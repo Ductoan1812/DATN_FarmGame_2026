@@ -20,16 +20,40 @@ public class OnEquipEvent : IGameEvent
     
 }
 /// <summary>
+///     Sự kiện khi Player/Enemy bắt đầu tấn công.
+/// </summary>
+public class AttackEvent : IGameEvent
+{
+    public readonly EntityRuntime attacker;
+
+    public AttackEvent(EntityRuntime attacker)
+    {
+        this.attacker = attacker;
+    }
+}
+
+/// <summary>
 ///     Sự kiện khi một entity nhận sát thương.
 /// </summary>
 public class TakeDamageEvent : IGameEvent
 {
-    public int damage;
-    public ToolType toolType;
+    public readonly EntityRuntime attacker;
+    public readonly float damage;
+    public readonly ToolType toolType;
 
-    public TakeDamageEvent(int damage, ToolType toolType = ToolType.None)
+    /// <summary>Tấn công từ entity (combat system).</summary>
+    public TakeDamageEvent(EntityRuntime attacker, float damage)
     {
-        this.damage = damage;
+        this.attacker = attacker;
+        this.damage   = damage;
+        this.toolType = ToolType.None;
+    }
+
+    /// <summary>Tấn công từ tool (harvest system — backward compat).</summary>
+    public TakeDamageEvent(float damage, ToolType toolType = ToolType.None)
+    {
+        this.attacker = null;
+        this.damage   = damage;
         this.toolType = toolType;
     }
 }
