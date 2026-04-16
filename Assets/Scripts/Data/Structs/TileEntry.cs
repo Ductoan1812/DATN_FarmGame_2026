@@ -1,14 +1,12 @@
 using System.Collections.Generic;
-using UnityEngine.Tilemaps;
 
 /// <summary>
 /// Dữ liệu 1 cell trong spatial map.
-/// Chứa ground tile + dictionary entity theo layer.
+/// Chỉ chứa dictionary entity theo layer.
+/// Ground/tile data thuộc TileRegistry.
 /// </summary>
 public class TileEntry
 {
-    public TileBase groundType;
-
     /// <summary>Key = EntityLayer, Value = idRuntime của entity chiếm layer đó.</summary>
     public Dictionary<EntityLayer, string> layers = new();
 

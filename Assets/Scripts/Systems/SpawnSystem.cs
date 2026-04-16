@@ -68,7 +68,7 @@ public class SpawnSystem : MonoBehaviour
             layer         = rule.occupyLayer
         };
 
-        // Đăng ký vào WorldEntityRegistry
+        // Đăng ký vào SpatialEntityRegistry
         if (req.bypassValidation)
         {
             _worldService.ForceRegisterSpawn(ep);

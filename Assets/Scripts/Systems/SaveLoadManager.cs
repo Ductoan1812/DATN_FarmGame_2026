@@ -4,11 +4,15 @@ using UnityEngine;
 /// <summary>
 /// Orchestrator cho boot sequence:
 ///   Phase 1: Load EntityRegistry (tất cả EntityRuntime)
-///   Phase 2: Load WorldEntityRegistry (positions, spatial, tiles)
-///   Phase 3: Spawn GameObjects từ WorldEntityRegistry (bao gồm Player)
+///   Phase 2: Load SpatialEntityRegistry (positions, spatial) + TileRegistry dirty
+///   Phase 3: Spawn GameObjects từ SpatialEntityRegistry (bao gồm Player)
 ///   Phase 4: Publish WorldReady → UI bind data
 ///
 /// New Game: không có save file → tạo Player entity mới + spawn tại vị trí mặc định.
+///
+/// Save format mới:
+///   - entities: chỉ entity đang tồn tại (bỏ ô trống)
+///   - tileChanges: chỉ tile thay đổi so với baseline (dirty)
 /// </summary>
 public class SaveLoadManager
 {
@@ -109,7 +113,7 @@ public class SaveLoadManager
             true
         );
 
-        // Phase 2+3: Load WorldEntityRegistry + Spawn GameObjects
+        // Phase 2+3: Load SpatialEntityRegistry + TileRegistry dirty + Spawn GameObjects
         // → EntityRoot.Add → inv.Container được set
         _worldService.Load(WorldSaveFile, ep =>
         {

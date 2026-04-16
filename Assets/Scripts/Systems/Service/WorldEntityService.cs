@@ -17,25 +17,21 @@ public class EntityPositionSave
 }
 
 [Serializable]
-public class TileEntrySave
-{
-    public int cellX, cellY;
-    public string groundName;
-    public LayerEntitySave[] layerEntities;
-}
-
-[Serializable]
 public class LayerEntitySave
 {
     public int layer;
     public string entityId;
 }
 
+/// <summary>
+/// Save container mới: chỉ lưu entity positions + tile dirty changes.
+/// Không lưu ô trống, không lưu ground tile (dùng TileRegistry dirty).
+/// </summary>
 [Serializable]
 public class WorldSaveContainer
 {
     public EntityPositionSave[] entities;
-    public TileEntrySave[]      tiles;
+    public TileChangeSave[]     tileChanges; // dirty tiles only
 }
 
 // ─── Spawn Result ─────────────────────────────────────────────────────────────
@@ -46,29 +42,38 @@ public enum SpawnResult { Success, CellBlocked, ConditionFailed, PrefabNotFound 
 
 /// <summary>
 /// Business logic layer cho world entities.
-/// Dùng PlacementValidator để kiểm tra điều kiện spawn.
+/// Dùng:
+///   - SpatialEntityRegistry: entity positions + spatial map
+///   - TileRegistry: tile baseline + dirty
+///   - PlacementValidator: kiểm tra điều kiện spawn
 /// </summary>
 public class WorldEntityService
 {
-    private readonly WorldEntityRegistry _registry;
-    private readonly PlacementValidator  _validator;
-    private readonly TileData            _tileData;
-    private readonly Tilemap             _tilemap;
+    private readonly SpatialEntityRegistry _spatial;
+    private readonly TileRegistry          _tileRegistry;
+    private readonly PlacementValidator    _validator;
+    private readonly TileData              _tileData;
+    private readonly Tilemap               _tilemap; // reference tilemap cho WorldToCell
 
-    public WorldEntityService(WorldEntityRegistry registry, TileData tileData, Tilemap tilemap)
+    public WorldEntityService(
+        SpatialEntityRegistry spatial,
+        TileRegistry tileRegistry,
+        TileData tileData,
+        Tilemap tilemap)
     {
-        _registry  = registry ?? throw new ArgumentNullException(nameof(registry));
-        _tileData  = tileData;
-        _tilemap   = tilemap;
-        _validator = new PlacementValidator(registry, tileData);
+        _spatial      = spatial      ?? throw new ArgumentNullException(nameof(spatial));
+        _tileRegistry = tileRegistry ?? throw new ArgumentNullException(nameof(tileRegistry));
+        _tileData     = tileData;
+        _tilemap      = tilemap;
+        _validator    = new PlacementValidator(spatial, tileRegistry, tileData);
     }
 
-    // ── Ground ────────────────────────────────────────────────────────────────
+    // ── Ground (delegate to TileRegistry) ─────────────────────────────────────
 
+    /// <summary>Set ground tile tại cell trên Tm_Ground. Tự ghi dirty nếu khác baseline.</summary>
     public void SetGround(Vector2Int cell, TileBase tile)
     {
-        _registry.SetGround(cell, tile);
-        _tilemap?.SetTile(new Vector3Int(cell.x, cell.y, 0), tile);
+        _tileRegistry.SetTile("Tm_Ground", cell, tile);
     }
 
     public void SetGroundByName(Vector2Int cell, string tileName)
@@ -77,7 +82,7 @@ public class WorldEntityService
         if (tile != null) SetGround(cell, tile);
     }
 
-    public TileBase GetGround(Vector2Int cell) => _registry.GetGround(cell);
+    public TileBase GetGround(Vector2Int cell) => _tileRegistry.GetTile("Tm_Ground", cell);
 
     // ── Spawn ─────────────────────────────────────────────────────────────────
 
@@ -105,10 +110,10 @@ public class WorldEntityService
         }
 
         // Đăng ký
-        _registry.RegisterEntity(ep);
-        if (!_registry.AddToSpatial(ep, rule.occupyLayer))
+        _spatial.RegisterEntity(ep);
+        if (!_spatial.AddToSpatial(ep, rule.occupyLayer))
         {
-            _registry.UnregisterEntity(ep.idRuntime);
+            _spatial.UnregisterEntity(ep.idRuntime);
             return SpawnResult.CellBlocked;
         }
 
@@ -123,18 +128,18 @@ public class WorldEntityService
         if (ep.occupiedCells == null || ep.occupiedCells.Length == 0)
             ep.occupiedCells = new[] { WorldToCell(ep.pos) };
 
-        _registry.RegisterEntity(ep);
-        _registry.AddToSpatial(ep, ep.layer);
+        _spatial.RegisterEntity(ep);
+        _spatial.AddToSpatial(ep, ep.layer);
     }
 
     // ── Despawn ───────────────────────────────────────────────────────────────
 
     public bool TryUnregister(string idRuntime)
     {
-        var ep = _registry.GetEntity(idRuntime);
+        var ep = _spatial.GetEntity(idRuntime);
         if (ep == null) return false;
-        _registry.RemoveFromSpatial(ep, ep.layer);
-        _registry.UnregisterEntity(idRuntime);
+        _spatial.RemoveFromSpatial(ep, ep.layer);
+        _spatial.UnregisterEntity(idRuntime);
         return true;
     }
 
@@ -142,38 +147,41 @@ public class WorldEntityService
 
     public bool MoveEntity(string idRuntime, Vector2 newPos, Vector2Int[] newCells = null)
     {
-        var ep = _registry.GetEntity(idRuntime);
+        var ep = _spatial.GetEntity(idRuntime);
         if (ep == null) return false;
 
-        _registry.RemoveFromSpatial(ep, ep.layer);
+        _spatial.RemoveFromSpatial(ep, ep.layer);
         ep.pos           = newPos;
         ep.occupiedCells = newCells ?? new[] { WorldToCell(newPos) };
-        _registry.AddToSpatial(ep, ep.layer);
+        _spatial.AddToSpatial(ep, ep.layer);
         return true;
     }
 
     // ── Query ─────────────────────────────────────────────────────────────────
 
-    public void UpdateEntityId(string oldId, string newId) => _registry.UpdateEntityId(oldId, newId);
+    public void UpdateEntityId(string oldId, string newId) => _spatial.UpdateEntityId(oldId, newId);
 
     public bool CanPlaceAt(PlacementRule rule, Vector2Int cell, out string reason)
         => _validator.CanPlace(rule, cell, out reason) == SpawnResult.Success;
 
     /// <summary>Kiểm tra ô có bị block bởi entity ở layer chỉ định không.</summary>
     public bool HasBlockerAt(Vector2Int cell, EntityLayer layer)
-        => _registry.HasEntityAtLayer(cell, layer);
+        => _spatial.HasEntityAtLayer(cell, layer);
 
     /// <summary>Kiểm tra tile tại ô có thể cuốc được không (tồn tại, chưa plowed/watered).</summary>
     public bool IsTillable(Vector2Int cell)
     {
-        if (_tileData == null || _tilemap == null) return false;
-        var tile = _tilemap.GetTile(new Vector3Int(cell.x, cell.y, 0));
+        if (_tileData == null || _tileRegistry == null) return false;
+        var tile = _tileRegistry.GetTile("Tm_Ground", cell);
         if (tile == null) return false;
         return tile != _tileData.plowedTile && tile != _tileData.wateredTile;
     }
 
-    public IEnumerable<string> GetEntitiesAt(Vector2Int cell) => _registry.GetEntitiesAt(cell);
-    public EntityPosition GetEntityPosition(string idRuntime)  => _registry.GetEntity(idRuntime);
+    public IEnumerable<string> GetEntitiesAt(Vector2Int cell) => _spatial.GetEntitiesAt(cell);
+    public EntityPosition GetEntityPosition(string idRuntime)  => _spatial.GetEntity(idRuntime);
+
+    /// <summary>Truy cập TileRegistry (cho các hệ thống cần đọc tile trực tiếp).</summary>
+    public TileRegistry TileRegistry => _tileRegistry;
 
     // ── Helper ────────────────────────────────────────────────────────────────
 
@@ -200,8 +208,9 @@ public class WorldEntityService
 
     public void Save(string filename)
     {
+        // 1. Save entity positions — chỉ entity đang tồn tại
         var entitySaves = new List<EntityPositionSave>();
-        foreach (var ep in _registry.GetAllEntities())
+        foreach (var ep in _spatial.GetAllEntities())
         {
             var s = new EntityPositionSave
             {
@@ -224,30 +233,17 @@ public class WorldEntityService
             entitySaves.Add(s);
         }
 
-        var tileSaves = new List<TileEntrySave>();
-        foreach (var kv in _registry.SnapshotSpatial())
+        // 2. Save tile dirty — chỉ những ô thay đổi so với baseline
+        var tileChanges = _tileRegistry.GetDirtySnapshot();
+
+        var container = new WorldSaveContainer
         {
-            var layerList = new List<LayerEntitySave>();
-            foreach (var lkv in kv.Value.layers)
-                layerList.Add(new LayerEntitySave { layer = (int)lkv.Key, entityId = lkv.Value });
+            entities    = entitySaves.ToArray(),
+            tileChanges = tileChanges.ToArray()
+        };
 
-            tileSaves.Add(new TileEntrySave
-            {
-                cellX         = kv.Key.x,
-                cellY         = kv.Key.y,
-                groundName    = kv.Value.groundType?.name ?? string.Empty,
-                layerEntities = layerList.ToArray()
-            });
-        }
-
-        File.WriteAllText(SavePath(filename),
-            JsonUtility.ToJson(new WorldSaveContainer
-            {
-                entities = entitySaves.ToArray(),
-                tiles    = tileSaves.ToArray()
-            }, true));
-
-        Debug.Log($"[WorldEntityService] Saved {entitySaves.Count} entities, {tileSaves.Count} tiles.");
+        File.WriteAllText(SavePath(filename), JsonUtility.ToJson(container, true));
+        Debug.Log($"[WorldEntityService] Saved {entitySaves.Count} entities, {tileChanges.Count} tile changes (dirty only).");
     }
 
     // ── Load ──────────────────────────────────────────────────────────────────
@@ -262,7 +258,10 @@ public class WorldEntityService
         catch (Exception ex) { Debug.LogError($"[WorldEntityService] Parse error: {ex.Message}"); return; }
         if (container == null) return;
 
+        // 1. Rebuild entity positions + spatial
         var positions = new Dictionary<string, EntityPosition>();
+        var spatial   = new Dictionary<Vector2Int, TileEntry>();
+
         if (container.entities != null)
         {
             foreach (var s in container.entities)
@@ -271,12 +270,13 @@ public class WorldEntityService
                     ? BuildCells(s.cellsX, s.cellsY)
                     : new[] { WorldToCell(new Vector2(s.posX, s.posY)) };
 
-                if (!System.Enum.TryParse<ObjectType>(s.idPrefab, out var objType))
+                if (!Enum.TryParse<ObjectType>(s.idPrefab, out var objType))
                 {
                     Debug.LogWarning($"[WorldEntityService] Unknown ObjectType '{s.idPrefab}', skipping.");
                     continue;
                 }
-                positions[s.idRuntime] = new EntityPosition
+
+                var ep = new EntityPosition
                 {
                     idRuntime     = s.idRuntime,
                     idPrefab      = objType,
@@ -284,31 +284,36 @@ public class WorldEntityService
                     occupiedCells = cells,
                     layer         = (EntityLayer)s.layer
                 };
+                positions[s.idRuntime] = ep;
+
+                // Rebuild spatial map
+                foreach (var cell in cells)
+                {
+                    if (!spatial.TryGetValue(cell, out var entry))
+                        spatial[cell] = entry = new TileEntry();
+                    entry.TryAdd(ep.layer, ep.idRuntime);
+                }
             }
         }
 
-        var spatial = new Dictionary<Vector2Int, TileEntry>();
-        if (container.tiles != null)
+        _spatial.ReplaceAll(positions, spatial);
+
+        // 2. Apply tile dirty changes lên TileRegistry
+        // (TileRegistry đã ScanBaseline trước đó, giờ chỉ áp dirty)
+        if (container.tileChanges != null)
         {
-            foreach (var t in container.tiles)
-            {
-                var entry = new TileEntry { groundType = ResolveTile(t.groundName) };
-                if (t.layerEntities != null)
-                    foreach (var le in t.layerEntities)
-                        entry.TryAdd((EntityLayer)le.layer, le.entityId);
-
-                spatial[new Vector2Int(t.cellX, t.cellY)] = entry;
-            }
+            _tileRegistry.ApplyDirty(
+                new List<TileChangeSave>(container.tileChanges),
+                tileName => ResolveTile(tileName)
+            );
         }
 
-        _registry.ReplaceAll(positions, spatial);
-        RebuildTilemap(spatial);
-
+        // 3. Callback cho mỗi entity → SpawnSystem reinstantiate
         if (onEntityLoaded != null)
             foreach (var ep in positions.Values)
                 onEntityLoaded(ep);
 
-        Debug.Log($"[WorldEntityService] Loaded {positions.Count} entities, {spatial.Count} tiles.");
+        Debug.Log($"[WorldEntityService] Loaded {positions.Count} entities, {container.tileChanges?.Length ?? 0} tile changes.");
     }
 
     // ── Private ───────────────────────────────────────────────────────────────
@@ -338,15 +343,6 @@ public class WorldEntityService
         if (_tileData.wateredTile?.name == name) return _tileData.wateredTile;
         if (_tileData.grassTile?.name   == name) return _tileData.grassTile;
         return null;
-    }
-
-    private void RebuildTilemap(Dictionary<Vector2Int, TileEntry> spatial)
-    {
-        if (_tilemap == null) return;
-        // Chỉ overlay tiles có groundType từ save, không xóa tilemap gốc
-        foreach (var kv in spatial)
-            if (kv.Value.groundType != null)
-                _tilemap.SetTile(new Vector3Int(kv.Key.x, kv.Key.y, 0), kv.Value.groundType);
     }
 
     private static string SavePath(string filename) =>

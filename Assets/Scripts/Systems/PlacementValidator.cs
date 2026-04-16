@@ -2,17 +2,21 @@ using UnityEngine;
 
 /// <summary>
 /// Kiểm tra entity có được đặt tại cell hay không.
-/// Logic đơn giản, 1 hàm duy nhất, dễ đọc dễ debug.
+/// Dùng 2 registry:
+///   - TileRegistry: kiểm tra tile tags (đất, cỏ, plowed...)
+///   - SpatialEntityRegistry: kiểm tra entity đã chiếm layer
 /// </summary>
 public class PlacementValidator
 {
-    private readonly WorldEntityRegistry _registry;
+    private readonly SpatialEntityRegistry _spatial;
+    private readonly TileRegistry _tileRegistry;
     private readonly TileData _tileData;
 
-    public PlacementValidator(WorldEntityRegistry registry, TileData tileData)
+    public PlacementValidator(SpatialEntityRegistry spatial, TileRegistry tileRegistry, TileData tileData)
     {
-        _registry = registry;
-        _tileData = tileData;
+        _spatial      = spatial;
+        _tileRegistry = tileRegistry;
+        _tileData     = tileData;
     }
 
     /// <summary>
@@ -21,7 +25,7 @@ public class PlacementValidator
     /// </summary>
     public SpawnResult CanPlace(PlacementRule rule, Vector2Int cell, out string reason)
     {
-        var entry = _registry.GetTileEntry(cell);
+        var entry = _spatial.GetTileEntry(cell);
 
         // ── 1. Layer đã bị chiếm? ──
         if (entry != null && entry.HasEntityAt(rule.occupyLayer))
@@ -35,7 +39,7 @@ public class PlacementValidator
         {
             foreach (var kv in entry.layers)
             {
-                var otherEp = _registry.GetEntity(kv.Value);
+                var otherEp = _spatial.GetEntity(kv.Value);
                 if (otherEp == null) continue;
 
                 var otherData = ResolveEntityData(otherEp);
@@ -67,22 +71,25 @@ public class PlacementValidator
 
     // ── Private ──────────────────────────────────────────
 
-    /// <summary>Gộp tất cả tags tại cell: từ Tilemap ground + từ entity provideTags.</summary>
+    /// <summary>Gộp tất cả tags tại cell: từ TileRegistry ground + từ entity provideTags.</summary>
     private PlacementTag GatherTags(Vector2Int cell, TileEntry entry)
     {
         var tags = PlacementTag.None;
 
-        // Tags từ ground tile (Tilemap)
-        var groundTile = _registry.GetGround(cell);
-        if (_tileData != null && groundTile != null)
-            tags |= _tileData.GetTags(groundTile);
+        // Tags từ ground tile (qua TileRegistry — lấy tile hiện tại trên Tm_Ground)
+        if (_tileRegistry != null && _tileData != null)
+        {
+            var groundTile = _tileRegistry.GetTile("Tm_Ground", cell);
+            if (groundTile != null)
+                tags |= _tileData.GetTags(groundTile);
+        }
 
         // Tags từ các entity đã có tại cell
         if (entry != null)
         {
             foreach (var kv in entry.layers)
             {
-                var ep = _registry.GetEntity(kv.Value);
+                var ep = _spatial.GetEntity(kv.Value);
                 if (ep == null) continue;
 
                 var data = ResolveEntityData(ep);
@@ -106,7 +113,6 @@ public class PlacementValidator
     /// <summary>Resolve EntityData từ EntityPosition thông qua EntityRegistry.</summary>
     private static EntityData ResolveEntityData(EntityPosition ep)
     {
-        // Lấy từ EntityService thông qua GameManager
         var runtime = GameManager.Instance?.EntityService?.Get(ep.idRuntime);
         return runtime?.entityData;
     }

@@ -1,14 +1,16 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 /// <summary>
-/// Pure data store — không có logic nghiệp vụ.
+/// Pure data store cho entity positions + spatial map.
 /// Layer 1: positions  — tra entity theo GUID  O(1)
 /// Layer 2: spatial    — tra entity theo ô     O(1), hỗ trợ multi-layer
+///
+/// Không chứa ground/tile data — phần đó thuộc TileRegistry.
+/// Save: chỉ lưu entity đang tồn tại (bỏ ô trống).
 /// </summary>
-public class WorldEntityRegistry
+public class SpatialEntityRegistry
 {
     private readonly Dictionary<string, EntityPosition> _positions = new();
     private readonly Dictionary<Vector2Int, TileEntry>  _spatial   = new();
@@ -72,7 +74,12 @@ public class WorldEntityRegistry
         if (ep?.occupiedCells == null) return;
         foreach (var cell in ep.occupiedCells)
             if (_spatial.TryGetValue(cell, out var entry))
+            {
                 entry.Remove(layer, ep.idRuntime);
+                // Dọn dẹp entry trống để save gọn
+                if (entry.layers.Count == 0)
+                    _spatial.Remove(cell);
+            }
     }
 
     public TileEntry GetTileEntry(Vector2Int cell)
@@ -99,13 +106,9 @@ public class WorldEntityRegistry
         return e != null && e.HasEntityAt(layer);
     }
 
-    // ── Ground ────────────────────────────────────────────────────────────────
-
-    public void SetGround(Vector2Int cell, TileBase tile) => EnsureTile(cell).groundType = tile;
-    public TileBase GetGround(Vector2Int cell) => GetTileEntry(cell)?.groundType;
-
     // ── Bulk (Save/Load) ──────────────────────────────────────────────────────
 
+    /// <summary>Thay thế toàn bộ data (dùng khi load).</summary>
     public void ReplaceAll(Dictionary<string, EntityPosition> positions, Dictionary<Vector2Int, TileEntry> spatial)
     {
         _positions.Clear();
@@ -114,6 +117,7 @@ public class WorldEntityRegistry
         if (spatial   != null) foreach (var kv in spatial)   _spatial[kv.Key]   = kv.Value;
     }
 
+    /// <summary>Snapshot positions cho save — chỉ entity đang tồn tại.</summary>
     public Dictionary<string, EntityPosition> SnapshotPositions()
     {
         var d = new Dictionary<string, EntityPosition>(_positions.Count);
@@ -121,11 +125,21 @@ public class WorldEntityRegistry
         return d;
     }
 
+    /// <summary>Snapshot spatial cho save — chỉ cell có entity.</summary>
     public Dictionary<Vector2Int, TileEntry> SnapshotSpatial()
     {
-        var d = new Dictionary<Vector2Int, TileEntry>(_spatial.Count);
-        foreach (var kv in _spatial) d[kv.Key] = kv.Value;
+        var d = new Dictionary<Vector2Int, TileEntry>();
+        foreach (var kv in _spatial)
+            if (kv.Value.layers.Count > 0) // Chỉ lưu cell có entity
+                d[kv.Key] = kv.Value;
         return d;
+    }
+
+    /// <summary>Xóa toàn bộ data.</summary>
+    public void Clear()
+    {
+        _positions.Clear();
+        _spatial.Clear();
     }
 
     // ── Private ───────────────────────────────────────────────────────────────

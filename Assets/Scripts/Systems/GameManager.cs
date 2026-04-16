@@ -1,14 +1,16 @@
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
     // ── Registries ────────────────────────────────────────
-    public EntityRegistry       EntityRegistry     { get; private set; }
-    public EntityDataRegistry   EntityDataRegistry { get; private set; }
-    public WorldObjectRegistry  WorldObjects       { get; private set; }
-    public WorldEntityRegistry  WorldRegistry      { get; private set; }
+    public EntityRegistry          EntityRegistry     { get; private set; }
+    public EntityDataRegistry      EntityDataRegistry { get; private set; }
+    public WorldObjectRegistry     WorldObjects       { get; private set; }
+    public SpatialEntityRegistry   SpatialRegistry    { get; private set; }
+    public TileRegistry            TileRegistry       { get; private set; }
 
     // ── Services ──────────────────────────────────────────
     public EntityService        EntityService      { get; private set; }
@@ -22,6 +24,13 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private TileData tileData;
     public TileData TileData => tileData;
+
+    [Header("Tilemap References")]
+    [SerializeField] private Tilemap tmGround;
+    [SerializeField] private Tilemap tmGroundDetail;
+    [SerializeField] private Tilemap tmCollision;
+    [SerializeField] private Tilemap tmDecoration;
+    [SerializeField] private Tilemap tmOverlay;
 
     [Header("Player Config")]
     [SerializeField] private ObjectType playerPrefabId = ObjectType.Player01;
@@ -38,6 +47,7 @@ public class GameManager : MonoBehaviour
         InitEntityDataRegistry();
         InitEntitySystem();
         InitWorldObjects();
+        InitTileRegistry();
         InitWorldEntitySystem();
         InitSpawnSystem();
         InitSaveLoadManager();
@@ -104,14 +114,51 @@ public class GameManager : MonoBehaviour
         WorldObjects.RegisterAll(Resources.LoadAll<WorldObjectDefinition>("Data/WorldObjects"));
     }
 
+    private void InitTileRegistry()
+    {
+        TileRegistry = new TileRegistry();
+
+        // Auto-find tilemaps nếu chưa gán trong Inspector
+        if (tmGround == null || tmGroundDetail == null)
+            AutoFindTilemaps();
+
+        // Đăng ký tất cả tilemap
+        if (tmGround       != null) TileRegistry.RegisterTilemap("Tm_Ground",       tmGround);
+        if (tmGroundDetail != null) TileRegistry.RegisterTilemap("Tm_GroundDetail",  tmGroundDetail);
+        if (tmCollision    != null) TileRegistry.RegisterTilemap("Tm_Collision",     tmCollision);
+        if (tmDecoration   != null) TileRegistry.RegisterTilemap("Tm_Decoration",    tmDecoration);
+        if (tmOverlay      != null) TileRegistry.RegisterTilemap("Tm_Overlay",       tmOverlay);
+
+        // Quét baseline (snapshot gốc từ Editor)
+        TileRegistry.ScanBaseline();
+    }
+
+    private void AutoFindTilemaps()
+    {
+        var grid = FindAnyObjectByType<Grid>();
+        if (grid == null) return;
+
+        foreach (var tm in grid.GetComponentsInChildren<Tilemap>())
+        {
+            switch (tm.gameObject.name)
+            {
+                case "Tm_Ground":       if (tmGround       == null) tmGround       = tm; break;
+                case "Tm_GroundDetail": if (tmGroundDetail == null) tmGroundDetail = tm; break;
+                case "Tm_Collision":    if (tmCollision    == null) tmCollision    = tm; break;
+                case "Tm_Decoration":   if (tmDecoration   == null) tmDecoration   = tm; break;
+                case "Tm_Overlay":      if (tmOverlay      == null) tmOverlay      = tm; break;
+            }
+        }
+    }
+
     private void InitWorldEntitySystem()
     {
         var tilemap = GridSystem.GetTilemap();
         if (tilemap == null)
             Debug.LogWarning("[GameManager] Tilemap not found – WorldEntityService running headless.");
 
-        WorldRegistry = new WorldEntityRegistry();
-        WorldService  = new WorldEntityService(WorldRegistry, tileData, tilemap);
+        SpatialRegistry = new SpatialEntityRegistry();
+        WorldService    = new WorldEntityService(SpatialRegistry, TileRegistry, tileData, tilemap);
     }
 
     private void InitSpawnSystem()

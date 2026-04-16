@@ -1,7 +1,7 @@
 using UnityEngine;
 
 /// <summary>
-/// Sync vị trí entity vào WorldEntityRegistry khi đổi cell.
+/// Sync vị trí entity vào SpatialEntityRegistry khi đổi cell.
 /// Chỉ gắn vào entity có thể di chuyển (enemy, NPC, pet...).
 /// Cost: 1 phép so sánh Vector2Int mỗi frame.
 /// </summary>
