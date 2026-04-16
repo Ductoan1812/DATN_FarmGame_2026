@@ -3,7 +3,7 @@ using UnityEngine;
 
 /// <summary>
 /// Bridge giữa InventoryRuntime (data) và UI (view).
-/// Không giữ data — chỉ trỏ tới EntityRoot.entity.
+/// Không giữ data — chỉ forward refs từ InventoryRuntime.
 /// Đợi WorldReady trước khi init.
 /// </summary>
 [RequireComponent(typeof(EntityRoot))]
@@ -13,8 +13,9 @@ public class PlayerInventory : MonoBehaviour
     private InventoryService _inventoryService;
     private bool _ready;
 
-    public int SelectedHotbarIndex { get; private set; }
-    public EntityRuntime SelectedItem { get; private set; }
+    // ── Refs từ Runtime (không giữ data) ──
+    public int SelectedHotbarIndex => GetHotbar()?.SelectedIndex ?? 0;
+    public EntityRuntime SelectedItem => GetHotbar()?.SelectedEntity;
 
     // ── Event cho UI bind ──
     public event Action OnInventoryChanged;
@@ -22,6 +23,9 @@ public class PlayerInventory : MonoBehaviour
 
     // ── Shortcut ──
     private EntityRuntime Entity => _root?.GetEntity();
+
+    // Cache hotbar ref (invalidate khi chưa ready)
+    private InventoryRuntime _cachedHotbar;
 
     private void Awake()
     {
@@ -36,6 +40,10 @@ public class PlayerInventory : MonoBehaviour
 
     private void OnDisable()
     {
+        // Unsubscribe hotbar event
+        if (_cachedHotbar != null)
+            _cachedHotbar.OnSelectionChanged -= ForwardSelectionChanged;
+
         var bus = GameManager.Instance?.EventBus;
         if (bus != null) bus.Unsubscribe<WorldReady>(OnWorldReady);
     }
@@ -44,7 +52,12 @@ public class PlayerInventory : MonoBehaviour
     {
         _inventoryService = GameManager.Instance.InventoryService;
         _ready = true;
-        RefreshSelectedItem();
+
+        // Cache + subscribe hotbar selection event
+        _cachedHotbar = GetInventory(InventoryType.Hotbar);
+        if (_cachedHotbar != null)
+            _cachedHotbar.OnSelectionChanged += ForwardSelectionChanged;
+
         OnInventoryChanged?.Invoke();
         Debug.Log("[PlayerInventory] Ready.");
     }
@@ -54,22 +67,13 @@ public class PlayerInventory : MonoBehaviour
     public void SelectSlot(int index)
     {
         if (!_ready) return;
-        var hotbar = GetInventory(InventoryType.Hotbar);
-        if (hotbar == null || index < 0 || index >= hotbar.MaxSlots) return;
-
-        SelectedHotbarIndex = index;
-        RefreshSelectedItem();
-        OnHotbarSelectionChanged?.Invoke(index);
+        GetHotbar()?.SelectSlot(index);
     }
 
     public void CycleHotbar(int delta)
     {
         if (!_ready) return;
-        var hotbar = GetInventory(InventoryType.Hotbar);
-        if (hotbar == null) return;
-
-        int next = (SelectedHotbarIndex + delta + hotbar.MaxSlots) % hotbar.MaxSlots;
-        SelectSlot(next);
+        GetHotbar()?.CycleSelection(delta);
     }
 
     // ══════ Pickup ══════
@@ -88,7 +92,7 @@ public class PlayerInventory : MonoBehaviour
     {
         if (!_ready || SelectedItem == null || Entity == null) return false;
         bool ok = _inventoryService.Consume(SelectedItem, Entity, amount);
-        if (ok) { RefreshSelectedItem(); NotifyChanged(); }
+        if (ok) NotifyChanged();
         return ok;
     }
 
@@ -109,15 +113,19 @@ public class PlayerInventory : MonoBehaviour
 
     // ══════ Internal ══════
 
-    private void RefreshSelectedItem()
+    private InventoryRuntime GetHotbar()
     {
-        var hotbar = GetInventory(InventoryType.Hotbar);
-        SelectedItem = hotbar?.GetSlot(SelectedHotbarIndex)?.entity;
+        return _cachedHotbar ?? GetInventory(InventoryType.Hotbar);
+    }
+
+    /// <summary>Forward event từ InventoryRuntime → UI.</summary>
+    private void ForwardSelectionChanged(int index)
+    {
+        OnHotbarSelectionChanged?.Invoke(index);
     }
 
     private void NotifyChanged()
     {
-        RefreshSelectedItem();
         OnInventoryChanged?.Invoke();
     }
 }

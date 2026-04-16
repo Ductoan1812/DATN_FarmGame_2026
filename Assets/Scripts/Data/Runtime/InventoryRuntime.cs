@@ -15,6 +15,32 @@ public class InventoryRuntime : IModuleRuntime
     // Container sở hữu túi này (dùng để set Owner của entity)
     public IEntityContainer Container { get; set; }
 
+    // ══════ Selection (chỉ có ý nghĩa với Hotbar) ══════
+
+    /// <summary>Index slot đang được chọn. Mặc định 0.</summary>
+    public int SelectedIndex { get; private set; }
+
+    /// <summary>Entity tại slot đang chọn (null nếu slot trống).</summary>
+    public EntityRuntime SelectedEntity => GetSlot(SelectedIndex)?.entity;
+
+    /// <summary>Fired khi SelectedIndex thay đổi.</summary>
+    public event Action<int> OnSelectionChanged;
+
+    /// <summary>Chọn slot theo index. Clamp trong [0, MaxSlots).</summary>
+    public void SelectSlot(int index)
+    {
+        if (index < 0 || index >= MaxSlots) return;
+        SelectedIndex = index;
+        OnSelectionChanged?.Invoke(index);
+    }
+
+    /// <summary>Cycle selection theo delta (-1 / +1).</summary>
+    public void CycleSelection(int delta)
+    {
+        int next = (SelectedIndex + delta + MaxSlots) % MaxSlots;
+        SelectSlot(next);
+    }
+
     private List<InventorySlot> slots;
 
     public InventoryRuntime(InventoryModule data)
@@ -149,7 +175,7 @@ public class InventoryRuntime : IModuleRuntime
             if (!slots[i].IsEmpty)
                 slotSaves.Add(new SlotSave { index = i, entityId = slots[i].entity.Id });
 
-        var data = new InventorySaveData { type = Type, slots = slotSaves.ToArray() };
+        var data = new InventorySaveData { type = Type, slots = slotSaves.ToArray(), selectedIndex = SelectedIndex };
         return new ModuleSaveData { moduleType = "Inventory", dataJson = JsonUtility.ToJson(data) };
     }
 
@@ -159,6 +185,7 @@ public class InventoryRuntime : IModuleRuntime
         var data = JsonUtility.FromJson<InventorySaveData>(save.dataJson);
         if (data == null) return;
         _pendingSlots = data.slots;
+        SelectedIndex = Mathf.Clamp(data.selectedIndex, 0, MaxSlots - 1);
     }
 
     public void RestoreSlots(EntityRegistry registry)
@@ -175,7 +202,7 @@ public class InventoryRuntime : IModuleRuntime
 
     private SlotSave[] _pendingSlots;
 
-    [Serializable] private class InventorySaveData { public InventoryType type; public SlotSave[] slots; }
+    [Serializable] private class InventorySaveData { public InventoryType type; public SlotSave[] slots; public int selectedIndex; }
     [Serializable] private class SlotSave { public int index; public string entityId; }
 
     public bool Equals(IModuleRuntime other)

@@ -9,6 +9,7 @@ public class PlayerControler : MonoBehaviour
     public Vector3 LastMoveDirection => lastMoveDirection;
 
     private PlayerInventory _inventory;
+    private EntityRoot _entityRoot;
 
     private void Awake()
     {
@@ -18,7 +19,8 @@ public class PlayerControler : MonoBehaviour
 
     private void Start()
     {
-        _inventory = GetComponent<PlayerInventory>();
+        _inventory  = GetComponent<PlayerInventory>();
+        _entityRoot = GetComponent<EntityRoot>();
     }
 
     private void Update()
@@ -45,6 +47,14 @@ public class PlayerControler : MonoBehaviour
             var selected = _inventory.SelectedItem;
             if (selected != null)
                 selected.TriggerEvent(new UseEvent(selected));
+        }
+
+        // Chuột phải: tấn công
+        if (Input.GetMouseButtonDown(1))
+        {
+            var playerEntity = _entityRoot?.GetEntity();
+            if (playerEntity != null)
+                playerEntity.TriggerEvent(new AttackEvent(playerEntity));
         }
 
         // 1-8: Chọn hotbar slot
