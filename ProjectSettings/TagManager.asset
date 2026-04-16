@@ -3,20 +3,21 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Plant
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - 'Ground  '
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Obstacle
+  - Player
+  - Enemy
+  - Interactable
+  - Projectile
+  - Trigger
   - 
   - 
   - 
@@ -40,4 +41,25 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 2322716609
+    locked: 0
+  - name: Ground
+    uniqueID: 3493838703
+    locked: 0
+  - name: Detail
+    uniqueID: 1139250691
+    locked: 0
+  - name: ObjectLow
+    uniqueID: 1948816981
+    locked: 0
+  - name: Entity
+    uniqueID: 398158049
+    locked: 0
+  - name: ObjectHigh
+    uniqueID: 3739498385
+    locked: 0
+  - name: Effect
+    uniqueID: 3112377239
     locked: 0
