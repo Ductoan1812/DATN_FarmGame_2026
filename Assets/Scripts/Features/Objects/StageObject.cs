@@ -1,29 +1,36 @@
-using System.Diagnostics;
 using UnityEngine;
-using Debug = UnityEngine.Debug;
 
+/// <summary>
+/// Bridge giữa global NextDayEventPublish (EventBus) → entity NextDayEvent (TriggerEvent).
+/// Subscribe EntityRoot.OnEntityReady để lấy entity ref.
+/// </summary>
 [DisallowMultipleComponent]
 public class StageObject : MonoBehaviour
 {
-    [SerializeField] private EntityRuntime entity;
+    private EntityRuntime entity;
     private EventBus eventBus;
     private bool subscribed;
 
-    private void Start()
+    private void Awake()
     {
-        entity = GetComponent<EntityRoot>()?.GetEntity();
-        if (entity == null)
-            Debug.LogWarning($"[StageObject]{gameObject.name} can not get EntityRuntime");
-        subscribed = false;
+        var root = GetComponent<EntityRoot>();
+        if (root != null)
+            root.OnEntityReady += OnEntityReady;
     }
 
-    private void OnEnable()
+    private void OnEntityReady(EntityRuntime e)
     {
-        eventBus = GameManager.Instance?.EventBus;
-        if (eventBus != null && !subscribed)
+        entity = e;
+
+        // Subscribe NextDay nếu chưa
+        if (!subscribed)
         {
-            eventBus.Subscribe<NextDayEventPublish>(OnGlobalNextDay);
-            subscribed = true;
+            eventBus = GameManager.Instance?.EventBus;
+            if (eventBus != null)
+            {
+                eventBus.Subscribe<NextDayEventPublish>(OnGlobalNextDay);
+                subscribed = true;
+            }
         }
     }
 
@@ -40,9 +47,9 @@ public class StageObject : MonoBehaviour
     {
         if (entity == null)
         {
-            Debug.LogWarning($"[StageObject]{gameObject.name} No EntityRuntime");
+            Debug.LogWarning($"[StageObject] {gameObject.name} No EntityRuntime");
             return;
         }
-        entity.TriggerEvent<NextDayEvent>(new NextDayEvent());
+        entity.TriggerEvent(new NextDayEvent());
     }
 }

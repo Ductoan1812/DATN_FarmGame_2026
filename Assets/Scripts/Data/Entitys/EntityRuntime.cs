@@ -8,16 +8,14 @@ public class EntityRuntime
     public string Id { get; private set; }
     public EntityData entityData { get; private set; }
     public IEntityContainer Owner { get; set; }
-    public StatsRuntime stats = new();
-    private List<IModuleRuntime> modules = new();
-
-    // ══════ Số lượng ══════
+  
     public int Amount { get; private set; } = 1;
     public int MaxStack => entityData != null ? entityData.maxStack : 1;
     public int FreeSpace => MaxStack - Amount;
     public bool IsEmpty => Amount <= 0;
     public bool IsFull => Amount >= MaxStack;
-
+    public StatsRuntime stats = new();
+    private List<IModuleRuntime> modules = new();
     public EntityRuntime(EntityData data, int amount = 1)
     {
         Id = Guid.NewGuid().ToString("N").Substring(0, 8);

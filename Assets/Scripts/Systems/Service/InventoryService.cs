@@ -56,7 +56,15 @@ public class InventoryService
                 }
             }
         }
-
+        
+        if (totalReceived > 0)
+        {
+            UnityEngine.Debug.Log($"[InventoryService] {receiverEntity.entityData.name} nhận được:{pickupEntity.entityData.name} x{totalReceived}");
+        }
+        else
+        {
+            UnityEngine.Debug.Log($"[InventoryService] {receiverEntity.entityData.name} không nhận được gì");
+        }
         return totalReceived;
     }
 

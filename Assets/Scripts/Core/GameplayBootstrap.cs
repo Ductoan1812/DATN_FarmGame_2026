@@ -1,11 +1,9 @@
 using UnityEngine;
 
-[DefaultExecutionOrder(-1000)]
 public class GameplayBootstrap : MonoBehaviour
 {
     [Header("Scene Refs")]
     [SerializeField] private EventBus eventBus;
-    [SerializeField] private PlayerControler playerControler;
 
     [Header("Auto Setup")]
     [SerializeField] private bool autoCreateEventBus = true;
@@ -15,24 +13,29 @@ public class GameplayBootstrap : MonoBehaviour
     {
         EnsureEventBus();
 
+        // Subscribe ngay sau khi có eventBus — WorldReady sẽ fire sau GameManager.Start
+        if (eventBus != null)
+            eventBus.Subscribe<WorldReady>(OnWorldReady);
+    }
+
+    private void OnDestroy()
+    {
+        if (eventBus != null)
+            eventBus.Unsubscribe<WorldReady>(OnWorldReady);
+    }
+
+    private void OnWorldReady(WorldReady _)
+    {
         if (autoSetupPlayerToolStack)
-        {
             EnsurePlayerToolStack();
-        }
     }
 
     private void EnsureEventBus()
     {
-        if (eventBus != null)
-        {
-            return;
-        }
+        if (eventBus != null) return;
 
         eventBus = FindAnyObjectByType<EventBus>();
-        if (eventBus != null || !autoCreateEventBus)
-        {
-            return;
-        }
+        if (eventBus != null || !autoCreateEventBus) return;
 
         GameObject eventBusObject = new GameObject("EventBus");
         eventBus = eventBusObject.AddComponent<EventBus>();
@@ -41,11 +44,7 @@ public class GameplayBootstrap : MonoBehaviour
 
     private void EnsurePlayerToolStack()
     {
-        if (playerControler == null)
-        {
-            playerControler = FindAnyObjectByType<PlayerControler>();
-        }
-
+        var playerControler = FindAnyObjectByType<PlayerControler>();
         if (playerControler == null)
         {
             Debug.LogWarning("[GameplayBootstrap] Khong tim thay PlayerControler de setup tool stack.");
@@ -53,33 +52,15 @@ public class GameplayBootstrap : MonoBehaviour
         }
 
         GameObject playerObject = playerControler.gameObject;
-
-
-
         GameObject handlersRoot = GetOrCreateChild(playerObject.transform, "ToolHandlers");
-    
 
         Debug.Log("[GameplayBootstrap] Player tool stack da san sang.");
-    }
-
-    private static T EnsureComponent<T>(GameObject target) where T : Component
-    {
-        T component = target.GetComponent<T>();
-        if (component == null)
-        {
-            component = target.AddComponent<T>();
-        }
-
-        return component;
     }
 
     private static GameObject GetOrCreateChild(Transform parent, string childName)
     {
         Transform child = parent.Find(childName);
-        if (child != null)
-        {
-            return child.gameObject;
-        }
+        if (child != null) return child.gameObject;
 
         GameObject childObject = new GameObject(childName);
         childObject.transform.SetParent(parent, false);

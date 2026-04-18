@@ -10,6 +10,9 @@ public abstract class ToolRuntime : IModuleRuntime, IHandleEvent<UseEvent>
     protected readonly ToolModule _data;
     private float _lastUseTime = -999f;
 
+    /// <summary>Loại tool (Hoe, Axe...) — expose cho các system bên ngoài đọc.</summary>
+    public ToolType ToolType => _data?.toolType ?? ToolType.None;
+
     protected ToolRuntime(ToolModule data)
     {
         _data = data;

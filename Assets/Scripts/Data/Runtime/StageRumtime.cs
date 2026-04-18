@@ -4,6 +4,7 @@ using System;
 public class StageRuntime : IModuleRuntime, IHandleEvent<NextDayEvent>, IHandleEvent<SpawnedEvent>
 {
     public int currentStageIndex = 0;
+    public bool CanHarvest ;
     private int daysInCurrentStage = 0;
     private int TotaldaysInCurrentStage;
     private StageModule data;
@@ -15,6 +16,7 @@ public class StageRuntime : IModuleRuntime, IHandleEvent<NextDayEvent>, IHandleE
         this.data = data;
         if (data.stages.Length > 0) currentStageIndex = 0;
         TotaldaysInCurrentStage = data.stages[currentStageIndex].daysToGrow;
+        CanHarvest = data.stages[currentStageIndex].canHarvest;
     }
 
     public ModuleSaveData ToSaveData()
@@ -29,6 +31,7 @@ public class StageRuntime : IModuleRuntime, IHandleEvent<NextDayEvent>, IHandleE
         var s = JsonUtility.FromJson<StageModuleSave>(save.dataJson);
         currentStageIndex = s.currentStageIndex;
         daysInCurrentStage = s.daysInCurrentStage;
+        CanHarvest = data.stages[currentStageIndex].canHarvest;
     }
 
     public bool Equals(IModuleRuntime other)
@@ -58,12 +61,13 @@ public class StageRuntime : IModuleRuntime, IHandleEvent<NextDayEvent>, IHandleE
             {
                 currentStageIndex++;
                 daysInCurrentStage = 0;
-
+                CanHarvest = data.stages[currentStageIndex].canHarvest;
                 if (spriteRenderer == null)
                     spriteRenderer = Owner.GameObject.GetComponentInChildren<SpriteRenderer>();
 
                 if (spriteRenderer != null)
                     spriteRenderer.sprite = data.stages[currentStageIndex].sprite;
+                
             }
             else
             {
@@ -87,8 +91,9 @@ public class StageRuntime : IModuleRuntime, IHandleEvent<NextDayEvent>, IHandleE
             return;
         }
 
+        CanHarvest = data.stages[currentStageIndex].canHarvest;
         spriteRenderer.sprite = data.stages[currentStageIndex].sprite;
-        Debug.Log($"[StageRuntime] Đã set sprite stage {currentStageIndex} cho '{Owner.GameObject.name}'");
+        Debug.Log($"[StageRuntime] Đã set sprite stage {currentStageIndex} cho '{Owner.GameObject.name}' (CanHarvest={CanHarvest})");
     }
 
     public void Handle(NextDayEvent e)

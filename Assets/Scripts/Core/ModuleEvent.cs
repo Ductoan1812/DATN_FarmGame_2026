@@ -38,7 +38,7 @@ public class AttackEvent : IGameEvent
 public class TakeDamageEvent : IGameEvent
 {
     public readonly EntityRuntime attacker;
-    public readonly float damage;
+    public float damage;  // mutable — module trước có thể modify trước khi module sau đọc
     public readonly ToolType toolType;
 
     /// <summary>Tấn công từ entity (combat system).</summary>
@@ -69,10 +69,14 @@ public class UseEvent : IGameEvent
         this.entity = entity;
     }
 }
-public class DoDropEvent : IGameEvent
+/// <summary>
+/// Sự kiện khi entity chết (Hp <= 0). HealthRuntime phát hiện → TriggerEvent.
+/// Các module khác (DropRuntime...) lắng nghe để xử lý hậu quả.
+/// </summary>
+public class DieEvent : IGameEvent
 {
-    public EntityRuntime entity;
-    public DoDropEvent(EntityRuntime entity)
+    public readonly EntityRuntime entity;
+    public DieEvent(EntityRuntime entity)
     {
         this.entity = entity;
     }

@@ -36,6 +36,11 @@ public class PlayerInventory : MonoBehaviour
     {
         var bus = GameManager.Instance?.EventBus;
         if (bus != null) bus.Subscribe<WorldReady>(OnWorldReady);
+
+        // Player spawn runtime → OnEnable chạy SAU WorldReady đã publish
+        // Nếu GameManager đã sẵn sàng (InventoryService != null) → init ngay
+        if (!_ready && GameManager.Instance?.InventoryService != null)
+            OnWorldReady(default);
     }
 
     private void OnDisable()
@@ -50,6 +55,7 @@ public class PlayerInventory : MonoBehaviour
 
     private void OnWorldReady(WorldReady _)
     {
+        if (_ready) return; // Đã init rồi (từ OnEnable hoặc WorldReady — cái nào đến trước)
         _inventoryService = GameManager.Instance.InventoryService;
         _ready = true;
 

@@ -153,7 +153,19 @@ public class GameManager : MonoBehaviour
 
     private void InitWorldEntitySystem()
     {
-        var tilemap = GridSystem.GetTilemap();
+        // Dùng tmGround trực tiếp — GridSystem.Instance có thể chưa sẵn sàng lúc Awake
+        var tilemap = tmGround;
+        if (tilemap == null)
+        {
+            // Fallback: thử auto-find
+            var grid = FindAnyObjectByType<Grid>();
+            if (grid != null)
+            {
+                foreach (var tm in grid.GetComponentsInChildren<Tilemap>())
+                    if (tm.gameObject.name == "Tm_Ground") { tilemap = tm; break; }
+            }
+        }
+
         if (tilemap == null)
             Debug.LogWarning("[GameManager] Tilemap not found – WorldEntityService running headless.");
 
