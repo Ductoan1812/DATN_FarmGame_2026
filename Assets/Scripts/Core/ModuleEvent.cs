@@ -20,40 +20,22 @@ public class OnEquipEvent : IGameEvent
     
 }
 /// <summary>
-///     Sự kiện khi Player/Enemy bắt đầu tấn công.
-/// </summary>
-public class AttackEvent : IGameEvent
-{
-    public readonly EntityRuntime attacker;
-
-    public AttackEvent(EntityRuntime attacker)
-    {
-        this.attacker = attacker;
-    }
-}
-
-/// <summary>
 ///     Sự kiện khi một entity nhận sát thương.
 /// </summary>
 public class TakeDamageEvent : IGameEvent
 {
+<<<<<<< HEAD
     public readonly EntityRuntime attacker;
     public float damage;  // mutable — module trước có thể modify trước khi module sau đọc
     public readonly ToolType toolType;
+=======
+    public int damage;
+    public ToolType toolType;
+>>>>>>> parent of 48e8ab7 (Feat: tạo module xử lý tấn công và nhận sát thương)
 
-    /// <summary>Tấn công từ entity (combat system).</summary>
-    public TakeDamageEvent(EntityRuntime attacker, float damage)
+    public TakeDamageEvent(int damage, ToolType toolType = ToolType.None)
     {
-        this.attacker = attacker;
-        this.damage   = damage;
-        this.toolType = ToolType.None;
-    }
-
-    /// <summary>Tấn công từ tool (harvest system — backward compat).</summary>
-    public TakeDamageEvent(float damage, ToolType toolType = ToolType.None)
-    {
-        this.attacker = null;
-        this.damage   = damage;
+        this.damage = damage;
         this.toolType = toolType;
     }
 }
