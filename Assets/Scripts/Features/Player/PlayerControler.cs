@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerControler : MonoBehaviour
 {
@@ -10,6 +11,12 @@ public class PlayerControler : MonoBehaviour
 
     private PlayerInventory _inventory;
     private EntityRoot _entityRoot;
+
+    private static readonly Key[] HotbarKeys = new Key[]
+    {
+        Key.Digit1, Key.Digit2, Key.Digit3, Key.Digit4,
+        Key.Digit5, Key.Digit6, Key.Digit7, Key.Digit8
+    };
 
     private void Awake()
     {
@@ -31,18 +38,31 @@ public class PlayerControler : MonoBehaviour
 
     private void HandleMovement()
     {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
+        var keyboard = Keyboard.current;
+        if (keyboard == null) return;
+
+        float horizontal = 0f;
+        float vertical = 0f;
+
+        if (keyboard.aKey.isPressed || keyboard.leftArrowKey.isPressed)  horizontal -= 1f;
+        if (keyboard.dKey.isPressed || keyboard.rightArrowKey.isPressed) horizontal += 1f;
+        if (keyboard.sKey.isPressed || keyboard.downArrowKey.isPressed)  vertical   -= 1f;
+        if (keyboard.wKey.isPressed || keyboard.upArrowKey.isPressed)    vertical   += 1f;
+
         Vector3 moveDirection = new Vector3(horizontal, vertical, 0f).normalized;
         transform.Translate(moveDirection * moveSpeed * Time.deltaTime, Space.World);
+
         if (moveDirection.sqrMagnitude > 0.0001f)
             lastMoveDirection = moveDirection;
     }
 
     private void HandleActions()
     {
+        var mouse    = Mouse.current;
+        var keyboard = Keyboard.current;
+
         // Chuột trái: dùng item đang cầm
-        if (Input.GetMouseButtonDown(0) && _inventory != null)
+        if (mouse != null && mouse.leftButton.wasPressedThisFrame && _inventory != null)
         {
             var selected = _inventory.SelectedItem;
             if (selected != null)
@@ -50,7 +70,7 @@ public class PlayerControler : MonoBehaviour
         }
 
         // Chuột phải: tấn công
-        if (Input.GetMouseButtonDown(1))
+        if (mouse != null && mouse.rightButton.wasPressedThisFrame)
         {
             var playerEntity = _entityRoot?.GetEntity();
             if (playerEntity != null)
@@ -58,11 +78,11 @@ public class PlayerControler : MonoBehaviour
         }
 
         // 1-8: Chọn hotbar slot
-        if (_inventory != null)
+        if (keyboard != null && _inventory != null)
         {
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < HotbarKeys.Length; i++)
             {
-                if (Input.GetKeyDown(KeyCode.Alpha1 + i))
+                if (keyboard[HotbarKeys[i]].wasPressedThisFrame)
                 {
                     _inventory.SelectSlot(i);
                     break;
@@ -70,13 +90,16 @@ public class PlayerControler : MonoBehaviour
             }
 
             // Scroll chuột: cycle hotbar
-            float scroll = Input.GetAxis("Mouse ScrollWheel");
-            if (scroll > 0f) _inventory.CycleHotbar(-1);
-            else if (scroll < 0f) _inventory.CycleHotbar(1);
+            if (mouse != null)
+            {
+                float scroll = mouse.scroll.ReadValue().y;
+                if (scroll > 0f) _inventory.CycleHotbar(-1);
+                else if (scroll < 0f) _inventory.CycleHotbar(1);
+            }
         }
 
         // F5: Save
-        if (Input.GetKeyDown(KeyCode.F5))
+        if (keyboard != null && keyboard.f5Key.wasPressedThisFrame)
         {
             eventBus?.Publish(new SaveGameRequest());
             Debug.Log("[Player] Save requested.");

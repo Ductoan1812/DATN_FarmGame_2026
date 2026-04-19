@@ -14,24 +14,6 @@ public class StageObject : MonoBehaviour
     private void Awake()
     {
         var root = GetComponent<EntityRoot>();
-        if (root != null)
-            root.OnEntityReady += OnEntityReady;
-    }
-
-    private void OnEntityReady(EntityRuntime e)
-    {
-        entity = e;
-
-        // Subscribe NextDay nếu chưa
-        if (!subscribed)
-        {
-            eventBus = GameManager.Instance?.EventBus;
-            if (eventBus != null)
-            {
-                eventBus.Subscribe<NextDayEventPublish>(OnGlobalNextDay);
-                subscribed = true;
-            }
-        }
     }
 
     private void OnDisable()
