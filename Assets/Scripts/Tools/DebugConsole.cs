@@ -174,7 +174,7 @@ public class DebugConsole : MonoBehaviour
             string dataId = args.Length >= 4 ? args[3] : args[0];
             var data = FindEntityData(dataId); if (data == null) return;
 
-            gm.EventBus.Publish(new SpawnRequest(new Vector2(x, z), objectType, data));
+            gm.EventBus.Publish(new SpawnRequestPublish(new Vector2(x, z), objectType, data));
             LogSuccess($"Spawn '{objectType}' ({data.keyName}) tại ({x},{z})");
         });
 

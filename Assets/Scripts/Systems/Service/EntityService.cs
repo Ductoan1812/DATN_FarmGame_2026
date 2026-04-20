@@ -12,7 +12,65 @@ public class EntityService
         this.registry = registry;
     }
 
-    // ===== Create =====
+    // ══════════════════════════════════════════════════════════
+    //  Amount mutation — single source of truth
+    // ══════════════════════════════════════════════════════════
+
+    /// <summary>
+    /// Set Amount tuyệt đối (đã clamp về [0, MaxStack]).
+    /// Nếu kết quả = 0 → tự Unregister khỏi Registry.
+    /// Trả về true nếu entity bị depleted (Amount = 0) sau khi set.
+    /// MỌI thay đổi Amount trong game PHẢI đi qua hàm này.
+    /// </summary>
+    public bool SetAmount(EntityRuntime entity, int value)
+    {
+        if (entity == null) return false;
+        int clamped = Mathf.Clamp(value, 0, entity.MaxStack);
+        entity.Amount = clamped;
+        if (clamped <= 0)
+        {
+            registry.Unregister(entity);
+            return true;
+        }
+        return false;
+    }
+
+    /// <summary>Cộng/trừ Amount theo delta. Trả về true nếu depleted.</summary>
+    public bool AddAmount(EntityRuntime entity, int delta)
+    {
+        if (entity == null) return false;
+        return SetAmount(entity, entity.Amount + delta);
+    }
+
+    // ══════════════════════════════════════════════════════════
+    //  Stack rules — pure function, không mutate
+    // ══════════════════════════════════════════════════════════
+
+    /// <summary>
+    /// Hai entity có thể stack vào chung 1 slot hay không.
+    /// Pure function — không cần instance service state.
+    /// </summary>
+    public static bool CanStack(EntityRuntime a, EntityRuntime b)
+    {
+        if (a == null || b == null) return false;
+        if (a.entityData == null || b.entityData == null) return false;
+        if (a.entityData.maxStack <= 1) return false;
+        if (a.entityData.id != b.entityData.id) return false;
+        if (!a.stats.Equals(b.stats)) return false;
+        if (a.modules.Count != b.modules.Count) return false;
+        foreach (var ma in a.modules)
+        {
+            var t = ma.GetType();
+            var mb = b.modules.Find(m => m.GetType() == t);
+            if (mb == null) return false;
+            if (!ma.Equals(mb)) return false;
+        }
+        return true;
+    }
+
+    // ══════════════════════════════════════════════════════════
+    //  Create / Clone / Split / Merge / Consume / Destroy
+    // ══════════════════════════════════════════════════════════
 
     public EntityRuntime Create(EntityData data, int amount = 1)
     {
@@ -20,8 +78,6 @@ public class EntityService
         registry.Register(entity);
         return entity;
     }
-
-    // ===== Clone =====
 
     public EntityRuntime Clone(EntityRuntime source)
     {
@@ -33,45 +89,55 @@ public class EntityService
         return clone;
     }
 
-    // ===== Split =====
-
+    /// <summary>Tách splitAmount khỏi source, tạo entity mới cùng data.</summary>
     public EntityRuntime Split(EntityRuntime source, int splitAmount)
     {
         if (source == null) throw new ArgumentNullException(nameof(source));
         if (splitAmount <= 0 || splitAmount > source.Amount) return null;
-        source.AddAmount(-splitAmount);
+
+        AddAmount(source, -splitAmount); // có thể Unregister source nếu về 0
+
         var newEntity = new EntityRuntime(source.entityData, splitAmount);
         registry.Register(newEntity);
         return newEntity;
     }
 
-    // ===== Consume =====
+    /// <summary>
+    /// Dồn src vào dst (nếu CanStack). Trả về số lượng đã dồn.
+    /// Nếu src hết sạch → tự Unregister (do SetAmount xử lý).
+    /// </summary>
+    public int Merge(EntityRuntime dst, EntityRuntime src)
+    {
+        if (dst == null || src == null) return 0;
+        if (!CanStack(dst, src)) return 0;
+
+        int take = Mathf.Min(src.Amount, dst.FreeSpace);
+        if (take <= 0) return 0;
+
+        AddAmount(dst, take);
+        AddAmount(src, -take); // nếu src về 0 → Unregister
+        return take;
+    }
 
     /// <summary>
-    /// Tiêu thụ amount của entity. Trả về true nếu entity bị depleted (Amount = 0).
-    /// Nếu depleted → Unregister khỏi Registry.
+    /// Tiêu thụ amount của entity. Trả về true nếu entity bị depleted.
     /// </summary>
     public bool TryConsume(EntityRuntime entity, int amount)
     {
         if (entity == null || amount <= 0) return false;
-        entity.AddAmount(-amount);
-        if (entity.IsEmpty)
-        {
-            registry.Unregister(entity);
-            return true;
-        }
-        return false;
+        return AddAmount(entity, -amount);
     }
-
-    // ===== Destroy =====
 
     public void Destroy(EntityRuntime entity)
     {
+        if (entity == null) return;
         entity.Owner?.Remove(entity);
         registry.Unregister(entity);
     }
 
-    // ===== Move =====
+    // ══════════════════════════════════════════════════════════
+    //  Move / Query
+    // ══════════════════════════════════════════════════════════
 
     public void Move(EntityRuntime entity, IEntityContainer target)
     {
@@ -79,13 +145,13 @@ public class EntityService
         target.Add(entity);
     }
 
-    // ===== Query =====
-
     public EntityRuntime Get(string id) => registry.Get(id);
 
     public IEnumerable<EntityRuntime> GetAll() => registry.GetAll();
 
-    // ===== Save / Load =====
+    // ══════════════════════════════════════════════════════════
+    //  Save / Load
+    // ══════════════════════════════════════════════════════════
 
     [Serializable]
     public class EntitySaveContainer

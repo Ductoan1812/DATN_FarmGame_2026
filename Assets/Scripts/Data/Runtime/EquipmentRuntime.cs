@@ -104,7 +104,7 @@ public class EquipmentRuntime : IModuleRuntime
         {
             // Hand không save — sẽ restore từ hotbar selection
             if (kv.Key == EquipSlot.Hand) continue;
-            entries.Add(new EquipSlotSave { slot = (int)kv.Key, entityId = kv.Value.Id });
+            entries.Add(new EquipSlotSave { slot = (int)kv.Key, entityId = kv.Value.id });
         }
 
         var data = new EquipmentSaveData { entries = entries.ToArray() };

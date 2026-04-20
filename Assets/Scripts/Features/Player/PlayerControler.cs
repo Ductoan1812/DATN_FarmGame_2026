@@ -55,6 +55,7 @@ public class PlayerControler : MonoBehaviour
             var playerEntity = _entityRoot?.GetEntity();
             if (playerEntity != null)
                 playerEntity.TriggerEvent(new AttackEvent(playerEntity));
+
         }
 
         // 1-8: Chọn hotbar slot
@@ -78,7 +79,7 @@ public class PlayerControler : MonoBehaviour
         // F5: Save
         if (Input.GetKeyDown(KeyCode.F5))
         {
-            eventBus?.Publish(new SaveGameRequest());
+            eventBus?.Publish(new SaveGameRequestPublish());
             Debug.Log("[Player] Save requested.");
         }
     }

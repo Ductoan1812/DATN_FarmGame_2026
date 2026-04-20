@@ -1,40 +1,40 @@
-public class SpawnedEvent : IGameEvent
-{
-    public readonly EntityRuntime entity;
-    public SpawnedEvent(EntityRuntime entity) { this.entity = entity; }
-}
+// ══════════════════════════════════════════════════════════
+//  Module events (IGameEvent) — phát qua EntityRuntime.TriggerEvent.
+//  CHỈ các module trong cùng entity nhận được.
+//  KHÔNG dùng EventBus.Publish cho loại này.
+// ══════════════════════════════════════════════════════════
+
 public interface IHandleEvent<T> where T : IGameEvent
 {
     void Handle(T e);
 }
 
+public class SpawnedEvent : IGameEvent
+{
+    public readonly EntityRuntime entity;
+    public SpawnedEvent(EntityRuntime entity) { this.entity = entity; }
+}
+
 /// <summary>
-///    Sự kiện được publish toàn cục khi sang ngày mới (được GameManager gọi).
+/// Sự kiện được phát khi sang ngày mới (cho module nội bộ entity).
+/// EventBus tương ứng: NextDayEventPublish.
 /// </summary>
 public class NextDayEvent : IGameEvent
 {
-
 }
+
 public class OnEquipEvent : IGameEvent
 {
-    
 }
-/// <summary>
-///     Sự kiện khi Player/Enemy bắt đầu tấn công.
-/// </summary>
+
+/// <summary>Sự kiện khi Player/Enemy bắt đầu tấn công.</summary>
 public class AttackEvent : IGameEvent
 {
     public readonly EntityRuntime attacker;
-
-    public AttackEvent(EntityRuntime attacker)
-    {
-        this.attacker = attacker;
-    }
+    public AttackEvent(EntityRuntime attacker) { this.attacker = attacker; }
 }
 
-/// <summary>
-///     Sự kiện khi một entity nhận sát thương.
-/// </summary>
+/// <summary>Sự kiện khi một entity nhận sát thương.</summary>
 public class TakeDamageEvent : IGameEvent
 {
     public readonly EntityRuntime attacker;
@@ -57,23 +57,24 @@ public class TakeDamageEvent : IGameEvent
         this.toolType = toolType;
     }
 }
-/// <summary>
-/// Sự kiện khi người chơi sử dụng một item 
-/// </summary>
+
+/// <summary>Sự kiện khi người chơi sử dụng một item.</summary>
 public class UseEvent : IGameEvent
 {
     public EntityRuntime entity;
-
-    public UseEvent(EntityRuntime entity)
-    {
-        this.entity = entity;
-    }
+    public UseEvent(EntityRuntime entity) { this.entity = entity; }
 }
-public class DoDropEvent : IGameEvent
+
+/// <summary>
+/// Sự kiện khi entity chết (HP = 0 hoặc bị harvest).
+/// Các module nội bộ subscribe để phản ứng:
+///   - DropRuntime: spawn drops.
+///   - MortalRuntime: publish DestroyEntityRequestPublish (hủy vĩnh viễn).
+///   - RespawnRuntime: publish DespawnRequestPublish + schedule respawn.
+/// HealthRuntime CHỈ phát event, không tự xử lý Despawn/Destroy.
+/// </summary>
+public class DieEvent : IGameEvent
 {
-    public EntityRuntime entity;
-    public DoDropEvent(EntityRuntime entity)
-    {
-        this.entity = entity;
-    }
+    public readonly EntityRuntime entity;
+    public DieEvent(EntityRuntime entity) { this.entity = entity; }
 }

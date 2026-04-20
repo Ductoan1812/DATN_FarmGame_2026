@@ -6,12 +6,12 @@ public class EntityRegistry
 
     public void Register(EntityRuntime entity)
     {
-        entities[entity.Id] = entity;
+        entities[entity.id] = entity;
     }
 
     public void Unregister(EntityRuntime entity)
     {
-        entities.Remove(entity.Id);
+        entities.Remove(entity.id);
     }
 
     public EntityRuntime Get(string id)

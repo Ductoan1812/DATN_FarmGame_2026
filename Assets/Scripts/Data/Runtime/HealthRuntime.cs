@@ -6,7 +6,12 @@ using System;
 /// - Đọc canTakeDamage từ HealthModule config.
 /// - Tính giảm dame theo Defense.
 /// - Trừ Hp trong StatsRuntime.
-/// - Khi Hp <= 0 → publish EntityDiedEvent.
+/// - Khi Hp <= 0 → TriggerEvent(DieEvent).
+///
+/// KHÔNG xử lý Despawn / Destroy / Drop — đó là việc của:
+///   - DropRuntime  (IHandleEvent&lt;DieEvent&gt;) → spawn drops.
+///   - MortalRuntime  (IHandleEvent&lt;DieEvent&gt;) → hủy entity vĩnh viễn.
+///   - RespawnRuntime (IHandleEvent&lt;DieEvent&gt;) → despawn + respawn sau delay.
 /// </summary>
 public class HealthRuntime : IModuleRuntime, IHandleEvent<SpawnedEvent>, IHandleEvent<TakeDamageEvent>
 {
@@ -21,7 +26,7 @@ public class HealthRuntime : IModuleRuntime, IHandleEvent<SpawnedEvent>, IHandle
     }
     private bool _canTakeDamageOverride = true;
 
-    /// <summary>Fired khi entity chết (Hp <= 0).</summary>
+    /// <summary>Fired khi entity chết (Hp &lt;= 0). Dành cho external listener (UI…).</summary>
     public event Action<EntityRuntime> OnDied;
 
     public HealthRuntime(HealthModule data)
@@ -47,7 +52,7 @@ public class HealthRuntime : IModuleRuntime, IHandleEvent<SpawnedEvent>, IHandle
         if (!CanTakeDamage) return;
 
         // Tính giảm dame theo Defense: finalDamage = damage - Defense (tối thiểu 1)
-        float defense    = _entity.stats.Get(StatType.Defense);
+        float defense     = _entity.stats.Get(StatType.Defense);
         float finalDamage = Mathf.Max(1f, e.damage - defense);
 
         float currentHp = _entity.stats.Get(StatType.Hp);
@@ -67,17 +72,10 @@ public class HealthRuntime : IModuleRuntime, IHandleEvent<SpawnedEvent>, IHandle
 
     private void Die()
     {
-        Debug.Log($"[HealthRuntime] {_entity.entityData?.keyName} đã chết.");
+        Debug.Log($"[HealthRuntime] {_entity.id} đã chết.");
         OnDied?.Invoke(_entity);
-        _entity.TriggerEvent(new DoDropEvent(_entity));
-
-        // Despawn GameObject khỏi world
-        var ownerGO = _entity.Owner?.GameObject;
-        if (ownerGO != null)
-        {
-            var req = new DespawnRequest(_entity.Id);
-            GameManager.Instance?.EventBus?.Publish(req);
-        }
+        _entity.TriggerEvent(new DieEvent(_entity));
+        // Việc Despawn/Destroy/Respawn/Drop do các module khác xử lý.
     }
 
     // ── Save / Load ───────────────────────────────────────────────────────────

@@ -12,6 +12,7 @@ public class EntityRoot : MonoBehaviour, IEntityContainer
     private EntityRuntime entity;
 
     public EntityService entityService;
+    public bool EntityReady{ get; private set; }
 
     public void Init(EntityRuntime runtime)
     {
@@ -21,7 +22,8 @@ public class EntityRoot : MonoBehaviour, IEntityContainer
 
     public EntityRuntime GetEntity()
     {
-        return entity;
+        if (EntityReady == true) return entity;
+        else return null;
     }
 
     public bool Add(EntityRuntime entity)
@@ -29,6 +31,7 @@ public class EntityRoot : MonoBehaviour, IEntityContainer
         this.entity = entity;
         if (entity != null) entity.Owner = this;
         entity.TriggerEvent(new SpawnedEvent(entity));
+        EntityReady = true;
         return true;
     }
 
@@ -36,6 +39,7 @@ public class EntityRoot : MonoBehaviour, IEntityContainer
     {
         if (this.entity != entity) return false;
         this.entity = null;
+        EntityReady = false;
         return true;
     }
 }

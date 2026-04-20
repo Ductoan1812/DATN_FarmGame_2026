@@ -71,7 +71,7 @@ public class SaveLoadManager
         }
 
         // Phase 4: Broadcast WorldReady
-        _eventBus.Publish(new WorldReady());
+        _eventBus.Publish(new WorldReadyPublish());
         Debug.Log("[SaveLoadManager] WorldReady published.");
     }
 
@@ -90,10 +90,10 @@ public class SaveLoadManager
         }
 
         var playerEntity = _entityService.Create(playerData);
-        Debug.Log($"[SaveLoadManager] Created Player entity: {playerEntity.Id}");
+        Debug.Log($"[SaveLoadManager] Created Player entity: {playerEntity.id}");
 
         // Spawn Player qua SpawnSystem event
-        _eventBus.Publish(new SpawnRequest(
+        _eventBus.Publish(new SpawnRequestPublish(
             _defaultPlayerPos,
             _playerPrefabId,
             playerEntity

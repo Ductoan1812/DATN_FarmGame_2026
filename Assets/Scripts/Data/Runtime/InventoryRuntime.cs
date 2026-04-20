@@ -99,7 +99,7 @@ public class InventoryRuntime : IModuleRuntime
 
         // Cộng free space từ các stack cùng loại
         for (int i = 0; i < slots.Count; i++)
-            if (!slots[i].IsEmpty && slots[i].entity.CanStackWith(entity))
+            if (!slots[i].IsEmpty && EntityService.CanStack(slots[i].entity, entity))
                 canReceive += slots[i].entity.FreeSpace;
 
         // Cộng slot trống
@@ -130,7 +130,7 @@ public class InventoryRuntime : IModuleRuntime
         for (int i = 0; i < slots.Count; i++)
         {
             if (slots[i].IsEmpty) continue;
-            if (slots[i].entity.CanStackWith(entity) && !slots[i].entity.IsFull)
+            if (EntityService.CanStack(slots[i].entity, entity) && !slots[i].entity.IsFull)
                 return i;
         }
         return -1;
@@ -173,7 +173,7 @@ public class InventoryRuntime : IModuleRuntime
         var slotSaves = new List<SlotSave>();
         for (int i = 0; i < slots.Count; i++)
             if (!slots[i].IsEmpty)
-                slotSaves.Add(new SlotSave { index = i, entityId = slots[i].entity.Id });
+                slotSaves.Add(new SlotSave { index = i, entityId = slots[i].entity.id });
 
         var data = new InventorySaveData { type = Type, slots = slotSaves.ToArray(), selectedIndex = SelectedIndex };
         return new ModuleSaveData { moduleType = "Inventory", dataJson = JsonUtility.ToJson(data) };

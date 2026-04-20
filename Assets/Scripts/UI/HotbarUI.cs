@@ -18,7 +18,7 @@ public class HotbarUI : MonoBehaviour
     private void OnEnable()
     {
         var bus = GameManager.Instance?.EventBus;
-        if (bus != null) bus.Subscribe<WorldReady>(OnWorldReady);
+        if (bus != null) bus.Subscribe<WorldReadyPublish>(OnWorldReady);
     }
 
     private void OnDisable()
@@ -29,10 +29,10 @@ public class HotbarUI : MonoBehaviour
             _inventory.OnHotbarSelectionChanged -= OnSelectionChanged;
         }
         var bus = GameManager.Instance?.EventBus;
-        if (bus != null) bus.Unsubscribe<WorldReady>(OnWorldReady);
+        if (bus != null) bus.Unsubscribe<WorldReadyPublish>(OnWorldReady);
     }
 
-    private void OnWorldReady(WorldReady _)
+    private void OnWorldReady(WorldReadyPublish _)
     {
         var player = FindAnyObjectByType<PlayerInventory>();
         if (player == null) { Debug.LogWarning("[HotbarUI] PlayerInventory not found."); return; }

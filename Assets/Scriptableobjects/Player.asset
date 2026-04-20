@@ -24,6 +24,8 @@ MonoBehaviour:
     baseStats:
     - statType: 0
       value: 100
+    - statType: 2
+      value: 5
   placementRule:
     occupyLayer: 0
     requireTags: 0
@@ -33,6 +35,8 @@ MonoBehaviour:
   - rid: 2376239469260439552
   - rid: 2376239469260439553
   - rid: 2376239498774446080
+  - rid: 2376239686607699968
+  - rid: 2376239686607699969
   references:
     version: 2
     RefIds:
@@ -49,3 +53,12 @@ MonoBehaviour:
     - rid: 2376239498774446080
       type: {class: EquipmentModule, ns: , asm: Assembly-CSharp}
       data: 
+    - rid: 2376239686607699968
+      type: {class: AttackModule, ns: , asm: Assembly-CSharp}
+      data:
+        attackRange: 1.5
+        attackCooldown: 0.5
+    - rid: 2376239686607699969
+      type: {class: HealthModule, ns: , asm: Assembly-CSharp}
+      data:
+        canTakeDamage: 1

@@ -1,8 +1,12 @@
 using UnityEngine;
 
 /// <summary>
-/// Lắng nghe SpawnRequest / DespawnRequest từ EventBus.
+/// Lắng nghe SpawnRequestPublish / DespawnRequestPublish / DestroyEntityRequestPublish từ EventBus.
 /// Dùng PlacementRule từ EntityData để validate trước khi spawn.
+///
+/// Phân biệt:
+///   - DespawnRequestPublish    → remove GameObject + world pos, GIỮ entity trong Registry (cho respawn).
+///   - DestroyEntityRequestPublish → remove GameObject + Unregister entity (hủy vĩnh viễn).
 /// </summary>
 public class SpawnSystem : MonoBehaviour
 {
@@ -21,20 +25,22 @@ public class SpawnSystem : MonoBehaviour
         _worldObjects  = worldObjects;
         _entityService = entityService;
 
-        _bus.Subscribe<SpawnRequest>(OnSpawnRequest);
-        _bus.Subscribe<DespawnRequest>(OnDespawnRequest);
+        _bus.Subscribe<SpawnRequestPublish>(OnSpawnRequest);
+        _bus.Subscribe<DespawnRequestPublish>(OnDespawnRequest);
+        _bus.Subscribe<DestroyEntityRequestPublish>(OnDestroyEntityRequest);
     }
 
     private void OnDestroy()
     {
         if (_bus == null) return;
-        _bus.Unsubscribe<SpawnRequest>(OnSpawnRequest);
-        _bus.Unsubscribe<DespawnRequest>(OnDespawnRequest);
+        _bus.Unsubscribe<SpawnRequestPublish>(OnSpawnRequest);
+        _bus.Unsubscribe<DespawnRequestPublish>(OnDespawnRequest);
+        _bus.Unsubscribe<DestroyEntityRequestPublish>(OnDestroyEntityRequest);
     }
 
     // ── Spawn ──────────────────────────────────────────────
 
-    private void OnSpawnRequest(SpawnRequest req)
+    private void OnSpawnRequest(SpawnRequestPublish req)
     {
         // Validate prefab
         var prefab = _worldObjects.GetPrefab(req.idPrefab);
@@ -61,7 +67,7 @@ public class SpawnSystem : MonoBehaviour
 
         var ep = new EntityPosition
         {
-            idRuntime     = spawnRuntime.Id,
+            idRuntime     = spawnRuntime.id,
             idPrefab      = req.idPrefab,
             pos           = req.worldPos,
             occupiedCells = cells,
@@ -95,7 +101,7 @@ public class SpawnSystem : MonoBehaviour
                 return;
             }
             // Cập nhật idRuntime trong registry sang entity mới (không unregister/re-register)
-            _worldService.UpdateEntityId(spawnRuntime.Id, spawnEntity.Id);
+            _worldService.UpdateEntityId(spawnRuntime.id, spawnEntity.id);
         }
         else
         {
@@ -104,7 +110,7 @@ public class SpawnSystem : MonoBehaviour
 
         // Instantiate GameObject
         var obj = Instantiate(prefab, new Vector3(req.worldPos.x, req.worldPos.y, 0), Quaternion.identity);
-        obj.name = $"{req.idPrefab}_{spawnEntity.Id[..8]}";
+        obj.name = $"{req.idPrefab}_{spawnEntity.id[..8]}";
 
         // Gắn EntityRuntime vào EntityRoot
         var root = obj.GetComponent<EntityRoot>();
@@ -114,25 +120,44 @@ public class SpawnSystem : MonoBehaviour
             root.Add(spawnEntity); // EntityRoot.Add đã tự gọi SpawnedEvent
         }
 
-        Debug.Log($"[SpawnSystem] Spawned '{req.idPrefab}' layer={rule.occupyLayer} id={spawnRuntime.Id[..8]}");
+        Debug.Log($"[SpawnSystem] Spawned '{req.idPrefab}' layer={rule.occupyLayer} id={spawnRuntime.id[..8]}");
     }
 
-    // ── Despawn ────────────────────────────────────────────
+    // ── Despawn (giữ entity trong registry) ───────────────
 
-    private void OnDespawnRequest(DespawnRequest req)
+    private void OnDespawnRequest(DespawnRequestPublish req)
     {
-        var ep = _worldService.GetEntityPosition(req.idRuntime);
+        DespawnGameObject(req.idRuntime);
+    }
+
+    // ── Destroy (hủy vĩnh viễn) ────────────────────────────
+
+    private void OnDestroyEntityRequest(DestroyEntityRequestPublish req)
+    {
+        DespawnGameObject(req.idRuntime);
+
+        var entity = _entityService.Get(req.idRuntime);
+        if (entity != null)
+        {
+            _entityService.Destroy(entity);
+            Debug.Log($"[SpawnSystem] Destroyed entity '{req.idRuntime[..8]}' permanently.");
+        }
+    }
+
+    private void DespawnGameObject(string idRuntime)
+    {
+        var ep = _worldService.GetEntityPosition(idRuntime);
         if (ep == null)
         {
-            Debug.LogWarning($"[SpawnSystem] Entity not found: '{req.idRuntime}'");
+            Debug.LogWarning($"[SpawnSystem] Entity not found in world: '{idRuntime}'");
             return;
         }
 
-        var obj = GameObject.Find($"{ep.idPrefab}_{req.idRuntime[..8]}");
+        var obj = GameObject.Find($"{ep.idPrefab}_{idRuntime[..8]}");
         if (obj != null) Destroy(obj);
 
-        _worldService.TryUnregister(req.idRuntime);
-        Debug.Log($"[SpawnSystem] Despawned '{req.idRuntime[..8]}'");
+        _worldService.TryUnregister(idRuntime);
+        Debug.Log($"[SpawnSystem] Despawned GameObject '{idRuntime[..8]}'");
     }
 
     // ── Load callback ──────────────────────────────────────
@@ -154,7 +179,7 @@ public class SpawnSystem : MonoBehaviour
 
     // ── Private ────────────────────────────────────────────
 
-    private EntityRuntime ResolveRuntime(SpawnRequest req)
+    private EntityRuntime ResolveRuntime(SpawnRequestPublish req)
     {
         if (req.runtime == null)
         {

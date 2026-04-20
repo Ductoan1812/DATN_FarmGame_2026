@@ -56,7 +56,8 @@ public class InventoryService
                 }
             }
         }
-
+        if(totalReceived > 0) Debug.Log($"[InventoryService] Pickup:{receiverEntity.entityData.keyName} đã nhặt {pickupEntity.entityData.keyName} X {totalReceived}.");
+        else Debug.LogWarning($"[InventoryService] Pickup: không thể nhặt {pickupEntity.entityData.keyName} vào {receiverEntity.entityData.keyName}.");
         return totalReceived;
     }
 
@@ -273,7 +274,7 @@ public class InventoryService
         {
             int stackSlot = inv.FindStackableSlot(entity);
             if (stackSlot < 0) break;
-            inv.GetSlot(stackSlot).entity.MergeFrom(entity);
+            entityService.Merge(inv.GetSlot(stackSlot).entity, entity);
         }
 
         if (entity.IsEmpty) return;

@@ -35,6 +35,8 @@ MonoBehaviour:
   - rid: 2376239545838731267
   - rid: 2376239545838731268
   - rid: 2376239555521544193
+  - rid: 2376239684983193602
+  - rid: 2376239686607699971
   references:
     version: 2
     RefIds:
@@ -68,4 +70,16 @@ MonoBehaviour:
     - rid: 2376239555521544193
       type: {class: HarvestModule, ns: , asm: Assembly-CSharp}
       data:
-        harvestTool: 0
+        harvestTool: 3
+    - rid: 2376239684983193602
+      type: {class: HealthModule, ns: , asm: Assembly-CSharp}
+      data:
+        canTakeDamage: 1
+    - rid: 2376239686607699971
+      type: {class: DropModule, ns: , asm: Assembly-CSharp}
+      data:
+        harvestDrops:
+        - item: {fileID: 11400000}
+          minAmount: 1
+          maxAmount: 3
+          dropChance: 1

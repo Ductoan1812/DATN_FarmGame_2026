@@ -38,7 +38,7 @@ public class PlacementRuntime : IModuleRuntime, IHandleEvent<UseEvent>
 
         if(_data.centerTile) worldPos += new Vector2(0.5f, 0.5f);
         // splitOnSpawn = true → SpawnSystem sẽ Split sau khi validate thành công
-        gm.EventBus.Publish(new SpawnRequest(worldPos, _data.objectTypeToSpawn, e.entity, splitOnSpawn: true));
+        gm.EventBus.Publish(new SpawnRequestPublish(worldPos, _data.objectTypeToSpawn, e.entity, splitOnSpawn: true));
     }
 
     // ── Save / Load ───────────────────────────────────────────────────────────

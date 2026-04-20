@@ -5,14 +5,16 @@ using System;
 [System.Serializable]
 public class EntityRuntime
 {
-    public string Id { get; private set; }
+    public string id { get; internal set; }
     public EntityData entityData { get; private set; }
     public IEntityContainer Owner { get; set; }
     public StatsRuntime stats = new();
-    private List<IModuleRuntime> modules = new();
+    internal List<IModuleRuntime> modules = new();
 
     // ══════ Số lượng ══════
-    public int Amount { get; private set; } = 1;
+    // NOTE: Setter là `internal` — CHỈ EntityService được phép set (qua SetAmount).
+    //       Không set trực tiếp ở bất kỳ nơi nào khác.
+    public int Amount { get; internal set; } = 1;
     public int MaxStack => entityData != null ? entityData.maxStack : 1;
     public int FreeSpace => MaxStack - Amount;
     public bool IsEmpty => Amount <= 0;
@@ -20,25 +22,10 @@ public class EntityRuntime
 
     public EntityRuntime(EntityData data, int amount = 1)
     {
-        Id = Guid.NewGuid().ToString("N").Substring(0, 8);
+        id = Guid.NewGuid().ToString("N").Substring(0, 8);
         entityData = data;
         Amount = Mathf.Clamp(amount, 0, data != null ? data.maxStack : 1);
         Initialize();
-    }
-
-    public void AddAmount(int delta)
-    {
-        Amount = Mathf.Clamp(Amount + delta, 0, MaxStack);
-    }
-
-    public int MergeFrom(EntityRuntime other)
-    {
-        if (other == null || !CanStackWith(other)) return 0;
-        int take = Mathf.Min(other.Amount, FreeSpace);
-        if (take <= 0) return 0;
-        Amount += take;
-        other.Amount -= take;
-        return take;
     }
 
     // ══════ Save / Load ══════
@@ -46,7 +33,7 @@ public class EntityRuntime
     public EntitySaveData ToSaveData()
     {
         var save = new EntitySaveData();
-        save.id = Id;
+        save.id = id;
         save.entityDataId = entityData?.id;
         save.amount = Amount;
         save.stats = stats?.ToSaveData();
@@ -67,7 +54,7 @@ public class EntityRuntime
         if (entityData == null) throw new ArgumentException($"EntityData not found for id={save.entityDataId}");
 
         var runtime = new EntityRuntime(entityData, save.amount);
-        runtime.Id = save.id ?? Guid.NewGuid().ToString("N").Substring(0, 8);
+        runtime.id = save.id ?? Guid.NewGuid().ToString("N").Substring(0, 8);
 
         if (save.stats != null)
             runtime.stats = StatsRuntime.FromSaveData(save.stats);
@@ -125,25 +112,6 @@ public class EntityRuntime
         foreach (var m in modules)
             if (m is T t) result.Add(t);
         return result;
-    }
-
-    // ══════ Stack ══════
-
-    public bool CanStackWith(EntityRuntime other)
-    {
-        if (other == null) return false;
-        if (entityData.maxStack <= 1) return false;
-        if (entityData.id != other.entityData.id) return false;
-        if (!stats.Equals(other.stats)) return false;
-        if (modules.Count != other.modules.Count) return false;
-        foreach (var myModule in modules)
-        {
-            var myType = myModule.GetType();
-            var otherModule = other.modules.Find(m => m.GetType() == myType);
-            if (otherModule == null) return false;
-            if (!myModule.Equals(otherModule)) return false;
-        }
-        return true;
     }
 
     // ══════ Event ══════

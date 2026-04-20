@@ -21,7 +21,7 @@ public class InventoryUI : MonoBehaviour
     private void OnEnable()
     {
         var bus = GameManager.Instance?.EventBus;
-        if (bus != null) bus.Subscribe<WorldReady>(OnWorldReady);
+        if (bus != null) bus.Subscribe<WorldReadyPublish>(OnWorldReady);
     }
 
     private void OnDisable()
@@ -29,10 +29,10 @@ public class InventoryUI : MonoBehaviour
         if (_inventory != null)
             _inventory.OnInventoryChanged -= Refresh;
         var bus = GameManager.Instance?.EventBus;
-        if (bus != null) bus.Unsubscribe<WorldReady>(OnWorldReady);
+        if (bus != null) bus.Unsubscribe<WorldReadyPublish>(OnWorldReady);
     }
 
-    private void OnWorldReady(WorldReady _)
+    private void OnWorldReady(WorldReadyPublish _)
     {
         var player = FindAnyObjectByType<PlayerInventory>();
         if (player == null) { Debug.LogWarning("[InventoryUI] PlayerInventory not found."); return; }

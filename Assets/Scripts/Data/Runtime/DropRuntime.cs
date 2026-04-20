@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class DropRuntime : IModuleRuntime, IHandleEvent<DoDropEvent>
+public class DropRuntime : IModuleRuntime, IHandleEvent<DieEvent>
 {
     public DropEntry[] harvestDrops;
 
@@ -18,7 +18,7 @@ public class DropRuntime : IModuleRuntime, IHandleEvent<DoDropEvent>
 
     public bool Equals(IModuleRuntime other) => true;
 
-    public void Handle(DoDropEvent e)
+    public void Handle(DieEvent e)
     {
         if (harvestDrops == null || harvestDrops.Length == 0) return;
 
@@ -42,7 +42,7 @@ public class DropRuntime : IModuleRuntime, IHandleEvent<DoDropEvent>
             int amount = Random.Range(entry.minAmount, entry.maxAmount + 1);
             if (amount <= 0) continue;
 
-            var req = new SpawnRequest(
+            var req = new SpawnRequestPublish(
                 worldPos:         dropPos,
                 idPrefab:         ObjectType.EntityDrop,
                 entityData:       entry.item,

@@ -61,7 +61,7 @@ public class HarvestRuntime : IModuleRuntime, IHandleEvent<SpawnedEvent>
     private void Die()
     {
         OnDied?.Invoke();
-        _entity.TriggerEvent(new DoDropEvent(_entity));
+        _entity.TriggerEvent(new DieEvent(_entity));
     }
 
     // ── Save / Load ──

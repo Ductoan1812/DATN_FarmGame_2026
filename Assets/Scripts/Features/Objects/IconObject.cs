@@ -21,7 +21,7 @@ public class IconObject : MonoBehaviour
     private void OnEnable()
     {
         var bus = GameManager.Instance?.EventBus;
-        if (bus != null) bus.Subscribe<WorldReady>(OnWorldReady);
+        if (bus != null) bus.Subscribe<WorldReadyPublish>(OnWorldReady);
 
         // Nếu entity đã có sẵn (spawn sau WorldReady)
         TrySetIcon();
@@ -30,12 +30,12 @@ public class IconObject : MonoBehaviour
     private void OnDisable()
     {
         var bus = GameManager.Instance?.EventBus;
-        if (bus != null) bus.Unsubscribe<WorldReady>(OnWorldReady);
+        if (bus != null) bus.Unsubscribe<WorldReadyPublish>(OnWorldReady);
 
         if (spriteRenderer != null) spriteRenderer.sprite = null;
     }
 
-    private void OnWorldReady(WorldReady _)
+    private void OnWorldReady(WorldReadyPublish _)
     {
         TrySetIcon();
     }

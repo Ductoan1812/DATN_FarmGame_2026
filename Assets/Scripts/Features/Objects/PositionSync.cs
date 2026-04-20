@@ -42,7 +42,7 @@ public class PositionSync : MonoBehaviour
 
         // 2D: XY plane
         var pos = new Vector2(transform.position.x, transform.position.y);
-        _worldService.MoveEntity(entity.Id, pos, new[] { newCell });
+        _worldService.MoveEntity(entity.id, pos, new[] { newCell });
         _lastCell = newCell;
     }
 

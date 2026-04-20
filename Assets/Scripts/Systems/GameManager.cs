@@ -53,8 +53,8 @@ public class GameManager : MonoBehaviour
         InitSaveLoadManager();
 
         // Subscribe save/load events
-        EventBus.Subscribe<SaveGameRequest>(OnSaveRequest);
-        EventBus.Subscribe<LoadGameRequest>(OnLoadRequest);
+        EventBus.Subscribe<SaveGameRequestPublish>(OnSaveRequest);
+        EventBus.Subscribe<LoadGameRequestPublish>(OnLoadRequest);
     }
 
     private void Start()
@@ -67,8 +67,8 @@ public class GameManager : MonoBehaviour
     {
         if (EventBus != null)
         {
-            EventBus.Unsubscribe<SaveGameRequest>(OnSaveRequest);
-            EventBus.Unsubscribe<LoadGameRequest>(OnLoadRequest);
+            EventBus.Unsubscribe<SaveGameRequestPublish>(OnSaveRequest);
+            EventBus.Unsubscribe<LoadGameRequestPublish>(OnLoadRequest);
         }
     }
 
@@ -183,12 +183,12 @@ public class GameManager : MonoBehaviour
 
     // ── Event handlers ────────────────────────────────────
 
-    private void OnSaveRequest(SaveGameRequest req)
+    private void OnSaveRequest(SaveGameRequestPublish req)
     {
         SaveLoadManager.SaveAll();
     }
 
-    private void OnLoadRequest(LoadGameRequest req)
+    private void OnLoadRequest(LoadGameRequestPublish req)
     {
         // TODO: full reload (destroy all → re-boot)
         Debug.LogWarning("[GameManager] Runtime reload not yet implemented. Restart the game to load.");

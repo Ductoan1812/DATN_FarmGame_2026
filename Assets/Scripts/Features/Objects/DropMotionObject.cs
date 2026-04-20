@@ -54,16 +54,9 @@ public class DropMotionObject : MonoBehaviour
         _routine = StartCoroutine(DropRoutine());
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (!other.CompareTag(targetTag)) return;
-        if (Time.time - _spawnTime < pickDelay) return;
-        if (_routine != null) return; // đang chạy animation khác → bỏ qua
-
-        OnPickedUp(other.transform);
-    }
-
     // ── Public API ────────────────────────────────────────────────────────────
+    //   Trigger detection đã được chuyển sang PickUpObject để tránh xung đột
+    //   2 component cùng xử lý collider. File này chỉ còn visual/animation.
     public void OnPickedUp(Transform target)
     {
         if (_routine != null) StopCoroutine(_routine);
