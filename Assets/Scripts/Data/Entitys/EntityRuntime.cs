@@ -38,9 +38,15 @@ public class EntityRuntime
         save.amount = Amount;
         save.stats = stats?.ToSaveData();
 
+        // Module nào trả null từ ToSaveData() = không cần save → skip.
         var list = new List<ModuleSaveData>();
         foreach (var m in modules)
-            list.Add(m?.ToSaveData() ?? new ModuleSaveData());
+        {
+            if (m == null) continue;
+            var saveData = m.ToSaveData();
+            if (saveData == null) continue;
+            list.Add(saveData);
+        }
         save.modules = list.ToArray();
         return save;
     }
