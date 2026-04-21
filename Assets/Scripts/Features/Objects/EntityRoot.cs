@@ -1,9 +1,6 @@
 using UnityEngine;
+using System;
 
-/// <summary>
-/// Pure container — chỉ giữ reference tới EntityRuntime.
-/// Không tự tạo entity. Entity được gán từ bên ngoài (SpawnSystem, SaveLoadManager).
-/// </summary>
 [DisallowMultipleComponent]
 public class EntityRoot : MonoBehaviour, IEntityContainer
 {
@@ -12,7 +9,9 @@ public class EntityRoot : MonoBehaviour, IEntityContainer
     private EntityRuntime entity;
 
     public EntityService entityService;
-    public bool EntityReady{ get; private set; }
+    public event Action<EntityRuntime> OnEntityReady;
+
+    public EntityRuntime GetEntity() => entity;
 
     public void Init(EntityRuntime runtime)
     {
@@ -20,18 +19,12 @@ public class EntityRoot : MonoBehaviour, IEntityContainer
         if (entity != null) entity.Owner = this;
     }
 
-    public EntityRuntime GetEntity()
-    {
-        if (EntityReady == true) return entity;
-        else return null;
-    }
-
     public bool Add(EntityRuntime entity)
     {
         this.entity = entity;
         if (entity != null) entity.Owner = this;
         entity.TriggerEvent(new SpawnedEvent(entity));
-        EntityReady = true;
+        OnEntityReady?.Invoke(entity);
         return true;
     }
 
@@ -39,7 +32,6 @@ public class EntityRoot : MonoBehaviour, IEntityContainer
     {
         if (this.entity != entity) return false;
         this.entity = null;
-        EntityReady = false;
         return true;
     }
 }

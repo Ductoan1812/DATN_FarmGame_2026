@@ -5,45 +5,31 @@ public class IconObject : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer spriteRenderer;
 
+    private EntityRuntime _EntityRoot;
     private EntityRoot _root;
 
-    private void Awake()
-    {
-        _root = GetComponent<EntityRoot>();
-        if (spriteRenderer == null)
-        {
-            spriteRenderer = GetComponent<SpriteRenderer>();
-            if (spriteRenderer == null)
-                spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        }
-    }
 
     private void OnEnable()
     {
-        var bus = GameManager.Instance?.EventBus;
-        if (bus != null) bus.Subscribe<WorldReadyPublish>(OnWorldReady);
-
-        // Nếu entity đã có sẵn (spawn sau WorldReady)
+        _root = GetComponent<EntityRoot>();
+        if(_root != null) _root.OnEntityReady += SetEntityRoot;
+        spriteRenderer.sprite = null;
         TrySetIcon();
     }
-
+    
     private void OnDisable()
     {
         var bus = GameManager.Instance?.EventBus;
-        if (bus != null) bus.Unsubscribe<WorldReadyPublish>(OnWorldReady);
-
         if (spriteRenderer != null) spriteRenderer.sprite = null;
     }
 
-    private void OnWorldReady(WorldReadyPublish _)
+    private void SetEntityRoot(EntityRuntime root)
     {
+        _EntityRoot = root;
         TrySetIcon();
     }
-
     private void TrySetIcon()
     {
-        var entity = _root?.GetEntity();
-        if (entity != null && entity.entityData != null && spriteRenderer != null)
-            spriteRenderer.sprite = entity.entityData.icon;
+        if (_EntityRoot != null && _EntityRoot.entityData != null )spriteRenderer.sprite = _EntityRoot.entityData.icon;
     }
 }

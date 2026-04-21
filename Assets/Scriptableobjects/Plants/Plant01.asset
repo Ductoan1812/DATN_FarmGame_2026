@@ -37,6 +37,7 @@ MonoBehaviour:
   - rid: 2376239555521544193
   - rid: 2376239684983193602
   - rid: 2376239686607699971
+  - rid: 2376239712185090049
   references:
     version: 2
     RefIds:
@@ -83,3 +84,6 @@ MonoBehaviour:
           minAmount: 1
           maxAmount: 3
           dropChance: 1
+    - rid: 2376239712185090049
+      type: {class: MortalModule, ns: , asm: Assembly-CSharp}
+      data: 
