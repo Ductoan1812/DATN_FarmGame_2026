@@ -1,11 +1,6 @@
 using UnityEngine;
 
-/// <summary>
-/// Base class chung cho tất cả tool runtime.
-/// Xử lý: cooldown, owner → targetCell.
-/// Subclass chỉ cần override Execute() với logic riêng.
-/// </summary>
-public abstract class ToolRuntime : IModuleRuntime, IHandleEvent<UseEvent>
+public abstract class ToolRuntime : IModuleRuntime, IHandleEvent<PrimaryActionEvent>
 {
     protected readonly ToolModule _data;
     private float _lastUseTime = -999f;
@@ -15,45 +10,28 @@ public abstract class ToolRuntime : IModuleRuntime, IHandleEvent<UseEvent>
         _data = data;
     }
 
-    public void Handle(UseEvent e)
+    public void Handle(PrimaryActionEvent e)
     {
-        // ── Cooldown ──────────────────────────────────────────────────────────
-        float cd = _data?.cooldown ?? 0.3f;
-        if (cd <= 0f)
-            Debug.LogWarning($"[{GetType().Name}] cooldown = 0, kiểm tra Inspector!");
-
+        if (e.actor == null) return;
+        float cd = e.item?.stats.Get(StatType.CoolDown) ?? 0.3f;
+        if (cd <= 0f) cd = 0.3f;
         if (Time.time - _lastUseTime < cd) return;
-
-        // ── Owner → GameObject ────────────────────────────────────────────────
-        var ownerGO = e.entity?.Owner?.GameObject;
-        if (ownerGO == null)
+        var actorGO = e.actor.Owner?.GameObject;
+        if (actorGO == null)
         {
-            Debug.LogWarning($"[{GetType().Name}] Owner.GameObject null — entity chưa vào inventory?");
+            Debug.LogWarning($"[{GetType().Name}] actor.Owner.GameObject null.");
             return;
         }
-
-        // ── Target cell ───────────────────────────────────────────────────────
-        var targetCell = GridSystem.GetCellInFrontOf(ownerGO);
-        var cell2d = new Vector2Int(targetCell.x, targetCell.y);
-
-        // ── Delegate logic riêng cho subclass ─────────────────────────────────
-        if (!Execute(ownerGO, targetCell, cell2d)) return;
+        if (!Execute(actorGO, e)) return;
 
         _lastUseTime = Time.time;
     }
 
-    /// <summary>
-    /// Thực thi logic riêng của từng tool.
-    /// Trả về true nếu thành công (cập nhật cooldown), false nếu bị block.
-    /// </summary>
-    protected abstract bool Execute(GameObject ownerGO, Vector3Int targetCell, Vector2Int cell2d);
+    protected abstract bool Execute(GameObject actorGO, PrimaryActionEvent e);
 
     // ── Save / Load ───────────────────────────────────────────────────────────
 
-    public virtual ModuleSaveData ToSaveData() =>
-        new ModuleSaveData { moduleType = _data?.toolType.ToString() ?? "Tool", dataJson = "" };
-
+    public virtual ModuleSaveData ToSaveData() => null;
     public virtual void ApplySaveData(ModuleSaveData save) { }
-
     public virtual bool Equals(IModuleRuntime other) => other?.GetType() == GetType();
 }

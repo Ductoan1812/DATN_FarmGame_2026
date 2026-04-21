@@ -41,5 +41,4 @@ MonoBehaviour:
     - rid: 2376239686607699970
       type: {class: ToolModule, ns: , asm: Assembly-CSharp}
       data:
-        cooldown: 0.3
         toolType: 3

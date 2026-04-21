@@ -4,6 +4,8 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting;
+using static GameManager;
 
 /// <summary>
 /// In-game Debug Console. Mở bằng phím ` (BackQuote).
@@ -76,9 +78,14 @@ public class DebugConsole : MonoBehaviour
 
     /// <summary>Mở/đóng console.</summary>
     public void Toggle()
-    {
+    {   
         isOpen = !isOpen;
         panel.SetActive(isOpen);
+
+        // Tắt/bật input của Player khi console mở/đóng
+        var playerCtl = FindAnyObjectByType<PlayerControler>();
+        if (playerCtl != null) playerCtl.InputEnabled = !isOpen;
+
         if (isOpen) { inputField.ActivateInputField(); inputField.text = ""; }
     }
 

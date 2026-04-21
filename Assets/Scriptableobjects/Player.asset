@@ -37,6 +37,8 @@ MonoBehaviour:
   - rid: 2376239498774446080
   - rid: 2376239686607699968
   - rid: 2376239686607699969
+  - rid: 2376239726483210245
+  - rid: 2376239726483210247
   references:
     version: 2
     RefIds:
@@ -62,3 +64,11 @@ MonoBehaviour:
       type: {class: HealthModule, ns: , asm: Assembly-CSharp}
       data:
         canTakeDamage: 1
+    - rid: 2376239726483210245
+      type: {class: ActionModule, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 2376239726483210247
+      type: {class: AttackModule, ns: , asm: Assembly-CSharp}
+      data:
+        attackRange: 1.5
+        attackCooldown: 0.5

@@ -21,7 +21,9 @@ MonoBehaviour:
   buyPrice: 100
   sellPrice: 60
   baseStats:
-    baseStats: []
+    baseStats:
+    - statType: 10
+      value: 0.4
   placementRule:
     occupyLayer: 0
     requireTags: 0
@@ -35,5 +37,4 @@ MonoBehaviour:
     - rid: 2376239539840090112
       type: {class: ToolModule, ns: , asm: Assembly-CSharp}
       data:
-        cooldown: 0.3
         toolType: 1

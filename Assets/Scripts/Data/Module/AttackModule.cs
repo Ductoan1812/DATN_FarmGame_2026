@@ -7,7 +7,7 @@ using UnityEngine;
 [System.Serializable]
 public class AttackModule : IModuleData
 {
-    [Tooltip("Tầm tấn công (đơn vị Unity). CombatScanSystem dùng giá trị này để quét target.")]
+    [Tooltip("Tầm tấn công (đơn vị Unity). EntityScanSystem dùng giá trị này để quét target.")]
     public float attackRange = 1.5f;
 
     [Tooltip("Cooldown giữa 2 lần tấn công (giây).")]

@@ -2,25 +2,27 @@ using UnityEngine;
 
 /// <summary>
 /// Tool Hoe: cuốc đất → đổi tile thành plowedTile.
-/// Logic chung (cooldown, targetCell) đã ở ToolRuntime.
+/// Quét: 1 cell trước mặt.
 /// </summary>
 public class HoeRuntime : ToolRuntime
 {
     public HoeRuntime(ToolModule data) : base(data) { }
 
-    protected override bool Execute(GameObject ownerGO, Vector3Int targetCell, Vector2Int cell2d)
+    protected override bool Execute(GameObject actorGO, PrimaryActionEvent e)
     {
+        var targetCell = GridSystem.GetCellInFrontOf(actorGO);
+        var cell2d = new Vector2Int(targetCell.x, targetCell.y);
+
         var ws = GameManager.Instance?.WorldService;
         if (ws == null) return false;
 
-        // Bị block bởi cây
-        if (ws.HasBlockerAt(cell2d, EntityLayer.Plant))
+        var entityAtCell = EntityScanSystem.GetAtCell(cell2d);
+        if (entityAtCell != null)
         {
-            Debug.Log("[HoeRuntime] Có cây tại ô này, không thể cuốc.");
+            Debug.Log("[HoeRuntime] Có entity tại ô này, không thể cuốc.");
             return false;
         }
 
-        // Tile không thể cuốc (đã plowed/watered hoặc không tồn tại)
         if (!ws.IsTillable(cell2d))
         {
             Debug.Log("[HoeRuntime] Ô không thể cuốc.");

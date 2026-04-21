@@ -2,10 +2,9 @@ using UnityEngine;
 
 /// <summary>
 /// Runtime của PlacementModule.
-/// Lắng nghe UseEvent → tính targetCell phía trước owner → publish SpawnRequest.
-/// Owner của entity sẽ tự chuyển sang EntityRoot mới khi SpawnSystem gọi root.Add().
+/// Lắng nghe PrimaryActionEvent → dùng actor lấy vị trí → spawn entity xuống world.
 /// </summary>
-public class PlacementRuntime : IModuleRuntime, IHandleEvent<UseEvent>
+public class PlacementRuntime : IModuleRuntime, IHandleEvent<PrimaryActionEvent>
 {
     private readonly PlacementModule _data;
 
@@ -14,21 +13,22 @@ public class PlacementRuntime : IModuleRuntime, IHandleEvent<UseEvent>
         _data = data;
     }
 
-    public void Handle(UseEvent e)
+    public void Handle(PrimaryActionEvent e)
     {
-        // ── Lấy Owner GameObject ──────────────────────────────────────────────
-        var ownerGO = e.entity?.Owner?.GameObject;
-        if (ownerGO == null)
+        if (e.actor == null) return;
+
+        // ── Actor GameObject ──────────────────────────────────────────────────
+        var actorGO = e.actor.Owner?.GameObject;
+        if (actorGO == null)
         {
-            Debug.LogWarning("[PlacementRuntime] Owner.GameObject null.");
+            Debug.LogWarning("[PlacementRuntime] actor.Owner.GameObject null.");
             return;
         }
 
-        // ── Tính targetCell phía trước owner ──────────────────────────────────
-        var targetCell = GridSystem.GetCellInFrontOf(ownerGO);
+        // ── Tính targetCell phía trước actor ──────────────────────────────────
+        var targetCell = GridSystem.GetCellInFrontOf(actorGO);
         var worldPos   = new Vector2(targetCell.x, targetCell.y);
 
-        // ── Clone 1 unit từ entity gốc (trừ amount, giữ nguyên entity gốc trong hotbar) ──
         var gm = GameManager.Instance;
         if (gm == null)
         {
@@ -36,17 +36,16 @@ public class PlacementRuntime : IModuleRuntime, IHandleEvent<UseEvent>
             return;
         }
 
-        if(_data.centerTile) worldPos += new Vector2(0.5f, 0.5f);
-        // splitOnSpawn = true → SpawnSystem sẽ Split sau khi validate thành công
-        gm.EventBus.Publish(new SpawnRequestPublish(worldPos, _data.objectTypeToSpawn, e.entity, splitOnSpawn: true));
+        if (_data.centerTile) worldPos += new Vector2(0.5f, 0.5f);
+
+        // e.item = entity hạt giống đang cầm → split 1 unit khi spawn
+        gm.EventBus.Publish(new SpawnRequestPublish(worldPos, _data.objectTypeToSpawn, e.item, splitOnSpawn: true));
     }
 
     // ── Save / Load ───────────────────────────────────────────────────────────
 
-    public ModuleSaveData ToSaveData() =>
-        new ModuleSaveData { moduleType = "Placement", dataJson = "" };
+    public ModuleSaveData ToSaveData() => null;
 
     public void ApplySaveData(ModuleSaveData save) { }
-
     public bool Equals(IModuleRuntime other) => other is PlacementRuntime;
 }

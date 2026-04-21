@@ -8,6 +8,9 @@ public class PlayerControler : MonoBehaviour
     private Vector3 lastMoveDirection = Vector3.up;
     public Vector3 LastMoveDirection => lastMoveDirection;
 
+    /// <summary>Bật/tắt nhận input. False = bấm gì cũng không nhận (DebugConsole, cutscene...).</summary>
+    public bool InputEnabled { get; set; } = true;
+
     private PlayerInventory _inventory;
     private EntityRoot _entityRoot;
 
@@ -25,6 +28,8 @@ public class PlayerControler : MonoBehaviour
 
     private void Update()
     {
+        if (!InputEnabled) return;
+
         HandleMovement();
         HandleActions();
     }
@@ -41,24 +46,22 @@ public class PlayerControler : MonoBehaviour
 
     private void HandleActions()
     {
-        // Chuột trái: dùng item đang cầm
-        if (Input.GetMouseButtonDown(0) && _inventory != null)
+        var playerEntity = _entityRoot?.GetEntity();
+        if (playerEntity == null) return;
+
+        // ── Chuột trái: PrimaryAction ─────────────────────────────────────────
+        if (Input.GetMouseButtonDown(0))
         {
-            var selected = _inventory.SelectedItem;
-            if (selected != null)
-                selected.TriggerEvent(new UseEvent(selected));
+            playerEntity.TriggerEvent(new PrimaryActionEvent(playerEntity));
         }
 
-        // Chuột phải: tấn công
+        // ── Chuột phải: SecondaryAction ───────────────────────────────────────
         if (Input.GetMouseButtonDown(1))
         {
-            var playerEntity = _entityRoot?.GetEntity();
-            if (playerEntity != null)
-                playerEntity.TriggerEvent(new AttackEvent(playerEntity));
-
+            playerEntity.TriggerEvent(new SecondaryActionEvent(playerEntity));
         }
 
-        // 1-8: Chọn hotbar slot
+        // ── 1-8: Chọn hotbar slot ────────────────────────────────────────────
         if (_inventory != null)
         {
             for (int i = 0; i < 8; i++)
@@ -76,7 +79,7 @@ public class PlayerControler : MonoBehaviour
             else if (scroll < 0f) _inventory.CycleHotbar(1);
         }
 
-        // F5: Save
+        // ── F5: Save ─────────────────────────────────────────────────────────
         if (Input.GetKeyDown(KeyCode.F5))
         {
             eventBus?.Publish(new SaveGameRequestPublish());

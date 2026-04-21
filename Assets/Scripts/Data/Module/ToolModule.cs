@@ -1,23 +1,24 @@
 using UnityEngine;
 
 /// <summary>
-/// Module cuốc đất — gắn vào EntityData của cái cuốc.
+/// Module tool — gắn vào EntityData của tool (cuốc, liềm, rìu...).
+/// Chỉ giữ toolType. Mọi chỉ số (cooldown, damage, range...) lấy từ EntityData.baseStats.
 /// </summary>
 [System.Serializable]
 public class ToolModule : IModuleData
 {
-    [Tooltip("Thời gian hồi giữa 2 lần cuốc (giây)")]
-    public float cooldown = 0.3f;
     public ToolType toolType;
 
-
     public override IModuleRuntime CreateRuntime()
-    {   
-        switch (toolType)        {
+    {
+        switch (toolType)
+        {
             case ToolType.Hoe:
                 return new HoeRuntime(this);
+            case ToolType.Scythe:
+                return new ScytheRuntime(this);
             default:
-                Debug.LogWarning($"[ToolModule] ToolType {toolType} chưa có Runtime, ");
+                Debug.LogWarning($"[ToolModule] ToolType {toolType} chưa có Runtime.");
                 return null;
         }
     }
