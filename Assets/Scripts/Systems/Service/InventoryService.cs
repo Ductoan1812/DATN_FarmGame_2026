@@ -1,12 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-
-/// <summary>
-/// Singleton service — nghiệp vụ inventory tập trung.
-/// Biết EntityService và InventoryRuntime của bất kỳ entity nào.
-/// KHÔNG tự thay đổi Amount — ủy thác cho EntityService.
-/// </summary>
 public class InventoryService
 {
     private readonly EntityService entityService;
@@ -16,22 +10,16 @@ public class InventoryService
         this.entityService = entityService;
     }
 
-    // ══════ Pickup — nhặt entity từ thế giới ══════
-
-    /// <summary>
-    /// Nhặt pickupEntity vào túi của receiverEntity. Ưu tiên Hotbar → Backpack.
-    /// Nếu túi chỉ nhận được 1 phần: Split, phần nhặt vào túi, phần còn lại ở thế giới.
-    /// Trả về tổng số lượng đã nhặt được.
-    /// </summary>
     public int Pickup(EntityRuntime pickupEntity, EntityRuntime receiverEntity)
     {
         int totalReceived = 0;
-
-        // Đảm bảo các inventory của receiver có Container để SetSlot gán Owner đúng
         var receiverContainer = receiverEntity.Owner;
         if (receiverContainer != null)
             foreach (var inv in GetAllInventories(receiverEntity))
                 if (inv.Container == null) inv.Container = receiverContainer;
+
+        string itemName = pickupEntity.entityData.keyName;
+        string receiverName = receiverEntity.entityData.keyName;
 
         foreach (var inv in GetInventoriesByPriority(receiverEntity))
         {
@@ -42,8 +30,10 @@ public class InventoryService
 
             if (canReceive >= pickupEntity.Amount)
             {
-                totalReceived += pickupEntity.Amount;
+                int received = pickupEntity.Amount;
                 PlaceInto(inv, pickupEntity);
+                totalReceived += received;
+                Debug.Log($"[InventoryService] Pickup: {receiverName} nhặt {itemName} x{received} → {inv.Type}");
                 break;
             }
             else
@@ -53,21 +43,24 @@ public class InventoryService
                 {
                     PlaceInto(inv, split);
                     totalReceived += canReceive;
+                    Debug.Log($"[InventoryService] Pickup: {receiverName} nhặt {itemName} x{canReceive} → {inv.Type}");
                 }
             }
         }
-        if(totalReceived > 0) Debug.Log($"[InventoryService] Pickup:{receiverEntity.entityData.keyName} đã nhặt {pickupEntity.entityData.keyName} X {totalReceived}.");
-        else Debug.LogWarning($"[InventoryService] Pickup: không thể nhặt {pickupEntity.entityData.keyName} vào {receiverEntity.entityData.keyName}.");
+
+        if (totalReceived > 0)
+        {
+            Debug.Log($"[InventoryService] Pickup tổng: {receiverName} nhặt {itemName} x{totalReceived}");
+            PublishChanged(receiverEntity);
+        }
+        else
+        {
+            Debug.LogWarning($"[InventoryService] Pickup thất bại: không thể nhặt {itemName} vào {receiverName}");
+        }
+
         return totalReceived;
     }
 
-    // ══════ Transfer — chuyển entity giữa 2 entity ══════
-
-    /// <summary>
-    /// Chuyển entity từ túi của fromEntity sang túi của toEntity.
-    /// Ví dụ: NPC → Player, Player → Chest.
-    /// Trả về số lượng đã chuyển được.
-    /// </summary>
     public int Transfer(EntityRuntime entity, EntityRuntime fromEntity, EntityRuntime toEntity, int amount = -1)
     {
         var srcInv = FindInventoryOf(fromEntity, entity);
@@ -85,7 +78,6 @@ public class InventoryService
 
             if (canReceive >= entity.Amount)
             {
-                // Chuyển hết entity
                 int srcSlot = srcInv.FindSlotOf(entity);
                 srcInv.ClearSlot(srcSlot);
                 PlaceInto(dstInv, entity);
@@ -94,7 +86,6 @@ public class InventoryService
             }
             else
             {
-                // Chuyển 1 phần
                 var split = entityService.Split(entity, canReceive);
                 if (split != null)
                 {
@@ -107,16 +98,15 @@ public class InventoryService
 
         if (totalTransferred == 0)
             Debug.LogWarning("[InventoryService] Transfer: destination đầy hoặc không có inventory phù hợp.");
+        else
+        {
+            PublishChanged(fromEntity);
+            PublishChanged(toEntity);
+        }
 
         return totalTransferred;
     }
 
-    // ══════ Consume — tiêu thụ entity ══════
-
-    /// <summary>
-    /// Tiêu thụ amount của entity. Nếu Amount = 0 → ClearSlot + Unregister.
-    /// Trả về true nếu thành công.
-    /// </summary>
     public bool Consume(EntityRuntime entity, EntityRuntime ownerEntity, int amount = 1)
     {
         var inv = FindInventoryOf(ownerEntity, entity);
@@ -129,12 +119,10 @@ public class InventoryService
             if (slot >= 0) inv.ClearSlot(slot);
         }
 
+        PublishChanged(ownerEntity);
         return true;
     }
 
-    // ══════ Remove — xóa hoàn toàn ══════
-
-    /// <summary>Xóa entity khỏi túi và Unregister khỏi Registry.</summary>
     public bool Remove(EntityRuntime entity, EntityRuntime ownerEntity)
     {
         var inv = FindInventoryOf(ownerEntity, entity);
@@ -148,7 +136,6 @@ public class InventoryService
         return true;
     }
 
-    /// <summary>Xóa theo id + amount, duyệt tất cả túi của ownerEntity.</summary>
     public bool Remove(string entityDataId, int amount, EntityRuntime ownerEntity)
     {
         int remaining = amount;
@@ -172,9 +159,6 @@ public class InventoryService
         return remaining <= 0;
     }
 
-    // ══════ Sort — sắp xếp túi ══════
-
-    /// <summary>Sắp xếp slot theo category → name → amount.</summary>
     public void Sort(EntityRuntime ownerEntity, InventoryType inventoryType)
     {
         var inv = GetInventory(ownerEntity, inventoryType);
@@ -185,21 +169,13 @@ public class InventoryService
             .ThenBy(e => e.entityData.keyName)
             .ThenByDescending(e => e.Amount)
             .ToList();
-
-        // Clear tất cả slot
         for (int i = 0; i < inv.MaxSlots; i++)
             inv.ClearSlot(i);
 
-        // Set lại theo thứ tự
         for (int i = 0; i < entities.Count; i++)
             inv.SetSlot(i, entities[i]);
     }
 
-    // ══════ SwapSlots — drag & drop UI ══════
-
-    /// <summary>
-    /// Swap 2 slot bất kỳ, kể cả khác entity (Player ↔ Chest).
-    /// </summary>
     public void SwapSlots(EntityRuntime ownerA, InventoryType typeA, int slotA,
                           EntityRuntime ownerB, InventoryType typeB, int slotB)
     {
@@ -210,16 +186,15 @@ public class InventoryService
         var entityA = invA.GetSlot(slotA)?.entity;
         var entityB = invB.GetSlot(slotB)?.entity;
 
-        // Clear cả 2 trước để reset Owner
         if (entityA != null) invA.ClearSlot(slotA);
         if (entityB != null) invB.ClearSlot(slotB);
 
-        // Set lại chéo — SetSlot tự cập nhật Owner
         if (entityB != null) invA.SetSlot(slotA, entityB);
         if (entityA != null) invB.SetSlot(slotB, entityA);
-    }
 
-    // ══════ Query ══════
+        PublishChanged(ownerA);
+        if (ownerA != ownerB) PublishChanged(ownerB);
+    }
 
     public bool Contains(EntityRuntime ownerEntity, EntityRuntime entity)
         => FindInventoryOf(ownerEntity, entity) != null;
@@ -239,12 +214,10 @@ public class InventoryService
         return null;
     }
 
-    // ══════ Internal helpers ══════
-
     private List<InventoryRuntime> GetAllInventories(EntityRuntime entity)
         => entity.GetModules<InventoryRuntime>();
 
-    /// <summary>Trả về inventories theo thứ tự ưu tiên: Hotbar → Backpack → Chest.</summary>
+  
     private IEnumerable<InventoryRuntime> GetInventoriesByPriority(EntityRuntime entity)
     {
         var all = GetAllInventories(entity);
@@ -254,7 +227,6 @@ public class InventoryService
             var inv = all.Find(i => i.Type == type);
             if (inv != null) yield return inv;
         }
-        // Các type còn lại không nằm trong order
         foreach (var inv in all)
             if (!order.Contains(inv.Type)) yield return inv;
     }
@@ -266,10 +238,17 @@ public class InventoryService
         return null;
     }
 
-    /// <summary>Đặt entity vào túi: merge stack trước → slot trống. SetSlot tự cập nhật Owner.</summary>
+    private void PublishChanged(EntityRuntime entity)
+    {
+        var eb = GameManager.Instance?.EventBus;
+        if (eb == null || entity == null) return;
+        foreach (var inv in GetAllInventories(entity))
+            eb.Publish(new InventoryChangedPublish(entity.id, inv.Type));
+    }
+
+  
     private void PlaceInto(InventoryRuntime inv, EntityRuntime entity)
     {
-        // 1. Merge vào stack cùng loại
         while (entity.Amount > 0)
         {
             int stackSlot = inv.FindStackableSlot(entity);
@@ -279,7 +258,6 @@ public class InventoryService
 
         if (entity.IsEmpty) return;
 
-        // 2. Slot trống
         int emptySlot = inv.FindEmptySlot();
         if (emptySlot < 0) { Debug.LogWarning($"[InventoryService] PlaceInto: {inv.Type} đầy."); return; }
 

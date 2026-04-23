@@ -3,40 +3,45 @@ using UnityEngine.UI;
 using TMPro;
 
 /// <summary>
-/// Bind Inventory (Backpack) data từ PlayerInventory → UI.
-/// Đợi WorldReady trước khi bind.
+/// Bind Inventory (Backpack) data → UI.
+/// Subscribe EventBus: InventoryChangedPublish.
 /// </summary>
 public class InventoryUI : MonoBehaviour
 {
     [Header("Refs")]
-    [SerializeField] private Button openButton;
-    [SerializeField] private Button closeButton;
     [SerializeField] private Transform slotsGrid;
 
-    private PlayerInventory _inventory;
+    private EntityRuntime _playerEntity;
+    private InventoryRuntime _backpack;
     private SlotUI[] _slots;
-    private bool _isOpen;
     private bool _ready;
 
     private void OnEnable()
     {
         var bus = GameManager.Instance?.EventBus;
-        if (bus != null) bus.Subscribe<WorldReadyPublish>(OnWorldReady);
+        if (bus == null) return;
+        bus.Subscribe<WorldReadyPublish>(OnWorldReady);
+        bus.Subscribe<InventoryChangedPublish>(OnInventoryChanged);
     }
 
     private void OnDisable()
     {
-        if (_inventory != null)
-            _inventory.OnInventoryChanged -= Refresh;
         var bus = GameManager.Instance?.EventBus;
-        if (bus != null) bus.Unsubscribe<WorldReadyPublish>(OnWorldReady);
+        if (bus == null) return;
+        bus.Unsubscribe<WorldReadyPublish>(OnWorldReady);
+        bus.Unsubscribe<InventoryChangedPublish>(OnInventoryChanged);
     }
 
     private void OnWorldReady(WorldReadyPublish _)
     {
-        var player = FindAnyObjectByType<PlayerInventory>();
-        if (player == null) { Debug.LogWarning("[InventoryUI] PlayerInventory not found."); return; }
-        _inventory = player;
+        var playerRoot = FindAnyObjectByType<PlayerInventory>()?.GetComponent<EntityRoot>();
+        if (playerRoot == null) return;
+
+        _playerEntity = playerRoot.GetEntity();
+        if (_playerEntity == null) return;
+
+        _backpack = _playerEntity.GetModules<InventoryRuntime>()
+                                 .Find(i => i.Type == InventoryType.Backpack);
 
         // Cache slot UI
         if (slotsGrid != null)
@@ -46,48 +51,28 @@ public class InventoryUI : MonoBehaviour
                 _slots[i] = new SlotUI(slotsGrid.GetChild(i));
         }
 
-        // Buttons
-        if (openButton != null) openButton.onClick.AddListener(Toggle);
-        if (closeButton != null) closeButton.onClick.AddListener(Close);
-
-        // Subscribe
-        _inventory.OnInventoryChanged += Refresh;
-
         _ready = true;
-
-        // Bắt đầu ẩn
-        gameObject.SetActive(false);
-        _isOpen = false;
-
-        Debug.Log("[InventoryUI] Ready.");
+        Refresh();
     }
 
-    // ══════ Toggle ══════
+    // ── Event handlers ────────────────────────────────────────────────────────
 
-    public void Toggle()
+    private void OnInventoryChanged(InventoryChangedPublish e)
     {
-        _isOpen = !_isOpen;
-        gameObject.SetActive(_isOpen);
-        if (_isOpen && _ready) Refresh();
+        if (e.entityId != _playerEntity?.id) return;
+        if (e.inventoryType != InventoryType.Backpack) return;
+        Refresh();
     }
 
-    public void Close()
-    {
-        _isOpen = false;
-        gameObject.SetActive(false);
-    }
-
-    // ══════ Refresh ══════
+    // ── Refresh ───────────────────────────────────────────────────────────────
 
     private void Refresh()
     {
-        if (!_ready || _inventory == null) return;
-        var backpack = _inventory.GetInventory(InventoryType.Backpack);
-        if (backpack == null || _slots == null) return;
+        if (!_ready || _backpack == null || _slots == null) return;
 
         for (int i = 0; i < _slots.Length; i++)
         {
-            var slot = backpack.GetSlot(i);
+            var slot = _backpack.GetSlot(i);
             bool isEmpty = slot == null || slot.IsEmpty;
 
             _slots[i].SetIcon(isEmpty ? null : slot.entity.entityData.icon);
@@ -95,7 +80,7 @@ public class InventoryUI : MonoBehaviour
         }
     }
 
-    // ══════ SlotUI helper ══════
+    // ── SlotUI helper ─────────────────────────────────────────────────────────
 
     private class SlotUI
     {
@@ -104,10 +89,10 @@ public class InventoryUI : MonoBehaviour
 
         public SlotUI(Transform root)
         {
-            var iconT = root.Find("Icon");
+            var iconT = root.Find("Icon") ?? root.Find("ImgItem");
             if (iconT != null) _icon = iconT.GetComponent<Image>();
 
-            var amountT = root.Find("Amount");
+            var amountT = root.Find("Amount") ?? root.Find("Quantity");
             if (amountT != null) _amount = amountT.GetComponent<TextMeshProUGUI>();
         }
 
@@ -115,7 +100,7 @@ public class InventoryUI : MonoBehaviour
         {
             if (_icon == null) return;
             _icon.sprite = sprite;
-            _icon.color = sprite != null ? Color.white : new Color(1, 1, 1, 0.15f);
+            _icon.color = sprite != null ? Color.white : new Color(1, 1, 1, 0);
         }
 
         public void SetAmount(int amount)

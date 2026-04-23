@@ -46,12 +46,12 @@ MonoBehaviour:
       type: {class: InventoryModule, ns: , asm: Assembly-CSharp}
       data:
         inventoryType: 0
-        size: 20
+        size: 60
     - rid: 2376239469260439553
       type: {class: InventoryModule, ns: , asm: Assembly-CSharp}
       data:
         inventoryType: 1
-        size: 8
+        size: 10
     - rid: 2376239498774446080
       type: {class: EquipmentModule, ns: , asm: Assembly-CSharp}
       data: 

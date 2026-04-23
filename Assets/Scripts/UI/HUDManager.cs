@@ -5,12 +5,17 @@ using UnityEngine;
 /// </summary>
 public class HUDManager : MonoBehaviour
 {
-    [SerializeField] private InventoryUI inventoryUI;
-    [SerializeField] private KeyCode inventoryToggleKey = KeyCode.I;
+    [SerializeField] private GameObject menuWindow;
+    [SerializeField] private KeyCode menuToggleKey = KeyCode.I;
+
+    private bool _isOpen;
 
     private void Update()
     {
-        if (Input.GetKeyDown(inventoryToggleKey) && inventoryUI != null)
-            inventoryUI.Toggle();
+        if (Input.GetKeyDown(menuToggleKey) && menuWindow != null)
+        {
+            _isOpen = !_isOpen;
+            menuWindow.SetActive(_isOpen);
+        }
     }
 }

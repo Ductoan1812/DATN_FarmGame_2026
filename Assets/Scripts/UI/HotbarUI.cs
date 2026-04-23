@@ -3,127 +3,143 @@ using UnityEngine.UI;
 using TMPro;
 
 /// <summary>
-/// Bind Hotbar data từ PlayerInventory → UI.
-/// Đợi WorldReady trước khi bind.
+/// FE Hotbar — subscribe HotbarSlotChangedPublish + HotbarSelectionChangedPublish.
+/// Gắn vào GameObject "Hotbar" trong HUD_Canvas.
+/// Children theo thứ tự = slot index (child 0 = index 0, ...).
+/// Mỗi child cần: "Icon" (Image), "Amount" (TMP), slot đầu tiên chứa "Select" (Image).
 /// </summary>
 public class HotbarUI : MonoBehaviour
 {
-    [Header("Refs")]
-    [SerializeField] private TextMeshProUGUI slotLabel;
+    private const int MaxDisplayAmount = 99999;
 
-    private PlayerInventory _inventory;
-    private SlotUI[] _slots;
-    private bool _ready;
+    // ── Cache ──
+    private SlotView[] _slots;
+    private Transform _selectIndicator;
+    private int _currentSelected = -1;
+    private bool _subscribed;
+
+    // ══════ Lifecycle ══════
+
+    private void Start()
+    {
+        CacheSlots();
+        CacheSelectIndicator();
+        TrySubscribe();
+    }
 
     private void OnEnable()
     {
-        var bus = GameManager.Instance?.EventBus;
-        if (bus != null) bus.Subscribe<WorldReadyPublish>(OnWorldReady);
+        TrySubscribe();
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
-        if (_inventory != null)
-        {
-            _inventory.OnInventoryChanged -= Refresh;
-            _inventory.OnHotbarSelectionChanged -= OnSelectionChanged;
-        }
+        if (!_subscribed) return;
         var bus = GameManager.Instance?.EventBus;
-        if (bus != null) bus.Unsubscribe<WorldReadyPublish>(OnWorldReady);
+        if (bus == null) return;
+        bus.Unsubscribe<HotbarSlotChangedPublish>(OnSlotChanged);
+        bus.Unsubscribe<HotbarSelectionChangedPublish>(OnSelectionChanged);
+        _subscribed = false;
     }
 
-    private void OnWorldReady(WorldReadyPublish _)
+    private void TrySubscribe()
     {
-        var player = FindAnyObjectByType<PlayerInventory>();
-        if (player == null) { Debug.LogWarning("[HotbarUI] PlayerInventory not found."); return; }
-        _inventory = player;
+        if (_subscribed) return;
+        var bus = GameManager.Instance?.EventBus;
+        if (bus == null) return;
+        bus.Subscribe<HotbarSlotChangedPublish>(OnSlotChanged);
+        bus.Subscribe<HotbarSelectionChangedPublish>(OnSelectionChanged);
+        _subscribed = true;
+    }
 
-        // Cache slot UI
-        _slots = new SlotUI[transform.childCount];
+    // ══════ Cache ══════
+
+    private void CacheSlots()
+    {
+        int count = transform.childCount;
+        _slots = new SlotView[count];
+        for (int i = 0; i < count; i++)
+            _slots[i] = new SlotView(transform.GetChild(i));
+    }
+
+    private void CacheSelectIndicator()
+    {
+        // Tìm "Select" trong bất kỳ slot con nào (mặc định nằm ở slot đầu)
         for (int i = 0; i < transform.childCount; i++)
-            _slots[i] = new SlotUI(transform.GetChild(i));
-
-        // Subscribe events
-        _inventory.OnInventoryChanged += Refresh;
-        _inventory.OnHotbarSelectionChanged += OnSelectionChanged;
-
-        _ready = true;
-        Refresh();
-        Debug.Log("[HotbarUI] Ready.");
-    }
-
-    // ══════ Refresh ══════
-
-    private void Refresh()
-    {
-        if (!_ready || _inventory == null) return;
-        var hotbar = _inventory.GetInventory(InventoryType.Hotbar);
-        if (hotbar == null || _slots == null) return;
-
-        for (int i = 0; i < _slots.Length; i++)
         {
-            var slot = hotbar.GetSlot(i);
-            bool isEmpty = slot == null || slot.IsEmpty;
-
-            _slots[i].SetIcon(isEmpty ? null : slot.entity.entityData.icon);
-            _slots[i].SetAmount(isEmpty ? 0 : slot.entity.Amount);
-            _slots[i].SetSelected(i == _inventory.SelectedHotbarIndex);
+            var sel = transform.GetChild(i).Find("Select");
+            if (sel != null)
+            {
+                _selectIndicator = sel;
+                _currentSelected = i;
+                return;
+            }
         }
-
-        UpdateLabel();
     }
 
-    private void OnSelectionChanged(int index)
+    // ══════ Event handlers ══════
+
+    private void OnSlotChanged(HotbarSlotChangedPublish e)
     {
-        if (_slots == null) return;
-        for (int i = 0; i < _slots.Length; i++)
-            _slots[i].SetSelected(i == index);
-        UpdateLabel();
+        if (_slots == null || e.index < 0 || e.index >= _slots.Length) return;
+
+        _slots[e.index].SetIcon(e.icon);
+        _slots[e.index].SetAmount(e.amount);
     }
 
-    private void UpdateLabel()
+    private void OnSelectionChanged(HotbarSelectionChangedPublish e)
     {
-        if (slotLabel == null) return;
-        var item = _inventory?.SelectedItem;
-        slotLabel.text = item != null ? item.entityData.keyName : "";
+        if (e.selectedIndex != _currentSelected)
+            MoveSelect(e.selectedIndex);
     }
 
-    // ══════ SlotUI helper ══════
+    // ══════ Select indicator ══════
 
-    private class SlotUI
+    private void MoveSelect(int newIndex)
+    {
+        if (_selectIndicator == null) return;
+        if (newIndex < 0 || newIndex >= _slots.Length) return;
+
+        _selectIndicator.SetParent(transform.GetChild(newIndex), false);
+        _currentSelected = newIndex;
+    }
+
+    // ══════ SlotView ══════
+
+    private class SlotView
     {
         private readonly Image _icon;
         private readonly TextMeshProUGUI _amount;
-        private readonly GameObject _highlight;
 
-        public SlotUI(Transform root)
+        public SlotView(Transform root)
         {
             var iconT = root.Find("Icon");
             if (iconT != null) _icon = iconT.GetComponent<Image>();
 
             var amountT = root.Find("Amount");
             if (amountT != null) _amount = amountT.GetComponent<TextMeshProUGUI>();
-
-            var hlT = root.Find("Highlight");
-            if (hlT != null) _highlight = hlT.gameObject;
         }
 
         public void SetIcon(Sprite sprite)
         {
             if (_icon == null) return;
             _icon.sprite = sprite;
-            _icon.color = sprite != null ? Color.white : new Color(1, 1, 1, 0.15f);
+            _icon.color = sprite != null ? Color.white : new Color(1, 1, 1, 0);
         }
 
         public void SetAmount(int amount)
         {
             if (_amount == null) return;
-            _amount.text = amount > 1 ? amount.ToString() : "";
-        }
 
-        public void SetSelected(bool selected)
-        {
-            if (_highlight != null) _highlight.SetActive(selected);
+            if (amount <= 1)
+            {
+                _amount.text = "";
+                return;
+            }
+
+            _amount.text = amount > MaxDisplayAmount
+                ? MaxDisplayAmount.ToString()
+                : amount.ToString();
         }
     }
 }

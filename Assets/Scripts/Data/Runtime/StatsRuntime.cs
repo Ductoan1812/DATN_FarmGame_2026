@@ -94,22 +94,28 @@ public class StatsRuntime
         return stats[type].GetValue();
     }
 
+    /// <summary>Fired khi bất kỳ stat nào thay đổi. (StatType, newValue)</summary>
+    public event System.Action<StatType, float> OnChanged;
+
     // Set baseValue trực tiếp
     public void Set(StatType type, float value)
     {
         EnsureStat(type).baseValue = value;
+        OnChanged?.Invoke(type, Get(type));
     }
 
     // Cộng thẳng
     public void AddFlat(StatType type, float value)
     {
         EnsureStat(type).flatBonus += value;
+        OnChanged?.Invoke(type, Get(type));
     }
 
     // Cộng %
     public void AddPercent(StatType type, float value)
     {
         EnsureStat(type).percentBonus += value;
+        OnChanged?.Invoke(type, Get(type));
     }
 
     private Stat EnsureStat(StatType type)

@@ -9,6 +9,7 @@ using UnityEngine;
 public struct NextDayEventPublish { }
 
 // ── Boot / Save-Load ──────────────────────────────────────
+
 /// <summary>Broadcast sau khi toàn bộ world đã load xong (entities + gameobjects).</summary>
 public struct WorldReadyPublish { }
 
@@ -18,7 +19,68 @@ public struct SaveGameRequestPublish { }
 /// <summary>Yêu cầu load game.</summary>
 public struct LoadGameRequestPublish { }
 
-// ── Spawn / Despawn / Destroy ─────────────────────────────
+// ══════════════════════════════════════════════════════════
+//  UI Events — PlayerBridge / Service publish, UI subscribe.
+// ══════════════════════════════════════════════════════════
+
+/// <summary>Stats của entity thay đổi (HP, Mana, Attack...). PlayerBridge publish.</summary>
+public struct StatsChangedPublish
+{
+    public readonly string entityId;
+    public readonly StatType statType;
+    public readonly float newValue;
+    public StatsChangedPublish(string entityId, StatType statType, float newValue)
+    { this.entityId = entityId; this.statType = statType; this.newValue = newValue; }
+}
+
+/// <summary>Inventory thay đổi (pickup, consume, swap...). InventoryService publish.</summary>
+public struct InventoryChangedPublish
+{
+    public readonly string entityId;
+    public readonly InventoryType inventoryType;
+    public InventoryChangedPublish(string entityId, InventoryType inventoryType)
+    { this.entityId = entityId; this.inventoryType = inventoryType; }
+}
+
+/// <summary>
+/// Nội dung 1 slot hotbar thay đổi (icon, amount).
+/// PlayerBridge publish chỉ cho slot thực sự thay đổi.
+/// </summary>
+public struct HotbarSlotChangedPublish
+{
+    public readonly int    index;
+    public readonly Sprite icon;
+    public readonly int    amount;
+    public HotbarSlotChangedPublish(int index, Sprite icon, int amount)
+    { this.index = index; this.icon = icon; this.amount = amount; }
+}
+
+/// <summary>
+/// Selection hotbar thay đổi. PlayerBridge publish khi SelectedIndex thay đổi.
+/// </summary>
+public struct HotbarSelectionChangedPublish
+{
+    public readonly int selectedIndex;
+    public HotbarSelectionChangedPublish(int selectedIndex)
+    { this.selectedIndex = selectedIndex; }
+}
+
+/// <summary>
+/// Nội dung 1 slot backpack thay đổi (icon, amount).
+/// PlayerBridge publish mỗi khi backpack inventory thay đổi.
+/// </summary>
+public struct BackpackSlotChangedPublish
+{
+    public readonly int    index;
+    public readonly Sprite icon;
+    public readonly int    amount;
+    public BackpackSlotChangedPublish(int index, Sprite icon, int amount)
+    { this.index = index; this.icon = icon; this.amount = amount; }
+}
+
+// ══════════════════════════════════════════════════════════
+//  Spawn / Despawn / Destroy
+// ══════════════════════════════════════════════════════════
 
 /// <summary>
 /// Yêu cầu spawn entity vào world.
@@ -31,12 +93,10 @@ public struct SpawnRequestPublish
     public readonly EntityRuntime runtime;
     public readonly EntityData    entityData;
     public readonly int           spawnAmount;
-    public readonly bool          splitOnSpawn; // true = Split 1 unit từ runtime trước khi spawn
+    public readonly bool          splitOnSpawn;
     public readonly bool          bypassValidation;
     public readonly object        payload;
 
-
-    /// <summary>Spawn từ EntityRuntime có sẵn.</summary>
     public SpawnRequestPublish(Vector2 worldPos, ObjectType idPrefab, EntityRuntime runtime, bool splitOnSpawn = false, int spawnAmount = -1, bool bypassValidation = false, object payload = null)
     {
         this.worldPos         = worldPos;
@@ -49,7 +109,6 @@ public struct SpawnRequestPublish
         this.payload          = payload;
     }
 
-    /// <summary>Spawn tạo mới từ EntityData.</summary>
     public SpawnRequestPublish(Vector2 worldPos, ObjectType idPrefab, EntityData entityData, int spawnAmount = 1, bool bypassValidation = false, object payload = null)
     {
         this.worldPos         = worldPos;
@@ -63,20 +122,14 @@ public struct SpawnRequestPublish
     }
 }
 
-/// <summary>
-/// Despawn entity khỏi world (chỉ remove GameObject + spatial position).
-/// Entity runtime VẪN nằm trong EntityRegistry — dùng để respawn lại sau này.
-/// </summary>
+/// <summary>Despawn entity khỏi world (giữ trong EntityRegistry để respawn).</summary>
 public struct DespawnRequestPublish
 {
     public readonly string idRuntime;
     public DespawnRequestPublish(string idRuntime) { this.idRuntime = idRuntime; }
 }
 
-/// <summary>
-/// Hủy entity vĩnh viễn: despawn GameObject + Unregister khỏi EntityRegistry.
-/// MortalRuntime publish event này khi entity chết mà KHÔNG có RespawnModule.
-/// </summary>
+/// <summary>Hủy entity vĩnh viễn: despawn + Unregister.</summary>
 public struct DestroyEntityRequestPublish
 {
     public readonly string idRuntime;
