@@ -93,7 +93,8 @@ public class PlayerEquipment : MonoBehaviour
     // ══════ Gear — Mũ, Áo, Giày... ══════
 
     /// <summary>
-    /// Trang bị gear (không phải Hand). Xóa khỏi Inventory → vào EquipmentRuntime.
+    /// Trang bị gear (không phải Hand). 
+    /// EquipmentRuntime.Equip() tự xử lý toàn bộ ref transfer.
     /// Trả về true nếu thành công.
     /// </summary>
     public bool EquipGear(EntityRuntime entity)
@@ -109,20 +110,7 @@ public class PlayerEquipment : MonoBehaviour
         var equip = Equipment;
         if (equip == null) return false;
 
-        // Xóa khỏi Inventory
-        var inv = FindInventoryOf(entity);
-        if (inv != null)
-        {
-            int slot = inv.FindSlotOf(entity);
-            if (slot >= 0) inv.ClearSlot(slot);
-        }
-
-        // Equip — nếu slot đã có item cũ → trả lại Inventory
-        var previous = equip.Equip(entity);
-        if (previous != null)
-            _inventoryService.Pickup(previous, Entity);
-
-        return true;
+        return equip.Equip(entity);
     }
 
     /// <summary>

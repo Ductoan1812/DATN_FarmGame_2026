@@ -36,22 +36,18 @@ public class EquipmentRuntime : IModuleRuntime
 
     /// <summary>
     /// Trang bị entity vào slot tương ứng.
-    /// Đọc AppearanceRuntime từ entity để biết EquipmentPart + SpriteId.
-    /// 1. Tính stats (remove cũ + apply mới)
-    /// 2. Cập nhật Character4D visual
-    /// 3. Fire OnChanged
-    /// Trả về entity cũ nếu slot đã có (swap), null nếu slot trống.
-    /// Trả về entity gốc (không thay đổi) nếu equip thất bại.
+    /// Xử lý toàn bộ: check → remove khỏi inventory → swap cũ về inventory → stats → visual.
+    /// Trả về true nếu equip thành công, false nếu thất bại (không thay đổi gì).
     /// </summary>
-    public EntityRuntime Equip(EntityRuntime entity)
+    public bool Equip(EntityRuntime entity)
     {
-        if (entity == null) return null;
+        if (entity == null) return false;
 
         var appearance = entity.GetModule<AppearanceRuntime>();
         if (appearance == null)
         {
             Debug.LogWarning($"[EquipmentRuntime] '{entity.entityData?.keyName}' không có AppearanceModule → không equip được.");
-            return null;
+            return false;
         }
 
         var part = appearance.EquipmentPart;
@@ -61,29 +57,57 @@ public class EquipmentRuntime : IModuleRuntime
             && !_config.supportedParts.Contains(part))
         {
             Debug.LogWarning($"[EquipmentRuntime] Part '{part}' không nằm trong supportedParts.");
-            return null;
+            return false;
         }
 
-        // ── Bước 1: Tính stats ──
-        EntityRuntime previous = null;
-        if (_slots.TryGetValue(part, out var existing))
+        var owner = FindOwnerEntity();
+        var inventoryService = GameManager.Instance?.InventoryService;
+
+        // ── Bước 1: Remove entity khỏi Inventory (chỉ clear ref) ──
+        if (owner != null)
         {
-            RemoveStats(existing);
-            previous = existing;
+            foreach (var inv in owner.GetModules<InventoryRuntime>())
+            {
+                int slot = inv.FindSlotOf(entity);
+                if (slot >= 0)
+                {
+                    inv.ClearSlot(slot);
+                    break;
+                }
+            }
         }
 
+        // ── Bước 2: Nếu slot đã có item cũ → remove stats + trả về inventory ──
+        if (_slots.TryGetValue(part, out var previous))
+        {
+            RemoveStats(previous);
+            _slots.Remove(part);
+
+            // Trả item cũ về inventory
+            if (owner != null && inventoryService != null)
+                inventoryService.Pickup(previous, owner);
+        }
+
+        // ── Bước 3: Gắn entity mới + apply stats ──
+        _slots[part] = entity;
         ApplyStats(entity);
 
-        // ── Cập nhật slot ──
-        _slots[part] = entity;
-
-        // ── Bước 2: Cập nhật Character4D visual ──
+        // ── Bước 4: Cập nhật Character4D visual ──
         ApplyVisual(entity, appearance);
 
-        // ── Bước 3: Fire event ──
-        OnChanged?.Invoke();
+        // ── Bước 5: Publish inventory changed + fire event ──
+        if (owner != null)
+        {
+            var eb = GameManager.Instance?.EventBus;
+            if (eb != null)
+            {
+                foreach (var inv in owner.GetModules<InventoryRuntime>())
+                    eb.Publish(new InventoryChangedPublish(owner.id, inv.Type));
+            }
+        }
 
-        return previous;
+        OnChanged?.Invoke();
+        return true;
     }
 
     // ══════ Unequip ══════

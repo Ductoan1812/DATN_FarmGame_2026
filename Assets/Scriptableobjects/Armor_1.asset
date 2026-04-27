@@ -10,41 +10,32 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8393fbdfdb650e5418aad1c82ae5b8b5, type: 3}
-  m_Name: Scythe_01
+  m_Name: Armor_1
   m_EditorClassIdentifier: 
-  id: Scrythe01
-  keyName: Scrythe01_Name
-  descKey: Scrythe01_Desc
-  icon: {fileID: 5223213533427645220, guid: 3123aa6547c7c9d4191934fdc33aad08, type: 3}
-  category: 1
+  id: Armor_02
+  keyName: Armor_02_name
+  descKey: Armor_02_desc
+  icon: {fileID: 21300000, guid: 1b2d040742440a94bb3fde097acb96b4, type: 3}
+  category: 7
   maxStack: 1
-  buyPrice: 20
-  sellPrice: 100
+  buyPrice: 120
+  sellPrice: 20
   baseStats:
     baseStats:
-    - statType: 2
-      value: 5
-    - statType: 10
-      value: 1
-    - statType: 11
-      value: 3
+    - statType: 0
+      value: 120
   placementRule:
     occupyLayer: 0
     requireTags: 0
     provideTags: 0
     blockLayers: 
   modules:
-  - rid: 2376239686607699970
-  - rid: 2376239868009775105
+  - rid: 2376239868009775106
   references:
     version: 2
     RefIds:
-    - rid: 2376239686607699970
-      type: {class: ToolModule, ns: , asm: Assembly-CSharp}
-      data:
-        toolType: 3
-    - rid: 2376239868009775105
+    - rid: 2376239868009775106
       type: {class: AppearanceModule, ns: , asm: Assembly-CSharp}
       data:
-        spriteId: FantasyHeroes.Basic.MeleeWeapon2H.BizarreSword
-        equipmentPart: 6
+        spriteId: FantasyHeroes.Basic.Armor.AcornArmor [ShowEars]
+        equipmentPart: 0

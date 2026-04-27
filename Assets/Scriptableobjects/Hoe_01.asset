@@ -31,6 +31,7 @@ MonoBehaviour:
     blockLayers: 
   modules:
   - rid: 2376239539840090112
+  - rid: 2376239868009775104
   references:
     version: 2
     RefIds:
@@ -38,3 +39,8 @@ MonoBehaviour:
       type: {class: ToolModule, ns: , asm: Assembly-CSharp}
       data:
         toolType: 1
+    - rid: 2376239868009775104
+      type: {class: AppearanceModule, ns: , asm: Assembly-CSharp}
+      data:
+        spriteId: FantasyHeroes.Basic.MeleeWeapon1H.BalancedAxe
+        equipmentPart: 5

@@ -1,11 +1,14 @@
 using Assets.HeroEditor4D.Common.Scripts.Enums;
+using UnityEngine;
 
 /// <summary>
-/// Runtime của AppearanceModule.
-/// Chỉ giữ dữ liệu tĩnh từ module config — không có state riêng.
-/// EquipmentRuntime đọc thông tin này khi equip item lên Character4D.
+/// Runtime của AppearanceModule — gắn trên EntityData của gear (giáp, mũ, quần...).
+/// 
+/// Khi entity nhận PrimaryActionEvent (từ btn_use):
+///   → Chỉ forward sang EquipmentRuntime.Equip()
+///   → EquipmentRuntime tự xử lý toàn bộ: check, remove khỏi inventory, swap, stats, visual
 /// </summary>
-public class AppearanceRuntime : IModuleRuntime
+public class AppearanceRuntime : IModuleRuntime, IHandleEvent<PrimaryActionEvent>
 {
     private readonly AppearanceModule _data;
 
@@ -17,7 +20,16 @@ public class AppearanceRuntime : IModuleRuntime
         _data = data;
     }
 
-    // Không có state → không cần save
+    public void Handle(PrimaryActionEvent e)
+    {
+        if (e.actor == null || e.item == null) return;
+
+        var equipment = e.actor.GetModule<EquipmentRuntime>();
+        if (equipment == null) return;
+
+        equipment.Equip(e.item);
+    }
+
     public ModuleSaveData ToSaveData() => null;
     public void ApplySaveData(ModuleSaveData save) { }
 
