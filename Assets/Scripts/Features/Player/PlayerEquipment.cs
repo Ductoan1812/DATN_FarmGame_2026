@@ -1,12 +1,14 @@
 using System;
-using System.Collections.Generic;
+using Assets.HeroEditor4D.Common.Scripts.Enums;
 using UnityEngine;
 
 /// <summary>
 /// Bridge giữa EquipmentRuntime và UI.
+/// Lắng nghe EquipmentRuntime.OnChanged → publish event cho UI.
+///
 /// Xử lý logic:
-///   - Hand: chọn hotbar → auto equip/unequip (item vẫn nằm trong Hotbar)
-///   - Gear: kéo vào ô equipment → xóa khỏi Inventory, kéo ra → trả lại Inventory
+///   - Hand: chọn hotbar → auto equip/unequip visual + stats (item vẫn nằm trong Hotbar)
+///   - Gear: equip từ Inventory → xóa khỏi Inventory, unequip → trả lại Inventory
 /// </summary>
 [RequireComponent(typeof(EntityRoot))]
 [RequireComponent(typeof(PlayerInventory))]
@@ -33,10 +35,16 @@ public class PlayerEquipment : MonoBehaviour
     {
         _inventoryService = GameManager.Instance.InventoryService;
 
-        // Init OwnerStats cho EquipmentRuntime
         var equip = Equipment;
         if (equip != null)
+        {
+            // Set owner ref + stats
+            equip.SetOwner(Entity);
             equip.OwnerStats = Entity.stats;
+
+            // Lắng nghe thay đổi từ EquipmentRuntime
+            equip.OnChanged += OnEquipRuntimeChanged;
+        }
 
         // Lắng nghe hotbar thay đổi → auto equip/unequip Hand
         _playerInventory.OnHotbarSelectionChanged += OnHotbarChanged;
@@ -49,6 +57,17 @@ public class PlayerEquipment : MonoBehaviour
     {
         if (_playerInventory != null)
             _playerInventory.OnHotbarSelectionChanged -= OnHotbarChanged;
+
+        var equip = Equipment;
+        if (equip != null)
+            equip.OnChanged -= OnEquipRuntimeChanged;
+    }
+
+    // ══════ EquipmentRuntime → UI ══════
+
+    private void OnEquipRuntimeChanged()
+    {
+        OnEquipmentChanged?.Invoke();
     }
 
     // ══════ Hand — Auto từ Hotbar ══════
@@ -60,17 +79,15 @@ public class PlayerEquipment : MonoBehaviour
 
         var selectedItem = _playerInventory.SelectedItem;
 
-        // Kiểm tra item có phải Hand equipment không
+        // Kiểm tra item có AppearanceModule (có sprite trên nhân vật) không
         if (selectedItem != null && IsHandItem(selectedItem))
         {
-            equip.Equip(selectedItem); // Equip tự remove stats cũ + apply mới
+            equip.EquipHand(selectedItem);
         }
         else
         {
-            equip.ClearHand(); // Không phải Hand → clear
+            equip.ClearHand();
         }
-
-        OnEquipmentChanged?.Invoke();
     }
 
     // ══════ Gear — Mũ, Áo, Giày... ══════
@@ -83,8 +100,11 @@ public class PlayerEquipment : MonoBehaviour
     {
         if (entity == null || Entity == null) return false;
 
-        var equipInfo = entity.GetModule<EquipRuntime>();
-        if (equipInfo == null || equipInfo.GetEquipSlot() == EquipSlot.Hand) return false;
+        var appearance = entity.GetModule<AppearanceRuntime>();
+        if (appearance == null) return false;
+
+        // Hand items do hotbar quản lý, không equip qua đây
+        if (IsHandPart(appearance.EquipmentPart)) return false;
 
         var equip = Equipment;
         if (equip == null) return false;
@@ -102,42 +122,72 @@ public class PlayerEquipment : MonoBehaviour
         if (previous != null)
             _inventoryService.Pickup(previous, Entity);
 
-        OnEquipmentChanged?.Invoke();
         return true;
     }
 
     /// <summary>
     /// Tháo gear. Trả item lại Inventory.
     /// </summary>
-    public EntityRuntime UnequipGear(EquipSlot slot)
+    public EntityRuntime UnequipGear(EquipmentPart part)
     {
-        if (slot == EquipSlot.Hand) return null; // Hand do hotbar quản lý
+        if (IsHandPart(part)) return null; // Hand do hotbar quản lý
 
         var equip = Equipment;
         if (equip == null) return null;
 
-        var entity = equip.Unequip(slot);
+        var entity = equip.Unequip(part);
         if (entity == null) return null;
 
         // Nhét lại vào Inventory
         _inventoryService.Pickup(entity, Entity);
 
-        OnEquipmentChanged?.Invoke();
         return entity;
     }
 
     // ══════ Query ══════
 
-    public EntityRuntime GetEquipped(EquipSlot slot) => Equipment?.Get(slot);
+    public EntityRuntime GetEquipped(EquipmentPart part) => Equipment?.Get(part);
 
-    public EntityRuntime GetHandItem() => Equipment?.Get(EquipSlot.Hand);
+    public EntityRuntime GetHandItem()
+    {
+        var equip = Equipment;
+        if (equip == null) return null;
+
+        // Tìm bất kỳ hand-type slot nào đang có item
+        foreach (var handPart in _handParts)
+        {
+            var item = equip.Get(handPart);
+            if (item != null) return item;
+        }
+        return null;
+    }
 
     // ══════ Private ══════
 
+    private static readonly EquipmentPart[] _handParts =
+    {
+        EquipmentPart.MeleeWeapon1H,
+        EquipmentPart.MeleeWeapon2H,
+        EquipmentPart.Bow,
+        EquipmentPart.Crossbow,
+        EquipmentPart.Firearm1H,
+        EquipmentPart.Firearm2H,
+        EquipmentPart.SecondaryMelee1H,
+        EquipmentPart.SecondaryFirearm1H,
+        EquipmentPart.Shield
+    };
+
+    private static bool IsHandPart(EquipmentPart part)
+    {
+        return System.Array.IndexOf(_handParts, part) >= 0;
+    }
+
+    /// <summary>Item có phải hand item không (có AppearanceModule với hand-type part).</summary>
     private static bool IsHandItem(EntityRuntime entity)
     {
-        var equipInfo = entity.GetModule<EquipRuntime>();
-        return equipInfo != null && equipInfo.GetEquipSlot() == EquipSlot.Hand;
+        var appearance = entity.GetModule<AppearanceRuntime>();
+        if (appearance == null) return false;
+        return IsHandPart(appearance.EquipmentPart);
     }
 
     private InventoryRuntime FindInventoryOf(EntityRuntime entity)

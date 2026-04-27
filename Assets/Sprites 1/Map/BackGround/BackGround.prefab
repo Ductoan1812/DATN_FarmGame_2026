@@ -317,6 +317,16 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741826
+  - first: {x: -1, y: -2, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 27
+      m_TileSpriteIndex: 26
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741826
   - first: {x: -5, y: -1, z: 0}
     second:
       serializedVersion: 2
@@ -413,6 +423,8 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: 303a60b53c4f2e94aadb5c3a2c77763b, type: 2}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: ce2b624cdf9e9e44ba944af8eeecd41e, type: 2}
+  - m_RefCount: 1
+    m_Data: {fileID: 11400000, guid: 7c67fce755c2d7041bf6a4b5cabfdaf3, type: 2}
   m_TileSpriteArray:
   - m_RefCount: 1
     m_Data: {fileID: -1299733903, guid: 854bd8e9cfbe15e4ea7d254d5d439bb9, type: 3}
@@ -466,8 +478,10 @@ Tilemap:
     m_Data: {fileID: 1442683138, guid: 854bd8e9cfbe15e4ea7d254d5d439bb9, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 445122576, guid: 854bd8e9cfbe15e4ea7d254d5d439bb9, type: 3}
+  - m_RefCount: 1
+    m_Data: {fileID: 446749310, guid: b9a718f53c7428a4ebb0ffe5ef2d4d37, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 27
+  - m_RefCount: 28
     m_Data:
       e00: 1
       e01: 0
@@ -486,7 +500,7 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 27
+  - m_RefCount: 28
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
@@ -529,11 +543,6 @@ TilemapRenderer:
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -555,7 +564,6 @@ TilemapRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
@@ -567,7 +575,7 @@ TilemapRenderer:
   m_Mode: 0
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
---- !u!114 &2104739087232302687
+--- !u!114 &522425313956489103
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

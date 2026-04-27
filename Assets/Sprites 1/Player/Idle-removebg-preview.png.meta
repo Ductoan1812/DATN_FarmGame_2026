@@ -1,0 +1,818 @@
+fileFormatVersion: 2
+guid: afc763e7f8e221646864da1cb8fc0d5a
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 64
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Idle-removebg-preview_0
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 313
+        width: 55
+        height: 78
+      alignment: 9
+      pivot: {x: 0.47382194, y: 0.027979532}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f815de7e25c3d6240b1e3d261c08be5e
+      internalID: 1856105672
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle-removebg-preview_1
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 312
+        width: 54
+        height: 79
+      alignment: 9
+      pivot: {x: 0.48476437, y: 0.05217965}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a172d7869aa4fb40bfcae589c20e735
+      internalID: -168809526
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle-removebg-preview_2
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 312
+        width: 53
+        height: 79
+      alignment: 9
+      pivot: {x: 0.47283447, y: 0.054783303}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9c60d31fc177afa4582e0ed6445ff8c5
+      internalID: -1459479532
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle-removebg-preview_3
+      rect:
+        serializedVersion: 2
+        x: 247
+        y: 312
+        width: 54
+        height: 79
+      alignment: 9
+      pivot: {x: 0.45810163, y: 0.059990603}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0be64706f1dd25b4ab356b0279752075
+      internalID: -1801881774
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle-removebg-preview_4
+      rect:
+        serializedVersion: 2
+        x: 317
+        y: 313
+        width: 54
+        height: 79
+      alignment: 9
+      pivot: {x: 0.4809559, y: 0.054783303}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 50738835617b6ef4993f5e9ce4360087
+      internalID: 10654468
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle-removebg-preview_5
+      rect:
+        serializedVersion: 2
+        x: 388
+        y: 313
+        width: 53
+        height: 79
+      alignment: 9
+      pivot: {x: 0.4728359, y: 0.054783303}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fee8c17b010451f45b1aebff2a492f18
+      internalID: 848303128
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle-removebg-preview_6
+      rect:
+        serializedVersion: 2
+        x: 458
+        y: 312
+        width: 52
+        height: 79
+      alignment: 9
+      pivot: {x: 0.48417956, y: 0.057386953}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7be18962f24565a489a3debecf6745ae
+      internalID: -82301856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle-removebg-preview_7
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 313
+        width: 53
+        height: 78
+      alignment: 9
+      pivot: {x: 0.46895498, y: 0.041164692}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 66cc02baf8b0bdb4aad0374560199855
+      internalID: 844470493
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle-removebg-preview_8
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 218
+        width: 49
+        height: 82
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 59ad7e3942d31394181eeebc87784136
+      internalID: -684028792
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle-removebg-preview_9
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 217
+        width: 48
+        height: 82
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cac9bf4628398da49acd82a885678eef
+      internalID: 1417797787
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle-removebg-preview_10
+      rect:
+        serializedVersion: 2
+        x: 172
+        y: 217
+        width: 48
+        height: 82
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 725f8114175aef2488202abce77def53
+      internalID: -507193348
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle-removebg-preview_11
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 217
+        width: 48
+        height: 82
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d343666742eb6564186644135d43bb82
+      internalID: 941384301
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle-removebg-preview_12
+      rect:
+        serializedVersion: 2
+        x: 314
+        y: 217
+        width: 48
+        height: 82
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7de3d54ea474e547b509561a4857823
+      internalID: -1155246980
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle-removebg-preview_13
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 217
+        width: 48
+        height: 82
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c1075c69a5d3f84419138acd70d2e93a
+      internalID: 1143117284
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle-removebg-preview_14
+      rect:
+        serializedVersion: 2
+        x: 455
+        y: 217
+        width: 48
+        height: 82
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 12bfae7e4f77b934887c4ae39eecbb2e
+      internalID: 1714633920
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle-removebg-preview_15
+      rect:
+        serializedVersion: 2
+        x: 523
+        y: 217
+        width: 49
+        height: 82
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a8e60f54bb065f643be3c746c8dbf6bb
+      internalID: -1473149742
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle-removebg-preview_16
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 124
+        width: 48
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a014f577bc8a334aacc18d82d5be1b6
+      internalID: -1731984873
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle-removebg-preview_17
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 124
+        width: 47
+        height: 81
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d833b50664c29c040bb31372bb6e02bb
+      internalID: -1053684788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle-removebg-preview_18
+      rect:
+        serializedVersion: 2
+        x: 173
+        y: 124
+        width: 47
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 71d152c8421aa1d4b95865b7f845724b
+      internalID: -1727886345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle-removebg-preview_19
+      rect:
+        serializedVersion: 2
+        x: 245
+        y: 125
+        width: 47
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ef9744be64fbd294c9bbb6d392136237
+      internalID: 2076149925
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle-removebg-preview_20
+      rect:
+        serializedVersion: 2
+        x: 315
+        y: 124
+        width: 47
+        height: 81
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b6c54146046d6144b8a27050d70c0eec
+      internalID: -1131911243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle-removebg-preview_21
+      rect:
+        serializedVersion: 2
+        x: 386
+        y: 124
+        width: 47
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 138668c966c465c418100e33b7e75130
+      internalID: 93604925
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle-removebg-preview_22
+      rect:
+        serializedVersion: 2
+        x: 457
+        y: 124
+        width: 47
+        height: 81
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9eb347d3f2ed8674e9254831207bdcd1
+      internalID: -1678432066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle-removebg-preview_23
+      rect:
+        serializedVersion: 2
+        x: 526
+        y: 124
+        width: 47
+        height: 81
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8f3cc8742cab347408a032d4c892bf0e
+      internalID: -1826244506
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle-removebg-preview_24
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 33
+        width: 50
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e1d51124ff0c6e34a80d9e4bad466563
+      internalID: -326430151
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle-removebg-preview_25
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 33
+        width: 49
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e8ed628820e5f342b3329a8a98798da
+      internalID: 763763719
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle-removebg-preview_26
+      rect:
+        serializedVersion: 2
+        x: 172
+        y: 33
+        width: 48
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 513b39c86555da548ab77201d3b5c4d4
+      internalID: 2075523882
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle-removebg-preview_27
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 33
+        width: 49
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 279963f08d6538a42b3e9882ab9dac55
+      internalID: 1063374018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle-removebg-preview_28
+      rect:
+        serializedVersion: 2
+        x: 314
+        y: 33
+        width: 50
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2df482cff7559524788065acfce432cc
+      internalID: -1234217967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle-removebg-preview_29
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 33
+        width: 50
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bbea6c28ac005324bbc5e782f22ec1e7
+      internalID: 1803059501
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle-removebg-preview_30
+      rect:
+        serializedVersion: 2
+        x: 456
+        y: 33
+        width: 49
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f566084a47199e547b182c42810f8430
+      internalID: -636955324
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle-removebg-preview_31
+      rect:
+        serializedVersion: 2
+        x: 526
+        y: 33
+        width: 49
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d15e35478ff72d43bc3927979f46322
+      internalID: 871012517
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      Idle-removebg-preview_0: 1856105672
+      Idle-removebg-preview_1: -168809526
+      Idle-removebg-preview_10: -507193348
+      Idle-removebg-preview_11: 941384301
+      Idle-removebg-preview_12: -1155246980
+      Idle-removebg-preview_13: 1143117284
+      Idle-removebg-preview_14: 1714633920
+      Idle-removebg-preview_15: -1473149742
+      Idle-removebg-preview_16: -1731984873
+      Idle-removebg-preview_17: -1053684788
+      Idle-removebg-preview_18: -1727886345
+      Idle-removebg-preview_19: 2076149925
+      Idle-removebg-preview_2: -1459479532
+      Idle-removebg-preview_20: -1131911243
+      Idle-removebg-preview_21: 93604925
+      Idle-removebg-preview_22: -1678432066
+      Idle-removebg-preview_23: -1826244506
+      Idle-removebg-preview_24: -326430151
+      Idle-removebg-preview_25: 763763719
+      Idle-removebg-preview_26: 2075523882
+      Idle-removebg-preview_27: 1063374018
+      Idle-removebg-preview_28: -1234217967
+      Idle-removebg-preview_29: 1803059501
+      Idle-removebg-preview_3: -1801881774
+      Idle-removebg-preview_30: -636955324
+      Idle-removebg-preview_31: 871012517
+      Idle-removebg-preview_4: 10654468
+      Idle-removebg-preview_5: 848303128
+      Idle-removebg-preview_6: -82301856
+      Idle-removebg-preview_7: 844470493
+      Idle-removebg-preview_8: -684028792
+      Idle-removebg-preview_9: 1417797787
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -233,8 +233,12 @@ public class EntityService
     /// </summary>
     public void RestoreAllInventories()
     {
-        int count = 0;
+        int invCount = 0;
+        int equipCount = 0;
+
         foreach (var entity in registry.GetAll())
+        {
+            // Restore InventoryRuntime slots
             foreach (var inv in entity.GetModules<InventoryRuntime>())
             {
                 // Entity và inventory cùng chủ sở hữu → set Container trước khi RestoreSlots
@@ -242,8 +246,20 @@ public class EntityService
                     inv.Container = entity.Owner;
 
                 inv.RestoreSlots(registry);
-                count++;
+                invCount++;
             }
-        Debug.Log($"[EntityService] RestoreAllInventories: {count} inventory(s) restored.");
+
+            // Restore EquipmentRuntime slots
+            var equip = entity.GetModule<EquipmentRuntime>();
+            if (equip != null)
+            {
+                equip.SetOwner(entity);
+                equip.OwnerStats = entity.stats;
+                equip.RestoreSlots(registry);
+                equipCount++;
+            }
+        }
+
+        Debug.Log($"[EntityService] RestoreAll: {invCount} inventory(s), {equipCount} equipment(s) restored.");
     }
 }

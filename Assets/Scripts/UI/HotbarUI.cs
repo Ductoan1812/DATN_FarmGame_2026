@@ -59,7 +59,7 @@ public class HotbarUI : MonoBehaviour
         int count = transform.childCount;
         _slots = new SlotView[count];
         for (int i = 0; i < count; i++)
-            _slots[i] = new SlotView(transform.GetChild(i));
+            _slots[i] = new SlotView(transform.GetChild(i), i);
     }
 
     private void CacheSelectIndicator()
@@ -111,13 +111,18 @@ public class HotbarUI : MonoBehaviour
         private readonly Image _icon;
         private readonly TextMeshProUGUI _amount;
 
-        public SlotView(Transform root)
+        public SlotView(Transform root, int index)
         {
             var iconT = root.Find("Icon");
             if (iconT != null) _icon = iconT.GetComponent<Image>();
 
             var amountT = root.Find("Amount");
             if (amountT != null) _amount = amountT.GetComponent<TextMeshProUGUI>();
+
+            // Drag & drop
+            var drag = root.GetComponent<DraggableSlot>();
+            if (drag == null) drag = root.gameObject.AddComponent<DraggableSlot>();
+            drag.Init(InventoryType.Hotbar, index, _icon);
         }
 
         public void SetIcon(Sprite sprite)

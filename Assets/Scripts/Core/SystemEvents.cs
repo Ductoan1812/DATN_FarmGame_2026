@@ -78,6 +78,109 @@ public struct BackpackSlotChangedPublish
     { this.index = index; this.icon = icon; this.amount = amount; }
 }
 
+/// <summary>
+/// UI request chọn 1 slot backpack. BackpackUI publish, PlayerBridge subscribe.
+/// </summary>
+public struct BackpackSlotSelectedRequestPublish
+{
+    public readonly int slotIndex;
+    public BackpackSlotSelectedRequestPublish(int slotIndex)
+    { this.slotIndex = slotIndex; }
+}
+
+/// <summary>
+/// UI request sort backpack. BackpackUI publish, PlayerBridge subscribe.
+/// </summary>
+public struct BackpackSortRequestPublish { }
+
+/// <summary>
+/// UI request kéo thả slot giữa backpack ↔ hotbar (hoặc trong cùng 1 inventory).
+/// DraggableSlot publish, PlayerBridge subscribe.
+/// </summary>
+public struct SlotDragDropRequestPublish
+{
+    public readonly InventoryType srcType;
+    public readonly int srcIndex;
+    public readonly InventoryType dstType;
+    public readonly int dstIndex;
+    public SlotDragDropRequestPublish(InventoryType srcType, int srcIndex, InventoryType dstType, int dstIndex)
+    { this.srcType = srcType; this.srcIndex = srcIndex; this.dstType = dstType; this.dstIndex = dstIndex; }
+}
+
+/// <summary>
+/// UI request tách item tại slot backpack đang chọn.
+/// BackpackUI publish (khi nhấn btn_Separate), PlayerBridge subscribe.
+/// </summary>
+public struct BackpackSplitRequestPublish
+{
+    public readonly int slotIndex;
+    public readonly int splitAmount;
+    public BackpackSplitRequestPublish(int slotIndex, int splitAmount)
+    { this.slotIndex = slotIndex; this.splitAmount = splitAmount; }
+}
+
+/// <summary>
+/// UI request drop item tại slot ra world.
+/// BackpackUI publish (khi nhấn Btn_Drop) hoặc DraggableSlot publish (khi kéo ra ngoài).
+/// PlayerBridge subscribe → spawn EntityDrop tại vị trí Player.
+/// </summary>
+public struct InventoryDropRequestPublish
+{
+    public readonly InventoryType inventoryType;
+    public readonly int slotIndex;
+    public InventoryDropRequestPublish(InventoryType inventoryType, int slotIndex)
+    { this.inventoryType = inventoryType; this.slotIndex = slotIndex; }
+}
+
+/// <summary>
+/// Dữ liệu stat để UI hiển thị trong item info panel.
+/// </summary>
+public struct StatDisplay
+{
+    public readonly StatType statType;
+    public readonly float value;
+    public StatDisplay(StatType statType, float value)
+    { this.statType = statType; this.value = value; }
+}
+
+/// <summary>
+/// PlayerBridge publish khi item info của slot backpack được chọn thay đổi.
+/// </summary>
+public struct BackpackItemInfoChangedPublish
+{
+    public readonly int slotIndex;
+    public readonly bool isEmpty;
+    public readonly Sprite icon;
+    public readonly int amount;
+    public readonly string nameKey;
+    public readonly string descKey;
+    public readonly string categoryKey;
+    public readonly int sellPrice;
+    public readonly StatDisplay[] stats;
+
+    public BackpackItemInfoChangedPublish(
+        int slotIndex,
+        bool isEmpty,
+        Sprite icon,
+        int amount,
+        string nameKey,
+        string descKey,
+        string categoryKey,
+        int sellPrice,
+        StatDisplay[] stats)
+    {
+        this.slotIndex = slotIndex;
+        this.isEmpty = isEmpty;
+        this.icon = icon;
+        this.amount = amount;
+        this.nameKey = nameKey;
+        this.descKey = descKey;
+        this.categoryKey = categoryKey;
+        this.sellPrice = sellPrice;
+        this.stats = stats;
+    }
+}
+
 // ══════════════════════════════════════════════════════════
 //  Spawn / Despawn / Destroy
 // ══════════════════════════════════════════════════════════

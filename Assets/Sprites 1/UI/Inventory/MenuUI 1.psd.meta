@@ -546,7 +546,7 @@ TextureImporter:
         width: 316
         height: 605
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -567,7 +567,7 @@ TextureImporter:
         width: 261
         height: 7
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -588,7 +588,7 @@ TextureImporter:
         width: 257
         height: 6
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -596,6 +596,48 @@ TextureImporter:
       bones: []
       spriteID: 1db179bd594ec19449af9a98562e5897
       internalID: 2100627753
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MenuUI 1_24
+      rect:
+        serializedVersion: 2
+        x: 2772
+        y: 1065
+        width: 132
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4cd1c31bd6b077d48bdda4846ce59e0b
+      internalID: -22707297
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MenuUI 1_25
+      rect:
+        serializedVersion: 2
+        x: 2933
+        y: 1065
+        width: 137
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 73c8486a17d9657428c2c4a21afd4b27
+      internalID: -2042786543
       vertices: []
       indices: 
       edges: []
@@ -628,6 +670,8 @@ TextureImporter:
       MenuUI 1_21: 1857422491
       MenuUI 1_22: 171773161
       MenuUI 1_23: 2100627753
+      MenuUI 1_24: -22707297
+      MenuUI 1_25: -2042786543
       MenuUI 1_3: -2063129886
       MenuUI 1_4: 1040841881
       MenuUI 1_5: 1569325102

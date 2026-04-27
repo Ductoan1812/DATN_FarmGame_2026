@@ -14,9 +14,16 @@ public class PickUpObject : MonoBehaviour
 {
     [SerializeField] public string targetTag = "Player";
     [SerializeField] private float cooldown = 1f;
+    [SerializeField] private float pickupDelay = 3f;
 
     private EntityRuntime _entity;
     private float _nextTriggerTime;
+    private float _enabledTime;
+
+    private void OnEnable()
+    {
+        _enabledTime = Time.time;
+    }
 
     private void OnDisable()
     {
@@ -26,6 +33,7 @@ public class PickUpObject : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (Time.time < _nextTriggerTime) return;
+        if (Time.time < _enabledTime + pickupDelay) return;
         if (!other.CompareTag(targetTag)) return;
 
         // Lazy-cache entity (thay cho polling trong Update)

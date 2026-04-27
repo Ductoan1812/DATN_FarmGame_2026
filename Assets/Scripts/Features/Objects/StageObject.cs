@@ -19,6 +19,7 @@ public class StageObject : MonoBehaviour
 
     private void OnEnable()
     {
+        entity = GetComponent<EntityRoot>()?.GetEntity();
         eventBus = GameManager.Instance?.EventBus;
         if (eventBus != null && !subscribed)
         {

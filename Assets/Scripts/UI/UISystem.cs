@@ -16,6 +16,7 @@ public class UISystem : MonoBehaviour
     [Header("UI Panels")]
     [SerializeField] private GameObject controllerPanel;
     [SerializeField] private GameObject menuPanel;
+    [SerializeField] private GameObject panelShownWhenMenuOpen;
 
     [Header("Control Buttons")]
     [SerializeField] private Button openButton;
@@ -35,6 +36,7 @@ public class UISystem : MonoBehaviour
 
     private void Start()
     {
+        if (panelShownWhenMenuOpen != null) panelShownWhenMenuOpen.SetActive(false);
         ShowController();
         InitializeTabSystem();
 
@@ -67,6 +69,7 @@ public class UISystem : MonoBehaviour
         isMenuOpen = false;
         if (controllerPanel != null) controllerPanel.SetActive(true);
         if (menuPanel != null) menuPanel.SetActive(false);
+        if (panelShownWhenMenuOpen != null) panelShownWhenMenuOpen.SetActive(false);
         if (openButton != null) openButton.gameObject.SetActive(true);
         if (closeButton != null) closeButton.gameObject.SetActive(false);
 
@@ -78,8 +81,9 @@ public class UISystem : MonoBehaviour
     public void ShowMenu()
     {
         isMenuOpen = true;
-        if (controllerPanel != null) controllerPanel.SetActive(false);
+        if (controllerPanel != null) controllerPanel.SetActive(true);
         if (menuPanel != null) menuPanel.SetActive(true);
+        if (panelShownWhenMenuOpen != null) panelShownWhenMenuOpen.SetActive(true);
         if (openButton != null) openButton.gameObject.SetActive(false);
         if (closeButton != null) closeButton.gameObject.SetActive(true);
 
