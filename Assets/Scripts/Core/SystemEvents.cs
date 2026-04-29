@@ -10,8 +10,20 @@ public struct NextDayEventPublish { }
 
 // ── Boot / Save-Load ──────────────────────────────────────
 
-/// <summary>Broadcast sau khi toàn bộ world đã load xong (entities + gameobjects).</summary>
-public struct WorldReadyPublish { }
+/// <summary>Phase 1: SaveLoadManager đã load/tạo xong EntityRegistry (data sẵn sàng).</summary>
+public struct DataReadyPublish { }
+
+/// <summary>Phase 2: SpawnSystem đã spawn xong tất cả GameObjects trong world.</summary>
+public struct WorldObjectsSpawnedPublish { }
+
+/// <summary>Phase 3: EntityService đã restore xong tất cả inventory slots.</summary>
+public struct InventoryDataRestoredPublish { }
+
+/// <summary>Phase 4: PlayerBridge đã bind xong Player entity ↔ UI.</summary>
+public struct PlayerReadyPublish { }
+
+/// <summary>Phase 5: Toàn bộ boot sequence hoàn tất — game sẵn sàng chơi.</summary>
+public struct GameReadyPublish { }
 
 /// <summary>Yêu cầu save game.</summary>
 public struct SaveGameRequestPublish { }

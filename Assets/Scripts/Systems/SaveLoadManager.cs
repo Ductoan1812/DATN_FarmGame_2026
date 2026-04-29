@@ -3,14 +3,15 @@ using UnityEngine;
 
 /// <summary>
 /// Orchestrator cho boot sequence:
-///   Phase 1: Load EntityRegistry (tất cả EntityRuntime)
-///   Phase 2: Load SpatialEntityRegistry (positions, spatial) + TileRegistry dirty
-///   Phase 3: Spawn GameObjects từ SpatialEntityRegistry (bao gồm Player)
-///   Phase 4: Publish WorldReady → UI bind data
+///   Phase 1: Load EntityRegistry → publish DataReadyPublish
+///   Phase 2: Spawn GameObjects → publish WorldObjectsSpawnedPublish (SpawnSystem)
+///   Phase 3: Restore inventories → publish InventoryDataRestoredPublish
+///   Phase 4: PlayerBridge bind → publish PlayerReadyPublish
+///   Phase 5: GameManager publish GameReadyPublish
 ///
 /// New Game: không có save file → tạo Player entity mới + spawn tại vị trí mặc định.
 ///
-/// Save format mới:
+/// Save format:
 ///   - entities: chỉ entity đang tồn tại (bỏ ô trống)
 ///   - tileChanges: chỉ tile thay đổi so với baseline (dirty)
 /// </summary>
@@ -70,9 +71,20 @@ public class SaveLoadManager
             NewGame();
         }
 
-        // Phase 4: Broadcast WorldReady
-        _eventBus.Publish(new WorldReadyPublish());
-        Debug.Log("[SaveLoadManager] WorldReady published.");
+        // Phase 1: Entity data loaded
+        _eventBus.Publish(new DataReadyPublish());
+        Debug.Log("[SaveLoadManager] DataReadyPublish published.");
+
+        // Phase 2: World objects spawned (đã spawn trong LoadAll/NewGame)
+        _eventBus.Publish(new WorldObjectsSpawnedPublish());
+        Debug.Log("[SaveLoadManager] WorldObjectsSpawnedPublish published.");
+
+        // Phase 3: Restore inventories (chỉ khi load save)
+        if (hasSave)
+            _entityService.RestoreAllInventories();
+
+        _eventBus.Publish(new InventoryDataRestoredPublish());
+        Debug.Log("[SaveLoadManager] InventoryDataRestoredPublish published.");
     }
 
     // ══════════════════════════════════════
@@ -113,16 +125,13 @@ public class SaveLoadManager
             true
         );
 
-        // Phase 2+3: Load SpatialEntityRegistry + TileRegistry dirty + Spawn GameObjects
+        // Phase 2: Load SpatialEntityRegistry + TileRegistry dirty + Spawn GameObjects
         // → EntityRoot.Add → inv.Container được set
         _worldService.Load(WorldSaveFile, ep =>
         {
             var runtime = _entityService.Get(ep.idRuntime);
             _spawnSystem.ReinstantiateFromSave(ep, runtime);
         });
-
-        // Phase 4: Sau khi spawn xong, Container đã có → RestoreSlots → item.Owner đúng
-        _entityService.RestoreAllInventories();
     }
 
     // ══════════════════════════════════════

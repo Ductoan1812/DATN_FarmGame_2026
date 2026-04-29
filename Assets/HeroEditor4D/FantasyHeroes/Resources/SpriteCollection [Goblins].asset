@@ -193,8 +193,7 @@ MonoBehaviour:
     Edition: Common
     Collection: Goblin
     Path: Assets/HeroEditor4D/Common/Sprites/BodyParts/Ears/Goblin/Type1.png
-    Sprite: {fileID: 4475375876111409798, guid: 3923c8ce50671b94594dbff57c21891e,
-      type: 3}
+    Sprite: {fileID: 4475375876111409798, guid: 3923c8ce50671b94594dbff57c21891e, type: 3}
     Sprites:
     - {fileID: 4475375876111409798, guid: 3923c8ce50671b94594dbff57c21891e, type: 3}
     - {fileID: 8749302817991680212, guid: 3923c8ce50671b94594dbff57c21891e, type: 3}
@@ -206,8 +205,7 @@ MonoBehaviour:
     Edition: Common
     Collection: Goblin
     Path: Assets/HeroEditor4D/Common/Sprites/BodyParts/Ears/Goblin/Type2.png
-    Sprite: {fileID: 4475375876111409798, guid: b9dc565f1d1f6774eab060c5778dd346,
-      type: 3}
+    Sprite: {fileID: 4475375876111409798, guid: b9dc565f1d1f6774eab060c5778dd346, type: 3}
     Sprites:
     - {fileID: 4475375876111409798, guid: b9dc565f1d1f6774eab060c5778dd346, type: 3}
     - {fileID: 8749302817991680212, guid: b9dc565f1d1f6774eab060c5778dd346, type: 3}
@@ -219,8 +217,7 @@ MonoBehaviour:
     Edition: Common
     Collection: Goblin
     Path: Assets/HeroEditor4D/Common/Sprites/BodyParts/Ears/Goblin/Type3.png
-    Sprite: {fileID: 4475375876111409798, guid: 78f0e3a68085941499f17eba5353fd03,
-      type: 3}
+    Sprite: {fileID: 4475375876111409798, guid: 78f0e3a68085941499f17eba5353fd03, type: 3}
     Sprites:
     - {fileID: 4475375876111409798, guid: 78f0e3a68085941499f17eba5353fd03, type: 3}
     - {fileID: 8749302817991680212, guid: 78f0e3a68085941499f17eba5353fd03, type: 3}
@@ -232,8 +229,7 @@ MonoBehaviour:
     Edition: Common
     Collection: Goblin
     Path: Assets/HeroEditor4D/Common/Sprites/BodyParts/Ears/Goblin/Type4.png
-    Sprite: {fileID: 4475375876111409798, guid: ce375968048405a4da550611b1d641f6,
-      type: 3}
+    Sprite: {fileID: 4475375876111409798, guid: ce375968048405a4da550611b1d641f6, type: 3}
     Sprites:
     - {fileID: 4475375876111409798, guid: ce375968048405a4da550611b1d641f6, type: 3}
     - {fileID: 8749302817991680212, guid: ce375968048405a4da550611b1d641f6, type: 3}
@@ -306,8 +302,7 @@ MonoBehaviour:
     Edition: Common
     Collection: Goblin
     Path: Assets/HeroEditor4D/Common/Sprites/BodyParts/Hair/Goblin/Mohawk.png
-    Sprite: {fileID: -8137581963233685907, guid: 6a3c18a77a874214782e1b53a2f3e884,
-      type: 3}
+    Sprite: {fileID: -8137581963233685907, guid: 6a3c18a77a874214782e1b53a2f3e884, type: 3}
     Sprites:
     - {fileID: -8137581963233685907, guid: 6a3c18a77a874214782e1b53a2f3e884, type: 3}
     - {fileID: 6591478365344907407, guid: 6a3c18a77a874214782e1b53a2f3e884, type: 3}
@@ -319,8 +314,7 @@ MonoBehaviour:
     Edition: Common
     Collection: Goblin
     Path: Assets/HeroEditor4D/Common/Sprites/BodyParts/Hair/Goblin/Type1.png
-    Sprite: {fileID: -8137581963233685907, guid: f1de4b5a5fa33784386df3d27f654267,
-      type: 3}
+    Sprite: {fileID: -8137581963233685907, guid: f1de4b5a5fa33784386df3d27f654267, type: 3}
     Sprites:
     - {fileID: -8137581963233685907, guid: f1de4b5a5fa33784386df3d27f654267, type: 3}
     - {fileID: 6591478365344907407, guid: f1de4b5a5fa33784386df3d27f654267, type: 3}
@@ -332,8 +326,7 @@ MonoBehaviour:
     Edition: Common
     Collection: Goblin
     Path: Assets/HeroEditor4D/Common/Sprites/BodyParts/Hair/Goblin/Type2.png
-    Sprite: {fileID: -8137581963233685907, guid: b54775a584ed26142bb5a092b7d04657,
-      type: 3}
+    Sprite: {fileID: -8137581963233685907, guid: b54775a584ed26142bb5a092b7d04657, type: 3}
     Sprites:
     - {fileID: -8137581963233685907, guid: b54775a584ed26142bb5a092b7d04657, type: 3}
     - {fileID: 6591478365344907407, guid: b54775a584ed26142bb5a092b7d04657, type: 3}
@@ -345,8 +338,7 @@ MonoBehaviour:
     Edition: Common
     Collection: Goblin
     Path: Assets/HeroEditor4D/Common/Sprites/BodyParts/Hair/Goblin/Type3.png
-    Sprite: {fileID: -8137581963233685907, guid: 8e99e656d4526f149a8a6c92cda3423d,
-      type: 3}
+    Sprite: {fileID: -8137581963233685907, guid: 8e99e656d4526f149a8a6c92cda3423d, type: 3}
     Sprites:
     - {fileID: -8137581963233685907, guid: 8e99e656d4526f149a8a6c92cda3423d, type: 3}
     - {fileID: 6591478365344907407, guid: 8e99e656d4526f149a8a6c92cda3423d, type: 3}
@@ -358,8 +350,7 @@ MonoBehaviour:
     Edition: Common
     Collection: Goblin
     Path: Assets/HeroEditor4D/Common/Sprites/BodyParts/Hair/Goblin/Type4.png
-    Sprite: {fileID: -8137581963233685907, guid: 073859eda1459974cac549e4d977ba91,
-      type: 3}
+    Sprite: {fileID: -8137581963233685907, guid: 073859eda1459974cac549e4d977ba91, type: 3}
     Sprites:
     - {fileID: -8137581963233685907, guid: 073859eda1459974cac549e4d977ba91, type: 3}
     - {fileID: 6591478365344907407, guid: 073859eda1459974cac549e4d977ba91, type: 3}
@@ -371,8 +362,7 @@ MonoBehaviour:
     Edition: Common
     Collection: Goblin
     Path: Assets/HeroEditor4D/Common/Sprites/BodyParts/Hair/Goblin/Type5.png
-    Sprite: {fileID: -8137581963233685907, guid: dca275dc8268bd94e8aa290bbb85f216,
-      type: 3}
+    Sprite: {fileID: -8137581963233685907, guid: dca275dc8268bd94e8aa290bbb85f216, type: 3}
     Sprites:
     - {fileID: -8137581963233685907, guid: dca275dc8268bd94e8aa290bbb85f216, type: 3}
     - {fileID: 6591478365344907407, guid: dca275dc8268bd94e8aa290bbb85f216, type: 3}
@@ -384,8 +374,7 @@ MonoBehaviour:
     Edition: Common
     Collection: Goblin
     Path: Assets/HeroEditor4D/Common/Sprites/BodyParts/Hair/Goblin/Type6.png
-    Sprite: {fileID: -8137581963233685907, guid: f8994c5084f47ca4a94128acd8fa0c13,
-      type: 3}
+    Sprite: {fileID: -8137581963233685907, guid: f8994c5084f47ca4a94128acd8fa0c13, type: 3}
     Sprites:
     - {fileID: -8137581963233685907, guid: f8994c5084f47ca4a94128acd8fa0c13, type: 3}
     - {fileID: 6591478365344907407, guid: f8994c5084f47ca4a94128acd8fa0c13, type: 3}
@@ -397,8 +386,7 @@ MonoBehaviour:
     Edition: Common
     Collection: Goblin
     Path: Assets/HeroEditor4D/Common/Sprites/BodyParts/Hair/Goblin/Type7.png
-    Sprite: {fileID: -8137581963233685907, guid: 4542262938e29004382294fae3135007,
-      type: 3}
+    Sprite: {fileID: -8137581963233685907, guid: 4542262938e29004382294fae3135007, type: 3}
     Sprites:
     - {fileID: -8137581963233685907, guid: 4542262938e29004382294fae3135007, type: 3}
     - {fileID: 6591478365344907407, guid: 4542262938e29004382294fae3135007, type: 3}
@@ -410,8 +398,7 @@ MonoBehaviour:
     Edition: Common
     Collection: Goblin
     Path: Assets/HeroEditor4D/Common/Sprites/BodyParts/Hair/Goblin/Type8.png
-    Sprite: {fileID: -8137581963233685907, guid: 5125ac597e2c7a548b6076a648cf568c,
-      type: 3}
+    Sprite: {fileID: -8137581963233685907, guid: 5125ac597e2c7a548b6076a648cf568c, type: 3}
     Sprites:
     - {fileID: -8137581963233685907, guid: 5125ac597e2c7a548b6076a648cf568c, type: 3}
     - {fileID: 6591478365344907407, guid: 5125ac597e2c7a548b6076a648cf568c, type: 3}
@@ -423,8 +410,7 @@ MonoBehaviour:
     Edition: Common
     Collection: Goblin
     Path: Assets/HeroEditor4D/Common/Sprites/BodyParts/Hair/Goblin/Type9.png
-    Sprite: {fileID: -8137581963233685907, guid: 13535ae4f24059342ae6e8989f7b4b16,
-      type: 3}
+    Sprite: {fileID: -8137581963233685907, guid: 13535ae4f24059342ae6e8989f7b4b16, type: 3}
     Sprites:
     - {fileID: -8137581963233685907, guid: 13535ae4f24059342ae6e8989f7b4b16, type: 3}
     - {fileID: 6591478365344907407, guid: 13535ae4f24059342ae6e8989f7b4b16, type: 3}
@@ -437,8 +423,7 @@ MonoBehaviour:
     Edition: Common
     Collection: Goblin
     Path: Assets/HeroEditor4D/Common/Sprites/BodyParts/Beard/Goblin/Type1.png
-    Sprite: {fileID: 6591478365344907407, guid: ccf447a9472c64046a250e4c1331cee2,
-      type: 3}
+    Sprite: {fileID: 6591478365344907407, guid: ccf447a9472c64046a250e4c1331cee2, type: 3}
     Sprites:
     - {fileID: 6591478365344907407, guid: ccf447a9472c64046a250e4c1331cee2, type: 3}
     - {fileID: 8968894577945027273, guid: ccf447a9472c64046a250e4c1331cee2, type: 3}
@@ -449,8 +434,7 @@ MonoBehaviour:
     Edition: Common
     Collection: Goblin
     Path: Assets/HeroEditor4D/Common/Sprites/BodyParts/Beard/Goblin/Type2.png
-    Sprite: {fileID: 6591478365344907407, guid: 8b4ee3bc1e87ff849aa4f15269d530ed,
-      type: 3}
+    Sprite: {fileID: 6591478365344907407, guid: 8b4ee3bc1e87ff849aa4f15269d530ed, type: 3}
     Sprites:
     - {fileID: 6591478365344907407, guid: 8b4ee3bc1e87ff849aa4f15269d530ed, type: 3}
     - {fileID: 8968894577945027273, guid: 8b4ee3bc1e87ff849aa4f15269d530ed, type: 3}
@@ -461,8 +445,7 @@ MonoBehaviour:
     Edition: Common
     Collection: Goblin
     Path: Assets/HeroEditor4D/Common/Sprites/BodyParts/Beard/Goblin/Type3.png
-    Sprite: {fileID: 6591478365344907407, guid: 69076c9094bd49a4da8eaea1c971aefb,
-      type: 3}
+    Sprite: {fileID: 6591478365344907407, guid: 69076c9094bd49a4da8eaea1c971aefb, type: 3}
     Sprites:
     - {fileID: 6591478365344907407, guid: 69076c9094bd49a4da8eaea1c971aefb, type: 3}
     - {fileID: 8968894577945027273, guid: 69076c9094bd49a4da8eaea1c971aefb, type: 3}
@@ -473,8 +456,7 @@ MonoBehaviour:
     Edition: Common
     Collection: Goblin
     Path: Assets/HeroEditor4D/Common/Sprites/BodyParts/Beard/Goblin/Type4.png
-    Sprite: {fileID: 6591478365344907407, guid: 92d07c2a58110664799d4105fee8982c,
-      type: 3}
+    Sprite: {fileID: 6591478365344907407, guid: 92d07c2a58110664799d4105fee8982c, type: 3}
     Sprites:
     - {fileID: 6591478365344907407, guid: 92d07c2a58110664799d4105fee8982c, type: 3}
     - {fileID: 8968894577945027273, guid: 92d07c2a58110664799d4105fee8982c, type: 3}
@@ -487,8 +469,7 @@ MonoBehaviour:
     Edition: Common
     Collection: Goblin
     Path: Assets/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Goblin/Angry.png
-    Sprite: {fileID: 6591478365344907407, guid: ac3058d31519f0a4a858717de45a6217,
-      type: 3}
+    Sprite: {fileID: 6591478365344907407, guid: ac3058d31519f0a4a858717de45a6217, type: 3}
     Sprites:
     - {fileID: 6591478365344907407, guid: ac3058d31519f0a4a858717de45a6217, type: 3}
     - {fileID: 8968894577945027273, guid: ac3058d31519f0a4a858717de45a6217, type: 3}
@@ -3106,8 +3087,7 @@ MonoBehaviour:
     Edition: FantasyHeroes
     Collection: Basic
     Path: Assets/HeroEditor4D/FantasyHeroes/Sprites/Equipment/Bow/Basic/BoneBow.png
-    Sprite: {fileID: 7034423813313189624, guid: 99840cb4e0918d944948f8d07f7d96de,
-      type: 3}
+    Sprite: {fileID: 7034423813313189624, guid: 99840cb4e0918d944948f8d07f7d96de, type: 3}
     Sprites:
     - {fileID: 7034423813313189624, guid: 99840cb4e0918d944948f8d07f7d96de, type: 3}
     - {fileID: -4746564685177126027, guid: 99840cb4e0918d944948f8d07f7d96de, type: 3}
@@ -3525,8 +3505,7 @@ MonoBehaviour:
     Edition: Common
     Collection: Christmas
     Path: Assets/HeroEditor4D/Common/Sprites/Equipment/Firearm1H/Christmas/CandyCannon.png
-    Sprite: {fileID: -768287472138149725, guid: 4c6d1938fb8419342bffd942c1dc56ea,
-      type: 3}
+    Sprite: {fileID: -768287472138149725, guid: 4c6d1938fb8419342bffd942c1dc56ea, type: 3}
     Sprites:
     - {fileID: -768287472138149725, guid: 4c6d1938fb8419342bffd942c1dc56ea, type: 3}
     - {fileID: -3905612625394228665, guid: 4c6d1938fb8419342bffd942c1dc56ea, type: 3}
@@ -3538,8 +3517,7 @@ MonoBehaviour:
     Edition: FantasyHeroes
     Collection: Basic
     Path: Assets/HeroEditor4D/FantasyHeroes/Sprites/Equipment/Firearm1H/Basic/CombatPistol.png
-    Sprite: {fileID: -768287472138149725, guid: eac35799234d3994ca99b0ee02f3fca5,
-      type: 3}
+    Sprite: {fileID: -768287472138149725, guid: eac35799234d3994ca99b0ee02f3fca5, type: 3}
     Sprites:
     - {fileID: -768287472138149725, guid: eac35799234d3994ca99b0ee02f3fca5, type: 3}
     - {fileID: -3905612625394228665, guid: eac35799234d3994ca99b0ee02f3fca5, type: 3}
@@ -3551,8 +3529,7 @@ MonoBehaviour:
     Edition: FantasyHeroes
     Collection: Basic
     Path: Assets/HeroEditor4D/FantasyHeroes/Sprites/Equipment/Firearm1H/Basic/DoubleBarrelledShotgun.png
-    Sprite: {fileID: -768287472138149725, guid: 66b74113d0b1c084bad8cbe94284584a,
-      type: 3}
+    Sprite: {fileID: -768287472138149725, guid: 66b74113d0b1c084bad8cbe94284584a, type: 3}
     Sprites:
     - {fileID: -768287472138149725, guid: 66b74113d0b1c084bad8cbe94284584a, type: 3}
     - {fileID: -3905612625394228665, guid: 66b74113d0b1c084bad8cbe94284584a, type: 3}
@@ -3564,8 +3541,7 @@ MonoBehaviour:
     Edition: FantasyHeroes
     Collection: Basic
     Path: Assets/HeroEditor4D/FantasyHeroes/Sprites/Equipment/Firearm1H/Basic/FlintlockPistol.png
-    Sprite: {fileID: -768287472138149725, guid: 371bc9205192150449f0271e6086d5c7,
-      type: 3}
+    Sprite: {fileID: -768287472138149725, guid: 371bc9205192150449f0271e6086d5c7, type: 3}
     Sprites:
     - {fileID: -768287472138149725, guid: 371bc9205192150449f0271e6086d5c7, type: 3}
     - {fileID: -3905612625394228665, guid: 371bc9205192150449f0271e6086d5c7, type: 3}
@@ -3577,8 +3553,7 @@ MonoBehaviour:
     Edition: FantasyHeroes
     Collection: Basic
     Path: Assets/HeroEditor4D/FantasyHeroes/Sprites/Equipment/Firearm1H/Basic/HomemadeWickPistol.png
-    Sprite: {fileID: -768287472138149725, guid: 6cde62381eb81c14bab2bed8b05019ff,
-      type: 3}
+    Sprite: {fileID: -768287472138149725, guid: 6cde62381eb81c14bab2bed8b05019ff, type: 3}
     Sprites:
     - {fileID: -768287472138149725, guid: 6cde62381eb81c14bab2bed8b05019ff, type: 3}
     - {fileID: -3905612625394228665, guid: 6cde62381eb81c14bab2bed8b05019ff, type: 3}
@@ -3590,8 +3565,7 @@ MonoBehaviour:
     Edition: FantasyHeroes
     Collection: Basic
     Path: Assets/HeroEditor4D/FantasyHeroes/Sprites/Equipment/Firearm1H/Basic/LongBarreledPistol.png
-    Sprite: {fileID: -768287472138149725, guid: d9f0d088ace613042a6870767341b87c,
-      type: 3}
+    Sprite: {fileID: -768287472138149725, guid: d9f0d088ace613042a6870767341b87c, type: 3}
     Sprites:
     - {fileID: -768287472138149725, guid: d9f0d088ace613042a6870767341b87c, type: 3}
     - {fileID: -3905612625394228665, guid: d9f0d088ace613042a6870767341b87c, type: 3}
@@ -3603,8 +3577,7 @@ MonoBehaviour:
     Edition: FantasyHeroes
     Collection: Basic
     Path: Assets/HeroEditor4D/FantasyHeroes/Sprites/Equipment/Firearm1H/Basic/OldFlintlockPistol.png
-    Sprite: {fileID: -768287472138149725, guid: 8a4a938b369ed9b4da0520ff09fe3859,
-      type: 3}
+    Sprite: {fileID: -768287472138149725, guid: 8a4a938b369ed9b4da0520ff09fe3859, type: 3}
     Sprites:
     - {fileID: -768287472138149725, guid: 8a4a938b369ed9b4da0520ff09fe3859, type: 3}
     - {fileID: -3905612625394228665, guid: 8a4a938b369ed9b4da0520ff09fe3859, type: 3}
@@ -3616,8 +3589,7 @@ MonoBehaviour:
     Edition: FantasyHeroes
     Collection: Basic
     Path: Assets/HeroEditor4D/FantasyHeroes/Sprites/Equipment/Firearm1H/Basic/RustedMortair.png
-    Sprite: {fileID: -768287472138149725, guid: 96b111785f4dd4944b0b8542114cbde4,
-      type: 3}
+    Sprite: {fileID: -768287472138149725, guid: 96b111785f4dd4944b0b8542114cbde4, type: 3}
     Sprites:
     - {fileID: -768287472138149725, guid: 96b111785f4dd4944b0b8542114cbde4, type: 3}
     - {fileID: -3905612625394228665, guid: 96b111785f4dd4944b0b8542114cbde4, type: 3}
@@ -3629,8 +3601,7 @@ MonoBehaviour:
     Edition: FantasyHeroes
     Collection: Basic
     Path: Assets/HeroEditor4D/FantasyHeroes/Sprites/Equipment/Firearm1H/Basic/RustedShotgun.png
-    Sprite: {fileID: -768287472138149725, guid: 74769dc77c4418a43a9f8c7647f41267,
-      type: 3}
+    Sprite: {fileID: -768287472138149725, guid: 74769dc77c4418a43a9f8c7647f41267, type: 3}
     Sprites:
     - {fileID: -768287472138149725, guid: 74769dc77c4418a43a9f8c7647f41267, type: 3}
     - {fileID: -3905612625394228665, guid: 74769dc77c4418a43a9f8c7647f41267, type: 3}
@@ -3642,8 +3613,7 @@ MonoBehaviour:
     Edition: FantasyHeroes
     Collection: Basic
     Path: Assets/HeroEditor4D/FantasyHeroes/Sprites/Equipment/Firearm1H/Basic/SawedOffShotgun.png
-    Sprite: {fileID: -768287472138149725, guid: bd612ab463688ef478d29170a8309c5b,
-      type: 3}
+    Sprite: {fileID: -768287472138149725, guid: bd612ab463688ef478d29170a8309c5b, type: 3}
     Sprites:
     - {fileID: -768287472138149725, guid: bd612ab463688ef478d29170a8309c5b, type: 3}
     - {fileID: -3905612625394228665, guid: bd612ab463688ef478d29170a8309c5b, type: 3}
@@ -3655,8 +3625,7 @@ MonoBehaviour:
     Edition: FantasyHeroes
     Collection: Basic
     Path: Assets/HeroEditor4D/FantasyHeroes/Sprites/Equipment/Firearm1H/Basic/ShortFlintlockPistol.png
-    Sprite: {fileID: -768287472138149725, guid: 6f14d8e323865304283c8087a0bb3053,
-      type: 3}
+    Sprite: {fileID: -768287472138149725, guid: 6f14d8e323865304283c8087a0bb3053, type: 3}
     Sprites:
     - {fileID: -768287472138149725, guid: 6f14d8e323865304283c8087a0bb3053, type: 3}
     - {fileID: -3905612625394228665, guid: 6f14d8e323865304283c8087a0bb3053, type: 3}
@@ -3668,8 +3637,7 @@ MonoBehaviour:
     Edition: FantasyHeroes
     Collection: Basic
     Path: Assets/HeroEditor4D/FantasyHeroes/Sprites/Equipment/Firearm1H/Basic/Trombone.png
-    Sprite: {fileID: -768287472138149725, guid: 6b5103c1a7ac4514cb73e51d1e52d65c,
-      type: 3}
+    Sprite: {fileID: -768287472138149725, guid: 6b5103c1a7ac4514cb73e51d1e52d65c, type: 3}
     Sprites:
     - {fileID: -768287472138149725, guid: 6b5103c1a7ac4514cb73e51d1e52d65c, type: 3}
     - {fileID: -3905612625394228665, guid: 6b5103c1a7ac4514cb73e51d1e52d65c, type: 3}
@@ -3681,8 +3649,7 @@ MonoBehaviour:
     Edition: FantasyHeroes
     Collection: Basic
     Path: Assets/HeroEditor4D/FantasyHeroes/Sprites/Equipment/Firearm1H/Basic/WickPistol.png
-    Sprite: {fileID: -768287472138149725, guid: 0f2088e6c67436a4dbf3084f1e727d52,
-      type: 3}
+    Sprite: {fileID: -768287472138149725, guid: 0f2088e6c67436a4dbf3084f1e727d52, type: 3}
     Sprites:
     - {fileID: -768287472138149725, guid: 0f2088e6c67436a4dbf3084f1e727d52, type: 3}
     - {fileID: -3905612625394228665, guid: 0f2088e6c67436a4dbf3084f1e727d52, type: 3}
@@ -3695,8 +3662,7 @@ MonoBehaviour:
     Edition: FantasyHeroes
     Collection: Basic
     Path: Assets/HeroEditor4D/FantasyHeroes/Sprites/Equipment/Firearm2H/Basic/HarpoonGun.png
-    Sprite: {fileID: -768287472138149725, guid: 051c843148e085c49ac7a5e07add609b,
-      type: 3}
+    Sprite: {fileID: -768287472138149725, guid: 051c843148e085c49ac7a5e07add609b, type: 3}
     Sprites:
     - {fileID: -768287472138149725, guid: 051c843148e085c49ac7a5e07add609b, type: 3}
     - {fileID: -3905612625394228665, guid: 051c843148e085c49ac7a5e07add609b, type: 3}
@@ -3708,8 +3674,7 @@ MonoBehaviour:
     Edition: Common
     Collection: Christmas
     Path: Assets/HeroEditor4D/Common/Sprites/Equipment/Firearm2H/Christmas/Musket.png
-    Sprite: {fileID: -768287472138149725, guid: 712bf18a779eb7844bbd1698ae215f54,
-      type: 3}
+    Sprite: {fileID: -768287472138149725, guid: 712bf18a779eb7844bbd1698ae215f54, type: 3}
     Sprites:
     - {fileID: -768287472138149725, guid: 712bf18a779eb7844bbd1698ae215f54, type: 3}
     - {fileID: -3905612625394228665, guid: 712bf18a779eb7844bbd1698ae215f54, type: 3}
@@ -7106,8 +7071,7 @@ MonoBehaviour:
     Edition: FantasyHeroes
     Collection: Goblin
     Path: Assets/HeroEditor4D/FantasyHeroes/Sprites/Equipment/Makeup/Goblin/Type1.png
-    Sprite: {fileID: -8137581963233685907, guid: 6c349ae6e68fe734f8b505859ea75c7f,
-      type: 3}
+    Sprite: {fileID: -8137581963233685907, guid: 6c349ae6e68fe734f8b505859ea75c7f, type: 3}
     Sprites:
     - {fileID: -8137581963233685907, guid: 6c349ae6e68fe734f8b505859ea75c7f, type: 3}
     - {fileID: 6591478365344907407, guid: 6c349ae6e68fe734f8b505859ea75c7f, type: 3}
@@ -7119,8 +7083,7 @@ MonoBehaviour:
     Edition: FantasyHeroes
     Collection: Goblin
     Path: Assets/HeroEditor4D/FantasyHeroes/Sprites/Equipment/Makeup/Goblin/Type2.png
-    Sprite: {fileID: -8137581963233685907, guid: b725f998e0cfc36479499ad1c580a0a9,
-      type: 3}
+    Sprite: {fileID: -8137581963233685907, guid: b725f998e0cfc36479499ad1c580a0a9, type: 3}
     Sprites:
     - {fileID: -8137581963233685907, guid: b725f998e0cfc36479499ad1c580a0a9, type: 3}
     - {fileID: 6591478365344907407, guid: b725f998e0cfc36479499ad1c580a0a9, type: 3}
@@ -7133,8 +7096,7 @@ MonoBehaviour:
     Edition: FantasyHeroes
     Collection: Goblin
     Path: Assets/HeroEditor4D/FantasyHeroes/Sprites/Equipment/Mask/Goblin/EyePatchAsymmetric.png
-    Sprite: {fileID: -8137581963233685907, guid: 5877336fab242bf45a023ee11d9bcb7a,
-      type: 3}
+    Sprite: {fileID: -8137581963233685907, guid: 5877336fab242bf45a023ee11d9bcb7a, type: 3}
     Sprites:
     - {fileID: -8137581963233685907, guid: 5877336fab242bf45a023ee11d9bcb7a, type: 3}
     - {fileID: 6591478365344907407, guid: 5877336fab242bf45a023ee11d9bcb7a, type: 3}
@@ -7148,8 +7110,7 @@ MonoBehaviour:
     Edition: FantasyHeroes
     Collection: Goblin
     Path: Assets/HeroEditor4D/FantasyHeroes/Sprites/Equipment/Earrings/Goblin/Type1.png
-    Sprite: {fileID: -7723269463868277591, guid: e586d42e444abec438b5af47b7f4fca0,
-      type: 3}
+    Sprite: {fileID: -7723269463868277591, guid: e586d42e444abec438b5af47b7f4fca0, type: 3}
     Sprites:
     - {fileID: -7723269463868277591, guid: e586d42e444abec438b5af47b7f4fca0, type: 3}
     - {fileID: -5411889706109369529, guid: e586d42e444abec438b5af47b7f4fca0, type: 3}
@@ -7164,8 +7125,7 @@ MonoBehaviour:
     Edition: FantasyHeroes
     Collection: Goblin
     Path: Assets/HeroEditor4D/FantasyHeroes/Sprites/Equipment/Earrings/Goblin/Type2.png
-    Sprite: {fileID: -5411889706109369529, guid: 497857e37d5512340a8392c4abf869d3,
-      type: 3}
+    Sprite: {fileID: -5411889706109369529, guid: 497857e37d5512340a8392c4abf869d3, type: 3}
     Sprites:
     - {fileID: -5411889706109369529, guid: 497857e37d5512340a8392c4abf869d3, type: 3}
     - {fileID: -7723269463868277591, guid: 497857e37d5512340a8392c4abf869d3, type: 3}
@@ -7180,8 +7140,7 @@ MonoBehaviour:
     Edition: FantasyHeroes
     Collection: Goblin
     Path: Assets/HeroEditor4D/FantasyHeroes/Sprites/Equipment/Earrings/Goblin/Type3.png
-    Sprite: {fileID: -5411889706109369529, guid: 76ef98222a056264a97da62b8b65be7d,
-      type: 3}
+    Sprite: {fileID: -5411889706109369529, guid: 76ef98222a056264a97da62b8b65be7d, type: 3}
     Sprites:
     - {fileID: -5411889706109369529, guid: 76ef98222a056264a97da62b8b65be7d, type: 3}
     - {fileID: -7723269463868277591, guid: 76ef98222a056264a97da62b8b65be7d, type: 3}
@@ -7192,5 +7151,5 @@ MonoBehaviour:
     Tags: []
     Meta: 
   Wings: []
-  IncludePsd: 0
-  DebugLogging: 0
+  IncludePsd: 1
+  DebugLogging: 1

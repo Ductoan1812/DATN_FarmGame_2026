@@ -42,17 +42,23 @@ public class PlayerBridge : MonoBehaviour
     private void OnEnable()
     {
         var eb = GameManager.Instance?.EventBus;
-        if (eb != null) eb.Subscribe<WorldReadyPublish>(OnWorldReady);
+        if (eb != null) eb.Subscribe<InventoryDataRestoredPublish>(OnInventoryDataRestored);
     }
 
     private void OnDisable()
     {
         Unbind();
         var eb = GameManager.Instance?.EventBus;
-        if (eb != null) eb.Unsubscribe<WorldReadyPublish>(OnWorldReady);
+        if (eb != null) eb.Unsubscribe<InventoryDataRestoredPublish>(OnInventoryDataRestored);
     }
 
-    private void OnWorldReady(WorldReadyPublish _) => Bind();
+    private void OnInventoryDataRestored(InventoryDataRestoredPublish _)
+    {
+        Bind();
+        // PlayerBridge đã bind xong → publish PlayerReadyPublish
+        _eventBus?.Publish(new PlayerReadyPublish());
+        Debug.Log("[PlayerBridge] PlayerReadyPublish published.");
+    }
 
     // ══════════════════════════════════════════════════════════
     //  Bind / Unbind

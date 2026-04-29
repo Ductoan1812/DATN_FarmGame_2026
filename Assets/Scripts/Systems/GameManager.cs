@@ -55,11 +55,12 @@ public class GameManager : MonoBehaviour
         // Subscribe save/load events
         EventBus.Subscribe<SaveGameRequestPublish>(OnSaveRequest);
         EventBus.Subscribe<LoadGameRequestPublish>(OnLoadRequest);
+        EventBus.Subscribe<PlayerReadyPublish>(OnPlayerReady);
     }
 
     private void Start()
     {
-        // Phase 2-4: Boot sequence (load data → spawn objects → WorldReady)
+        // Boot sequence: DataReady → WorldObjectsSpawned → InventoryDataRestored → PlayerReady → GameReady
         SaveLoadManager.Boot();
     }
 
@@ -69,6 +70,7 @@ public class GameManager : MonoBehaviour
         {
             EventBus.Unsubscribe<SaveGameRequestPublish>(OnSaveRequest);
             EventBus.Unsubscribe<LoadGameRequestPublish>(OnLoadRequest);
+            EventBus.Unsubscribe<PlayerReadyPublish>(OnPlayerReady);
         }
     }
 
@@ -192,5 +194,11 @@ public class GameManager : MonoBehaviour
     {
         // TODO: full reload (destroy all → re-boot)
         Debug.LogWarning("[GameManager] Runtime reload not yet implemented. Restart the game to load.");
+    }
+
+    private void OnPlayerReady(PlayerReadyPublish _)
+    {
+        EventBus.Publish(new GameReadyPublish());
+        Debug.Log("[GameManager] GameReadyPublish published — boot sequence complete.");
     }
 }

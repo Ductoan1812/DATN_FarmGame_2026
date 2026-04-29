@@ -35,7 +35,7 @@ public class PlayerInventory : MonoBehaviour
     private void OnEnable()
     {
         var bus = GameManager.Instance?.EventBus;
-        if (bus != null) bus.Subscribe<WorldReadyPublish>(OnWorldReady);
+        if (bus != null) bus.Subscribe<GameReadyPublish>(OnGameReady);
     }
 
     private void OnDisable()
@@ -45,10 +45,10 @@ public class PlayerInventory : MonoBehaviour
             _cachedHotbar.OnSelectionChanged -= ForwardSelectionChanged;
 
         var bus = GameManager.Instance?.EventBus;
-        if (bus != null) bus.Unsubscribe<WorldReadyPublish>(OnWorldReady);
+        if (bus != null) bus.Unsubscribe<GameReadyPublish>(OnGameReady);
     }
 
-    private void OnWorldReady(WorldReadyPublish _)
+    private void OnGameReady(GameReadyPublish _)
     {
         _inventoryService = GameManager.Instance.InventoryService;
         _ready = true;

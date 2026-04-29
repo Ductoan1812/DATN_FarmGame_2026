@@ -23,7 +23,7 @@ public class HealthBarUI : MonoBehaviour
     {
         var bus = GameManager.Instance?.EventBus;
         if (bus == null) return;
-        bus.Subscribe<WorldReadyPublish>(OnWorldReady);
+        bus.Subscribe<GameReadyPublish>(OnGameReady);
         bus.Subscribe<StatsChangedPublish>(OnStatsChanged);
     }
 
@@ -31,11 +31,11 @@ public class HealthBarUI : MonoBehaviour
     {
         var bus = GameManager.Instance?.EventBus;
         if (bus == null) return;
-        bus.Unsubscribe<WorldReadyPublish>(OnWorldReady);
+        bus.Unsubscribe<GameReadyPublish>(OnGameReady);
         bus.Unsubscribe<StatsChangedPublish>(OnStatsChanged);
     }
 
-    private void OnWorldReady(WorldReadyPublish _)
+    private void OnGameReady(GameReadyPublish _)
     {
         var playerRoot = FindAnyObjectByType<PlayerInventory>()?.GetComponent<EntityRoot>();
         if (playerRoot == null) return;

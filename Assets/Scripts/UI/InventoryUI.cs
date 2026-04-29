@@ -20,7 +20,7 @@ public class InventoryUI : MonoBehaviour
     {
         var bus = GameManager.Instance?.EventBus;
         if (bus == null) return;
-        bus.Subscribe<WorldReadyPublish>(OnWorldReady);
+        bus.Subscribe<GameReadyPublish>(OnGameReady);
         bus.Subscribe<InventoryChangedPublish>(OnInventoryChanged);
     }
 
@@ -28,11 +28,11 @@ public class InventoryUI : MonoBehaviour
     {
         var bus = GameManager.Instance?.EventBus;
         if (bus == null) return;
-        bus.Unsubscribe<WorldReadyPublish>(OnWorldReady);
+        bus.Unsubscribe<GameReadyPublish>(OnGameReady);
         bus.Unsubscribe<InventoryChangedPublish>(OnInventoryChanged);
     }
 
-    private void OnWorldReady(WorldReadyPublish _)
+    private void OnGameReady(GameReadyPublish _)
     {
         var playerRoot = FindAnyObjectByType<PlayerInventory>()?.GetComponent<EntityRoot>();
         if (playerRoot == null) return;

@@ -14,28 +14,34 @@ public class CameraFollow : MonoBehaviour
 
     private float introTimer;
     private bool introFinished;
+    private EventBus eventBus;
+
+    private void OnEnable()
+    {
+        SubscribePlayerReady();
+    }
 
     private void Start()
     {
-        if (target == null)
-        {
-            target = GameObject.FindGameObjectWithTag(targetTag)?.transform;
-        }
+        SubscribePlayerReady();
 
-        if (target == null)
+        if (target != null)
         {
-            Debug.LogError("CameraFollow: Target not found.");
-            return;
+            InitializeFollow();
         }
-
-        if (playIntroOnStart)
+        else
         {
-            transform.position = target.position + introOffset;
-            return;
+            TryBindTargetFromTag(false);
         }
+    }
 
-        transform.position = target.position + offset;
-        introFinished = true;
+    private void OnDisable()
+    {
+        if (eventBus != null)
+        {
+            eventBus.Unsubscribe<PlayerReadyPublish>(OnPlayerReady);
+            eventBus = null;
+        }
     }
 
     private void LateUpdate()
@@ -70,5 +76,56 @@ public class CameraFollow : MonoBehaviour
         {
             introFinished = true;
         }
+    }
+
+    private void SubscribePlayerReady()
+    {
+        if (eventBus != null)
+        {
+            return;
+        }
+
+        eventBus = GameManager.Instance?.EventBus;
+        if (eventBus != null)
+        {
+            eventBus.Subscribe<PlayerReadyPublish>(OnPlayerReady);
+        }
+    }
+
+    private void OnPlayerReady(PlayerReadyPublish _)
+    {
+        TryBindTargetFromTag(true);
+    }
+
+    private void TryBindTargetFromTag(bool logWarning)
+    {
+        target = GameObject.FindGameObjectWithTag(targetTag)?.transform;
+
+        if (target == null)
+        {
+            if (logWarning)
+            {
+                Debug.LogWarning($"CameraFollow: Target with tag '{targetTag}' not found after PlayerReadyPublish.");
+            }
+
+            return;
+        }
+
+        InitializeFollow();
+    }
+
+    private void InitializeFollow()
+    {
+        introTimer = 0f;
+        introFinished = false;
+
+        if (playIntroOnStart)
+        {
+            transform.position = target.position + introOffset;
+            return;
+        }
+
+        transform.position = target.position + offset;
+        introFinished = true;
     }
 }
