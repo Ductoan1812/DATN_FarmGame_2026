@@ -2056,6 +2056,7 @@ SpriteAtlas:
     - c32411b8e02360a439a4bd26decbef8f: 21300070
     - bc3702b8a5664104e919f834a355aed3: 21300000
     - bc3702b8a5664104e919f834a355aed3: 21300002
+    - f07c95b844ab92248815a5cb6e8c255d: 21300000
     - 94dedfb8f1ad47744930f938d36cef83: 21300000
     - f73efbc8b98b74d48a7fb12161cfdcbe: 21300000
     - 02950ec8adf79a74ba4e69eaae67e011: 21300000
@@ -5759,6 +5760,7 @@ SpriteAtlas:
   - {fileID: 21300070, guid: c32411b8e02360a439a4bd26decbef8f, type: 3}
   - {fileID: 21300000, guid: bc3702b8a5664104e919f834a355aed3, type: 3}
   - {fileID: 21300002, guid: bc3702b8a5664104e919f834a355aed3, type: 3}
+  - {fileID: 21300000, guid: f07c95b844ab92248815a5cb6e8c255d, type: 3}
   - {fileID: 21300000, guid: 94dedfb8f1ad47744930f938d36cef83, type: 3}
   - {fileID: 21300000, guid: f73efbc8b98b74d48a7fb12161cfdcbe, type: 3}
   - {fileID: 21300000, guid: 02950ec8adf79a74ba4e69eaae67e011, type: 3}
@@ -9461,6 +9463,7 @@ SpriteAtlas:
   - FrontSleeveR
   - Back
   - Front
+  - Hoe
   - Pumpkin
   - GreenPotionM
   - Back

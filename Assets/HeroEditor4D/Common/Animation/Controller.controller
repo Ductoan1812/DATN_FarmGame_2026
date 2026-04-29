@@ -708,6 +708,33 @@ MonoBehaviour:
   Name: ShieldPushU
   Continuous: 0
   Active: 0
+--- !u!1102 &-3159038105303149754
+AnimatorState:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Hoe
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours:
+  - {fileID: 5980153214863721702}
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 1
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: a28df53dbe6cc8848afec2363c548bfd, type: 2}
+  m_Tag: 
+  m_SpeedParameter: Speed
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!114 &-3090184022909608677
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -919,6 +946,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: Death
+  StateEnterEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  StateUpdateEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  StateExit:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &-1552674364733579982
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3a0ee04431d30e44a5c283405d7aa62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: 
   StateEnterEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -1259,6 +1308,12 @@ AnimatorController:
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
   - m_Name: SecondaryShot
+    m_Type: 9
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
+  - m_Name: Hoe
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -2714,6 +2769,9 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: 1478040920288892573}
     m_Position: {x: -220, y: -90, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -3159038105303149754}
+    m_Position: {x: -10, y: 660, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
   - {fileID: 1101575175323951040}
@@ -2748,6 +2806,7 @@ AnimatorStateMachine:
   - {fileID: 6447070536108414812}
   - {fileID: -8568826794924113377}
   - {fileID: 9012162798809508997}
+  - {fileID: 3837265294789746322}
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
@@ -3175,6 +3234,31 @@ MonoBehaviour:
   Name: TrippleStab
   Continuous: 0
   Active: 0
+--- !u!1101 &3837265294789746322
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions:
+  - m_ConditionMode: 1
+    m_ConditionEvent: Hoe
+    m_EventTreshold: 0
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: -3159038105303149754}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0
+  m_TransitionOffset: 0
+  m_ExitTime: 0.75
+  m_HasExitTime: 0
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!1101 &4168205676513790278
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -3386,6 +3470,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af199c67824fa9846809fe549ec6f242, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5980153214863721702
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58ee6b45cd4ddb04dbf289007d2292f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Hoe
+  Continuous: 0
+  Active: 0
 --- !u!1101 &6027128703948382876
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -3477,6 +3576,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: SecondaryShot
+  Continuous: 0
+  Active: 0
+--- !u!114 &6783644214294057209
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58ee6b45cd4ddb04dbf289007d2292f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: 
   Continuous: 0
   Active: 0
 --- !u!1102 &7216254816858307635

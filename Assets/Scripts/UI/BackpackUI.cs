@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,7 +23,7 @@ public class BackpackUI : MonoBehaviour
     [SerializeField] private Button btnSeparate;
     [SerializeField] private TMP_InputField splitInput;
     [SerializeField] private Button btnDrop;
-    [SerializeField] private Transform statsContent;
+    [SerializeField] private StatListUI statListUI;
 
     private const int MaxDisplayAmount = 99999;
 
@@ -36,7 +35,6 @@ public class BackpackUI : MonoBehaviour
 
     private SlotData[] _cache;
     private SlotView[] _views;
-    private Dictionary<StatType, StatsInfo> _statViews;
     private LocalizedText _nameLocalized;
     private LocalizedText _descLocalized;
     private LocalizedText _categoryLocalized;
@@ -249,17 +247,6 @@ public class BackpackUI : MonoBehaviour
         if (nameText != null) _nameLocalized = nameText.GetComponent<LocalizedText>();
         if (descText != null) _descLocalized = descText.GetComponent<LocalizedText>();
         if (categoryText != null) _categoryLocalized = categoryText.GetComponent<LocalizedText>();
-
-        _statViews = new Dictionary<StatType, StatsInfo>();
-        if (statsContent == null) return;
-
-        var stats = statsContent.GetComponentsInChildren<StatsInfo>(true);
-        for (int i = 0; i < stats.Length; i++)
-        {
-            if (stats[i] == null) continue;
-            if (_statViews.ContainsKey(stats[i].StatType)) continue;
-            _statViews.Add(stats[i].StatType, stats[i]);
-        }
     }
 
     private void AutoAssignInfoRefs()
@@ -307,11 +294,23 @@ public class BackpackUI : MonoBehaviour
             if (target != null) btnUse = target.GetComponent<Button>();
         }
 
-        if (statsContent == null)
+        if (statListUI == null)
         {
             var scroll = FindDeepChild(infoRoot, "attribute_SclView");
             if (scroll != null)
-                statsContent = FindDeepChild(scroll, "content") ?? FindDeepChild(scroll, "Content");
+            {
+                statListUI = scroll.GetComponentInChildren<StatListUI>(true);
+
+                if (statListUI == null)
+                {
+                    var content = FindDeepChild(scroll, "content") ?? FindDeepChild(scroll, "Content");
+                    if (content != null)
+                        statListUI = content.GetComponent<StatListUI>();
+                }
+            }
+
+            if (statListUI == null)
+                statListUI = infoRoot.GetComponentInChildren<StatListUI>(true);
         }
 
         if (btnDrop == null)
@@ -340,20 +339,8 @@ public class BackpackUI : MonoBehaviour
 
     private void ApplyStats(StatDisplay[] stats)
     {
-        if (_statViews == null) return;
-
-        foreach (var pair in _statViews)
-            pair.Value.Hide();
-
-        if (stats == null) return;
-
-        for (int i = 0; i < stats.Length; i++)
-        {
-            if (!_statViews.TryGetValue(stats[i].statType, out var view))
-                continue;
-
-            view.Show(stats[i].value);
-        }
+        if (statListUI != null)
+            statListUI.Show(stats);
     }
 
     private void UpdateSelectionVisual()
@@ -381,7 +368,8 @@ public class BackpackUI : MonoBehaviour
         if (btnUse != null)
             btnUse.interactable = false;
 
-        ApplyStats(Array.Empty<StatDisplay>());
+        if (statListUI != null)
+            statListUI.Clear();
     }
 
     private static void SetLocalizedOrText(LocalizedText localized, TMP_Text text, string key)

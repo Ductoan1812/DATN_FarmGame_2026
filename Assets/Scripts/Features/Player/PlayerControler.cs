@@ -7,6 +7,7 @@ public class PlayerControler : MonoBehaviour
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private EventBus eventBus;
     [SerializeField] private Character4D character4D;
+    [SerializeField] private AnimationManager _anim ;
 
     private Vector3 lastMoveDirection = Vector3.up;
     public Vector3 LastMoveDirection => lastMoveDirection;
@@ -27,6 +28,7 @@ public class PlayerControler : MonoBehaviour
     {
         _inventory  = GetComponent<PlayerInventory>();
         _entityRoot = GetComponent<EntityRoot>();
+        _anim = character4D.AnimationManager;
     }
 
     private void Update()
@@ -110,6 +112,11 @@ public class PlayerControler : MonoBehaviour
         {
             eventBus?.Publish(new SaveGameRequestPublish());
             Debug.Log("[Player] Save requested.");
+        }
+        if (Input.GetKeyDown(KeyCode.F9))
+        {
+            _anim.Animator.SetTrigger("Hoe");
+            _anim.IsAction = true;
         }
     }
 }

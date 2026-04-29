@@ -609,7 +609,7 @@ TextureImporter:
         width: 132
         height: 55
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -630,7 +630,7 @@ TextureImporter:
         width: 137
         height: 55
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -638,6 +638,48 @@ TextureImporter:
       bones: []
       spriteID: 73c8486a17d9657428c2c4a21afd4b27
       internalID: -2042786543
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MenuUI 1_26
+      rect:
+        serializedVersion: 2
+        x: 1404
+        y: 641
+        width: 227
+        height: 237
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 084344fd82bf6214e89c61bb532d773b
+      internalID: -1756118149
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MenuUI 1_27
+      rect:
+        serializedVersion: 2
+        x: 1638
+        y: 640
+        width: 141
+        height: 238
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 77633dd82ba70fe4c9569b2170c6c336
+      internalID: -1021955294
       vertices: []
       indices: 
       edges: []
@@ -672,6 +714,8 @@ TextureImporter:
       MenuUI 1_23: 2100627753
       MenuUI 1_24: -22707297
       MenuUI 1_25: -2042786543
+      MenuUI 1_26: -1756118149
+      MenuUI 1_27: -1021955294
       MenuUI 1_3: -2063129886
       MenuUI 1_4: 1040841881
       MenuUI 1_5: 1569325102

@@ -54,7 +54,8 @@ MonoBehaviour:
         size: 10
     - rid: 2376239498774446080
       type: {class: EquipmentModule, ns: , asm: Assembly-CSharp}
-      data: 
+      data:
+        supportedParts: 0000000000000000
     - rid: 2376239686607699968
       type: {class: AttackModule, ns: , asm: Assembly-CSharp}
       data:

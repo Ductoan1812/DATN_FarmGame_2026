@@ -26,11 +26,13 @@
     { "key": "ui.item.description", "value": "Mô tả" },
     { "key": "ui.item.sell_price", "value": "Giá bán" },
 
-    { "key": "ui.stat.hp", "value": "HP" },
+    { "key": "ui.stat.hp", "value": "Máu" },
+    { "key": "ui.stat.hpmax", "value": "Máu tối đa" },
     { "key": "ui.stat.energy", "value": "Năng lượng" },
     { "key": "ui.stat.exp", "value": "EXP" },
     { "key": "ui.stat.attack", "value": "Tấn công" },
     { "key": "ui.stat.defense", "value": "Phòng thủ" },
+    { "key": "ui.stat.speed", "value": "Tốc độ" },
     { "key": "ui.stat.crit_rate", "value": "Tỷ lệ chí mạng" },
     { "key": "ui.stat.attack_speed", "value": "Tốc độ đánh" },
 
