@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8393fbdfdb650e5418aad1c82ae5b8b5, type: 3}
+  m_Name: Player
+  m_EditorClassIdentifier: 
+  id: player
+  keyName: Player
+  descKey: 
+  icon: {fileID: 0}
+  category: 0
+  maxStack: 1
+  buyPrice: 0
+  sellPrice: 0
+  baseStats:
+    baseStats:
+    - statType: 0
+      value: 100
+    - statType: 2
+      value: 5
+  placementRule:
+    occupyLayer: 0
+    requireTags: 0
+    provideTags: 0
+    blockLayers: 
+  modules:
+  - rid: 2376239469260439552
+  - rid: 2376239469260439553
+  - rid: 2376239498774446080
+  - rid: 2376239686607699968
+  - rid: 2376239686607699969
+  - rid: 2376239726483210245
+  - rid: 2376239726483210247
+  references:
+    version: 2
+    RefIds:
+    - rid: 2376239469260439552
+      type: {class: InventoryModule, ns: , asm: Assembly-CSharp}
+      data:
+        inventoryType: 0
+        size: 60
+    - rid: 2376239469260439553
+      type: {class: InventoryModule, ns: , asm: Assembly-CSharp}
+      data:
+        inventoryType: 1
+        size: 10
+    - rid: 2376239498774446080
+      type: {class: EquipmentModule, ns: , asm: Assembly-CSharp}
+      data:
+        supportedParts: 010000000200000003000000040000000c0000000d000000
+    - rid: 2376239686607699968
+      type: {class: AttackModule, ns: , asm: Assembly-CSharp}
+      data:
+        attackRange: 1.5
+        attackCooldown: 0.5
+    - rid: 2376239686607699969
+      type: {class: HealthModule, ns: , asm: Assembly-CSharp}
+      data:
+        canTakeDamage: 1
+    - rid: 2376239726483210245
+      type: {class: ActionModule, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 2376239726483210247
+      type: {class: AttackModule, ns: , asm: Assembly-CSharp}
+      data:
+        attackRange: 1.5
+        attackCooldown: 0.5

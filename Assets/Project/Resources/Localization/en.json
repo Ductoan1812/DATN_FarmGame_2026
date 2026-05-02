@@ -1,0 +1,56 @@
+{
+  "entries": [
+    { "key": "ui.common.open", "value": "Open" },
+    { "key": "ui.common.close", "value": "Close" },
+    { "key": "ui.common.use", "value": "Use" },
+    { "key": "ui.common.cancel", "value": "Cancel" },
+    { "key": "ui.common.equip", "value": "Equip" },
+    { "key": "ui.common.sort", "value": "Sort" },
+
+    { "key": "ui.menu.inventory", "value": "Inventory" },
+    { "key": "ui.menu.storage", "value": "Storage" },
+    { "key": "ui.menu.skills", "value": "Skills" },
+    { "key": "ui.menu.map", "value": "Map" },
+    { "key": "ui.menu.quest", "value": "Quest" },
+    { "key": "ui.menu.journal", "value": "Journal" },
+    { "key": "ui.menu.settings", "value": "Settings" },
+
+    { "key": "ui.inventory.title", "value": "Inventory" },
+    { "key": "ui.inventory.capacity", "value": "{0}/{1}" },
+    { "key": "ui.inventory.quick_sort", "value": "Quick Sort" },
+    { "key": "ui.inventory.money", "value": "Money" },
+    { "key": "ui.inventory.info_title", "value": "Item Info" },
+
+    { "key": "ui.item.category", "value": "Category" },
+    { "key": "ui.item.rarity", "value": "Rarity" },
+    { "key": "ui.item.description", "value": "Description" },
+    { "key": "ui.item.sell_price", "value": "Sell Price" },
+
+    { "key": "ui.stat.hp", "value": "HP" },
+    { "key": "ui.stat.hpmax", "value": "Max HP" },
+    { "key": "ui.stat.energy", "value": "Energy" },
+    { "key": "ui.stat.exp", "value": "EXP" },
+    { "key": "ui.stat.attack", "value": "Attack" },
+    { "key": "ui.stat.defense", "value": "Defense" },
+    { "key": "ui.stat.speed", "value": "Speed" },
+    { "key": "ui.stat.crit_rate", "value": "Crit Rate" },
+    { "key": "ui.stat.attack_speed", "value": "Attack Speed" },
+
+    { "key": "ui.player.level", "value": "Lv. {0}" },
+
+    { "key": "ui.time.spring", "value": "Spring" },
+    { "key": "ui.time.day", "value": "Day {0}" },
+    { "key": "ui.time.gold", "value": "Gold" },
+
+    { "key": "ui.rarity.common", "value": "Common" },
+    { "key": "ui.rarity.uncommon", "value": "Uncommon" },
+    { "key": "ui.rarity.rare", "value": "Rare" },
+    { "key": "ui.rarity.epic", "value": "Epic" },
+
+    { "key": "ui.category.weapon", "value": "Weapon" },
+    { "key": "ui.category.tool", "value": "Tool" },
+    { "key": "ui.category.material", "value": "Material" },
+    { "key": "ui.category.food", "value": "Food" },
+    { "key": "ui.category.potion", "value": "Potion" }
+  ]
+}
