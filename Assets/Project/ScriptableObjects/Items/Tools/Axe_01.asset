@@ -44,5 +44,5 @@ MonoBehaviour:
     - rid: 8196222611227148289
       type: {class: AppearanceModule, ns: , asm: Assembly-CSharp}
       data:
-        spriteId: 
+        spriteId: Art.Equipment.MeleeWeapon1H.Axe01
         equipmentPart: 5

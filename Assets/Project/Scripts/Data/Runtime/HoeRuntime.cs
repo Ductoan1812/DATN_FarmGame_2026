@@ -2,13 +2,14 @@ using UnityEngine;
 
 /// <summary>
 /// Tool Hoe: cuốc đất → đổi tile thành plowedTile.
-/// Quét: 1 cell trước mặt.
+/// Validate: kiểm tra ô trước mặt có cuốc được không.
+/// Execute: đổi tile (gọi tại frame "Hit" của animation).
 /// </summary>
 public class HoeRuntime : ToolRuntime
 {
     public HoeRuntime(ToolModule data) : base(data) { }
 
-    protected override bool Execute(GameObject actorGO, PrimaryActionEvent e)
+    protected override bool Validate(GameObject actorGO, PrimaryActionEvent e)
     {
         var targetCell = GridSystem.GetCellInFrontOf(actorGO);
         var cell2d = new Vector2Int(targetCell.x, targetCell.y);
@@ -16,10 +17,13 @@ public class HoeRuntime : ToolRuntime
         var ws = GameManager.Instance?.WorldService;
         if (ws == null) return false;
 
-        var entityAtCell = EntityScanSystem.GetAtCell(cell2d);
-        if (entityAtCell != null)
+        // Kiểm tra qua SpatialRegistry — chỉ block nếu có entity chiếm cell (cây, đá...)
+        // Player di chuyển tự do, không nằm trong spatial → không bị block
+        if (ws.HasBlockerAt(cell2d, EntityLayer.Ground)
+            || ws.HasBlockerAt(cell2d, EntityLayer.Plant)
+            || ws.HasBlockerAt(cell2d, EntityLayer.Furniture))
         {
-            Debug.Log("[HoeRuntime] Có entity tại ô này, không thể cuốc.");
+            Debug.Log("[HoeRuntime] Có entity chiếm ô này, không thể cuốc.");
             return false;
         }
 
@@ -29,15 +33,24 @@ public class HoeRuntime : ToolRuntime
             return false;
         }
 
-        var plowedTile = GameManager.Instance.TileData?.plowedTile;
-        if (plowedTile == null)
+        if (GameManager.Instance.TileData?.plowedTile == null)
         {
             Debug.LogWarning("[HoeRuntime] plowedTile chưa gán trong TileData!");
             return false;
         }
 
+        return true;
+    }
+
+    protected override void Execute(GameObject actorGO, EntityRuntime actor, EntityRuntime item)
+    {
+        var targetCell = GridSystem.GetCellInFrontOf(actorGO);
+        var cell2d = new Vector2Int(targetCell.x, targetCell.y);
+
+        var ws = GameManager.Instance?.WorldService;
+        var plowedTile = GameManager.Instance.TileData?.plowedTile;
+
         ws.SetGround(cell2d, plowedTile);
         Debug.Log($"[HoeRuntime] Cuốc đất tại {targetCell}");
-        return true;
     }
 }

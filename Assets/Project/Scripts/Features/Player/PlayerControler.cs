@@ -12,11 +12,11 @@ public class PlayerControler : MonoBehaviour
     private Vector3 lastMoveDirection = Vector3.up;
     public Vector3 LastMoveDirection => lastMoveDirection;
 
-    /// <summary>Bật/tắt nhận input. False = bấm gì cũng không nhận (DebugConsole, cutscene...).</summary>
     public bool InputEnabled { get; set; } = true;
 
     private PlayerInventory _inventory;
     private EntityRoot _entityRoot;
+    private ToolActionBridge _toolBridge;
 
     private void Awake()
     {
@@ -26,14 +26,22 @@ public class PlayerControler : MonoBehaviour
 
     private void Start()
     {
-        _inventory  = GetComponent<PlayerInventory>();
-        _entityRoot = GetComponent<EntityRoot>();
+        _inventory   = GetComponent<PlayerInventory>();
+        _entityRoot  = GetComponent<EntityRoot>();
+        _toolBridge  = GetComponent<ToolActionBridge>();
         _anim = character4D.AnimationManager;
+        character4D.SetDirection(Vector2.down);
+        character4D.AnimationManager.SetState(CharacterState.Idle);
     }
+
+    private bool IsActionBusy => _toolBridge != null && _toolBridge.IsBusy;
 
     private void Update()
     {
         if (!InputEnabled) return;
+
+        // Animation đang chạy → block movement + action
+        if (IsActionBusy) return;
 
         HandleMovement();
         HandleActions();
@@ -112,11 +120,6 @@ public class PlayerControler : MonoBehaviour
         {
             eventBus?.Publish(new SaveGameRequestPublish());
             Debug.Log("[Player] Save requested.");
-        }
-        if (Input.GetKeyDown(KeyCode.F9))
-        {
-            _anim.Animator.SetTrigger("Hoe");
-            _anim.IsAction = true;
         }
     }
 }

@@ -46,6 +46,7 @@ MonoBehaviour:
       data:
         objectTypeToSpawn: 2
         centerTile: 1
+        animTrigger: PutDown
     - rid: 2376239545838731268
       type: {class: StageModule, ns: , asm: Assembly-CSharp}
       data:

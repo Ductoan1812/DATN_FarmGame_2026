@@ -43,8 +43,9 @@ MonoBehaviour:
       type: {class: ToolModule, ns: , asm: Assembly-CSharp}
       data:
         toolType: 3
+        animTrigger: Harvert
     - rid: 2376239868009775105
       type: {class: AppearanceModule, ns: , asm: Assembly-CSharp}
       data:
-        spriteId: FantasyHeroes.Basic.MeleeWeapon2H.BizarreSword
+        spriteId: Art.Equipment.MeleeWeapon1H.Scythe02
         equipmentPart: 5

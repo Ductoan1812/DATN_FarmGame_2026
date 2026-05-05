@@ -39,8 +39,9 @@ MonoBehaviour:
       type: {class: ToolModule, ns: , asm: Assembly-CSharp}
       data:
         toolType: 1
+        animTrigger: Hoe
     - rid: 2376239868009775104
       type: {class: AppearanceModule, ns: , asm: Assembly-CSharp}
       data:
-        spriteId: FantasyHeroes.Basic.MeleeWeapon1H.BalancedAxe
+        spriteId: Art.Equipment.MeleeWeapon1H.Axe01
         equipmentPart: 5
