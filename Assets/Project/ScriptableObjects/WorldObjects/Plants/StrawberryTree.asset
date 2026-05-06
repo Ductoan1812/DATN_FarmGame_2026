@@ -72,7 +72,7 @@ MonoBehaviour:
     - rid: 2376239555521544193
       type: {class: HarvestModule, ns: , asm: Assembly-CSharp}
       data:
-        harvestTool: 3
+        harvestTool: 0
     - rid: 2376239684983193602
       type: {class: HealthModule, ns: , asm: Assembly-CSharp}
       data:

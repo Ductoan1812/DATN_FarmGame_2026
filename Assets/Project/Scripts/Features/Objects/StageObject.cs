@@ -1,11 +1,9 @@
-using System.Diagnostics;
 using UnityEngine;
-using Debug = UnityEngine.Debug;
 
 [DisallowMultipleComponent]
 public class StageObject : MonoBehaviour
 {
-    [SerializeField] private EntityRuntime entity;
+    private EntityRuntime entity;
     private EventBus eventBus;
     private EntityRoot _root;
     private bool subscribed;
@@ -13,13 +11,12 @@ public class StageObject : MonoBehaviour
     private void Awake()
     {
         _root = GetComponent<EntityRoot>();
-        if (entity == null)
-            Debug.LogWarning($"[StageObject]{gameObject.name} can not get EntityRuntime");
     }
 
     private void OnEnable()
     {
-        if( _root != null) _root.OnEntityReady += SetEntityRoot;
+        if (_root != null) _root.OnEntityReady += SetEntityRoot;
+
         eventBus = GameManager.Instance?.EventBus;
         if (eventBus != null && !subscribed)
         {
@@ -30,6 +27,8 @@ public class StageObject : MonoBehaviour
 
     private void OnDisable()
     {
+        if (_root != null) _root.OnEntityReady -= SetEntityRoot;
+
         if (eventBus != null && subscribed)
         {
             eventBus.Unsubscribe<NextDayEventPublish>(OnGlobalNextDay);
@@ -41,11 +40,12 @@ public class StageObject : MonoBehaviour
     {
         if (entity == null)
         {
-            Debug.LogWarning($"[StageObject]{gameObject.name} No EntityRuntime");
+            Debug.LogWarning($"[StageObject] {gameObject.name} No EntityRuntime");
             return;
         }
-        entity.TriggerEvent<NextDayEvent>(new NextDayEvent());
+        entity.TriggerEvent(new NextDayEvent());
     }
+
     public void SetEntityRoot(EntityRuntime entityRuntime)
     {
         entity = entityRuntime;

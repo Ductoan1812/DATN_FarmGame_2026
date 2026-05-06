@@ -10,6 +10,13 @@ public class StageRuntime : IModuleRuntime, IHandleEvent<NextDayEvent>, IHandleE
     private IEntityContainer Owner { get; set; }
     private SpriteRenderer spriteRenderer;
 
+    /// <summary>True nếu stage hiện tại cho phép thu hoạch.</summary>
+    public bool CanHarvest =>
+        data?.stages != null
+        && currentStageIndex >= 0
+        && currentStageIndex < data.stages.Length
+        && data.stages[currentStageIndex].canHarvest;
+
     public StageRuntime(StageModule data)
     {
         this.data = data;
