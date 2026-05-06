@@ -7,19 +7,19 @@ public class StageObject : MonoBehaviour
 {
     [SerializeField] private EntityRuntime entity;
     private EventBus eventBus;
+    private EntityRoot _root;
     private bool subscribed;
 
-    private void Start()
+    private void Awake()
     {
-        entity = GetComponent<EntityRoot>()?.GetEntity();
+        _root = GetComponent<EntityRoot>();
         if (entity == null)
             Debug.LogWarning($"[StageObject]{gameObject.name} can not get EntityRuntime");
-        subscribed = false;
     }
 
     private void OnEnable()
     {
-        entity = GetComponent<EntityRoot>()?.GetEntity();
+        if( _root != null) _root.OnEntityReady += SetEntityRoot;
         eventBus = GameManager.Instance?.EventBus;
         if (eventBus != null && !subscribed)
         {
@@ -45,5 +45,9 @@ public class StageObject : MonoBehaviour
             return;
         }
         entity.TriggerEvent<NextDayEvent>(new NextDayEvent());
+    }
+    public void SetEntityRoot(EntityRuntime entityRuntime)
+    {
+        entity = entityRuntime;
     }
 }
