@@ -20,12 +20,14 @@ public class SaveLoadManager
     // ── File names ────────────────────────────────────────
     public const string EntitiesSaveFile = "entities_save.json";
     public const string WorldSaveFile    = "world_save.json";
+    public const string SystemSaveFile   = "system_save.json";
 
     private readonly EntityService _entityService;
     private readonly EntityDataRegistry _entityDataRegistry;
     private readonly WorldEntityService _worldService;
     private readonly SpawnSystem _spawnSystem;
     private readonly EventBus _eventBus;
+    private TimeManager _timeManager;
 
     // Config
     private readonly ObjectType _playerPrefabId;
@@ -51,6 +53,9 @@ public class SaveLoadManager
         _playerEntityDataId = playerEntityDataId;
         _defaultPlayerPos = defaultPlayerPos;
     }
+
+    /// <summary>Gọi sau khi TimeManager được tạo (trong GameManager.Start hoặc Awake).</summary>
+    public void SetTimeManager(TimeManager tm) => _timeManager = tm;
 
     // ══════════════════════════════════════
     //  BOOT (gọi 1 lần khi game start)
@@ -81,7 +86,10 @@ public class SaveLoadManager
 
         // Phase 3: Restore inventories (chỉ khi load save)
         if (hasSave)
+        {
             _entityService.RestoreAllInventories();
+            LoadSystemData();
+        }
 
         _eventBus.Publish(new InventoryDataRestoredPublish());
         Debug.Log("[SaveLoadManager] InventoryDataRestoredPublish published.");
@@ -142,7 +150,43 @@ public class SaveLoadManager
     {
         _entityService.SaveData(EntitiesSaveFile, true);
         _worldService.Save(WorldSaveFile);
+        SaveSystemData();
         Debug.Log("[SaveLoadManager] All data saved.");
+    }
+
+    // ══════════════════════════════════════
+    //  UTILS
+    // ══════════════════════════════════════
+
+    // ══════════════════════════════════════
+    //  SYSTEM SAVE / LOAD
+    // ══════════════════════════════════════
+
+    private void SaveSystemData()
+    {
+        var data = new SystemSaveData();
+        if (_timeManager != null)
+            data.time = _timeManager.GetSaveState();
+
+        var json = JsonUtility.ToJson(data, true);
+        var path = System.IO.Path.Combine(Application.persistentDataPath, SystemSaveFile);
+        System.IO.File.WriteAllText(path, json);
+        Debug.Log($"[SaveLoadManager] System data saved: {data.time}");
+    }
+
+    private void LoadSystemData()
+    {
+        var path = System.IO.Path.Combine(Application.persistentDataPath, SystemSaveFile);
+        if (!System.IO.File.Exists(path)) return;
+
+        var json = System.IO.File.ReadAllText(path);
+        var data = JsonUtility.FromJson<SystemSaveData>(json);
+        if (data == null) return;
+
+        if (_timeManager != null)
+            _timeManager.ApplySaveState(data.time);
+
+        Debug.Log($"[SaveLoadManager] System data loaded: {data.time}");
     }
 
     // ══════════════════════════════════════

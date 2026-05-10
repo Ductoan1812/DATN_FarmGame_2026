@@ -6045,14 +6045,14 @@ MonoBehaviour:
   Expression: Default
   Expressions:
   - Name: Default
-    Eyebrows: {fileID: 21300000, guid: 5bfc6e175255e2c48b850861f9e084b4, type: 3}
-    Eyes: {fileID: 21300000, guid: 8af072d9e54ae824dbcd4c67c7eac50d, type: 3}
-    EyesColor: {r: 0, g: 0.78431374, b: 1, a: 1}
-    Mouth: {fileID: 21300000, guid: d140943fa3a058e4fb442936e1540516, type: 3}
+    Eyebrows: {fileID: 21300000, guid: 4c0670d69bcd37c43948f6c92868c4de, type: 3}
+    Eyes: {fileID: 21300000, guid: 1a29ed4996a3d3d4c89e982d67af2a6e, type: 3}
+    EyesColor: {r: 0.5508569, g: 0.2639454, b: 0.98570395, a: 1}
+    Mouth: {fileID: 21300000, guid: 81686a2a4ef5fe14ab2b05394253f798, type: 3}
   - Name: Angry
     Eyebrows: {fileID: 21300000, guid: de83117efe1db20419ded60f35f02595, type: 3}
     Eyes: {fileID: 21300000, guid: 73461b69252e31e45aa9fd164956078d, type: 3}
-    EyesColor: {r: 0, g: 0.78431374, b: 1, a: 1}
+    EyesColor: {r: 0.5508569, g: 0.2639454, b: 0.98570395, a: 1}
     Mouth: {fileID: 21300000, guid: 9e1c0aaeb0040164cbd5285bb580695d, type: 3}
   - Name: Dead
     Eyebrows: {fileID: 21300000, guid: 498faabeb919ac24b8c2272faadfae32, type: 3}
@@ -6062,7 +6062,7 @@ MonoBehaviour:
   - Name: Happy
     Eyebrows: {fileID: 21300000, guid: 498faabeb919ac24b8c2272faadfae32, type: 3}
     Eyes: {fileID: 21300000, guid: 9a749df01cafb4b4bb058b787309f261, type: 3}
-    EyesColor: {r: 0, g: 0.78431374, b: 1, a: 1}
+    EyesColor: {r: 0.5508569, g: 0.2639454, b: 0.98570395, a: 1}
     Mouth: {fileID: 21300000, guid: 5c190d61cd55f964ea24dbd0def87104, type: 3}
   Helmet: {fileID: 21300024, guid: 932eb8d5023602e45bd0f3d4e1206516, type: 3}
   PrimaryWeapon: {fileID: 21300000, guid: 74c1e0e96bf63bc4c88b8eb728477ef9, type: 3}
@@ -8074,7 +8074,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 300
-  m_Sprite: {fileID: 21300000, guid: f07c95b844ab92248815a5cb6e8c255d, type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -9184,14 +9184,14 @@ MonoBehaviour:
   Expression: Default
   Expressions:
   - Name: Default
-    Eyebrows: {fileID: 21300002, guid: 5bfc6e175255e2c48b850861f9e084b4, type: 3}
-    Eyes: {fileID: 21300004, guid: 8af072d9e54ae824dbcd4c67c7eac50d, type: 3}
-    EyesColor: {r: 0, g: 0.78431374, b: 1, a: 1}
-    Mouth: {fileID: 21300004, guid: d140943fa3a058e4fb442936e1540516, type: 3}
+    Eyebrows: {fileID: 21300002, guid: 4c0670d69bcd37c43948f6c92868c4de, type: 3}
+    Eyes: {fileID: 21300004, guid: 1a29ed4996a3d3d4c89e982d67af2a6e, type: 3}
+    EyesColor: {r: 0.5508569, g: 0.2639454, b: 0.98570395, a: 1}
+    Mouth: {fileID: 21300004, guid: 81686a2a4ef5fe14ab2b05394253f798, type: 3}
   - Name: Angry
     Eyebrows: {fileID: 21300002, guid: de83117efe1db20419ded60f35f02595, type: 3}
     Eyes: {fileID: 21300004, guid: 73461b69252e31e45aa9fd164956078d, type: 3}
-    EyesColor: {r: 0, g: 0.78431374, b: 1, a: 1}
+    EyesColor: {r: 0.5508569, g: 0.2639454, b: 0.98570395, a: 1}
     Mouth: {fileID: 21300002, guid: 9e1c0aaeb0040164cbd5285bb580695d, type: 3}
   - Name: Dead
     Eyebrows: {fileID: 21300004, guid: 498faabeb919ac24b8c2272faadfae32, type: 3}
@@ -9201,16 +9201,16 @@ MonoBehaviour:
   - Name: Happy
     Eyebrows: {fileID: 21300004, guid: 498faabeb919ac24b8c2272faadfae32, type: 3}
     Eyes: {fileID: 21300004, guid: 9a749df01cafb4b4bb058b787309f261, type: 3}
-    EyesColor: {r: 0, g: 0.78431374, b: 1, a: 1}
+    EyesColor: {r: 0.5508569, g: 0.2639454, b: 0.98570395, a: 1}
     Mouth: {fileID: 21300004, guid: 5c190d61cd55f964ea24dbd0def87104, type: 3}
-  Helmet: {fileID: 21300038, guid: 932eb8d5023602e45bd0f3d4e1206516, type: 3}
-  PrimaryWeapon: {fileID: 21300000, guid: c3883e5c901004d4da81f76bf4a33112, type: 3}
+  Helmet: {fileID: 0}
+  PrimaryWeapon: {fileID: 0}
   SecondaryWeapon: {fileID: 0}
   Back: {fileID: 0}
   Quiver: {fileID: 0}
   Shield:
-  - {fileID: 21300000, guid: 98f733767f5bff5488383801dbe428bd, type: 3}
-  - {fileID: 21300002, guid: 98f733767f5bff5488383801dbe428bd, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
   Armor:
   - {fileID: 21300040, guid: 932eb8d5023602e45bd0f3d4e1206516, type: 3}
   - {fileID: 21300044, guid: 932eb8d5023602e45bd0f3d4e1206516, type: 3}
@@ -16871,14 +16871,14 @@ MonoBehaviour:
   Expression: Default
   Expressions:
   - Name: Default
-    Eyebrows: {fileID: 21300002, guid: 5bfc6e175255e2c48b850861f9e084b4, type: 3}
-    Eyes: {fileID: 21300004, guid: 8af072d9e54ae824dbcd4c67c7eac50d, type: 3}
-    EyesColor: {r: 0, g: 0.78431374, b: 1, a: 1}
-    Mouth: {fileID: 21300004, guid: d140943fa3a058e4fb442936e1540516, type: 3}
+    Eyebrows: {fileID: 21300002, guid: 4c0670d69bcd37c43948f6c92868c4de, type: 3}
+    Eyes: {fileID: 21300004, guid: 1a29ed4996a3d3d4c89e982d67af2a6e, type: 3}
+    EyesColor: {r: 0.5508569, g: 0.2639454, b: 0.98570395, a: 1}
+    Mouth: {fileID: 21300004, guid: 81686a2a4ef5fe14ab2b05394253f798, type: 3}
   - Name: Angry
     Eyebrows: {fileID: 21300002, guid: de83117efe1db20419ded60f35f02595, type: 3}
     Eyes: {fileID: 21300004, guid: 73461b69252e31e45aa9fd164956078d, type: 3}
-    EyesColor: {r: 0, g: 0.78431374, b: 1, a: 1}
+    EyesColor: {r: 0.5508569, g: 0.2639454, b: 0.98570395, a: 1}
     Mouth: {fileID: 21300002, guid: 9e1c0aaeb0040164cbd5285bb580695d, type: 3}
   - Name: Dead
     Eyebrows: {fileID: 21300004, guid: 498faabeb919ac24b8c2272faadfae32, type: 3}
@@ -16888,7 +16888,7 @@ MonoBehaviour:
   - Name: Happy
     Eyebrows: {fileID: 21300004, guid: 498faabeb919ac24b8c2272faadfae32, type: 3}
     Eyes: {fileID: 21300004, guid: 9a749df01cafb4b4bb058b787309f261, type: 3}
-    EyesColor: {r: 0, g: 0.78431374, b: 1, a: 1}
+    EyesColor: {r: 0.5508569, g: 0.2639454, b: 0.98570395, a: 1}
     Mouth: {fileID: 21300004, guid: 5c190d61cd55f964ea24dbd0def87104, type: 3}
   Helmet: {fileID: 21300038, guid: 932eb8d5023602e45bd0f3d4e1206516, type: 3}
   PrimaryWeapon: {fileID: 21300000, guid: 74c1e0e96bf63bc4c88b8eb728477ef9, type: 3}
@@ -18119,7 +18119,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 330
-  m_Sprite: {fileID: 21300010, guid: 932eb8d5023602e45bd0f3d4e1206516, type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0

@@ -132,11 +132,53 @@ public class DebugConsole : MonoBehaviour
             if (got > 0) LogSuccess($"+{got}x {data.keyName} → {root.gameObject.name}");
             else LogError($"Inventory đầy.");
         });
-        AddCommand("NextDay", "Tiến tới ngày tiếp theo (test event)", _ =>
+        AddCommand("NextDay", "Tiến tới ngày tiếp theo", _ =>
         {
-            var gm = GM(); if (gm == null) return;
-            gm.EventBus.Publish(new NextDayEventPublish());
-            Log("NextDayEventPublish đã được phát.");
+            var tm = FindAnyObjectByType<TimeManager>();
+            if (tm != null)
+            {
+                tm.SkipToNextDay();
+                Log($"Sang ngày mới: {tm.CurrentState}");
+            }
+            else
+            {
+                var gm = GM(); if (gm == null) return;
+                gm.EventBus.Publish(new NextDayEventPublish());
+                Log("NextDayEventPublish đã được phát (no TimeManager).");
+            }
+        });
+
+        AddCommand("SetTime", "SetTime <hour> [minute] — Đặt giờ game", args =>
+        {
+            var tm = FindAnyObjectByType<TimeManager>();
+            if (tm == null) { LogError("TimeManager not found."); return; }
+            if (args.Length < 1 || !int.TryParse(args[0], out int h)) { LogError("Usage: SetTime <hour> [minute]"); return; }
+            int m = args.Length > 1 && int.TryParse(args[1], out int mm) ? mm : 0;
+            tm.SetTime(h, m);
+            Log($"Thời gian: {tm.CurrentState}");
+        });
+
+        AddCommand("Time", "Hiển thị thời gian hiện tại", _ =>
+        {
+            var tm = FindAnyObjectByType<TimeManager>();
+            if (tm == null) { LogError("TimeManager not found."); return; }
+            Log($"{tm.CurrentState}");
+        });
+
+        AddCommand("PauseTime", "Dừng thời gian", _ =>
+        {
+            var tm = FindAnyObjectByType<TimeManager>();
+            if (tm == null) { LogError("TimeManager not found."); return; }
+            tm.Pause();
+            Log("Thời gian đã dừng.");
+        });
+
+        AddCommand("ResumeTime", "Tiếp tục thời gian", _ =>
+        {
+            var tm = FindAnyObjectByType<TimeManager>();
+            if (tm == null) { LogError("TimeManager not found."); return; }
+            tm.Play();
+            Log("Thời gian tiếp tục.");
         });
 
         // ── containers ──

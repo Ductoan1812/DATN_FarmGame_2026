@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
 
     // ── Shared ────────────────────────────────────────────
     public EventBus             EventBus           { get; private set; }
+    public TimeManager          TimeManager        { get; private set; }
 
     [SerializeField] private TileData tileData;
     public TileData TileData => tileData;
@@ -50,6 +51,7 @@ public class GameManager : MonoBehaviour
         InitTileRegistry();
         InitWorldEntitySystem();
         InitSpawnSystem();
+        InitTimeManager();
         InitSaveLoadManager();
 
         // Subscribe save/load events
@@ -163,6 +165,15 @@ public class GameManager : MonoBehaviour
         WorldService    = new WorldEntityService(SpatialRegistry, TileRegistry, tileData, tilemap);
     }
 
+    private void InitTimeManager()
+    {
+        TimeManager = GetComponent<TimeManager>();
+        if (TimeManager == null)
+            TimeManager = FindAnyObjectByType<TimeManager>();
+        if (TimeManager == null)
+            Debug.LogWarning("[GameManager] TimeManager not found.");
+    }
+
     private void InitSpawnSystem()
     {
         SpawnSystem = gameObject.AddComponent<SpawnSystem>();
@@ -181,6 +192,7 @@ public class GameManager : MonoBehaviour
             playerEntityDataId,
             defaultPlayerPos
         );
+        SaveLoadManager.SetTimeManager(TimeManager);
     }
 
     // ── Event handlers ────────────────────────────────────

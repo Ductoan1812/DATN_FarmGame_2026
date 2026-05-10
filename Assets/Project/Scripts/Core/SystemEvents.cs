@@ -6,8 +6,64 @@ using UnityEngine;
 //  với Module events (IGameEvent, qua EntityRuntime.TriggerEvent).
 // ══════════════════════════════════════════════════════════
 
-// ── Farming ───────────────────────────────────────────────
+// ── Time / Calendar ───────────────────────────────────────
+
+/// <summary>Backward compatible — StageObject và các system cũ vẫn dùng được.</summary>
 public struct NextDayEventPublish { }
+
+/// <summary>Sang ngày mới — chứa đầy đủ context (year, season, day).</summary>
+public struct DayChangedPublish
+{
+    public readonly int year;
+    public readonly Season season;
+    public readonly int day;
+    public DayChangedPublish(int year, Season season, int day)
+    { this.year = year; this.season = season; this.day = day; }
+}
+
+/// <summary>Sang mùa mới.</summary>
+public struct SeasonChangedPublish
+{
+    public readonly int year;
+    public readonly Season season;
+    public SeasonChangedPublish(int year, Season season)
+    { this.year = year; this.season = season; }
+}
+
+/// <summary>Sang năm mới.</summary>
+public struct YearChangedPublish
+{
+    public readonly int year;
+    public YearChangedPublish(int year) { this.year = year; }
+}
+
+public struct GameTimeChangedPublish
+{
+    public readonly int day;
+    public readonly int hour;
+    public readonly int minute;
+    public readonly float normalizedTime;
+
+    public GameTimeChangedPublish(int day, int hour, int minute, float normalizedTime)
+    {
+        this.day = day;
+        this.hour = hour;
+        this.minute = minute;
+        this.normalizedTime = normalizedTime;
+    }
+}
+
+public struct GameHourChangedPublish
+{
+    public readonly int day;
+    public readonly int hour;
+
+    public GameHourChangedPublish(int day, int hour)
+    {
+        this.day = day;
+        this.hour = hour;
+    }
+}
 
 // ── Boot / Save-Load ──────────────────────────────────────
 
