@@ -1,0 +1,56 @@
+{
+  "entries": [
+    { "key": "ui.common.open", "value": "Mở" },
+    { "key": "ui.common.close", "value": "Đóng" },
+    { "key": "ui.common.use", "value": "Sử dụng" },
+    { "key": "ui.common.cancel", "value": "Hủy" },
+    { "key": "ui.common.equip", "value": "Trang bị" },
+    { "key": "ui.common.sort", "value": "Sắp xếp" },
+
+    { "key": "ui.menu.inventory", "value": "Túi đồ" },
+    { "key": "ui.menu.storage", "value": "Kho đồ" },
+    { "key": "ui.menu.skills", "value": "Kỹ năng" },
+    { "key": "ui.menu.map", "value": "Bản đồ" },
+    { "key": "ui.menu.quest", "value": "Nhiệm vụ" },
+    { "key": "ui.menu.journal", "value": "Nhật ký" },
+    { "key": "ui.menu.settings", "value": "Cài đặt" },
+
+    { "key": "ui.inventory.title", "value": "Túi đồ" },
+    { "key": "ui.inventory.capacity", "value": "{0}/{1}" },
+    { "key": "ui.inventory.quick_sort", "value": "sắp xếp nhanh" },
+    { "key": "ui.inventory.money", "value": "Tiền" },
+    { "key": "ui.inventory.info_title", "value": "Thông tin vật phẩm" },
+
+    { "key": "ui.item.category", "value": "Loại" },
+    { "key": "ui.item.rarity", "value": "Phẩm chất" },
+    { "key": "ui.item.description", "value": "Mô tả" },
+    { "key": "ui.item.sell_price", "value": "Giá bán" },
+
+    { "key": "ui.stat.hp", "value": "Máu" },
+    { "key": "ui.stat.hpmax", "value": "Máu tối đa" },
+    { "key": "ui.stat.energy", "value": "Năng lượng" },
+    { "key": "ui.stat.exp", "value": "EXP" },
+    { "key": "ui.stat.attack", "value": "Tấn công" },
+    { "key": "ui.stat.defense", "value": "Phòng thủ" },
+    { "key": "ui.stat.speed", "value": "Tốc độ" },
+    { "key": "ui.stat.crit_rate", "value": "Tỷ lệ chí mạng" },
+    { "key": "ui.stat.attack_speed", "value": "Tốc độ đánh" },
+
+    { "key": "ui.player.level", "value": "Lv. {0}" },
+
+    { "key": "ui.time.spring", "value": "Xuân" },
+    { "key": "ui.time.day", "value": "Ngày {0}" },
+    { "key": "ui.time.gold", "value": "Vàng" },
+
+    { "key": "ui.rarity.common", "value": "Thường" },
+    { "key": "ui.rarity.uncommon", "value": "Không phổ biến" },
+    { "key": "ui.rarity.rare", "value": "Hiếm" },
+    { "key": "ui.rarity.epic", "value": "Sử thi" },
+
+    { "key": "ui.category.weapon", "value": "Vũ khí" },
+    { "key": "ui.category.tool", "value": "ông cụ" },
+    { "key": "ui.category.material", "value": "Nguyên liệu" },
+    { "key": "ui.category.food", "value": "Thực phẩm" },
+    { "key": "ui.category.potion", "value": "Thuốc" }
+  ]
+}

@@ -1,0 +1,3547 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73a7a8e7b56513e488c69503e063a6d4, type: 3}
+  m_Name: SpriteCollection
+  m_EditorClassIdentifier: 
+  Id: FantasyHeroes
+  SpriteFolders:
+  - {fileID: 102900000, guid: f50e7ad258e10d24f91831312acdd049, type: 3}
+  - {fileID: 102900000, guid: 503ca1f622f03e24bb6c1f475ba319c8, type: 3}
+  - {fileID: 102900000, guid: fec8355bdc5fbb94e9aa4ba3a01701fc, type: 3}
+  - {fileID: 102900000, guid: ef488a7c316b3034d892749c6afed3d2, type: 3}
+  CollectionFilter:
+  - '!Reference'
+  - '!Goblin'
+  CollectionFilterIgnore: []
+  Body:
+  - Name: Demon1
+    Id: HeroEditor4D.Draft.Body.Demon1
+    Edition: HeroEditor4D
+    Collection: Draft
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Body/Draft/Demon1.png
+    Sprite: {fileID: 21300016, guid: 896294497c4b1bb4199d46ea500f8578, type: 3}
+    Sprites:
+    - {fileID: 21300016, guid: 896294497c4b1bb4199d46ea500f8578, type: 3}
+    - {fileID: 21300020, guid: 896294497c4b1bb4199d46ea500f8578, type: 3}
+    - {fileID: 21300018, guid: 896294497c4b1bb4199d46ea500f8578, type: 3}
+    - {fileID: 21300086, guid: 896294497c4b1bb4199d46ea500f8578, type: 3}
+    - {fileID: 21300084, guid: 896294497c4b1bb4199d46ea500f8578, type: 3}
+    - {fileID: 21300066, guid: 896294497c4b1bb4199d46ea500f8578, type: 3}
+    - {fileID: 21300056, guid: 896294497c4b1bb4199d46ea500f8578, type: 3}
+    - {fileID: 21300012, guid: 896294497c4b1bb4199d46ea500f8578, type: 3}
+    - {fileID: 21300022, guid: 896294497c4b1bb4199d46ea500f8578, type: 3}
+    - {fileID: 21300024, guid: 896294497c4b1bb4199d46ea500f8578, type: 3}
+    - {fileID: 21300006, guid: 896294497c4b1bb4199d46ea500f8578, type: 3}
+    - {fileID: 21300002, guid: 896294497c4b1bb4199d46ea500f8578, type: 3}
+    - {fileID: 21300004, guid: 896294497c4b1bb4199d46ea500f8578, type: 3}
+    - {fileID: 21300054, guid: 896294497c4b1bb4199d46ea500f8578, type: 3}
+    - {fileID: 21300062, guid: 896294497c4b1bb4199d46ea500f8578, type: 3}
+    - {fileID: 21300000, guid: 896294497c4b1bb4199d46ea500f8578, type: 3}
+    - {fileID: 21300010, guid: 896294497c4b1bb4199d46ea500f8578, type: 3}
+    - {fileID: 21300008, guid: 896294497c4b1bb4199d46ea500f8578, type: 3}
+    - {fileID: 21300070, guid: 896294497c4b1bb4199d46ea500f8578, type: 3}
+    - {fileID: 21300076, guid: 896294497c4b1bb4199d46ea500f8578, type: 3}
+    - {fileID: 21300100, guid: 896294497c4b1bb4199d46ea500f8578, type: 3}
+    - {fileID: 21300092, guid: 896294497c4b1bb4199d46ea500f8578, type: 3}
+    - {fileID: 21300094, guid: 896294497c4b1bb4199d46ea500f8578, type: 3}
+    - {fileID: 21300108, guid: 896294497c4b1bb4199d46ea500f8578, type: 3}
+    - {fileID: 21300102, guid: 896294497c4b1bb4199d46ea500f8578, type: 3}
+    - {fileID: 21300104, guid: 896294497c4b1bb4199d46ea500f8578, type: 3}
+    - {fileID: 21300090, guid: 896294497c4b1bb4199d46ea500f8578, type: 3}
+    - {fileID: 21300098, guid: 896294497c4b1bb4199d46ea500f8578, type: 3}
+    - {fileID: 21300096, guid: 896294497c4b1bb4199d46ea500f8578, type: 3}
+    - {fileID: 21300106, guid: 896294497c4b1bb4199d46ea500f8578, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Demon2
+    Id: HeroEditor4D.Draft.Body.Demon2
+    Edition: HeroEditor4D
+    Collection: Draft
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Body/Draft/Demon2.png
+    Sprite: {fileID: 21300016, guid: e289c761889a8f549ac1c860821943c4, type: 3}
+    Sprites:
+    - {fileID: 21300016, guid: e289c761889a8f549ac1c860821943c4, type: 3}
+    - {fileID: 21300020, guid: e289c761889a8f549ac1c860821943c4, type: 3}
+    - {fileID: 21300018, guid: e289c761889a8f549ac1c860821943c4, type: 3}
+    - {fileID: 21300086, guid: e289c761889a8f549ac1c860821943c4, type: 3}
+    - {fileID: 21300084, guid: e289c761889a8f549ac1c860821943c4, type: 3}
+    - {fileID: 21300066, guid: e289c761889a8f549ac1c860821943c4, type: 3}
+    - {fileID: 21300056, guid: e289c761889a8f549ac1c860821943c4, type: 3}
+    - {fileID: 21300012, guid: e289c761889a8f549ac1c860821943c4, type: 3}
+    - {fileID: 21300022, guid: e289c761889a8f549ac1c860821943c4, type: 3}
+    - {fileID: 21300024, guid: e289c761889a8f549ac1c860821943c4, type: 3}
+    - {fileID: 21300006, guid: e289c761889a8f549ac1c860821943c4, type: 3}
+    - {fileID: 21300002, guid: e289c761889a8f549ac1c860821943c4, type: 3}
+    - {fileID: 21300004, guid: e289c761889a8f549ac1c860821943c4, type: 3}
+    - {fileID: 21300054, guid: e289c761889a8f549ac1c860821943c4, type: 3}
+    - {fileID: 21300062, guid: e289c761889a8f549ac1c860821943c4, type: 3}
+    - {fileID: 21300000, guid: e289c761889a8f549ac1c860821943c4, type: 3}
+    - {fileID: 21300010, guid: e289c761889a8f549ac1c860821943c4, type: 3}
+    - {fileID: 21300008, guid: e289c761889a8f549ac1c860821943c4, type: 3}
+    - {fileID: 21300070, guid: e289c761889a8f549ac1c860821943c4, type: 3}
+    - {fileID: 21300076, guid: e289c761889a8f549ac1c860821943c4, type: 3}
+    - {fileID: 21300100, guid: e289c761889a8f549ac1c860821943c4, type: 3}
+    - {fileID: 21300092, guid: e289c761889a8f549ac1c860821943c4, type: 3}
+    - {fileID: 21300094, guid: e289c761889a8f549ac1c860821943c4, type: 3}
+    - {fileID: 21300108, guid: e289c761889a8f549ac1c860821943c4, type: 3}
+    - {fileID: 21300102, guid: e289c761889a8f549ac1c860821943c4, type: 3}
+    - {fileID: 21300104, guid: e289c761889a8f549ac1c860821943c4, type: 3}
+    - {fileID: 21300090, guid: e289c761889a8f549ac1c860821943c4, type: 3}
+    - {fileID: 21300098, guid: e289c761889a8f549ac1c860821943c4, type: 3}
+    - {fileID: 21300096, guid: e289c761889a8f549ac1c860821943c4, type: 3}
+    - {fileID: 21300106, guid: e289c761889a8f549ac1c860821943c4, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Demon3
+    Id: HeroEditor4D.Draft.Body.Demon3
+    Edition: HeroEditor4D
+    Collection: Draft
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Body/Draft/Demon3.png
+    Sprite: {fileID: 21300016, guid: b547a9275c962c94a8a6c84399d35c7a, type: 3}
+    Sprites:
+    - {fileID: 21300016, guid: b547a9275c962c94a8a6c84399d35c7a, type: 3}
+    - {fileID: 21300020, guid: b547a9275c962c94a8a6c84399d35c7a, type: 3}
+    - {fileID: 21300018, guid: b547a9275c962c94a8a6c84399d35c7a, type: 3}
+    - {fileID: 21300086, guid: b547a9275c962c94a8a6c84399d35c7a, type: 3}
+    - {fileID: 21300084, guid: b547a9275c962c94a8a6c84399d35c7a, type: 3}
+    - {fileID: 21300066, guid: b547a9275c962c94a8a6c84399d35c7a, type: 3}
+    - {fileID: 21300056, guid: b547a9275c962c94a8a6c84399d35c7a, type: 3}
+    - {fileID: 21300012, guid: b547a9275c962c94a8a6c84399d35c7a, type: 3}
+    - {fileID: 21300022, guid: b547a9275c962c94a8a6c84399d35c7a, type: 3}
+    - {fileID: 21300024, guid: b547a9275c962c94a8a6c84399d35c7a, type: 3}
+    - {fileID: 21300006, guid: b547a9275c962c94a8a6c84399d35c7a, type: 3}
+    - {fileID: 21300002, guid: b547a9275c962c94a8a6c84399d35c7a, type: 3}
+    - {fileID: 21300004, guid: b547a9275c962c94a8a6c84399d35c7a, type: 3}
+    - {fileID: 21300054, guid: b547a9275c962c94a8a6c84399d35c7a, type: 3}
+    - {fileID: 21300062, guid: b547a9275c962c94a8a6c84399d35c7a, type: 3}
+    - {fileID: 21300000, guid: b547a9275c962c94a8a6c84399d35c7a, type: 3}
+    - {fileID: 21300010, guid: b547a9275c962c94a8a6c84399d35c7a, type: 3}
+    - {fileID: 21300008, guid: b547a9275c962c94a8a6c84399d35c7a, type: 3}
+    - {fileID: 21300070, guid: b547a9275c962c94a8a6c84399d35c7a, type: 3}
+    - {fileID: 21300076, guid: b547a9275c962c94a8a6c84399d35c7a, type: 3}
+    - {fileID: 21300100, guid: b547a9275c962c94a8a6c84399d35c7a, type: 3}
+    - {fileID: 21300092, guid: b547a9275c962c94a8a6c84399d35c7a, type: 3}
+    - {fileID: 21300094, guid: b547a9275c962c94a8a6c84399d35c7a, type: 3}
+    - {fileID: 21300108, guid: b547a9275c962c94a8a6c84399d35c7a, type: 3}
+    - {fileID: 21300102, guid: b547a9275c962c94a8a6c84399d35c7a, type: 3}
+    - {fileID: 21300104, guid: b547a9275c962c94a8a6c84399d35c7a, type: 3}
+    - {fileID: 21300090, guid: b547a9275c962c94a8a6c84399d35c7a, type: 3}
+    - {fileID: 21300098, guid: b547a9275c962c94a8a6c84399d35c7a, type: 3}
+    - {fileID: 21300096, guid: b547a9275c962c94a8a6c84399d35c7a, type: 3}
+    - {fileID: 21300106, guid: b547a9275c962c94a8a6c84399d35c7a, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Demon4
+    Id: HeroEditor4D.Draft.Body.Demon4
+    Edition: HeroEditor4D
+    Collection: Draft
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Body/Draft/Demon4.png
+    Sprite: {fileID: 21300016, guid: efa32762efcb7454381144294f3bd537, type: 3}
+    Sprites:
+    - {fileID: 21300016, guid: efa32762efcb7454381144294f3bd537, type: 3}
+    - {fileID: 21300020, guid: efa32762efcb7454381144294f3bd537, type: 3}
+    - {fileID: 21300018, guid: efa32762efcb7454381144294f3bd537, type: 3}
+    - {fileID: 21300086, guid: efa32762efcb7454381144294f3bd537, type: 3}
+    - {fileID: 21300084, guid: efa32762efcb7454381144294f3bd537, type: 3}
+    - {fileID: 21300066, guid: efa32762efcb7454381144294f3bd537, type: 3}
+    - {fileID: 21300056, guid: efa32762efcb7454381144294f3bd537, type: 3}
+    - {fileID: 21300012, guid: efa32762efcb7454381144294f3bd537, type: 3}
+    - {fileID: 21300022, guid: efa32762efcb7454381144294f3bd537, type: 3}
+    - {fileID: 21300024, guid: efa32762efcb7454381144294f3bd537, type: 3}
+    - {fileID: 21300006, guid: efa32762efcb7454381144294f3bd537, type: 3}
+    - {fileID: 21300002, guid: efa32762efcb7454381144294f3bd537, type: 3}
+    - {fileID: 21300004, guid: efa32762efcb7454381144294f3bd537, type: 3}
+    - {fileID: 21300054, guid: efa32762efcb7454381144294f3bd537, type: 3}
+    - {fileID: 21300062, guid: efa32762efcb7454381144294f3bd537, type: 3}
+    - {fileID: 21300000, guid: efa32762efcb7454381144294f3bd537, type: 3}
+    - {fileID: 21300010, guid: efa32762efcb7454381144294f3bd537, type: 3}
+    - {fileID: 21300008, guid: efa32762efcb7454381144294f3bd537, type: 3}
+    - {fileID: 21300070, guid: efa32762efcb7454381144294f3bd537, type: 3}
+    - {fileID: 21300076, guid: efa32762efcb7454381144294f3bd537, type: 3}
+    - {fileID: 21300100, guid: efa32762efcb7454381144294f3bd537, type: 3}
+    - {fileID: 21300092, guid: efa32762efcb7454381144294f3bd537, type: 3}
+    - {fileID: 21300094, guid: efa32762efcb7454381144294f3bd537, type: 3}
+    - {fileID: 21300108, guid: efa32762efcb7454381144294f3bd537, type: 3}
+    - {fileID: 21300102, guid: efa32762efcb7454381144294f3bd537, type: 3}
+    - {fileID: 21300104, guid: efa32762efcb7454381144294f3bd537, type: 3}
+    - {fileID: 21300090, guid: efa32762efcb7454381144294f3bd537, type: 3}
+    - {fileID: 21300098, guid: efa32762efcb7454381144294f3bd537, type: 3}
+    - {fileID: 21300096, guid: efa32762efcb7454381144294f3bd537, type: 3}
+    - {fileID: 21300106, guid: efa32762efcb7454381144294f3bd537, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Human
+    Id: HeroEditor4D.Basic.Body.Human
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Body/Basic/Human.png
+    Sprite: {fileID: 21300016, guid: eb2068f61a670144b924e061b7dba3cf, type: 3}
+    Sprites:
+    - {fileID: 21300016, guid: eb2068f61a670144b924e061b7dba3cf, type: 3}
+    - {fileID: 21300020, guid: eb2068f61a670144b924e061b7dba3cf, type: 3}
+    - {fileID: 21300018, guid: eb2068f61a670144b924e061b7dba3cf, type: 3}
+    - {fileID: 21300086, guid: eb2068f61a670144b924e061b7dba3cf, type: 3}
+    - {fileID: 21300084, guid: eb2068f61a670144b924e061b7dba3cf, type: 3}
+    - {fileID: 21300066, guid: eb2068f61a670144b924e061b7dba3cf, type: 3}
+    - {fileID: 21300056, guid: eb2068f61a670144b924e061b7dba3cf, type: 3}
+    - {fileID: 21300012, guid: eb2068f61a670144b924e061b7dba3cf, type: 3}
+    - {fileID: 21300022, guid: eb2068f61a670144b924e061b7dba3cf, type: 3}
+    - {fileID: 21300024, guid: eb2068f61a670144b924e061b7dba3cf, type: 3}
+    - {fileID: 21300006, guid: eb2068f61a670144b924e061b7dba3cf, type: 3}
+    - {fileID: 21300002, guid: eb2068f61a670144b924e061b7dba3cf, type: 3}
+    - {fileID: 21300004, guid: eb2068f61a670144b924e061b7dba3cf, type: 3}
+    - {fileID: 21300054, guid: eb2068f61a670144b924e061b7dba3cf, type: 3}
+    - {fileID: 21300062, guid: eb2068f61a670144b924e061b7dba3cf, type: 3}
+    - {fileID: 21300000, guid: eb2068f61a670144b924e061b7dba3cf, type: 3}
+    - {fileID: 21300010, guid: eb2068f61a670144b924e061b7dba3cf, type: 3}
+    - {fileID: 21300008, guid: eb2068f61a670144b924e061b7dba3cf, type: 3}
+    - {fileID: 21300070, guid: eb2068f61a670144b924e061b7dba3cf, type: 3}
+    - {fileID: 21300076, guid: eb2068f61a670144b924e061b7dba3cf, type: 3}
+    - {fileID: 21300100, guid: eb2068f61a670144b924e061b7dba3cf, type: 3}
+    - {fileID: 21300092, guid: eb2068f61a670144b924e061b7dba3cf, type: 3}
+    - {fileID: 21300094, guid: eb2068f61a670144b924e061b7dba3cf, type: 3}
+    - {fileID: 21300108, guid: eb2068f61a670144b924e061b7dba3cf, type: 3}
+    - {fileID: 21300102, guid: eb2068f61a670144b924e061b7dba3cf, type: 3}
+    - {fileID: 21300104, guid: eb2068f61a670144b924e061b7dba3cf, type: 3}
+    - {fileID: 21300090, guid: eb2068f61a670144b924e061b7dba3cf, type: 3}
+    - {fileID: 21300098, guid: eb2068f61a670144b924e061b7dba3cf, type: 3}
+    - {fileID: 21300096, guid: eb2068f61a670144b924e061b7dba3cf, type: 3}
+    - {fileID: 21300106, guid: eb2068f61a670144b924e061b7dba3cf, type: 3}
+    Tags: []
+    Meta: 
+  - Name: HumanPants
+    Id: HeroEditor4D.Basic.Body.HumanPants
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Body/Basic/HumanPants.png
+    Sprite: {fileID: 21300016, guid: 76ca77e0c084c82499f6224377bce39c, type: 3}
+    Sprites:
+    - {fileID: 21300016, guid: 76ca77e0c084c82499f6224377bce39c, type: 3}
+    - {fileID: 21300020, guid: 76ca77e0c084c82499f6224377bce39c, type: 3}
+    - {fileID: 21300018, guid: 76ca77e0c084c82499f6224377bce39c, type: 3}
+    - {fileID: 21300086, guid: 76ca77e0c084c82499f6224377bce39c, type: 3}
+    - {fileID: 21300084, guid: 76ca77e0c084c82499f6224377bce39c, type: 3}
+    - {fileID: 21300066, guid: 76ca77e0c084c82499f6224377bce39c, type: 3}
+    - {fileID: 21300056, guid: 76ca77e0c084c82499f6224377bce39c, type: 3}
+    - {fileID: 21300012, guid: 76ca77e0c084c82499f6224377bce39c, type: 3}
+    - {fileID: 21300022, guid: 76ca77e0c084c82499f6224377bce39c, type: 3}
+    - {fileID: 21300024, guid: 76ca77e0c084c82499f6224377bce39c, type: 3}
+    - {fileID: 21300006, guid: 76ca77e0c084c82499f6224377bce39c, type: 3}
+    - {fileID: 21300002, guid: 76ca77e0c084c82499f6224377bce39c, type: 3}
+    - {fileID: 21300004, guid: 76ca77e0c084c82499f6224377bce39c, type: 3}
+    - {fileID: 21300054, guid: 76ca77e0c084c82499f6224377bce39c, type: 3}
+    - {fileID: 21300062, guid: 76ca77e0c084c82499f6224377bce39c, type: 3}
+    - {fileID: 21300000, guid: 76ca77e0c084c82499f6224377bce39c, type: 3}
+    - {fileID: 21300010, guid: 76ca77e0c084c82499f6224377bce39c, type: 3}
+    - {fileID: 21300008, guid: 76ca77e0c084c82499f6224377bce39c, type: 3}
+    - {fileID: 21300070, guid: 76ca77e0c084c82499f6224377bce39c, type: 3}
+    - {fileID: 21300076, guid: 76ca77e0c084c82499f6224377bce39c, type: 3}
+    - {fileID: 21300100, guid: 76ca77e0c084c82499f6224377bce39c, type: 3}
+    - {fileID: 21300092, guid: 76ca77e0c084c82499f6224377bce39c, type: 3}
+    - {fileID: 21300094, guid: 76ca77e0c084c82499f6224377bce39c, type: 3}
+    - {fileID: 21300108, guid: 76ca77e0c084c82499f6224377bce39c, type: 3}
+    - {fileID: 21300102, guid: 76ca77e0c084c82499f6224377bce39c, type: 3}
+    - {fileID: 21300104, guid: 76ca77e0c084c82499f6224377bce39c, type: 3}
+    - {fileID: 21300090, guid: 76ca77e0c084c82499f6224377bce39c, type: 3}
+    - {fileID: 21300098, guid: 76ca77e0c084c82499f6224377bce39c, type: 3}
+    - {fileID: 21300096, guid: 76ca77e0c084c82499f6224377bce39c, type: 3}
+    - {fileID: 21300106, guid: 76ca77e0c084c82499f6224377bce39c, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Orc1
+    Id: HeroEditor4D.Draft.Body.Orc1
+    Edition: HeroEditor4D
+    Collection: Draft
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Body/Draft/Orc1.png
+    Sprite: {fileID: 21300016, guid: 49e47f3567945fc45abeb0a99bca9410, type: 3}
+    Sprites:
+    - {fileID: 21300016, guid: 49e47f3567945fc45abeb0a99bca9410, type: 3}
+    - {fileID: 21300020, guid: 49e47f3567945fc45abeb0a99bca9410, type: 3}
+    - {fileID: 21300018, guid: 49e47f3567945fc45abeb0a99bca9410, type: 3}
+    - {fileID: 21300086, guid: 49e47f3567945fc45abeb0a99bca9410, type: 3}
+    - {fileID: 21300084, guid: 49e47f3567945fc45abeb0a99bca9410, type: 3}
+    - {fileID: 21300066, guid: 49e47f3567945fc45abeb0a99bca9410, type: 3}
+    - {fileID: 21300056, guid: 49e47f3567945fc45abeb0a99bca9410, type: 3}
+    - {fileID: 21300012, guid: 49e47f3567945fc45abeb0a99bca9410, type: 3}
+    - {fileID: 21300022, guid: 49e47f3567945fc45abeb0a99bca9410, type: 3}
+    - {fileID: 21300024, guid: 49e47f3567945fc45abeb0a99bca9410, type: 3}
+    - {fileID: 21300006, guid: 49e47f3567945fc45abeb0a99bca9410, type: 3}
+    - {fileID: 21300002, guid: 49e47f3567945fc45abeb0a99bca9410, type: 3}
+    - {fileID: 21300004, guid: 49e47f3567945fc45abeb0a99bca9410, type: 3}
+    - {fileID: 21300054, guid: 49e47f3567945fc45abeb0a99bca9410, type: 3}
+    - {fileID: 21300062, guid: 49e47f3567945fc45abeb0a99bca9410, type: 3}
+    - {fileID: 21300000, guid: 49e47f3567945fc45abeb0a99bca9410, type: 3}
+    - {fileID: 21300010, guid: 49e47f3567945fc45abeb0a99bca9410, type: 3}
+    - {fileID: 21300008, guid: 49e47f3567945fc45abeb0a99bca9410, type: 3}
+    - {fileID: 21300070, guid: 49e47f3567945fc45abeb0a99bca9410, type: 3}
+    - {fileID: 21300076, guid: 49e47f3567945fc45abeb0a99bca9410, type: 3}
+    - {fileID: 21300100, guid: 49e47f3567945fc45abeb0a99bca9410, type: 3}
+    - {fileID: 21300092, guid: 49e47f3567945fc45abeb0a99bca9410, type: 3}
+    - {fileID: 21300094, guid: 49e47f3567945fc45abeb0a99bca9410, type: 3}
+    - {fileID: 21300108, guid: 49e47f3567945fc45abeb0a99bca9410, type: 3}
+    - {fileID: 21300102, guid: 49e47f3567945fc45abeb0a99bca9410, type: 3}
+    - {fileID: 21300104, guid: 49e47f3567945fc45abeb0a99bca9410, type: 3}
+    - {fileID: 21300090, guid: 49e47f3567945fc45abeb0a99bca9410, type: 3}
+    - {fileID: 21300098, guid: 49e47f3567945fc45abeb0a99bca9410, type: 3}
+    - {fileID: 21300096, guid: 49e47f3567945fc45abeb0a99bca9410, type: 3}
+    - {fileID: 21300106, guid: 49e47f3567945fc45abeb0a99bca9410, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Orc2
+    Id: HeroEditor4D.Draft.Body.Orc2
+    Edition: HeroEditor4D
+    Collection: Draft
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Body/Draft/Orc2.png
+    Sprite: {fileID: 21300016, guid: 7bfd6e04fd3a04b408980eeccbbabba5, type: 3}
+    Sprites:
+    - {fileID: 21300016, guid: 7bfd6e04fd3a04b408980eeccbbabba5, type: 3}
+    - {fileID: 21300020, guid: 7bfd6e04fd3a04b408980eeccbbabba5, type: 3}
+    - {fileID: 21300018, guid: 7bfd6e04fd3a04b408980eeccbbabba5, type: 3}
+    - {fileID: 21300086, guid: 7bfd6e04fd3a04b408980eeccbbabba5, type: 3}
+    - {fileID: 21300084, guid: 7bfd6e04fd3a04b408980eeccbbabba5, type: 3}
+    - {fileID: 21300066, guid: 7bfd6e04fd3a04b408980eeccbbabba5, type: 3}
+    - {fileID: 21300056, guid: 7bfd6e04fd3a04b408980eeccbbabba5, type: 3}
+    - {fileID: 21300012, guid: 7bfd6e04fd3a04b408980eeccbbabba5, type: 3}
+    - {fileID: 21300022, guid: 7bfd6e04fd3a04b408980eeccbbabba5, type: 3}
+    - {fileID: 21300024, guid: 7bfd6e04fd3a04b408980eeccbbabba5, type: 3}
+    - {fileID: 21300006, guid: 7bfd6e04fd3a04b408980eeccbbabba5, type: 3}
+    - {fileID: 21300002, guid: 7bfd6e04fd3a04b408980eeccbbabba5, type: 3}
+    - {fileID: 21300004, guid: 7bfd6e04fd3a04b408980eeccbbabba5, type: 3}
+    - {fileID: 21300054, guid: 7bfd6e04fd3a04b408980eeccbbabba5, type: 3}
+    - {fileID: 21300062, guid: 7bfd6e04fd3a04b408980eeccbbabba5, type: 3}
+    - {fileID: 21300000, guid: 7bfd6e04fd3a04b408980eeccbbabba5, type: 3}
+    - {fileID: 21300010, guid: 7bfd6e04fd3a04b408980eeccbbabba5, type: 3}
+    - {fileID: 21300008, guid: 7bfd6e04fd3a04b408980eeccbbabba5, type: 3}
+    - {fileID: 21300070, guid: 7bfd6e04fd3a04b408980eeccbbabba5, type: 3}
+    - {fileID: 21300076, guid: 7bfd6e04fd3a04b408980eeccbbabba5, type: 3}
+    - {fileID: 21300100, guid: 7bfd6e04fd3a04b408980eeccbbabba5, type: 3}
+    - {fileID: 21300092, guid: 7bfd6e04fd3a04b408980eeccbbabba5, type: 3}
+    - {fileID: 21300094, guid: 7bfd6e04fd3a04b408980eeccbbabba5, type: 3}
+    - {fileID: 21300108, guid: 7bfd6e04fd3a04b408980eeccbbabba5, type: 3}
+    - {fileID: 21300102, guid: 7bfd6e04fd3a04b408980eeccbbabba5, type: 3}
+    - {fileID: 21300104, guid: 7bfd6e04fd3a04b408980eeccbbabba5, type: 3}
+    - {fileID: 21300090, guid: 7bfd6e04fd3a04b408980eeccbbabba5, type: 3}
+    - {fileID: 21300098, guid: 7bfd6e04fd3a04b408980eeccbbabba5, type: 3}
+    - {fileID: 21300096, guid: 7bfd6e04fd3a04b408980eeccbbabba5, type: 3}
+    - {fileID: 21300106, guid: 7bfd6e04fd3a04b408980eeccbbabba5, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Orc3
+    Id: HeroEditor4D.Draft.Body.Orc3
+    Edition: HeroEditor4D
+    Collection: Draft
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Body/Draft/Orc3.png
+    Sprite: {fileID: 21300016, guid: bb0f16713e3fc1848a0d1b451f0ec5d2, type: 3}
+    Sprites:
+    - {fileID: 21300016, guid: bb0f16713e3fc1848a0d1b451f0ec5d2, type: 3}
+    - {fileID: 21300020, guid: bb0f16713e3fc1848a0d1b451f0ec5d2, type: 3}
+    - {fileID: 21300018, guid: bb0f16713e3fc1848a0d1b451f0ec5d2, type: 3}
+    - {fileID: 21300086, guid: bb0f16713e3fc1848a0d1b451f0ec5d2, type: 3}
+    - {fileID: 21300084, guid: bb0f16713e3fc1848a0d1b451f0ec5d2, type: 3}
+    - {fileID: 21300066, guid: bb0f16713e3fc1848a0d1b451f0ec5d2, type: 3}
+    - {fileID: 21300056, guid: bb0f16713e3fc1848a0d1b451f0ec5d2, type: 3}
+    - {fileID: 21300012, guid: bb0f16713e3fc1848a0d1b451f0ec5d2, type: 3}
+    - {fileID: 21300022, guid: bb0f16713e3fc1848a0d1b451f0ec5d2, type: 3}
+    - {fileID: 21300024, guid: bb0f16713e3fc1848a0d1b451f0ec5d2, type: 3}
+    - {fileID: 21300006, guid: bb0f16713e3fc1848a0d1b451f0ec5d2, type: 3}
+    - {fileID: 21300002, guid: bb0f16713e3fc1848a0d1b451f0ec5d2, type: 3}
+    - {fileID: 21300004, guid: bb0f16713e3fc1848a0d1b451f0ec5d2, type: 3}
+    - {fileID: 21300054, guid: bb0f16713e3fc1848a0d1b451f0ec5d2, type: 3}
+    - {fileID: 21300062, guid: bb0f16713e3fc1848a0d1b451f0ec5d2, type: 3}
+    - {fileID: 21300000, guid: bb0f16713e3fc1848a0d1b451f0ec5d2, type: 3}
+    - {fileID: 21300010, guid: bb0f16713e3fc1848a0d1b451f0ec5d2, type: 3}
+    - {fileID: 21300008, guid: bb0f16713e3fc1848a0d1b451f0ec5d2, type: 3}
+    - {fileID: 21300070, guid: bb0f16713e3fc1848a0d1b451f0ec5d2, type: 3}
+    - {fileID: 21300076, guid: bb0f16713e3fc1848a0d1b451f0ec5d2, type: 3}
+    - {fileID: 21300100, guid: bb0f16713e3fc1848a0d1b451f0ec5d2, type: 3}
+    - {fileID: 21300092, guid: bb0f16713e3fc1848a0d1b451f0ec5d2, type: 3}
+    - {fileID: 21300094, guid: bb0f16713e3fc1848a0d1b451f0ec5d2, type: 3}
+    - {fileID: 21300108, guid: bb0f16713e3fc1848a0d1b451f0ec5d2, type: 3}
+    - {fileID: 21300102, guid: bb0f16713e3fc1848a0d1b451f0ec5d2, type: 3}
+    - {fileID: 21300104, guid: bb0f16713e3fc1848a0d1b451f0ec5d2, type: 3}
+    - {fileID: 21300090, guid: bb0f16713e3fc1848a0d1b451f0ec5d2, type: 3}
+    - {fileID: 21300098, guid: bb0f16713e3fc1848a0d1b451f0ec5d2, type: 3}
+    - {fileID: 21300096, guid: bb0f16713e3fc1848a0d1b451f0ec5d2, type: 3}
+    - {fileID: 21300106, guid: bb0f16713e3fc1848a0d1b451f0ec5d2, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Orc4
+    Id: HeroEditor4D.Draft.Body.Orc4
+    Edition: HeroEditor4D
+    Collection: Draft
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Body/Draft/Orc4.png
+    Sprite: {fileID: 21300016, guid: 62290264bb7aa394e80949ea94baefbe, type: 3}
+    Sprites:
+    - {fileID: 21300016, guid: 62290264bb7aa394e80949ea94baefbe, type: 3}
+    - {fileID: 21300020, guid: 62290264bb7aa394e80949ea94baefbe, type: 3}
+    - {fileID: 21300018, guid: 62290264bb7aa394e80949ea94baefbe, type: 3}
+    - {fileID: 21300086, guid: 62290264bb7aa394e80949ea94baefbe, type: 3}
+    - {fileID: 21300084, guid: 62290264bb7aa394e80949ea94baefbe, type: 3}
+    - {fileID: 21300066, guid: 62290264bb7aa394e80949ea94baefbe, type: 3}
+    - {fileID: 21300056, guid: 62290264bb7aa394e80949ea94baefbe, type: 3}
+    - {fileID: 21300012, guid: 62290264bb7aa394e80949ea94baefbe, type: 3}
+    - {fileID: 21300022, guid: 62290264bb7aa394e80949ea94baefbe, type: 3}
+    - {fileID: 21300024, guid: 62290264bb7aa394e80949ea94baefbe, type: 3}
+    - {fileID: 21300006, guid: 62290264bb7aa394e80949ea94baefbe, type: 3}
+    - {fileID: 21300002, guid: 62290264bb7aa394e80949ea94baefbe, type: 3}
+    - {fileID: 21300004, guid: 62290264bb7aa394e80949ea94baefbe, type: 3}
+    - {fileID: 21300054, guid: 62290264bb7aa394e80949ea94baefbe, type: 3}
+    - {fileID: 21300062, guid: 62290264bb7aa394e80949ea94baefbe, type: 3}
+    - {fileID: 21300000, guid: 62290264bb7aa394e80949ea94baefbe, type: 3}
+    - {fileID: 21300010, guid: 62290264bb7aa394e80949ea94baefbe, type: 3}
+    - {fileID: 21300008, guid: 62290264bb7aa394e80949ea94baefbe, type: 3}
+    - {fileID: 21300070, guid: 62290264bb7aa394e80949ea94baefbe, type: 3}
+    - {fileID: 21300076, guid: 62290264bb7aa394e80949ea94baefbe, type: 3}
+    - {fileID: 21300100, guid: 62290264bb7aa394e80949ea94baefbe, type: 3}
+    - {fileID: 21300092, guid: 62290264bb7aa394e80949ea94baefbe, type: 3}
+    - {fileID: 21300094, guid: 62290264bb7aa394e80949ea94baefbe, type: 3}
+    - {fileID: 21300108, guid: 62290264bb7aa394e80949ea94baefbe, type: 3}
+    - {fileID: 21300102, guid: 62290264bb7aa394e80949ea94baefbe, type: 3}
+    - {fileID: 21300104, guid: 62290264bb7aa394e80949ea94baefbe, type: 3}
+    - {fileID: 21300090, guid: 62290264bb7aa394e80949ea94baefbe, type: 3}
+    - {fileID: 21300098, guid: 62290264bb7aa394e80949ea94baefbe, type: 3}
+    - {fileID: 21300096, guid: 62290264bb7aa394e80949ea94baefbe, type: 3}
+    - {fileID: 21300106, guid: 62290264bb7aa394e80949ea94baefbe, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type1
+    Id: HeroEditor4D.Basic.Body.Type1
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Body/Basic/Type1.png
+    Sprite: {fileID: 21300016, guid: c3f59e0d162155e46ad81afc354b0ae5, type: 3}
+    Sprites:
+    - {fileID: 21300016, guid: c3f59e0d162155e46ad81afc354b0ae5, type: 3}
+    - {fileID: 21300020, guid: c3f59e0d162155e46ad81afc354b0ae5, type: 3}
+    - {fileID: 21300018, guid: c3f59e0d162155e46ad81afc354b0ae5, type: 3}
+    - {fileID: 21300086, guid: c3f59e0d162155e46ad81afc354b0ae5, type: 3}
+    - {fileID: 21300084, guid: c3f59e0d162155e46ad81afc354b0ae5, type: 3}
+    - {fileID: 21300066, guid: c3f59e0d162155e46ad81afc354b0ae5, type: 3}
+    - {fileID: 21300056, guid: c3f59e0d162155e46ad81afc354b0ae5, type: 3}
+    - {fileID: 21300012, guid: c3f59e0d162155e46ad81afc354b0ae5, type: 3}
+    - {fileID: 21300022, guid: c3f59e0d162155e46ad81afc354b0ae5, type: 3}
+    - {fileID: 21300024, guid: c3f59e0d162155e46ad81afc354b0ae5, type: 3}
+    - {fileID: 21300006, guid: c3f59e0d162155e46ad81afc354b0ae5, type: 3}
+    - {fileID: 21300002, guid: c3f59e0d162155e46ad81afc354b0ae5, type: 3}
+    - {fileID: 21300004, guid: c3f59e0d162155e46ad81afc354b0ae5, type: 3}
+    - {fileID: 21300054, guid: c3f59e0d162155e46ad81afc354b0ae5, type: 3}
+    - {fileID: 21300062, guid: c3f59e0d162155e46ad81afc354b0ae5, type: 3}
+    - {fileID: 21300000, guid: c3f59e0d162155e46ad81afc354b0ae5, type: 3}
+    - {fileID: 21300010, guid: c3f59e0d162155e46ad81afc354b0ae5, type: 3}
+    - {fileID: 21300008, guid: c3f59e0d162155e46ad81afc354b0ae5, type: 3}
+    - {fileID: 21300070, guid: c3f59e0d162155e46ad81afc354b0ae5, type: 3}
+    - {fileID: 21300076, guid: c3f59e0d162155e46ad81afc354b0ae5, type: 3}
+    - {fileID: 21300100, guid: c3f59e0d162155e46ad81afc354b0ae5, type: 3}
+    - {fileID: 21300092, guid: c3f59e0d162155e46ad81afc354b0ae5, type: 3}
+    - {fileID: 21300094, guid: c3f59e0d162155e46ad81afc354b0ae5, type: 3}
+    - {fileID: 21300108, guid: c3f59e0d162155e46ad81afc354b0ae5, type: 3}
+    - {fileID: 21300102, guid: c3f59e0d162155e46ad81afc354b0ae5, type: 3}
+    - {fileID: 21300104, guid: c3f59e0d162155e46ad81afc354b0ae5, type: 3}
+    - {fileID: 21300090, guid: c3f59e0d162155e46ad81afc354b0ae5, type: 3}
+    - {fileID: 21300098, guid: c3f59e0d162155e46ad81afc354b0ae5, type: 3}
+    - {fileID: 21300096, guid: c3f59e0d162155e46ad81afc354b0ae5, type: 3}
+    - {fileID: 21300106, guid: c3f59e0d162155e46ad81afc354b0ae5, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type2
+    Id: HeroEditor4D.Basic.Body.Type2
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Body/Basic/Type2.png
+    Sprite: {fileID: 21300016, guid: 92aadc88184050a4a904d0a96889ff8b, type: 3}
+    Sprites:
+    - {fileID: 21300016, guid: 92aadc88184050a4a904d0a96889ff8b, type: 3}
+    - {fileID: 21300020, guid: 92aadc88184050a4a904d0a96889ff8b, type: 3}
+    - {fileID: 21300018, guid: 92aadc88184050a4a904d0a96889ff8b, type: 3}
+    - {fileID: 21300086, guid: 92aadc88184050a4a904d0a96889ff8b, type: 3}
+    - {fileID: 21300084, guid: 92aadc88184050a4a904d0a96889ff8b, type: 3}
+    - {fileID: 21300066, guid: 92aadc88184050a4a904d0a96889ff8b, type: 3}
+    - {fileID: 21300056, guid: 92aadc88184050a4a904d0a96889ff8b, type: 3}
+    - {fileID: 21300012, guid: 92aadc88184050a4a904d0a96889ff8b, type: 3}
+    - {fileID: 21300022, guid: 92aadc88184050a4a904d0a96889ff8b, type: 3}
+    - {fileID: 21300024, guid: 92aadc88184050a4a904d0a96889ff8b, type: 3}
+    - {fileID: 21300006, guid: 92aadc88184050a4a904d0a96889ff8b, type: 3}
+    - {fileID: 21300002, guid: 92aadc88184050a4a904d0a96889ff8b, type: 3}
+    - {fileID: 21300004, guid: 92aadc88184050a4a904d0a96889ff8b, type: 3}
+    - {fileID: 21300054, guid: 92aadc88184050a4a904d0a96889ff8b, type: 3}
+    - {fileID: 21300062, guid: 92aadc88184050a4a904d0a96889ff8b, type: 3}
+    - {fileID: 21300000, guid: 92aadc88184050a4a904d0a96889ff8b, type: 3}
+    - {fileID: 21300010, guid: 92aadc88184050a4a904d0a96889ff8b, type: 3}
+    - {fileID: 21300008, guid: 92aadc88184050a4a904d0a96889ff8b, type: 3}
+    - {fileID: 21300070, guid: 92aadc88184050a4a904d0a96889ff8b, type: 3}
+    - {fileID: 21300076, guid: 92aadc88184050a4a904d0a96889ff8b, type: 3}
+    - {fileID: 21300100, guid: 92aadc88184050a4a904d0a96889ff8b, type: 3}
+    - {fileID: 21300092, guid: 92aadc88184050a4a904d0a96889ff8b, type: 3}
+    - {fileID: 21300094, guid: 92aadc88184050a4a904d0a96889ff8b, type: 3}
+    - {fileID: 21300108, guid: 92aadc88184050a4a904d0a96889ff8b, type: 3}
+    - {fileID: 21300102, guid: 92aadc88184050a4a904d0a96889ff8b, type: 3}
+    - {fileID: 21300104, guid: 92aadc88184050a4a904d0a96889ff8b, type: 3}
+    - {fileID: 21300090, guid: 92aadc88184050a4a904d0a96889ff8b, type: 3}
+    - {fileID: 21300098, guid: 92aadc88184050a4a904d0a96889ff8b, type: 3}
+    - {fileID: 21300096, guid: 92aadc88184050a4a904d0a96889ff8b, type: 3}
+    - {fileID: 21300106, guid: 92aadc88184050a4a904d0a96889ff8b, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type3
+    Id: HeroEditor4D.Basic.Body.Type3
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Body/Basic/Type3.png
+    Sprite: {fileID: 21300016, guid: f8a0392ccd6a73a4184d90ce7434425f, type: 3}
+    Sprites:
+    - {fileID: 21300016, guid: f8a0392ccd6a73a4184d90ce7434425f, type: 3}
+    - {fileID: 21300020, guid: f8a0392ccd6a73a4184d90ce7434425f, type: 3}
+    - {fileID: 21300018, guid: f8a0392ccd6a73a4184d90ce7434425f, type: 3}
+    - {fileID: 21300086, guid: f8a0392ccd6a73a4184d90ce7434425f, type: 3}
+    - {fileID: 21300084, guid: f8a0392ccd6a73a4184d90ce7434425f, type: 3}
+    - {fileID: 21300066, guid: f8a0392ccd6a73a4184d90ce7434425f, type: 3}
+    - {fileID: 21300056, guid: f8a0392ccd6a73a4184d90ce7434425f, type: 3}
+    - {fileID: 21300012, guid: f8a0392ccd6a73a4184d90ce7434425f, type: 3}
+    - {fileID: 21300022, guid: f8a0392ccd6a73a4184d90ce7434425f, type: 3}
+    - {fileID: 21300024, guid: f8a0392ccd6a73a4184d90ce7434425f, type: 3}
+    - {fileID: 21300006, guid: f8a0392ccd6a73a4184d90ce7434425f, type: 3}
+    - {fileID: 21300002, guid: f8a0392ccd6a73a4184d90ce7434425f, type: 3}
+    - {fileID: 21300004, guid: f8a0392ccd6a73a4184d90ce7434425f, type: 3}
+    - {fileID: 21300054, guid: f8a0392ccd6a73a4184d90ce7434425f, type: 3}
+    - {fileID: 21300062, guid: f8a0392ccd6a73a4184d90ce7434425f, type: 3}
+    - {fileID: 21300000, guid: f8a0392ccd6a73a4184d90ce7434425f, type: 3}
+    - {fileID: 21300010, guid: f8a0392ccd6a73a4184d90ce7434425f, type: 3}
+    - {fileID: 21300008, guid: f8a0392ccd6a73a4184d90ce7434425f, type: 3}
+    - {fileID: 21300070, guid: f8a0392ccd6a73a4184d90ce7434425f, type: 3}
+    - {fileID: 21300076, guid: f8a0392ccd6a73a4184d90ce7434425f, type: 3}
+    - {fileID: 21300100, guid: f8a0392ccd6a73a4184d90ce7434425f, type: 3}
+    - {fileID: 21300092, guid: f8a0392ccd6a73a4184d90ce7434425f, type: 3}
+    - {fileID: 21300094, guid: f8a0392ccd6a73a4184d90ce7434425f, type: 3}
+    - {fileID: 21300108, guid: f8a0392ccd6a73a4184d90ce7434425f, type: 3}
+    - {fileID: 21300102, guid: f8a0392ccd6a73a4184d90ce7434425f, type: 3}
+    - {fileID: 21300104, guid: f8a0392ccd6a73a4184d90ce7434425f, type: 3}
+    - {fileID: 21300090, guid: f8a0392ccd6a73a4184d90ce7434425f, type: 3}
+    - {fileID: 21300098, guid: f8a0392ccd6a73a4184d90ce7434425f, type: 3}
+    - {fileID: 21300096, guid: f8a0392ccd6a73a4184d90ce7434425f, type: 3}
+    - {fileID: 21300106, guid: f8a0392ccd6a73a4184d90ce7434425f, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type4
+    Id: HeroEditor4D.Basic.Body.Type4
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Body/Basic/Type4.png
+    Sprite: {fileID: 21300016, guid: 5d5fbc45b8d18c343b5c93de38111374, type: 3}
+    Sprites:
+    - {fileID: 21300016, guid: 5d5fbc45b8d18c343b5c93de38111374, type: 3}
+    - {fileID: 21300020, guid: 5d5fbc45b8d18c343b5c93de38111374, type: 3}
+    - {fileID: 21300018, guid: 5d5fbc45b8d18c343b5c93de38111374, type: 3}
+    - {fileID: 21300086, guid: 5d5fbc45b8d18c343b5c93de38111374, type: 3}
+    - {fileID: 21300084, guid: 5d5fbc45b8d18c343b5c93de38111374, type: 3}
+    - {fileID: 21300066, guid: 5d5fbc45b8d18c343b5c93de38111374, type: 3}
+    - {fileID: 21300056, guid: 5d5fbc45b8d18c343b5c93de38111374, type: 3}
+    - {fileID: 21300012, guid: 5d5fbc45b8d18c343b5c93de38111374, type: 3}
+    - {fileID: 21300022, guid: 5d5fbc45b8d18c343b5c93de38111374, type: 3}
+    - {fileID: 21300024, guid: 5d5fbc45b8d18c343b5c93de38111374, type: 3}
+    - {fileID: 21300006, guid: 5d5fbc45b8d18c343b5c93de38111374, type: 3}
+    - {fileID: 21300002, guid: 5d5fbc45b8d18c343b5c93de38111374, type: 3}
+    - {fileID: 21300004, guid: 5d5fbc45b8d18c343b5c93de38111374, type: 3}
+    - {fileID: 21300054, guid: 5d5fbc45b8d18c343b5c93de38111374, type: 3}
+    - {fileID: 21300062, guid: 5d5fbc45b8d18c343b5c93de38111374, type: 3}
+    - {fileID: 21300000, guid: 5d5fbc45b8d18c343b5c93de38111374, type: 3}
+    - {fileID: 21300010, guid: 5d5fbc45b8d18c343b5c93de38111374, type: 3}
+    - {fileID: 21300008, guid: 5d5fbc45b8d18c343b5c93de38111374, type: 3}
+    - {fileID: 21300070, guid: 5d5fbc45b8d18c343b5c93de38111374, type: 3}
+    - {fileID: 21300076, guid: 5d5fbc45b8d18c343b5c93de38111374, type: 3}
+    - {fileID: 21300100, guid: 5d5fbc45b8d18c343b5c93de38111374, type: 3}
+    - {fileID: 21300092, guid: 5d5fbc45b8d18c343b5c93de38111374, type: 3}
+    - {fileID: 21300094, guid: 5d5fbc45b8d18c343b5c93de38111374, type: 3}
+    - {fileID: 21300108, guid: 5d5fbc45b8d18c343b5c93de38111374, type: 3}
+    - {fileID: 21300102, guid: 5d5fbc45b8d18c343b5c93de38111374, type: 3}
+    - {fileID: 21300104, guid: 5d5fbc45b8d18c343b5c93de38111374, type: 3}
+    - {fileID: 21300090, guid: 5d5fbc45b8d18c343b5c93de38111374, type: 3}
+    - {fileID: 21300098, guid: 5d5fbc45b8d18c343b5c93de38111374, type: 3}
+    - {fileID: 21300096, guid: 5d5fbc45b8d18c343b5c93de38111374, type: 3}
+    - {fileID: 21300106, guid: 5d5fbc45b8d18c343b5c93de38111374, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type5
+    Id: HeroEditor4D.Basic.Body.Type5
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Body/Basic/Type5.png
+    Sprite: {fileID: 21300016, guid: eaad66adad1d8a64ab2cce6bb9e93d20, type: 3}
+    Sprites:
+    - {fileID: 21300016, guid: eaad66adad1d8a64ab2cce6bb9e93d20, type: 3}
+    - {fileID: 21300020, guid: eaad66adad1d8a64ab2cce6bb9e93d20, type: 3}
+    - {fileID: 21300018, guid: eaad66adad1d8a64ab2cce6bb9e93d20, type: 3}
+    - {fileID: 21300086, guid: eaad66adad1d8a64ab2cce6bb9e93d20, type: 3}
+    - {fileID: 21300084, guid: eaad66adad1d8a64ab2cce6bb9e93d20, type: 3}
+    - {fileID: 21300066, guid: eaad66adad1d8a64ab2cce6bb9e93d20, type: 3}
+    - {fileID: 21300056, guid: eaad66adad1d8a64ab2cce6bb9e93d20, type: 3}
+    - {fileID: 21300012, guid: eaad66adad1d8a64ab2cce6bb9e93d20, type: 3}
+    - {fileID: 21300022, guid: eaad66adad1d8a64ab2cce6bb9e93d20, type: 3}
+    - {fileID: 21300024, guid: eaad66adad1d8a64ab2cce6bb9e93d20, type: 3}
+    - {fileID: 21300006, guid: eaad66adad1d8a64ab2cce6bb9e93d20, type: 3}
+    - {fileID: 21300002, guid: eaad66adad1d8a64ab2cce6bb9e93d20, type: 3}
+    - {fileID: 21300004, guid: eaad66adad1d8a64ab2cce6bb9e93d20, type: 3}
+    - {fileID: 21300054, guid: eaad66adad1d8a64ab2cce6bb9e93d20, type: 3}
+    - {fileID: 21300062, guid: eaad66adad1d8a64ab2cce6bb9e93d20, type: 3}
+    - {fileID: 21300000, guid: eaad66adad1d8a64ab2cce6bb9e93d20, type: 3}
+    - {fileID: 21300010, guid: eaad66adad1d8a64ab2cce6bb9e93d20, type: 3}
+    - {fileID: 21300008, guid: eaad66adad1d8a64ab2cce6bb9e93d20, type: 3}
+    - {fileID: 21300070, guid: eaad66adad1d8a64ab2cce6bb9e93d20, type: 3}
+    - {fileID: 21300076, guid: eaad66adad1d8a64ab2cce6bb9e93d20, type: 3}
+    - {fileID: 21300100, guid: eaad66adad1d8a64ab2cce6bb9e93d20, type: 3}
+    - {fileID: 21300092, guid: eaad66adad1d8a64ab2cce6bb9e93d20, type: 3}
+    - {fileID: 21300094, guid: eaad66adad1d8a64ab2cce6bb9e93d20, type: 3}
+    - {fileID: 21300108, guid: eaad66adad1d8a64ab2cce6bb9e93d20, type: 3}
+    - {fileID: 21300102, guid: eaad66adad1d8a64ab2cce6bb9e93d20, type: 3}
+    - {fileID: 21300104, guid: eaad66adad1d8a64ab2cce6bb9e93d20, type: 3}
+    - {fileID: 21300090, guid: eaad66adad1d8a64ab2cce6bb9e93d20, type: 3}
+    - {fileID: 21300098, guid: eaad66adad1d8a64ab2cce6bb9e93d20, type: 3}
+    - {fileID: 21300096, guid: eaad66adad1d8a64ab2cce6bb9e93d20, type: 3}
+    - {fileID: 21300106, guid: eaad66adad1d8a64ab2cce6bb9e93d20, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type6
+    Id: HeroEditor4D.Basic.Body.Type6
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Body/Basic/Type6.png
+    Sprite: {fileID: 21300016, guid: 62b4705259e5bdb408d6515546e29a0b, type: 3}
+    Sprites:
+    - {fileID: 21300016, guid: 62b4705259e5bdb408d6515546e29a0b, type: 3}
+    - {fileID: 21300020, guid: 62b4705259e5bdb408d6515546e29a0b, type: 3}
+    - {fileID: 21300018, guid: 62b4705259e5bdb408d6515546e29a0b, type: 3}
+    - {fileID: 21300086, guid: 62b4705259e5bdb408d6515546e29a0b, type: 3}
+    - {fileID: 21300084, guid: 62b4705259e5bdb408d6515546e29a0b, type: 3}
+    - {fileID: 21300066, guid: 62b4705259e5bdb408d6515546e29a0b, type: 3}
+    - {fileID: 21300056, guid: 62b4705259e5bdb408d6515546e29a0b, type: 3}
+    - {fileID: 21300012, guid: 62b4705259e5bdb408d6515546e29a0b, type: 3}
+    - {fileID: 21300022, guid: 62b4705259e5bdb408d6515546e29a0b, type: 3}
+    - {fileID: 21300024, guid: 62b4705259e5bdb408d6515546e29a0b, type: 3}
+    - {fileID: 21300006, guid: 62b4705259e5bdb408d6515546e29a0b, type: 3}
+    - {fileID: 21300002, guid: 62b4705259e5bdb408d6515546e29a0b, type: 3}
+    - {fileID: 21300004, guid: 62b4705259e5bdb408d6515546e29a0b, type: 3}
+    - {fileID: 21300054, guid: 62b4705259e5bdb408d6515546e29a0b, type: 3}
+    - {fileID: 21300062, guid: 62b4705259e5bdb408d6515546e29a0b, type: 3}
+    - {fileID: 21300000, guid: 62b4705259e5bdb408d6515546e29a0b, type: 3}
+    - {fileID: 21300010, guid: 62b4705259e5bdb408d6515546e29a0b, type: 3}
+    - {fileID: 21300008, guid: 62b4705259e5bdb408d6515546e29a0b, type: 3}
+    - {fileID: 21300070, guid: 62b4705259e5bdb408d6515546e29a0b, type: 3}
+    - {fileID: 21300076, guid: 62b4705259e5bdb408d6515546e29a0b, type: 3}
+    - {fileID: 21300100, guid: 62b4705259e5bdb408d6515546e29a0b, type: 3}
+    - {fileID: 21300092, guid: 62b4705259e5bdb408d6515546e29a0b, type: 3}
+    - {fileID: 21300094, guid: 62b4705259e5bdb408d6515546e29a0b, type: 3}
+    - {fileID: 21300108, guid: 62b4705259e5bdb408d6515546e29a0b, type: 3}
+    - {fileID: 21300102, guid: 62b4705259e5bdb408d6515546e29a0b, type: 3}
+    - {fileID: 21300104, guid: 62b4705259e5bdb408d6515546e29a0b, type: 3}
+    - {fileID: 21300090, guid: 62b4705259e5bdb408d6515546e29a0b, type: 3}
+    - {fileID: 21300098, guid: 62b4705259e5bdb408d6515546e29a0b, type: 3}
+    - {fileID: 21300096, guid: 62b4705259e5bdb408d6515546e29a0b, type: 3}
+    - {fileID: 21300106, guid: 62b4705259e5bdb408d6515546e29a0b, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type7
+    Id: HeroEditor4D.Basic.Body.Type7
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Body/Basic/Type7.png
+    Sprite: {fileID: 21300016, guid: 6f06f5401d43ce74f931d96d79852aeb, type: 3}
+    Sprites:
+    - {fileID: 21300016, guid: 6f06f5401d43ce74f931d96d79852aeb, type: 3}
+    - {fileID: 21300020, guid: 6f06f5401d43ce74f931d96d79852aeb, type: 3}
+    - {fileID: 21300018, guid: 6f06f5401d43ce74f931d96d79852aeb, type: 3}
+    - {fileID: 21300086, guid: 6f06f5401d43ce74f931d96d79852aeb, type: 3}
+    - {fileID: 21300084, guid: 6f06f5401d43ce74f931d96d79852aeb, type: 3}
+    - {fileID: 21300066, guid: 6f06f5401d43ce74f931d96d79852aeb, type: 3}
+    - {fileID: 21300056, guid: 6f06f5401d43ce74f931d96d79852aeb, type: 3}
+    - {fileID: 21300012, guid: 6f06f5401d43ce74f931d96d79852aeb, type: 3}
+    - {fileID: 21300022, guid: 6f06f5401d43ce74f931d96d79852aeb, type: 3}
+    - {fileID: 21300024, guid: 6f06f5401d43ce74f931d96d79852aeb, type: 3}
+    - {fileID: 21300006, guid: 6f06f5401d43ce74f931d96d79852aeb, type: 3}
+    - {fileID: 21300002, guid: 6f06f5401d43ce74f931d96d79852aeb, type: 3}
+    - {fileID: 21300004, guid: 6f06f5401d43ce74f931d96d79852aeb, type: 3}
+    - {fileID: 21300054, guid: 6f06f5401d43ce74f931d96d79852aeb, type: 3}
+    - {fileID: 21300062, guid: 6f06f5401d43ce74f931d96d79852aeb, type: 3}
+    - {fileID: 21300000, guid: 6f06f5401d43ce74f931d96d79852aeb, type: 3}
+    - {fileID: 21300010, guid: 6f06f5401d43ce74f931d96d79852aeb, type: 3}
+    - {fileID: 21300008, guid: 6f06f5401d43ce74f931d96d79852aeb, type: 3}
+    - {fileID: 21300070, guid: 6f06f5401d43ce74f931d96d79852aeb, type: 3}
+    - {fileID: 21300076, guid: 6f06f5401d43ce74f931d96d79852aeb, type: 3}
+    - {fileID: 21300100, guid: 6f06f5401d43ce74f931d96d79852aeb, type: 3}
+    - {fileID: 21300092, guid: 6f06f5401d43ce74f931d96d79852aeb, type: 3}
+    - {fileID: 21300094, guid: 6f06f5401d43ce74f931d96d79852aeb, type: 3}
+    - {fileID: 21300108, guid: 6f06f5401d43ce74f931d96d79852aeb, type: 3}
+    - {fileID: 21300102, guid: 6f06f5401d43ce74f931d96d79852aeb, type: 3}
+    - {fileID: 21300104, guid: 6f06f5401d43ce74f931d96d79852aeb, type: 3}
+    - {fileID: 21300090, guid: 6f06f5401d43ce74f931d96d79852aeb, type: 3}
+    - {fileID: 21300098, guid: 6f06f5401d43ce74f931d96d79852aeb, type: 3}
+    - {fileID: 21300096, guid: 6f06f5401d43ce74f931d96d79852aeb, type: 3}
+    - {fileID: 21300106, guid: 6f06f5401d43ce74f931d96d79852aeb, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type8
+    Id: HeroEditor4D.Basic.Body.Type8
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Body/Basic/Type8.png
+    Sprite: {fileID: 21300016, guid: 8a381df4f4b58ce41ba1440353e4a0aa, type: 3}
+    Sprites:
+    - {fileID: 21300016, guid: 8a381df4f4b58ce41ba1440353e4a0aa, type: 3}
+    - {fileID: 21300020, guid: 8a381df4f4b58ce41ba1440353e4a0aa, type: 3}
+    - {fileID: 21300018, guid: 8a381df4f4b58ce41ba1440353e4a0aa, type: 3}
+    - {fileID: 21300066, guid: 8a381df4f4b58ce41ba1440353e4a0aa, type: 3}
+    - {fileID: 21300056, guid: 8a381df4f4b58ce41ba1440353e4a0aa, type: 3}
+    - {fileID: 21300012, guid: 8a381df4f4b58ce41ba1440353e4a0aa, type: 3}
+    - {fileID: 21300022, guid: 8a381df4f4b58ce41ba1440353e4a0aa, type: 3}
+    - {fileID: 21300024, guid: 8a381df4f4b58ce41ba1440353e4a0aa, type: 3}
+    - {fileID: -2142623625, guid: 8a381df4f4b58ce41ba1440353e4a0aa, type: 3}
+    - {fileID: 1704579396, guid: 8a381df4f4b58ce41ba1440353e4a0aa, type: 3}
+    - {fileID: 21300006, guid: 8a381df4f4b58ce41ba1440353e4a0aa, type: 3}
+    - {fileID: 21300002, guid: 8a381df4f4b58ce41ba1440353e4a0aa, type: 3}
+    - {fileID: 21300004, guid: 8a381df4f4b58ce41ba1440353e4a0aa, type: 3}
+    - {fileID: 21300054, guid: 8a381df4f4b58ce41ba1440353e4a0aa, type: 3}
+    - {fileID: 21300062, guid: 8a381df4f4b58ce41ba1440353e4a0aa, type: 3}
+    - {fileID: 21300000, guid: 8a381df4f4b58ce41ba1440353e4a0aa, type: 3}
+    - {fileID: 21300010, guid: 8a381df4f4b58ce41ba1440353e4a0aa, type: 3}
+    - {fileID: 21300008, guid: 8a381df4f4b58ce41ba1440353e4a0aa, type: 3}
+    - {fileID: 21300070, guid: 8a381df4f4b58ce41ba1440353e4a0aa, type: 3}
+    - {fileID: 21300076, guid: 8a381df4f4b58ce41ba1440353e4a0aa, type: 3}
+    - {fileID: 21300100, guid: 8a381df4f4b58ce41ba1440353e4a0aa, type: 3}
+    - {fileID: 21300092, guid: 8a381df4f4b58ce41ba1440353e4a0aa, type: 3}
+    - {fileID: 21300094, guid: 8a381df4f4b58ce41ba1440353e4a0aa, type: 3}
+    - {fileID: 21300102, guid: 8a381df4f4b58ce41ba1440353e4a0aa, type: 3}
+    - {fileID: 21300104, guid: 8a381df4f4b58ce41ba1440353e4a0aa, type: 3}
+    - {fileID: 21300090, guid: 8a381df4f4b58ce41ba1440353e4a0aa, type: 3}
+    - {fileID: 21300098, guid: 8a381df4f4b58ce41ba1440353e4a0aa, type: 3}
+    - {fileID: 21300096, guid: 8a381df4f4b58ce41ba1440353e4a0aa, type: 3}
+    - {fileID: 21300106, guid: 8a381df4f4b58ce41ba1440353e4a0aa, type: 3}
+    - {fileID: -712132374, guid: 8a381df4f4b58ce41ba1440353e4a0aa, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type9
+    Id: HeroEditor4D.Basic.Body.Type9
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Body/Basic/Type9.png
+    Sprite: {fileID: -302688604, guid: ba2a9c62487144041b9a351fa53107c1, type: 3}
+    Sprites:
+    - {fileID: -302688604, guid: ba2a9c62487144041b9a351fa53107c1, type: 3}
+    - {fileID: -1315202483, guid: ba2a9c62487144041b9a351fa53107c1, type: 3}
+    - {fileID: -74878693, guid: ba2a9c62487144041b9a351fa53107c1, type: 3}
+    - {fileID: -126007421, guid: ba2a9c62487144041b9a351fa53107c1, type: 3}
+    - {fileID: -7869368, guid: ba2a9c62487144041b9a351fa53107c1, type: 3}
+    - {fileID: 1370968717, guid: ba2a9c62487144041b9a351fa53107c1, type: 3}
+    - {fileID: -1012586419, guid: ba2a9c62487144041b9a351fa53107c1, type: 3}
+    - {fileID: -87022236, guid: ba2a9c62487144041b9a351fa53107c1, type: 3}
+    - {fileID: -1196851636, guid: ba2a9c62487144041b9a351fa53107c1, type: 3}
+    - {fileID: 1890792911, guid: ba2a9c62487144041b9a351fa53107c1, type: 3}
+    - {fileID: -86409195, guid: ba2a9c62487144041b9a351fa53107c1, type: 3}
+    - {fileID: -1931997369, guid: ba2a9c62487144041b9a351fa53107c1, type: 3}
+    - {fileID: -888810288, guid: ba2a9c62487144041b9a351fa53107c1, type: 3}
+    - {fileID: 2106045826, guid: ba2a9c62487144041b9a351fa53107c1, type: 3}
+    - {fileID: -441331477, guid: ba2a9c62487144041b9a351fa53107c1, type: 3}
+    - {fileID: 1661847098, guid: ba2a9c62487144041b9a351fa53107c1, type: 3}
+    - {fileID: 330189417, guid: ba2a9c62487144041b9a351fa53107c1, type: 3}
+    - {fileID: 321870453, guid: ba2a9c62487144041b9a351fa53107c1, type: 3}
+    - {fileID: 497159931, guid: ba2a9c62487144041b9a351fa53107c1, type: 3}
+    - {fileID: 1620558372, guid: ba2a9c62487144041b9a351fa53107c1, type: 3}
+    - {fileID: 1008195370, guid: ba2a9c62487144041b9a351fa53107c1, type: 3}
+    - {fileID: 2143494902, guid: ba2a9c62487144041b9a351fa53107c1, type: 3}
+    - {fileID: 1473478234, guid: ba2a9c62487144041b9a351fa53107c1, type: 3}
+    - {fileID: -1345883714, guid: ba2a9c62487144041b9a351fa53107c1, type: 3}
+    - {fileID: 550593573, guid: ba2a9c62487144041b9a351fa53107c1, type: 3}
+    - {fileID: -1290621662, guid: ba2a9c62487144041b9a351fa53107c1, type: 3}
+    - {fileID: -253902327, guid: ba2a9c62487144041b9a351fa53107c1, type: 3}
+    - {fileID: 1581849524, guid: ba2a9c62487144041b9a351fa53107c1, type: 3}
+    - {fileID: 1666860900, guid: ba2a9c62487144041b9a351fa53107c1, type: 3}
+    - {fileID: 431750565, guid: ba2a9c62487144041b9a351fa53107c1, type: 3}
+    Tags: []
+    Meta: 
+  Ears:
+  - Name: Elf
+    Id: HeroEditor4D.Basic.Ears.Elf
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Ears/Basic/Elf.png
+    Sprite: {fileID: -5411889706109369529, guid: 6b6db86dcfc529646bcb51eaa36f6a6a, type: 3}
+    Sprites:
+    - {fileID: -5411889706109369529, guid: 6b6db86dcfc529646bcb51eaa36f6a6a, type: 3}
+    - {fileID: 21300000, guid: 6b6db86dcfc529646bcb51eaa36f6a6a, type: 3}
+    - {fileID: 21300004, guid: 6b6db86dcfc529646bcb51eaa36f6a6a, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Human
+    Id: HeroEditor4D.Basic.Ears.Human
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Ears/Basic/Human.png
+    Sprite: {fileID: 21300002, guid: 17d8c1b68153975408b54cbd158b6ce3, type: 3}
+    Sprites:
+    - {fileID: 21300002, guid: 17d8c1b68153975408b54cbd158b6ce3, type: 3}
+    - {fileID: 21300000, guid: 17d8c1b68153975408b54cbd158b6ce3, type: 3}
+    - {fileID: 21300004, guid: 17d8c1b68153975408b54cbd158b6ce3, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type1
+    Id: HeroEditor4D.Basic.Ears.Type1
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Ears/Basic/Type1.png
+    Sprite: {fileID: -5411889706109369529, guid: 4804e8f68d7bdc746b7f1f55d13db937, type: 3}
+    Sprites:
+    - {fileID: -5411889706109369529, guid: 4804e8f68d7bdc746b7f1f55d13db937, type: 3}
+    - {fileID: 21300000, guid: 4804e8f68d7bdc746b7f1f55d13db937, type: 3}
+    - {fileID: 21300004, guid: 4804e8f68d7bdc746b7f1f55d13db937, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type10
+    Id: HeroEditor4D.Basic.Ears.Type10
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Ears/Basic/Type10.png
+    Sprite: {fileID: -5411889706109369529, guid: 963bf49c9278bf2409c82a0032b76ed7, type: 3}
+    Sprites:
+    - {fileID: -5411889706109369529, guid: 963bf49c9278bf2409c82a0032b76ed7, type: 3}
+    - {fileID: 21300000, guid: 963bf49c9278bf2409c82a0032b76ed7, type: 3}
+    - {fileID: 21300004, guid: 963bf49c9278bf2409c82a0032b76ed7, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type11
+    Id: HeroEditor4D.Basic.Ears.Type11
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Ears/Basic/Type11.png
+    Sprite: {fileID: 21300006, guid: 2f0e5c5216079234392167d30e45bc23, type: 3}
+    Sprites:
+    - {fileID: 21300006, guid: 2f0e5c5216079234392167d30e45bc23, type: 3}
+    - {fileID: 21300004, guid: 2f0e5c5216079234392167d30e45bc23, type: 3}
+    - {fileID: 21300000, guid: 2f0e5c5216079234392167d30e45bc23, type: 3}
+    - {fileID: 21300002, guid: 2f0e5c5216079234392167d30e45bc23, type: 3}
+    - {fileID: 21300008, guid: 2f0e5c5216079234392167d30e45bc23, type: 3}
+    - {fileID: 21300010, guid: 2f0e5c5216079234392167d30e45bc23, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type12
+    Id: HeroEditor4D.Basic.Ears.Type12
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Ears/Basic/Type12.png
+    Sprite: {fileID: 21300006, guid: 6ab0a75ec5afc4142bc46306016acb82, type: 3}
+    Sprites:
+    - {fileID: 21300006, guid: 6ab0a75ec5afc4142bc46306016acb82, type: 3}
+    - {fileID: 21300004, guid: 6ab0a75ec5afc4142bc46306016acb82, type: 3}
+    - {fileID: 21300000, guid: 6ab0a75ec5afc4142bc46306016acb82, type: 3}
+    - {fileID: 21300002, guid: 6ab0a75ec5afc4142bc46306016acb82, type: 3}
+    - {fileID: 21300008, guid: 6ab0a75ec5afc4142bc46306016acb82, type: 3}
+    - {fileID: 21300010, guid: 6ab0a75ec5afc4142bc46306016acb82, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type2
+    Id: HeroEditor4D.Basic.Ears.Type2
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Ears/Basic/Type2.png
+    Sprite: {fileID: -5411889706109369529, guid: b6068982a9be22846bcb6cd8bfa6d375, type: 3}
+    Sprites:
+    - {fileID: -5411889706109369529, guid: b6068982a9be22846bcb6cd8bfa6d375, type: 3}
+    - {fileID: 21300000, guid: b6068982a9be22846bcb6cd8bfa6d375, type: 3}
+    - {fileID: 21300004, guid: b6068982a9be22846bcb6cd8bfa6d375, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type3
+    Id: HeroEditor4D.Basic.Ears.Type3
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Ears/Basic/Type3.png
+    Sprite: {fileID: -5411889706109369529, guid: 8ea383dfb5464d54caa43f69c6fce412, type: 3}
+    Sprites:
+    - {fileID: -5411889706109369529, guid: 8ea383dfb5464d54caa43f69c6fce412, type: 3}
+    - {fileID: 21300000, guid: 8ea383dfb5464d54caa43f69c6fce412, type: 3}
+    - {fileID: 21300004, guid: 8ea383dfb5464d54caa43f69c6fce412, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type4
+    Id: HeroEditor4D.Basic.Ears.Type4
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Ears/Basic/Type4.png
+    Sprite: {fileID: -5411889706109369529, guid: 4c84c0f324703164ebad95ead31bc865, type: 3}
+    Sprites:
+    - {fileID: -5411889706109369529, guid: 4c84c0f324703164ebad95ead31bc865, type: 3}
+    - {fileID: 21300000, guid: 4c84c0f324703164ebad95ead31bc865, type: 3}
+    - {fileID: 21300004, guid: 4c84c0f324703164ebad95ead31bc865, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type5
+    Id: HeroEditor4D.Basic.Ears.Type5
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Ears/Basic/Type5.png
+    Sprite: {fileID: -5411889706109369529, guid: 6a027fa3dda3a054b89face21b1fc709, type: 3}
+    Sprites:
+    - {fileID: -5411889706109369529, guid: 6a027fa3dda3a054b89face21b1fc709, type: 3}
+    - {fileID: 21300004, guid: 6a027fa3dda3a054b89face21b1fc709, type: 3}
+    - {fileID: 21300000, guid: 6a027fa3dda3a054b89face21b1fc709, type: 3}
+    - {fileID: 21300002, guid: 6a027fa3dda3a054b89face21b1fc709, type: 3}
+    - {fileID: 21300008, guid: 6a027fa3dda3a054b89face21b1fc709, type: 3}
+    - {fileID: 21300010, guid: 6a027fa3dda3a054b89face21b1fc709, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type6
+    Id: HeroEditor4D.Basic.Ears.Type6
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Ears/Basic/Type6.png
+    Sprite: {fileID: 21300006, guid: 75734134464bcde458cfea78a4ed6d22, type: 3}
+    Sprites:
+    - {fileID: 21300006, guid: 75734134464bcde458cfea78a4ed6d22, type: 3}
+    - {fileID: 21300004, guid: 75734134464bcde458cfea78a4ed6d22, type: 3}
+    - {fileID: 21300000, guid: 75734134464bcde458cfea78a4ed6d22, type: 3}
+    - {fileID: 21300002, guid: 75734134464bcde458cfea78a4ed6d22, type: 3}
+    - {fileID: 21300008, guid: 75734134464bcde458cfea78a4ed6d22, type: 3}
+    - {fileID: 21300010, guid: 75734134464bcde458cfea78a4ed6d22, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type7
+    Id: HeroEditor4D.Basic.Ears.Type7
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Ears/Basic/Type7.png
+    Sprite: {fileID: -5411889706109369529, guid: a7955cac645bf544bbc539ec5dfdf88d, type: 3}
+    Sprites:
+    - {fileID: -5411889706109369529, guid: a7955cac645bf544bbc539ec5dfdf88d, type: 3}
+    - {fileID: 21300000, guid: a7955cac645bf544bbc539ec5dfdf88d, type: 3}
+    - {fileID: 21300004, guid: a7955cac645bf544bbc539ec5dfdf88d, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type8
+    Id: HeroEditor4D.Basic.Ears.Type8
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Ears/Basic/Type8.png
+    Sprite: {fileID: -5411889706109369529, guid: 4740ce7dce3d16a49ab5ba1edbbcb7e5, type: 3}
+    Sprites:
+    - {fileID: -5411889706109369529, guid: 4740ce7dce3d16a49ab5ba1edbbcb7e5, type: 3}
+    - {fileID: 21300000, guid: 4740ce7dce3d16a49ab5ba1edbbcb7e5, type: 3}
+    - {fileID: 21300004, guid: 4740ce7dce3d16a49ab5ba1edbbcb7e5, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type9
+    Id: HeroEditor4D.Basic.Ears.Type9
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Ears/Basic/Type9.png
+    Sprite: {fileID: -5411889706109369529, guid: 5f241794472811c4bbc0076b61f65f24, type: 3}
+    Sprites:
+    - {fileID: -5411889706109369529, guid: 5f241794472811c4bbc0076b61f65f24, type: 3}
+    - {fileID: 21300000, guid: 5f241794472811c4bbc0076b61f65f24, type: 3}
+    - {fileID: 21300004, guid: 5f241794472811c4bbc0076b61f65f24, type: 3}
+    Tags: []
+    Meta: 
+  Hair:
+  - Name: BroFlow
+    Id: HeroEditor4D.Basic.Hair.BroFlow
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Basic/BroFlow.png
+    Sprite: {fileID: 21300002, guid: c4fb4d4f7dc3b82438a34377cf0e5fc5, type: 3}
+    Sprites:
+    - {fileID: 21300002, guid: c4fb4d4f7dc3b82438a34377cf0e5fc5, type: 3}
+    - {fileID: 21300000, guid: c4fb4d4f7dc3b82438a34377cf0e5fc5, type: 3}
+    - {fileID: 21300004, guid: c4fb4d4f7dc3b82438a34377cf0e5fc5, type: 3}
+    Tags: []
+    Meta: 
+  - Name: BroFlowBlue
+    Id: HeroEditor4D.Gradient [NoPaint].Hair.BroFlowBlue
+    Edition: HeroEditor4D
+    Collection: Gradient [NoPaint]
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Gradient [NoPaint]/BroFlowBlue.png
+    Sprite: {fileID: -8137581963233685907, guid: 95e0f8c7b185257448b184ac18e73d03, type: 3}
+    Sprites:
+    - {fileID: -8137581963233685907, guid: 95e0f8c7b185257448b184ac18e73d03, type: 3}
+    - {fileID: 6591478365344907407, guid: 95e0f8c7b185257448b184ac18e73d03, type: 3}
+    - {fileID: 8968894577945027273, guid: 95e0f8c7b185257448b184ac18e73d03, type: 3}
+    Tags:
+    - NoPaint
+    Meta: 
+  - Name: BroFlowPink
+    Id: HeroEditor4D.Gradient [NoPaint].Hair.BroFlowPink
+    Edition: HeroEditor4D
+    Collection: Gradient [NoPaint]
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Gradient [NoPaint]/BroFlowPink.png
+    Sprite: {fileID: -8137581963233685907, guid: a10f8aa10d2b63e4cb7120e100ff7c48, type: 3}
+    Sprites:
+    - {fileID: -8137581963233685907, guid: a10f8aa10d2b63e4cb7120e100ff7c48, type: 3}
+    - {fileID: 6591478365344907407, guid: a10f8aa10d2b63e4cb7120e100ff7c48, type: 3}
+    - {fileID: 8968894577945027273, guid: a10f8aa10d2b63e4cb7120e100ff7c48, type: 3}
+    Tags:
+    - NoPaint
+    Meta: 
+  - Name: BroFlowSunny
+    Id: HeroEditor4D.Gradient [NoPaint].Hair.BroFlowSunny
+    Edition: HeroEditor4D
+    Collection: Gradient [NoPaint]
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Gradient [NoPaint]/BroFlowSunny.png
+    Sprite: {fileID: -8137581963233685907, guid: 94e902b4b9185e346bdd50273c60a1f1, type: 3}
+    Sprites:
+    - {fileID: -8137581963233685907, guid: 94e902b4b9185e346bdd50273c60a1f1, type: 3}
+    - {fileID: 6591478365344907407, guid: 94e902b4b9185e346bdd50273c60a1f1, type: 3}
+    - {fileID: 8968894577945027273, guid: 94e902b4b9185e346bdd50273c60a1f1, type: 3}
+    Tags:
+    - NoPaint
+    Meta: 
+  - Name: BuzzCut
+    Id: HeroEditor4D.Basic.Hair.BuzzCut
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Basic/BuzzCut.png
+    Sprite: {fileID: 21300002, guid: 181898c4efb402c47945341aab44277f, type: 3}
+    Sprites:
+    - {fileID: 21300002, guid: 181898c4efb402c47945341aab44277f, type: 3}
+    - {fileID: 21300000, guid: 181898c4efb402c47945341aab44277f, type: 3}
+    - {fileID: 21300006, guid: 181898c4efb402c47945341aab44277f, type: 3}
+    Tags: []
+    Meta: 
+  - Name: CasualMessy
+    Id: HeroEditor4D.Basic.Hair.CasualMessy
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Basic/CasualMessy.png
+    Sprite: {fileID: 21300002, guid: fecaff34b9a8de544b217a1d37869768, type: 3}
+    Sprites:
+    - {fileID: 21300002, guid: fecaff34b9a8de544b217a1d37869768, type: 3}
+    - {fileID: 21300000, guid: fecaff34b9a8de544b217a1d37869768, type: 3}
+    - {fileID: 21300006, guid: fecaff34b9a8de544b217a1d37869768, type: 3}
+    Tags: []
+    Meta: 
+  - Name: CollegeBoy
+    Id: HeroEditor4D.Basic.Hair.CollegeBoy
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Basic/CollegeBoy.png
+    Sprite: {fileID: 21300002, guid: 7f19732e58ff821439a861e872fbf579, type: 3}
+    Sprites:
+    - {fileID: 21300002, guid: 7f19732e58ff821439a861e872fbf579, type: 3}
+    - {fileID: 21300000, guid: 7f19732e58ff821439a861e872fbf579, type: 3}
+    - {fileID: 21300006, guid: 7f19732e58ff821439a861e872fbf579, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Default
+    Id: HeroEditor4D.Basic.Hair.Default
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Basic/Default.png
+    Sprite: {fileID: 21300002, guid: 72aa7dbf531a6314080711e386cb4984, type: 3}
+    Sprites:
+    - {fileID: 21300002, guid: 72aa7dbf531a6314080711e386cb4984, type: 3}
+    - {fileID: 21300000, guid: 72aa7dbf531a6314080711e386cb4984, type: 3}
+    - {fileID: 21300006, guid: 72aa7dbf531a6314080711e386cb4984, type: 3}
+    Tags: []
+    Meta: 
+  - Name: FrenchCrop
+    Id: HeroEditor4D.Basic.Hair.FrenchCrop
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Basic/FrenchCrop.png
+    Sprite: {fileID: 21300002, guid: 000c59a63ed6fbe4385b5096349ffe3a, type: 3}
+    Sprites:
+    - {fileID: 21300002, guid: 000c59a63ed6fbe4385b5096349ffe3a, type: 3}
+    - {fileID: 21300000, guid: 000c59a63ed6fbe4385b5096349ffe3a, type: 3}
+    - {fileID: 21300006, guid: 000c59a63ed6fbe4385b5096349ffe3a, type: 3}
+    Tags: []
+    Meta: 
+  - Name: FringeUp
+    Id: HeroEditor4D.Basic.Hair.FringeUp
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Basic/FringeUp.png
+    Sprite: {fileID: 21300002, guid: 5bb406f97e292e5499c1574f1f5a5b9a, type: 3}
+    Sprites:
+    - {fileID: 21300002, guid: 5bb406f97e292e5499c1574f1f5a5b9a, type: 3}
+    - {fileID: 21300000, guid: 5bb406f97e292e5499c1574f1f5a5b9a, type: 3}
+    - {fileID: 21300006, guid: 5bb406f97e292e5499c1574f1f5a5b9a, type: 3}
+    Tags: []
+    Meta: 
+  - Name: FringeUpBlue
+    Id: HeroEditor4D.Gradient [NoPaint].Hair.FringeUpBlue
+    Edition: HeroEditor4D
+    Collection: Gradient [NoPaint]
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Gradient [NoPaint]/FringeUpBlue.png
+    Sprite: {fileID: -8137581963233685907, guid: 8121a62e051ac4a47a4c136563b8edd0, type: 3}
+    Sprites:
+    - {fileID: -8137581963233685907, guid: 8121a62e051ac4a47a4c136563b8edd0, type: 3}
+    - {fileID: 6591478365344907407, guid: 8121a62e051ac4a47a4c136563b8edd0, type: 3}
+    - {fileID: 8968894577945027273, guid: 8121a62e051ac4a47a4c136563b8edd0, type: 3}
+    Tags:
+    - NoPaint
+    Meta: 
+  - Name: FringeUpPink
+    Id: HeroEditor4D.Gradient [NoPaint].Hair.FringeUpPink
+    Edition: HeroEditor4D
+    Collection: Gradient [NoPaint]
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Gradient [NoPaint]/FringeUpPink.png
+    Sprite: {fileID: -8137581963233685907, guid: f9bedc88b9c2c5244ab679c84edcf55b, type: 3}
+    Sprites:
+    - {fileID: -8137581963233685907, guid: f9bedc88b9c2c5244ab679c84edcf55b, type: 3}
+    - {fileID: 6591478365344907407, guid: f9bedc88b9c2c5244ab679c84edcf55b, type: 3}
+    - {fileID: 8968894577945027273, guid: f9bedc88b9c2c5244ab679c84edcf55b, type: 3}
+    Tags:
+    - NoPaint
+    Meta: 
+  - Name: FringeUpSunny
+    Id: HeroEditor4D.Gradient [NoPaint].Hair.FringeUpSunny
+    Edition: HeroEditor4D
+    Collection: Gradient [NoPaint]
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Gradient [NoPaint]/FringeUpSunny.png
+    Sprite: {fileID: -8137581963233685907, guid: 674ed1a88a3adf04386e12a405876104, type: 3}
+    Sprites:
+    - {fileID: -8137581963233685907, guid: 674ed1a88a3adf04386e12a405876104, type: 3}
+    - {fileID: 6591478365344907407, guid: 674ed1a88a3adf04386e12a405876104, type: 3}
+    - {fileID: 8968894577945027273, guid: 674ed1a88a3adf04386e12a405876104, type: 3}
+    Tags:
+    - NoPaint
+    Meta: 
+  - Name: Gradient (PSD)
+    Id: HeroEditor4D.Hair.Hair.Gradient (PSD)
+    Edition: HeroEditor4D
+    Collection: Hair
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Gradient (PSD).psd
+    Sprite: {fileID: 21300000, guid: 3f0d6c746d76afe4f921ab35f5883535, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 3f0d6c746d76afe4f921ab35f5883535, type: 3}
+    Tags: []
+    Meta: 
+  - Name: MessyMedium
+    Id: HeroEditor4D.Basic.Hair.MessyMedium
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Basic/MessyMedium.png
+    Sprite: {fileID: 21300002, guid: 19e31b1222330214d922c2fcdbede153, type: 3}
+    Sprites:
+    - {fileID: 21300002, guid: 19e31b1222330214d922c2fcdbede153, type: 3}
+    - {fileID: 21300000, guid: 19e31b1222330214d922c2fcdbede153, type: 3}
+    - {fileID: 21300006, guid: 19e31b1222330214d922c2fcdbede153, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Mohawk
+    Id: HeroEditor4D.Basic.Hair.Mohawk
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Basic/Mohawk.png
+    Sprite: {fileID: 21300002, guid: 1ef6334cd7bf919409f958f8a4e8ad08, type: 3}
+    Sprites:
+    - {fileID: 21300002, guid: 1ef6334cd7bf919409f958f8a4e8ad08, type: 3}
+    - {fileID: 21300000, guid: 1ef6334cd7bf919409f958f8a4e8ad08, type: 3}
+    - {fileID: 21300006, guid: 1ef6334cd7bf919409f958f8a4e8ad08, type: 3}
+    Tags: []
+    Meta: 
+  - Name: NeatSidePart
+    Id: HeroEditor4D.Basic.Hair.NeatSidePart
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Basic/NeatSidePart.png
+    Sprite: {fileID: 21300002, guid: 737699d0949024042a89915bfd8d8f3f, type: 3}
+    Sprites:
+    - {fileID: 21300002, guid: 737699d0949024042a89915bfd8d8f3f, type: 3}
+    - {fileID: 21300000, guid: 737699d0949024042a89915bfd8d8f3f, type: 3}
+    - {fileID: 21300006, guid: 737699d0949024042a89915bfd8d8f3f, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Pigtail
+    Id: HeroEditor4D.Basic.Hair.Pigtail
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Basic/Pigtail.png
+    Sprite: {fileID: 21300002, guid: c183604fe84f5654a90518f7ffa182a4, type: 3}
+    Sprites:
+    - {fileID: 21300002, guid: c183604fe84f5654a90518f7ffa182a4, type: 3}
+    - {fileID: 21300000, guid: c183604fe84f5654a90518f7ffa182a4, type: 3}
+    - {fileID: 21300004, guid: c183604fe84f5654a90518f7ffa182a4, type: 3}
+    Tags: []
+    Meta: 
+  - Name: PigtailBlue
+    Id: HeroEditor4D.Gradient [NoPaint].Hair.PigtailBlue
+    Edition: HeroEditor4D
+    Collection: Gradient [NoPaint]
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Gradient [NoPaint]/PigtailBlue.png
+    Sprite: {fileID: -8137581963233685907, guid: 7dd461768b5021444bbf67d44bab0b33, type: 3}
+    Sprites:
+    - {fileID: -8137581963233685907, guid: 7dd461768b5021444bbf67d44bab0b33, type: 3}
+    - {fileID: 6591478365344907407, guid: 7dd461768b5021444bbf67d44bab0b33, type: 3}
+    - {fileID: 8968894577945027273, guid: 7dd461768b5021444bbf67d44bab0b33, type: 3}
+    Tags:
+    - NoPaint
+    Meta: 
+  - Name: PigtailPink
+    Id: HeroEditor4D.Gradient [NoPaint].Hair.PigtailPink
+    Edition: HeroEditor4D
+    Collection: Gradient [NoPaint]
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Gradient [NoPaint]/PigtailPink.png
+    Sprite: {fileID: -8137581963233685907, guid: f66a71713e5de1440aaf0ee43a2e07bd, type: 3}
+    Sprites:
+    - {fileID: -8137581963233685907, guid: f66a71713e5de1440aaf0ee43a2e07bd, type: 3}
+    - {fileID: 6591478365344907407, guid: f66a71713e5de1440aaf0ee43a2e07bd, type: 3}
+    - {fileID: 8968894577945027273, guid: f66a71713e5de1440aaf0ee43a2e07bd, type: 3}
+    Tags:
+    - NoPaint
+    Meta: 
+  - Name: PigtailSunny
+    Id: HeroEditor4D.Gradient [NoPaint].Hair.PigtailSunny
+    Edition: HeroEditor4D
+    Collection: Gradient [NoPaint]
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Gradient [NoPaint]/PigtailSunny.png
+    Sprite: {fileID: -8137581963233685907, guid: aa7c17a26e8c3b14a871317587219f8f, type: 3}
+    Sprites:
+    - {fileID: -8137581963233685907, guid: aa7c17a26e8c3b14a871317587219f8f, type: 3}
+    - {fileID: 6591478365344907407, guid: aa7c17a26e8c3b14a871317587219f8f, type: 3}
+    - {fileID: 8968894577945027273, guid: aa7c17a26e8c3b14a871317587219f8f, type: 3}
+    Tags:
+    - NoPaint
+    Meta: 
+  - Name: PopStyle
+    Id: HeroEditor4D.Basic.Hair.PopStyle
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Basic/PopStyle.png
+    Sprite: {fileID: 21300002, guid: 754277c15ad138947a40e682733d2002, type: 3}
+    Sprites:
+    - {fileID: 21300002, guid: 754277c15ad138947a40e682733d2002, type: 3}
+    - {fileID: 21300000, guid: 754277c15ad138947a40e682733d2002, type: 3}
+    - {fileID: 21300006, guid: 754277c15ad138947a40e682733d2002, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Sample1
+    Id: HeroEditor4D.Basic.Hair.Sample1
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Basic/Sample1.png
+    Sprite: {fileID: -1362379058, guid: b6a48bc232c731a42a5574d387be5591, type: 3}
+    Sprites:
+    - {fileID: -1362379058, guid: b6a48bc232c731a42a5574d387be5591, type: 3}
+    - {fileID: -148051052, guid: b6a48bc232c731a42a5574d387be5591, type: 3}
+    - {fileID: 1886934493, guid: b6a48bc232c731a42a5574d387be5591, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Shaggy
+    Id: HeroEditor4D.Basic.Hair.Shaggy
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Basic/Shaggy.png
+    Sprite: {fileID: 21300002, guid: a320b2236d8da3f49b305ffaab7b3637, type: 3}
+    Sprites:
+    - {fileID: 21300002, guid: a320b2236d8da3f49b305ffaab7b3637, type: 3}
+    - {fileID: 21300000, guid: a320b2236d8da3f49b305ffaab7b3637, type: 3}
+    - {fileID: 21300006, guid: a320b2236d8da3f49b305ffaab7b3637, type: 3}
+    Tags: []
+    Meta: 
+  - Name: ShortHair
+    Id: HeroEditor4D.Basic.Hair.ShortHair
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Basic/ShortHair.png
+    Sprite: {fileID: 21300002, guid: 13e143c4e02e93e4bb319899c55c0808, type: 3}
+    Sprites:
+    - {fileID: 21300002, guid: 13e143c4e02e93e4bb319899c55c0808, type: 3}
+    - {fileID: 21300000, guid: 13e143c4e02e93e4bb319899c55c0808, type: 3}
+    - {fileID: 21300006, guid: 13e143c4e02e93e4bb319899c55c0808, type: 3}
+    Tags: []
+    Meta: 
+  - Name: ShortTail
+    Id: HeroEditor4D.Basic.Hair.ShortTail
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Basic/ShortTail.png
+    Sprite: {fileID: 21300002, guid: 02ec1fb8cb1ea604fac1e7d4c43710fd, type: 3}
+    Sprites:
+    - {fileID: 21300002, guid: 02ec1fb8cb1ea604fac1e7d4c43710fd, type: 3}
+    - {fileID: 21300000, guid: 02ec1fb8cb1ea604fac1e7d4c43710fd, type: 3}
+    - {fileID: 21300006, guid: 02ec1fb8cb1ea604fac1e7d4c43710fd, type: 3}
+    Tags: []
+    Meta: 
+  - Name: ShortTailBlue
+    Id: HeroEditor4D.Gradient [NoPaint].Hair.ShortTailBlue
+    Edition: HeroEditor4D
+    Collection: Gradient [NoPaint]
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Gradient [NoPaint]/ShortTailBlue.png
+    Sprite: {fileID: -8137581963233685907, guid: 88902e6054249194a9fa130f35f16b17, type: 3}
+    Sprites:
+    - {fileID: -8137581963233685907, guid: 88902e6054249194a9fa130f35f16b17, type: 3}
+    - {fileID: 6591478365344907407, guid: 88902e6054249194a9fa130f35f16b17, type: 3}
+    - {fileID: 8968894577945027273, guid: 88902e6054249194a9fa130f35f16b17, type: 3}
+    Tags:
+    - NoPaint
+    Meta: 
+  - Name: ShortTailPink
+    Id: HeroEditor4D.Gradient [NoPaint].Hair.ShortTailPink
+    Edition: HeroEditor4D
+    Collection: Gradient [NoPaint]
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Gradient [NoPaint]/ShortTailPink.png
+    Sprite: {fileID: -8137581963233685907, guid: e09f1370ce52293418e36350c6159742, type: 3}
+    Sprites:
+    - {fileID: -8137581963233685907, guid: e09f1370ce52293418e36350c6159742, type: 3}
+    - {fileID: 6591478365344907407, guid: e09f1370ce52293418e36350c6159742, type: 3}
+    - {fileID: 8968894577945027273, guid: e09f1370ce52293418e36350c6159742, type: 3}
+    Tags:
+    - NoPaint
+    Meta: 
+  - Name: ShortTailSunny
+    Id: HeroEditor4D.Gradient [NoPaint].Hair.ShortTailSunny
+    Edition: HeroEditor4D
+    Collection: Gradient [NoPaint]
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Gradient [NoPaint]/ShortTailSunny.png
+    Sprite: {fileID: -8137581963233685907, guid: c412691657a842443801b4565afac4e6, type: 3}
+    Sprites:
+    - {fileID: -8137581963233685907, guid: c412691657a842443801b4565afac4e6, type: 3}
+    - {fileID: 6591478365344907407, guid: c412691657a842443801b4565afac4e6, type: 3}
+    - {fileID: 8968894577945027273, guid: c412691657a842443801b4565afac4e6, type: 3}
+    Tags:
+    - NoPaint
+    Meta: 
+  - Name: SideBangs
+    Id: HeroEditor4D.Basic.Hair.SideBangs
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Basic/SideBangs.png
+    Sprite: {fileID: 21300002, guid: b897c0a5110345440880cc15cc41519d, type: 3}
+    Sprites:
+    - {fileID: 21300002, guid: b897c0a5110345440880cc15cc41519d, type: 3}
+    - {fileID: 21300000, guid: b897c0a5110345440880cc15cc41519d, type: 3}
+    - {fileID: 21300006, guid: b897c0a5110345440880cc15cc41519d, type: 3}
+    Tags: []
+    Meta: 
+  - Name: SideBangsBlue
+    Id: HeroEditor4D.Gradient [NoPaint].Hair.SideBangsBlue
+    Edition: HeroEditor4D
+    Collection: Gradient [NoPaint]
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Gradient [NoPaint]/SideBangsBlue.png
+    Sprite: {fileID: -8137581963233685907, guid: ef537f3bdd70dc149be8013efa13fbb6, type: 3}
+    Sprites:
+    - {fileID: -8137581963233685907, guid: ef537f3bdd70dc149be8013efa13fbb6, type: 3}
+    - {fileID: 6591478365344907407, guid: ef537f3bdd70dc149be8013efa13fbb6, type: 3}
+    - {fileID: 8968894577945027273, guid: ef537f3bdd70dc149be8013efa13fbb6, type: 3}
+    Tags:
+    - NoPaint
+    Meta: 
+  - Name: SideBangsPink
+    Id: HeroEditor4D.Gradient [NoPaint].Hair.SideBangsPink
+    Edition: HeroEditor4D
+    Collection: Gradient [NoPaint]
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Gradient [NoPaint]/SideBangsPink.png
+    Sprite: {fileID: -8137581963233685907, guid: 64e35d5a64809f744aa71038c00481ca, type: 3}
+    Sprites:
+    - {fileID: -8137581963233685907, guid: 64e35d5a64809f744aa71038c00481ca, type: 3}
+    - {fileID: 6591478365344907407, guid: 64e35d5a64809f744aa71038c00481ca, type: 3}
+    - {fileID: 8968894577945027273, guid: 64e35d5a64809f744aa71038c00481ca, type: 3}
+    Tags:
+    - NoPaint
+    Meta: 
+  - Name: SideBangsSunny
+    Id: HeroEditor4D.Gradient [NoPaint].Hair.SideBangsSunny
+    Edition: HeroEditor4D
+    Collection: Gradient [NoPaint]
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Gradient [NoPaint]/SideBangsSunny.png
+    Sprite: {fileID: -8137581963233685907, guid: 2ca2fdd39b5fb5b4a8b805686f015726, type: 3}
+    Sprites:
+    - {fileID: -8137581963233685907, guid: 2ca2fdd39b5fb5b4a8b805686f015726, type: 3}
+    - {fileID: 6591478365344907407, guid: 2ca2fdd39b5fb5b4a8b805686f015726, type: 3}
+    - {fileID: 8968894577945027273, guid: 2ca2fdd39b5fb5b4a8b805686f015726, type: 3}
+    Tags:
+    - NoPaint
+    Meta: 
+  - Name: SlickBack
+    Id: HeroEditor4D.Basic.Hair.SlickBack
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Basic/SlickBack.png
+    Sprite: {fileID: 21300002, guid: eb3da31584083e1449f95ef24ea1607b, type: 3}
+    Sprites:
+    - {fileID: 21300002, guid: eb3da31584083e1449f95ef24ea1607b, type: 3}
+    - {fileID: 21300000, guid: eb3da31584083e1449f95ef24ea1607b, type: 3}
+    - {fileID: 21300006, guid: eb3da31584083e1449f95ef24ea1607b, type: 3}
+    Tags: []
+    Meta: 
+  - Name: SlickBackBlue
+    Id: HeroEditor4D.Gradient [NoPaint].Hair.SlickBackBlue
+    Edition: HeroEditor4D
+    Collection: Gradient [NoPaint]
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Gradient [NoPaint]/SlickBackBlue.png
+    Sprite: {fileID: -8137581963233685907, guid: 657a2dbd22bb9d4449a60c924382bebe, type: 3}
+    Sprites:
+    - {fileID: -8137581963233685907, guid: 657a2dbd22bb9d4449a60c924382bebe, type: 3}
+    - {fileID: 6591478365344907407, guid: 657a2dbd22bb9d4449a60c924382bebe, type: 3}
+    - {fileID: 8968894577945027273, guid: 657a2dbd22bb9d4449a60c924382bebe, type: 3}
+    Tags:
+    - NoPaint
+    Meta: 
+  - Name: SlickBackPink
+    Id: HeroEditor4D.Gradient [NoPaint].Hair.SlickBackPink
+    Edition: HeroEditor4D
+    Collection: Gradient [NoPaint]
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Gradient [NoPaint]/SlickBackPink.png
+    Sprite: {fileID: -8137581963233685907, guid: 5904cea5b5e6352478076279ffacd939, type: 3}
+    Sprites:
+    - {fileID: -8137581963233685907, guid: 5904cea5b5e6352478076279ffacd939, type: 3}
+    - {fileID: 6591478365344907407, guid: 5904cea5b5e6352478076279ffacd939, type: 3}
+    - {fileID: 8968894577945027273, guid: 5904cea5b5e6352478076279ffacd939, type: 3}
+    Tags:
+    - NoPaint
+    Meta: 
+  - Name: SlickBackSunny
+    Id: HeroEditor4D.Gradient [NoPaint].Hair.SlickBackSunny
+    Edition: HeroEditor4D
+    Collection: Gradient [NoPaint]
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Gradient [NoPaint]/SlickBackSunny.png
+    Sprite: {fileID: -8137581963233685907, guid: 58d2484d4bc98c1448fd521789a6f69f, type: 3}
+    Sprites:
+    - {fileID: -8137581963233685907, guid: 58d2484d4bc98c1448fd521789a6f69f, type: 3}
+    - {fileID: 6591478365344907407, guid: 58d2484d4bc98c1448fd521789a6f69f, type: 3}
+    - {fileID: 8968894577945027273, guid: 58d2484d4bc98c1448fd521789a6f69f, type: 3}
+    Tags:
+    - NoPaint
+    Meta: 
+  - Name: Spiky
+    Id: HeroEditor4D.Basic.Hair.Spiky
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Basic/Spiky.png
+    Sprite: {fileID: 21300002, guid: eabe813fd110a464f982498af7c042fe, type: 3}
+    Sprites:
+    - {fileID: 21300002, guid: eabe813fd110a464f982498af7c042fe, type: 3}
+    - {fileID: 21300000, guid: eabe813fd110a464f982498af7c042fe, type: 3}
+    - {fileID: 21300006, guid: eabe813fd110a464f982498af7c042fe, type: 3}
+    Tags: []
+    Meta: 
+  - Name: SpikyFringeUp
+    Id: HeroEditor4D.Basic.Hair.SpikyFringeUp
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Basic/SpikyFringeUp.png
+    Sprite: {fileID: 21300002, guid: 01f5845a22ea84648bd92282153a70c1, type: 3}
+    Sprites:
+    - {fileID: 21300002, guid: 01f5845a22ea84648bd92282153a70c1, type: 3}
+    - {fileID: 21300000, guid: 01f5845a22ea84648bd92282153a70c1, type: 3}
+    - {fileID: 21300006, guid: 01f5845a22ea84648bd92282153a70c1, type: 3}
+    Tags: []
+    Meta: 
+  - Name: SpikyLayered
+    Id: HeroEditor4D.Basic.Hair.SpikyLayered
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Basic/SpikyLayered.png
+    Sprite: {fileID: 21300002, guid: 27f45495b87c83243942519aaf528745, type: 3}
+    Sprites:
+    - {fileID: 21300002, guid: 27f45495b87c83243942519aaf528745, type: 3}
+    - {fileID: 21300000, guid: 27f45495b87c83243942519aaf528745, type: 3}
+    - {fileID: 21300006, guid: 27f45495b87c83243942519aaf528745, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Twintales
+    Id: HeroEditor4D.Basic.Hair.Twintales
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Basic/Twintales.png
+    Sprite: {fileID: 21300002, guid: 6984ac2a53575a6428268003b94057bf, type: 3}
+    Sprites:
+    - {fileID: 21300002, guid: 6984ac2a53575a6428268003b94057bf, type: 3}
+    - {fileID: 21300000, guid: 6984ac2a53575a6428268003b94057bf, type: 3}
+    - {fileID: 21300006, guid: 6984ac2a53575a6428268003b94057bf, type: 3}
+    Tags: []
+    Meta: 
+  - Name: TwintalesBlue
+    Id: HeroEditor4D.Gradient [NoPaint].Hair.TwintalesBlue
+    Edition: HeroEditor4D
+    Collection: Gradient [NoPaint]
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Gradient [NoPaint]/TwintalesBlue.png
+    Sprite: {fileID: -8137581963233685907, guid: 25db7b0436435fd478677f1c88925389, type: 3}
+    Sprites:
+    - {fileID: -8137581963233685907, guid: 25db7b0436435fd478677f1c88925389, type: 3}
+    - {fileID: 6591478365344907407, guid: 25db7b0436435fd478677f1c88925389, type: 3}
+    - {fileID: 8968894577945027273, guid: 25db7b0436435fd478677f1c88925389, type: 3}
+    Tags:
+    - NoPaint
+    Meta: 
+  - Name: TwintalesPink
+    Id: HeroEditor4D.Gradient [NoPaint].Hair.TwintalesPink
+    Edition: HeroEditor4D
+    Collection: Gradient [NoPaint]
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Gradient [NoPaint]/TwintalesPink.png
+    Sprite: {fileID: -8137581963233685907, guid: 38e09bfd6169f9445a3147bf2de94969, type: 3}
+    Sprites:
+    - {fileID: -8137581963233685907, guid: 38e09bfd6169f9445a3147bf2de94969, type: 3}
+    - {fileID: 6591478365344907407, guid: 38e09bfd6169f9445a3147bf2de94969, type: 3}
+    - {fileID: 8968894577945027273, guid: 38e09bfd6169f9445a3147bf2de94969, type: 3}
+    Tags:
+    - NoPaint
+    Meta: 
+  - Name: TwintalesSunny
+    Id: HeroEditor4D.Gradient [NoPaint].Hair.TwintalesSunny
+    Edition: HeroEditor4D
+    Collection: Gradient [NoPaint]
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Gradient [NoPaint]/TwintalesSunny.png
+    Sprite: {fileID: -8137581963233685907, guid: 3dd90942f3211c44db02cabd6b96e2aa, type: 3}
+    Sprites:
+    - {fileID: -8137581963233685907, guid: 3dd90942f3211c44db02cabd6b96e2aa, type: 3}
+    - {fileID: 6591478365344907407, guid: 3dd90942f3211c44db02cabd6b96e2aa, type: 3}
+    - {fileID: 8968894577945027273, guid: 3dd90942f3211c44db02cabd6b96e2aa, type: 3}
+    Tags:
+    - NoPaint
+    Meta: 
+  - Name: Type1
+    Id: HeroEditor4D.Basic.Hair.Type1
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Basic/Type1.png
+    Sprite: {fileID: -8137581963233685907, guid: d33e43005b1aca04a88836a88f0ec4e0, type: 3}
+    Sprites:
+    - {fileID: -8137581963233685907, guid: d33e43005b1aca04a88836a88f0ec4e0, type: 3}
+    - {fileID: 6591478365344907407, guid: d33e43005b1aca04a88836a88f0ec4e0, type: 3}
+    - {fileID: 8968894577945027273, guid: d33e43005b1aca04a88836a88f0ec4e0, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type10 [HideEars]
+    Id: HeroEditor4D.Basic.Hair.Type10 [HideEars]
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Basic/Type10
+      [HideEars].png
+    Sprite: {fileID: 21300002, guid: f3afe2d1d9bd9f245a2d6a6df60e35d1, type: 3}
+    Sprites:
+    - {fileID: 21300002, guid: f3afe2d1d9bd9f245a2d6a6df60e35d1, type: 3}
+    - {fileID: 21300000, guid: f3afe2d1d9bd9f245a2d6a6df60e35d1, type: 3}
+    - {fileID: 21300006, guid: f3afe2d1d9bd9f245a2d6a6df60e35d1, type: 3}
+    Tags:
+    - HideEars
+    Meta: 
+  - Name: Type11 [HideEars]
+    Id: HeroEditor4D.Basic.Hair.Type11 [HideEars]
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Basic/Type11
+      [HideEars].png
+    Sprite: {fileID: 21300002, guid: 3b176aa41cd4729499a795aacf427ab0, type: 3}
+    Sprites:
+    - {fileID: 21300002, guid: 3b176aa41cd4729499a795aacf427ab0, type: 3}
+    - {fileID: 21300000, guid: 3b176aa41cd4729499a795aacf427ab0, type: 3}
+    - {fileID: 21300004, guid: 3b176aa41cd4729499a795aacf427ab0, type: 3}
+    Tags:
+    - HideEars
+    Meta: 
+  - Name: Type12
+    Id: HeroEditor4D.Basic.Hair.Type12
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Basic/Type12.png
+    Sprite: {fileID: 21300002, guid: b1bdbd39d17df6542867160b69d0e620, type: 3}
+    Sprites:
+    - {fileID: 21300002, guid: b1bdbd39d17df6542867160b69d0e620, type: 3}
+    - {fileID: 21300000, guid: b1bdbd39d17df6542867160b69d0e620, type: 3}
+    - {fileID: 21300006, guid: b1bdbd39d17df6542867160b69d0e620, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type13 [HideEars]
+    Id: HeroEditor4D.Basic.Hair.Type13 [HideEars]
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Basic/Type13
+      [HideEars].png
+    Sprite: {fileID: 21300002, guid: 0c9345ba434a64d4d8e299ae3648a724, type: 3}
+    Sprites:
+    - {fileID: 21300002, guid: 0c9345ba434a64d4d8e299ae3648a724, type: 3}
+    - {fileID: 21300000, guid: 0c9345ba434a64d4d8e299ae3648a724, type: 3}
+    - {fileID: 21300006, guid: 0c9345ba434a64d4d8e299ae3648a724, type: 3}
+    Tags:
+    - HideEars
+    Meta: 
+  - Name: Type14 [HideEars]
+    Id: HeroEditor4D.Basic.Hair.Type14 [HideEars]
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Basic/Type14
+      [HideEars].png
+    Sprite: {fileID: 21300002, guid: d0cdbadf65d170b48ac081b5074b05b9, type: 3}
+    Sprites:
+    - {fileID: 21300002, guid: d0cdbadf65d170b48ac081b5074b05b9, type: 3}
+    - {fileID: 21300000, guid: d0cdbadf65d170b48ac081b5074b05b9, type: 3}
+    - {fileID: 21300006, guid: d0cdbadf65d170b48ac081b5074b05b9, type: 3}
+    Tags:
+    - HideEars
+    Meta: 
+  - Name: Type15 [HideEars]
+    Id: HeroEditor4D.Basic.Hair.Type15 [HideEars]
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Basic/Type15
+      [HideEars].png
+    Sprite: {fileID: 21300002, guid: dee524b46bf35c8428c3a494ff996c71, type: 3}
+    Sprites:
+    - {fileID: 21300002, guid: dee524b46bf35c8428c3a494ff996c71, type: 3}
+    - {fileID: 21300000, guid: dee524b46bf35c8428c3a494ff996c71, type: 3}
+    - {fileID: 21300006, guid: dee524b46bf35c8428c3a494ff996c71, type: 3}
+    Tags:
+    - HideEars
+    Meta: 
+  - Name: Type16 [HideEars]
+    Id: HeroEditor4D.Basic.Hair.Type16 [HideEars]
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Basic/Type16
+      [HideEars].png
+    Sprite: {fileID: -8137581963233685907, guid: b3a6144926cf0c843b40d945f463febb, type: 3}
+    Sprites:
+    - {fileID: -8137581963233685907, guid: b3a6144926cf0c843b40d945f463febb, type: 3}
+    - {fileID: 6591478365344907407, guid: b3a6144926cf0c843b40d945f463febb, type: 3}
+    - {fileID: 8968894577945027273, guid: b3a6144926cf0c843b40d945f463febb, type: 3}
+    Tags:
+    - HideEars
+    Meta: 
+  - Name: Type17
+    Id: HeroEditor4D.Basic.Hair.Type17
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Basic/Type17.png
+    Sprite: {fileID: -8137581963233685907, guid: 8a210c9d800c63e41ae3bf8af30a52df, type: 3}
+    Sprites:
+    - {fileID: -8137581963233685907, guid: 8a210c9d800c63e41ae3bf8af30a52df, type: 3}
+    - {fileID: 6591478365344907407, guid: 8a210c9d800c63e41ae3bf8af30a52df, type: 3}
+    - {fileID: 8968894577945027273, guid: 8a210c9d800c63e41ae3bf8af30a52df, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type18
+    Id: HeroEditor4D.Basic.Hair.Type18
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Basic/Type18.png
+    Sprite: {fileID: -8137581963233685907, guid: 8d0e4ccc7de17be4aafa577d5104e39e, type: 3}
+    Sprites:
+    - {fileID: -8137581963233685907, guid: 8d0e4ccc7de17be4aafa577d5104e39e, type: 3}
+    - {fileID: 6591478365344907407, guid: 8d0e4ccc7de17be4aafa577d5104e39e, type: 3}
+    - {fileID: 8968894577945027273, guid: 8d0e4ccc7de17be4aafa577d5104e39e, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type19 [HideEars]
+    Id: HeroEditor4D.Basic.Hair.Type19 [HideEars]
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Basic/Type19
+      [HideEars].png
+    Sprite: {fileID: -8137581963233685907, guid: 641fdfeb14073a746965198f1051ddbf, type: 3}
+    Sprites:
+    - {fileID: -8137581963233685907, guid: 641fdfeb14073a746965198f1051ddbf, type: 3}
+    - {fileID: 6591478365344907407, guid: 641fdfeb14073a746965198f1051ddbf, type: 3}
+    - {fileID: 8968894577945027273, guid: 641fdfeb14073a746965198f1051ddbf, type: 3}
+    Tags:
+    - HideEars
+    Meta: 
+  - Name: Type2
+    Id: HeroEditor4D.Basic.Hair.Type2
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Basic/Type2.png
+    Sprite: {fileID: -8137581963233685907, guid: 36aa129f6392eae46a92f43976ad77a7, type: 3}
+    Sprites:
+    - {fileID: -8137581963233685907, guid: 36aa129f6392eae46a92f43976ad77a7, type: 3}
+    - {fileID: 6591478365344907407, guid: 36aa129f6392eae46a92f43976ad77a7, type: 3}
+    - {fileID: 8968894577945027273, guid: 36aa129f6392eae46a92f43976ad77a7, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type20
+    Id: HeroEditor4D.Basic.Hair.Type20
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Basic/Type20.png
+    Sprite: {fileID: -8137581963233685907, guid: ef9b3d875e734c946a9dc877026326b1, type: 3}
+    Sprites:
+    - {fileID: -8137581963233685907, guid: ef9b3d875e734c946a9dc877026326b1, type: 3}
+    - {fileID: 6591478365344907407, guid: ef9b3d875e734c946a9dc877026326b1, type: 3}
+    - {fileID: 8968894577945027273, guid: ef9b3d875e734c946a9dc877026326b1, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type21
+    Id: HeroEditor4D.Basic.Hair.Type21
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Basic/Type21.png
+    Sprite: {fileID: -8137581963233685907, guid: da7c542b00d67ab4d90566d8eab2f20d, type: 3}
+    Sprites:
+    - {fileID: -8137581963233685907, guid: da7c542b00d67ab4d90566d8eab2f20d, type: 3}
+    - {fileID: 6591478365344907407, guid: da7c542b00d67ab4d90566d8eab2f20d, type: 3}
+    - {fileID: 8968894577945027273, guid: da7c542b00d67ab4d90566d8eab2f20d, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type22 [HideEars]
+    Id: HeroEditor4D.Basic.Hair.Type22 [HideEars]
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Basic/Type22
+      [HideEars].png
+    Sprite: {fileID: 21300002, guid: 015c2c239ffa9b9418c46fe9de150a77, type: 3}
+    Sprites:
+    - {fileID: 21300002, guid: 015c2c239ffa9b9418c46fe9de150a77, type: 3}
+    - {fileID: 21300000, guid: 015c2c239ffa9b9418c46fe9de150a77, type: 3}
+    - {fileID: 21300006, guid: 015c2c239ffa9b9418c46fe9de150a77, type: 3}
+    Tags:
+    - HideEars
+    Meta: 
+  - Name: Type23
+    Id: HeroEditor4D.Basic.Hair.Type23
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Basic/Type23.png
+    Sprite: {fileID: -8137581963233685907, guid: a4be611fb1202d84485f8c1d510e4e62, type: 3}
+    Sprites:
+    - {fileID: -8137581963233685907, guid: a4be611fb1202d84485f8c1d510e4e62, type: 3}
+    - {fileID: 6591478365344907407, guid: a4be611fb1202d84485f8c1d510e4e62, type: 3}
+    - {fileID: 8968894577945027273, guid: a4be611fb1202d84485f8c1d510e4e62, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type24 [HideEars]
+    Id: HeroEditor4D.Basic.Hair.Type24 [HideEars]
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Basic/Type24
+      [HideEars].png
+    Sprite: {fileID: 21300002, guid: d67db11b60d3350489bd3dc3865db954, type: 3}
+    Sprites:
+    - {fileID: 21300002, guid: d67db11b60d3350489bd3dc3865db954, type: 3}
+    - {fileID: 21300000, guid: d67db11b60d3350489bd3dc3865db954, type: 3}
+    - {fileID: 21300006, guid: d67db11b60d3350489bd3dc3865db954, type: 3}
+    Tags:
+    - HideEars
+    Meta: 
+  - Name: Type25 [HideEars]
+    Id: HeroEditor4D.Basic.Hair.Type25 [HideEars]
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Basic/Type25
+      [HideEars].png
+    Sprite: {fileID: 21300002, guid: bc24140832d31934fa77d39b02757816, type: 3}
+    Sprites:
+    - {fileID: 21300002, guid: bc24140832d31934fa77d39b02757816, type: 3}
+    - {fileID: 21300000, guid: bc24140832d31934fa77d39b02757816, type: 3}
+    - {fileID: 21300006, guid: bc24140832d31934fa77d39b02757816, type: 3}
+    Tags:
+    - HideEars
+    Meta: 
+  - Name: Type26 [HideEars]
+    Id: HeroEditor4D.Basic.Hair.Type26 [HideEars]
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Basic/Type26
+      [HideEars].png
+    Sprite: {fileID: 21300002, guid: 4e6b9ec5cd91ab344a9a24ee84ad9924, type: 3}
+    Sprites:
+    - {fileID: 21300002, guid: 4e6b9ec5cd91ab344a9a24ee84ad9924, type: 3}
+    - {fileID: 21300000, guid: 4e6b9ec5cd91ab344a9a24ee84ad9924, type: 3}
+    - {fileID: 21300006, guid: 4e6b9ec5cd91ab344a9a24ee84ad9924, type: 3}
+    Tags:
+    - HideEars
+    Meta: 
+  - Name: Type27 [HideEars]
+    Id: HeroEditor4D.Basic.Hair.Type27 [HideEars]
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Basic/Type27
+      [HideEars].png
+    Sprite: {fileID: 21300002, guid: 3bbfc9dfca2e2be41a01ba225918ff98, type: 3}
+    Sprites:
+    - {fileID: 21300002, guid: 3bbfc9dfca2e2be41a01ba225918ff98, type: 3}
+    - {fileID: 21300000, guid: 3bbfc9dfca2e2be41a01ba225918ff98, type: 3}
+    - {fileID: 21300006, guid: 3bbfc9dfca2e2be41a01ba225918ff98, type: 3}
+    Tags:
+    - HideEars
+    Meta: 
+  - Name: Type28
+    Id: HeroEditor4D.Basic.Hair.Type28
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Basic/Type28.png
+    Sprite: {fileID: -8137581963233685907, guid: e760fef9bf07ed4418abcef6b22dc00d, type: 3}
+    Sprites:
+    - {fileID: -8137581963233685907, guid: e760fef9bf07ed4418abcef6b22dc00d, type: 3}
+    - {fileID: 6591478365344907407, guid: e760fef9bf07ed4418abcef6b22dc00d, type: 3}
+    - {fileID: 8968894577945027273, guid: e760fef9bf07ed4418abcef6b22dc00d, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type29
+    Id: HeroEditor4D.Basic.Hair.Type29
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Basic/Type29.png
+    Sprite: {fileID: -8137581963233685907, guid: e02a5d230c6e738439bc1479fcb110ae, type: 3}
+    Sprites:
+    - {fileID: -8137581963233685907, guid: e02a5d230c6e738439bc1479fcb110ae, type: 3}
+    - {fileID: 6591478365344907407, guid: e02a5d230c6e738439bc1479fcb110ae, type: 3}
+    - {fileID: 8968894577945027273, guid: e02a5d230c6e738439bc1479fcb110ae, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type3
+    Id: HeroEditor4D.Basic.Hair.Type3
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Basic/Type3.png
+    Sprite: {fileID: -8137581963233685907, guid: 628c65b60acab2e4188658f3ec34eb9f, type: 3}
+    Sprites:
+    - {fileID: -8137581963233685907, guid: 628c65b60acab2e4188658f3ec34eb9f, type: 3}
+    - {fileID: 6591478365344907407, guid: 628c65b60acab2e4188658f3ec34eb9f, type: 3}
+    - {fileID: 8968894577945027273, guid: 628c65b60acab2e4188658f3ec34eb9f, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type4
+    Id: HeroEditor4D.Basic.Hair.Type4
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Basic/Type4.png
+    Sprite: {fileID: -8137581963233685907, guid: 73d17174725a7b04385637b97a5fa7ad, type: 3}
+    Sprites:
+    - {fileID: -8137581963233685907, guid: 73d17174725a7b04385637b97a5fa7ad, type: 3}
+    - {fileID: 6591478365344907407, guid: 73d17174725a7b04385637b97a5fa7ad, type: 3}
+    - {fileID: 8968894577945027273, guid: 73d17174725a7b04385637b97a5fa7ad, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type5
+    Id: HeroEditor4D.Basic.Hair.Type5
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Basic/Type5.png
+    Sprite: {fileID: -8137581963233685907, guid: 981735c10f9476e4d8ad6cfbe9215532, type: 3}
+    Sprites:
+    - {fileID: -8137581963233685907, guid: 981735c10f9476e4d8ad6cfbe9215532, type: 3}
+    - {fileID: 6591478365344907407, guid: 981735c10f9476e4d8ad6cfbe9215532, type: 3}
+    - {fileID: 8968894577945027273, guid: 981735c10f9476e4d8ad6cfbe9215532, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type6
+    Id: HeroEditor4D.Basic.Hair.Type6
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Basic/Type6.png
+    Sprite: {fileID: -8137581963233685907, guid: 0377c75d2c9e6e3428d2204ca837fefc, type: 3}
+    Sprites:
+    - {fileID: -8137581963233685907, guid: 0377c75d2c9e6e3428d2204ca837fefc, type: 3}
+    - {fileID: 6591478365344907407, guid: 0377c75d2c9e6e3428d2204ca837fefc, type: 3}
+    - {fileID: 8968894577945027273, guid: 0377c75d2c9e6e3428d2204ca837fefc, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type7
+    Id: HeroEditor4D.Basic.Hair.Type7
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Basic/Type7.png
+    Sprite: {fileID: -8137581963233685907, guid: e08b3e7e51123b040804ce656d3b5ed7, type: 3}
+    Sprites:
+    - {fileID: -8137581963233685907, guid: e08b3e7e51123b040804ce656d3b5ed7, type: 3}
+    - {fileID: 6591478365344907407, guid: e08b3e7e51123b040804ce656d3b5ed7, type: 3}
+    - {fileID: 8968894577945027273, guid: e08b3e7e51123b040804ce656d3b5ed7, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type8
+    Id: HeroEditor4D.Basic.Hair.Type8
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Basic/Type8.png
+    Sprite: {fileID: -8137581963233685907, guid: e45ae84c034bf6641bbfe0e3ba02afb5, type: 3}
+    Sprites:
+    - {fileID: -8137581963233685907, guid: e45ae84c034bf6641bbfe0e3ba02afb5, type: 3}
+    - {fileID: 6591478365344907407, guid: e45ae84c034bf6641bbfe0e3ba02afb5, type: 3}
+    - {fileID: 8968894577945027273, guid: e45ae84c034bf6641bbfe0e3ba02afb5, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type9
+    Id: HeroEditor4D.Basic.Hair.Type9
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Basic/Type9.png
+    Sprite: {fileID: -8137581963233685907, guid: d657c382aca3c0d4aa83940cd23db008, type: 3}
+    Sprites:
+    - {fileID: -8137581963233685907, guid: d657c382aca3c0d4aa83940cd23db008, type: 3}
+    - {fileID: 6591478365344907407, guid: d657c382aca3c0d4aa83940cd23db008, type: 3}
+    - {fileID: 8968894577945027273, guid: d657c382aca3c0d4aa83940cd23db008, type: 3}
+    Tags: []
+    Meta: 
+  Beard:
+  - Name: Type1
+    Id: HeroEditor4D.Basic.Beard.Type1
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Beard/Basic/Type1.png
+    Sprite: {fileID: 6591478365344907407, guid: 2ad7c91ea697fea4ba69310a62559e90, type: 3}
+    Sprites:
+    - {fileID: 6591478365344907407, guid: 2ad7c91ea697fea4ba69310a62559e90, type: 3}
+    - {fileID: 8968894577945027273, guid: 2ad7c91ea697fea4ba69310a62559e90, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type10
+    Id: HeroEditor4D.Basic.Beard.Type10
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Beard/Basic/Type10.png
+    Sprite: {fileID: 6591478365344907407, guid: 700eb9e6b2f62564d97b1b65a2a5dff3, type: 3}
+    Sprites:
+    - {fileID: 6591478365344907407, guid: 700eb9e6b2f62564d97b1b65a2a5dff3, type: 3}
+    - {fileID: 8968894577945027273, guid: 700eb9e6b2f62564d97b1b65a2a5dff3, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type11
+    Id: HeroEditor4D.Basic.Beard.Type11
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Beard/Basic/Type11.png
+    Sprite: {fileID: 6591478365344907407, guid: 3814933754296f94c9b7e78d5682b8de, type: 3}
+    Sprites:
+    - {fileID: 6591478365344907407, guid: 3814933754296f94c9b7e78d5682b8de, type: 3}
+    - {fileID: 8968894577945027273, guid: 3814933754296f94c9b7e78d5682b8de, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type12
+    Id: HeroEditor4D.Basic.Beard.Type12
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Beard/Basic/Type12.png
+    Sprite: {fileID: 6591478365344907407, guid: b62de697d56025e418dbb6ac331bb6bb, type: 3}
+    Sprites:
+    - {fileID: 6591478365344907407, guid: b62de697d56025e418dbb6ac331bb6bb, type: 3}
+    - {fileID: 8968894577945027273, guid: b62de697d56025e418dbb6ac331bb6bb, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type13
+    Id: HeroEditor4D.Basic.Beard.Type13
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Beard/Basic/Type13.png
+    Sprite: {fileID: 6591478365344907407, guid: ff5d5dccab6613a4697defa9e909811e, type: 3}
+    Sprites:
+    - {fileID: 6591478365344907407, guid: ff5d5dccab6613a4697defa9e909811e, type: 3}
+    - {fileID: 8968894577945027273, guid: ff5d5dccab6613a4697defa9e909811e, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type2
+    Id: HeroEditor4D.Basic.Beard.Type2
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Beard/Basic/Type2.png
+    Sprite: {fileID: 6591478365344907407, guid: b2415f038c8b1484db07ddd3445b204b, type: 3}
+    Sprites:
+    - {fileID: 6591478365344907407, guid: b2415f038c8b1484db07ddd3445b204b, type: 3}
+    - {fileID: 8968894577945027273, guid: b2415f038c8b1484db07ddd3445b204b, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type3
+    Id: HeroEditor4D.Basic.Beard.Type3
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Beard/Basic/Type3.png
+    Sprite: {fileID: 6591478365344907407, guid: 834095ca77ed58c4baa67c791c50dfa1, type: 3}
+    Sprites:
+    - {fileID: 6591478365344907407, guid: 834095ca77ed58c4baa67c791c50dfa1, type: 3}
+    - {fileID: 8968894577945027273, guid: 834095ca77ed58c4baa67c791c50dfa1, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type4
+    Id: HeroEditor4D.Basic.Beard.Type4
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Beard/Basic/Type4.png
+    Sprite: {fileID: 6591478365344907407, guid: 6efa5e64b2fde914ebcb53b95c2fca01, type: 3}
+    Sprites:
+    - {fileID: 6591478365344907407, guid: 6efa5e64b2fde914ebcb53b95c2fca01, type: 3}
+    - {fileID: 8968894577945027273, guid: 6efa5e64b2fde914ebcb53b95c2fca01, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type5
+    Id: HeroEditor4D.Basic.Beard.Type5
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Beard/Basic/Type5.png
+    Sprite: {fileID: 6591478365344907407, guid: a00a48d81f663224a87014e928263977, type: 3}
+    Sprites:
+    - {fileID: 6591478365344907407, guid: a00a48d81f663224a87014e928263977, type: 3}
+    - {fileID: 8968894577945027273, guid: a00a48d81f663224a87014e928263977, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type6
+    Id: HeroEditor4D.Basic.Beard.Type6
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Beard/Basic/Type6.png
+    Sprite: {fileID: 6591478365344907407, guid: 40f7f79939bda494892fe9accdd93d43, type: 3}
+    Sprites:
+    - {fileID: 6591478365344907407, guid: 40f7f79939bda494892fe9accdd93d43, type: 3}
+    - {fileID: 8968894577945027273, guid: 40f7f79939bda494892fe9accdd93d43, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type7
+    Id: HeroEditor4D.Basic.Beard.Type7
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Beard/Basic/Type7.png
+    Sprite: {fileID: 6591478365344907407, guid: 8cf8db90eeb44674eaeb6553b7723518, type: 3}
+    Sprites:
+    - {fileID: 6591478365344907407, guid: 8cf8db90eeb44674eaeb6553b7723518, type: 3}
+    - {fileID: 8968894577945027273, guid: 8cf8db90eeb44674eaeb6553b7723518, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type8
+    Id: HeroEditor4D.Basic.Beard.Type8
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Beard/Basic/Type8.png
+    Sprite: {fileID: 6591478365344907407, guid: 3daf63816be7300488c822d290ccf829, type: 3}
+    Sprites:
+    - {fileID: 6591478365344907407, guid: 3daf63816be7300488c822d290ccf829, type: 3}
+    - {fileID: 8968894577945027273, guid: 3daf63816be7300488c822d290ccf829, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type9
+    Id: HeroEditor4D.Basic.Beard.Type9
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Beard/Basic/Type9.png
+    Sprite: {fileID: 6591478365344907407, guid: 4a07686103a49a4408f8e2e0b88dda15, type: 3}
+    Sprites:
+    - {fileID: 6591478365344907407, guid: 4a07686103a49a4408f8e2e0b88dda15, type: 3}
+    - {fileID: 8968894577945027273, guid: 4a07686103a49a4408f8e2e0b88dda15, type: 3}
+    Tags: []
+    Meta: 
+  Eyebrows:
+  - Name: AngryEyebrows
+    Id: HeroEditor4D.Emoji.Eyebrows.AngryEyebrows
+    Edition: HeroEditor4D
+    Collection: Emoji
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyebrows/Emoji/AngryEyebrows.png
+    Sprite: {fileID: 21300000, guid: de83117efe1db20419ded60f35f02595, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: de83117efe1db20419ded60f35f02595, type: 3}
+    - {fileID: 21300002, guid: de83117efe1db20419ded60f35f02595, type: 3}
+    Tags: []
+    Meta: 
+  - Name: DeadEyebrows1
+    Id: HeroEditor4D.Emoji.Eyebrows.DeadEyebrows1
+    Edition: HeroEditor4D
+    Collection: Emoji
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyebrows/Emoji/DeadEyebrows1.png
+    Sprite: {fileID: 21300000, guid: 498faabeb919ac24b8c2272faadfae32, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 498faabeb919ac24b8c2272faadfae32, type: 3}
+    - {fileID: 21300004, guid: 498faabeb919ac24b8c2272faadfae32, type: 3}
+    Tags: []
+    Meta: 
+  - Name: DeadEyebrows2
+    Id: HeroEditor4D.Emoji.Eyebrows.DeadEyebrows2
+    Edition: HeroEditor4D
+    Collection: Emoji
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyebrows/Emoji/DeadEyebrows2.png
+    Sprite: {fileID: 21300000, guid: 244b93ba44ec43b4f84ddb3a874c992e, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 244b93ba44ec43b4f84ddb3a874c992e, type: 3}
+    - {fileID: 21300004, guid: 244b93ba44ec43b4f84ddb3a874c992e, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Default
+    Id: HeroEditor4D.Basic.Eyebrows.Default
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyebrows/Basic/Default.png
+    Sprite: {fileID: 21300000, guid: 5bfc6e175255e2c48b850861f9e084b4, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 5bfc6e175255e2c48b850861f9e084b4, type: 3}
+    - {fileID: 21300002, guid: 5bfc6e175255e2c48b850861f9e084b4, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Eyebrows1
+    Id: HeroEditor4D.Basic.Eyebrows.Eyebrows1
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyebrows/Basic/Eyebrows1.png
+    Sprite: {fileID: 21300000, guid: fc3420a0e48d52d4fb6df0048ad88b3f, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: fc3420a0e48d52d4fb6df0048ad88b3f, type: 3}
+    - {fileID: 21300004, guid: fc3420a0e48d52d4fb6df0048ad88b3f, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Eyebrows10
+    Id: HeroEditor4D.Basic.Eyebrows.Eyebrows10
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyebrows/Basic/Eyebrows10.png
+    Sprite: {fileID: 21300000, guid: 07a70dc7c5bef8647bd94df330502d45, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 07a70dc7c5bef8647bd94df330502d45, type: 3}
+    - {fileID: 21300004, guid: 07a70dc7c5bef8647bd94df330502d45, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Eyebrows11
+    Id: HeroEditor4D.Basic.Eyebrows.Eyebrows11
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyebrows/Basic/Eyebrows11.png
+    Sprite: {fileID: 21300000, guid: 59881da659ebabc4680a25c49f23006b, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 59881da659ebabc4680a25c49f23006b, type: 3}
+    - {fileID: 21300004, guid: 59881da659ebabc4680a25c49f23006b, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Eyebrows12
+    Id: HeroEditor4D.Basic.Eyebrows.Eyebrows12
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyebrows/Basic/Eyebrows12.png
+    Sprite: {fileID: 21300000, guid: 66466376529b0fc4ca0c1fc03c1150a9, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 66466376529b0fc4ca0c1fc03c1150a9, type: 3}
+    - {fileID: 21300004, guid: 66466376529b0fc4ca0c1fc03c1150a9, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Eyebrows13
+    Id: HeroEditor4D.Basic.Eyebrows.Eyebrows13
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyebrows/Basic/Eyebrows13.png
+    Sprite: {fileID: 21300000, guid: f73fbd42aca6b934db181827ebe97389, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: f73fbd42aca6b934db181827ebe97389, type: 3}
+    - {fileID: 21300002, guid: f73fbd42aca6b934db181827ebe97389, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Eyebrows14
+    Id: HeroEditor4D.Basic.Eyebrows.Eyebrows14
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyebrows/Basic/Eyebrows14.png
+    Sprite: {fileID: 21300000, guid: a649815475ab2d844b60f75ed735a8c4, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: a649815475ab2d844b60f75ed735a8c4, type: 3}
+    - {fileID: 21300002, guid: a649815475ab2d844b60f75ed735a8c4, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Eyebrows15
+    Id: HeroEditor4D.Basic.Eyebrows.Eyebrows15
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyebrows/Basic/Eyebrows15.png
+    Sprite: {fileID: 21300000, guid: 060855c91a2346340afaf52744635423, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 060855c91a2346340afaf52744635423, type: 3}
+    - {fileID: 21300002, guid: 060855c91a2346340afaf52744635423, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Eyebrows16
+    Id: HeroEditor4D.Basic.Eyebrows.Eyebrows16
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyebrows/Basic/Eyebrows16.png
+    Sprite: {fileID: 21300000, guid: b2de71c81e5ac934cbca5ac00ee3e76a, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: b2de71c81e5ac934cbca5ac00ee3e76a, type: 3}
+    - {fileID: 21300002, guid: b2de71c81e5ac934cbca5ac00ee3e76a, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Eyebrows17
+    Id: HeroEditor4D.Basic.Eyebrows.Eyebrows17
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyebrows/Basic/Eyebrows17.png
+    Sprite: {fileID: 21300000, guid: 9a611ac734dc9cf4ab786f66054712e4, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 9a611ac734dc9cf4ab786f66054712e4, type: 3}
+    - {fileID: 21300002, guid: 9a611ac734dc9cf4ab786f66054712e4, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Eyebrows18
+    Id: HeroEditor4D.Basic.Eyebrows.Eyebrows18
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyebrows/Basic/Eyebrows18.png
+    Sprite: {fileID: 21300000, guid: 69a34981e26892c49a79373c27cbd5e4, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 69a34981e26892c49a79373c27cbd5e4, type: 3}
+    - {fileID: 21300002, guid: 69a34981e26892c49a79373c27cbd5e4, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Eyebrows19
+    Id: HeroEditor4D.Basic.Eyebrows.Eyebrows19
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyebrows/Basic/Eyebrows19.png
+    Sprite: {fileID: 21300000, guid: 0f076fa1c21974f4ea69776936b55827, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 0f076fa1c21974f4ea69776936b55827, type: 3}
+    - {fileID: 21300002, guid: 0f076fa1c21974f4ea69776936b55827, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Eyebrows2
+    Id: HeroEditor4D.Basic.Eyebrows.Eyebrows2
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyebrows/Basic/Eyebrows2.png
+    Sprite: {fileID: 21300000, guid: 282e8ed7eaf75284aab6a8ab5a9cbdcc, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 282e8ed7eaf75284aab6a8ab5a9cbdcc, type: 3}
+    - {fileID: 21300004, guid: 282e8ed7eaf75284aab6a8ab5a9cbdcc, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Eyebrows20
+    Id: HeroEditor4D.Basic.Eyebrows.Eyebrows20
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyebrows/Basic/Eyebrows20.png
+    Sprite: {fileID: 21300000, guid: 4c0670d69bcd37c43948f6c92868c4de, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 4c0670d69bcd37c43948f6c92868c4de, type: 3}
+    - {fileID: 21300002, guid: 4c0670d69bcd37c43948f6c92868c4de, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Eyebrows21
+    Id: HeroEditor4D.Basic.Eyebrows.Eyebrows21
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyebrows/Basic/Eyebrows21.png
+    Sprite: {fileID: 21300000, guid: 4fe9055cb9f7e4945a181bdec7bd518f, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 4fe9055cb9f7e4945a181bdec7bd518f, type: 3}
+    - {fileID: 21300002, guid: 4fe9055cb9f7e4945a181bdec7bd518f, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Eyebrows22
+    Id: HeroEditor4D.Basic.Eyebrows.Eyebrows22
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyebrows/Basic/Eyebrows22.png
+    Sprite: {fileID: 21300000, guid: 9a384b80822272e46a1b293949dcfb2b, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 9a384b80822272e46a1b293949dcfb2b, type: 3}
+    - {fileID: 21300002, guid: 9a384b80822272e46a1b293949dcfb2b, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Eyebrows3
+    Id: HeroEditor4D.Basic.Eyebrows.Eyebrows3
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyebrows/Basic/Eyebrows3.png
+    Sprite: {fileID: 21300000, guid: 8b4dc262c02140d42855e75c9c8e6333, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 8b4dc262c02140d42855e75c9c8e6333, type: 3}
+    - {fileID: 21300004, guid: 8b4dc262c02140d42855e75c9c8e6333, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Eyebrows4
+    Id: HeroEditor4D.Basic.Eyebrows.Eyebrows4
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyebrows/Basic/Eyebrows4.png
+    Sprite: {fileID: 21300000, guid: c62eb7f3f9338de458d206738ccb4731, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: c62eb7f3f9338de458d206738ccb4731, type: 3}
+    - {fileID: 21300004, guid: c62eb7f3f9338de458d206738ccb4731, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Eyebrows5
+    Id: HeroEditor4D.Basic.Eyebrows.Eyebrows5
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyebrows/Basic/Eyebrows5.png
+    Sprite: {fileID: 21300000, guid: aad28951219ef62449de5a58d6233ba2, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: aad28951219ef62449de5a58d6233ba2, type: 3}
+    - {fileID: 21300004, guid: aad28951219ef62449de5a58d6233ba2, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Eyebrows6
+    Id: HeroEditor4D.Basic.Eyebrows.Eyebrows6
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyebrows/Basic/Eyebrows6.png
+    Sprite: {fileID: 21300000, guid: b7d62034cf94b4c4c94e51a37d76ab48, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: b7d62034cf94b4c4c94e51a37d76ab48, type: 3}
+    - {fileID: 21300004, guid: b7d62034cf94b4c4c94e51a37d76ab48, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Eyebrows7
+    Id: HeroEditor4D.Basic.Eyebrows.Eyebrows7
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyebrows/Basic/Eyebrows7.png
+    Sprite: {fileID: 21300000, guid: 77f371ded70a4c74a83357c2593b986e, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 77f371ded70a4c74a83357c2593b986e, type: 3}
+    - {fileID: 21300004, guid: 77f371ded70a4c74a83357c2593b986e, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Eyebrows8
+    Id: HeroEditor4D.Basic.Eyebrows.Eyebrows8
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyebrows/Basic/Eyebrows8.png
+    Sprite: {fileID: 21300000, guid: cc0815cd6bffade4e96c29315a4e6e67, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: cc0815cd6bffade4e96c29315a4e6e67, type: 3}
+    - {fileID: 21300004, guid: cc0815cd6bffade4e96c29315a4e6e67, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Eyebrows9
+    Id: HeroEditor4D.Basic.Eyebrows.Eyebrows9
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyebrows/Basic/Eyebrows9.png
+    Sprite: {fileID: 21300000, guid: 852c12fa027819a42bd932574d5f26aa, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 852c12fa027819a42bd932574d5f26aa, type: 3}
+    - {fileID: 21300004, guid: 852c12fa027819a42bd932574d5f26aa, type: 3}
+    Tags: []
+    Meta: 
+  - Name: QuestionableEyebrows
+    Id: HeroEditor4D.Emoji.Eyebrows.QuestionableEyebrows
+    Edition: HeroEditor4D
+    Collection: Emoji
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyebrows/Emoji/QuestionableEyebrows.png
+    Sprite: {fileID: 21300000, guid: 8bd1701c033036241a4e4e17f1e91fbb, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 8bd1701c033036241a4e4e17f1e91fbb, type: 3}
+    - {fileID: 21300004, guid: 8bd1701c033036241a4e4e17f1e91fbb, type: 3}
+    Tags: []
+    Meta: 
+  - Name: SadEyebrows
+    Id: HeroEditor4D.Emoji.Eyebrows.SadEyebrows
+    Edition: HeroEditor4D
+    Collection: Emoji
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyebrows/Emoji/SadEyebrows.png
+    Sprite: {fileID: 21300000, guid: c81c959a2bf3215458eb6d46b53ed617, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: c81c959a2bf3215458eb6d46b53ed617, type: 3}
+    - {fileID: 21300004, guid: c81c959a2bf3215458eb6d46b53ed617, type: 3}
+    Tags: []
+    Meta: 
+  Eyes:
+  - Name: AngryEyes1
+    Id: HeroEditor4D.Emoji.Eyes.AngryEyes1
+    Edition: HeroEditor4D
+    Collection: Emoji
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Emoji/AngryEyes1.png
+    Sprite: {fileID: 21300000, guid: 8db8c1c34bb23114ca1ae578d00426fd, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 8db8c1c34bb23114ca1ae578d00426fd, type: 3}
+    - {fileID: 21300004, guid: 8db8c1c34bb23114ca1ae578d00426fd, type: 3}
+    Tags: []
+    Meta: 
+  - Name: AngryEyes2
+    Id: HeroEditor4D.Emoji.Eyes.AngryEyes2
+    Edition: HeroEditor4D
+    Collection: Emoji
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Emoji/AngryEyes2.png
+    Sprite: {fileID: 21300000, guid: ee6a973d988dfb14bbf2d63be0706259, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: ee6a973d988dfb14bbf2d63be0706259, type: 3}
+    - {fileID: 21300004, guid: ee6a973d988dfb14bbf2d63be0706259, type: 3}
+    Tags: []
+    Meta: 
+  - Name: AngryEyes3
+    Id: HeroEditor4D.Emoji.Eyes.AngryEyes3
+    Edition: HeroEditor4D
+    Collection: Emoji
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Emoji/AngryEyes3.png
+    Sprite: {fileID: 21300000, guid: 73461b69252e31e45aa9fd164956078d, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 73461b69252e31e45aa9fd164956078d, type: 3}
+    - {fileID: 21300004, guid: 73461b69252e31e45aa9fd164956078d, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Asian
+    Id: HeroEditor4D.Basic.Eyes.Asian
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Basic/Asian.png
+    Sprite: {fileID: 21300000, guid: 92fbc0d37d8ad2843921ce2f0450d194, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 92fbc0d37d8ad2843921ce2f0450d194, type: 3}
+    - {fileID: 21300002, guid: 92fbc0d37d8ad2843921ce2f0450d194, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Boy
+    Id: HeroEditor4D.Basic.Eyes.Boy
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Basic/Boy.png
+    Sprite: {fileID: 21300000, guid: 8af072d9e54ae824dbcd4c67c7eac50d, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 8af072d9e54ae824dbcd4c67c7eac50d, type: 3}
+    - {fileID: 21300004, guid: 8af072d9e54ae824dbcd4c67c7eac50d, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Boy01
+    Id: HeroEditor4D.Basic.Eyes.Boy01
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Basic/Boy01.png
+    Sprite: {fileID: 21300000, guid: 7d29a6168b8188249a81304debfac1f6, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 7d29a6168b8188249a81304debfac1f6, type: 3}
+    - {fileID: 21300004, guid: 7d29a6168b8188249a81304debfac1f6, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Boy02
+    Id: HeroEditor4D.Basic.Eyes.Boy02
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Basic/Boy02.png
+    Sprite: {fileID: 21300000, guid: 90ea5c276e8878941b88c51aeeb535b7, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 90ea5c276e8878941b88c51aeeb535b7, type: 3}
+    - {fileID: 21300004, guid: 90ea5c276e8878941b88c51aeeb535b7, type: 3}
+    Tags: []
+    Meta: 
+  - Name: DeadEyes1
+    Id: HeroEditor4D.Emoji.Eyes.DeadEyes1
+    Edition: HeroEditor4D
+    Collection: Emoji
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Emoji/DeadEyes1.png
+    Sprite: {fileID: 21300000, guid: c63a2114bc3294e4e9c6567ff870d25f, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: c63a2114bc3294e4e9c6567ff870d25f, type: 3}
+    - {fileID: 21300004, guid: c63a2114bc3294e4e9c6567ff870d25f, type: 3}
+    Tags: []
+    Meta: 
+  - Name: DeadEyes2
+    Id: HeroEditor4D.Emoji.Eyes.DeadEyes2
+    Edition: HeroEditor4D
+    Collection: Emoji
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Emoji/DeadEyes2.png
+    Sprite: {fileID: 21300000, guid: 9ba02d13c40652747a7462639ccc3260, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 9ba02d13c40652747a7462639ccc3260, type: 3}
+    - {fileID: 21300004, guid: 9ba02d13c40652747a7462639ccc3260, type: 3}
+    Tags: []
+    Meta: 
+  - Name: DeadEyes3
+    Id: HeroEditor4D.Emoji.Eyes.DeadEyes3
+    Edition: HeroEditor4D
+    Collection: Emoji
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Emoji/DeadEyes3.png
+    Sprite: {fileID: 21300000, guid: fc546d30f33818648a99c50aa78ebc18, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: fc546d30f33818648a99c50aa78ebc18, type: 3}
+    - {fileID: 21300004, guid: fc546d30f33818648a99c50aa78ebc18, type: 3}
+    Tags: []
+    Meta: 
+  - Name: DeadEyes4
+    Id: HeroEditor4D.Emoji.Eyes.DeadEyes4
+    Edition: HeroEditor4D
+    Collection: Emoji
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Emoji/DeadEyes4.png
+    Sprite: {fileID: 21300000, guid: 2e095cf31cb1de947b7843cabcc26986, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 2e095cf31cb1de947b7843cabcc26986, type: 3}
+    - {fileID: 21300004, guid: 2e095cf31cb1de947b7843cabcc26986, type: 3}
+    Tags: []
+    Meta: 
+  - Name: DeadEyes5
+    Id: HeroEditor4D.Emoji.Eyes.DeadEyes5
+    Edition: HeroEditor4D
+    Collection: Emoji
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Emoji/DeadEyes5.png
+    Sprite: {fileID: 21300000, guid: 9cd01d9547b07ee418fa5cd236515c15, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 9cd01d9547b07ee418fa5cd236515c15, type: 3}
+    - {fileID: 21300004, guid: 9cd01d9547b07ee418fa5cd236515c15, type: 3}
+    Tags: []
+    Meta: 
+  - Name: DotEyes
+    Id: HeroEditor4D.Emoji.Eyes.DotEyes
+    Edition: HeroEditor4D
+    Collection: Emoji
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Emoji/DotEyes.png
+    Sprite: {fileID: 21300000, guid: 1ff2bacf763ccb94986f2bb61a1cb8ed, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 1ff2bacf763ccb94986f2bb61a1cb8ed, type: 3}
+    - {fileID: 21300004, guid: 1ff2bacf763ccb94986f2bb61a1cb8ed, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Evil
+    Id: HeroEditor4D.Basic.Eyes.Evil
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Basic/Evil.png
+    Sprite: {fileID: 21300000, guid: c6e59415b3dfff24dbbcd8cf9c0deffe, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: c6e59415b3dfff24dbbcd8cf9c0deffe, type: 3}
+    - {fileID: 21300004, guid: c6e59415b3dfff24dbbcd8cf9c0deffe, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Girl
+    Id: HeroEditor4D.Basic.Eyes.Girl
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Basic/Girl.png
+    Sprite: {fileID: 21300000, guid: 0509d13ac0323f040b8b1e289f1e4ba2, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 0509d13ac0323f040b8b1e289f1e4ba2, type: 3}
+    - {fileID: 21300004, guid: 0509d13ac0323f040b8b1e289f1e4ba2, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Girl01
+    Id: HeroEditor4D.Basic.Eyes.Girl01
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Basic/Girl01.png
+    Sprite: {fileID: 21300000, guid: 2e742ac21df31e844aee0ad086647810, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 2e742ac21df31e844aee0ad086647810, type: 3}
+    - {fileID: 21300004, guid: 2e742ac21df31e844aee0ad086647810, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Girl02
+    Id: HeroEditor4D.Basic.Eyes.Girl02
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Basic/Girl02.png
+    Sprite: {fileID: 21300000, guid: 1a29ed4996a3d3d4c89e982d67af2a6e, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 1a29ed4996a3d3d4c89e982d67af2a6e, type: 3}
+    - {fileID: 21300004, guid: 1a29ed4996a3d3d4c89e982d67af2a6e, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Girl03
+    Id: HeroEditor4D.Basic.Eyes.Girl03
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Basic/Girl03.png
+    Sprite: {fileID: 21300000, guid: 73bf2dbe19629784f87ca739646e0868, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 73bf2dbe19629784f87ca739646e0868, type: 3}
+    - {fileID: 21300004, guid: 73bf2dbe19629784f87ca739646e0868, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Girl04
+    Id: HeroEditor4D.Basic.Eyes.Girl04
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Basic/Girl04.png
+    Sprite: {fileID: 21300000, guid: 362af7c2ed7e22d469a07814af9ce53b, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 362af7c2ed7e22d469a07814af9ce53b, type: 3}
+    - {fileID: 21300004, guid: 362af7c2ed7e22d469a07814af9ce53b, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Girl05
+    Id: HeroEditor4D.Basic.Eyes.Girl05
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Basic/Girl05.png
+    Sprite: {fileID: 21300000, guid: 833cac2ab31b1774ba8932b7240b41c7, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 833cac2ab31b1774ba8932b7240b41c7, type: 3}
+    - {fileID: 21300004, guid: 833cac2ab31b1774ba8932b7240b41c7, type: 3}
+    Tags: []
+    Meta: 
+  - Name: HappyEyes
+    Id: HeroEditor4D.Emoji.Eyes.HappyEyes
+    Edition: HeroEditor4D
+    Collection: Emoji
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Emoji/HappyEyes.png
+    Sprite: {fileID: 21300000, guid: 9a749df01cafb4b4bb058b787309f261, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 9a749df01cafb4b4bb058b787309f261, type: 3}
+    - {fileID: 21300004, guid: 9a749df01cafb4b4bb058b787309f261, type: 3}
+    Tags: []
+    Meta: 
+  - Name: HardEdge
+    Id: HeroEditor4D.Basic.Eyes.HardEdge
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Basic/HardEdge.png
+    Sprite: {fileID: 21300000, guid: 6fdedc3e94c216445a7d640c27875b7f, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 6fdedc3e94c216445a7d640c27875b7f, type: 3}
+    - {fileID: 21300004, guid: 6fdedc3e94c216445a7d640c27875b7f, type: 3}
+    Tags: []
+    Meta: 
+  - Name: HeartEyes
+    Id: HeroEditor4D.Emoji.Eyes.HeartEyes
+    Edition: HeroEditor4D
+    Collection: Emoji
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Emoji/HeartEyes.png
+    Sprite: {fileID: 21300000, guid: ac0da8b0426a3274fbb27e5c10d41a26, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: ac0da8b0426a3274fbb27e5c10d41a26, type: 3}
+    - {fileID: 21300004, guid: ac0da8b0426a3274fbb27e5c10d41a26, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Man
+    Id: HeroEditor4D.Basic.Eyes.Man
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Basic/Man.png
+    Sprite: {fileID: 21300000, guid: ea1dced43f7ba5846b7e16ffb2e63241, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: ea1dced43f7ba5846b7e16ffb2e63241, type: 3}
+    - {fileID: 21300004, guid: ea1dced43f7ba5846b7e16ffb2e63241, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Saitama
+    Id: HeroEditor4D.Basic.Eyes.Saitama
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Basic/Saitama.png
+    Sprite: {fileID: 21300000, guid: eeb372bdf8a3feb4cb8b59f714841673, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: eeb372bdf8a3feb4cb8b59f714841673, type: 3}
+    - {fileID: 21300004, guid: eeb372bdf8a3feb4cb8b59f714841673, type: 3}
+    Tags: []
+    Meta: 
+  - Name: ScaredEyes
+    Id: HeroEditor4D.Emoji.Eyes.ScaredEyes
+    Edition: HeroEditor4D
+    Collection: Emoji
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Emoji/ScaredEyes.png
+    Sprite: {fileID: 21300000, guid: e7a560fad8f1365428b3ffe42808b822, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: e7a560fad8f1365428b3ffe42808b822, type: 3}
+    - {fileID: 21300004, guid: e7a560fad8f1365428b3ffe42808b822, type: 3}
+    Tags: []
+    Meta: 
+  - Name: SurprsedEyes
+    Id: HeroEditor4D.Emoji.Eyes.SurprsedEyes
+    Edition: HeroEditor4D
+    Collection: Emoji
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Emoji/SurprsedEyes.png
+    Sprite: {fileID: 21300000, guid: 87b82580c3cb58247a3cbe6ab66cacaa, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 87b82580c3cb58247a3cbe6ab66cacaa, type: 3}
+    - {fileID: 21300004, guid: 87b82580c3cb58247a3cbe6ab66cacaa, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type01
+    Id: HeroEditor4D.Basic.Eyes.Type01
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Basic/Type01.png
+    Sprite: {fileID: 21300000, guid: 0c8bc9bca14518f4eb3b1b5ac3d84c05, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 0c8bc9bca14518f4eb3b1b5ac3d84c05, type: 3}
+    - {fileID: 21300004, guid: 0c8bc9bca14518f4eb3b1b5ac3d84c05, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type02
+    Id: HeroEditor4D.Basic.Eyes.Type02
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Basic/Type02.png
+    Sprite: {fileID: 21300000, guid: cba2b2cd906510e4baba81e4589d8f7d, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: cba2b2cd906510e4baba81e4589d8f7d, type: 3}
+    - {fileID: 21300004, guid: cba2b2cd906510e4baba81e4589d8f7d, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type03
+    Id: HeroEditor4D.Basic.Eyes.Type03
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Basic/Type03.png
+    Sprite: {fileID: 21300000, guid: a27489d7bfd6792489f1313ca8b3a8c6, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: a27489d7bfd6792489f1313ca8b3a8c6, type: 3}
+    - {fileID: 21300004, guid: a27489d7bfd6792489f1313ca8b3a8c6, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type04
+    Id: HeroEditor4D.Basic.Eyes.Type04
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Basic/Type04.png
+    Sprite: {fileID: 21300000, guid: 9ce7dc3cb1898014c94e07ff6d413208, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 9ce7dc3cb1898014c94e07ff6d413208, type: 3}
+    - {fileID: 21300004, guid: 9ce7dc3cb1898014c94e07ff6d413208, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type05
+    Id: HeroEditor4D.Basic.Eyes.Type05
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Basic/Type05.png
+    Sprite: {fileID: 21300000, guid: df32780acca4a3c4a9bf30254c95c6dd, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: df32780acca4a3c4a9bf30254c95c6dd, type: 3}
+    - {fileID: 21300004, guid: df32780acca4a3c4a9bf30254c95c6dd, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type06
+    Id: HeroEditor4D.Basic.Eyes.Type06
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Basic/Type06.png
+    Sprite: {fileID: 21300000, guid: 702370265f20bd64aac2df2fafcfa172, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 702370265f20bd64aac2df2fafcfa172, type: 3}
+    - {fileID: 21300004, guid: 702370265f20bd64aac2df2fafcfa172, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type07
+    Id: HeroEditor4D.Basic.Eyes.Type07
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Basic/Type07.png
+    Sprite: {fileID: 21300000, guid: 244e9e31938d18d45ad3700e1df884b1, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 244e9e31938d18d45ad3700e1df884b1, type: 3}
+    - {fileID: 21300004, guid: 244e9e31938d18d45ad3700e1df884b1, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type08
+    Id: HeroEditor4D.Basic.Eyes.Type08
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Basic/Type08.png
+    Sprite: {fileID: 21300000, guid: 63e2fa1c21ddf8d45b2adecceacc25b8, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 63e2fa1c21ddf8d45b2adecceacc25b8, type: 3}
+    - {fileID: 21300004, guid: 63e2fa1c21ddf8d45b2adecceacc25b8, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type09
+    Id: HeroEditor4D.Basic.Eyes.Type09
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Basic/Type09.png
+    Sprite: {fileID: 21300000, guid: ba74bc487bd0c7c438894b590d7fff56, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: ba74bc487bd0c7c438894b590d7fff56, type: 3}
+    - {fileID: 21300004, guid: ba74bc487bd0c7c438894b590d7fff56, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type10
+    Id: HeroEditor4D.Basic.Eyes.Type10
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Basic/Type10.png
+    Sprite: {fileID: 21300000, guid: 5cf545b8fec6f1946900002df83a0fdf, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 5cf545b8fec6f1946900002df83a0fdf, type: 3}
+    - {fileID: 21300004, guid: 5cf545b8fec6f1946900002df83a0fdf, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type11
+    Id: HeroEditor4D.Basic.Eyes.Type11
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Basic/Type11.png
+    Sprite: {fileID: 21300000, guid: 4348ce973b220254f864364cf735c48a, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 4348ce973b220254f864364cf735c48a, type: 3}
+    - {fileID: 21300004, guid: 4348ce973b220254f864364cf735c48a, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type12
+    Id: HeroEditor4D.Basic.Eyes.Type12
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Basic/Type12.png
+    Sprite: {fileID: 21300000, guid: 6a39450449e3318428f46a66a3b790e1, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 6a39450449e3318428f46a66a3b790e1, type: 3}
+    - {fileID: 21300004, guid: 6a39450449e3318428f46a66a3b790e1, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type13
+    Id: HeroEditor4D.Basic.Eyes.Type13
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Basic/Type13.png
+    Sprite: {fileID: 21300000, guid: 66c299e4fc324294aa4b7c5c229d5bc1, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 66c299e4fc324294aa4b7c5c229d5bc1, type: 3}
+    - {fileID: 21300004, guid: 66c299e4fc324294aa4b7c5c229d5bc1, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type14
+    Id: HeroEditor4D.Basic.Eyes.Type14
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Basic/Type14.png
+    Sprite: {fileID: 21300000, guid: 6c352945af5b43e4780be71ef18f9d00, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 6c352945af5b43e4780be71ef18f9d00, type: 3}
+    - {fileID: 21300004, guid: 6c352945af5b43e4780be71ef18f9d00, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type15
+    Id: HeroEditor4D.Basic.Eyes.Type15
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Basic/Type15.png
+    Sprite: {fileID: 21300000, guid: 67e89570932381943887de70c0ffaa0b, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 67e89570932381943887de70c0ffaa0b, type: 3}
+    - {fileID: 21300004, guid: 67e89570932381943887de70c0ffaa0b, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type16
+    Id: HeroEditor4D.Basic.Eyes.Type16
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Basic/Type16.png
+    Sprite: {fileID: 21300000, guid: d6abce728a41dfc42a502aac1477fab0, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: d6abce728a41dfc42a502aac1477fab0, type: 3}
+    - {fileID: 21300004, guid: d6abce728a41dfc42a502aac1477fab0, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type17
+    Id: HeroEditor4D.Basic.Eyes.Type17
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Basic/Type17.png
+    Sprite: {fileID: 21300000, guid: 577f0ca2760ffc245b3899ac93b78fdd, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 577f0ca2760ffc245b3899ac93b78fdd, type: 3}
+    - {fileID: 21300004, guid: 577f0ca2760ffc245b3899ac93b78fdd, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type18
+    Id: HeroEditor4D.Basic.Eyes.Type18
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Basic/Type18.png
+    Sprite: {fileID: 21300000, guid: 11bfd360000bb8c48854e5c731bb441c, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 11bfd360000bb8c48854e5c731bb441c, type: 3}
+    - {fileID: 21300004, guid: 11bfd360000bb8c48854e5c731bb441c, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type19
+    Id: HeroEditor4D.Basic.Eyes.Type19
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Basic/Type19.png
+    Sprite: {fileID: 21300000, guid: dee88fe72196b6949958de4d2fcbaae6, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: dee88fe72196b6949958de4d2fcbaae6, type: 3}
+    - {fileID: 21300004, guid: dee88fe72196b6949958de4d2fcbaae6, type: 3}
+    Tags: []
+    Meta: 
+  Mouth:
+  - Name: AngryMouth1
+    Id: HeroEditor4D.Emoji.Mouth.AngryMouth1
+    Edition: HeroEditor4D
+    Collection: Emoji
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Emoji/AngryMouth1.png
+    Sprite: {fileID: 21300000, guid: 9e1c0aaeb0040164cbd5285bb580695d, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 9e1c0aaeb0040164cbd5285bb580695d, type: 3}
+    - {fileID: 21300002, guid: 9e1c0aaeb0040164cbd5285bb580695d, type: 3}
+    Tags: []
+    Meta: 
+  - Name: AngryMouth2
+    Id: HeroEditor4D.Emoji.Mouth.AngryMouth2
+    Edition: HeroEditor4D
+    Collection: Emoji
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Emoji/AngryMouth2.png
+    Sprite: {fileID: 21300000, guid: d647a7db982a0314f84b5cde08038d8c, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: d647a7db982a0314f84b5cde08038d8c, type: 3}
+    - {fileID: 21300004, guid: d647a7db982a0314f84b5cde08038d8c, type: 3}
+    Tags: []
+    Meta: 
+  - Name: AngryMouth3
+    Id: HeroEditor4D.Emoji.Mouth.AngryMouth3
+    Edition: HeroEditor4D
+    Collection: Emoji
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Emoji/AngryMouth3.png
+    Sprite: {fileID: 21300000, guid: 51d945f91208e23499a51649326cbe89, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 51d945f91208e23499a51649326cbe89, type: 3}
+    - {fileID: 21300004, guid: 51d945f91208e23499a51649326cbe89, type: 3}
+    Tags: []
+    Meta: 
+  - Name: CreepySmile
+    Id: HeroEditor4D.Basic.Mouth.CreepySmile
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Basic/CreepySmile.png
+    Sprite: {fileID: 21300000, guid: 99920a890df6abc41ac65b3e8566d49d, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 99920a890df6abc41ac65b3e8566d49d, type: 3}
+    - {fileID: 21300002, guid: 99920a890df6abc41ac65b3e8566d49d, type: 3}
+    Tags: []
+    Meta: 
+  - Name: DeadMouth1
+    Id: HeroEditor4D.Emoji.Mouth.DeadMouth1
+    Edition: HeroEditor4D
+    Collection: Emoji
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Emoji/DeadMouth1.png
+    Sprite: {fileID: 21300000, guid: ed6884f7b08ebb64292a2e2020179c9d, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: ed6884f7b08ebb64292a2e2020179c9d, type: 3}
+    - {fileID: 21300004, guid: ed6884f7b08ebb64292a2e2020179c9d, type: 3}
+    Tags: []
+    Meta: 
+  - Name: DeadMouth2
+    Id: HeroEditor4D.Emoji.Mouth.DeadMouth2
+    Edition: HeroEditor4D
+    Collection: Emoji
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Emoji/DeadMouth2.png
+    Sprite: {fileID: 21300000, guid: a3f2e6911d9900d4fb36a781696a047c, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: a3f2e6911d9900d4fb36a781696a047c, type: 3}
+    - {fileID: 21300004, guid: a3f2e6911d9900d4fb36a781696a047c, type: 3}
+    Tags: []
+    Meta: 
+  - Name: DeadMouth3
+    Id: HeroEditor4D.Emoji.Mouth.DeadMouth3
+    Edition: HeroEditor4D
+    Collection: Emoji
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Emoji/DeadMouth3.png
+    Sprite: {fileID: 21300000, guid: 2296b484c67b15c48a0c48fa2bd0cd58, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 2296b484c67b15c48a0c48fa2bd0cd58, type: 3}
+    - {fileID: 21300004, guid: 2296b484c67b15c48a0c48fa2bd0cd58, type: 3}
+    Tags: []
+    Meta: 
+  - Name: DeadMouth4
+    Id: HeroEditor4D.Emoji.Mouth.DeadMouth4
+    Edition: HeroEditor4D
+    Collection: Emoji
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Emoji/DeadMouth4.png
+    Sprite: {fileID: 21300000, guid: aa79e67174ca46c49b51b5e14b1e72d8, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: aa79e67174ca46c49b51b5e14b1e72d8, type: 3}
+    - {fileID: 21300004, guid: aa79e67174ca46c49b51b5e14b1e72d8, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Default
+    Id: HeroEditor4D.Basic.Mouth.Default
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Basic/Default.png
+    Sprite: {fileID: 21300000, guid: d140943fa3a058e4fb442936e1540516, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: d140943fa3a058e4fb442936e1540516, type: 3}
+    - {fileID: 21300004, guid: d140943fa3a058e4fb442936e1540516, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Dot
+    Id: HeroEditor4D.Basic.Mouth.Dot
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Basic/Dot.png
+    Sprite: {fileID: 21300000, guid: d125c0f0db560064097c7a5eb908ce8a, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: d125c0f0db560064097c7a5eb908ce8a, type: 3}
+    - {fileID: 21300004, guid: d125c0f0db560064097c7a5eb908ce8a, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Mouth01
+    Id: HeroEditor4D.Basic.Mouth.Mouth01
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Basic/Mouth01.png
+    Sprite: {fileID: 21300000, guid: 4c6bfb18602bccc4b8c8217bb23a8558, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 4c6bfb18602bccc4b8c8217bb23a8558, type: 3}
+    - {fileID: 21300004, guid: 4c6bfb18602bccc4b8c8217bb23a8558, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Mouth02
+    Id: HeroEditor4D.Basic.Mouth.Mouth02
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Basic/Mouth02.png
+    Sprite: {fileID: 21300000, guid: e6f2a8f6ae4273b419f9086fa6b5c18d, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: e6f2a8f6ae4273b419f9086fa6b5c18d, type: 3}
+    - {fileID: 21300004, guid: e6f2a8f6ae4273b419f9086fa6b5c18d, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Mouth03
+    Id: HeroEditor4D.Basic.Mouth.Mouth03
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Basic/Mouth03.png
+    Sprite: {fileID: 21300000, guid: bc572ffb7cbec674fb2dc1bacba986f0, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: bc572ffb7cbec674fb2dc1bacba986f0, type: 3}
+    - {fileID: 21300004, guid: bc572ffb7cbec674fb2dc1bacba986f0, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Mouth04
+    Id: HeroEditor4D.Basic.Mouth.Mouth04
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Basic/Mouth04.png
+    Sprite: {fileID: 21300000, guid: c866ecf982e0e094fab7c8ef93aa9ff8, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: c866ecf982e0e094fab7c8ef93aa9ff8, type: 3}
+    - {fileID: 21300004, guid: c866ecf982e0e094fab7c8ef93aa9ff8, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Mouth05
+    Id: HeroEditor4D.Basic.Mouth.Mouth05
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Basic/Mouth05.png
+    Sprite: {fileID: 21300000, guid: 77b7764ee7f069e4187dcfd4aef0ee74, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 77b7764ee7f069e4187dcfd4aef0ee74, type: 3}
+    - {fileID: 21300004, guid: 77b7764ee7f069e4187dcfd4aef0ee74, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Mouth06
+    Id: HeroEditor4D.Basic.Mouth.Mouth06
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Basic/Mouth06.png
+    Sprite: {fileID: 21300000, guid: d1f3f09b60d9dd2488eaf0f3e9dc8c79, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: d1f3f09b60d9dd2488eaf0f3e9dc8c79, type: 3}
+    - {fileID: 21300004, guid: d1f3f09b60d9dd2488eaf0f3e9dc8c79, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Mouth07
+    Id: HeroEditor4D.Basic.Mouth.Mouth07
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Basic/Mouth07.png
+    Sprite: {fileID: 21300000, guid: 0164ca20d2ef7ad43883d9c657bcb8e1, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 0164ca20d2ef7ad43883d9c657bcb8e1, type: 3}
+    - {fileID: 21300004, guid: 0164ca20d2ef7ad43883d9c657bcb8e1, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Mouth08
+    Id: HeroEditor4D.Basic.Mouth.Mouth08
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Basic/Mouth08.png
+    Sprite: {fileID: 21300000, guid: 6aca9d4c3e78c0b408d14d54de69872c, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 6aca9d4c3e78c0b408d14d54de69872c, type: 3}
+    - {fileID: 21300004, guid: 6aca9d4c3e78c0b408d14d54de69872c, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Mouth09
+    Id: HeroEditor4D.Basic.Mouth.Mouth09
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Basic/Mouth09.png
+    Sprite: {fileID: 21300000, guid: 81686a2a4ef5fe14ab2b05394253f798, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 81686a2a4ef5fe14ab2b05394253f798, type: 3}
+    - {fileID: 21300004, guid: 81686a2a4ef5fe14ab2b05394253f798, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Mouth10
+    Id: HeroEditor4D.Basic.Mouth.Mouth10
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Basic/Mouth10.png
+    Sprite: {fileID: 21300000, guid: 7c5f5e134c527944aa4b1c991f67ebe7, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 7c5f5e134c527944aa4b1c991f67ebe7, type: 3}
+    - {fileID: 21300004, guid: 7c5f5e134c527944aa4b1c991f67ebe7, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Mouth11
+    Id: HeroEditor4D.Basic.Mouth.Mouth11
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Basic/Mouth11.png
+    Sprite: {fileID: 21300000, guid: b753147cc8a280a47bd3fc6c9de3b8ba, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: b753147cc8a280a47bd3fc6c9de3b8ba, type: 3}
+    - {fileID: 21300004, guid: b753147cc8a280a47bd3fc6c9de3b8ba, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Mouth12
+    Id: HeroEditor4D.Basic.Mouth.Mouth12
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Basic/Mouth12.png
+    Sprite: {fileID: 21300000, guid: 8e662d979cd69134f80af26abd342cc1, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 8e662d979cd69134f80af26abd342cc1, type: 3}
+    - {fileID: 21300004, guid: 8e662d979cd69134f80af26abd342cc1, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Mouth13
+    Id: HeroEditor4D.Basic.Mouth.Mouth13
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Basic/Mouth13.png
+    Sprite: {fileID: 21300000, guid: d605de4aa672f0a4c9903449b71fe913, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: d605de4aa672f0a4c9903449b71fe913, type: 3}
+    - {fileID: 21300004, guid: d605de4aa672f0a4c9903449b71fe913, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Mouth14
+    Id: HeroEditor4D.Basic.Mouth.Mouth14
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Basic/Mouth14.png
+    Sprite: {fileID: 21300000, guid: d1731a8739f7f9d4d86aab769c1fa4e6, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: d1731a8739f7f9d4d86aab769c1fa4e6, type: 3}
+    - {fileID: 21300004, guid: d1731a8739f7f9d4d86aab769c1fa4e6, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Mouth15
+    Id: HeroEditor4D.Basic.Mouth.Mouth15
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Basic/Mouth15.png
+    Sprite: {fileID: 21300000, guid: 2bbf9d386880b3d41971a09bcacc3f6a, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 2bbf9d386880b3d41971a09bcacc3f6a, type: 3}
+    - {fileID: 21300004, guid: 2bbf9d386880b3d41971a09bcacc3f6a, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Mouth16
+    Id: HeroEditor4D.Basic.Mouth.Mouth16
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Basic/Mouth16.png
+    Sprite: {fileID: 21300000, guid: 56b5d66d2eda58e41b91c517c82c2595, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 56b5d66d2eda58e41b91c517c82c2595, type: 3}
+    - {fileID: 21300004, guid: 56b5d66d2eda58e41b91c517c82c2595, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Mouth17
+    Id: HeroEditor4D.Basic.Mouth.Mouth17
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Basic/Mouth17.png
+    Sprite: {fileID: 21300000, guid: fd9fc436e44e3a640b9807727f7e42fd, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: fd9fc436e44e3a640b9807727f7e42fd, type: 3}
+    - {fileID: 21300004, guid: fd9fc436e44e3a640b9807727f7e42fd, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Mouth18
+    Id: HeroEditor4D.Basic.Mouth.Mouth18
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Basic/Mouth18.png
+    Sprite: {fileID: 21300000, guid: f408f7ab9dcc43e4f80d91bc0ee61cda, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: f408f7ab9dcc43e4f80d91bc0ee61cda, type: 3}
+    - {fileID: 21300004, guid: f408f7ab9dcc43e4f80d91bc0ee61cda, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Mouth19
+    Id: HeroEditor4D.Basic.Mouth.Mouth19
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Basic/Mouth19.png
+    Sprite: {fileID: 21300000, guid: 94dce907c39b0d74293d70667bb07847, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 94dce907c39b0d74293d70667bb07847, type: 3}
+    - {fileID: 21300004, guid: 94dce907c39b0d74293d70667bb07847, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Mouth20
+    Id: HeroEditor4D.Basic.Mouth.Mouth20
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Basic/Mouth20.png
+    Sprite: {fileID: 21300000, guid: 52948f94b98f6a14d8ed72cbeca19b5c, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 52948f94b98f6a14d8ed72cbeca19b5c, type: 3}
+    - {fileID: 21300004, guid: 52948f94b98f6a14d8ed72cbeca19b5c, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Mouth21
+    Id: HeroEditor4D.Basic.Mouth.Mouth21
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Basic/Mouth21.png
+    Sprite: {fileID: 21300000, guid: c15183acd7548ae4b80f7f10d0c26828, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: c15183acd7548ae4b80f7f10d0c26828, type: 3}
+    - {fileID: 21300004, guid: c15183acd7548ae4b80f7f10d0c26828, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Mouth22
+    Id: HeroEditor4D.Basic.Mouth.Mouth22
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Basic/Mouth22.png
+    Sprite: {fileID: 21300000, guid: b83c4b48d5806d44d9d43659df8ec83f, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: b83c4b48d5806d44d9d43659df8ec83f, type: 3}
+    - {fileID: 21300004, guid: b83c4b48d5806d44d9d43659df8ec83f, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Mouth23
+    Id: HeroEditor4D.Basic.Mouth.Mouth23
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Basic/Mouth23.png
+    Sprite: {fileID: 21300000, guid: 671d863f0603fa44291530b1798e2478, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 671d863f0603fa44291530b1798e2478, type: 3}
+    - {fileID: 21300004, guid: 671d863f0603fa44291530b1798e2478, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Mouth24 [Paint]
+    Id: HeroEditor4D.Basic.Mouth.Mouth24 [Paint]
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Basic/Mouth24
+      [Paint].png
+    Sprite: {fileID: 21300000, guid: 19aec9bff5fd7bb439e1e558eae9e1f1, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 19aec9bff5fd7bb439e1e558eae9e1f1, type: 3}
+    - {fileID: 21300004, guid: 19aec9bff5fd7bb439e1e558eae9e1f1, type: 3}
+    Tags:
+    - Paint
+    Meta: 
+  - Name: Mouth25 [Paint]
+    Id: HeroEditor4D.Basic.Mouth.Mouth25 [Paint]
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Basic/Mouth25
+      [Paint].png
+    Sprite: {fileID: 21300000, guid: 9975b7119f5319b479028d5ebba95dae, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 9975b7119f5319b479028d5ebba95dae, type: 3}
+    - {fileID: 21300004, guid: 9975b7119f5319b479028d5ebba95dae, type: 3}
+    Tags:
+    - Paint
+    Meta: 
+  - Name: Mouth26 [Paint]
+    Id: HeroEditor4D.Basic.Mouth.Mouth26 [Paint]
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Basic/Mouth26
+      [Paint].png
+    Sprite: {fileID: 21300000, guid: 393791bfcf78e2747af29aae121b8a2a, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 393791bfcf78e2747af29aae121b8a2a, type: 3}
+    - {fileID: 21300004, guid: 393791bfcf78e2747af29aae121b8a2a, type: 3}
+    Tags:
+    - Paint
+    Meta: 
+  - Name: Mouth27 [Paint]
+    Id: HeroEditor4D.Basic.Mouth.Mouth27 [Paint]
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Basic/Mouth27
+      [Paint].png
+    Sprite: {fileID: 21300000, guid: d23a0288bde0c744ba1514c061106e00, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: d23a0288bde0c744ba1514c061106e00, type: 3}
+    - {fileID: 21300004, guid: d23a0288bde0c744ba1514c061106e00, type: 3}
+    Tags:
+    - Paint
+    Meta: 
+  - Name: Mouth28 [Paint]
+    Id: HeroEditor4D.Basic.Mouth.Mouth28 [Paint]
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Basic/Mouth28
+      [Paint].png
+    Sprite: {fileID: 21300000, guid: d6023ac8fb5d8244987d4eb60bcea65a, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: d6023ac8fb5d8244987d4eb60bcea65a, type: 3}
+    - {fileID: 21300004, guid: d6023ac8fb5d8244987d4eb60bcea65a, type: 3}
+    Tags:
+    - Paint
+    Meta: 
+  - Name: Mouth29 [Paint]
+    Id: HeroEditor4D.Basic.Mouth.Mouth29 [Paint]
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Basic/Mouth29
+      [Paint].png
+    Sprite: {fileID: 21300000, guid: 54ea0444890bdd9428b0452d41d4eb8b, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 54ea0444890bdd9428b0452d41d4eb8b, type: 3}
+    - {fileID: 21300004, guid: 54ea0444890bdd9428b0452d41d4eb8b, type: 3}
+    Tags:
+    - Paint
+    Meta: 
+  - Name: Mouth30 [Paint]
+    Id: HeroEditor4D.Basic.Mouth.Mouth30 [Paint]
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Basic/Mouth30
+      [Paint].png
+    Sprite: {fileID: 21300000, guid: af828a0efa7fa4e4c912a44fdffd8ae0, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: af828a0efa7fa4e4c912a44fdffd8ae0, type: 3}
+    - {fileID: 21300004, guid: af828a0efa7fa4e4c912a44fdffd8ae0, type: 3}
+    Tags:
+    - Paint
+    Meta: 
+  - Name: Mouth31 [Paint]
+    Id: HeroEditor4D.Basic.Mouth.Mouth31 [Paint]
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Basic/Mouth31
+      [Paint].png
+    Sprite: {fileID: 21300000, guid: 26f44e26e0f5c9242a98d770ac4eed22, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 26f44e26e0f5c9242a98d770ac4eed22, type: 3}
+    - {fileID: 21300004, guid: 26f44e26e0f5c9242a98d770ac4eed22, type: 3}
+    Tags:
+    - Paint
+    Meta: 
+  - Name: Mouth32 [Paint]
+    Id: HeroEditor4D.Basic.Mouth.Mouth32 [Paint]
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Basic/Mouth32
+      [Paint].png
+    Sprite: {fileID: 21300000, guid: c3fefb8fd7196bb49b6f6492c271f7d2, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: c3fefb8fd7196bb49b6f6492c271f7d2, type: 3}
+    - {fileID: 21300004, guid: c3fefb8fd7196bb49b6f6492c271f7d2, type: 3}
+    Tags:
+    - Paint
+    Meta: 
+  - Name: Mouth33 [Paint]
+    Id: HeroEditor4D.Basic.Mouth.Mouth33 [Paint]
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Basic/Mouth33
+      [Paint].png
+    Sprite: {fileID: 21300000, guid: 3de0858ee4b3ab04a907da0250b1a330, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 3de0858ee4b3ab04a907da0250b1a330, type: 3}
+    - {fileID: 21300004, guid: 3de0858ee4b3ab04a907da0250b1a330, type: 3}
+    Tags:
+    - Paint
+    Meta: 
+  - Name: Mouth34 [Paint]
+    Id: HeroEditor4D.Basic.Mouth.Mouth34 [Paint]
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Basic/Mouth34
+      [Paint].png
+    Sprite: {fileID: 21300000, guid: e93130be33fb1274ab25045ece8cb8b5, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: e93130be33fb1274ab25045ece8cb8b5, type: 3}
+    - {fileID: 21300004, guid: e93130be33fb1274ab25045ece8cb8b5, type: 3}
+    Tags:
+    - Paint
+    Meta: 
+  - Name: Mouth35 [Paint]
+    Id: HeroEditor4D.Basic.Mouth.Mouth35 [Paint]
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Basic/Mouth35
+      [Paint].png
+    Sprite: {fileID: 21300000, guid: dd2dc50464e16ea4d98cd98f361176e8, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: dd2dc50464e16ea4d98cd98f361176e8, type: 3}
+    - {fileID: 21300004, guid: dd2dc50464e16ea4d98cd98f361176e8, type: 3}
+    Tags:
+    - Paint
+    Meta: 
+  - Name: Mouth36 [Paint]
+    Id: HeroEditor4D.Basic.Mouth.Mouth36 [Paint]
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Basic/Mouth36
+      [Paint].png
+    Sprite: {fileID: 21300000, guid: 4dda9edb139dad64ab2a5241e740181a, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 4dda9edb139dad64ab2a5241e740181a, type: 3}
+    - {fileID: 21300004, guid: 4dda9edb139dad64ab2a5241e740181a, type: 3}
+    Tags:
+    - Paint
+    Meta: 
+  - Name: Mouth37 [Paint]
+    Id: HeroEditor4D.Basic.Mouth.Mouth37 [Paint]
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Basic/Mouth37
+      [Paint].png
+    Sprite: {fileID: 21300000, guid: d25451ffb863a1a43bceecbe2b8eefa8, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: d25451ffb863a1a43bceecbe2b8eefa8, type: 3}
+    - {fileID: 21300004, guid: d25451ffb863a1a43bceecbe2b8eefa8, type: 3}
+    Tags:
+    - Paint
+    Meta: 
+  - Name: Mouth38 [Paint]
+    Id: HeroEditor4D.Basic.Mouth.Mouth38 [Paint]
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Basic/Mouth38
+      [Paint].png
+    Sprite: {fileID: 21300000, guid: 2643e01340836394996536563f3d0a1a, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 2643e01340836394996536563f3d0a1a, type: 3}
+    - {fileID: 21300004, guid: 2643e01340836394996536563f3d0a1a, type: 3}
+    Tags:
+    - Paint
+    Meta: 
+  - Name: Smile
+    Id: HeroEditor4D.Basic.Mouth.Smile
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Basic/Smile.png
+    Sprite: {fileID: 21300000, guid: b92b127d86d71e147980d8c86a8a7c6a, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: b92b127d86d71e147980d8c86a8a7c6a, type: 3}
+    - {fileID: 21300004, guid: b92b127d86d71e147980d8c86a8a7c6a, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Smirk
+    Id: HeroEditor4D.Basic.Mouth.Smirk
+    Edition: HeroEditor4D
+    Collection: Basic
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Basic/Smirk.png
+    Sprite: {fileID: 21300000, guid: 5c190d61cd55f964ea24dbd0def87104, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 5c190d61cd55f964ea24dbd0def87104, type: 3}
+    - {fileID: 21300004, guid: 5c190d61cd55f964ea24dbd0def87104, type: 3}
+    Tags: []
+    Meta: 
+  Armor:
+  - Name: AdvancedWizardRobe [ShowEars] [FullHair]
+    Id: Art.Armor.Armor.AdvancedWizardRobe [ShowEars] [FullHair]
+    Edition: Art
+    Collection: Armor
+    Path: Assets/Project/Art/Items/Equipment/Armor/AdvancedWizardRobe [ShowEars]
+      [FullHair].png
+    Sprite: {fileID: -999830042, guid: 2db253d2c1107fb4eb32d54f15e958e2, type: 3}
+    Sprites:
+    - {fileID: -999830042, guid: 2db253d2c1107fb4eb32d54f15e958e2, type: 3}
+    - {fileID: -263735253, guid: 2db253d2c1107fb4eb32d54f15e958e2, type: 3}
+    - {fileID: 1510025617, guid: 2db253d2c1107fb4eb32d54f15e958e2, type: 3}
+    - {fileID: -1422171781, guid: 2db253d2c1107fb4eb32d54f15e958e2, type: 3}
+    - {fileID: -121077355, guid: 2db253d2c1107fb4eb32d54f15e958e2, type: 3}
+    - {fileID: 329846973, guid: 2db253d2c1107fb4eb32d54f15e958e2, type: 3}
+    - {fileID: 153571325, guid: 2db253d2c1107fb4eb32d54f15e958e2, type: 3}
+    - {fileID: 2083669487, guid: 2db253d2c1107fb4eb32d54f15e958e2, type: 3}
+    - {fileID: -2097545109, guid: 2db253d2c1107fb4eb32d54f15e958e2, type: 3}
+    - {fileID: 1839416354, guid: 2db253d2c1107fb4eb32d54f15e958e2, type: 3}
+    - {fileID: -1121013039, guid: 2db253d2c1107fb4eb32d54f15e958e2, type: 3}
+    - {fileID: 393953600, guid: 2db253d2c1107fb4eb32d54f15e958e2, type: 3}
+    - {fileID: -502800164, guid: 2db253d2c1107fb4eb32d54f15e958e2, type: 3}
+    - {fileID: -416660568, guid: 2db253d2c1107fb4eb32d54f15e958e2, type: 3}
+    - {fileID: -685648905, guid: 2db253d2c1107fb4eb32d54f15e958e2, type: 3}
+    - {fileID: -263276177, guid: 2db253d2c1107fb4eb32d54f15e958e2, type: 3}
+    - {fileID: -48818876, guid: 2db253d2c1107fb4eb32d54f15e958e2, type: 3}
+    - {fileID: -578108266, guid: 2db253d2c1107fb4eb32d54f15e958e2, type: 3}
+    - {fileID: 712189869, guid: 2db253d2c1107fb4eb32d54f15e958e2, type: 3}
+    - {fileID: 1746996943, guid: 2db253d2c1107fb4eb32d54f15e958e2, type: 3}
+    - {fileID: -557920370, guid: 2db253d2c1107fb4eb32d54f15e958e2, type: 3}
+    - {fileID: -604579901, guid: 2db253d2c1107fb4eb32d54f15e958e2, type: 3}
+    - {fileID: 576219047, guid: 2db253d2c1107fb4eb32d54f15e958e2, type: 3}
+    - {fileID: 1189780673, guid: 2db253d2c1107fb4eb32d54f15e958e2, type: 3}
+    - {fileID: -732799825, guid: 2db253d2c1107fb4eb32d54f15e958e2, type: 3}
+    - {fileID: -796623508, guid: 2db253d2c1107fb4eb32d54f15e958e2, type: 3}
+    - {fileID: 1209485826, guid: 2db253d2c1107fb4eb32d54f15e958e2, type: 3}
+    - {fileID: -1571832224, guid: 2db253d2c1107fb4eb32d54f15e958e2, type: 3}
+    - {fileID: -144185572, guid: 2db253d2c1107fb4eb32d54f15e958e2, type: 3}
+    - {fileID: 820514532, guid: 2db253d2c1107fb4eb32d54f15e958e2, type: 3}
+    Tags:
+    - ShowEars
+    - FullHair
+    Meta: 
+  - Name: Sample1
+    Id: Art.Armor.Armor.Sample1
+    Edition: Art
+    Collection: Armor
+    Path: Assets/Project/Art/Items/Equipment/Armor/Sample1.png
+    Sprite: {fileID: -1207319706, guid: b4871efeaaa227843974c61bbfac5488, type: 3}
+    Sprites:
+    - {fileID: -1207319706, guid: b4871efeaaa227843974c61bbfac5488, type: 3}
+    - {fileID: -1392794487, guid: b4871efeaaa227843974c61bbfac5488, type: 3}
+    - {fileID: -1819204470, guid: b4871efeaaa227843974c61bbfac5488, type: 3}
+    - {fileID: 849934816, guid: b4871efeaaa227843974c61bbfac5488, type: 3}
+    - {fileID: -1174307598, guid: b4871efeaaa227843974c61bbfac5488, type: 3}
+    - {fileID: -615611026, guid: b4871efeaaa227843974c61bbfac5488, type: 3}
+    - {fileID: 1643182665, guid: b4871efeaaa227843974c61bbfac5488, type: 3}
+    - {fileID: 1822785182, guid: b4871efeaaa227843974c61bbfac5488, type: 3}
+    - {fileID: -1255904663, guid: b4871efeaaa227843974c61bbfac5488, type: 3}
+    - {fileID: 471263456, guid: b4871efeaaa227843974c61bbfac5488, type: 3}
+    - {fileID: 664624220, guid: b4871efeaaa227843974c61bbfac5488, type: 3}
+    - {fileID: -114740732, guid: b4871efeaaa227843974c61bbfac5488, type: 3}
+    - {fileID: 1810946942, guid: b4871efeaaa227843974c61bbfac5488, type: 3}
+    - {fileID: -1638731801, guid: b4871efeaaa227843974c61bbfac5488, type: 3}
+    - {fileID: 39732933, guid: b4871efeaaa227843974c61bbfac5488, type: 3}
+    - {fileID: 1865500847, guid: b4871efeaaa227843974c61bbfac5488, type: 3}
+    - {fileID: 1439286220, guid: b4871efeaaa227843974c61bbfac5488, type: 3}
+    - {fileID: -1901069150, guid: b4871efeaaa227843974c61bbfac5488, type: 3}
+    - {fileID: 2112104350, guid: b4871efeaaa227843974c61bbfac5488, type: 3}
+    - {fileID: -1994675178, guid: b4871efeaaa227843974c61bbfac5488, type: 3}
+    - {fileID: -257249621, guid: b4871efeaaa227843974c61bbfac5488, type: 3}
+    - {fileID: 2043993032, guid: b4871efeaaa227843974c61bbfac5488, type: 3}
+    - {fileID: -952249168, guid: b4871efeaaa227843974c61bbfac5488, type: 3}
+    - {fileID: 1793009043, guid: b4871efeaaa227843974c61bbfac5488, type: 3}
+    - {fileID: -1071143066, guid: b4871efeaaa227843974c61bbfac5488, type: 3}
+    - {fileID: 1617086765, guid: b4871efeaaa227843974c61bbfac5488, type: 3}
+    - {fileID: -1048372103, guid: b4871efeaaa227843974c61bbfac5488, type: 3}
+    - {fileID: 949454127, guid: b4871efeaaa227843974c61bbfac5488, type: 3}
+    - {fileID: 1796048374, guid: b4871efeaaa227843974c61bbfac5488, type: 3}
+    - {fileID: -1037895168, guid: b4871efeaaa227843974c61bbfac5488, type: 3}
+    Tags:
+    - FullHair
+    Meta: 
+  MeleeWeapon1H:
+  - Name: AdvancedShortSword
+    Id: Art.Equipment.MeleeWeapon1H.AdvancedShortSword
+    Edition: Art
+    Collection: Equipment
+    Path: Assets/Project/Art/Items/Equipment/MeleeWeapon1H/AdvancedShortSword.png
+    Sprite: {fileID: 21300000, guid: 62ea53872a31d5a4693da469e613b675, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 62ea53872a31d5a4693da469e613b675, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Axe01
+    Id: Art.Equipment.MeleeWeapon1H.Axe01
+    Edition: Art
+    Collection: Equipment
+    Path: Assets/Project/Art/Items/Equipment/MeleeWeapon1H/Axe01.png
+    Sprite: {fileID: 21300000, guid: cc830b8453725bb4baa4868c4859f763, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: cc830b8453725bb4baa4868c4859f763, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Scythe01
+    Id: Art.Equipment.MeleeWeapon1H.Scythe01
+    Edition: Art
+    Collection: Equipment
+    Path: Assets/Project/Art/Items/Equipment/MeleeWeapon1H/Scythe01.png
+    Sprite: {fileID: 21300000, guid: 3c9ef298d10d04242bcaa65f7f787d8c, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 3c9ef298d10d04242bcaa65f7f787d8c, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Scythe02
+    Id: Art.Equipment.MeleeWeapon1H.Scythe02
+    Edition: Art
+    Collection: Equipment
+    Path: Assets/Project/Art/Items/Equipment/MeleeWeapon1H/Scythe02.png
+    Sprite: {fileID: 21300000, guid: 621c021f74a3e1240aad8a56b324af61, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 621c021f74a3e1240aad8a56b324af61, type: 3}
+    Tags: []
+    Meta: 
+  MeleeWeapon2H: []
+  Bow: []
+  Crossbow: []
+  Firearm1H: []
+  Firearm2H: []
+  Shield: []
+  Back: []
+  Throwable: []
+  Supplies: []
+  Makeup: []
+  Mask: []
+  Earrings: []
+  Wings: []
+  IncludePsd: 1
+  DebugLogging: 1

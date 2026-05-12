@@ -1,0 +1,649 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73a7a8e7b56513e488c69503e063a6d4, type: 3}
+  m_Name: SpriteCollection [Goblins]
+  m_EditorClassIdentifier: 
+  Id: GoblinHeroes
+  SpriteFolders:
+  - {fileID: 102900000, guid: f50e7ad258e10d24f91831312acdd049, type: 3}
+  - {fileID: 102900000, guid: 503ca1f622f03e24bb6c1f475ba319c8, type: 3}
+  - {fileID: 102900000, guid: 7888b6e04f31d3e449c61fba9b780456, type: 3}
+  CollectionFilter:
+  - '!Reference'
+  - Goblin
+  CollectionFilterIgnore:
+  - /MeleeWeapon1H/
+  - /MeleeWeapon2H/
+  - /Bow/
+  - /Crossbow/
+  - /Shield/
+  - /Firearm1H/
+  - /Firearm2H/
+  - /Throwable/
+  - /Supplies/
+  Body:
+  - Name: Type1
+    Id: HeroEditor4D.Goblin.Body.Type1
+    Edition: HeroEditor4D
+    Collection: Goblin
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Body/Goblin/Type1.png
+    Sprite: {fileID: 21300016, guid: 56dda7bda3453b54b9a196e0eb8446c3, type: 3}
+    Sprites:
+    - {fileID: 21300016, guid: 56dda7bda3453b54b9a196e0eb8446c3, type: 3}
+    - {fileID: 21300020, guid: 56dda7bda3453b54b9a196e0eb8446c3, type: 3}
+    - {fileID: 21300018, guid: 56dda7bda3453b54b9a196e0eb8446c3, type: 3}
+    - {fileID: 21300086, guid: 56dda7bda3453b54b9a196e0eb8446c3, type: 3}
+    - {fileID: 21300084, guid: 56dda7bda3453b54b9a196e0eb8446c3, type: 3}
+    - {fileID: 21300066, guid: 56dda7bda3453b54b9a196e0eb8446c3, type: 3}
+    - {fileID: 21300056, guid: 56dda7bda3453b54b9a196e0eb8446c3, type: 3}
+    - {fileID: 21300012, guid: 56dda7bda3453b54b9a196e0eb8446c3, type: 3}
+    - {fileID: 21300022, guid: 56dda7bda3453b54b9a196e0eb8446c3, type: 3}
+    - {fileID: 21300024, guid: 56dda7bda3453b54b9a196e0eb8446c3, type: 3}
+    - {fileID: 21300006, guid: 56dda7bda3453b54b9a196e0eb8446c3, type: 3}
+    - {fileID: 21300002, guid: 56dda7bda3453b54b9a196e0eb8446c3, type: 3}
+    - {fileID: 21300004, guid: 56dda7bda3453b54b9a196e0eb8446c3, type: 3}
+    - {fileID: 21300054, guid: 56dda7bda3453b54b9a196e0eb8446c3, type: 3}
+    - {fileID: 21300062, guid: 56dda7bda3453b54b9a196e0eb8446c3, type: 3}
+    - {fileID: 21300000, guid: 56dda7bda3453b54b9a196e0eb8446c3, type: 3}
+    - {fileID: 21300010, guid: 56dda7bda3453b54b9a196e0eb8446c3, type: 3}
+    - {fileID: 21300008, guid: 56dda7bda3453b54b9a196e0eb8446c3, type: 3}
+    - {fileID: 21300070, guid: 56dda7bda3453b54b9a196e0eb8446c3, type: 3}
+    - {fileID: 21300076, guid: 56dda7bda3453b54b9a196e0eb8446c3, type: 3}
+    - {fileID: 21300100, guid: 56dda7bda3453b54b9a196e0eb8446c3, type: 3}
+    - {fileID: 21300092, guid: 56dda7bda3453b54b9a196e0eb8446c3, type: 3}
+    - {fileID: 21300094, guid: 56dda7bda3453b54b9a196e0eb8446c3, type: 3}
+    - {fileID: 21300108, guid: 56dda7bda3453b54b9a196e0eb8446c3, type: 3}
+    - {fileID: 21300102, guid: 56dda7bda3453b54b9a196e0eb8446c3, type: 3}
+    - {fileID: 21300104, guid: 56dda7bda3453b54b9a196e0eb8446c3, type: 3}
+    - {fileID: 21300090, guid: 56dda7bda3453b54b9a196e0eb8446c3, type: 3}
+    - {fileID: 21300098, guid: 56dda7bda3453b54b9a196e0eb8446c3, type: 3}
+    - {fileID: 21300096, guid: 56dda7bda3453b54b9a196e0eb8446c3, type: 3}
+    - {fileID: 21300106, guid: 56dda7bda3453b54b9a196e0eb8446c3, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type2
+    Id: HeroEditor4D.Goblin.Body.Type2
+    Edition: HeroEditor4D
+    Collection: Goblin
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Body/Goblin/Type2.png
+    Sprite: {fileID: 21300016, guid: a0c4f99f6e2d8ea469df92eebf351d9e, type: 3}
+    Sprites:
+    - {fileID: 21300016, guid: a0c4f99f6e2d8ea469df92eebf351d9e, type: 3}
+    - {fileID: 21300020, guid: a0c4f99f6e2d8ea469df92eebf351d9e, type: 3}
+    - {fileID: 21300018, guid: a0c4f99f6e2d8ea469df92eebf351d9e, type: 3}
+    - {fileID: 21300086, guid: a0c4f99f6e2d8ea469df92eebf351d9e, type: 3}
+    - {fileID: 21300084, guid: a0c4f99f6e2d8ea469df92eebf351d9e, type: 3}
+    - {fileID: 21300066, guid: a0c4f99f6e2d8ea469df92eebf351d9e, type: 3}
+    - {fileID: 21300056, guid: a0c4f99f6e2d8ea469df92eebf351d9e, type: 3}
+    - {fileID: 21300012, guid: a0c4f99f6e2d8ea469df92eebf351d9e, type: 3}
+    - {fileID: 21300022, guid: a0c4f99f6e2d8ea469df92eebf351d9e, type: 3}
+    - {fileID: 21300024, guid: a0c4f99f6e2d8ea469df92eebf351d9e, type: 3}
+    - {fileID: 21300006, guid: a0c4f99f6e2d8ea469df92eebf351d9e, type: 3}
+    - {fileID: 21300002, guid: a0c4f99f6e2d8ea469df92eebf351d9e, type: 3}
+    - {fileID: 21300004, guid: a0c4f99f6e2d8ea469df92eebf351d9e, type: 3}
+    - {fileID: 21300054, guid: a0c4f99f6e2d8ea469df92eebf351d9e, type: 3}
+    - {fileID: 21300062, guid: a0c4f99f6e2d8ea469df92eebf351d9e, type: 3}
+    - {fileID: 21300000, guid: a0c4f99f6e2d8ea469df92eebf351d9e, type: 3}
+    - {fileID: 21300010, guid: a0c4f99f6e2d8ea469df92eebf351d9e, type: 3}
+    - {fileID: 21300008, guid: a0c4f99f6e2d8ea469df92eebf351d9e, type: 3}
+    - {fileID: 21300070, guid: a0c4f99f6e2d8ea469df92eebf351d9e, type: 3}
+    - {fileID: 21300076, guid: a0c4f99f6e2d8ea469df92eebf351d9e, type: 3}
+    - {fileID: 21300100, guid: a0c4f99f6e2d8ea469df92eebf351d9e, type: 3}
+    - {fileID: 21300092, guid: a0c4f99f6e2d8ea469df92eebf351d9e, type: 3}
+    - {fileID: 21300094, guid: a0c4f99f6e2d8ea469df92eebf351d9e, type: 3}
+    - {fileID: 21300108, guid: a0c4f99f6e2d8ea469df92eebf351d9e, type: 3}
+    - {fileID: 21300102, guid: a0c4f99f6e2d8ea469df92eebf351d9e, type: 3}
+    - {fileID: 21300104, guid: a0c4f99f6e2d8ea469df92eebf351d9e, type: 3}
+    - {fileID: 21300090, guid: a0c4f99f6e2d8ea469df92eebf351d9e, type: 3}
+    - {fileID: 21300098, guid: a0c4f99f6e2d8ea469df92eebf351d9e, type: 3}
+    - {fileID: 21300096, guid: a0c4f99f6e2d8ea469df92eebf351d9e, type: 3}
+    - {fileID: 21300106, guid: a0c4f99f6e2d8ea469df92eebf351d9e, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type3
+    Id: HeroEditor4D.Goblin.Body.Type3
+    Edition: HeroEditor4D
+    Collection: Goblin
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Body/Goblin/Type3.png
+    Sprite: {fileID: 21300016, guid: 18feb401fe3ce3d40839ce0c31b56633, type: 3}
+    Sprites:
+    - {fileID: 21300016, guid: 18feb401fe3ce3d40839ce0c31b56633, type: 3}
+    - {fileID: 21300020, guid: 18feb401fe3ce3d40839ce0c31b56633, type: 3}
+    - {fileID: 21300018, guid: 18feb401fe3ce3d40839ce0c31b56633, type: 3}
+    - {fileID: 21300086, guid: 18feb401fe3ce3d40839ce0c31b56633, type: 3}
+    - {fileID: 21300084, guid: 18feb401fe3ce3d40839ce0c31b56633, type: 3}
+    - {fileID: 21300066, guid: 18feb401fe3ce3d40839ce0c31b56633, type: 3}
+    - {fileID: 21300056, guid: 18feb401fe3ce3d40839ce0c31b56633, type: 3}
+    - {fileID: 21300012, guid: 18feb401fe3ce3d40839ce0c31b56633, type: 3}
+    - {fileID: 21300022, guid: 18feb401fe3ce3d40839ce0c31b56633, type: 3}
+    - {fileID: 21300024, guid: 18feb401fe3ce3d40839ce0c31b56633, type: 3}
+    - {fileID: 21300006, guid: 18feb401fe3ce3d40839ce0c31b56633, type: 3}
+    - {fileID: 21300002, guid: 18feb401fe3ce3d40839ce0c31b56633, type: 3}
+    - {fileID: 21300004, guid: 18feb401fe3ce3d40839ce0c31b56633, type: 3}
+    - {fileID: 21300054, guid: 18feb401fe3ce3d40839ce0c31b56633, type: 3}
+    - {fileID: 21300062, guid: 18feb401fe3ce3d40839ce0c31b56633, type: 3}
+    - {fileID: 21300000, guid: 18feb401fe3ce3d40839ce0c31b56633, type: 3}
+    - {fileID: 21300010, guid: 18feb401fe3ce3d40839ce0c31b56633, type: 3}
+    - {fileID: 21300008, guid: 18feb401fe3ce3d40839ce0c31b56633, type: 3}
+    - {fileID: 21300070, guid: 18feb401fe3ce3d40839ce0c31b56633, type: 3}
+    - {fileID: 21300076, guid: 18feb401fe3ce3d40839ce0c31b56633, type: 3}
+    - {fileID: 21300100, guid: 18feb401fe3ce3d40839ce0c31b56633, type: 3}
+    - {fileID: 21300092, guid: 18feb401fe3ce3d40839ce0c31b56633, type: 3}
+    - {fileID: 21300094, guid: 18feb401fe3ce3d40839ce0c31b56633, type: 3}
+    - {fileID: 21300108, guid: 18feb401fe3ce3d40839ce0c31b56633, type: 3}
+    - {fileID: 21300102, guid: 18feb401fe3ce3d40839ce0c31b56633, type: 3}
+    - {fileID: 21300104, guid: 18feb401fe3ce3d40839ce0c31b56633, type: 3}
+    - {fileID: 21300090, guid: 18feb401fe3ce3d40839ce0c31b56633, type: 3}
+    - {fileID: 21300098, guid: 18feb401fe3ce3d40839ce0c31b56633, type: 3}
+    - {fileID: 21300096, guid: 18feb401fe3ce3d40839ce0c31b56633, type: 3}
+    - {fileID: 21300106, guid: 18feb401fe3ce3d40839ce0c31b56633, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type4
+    Id: HeroEditor4D.Goblin.Body.Type4
+    Edition: HeroEditor4D
+    Collection: Goblin
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Body/Goblin/Type4.png
+    Sprite: {fileID: 21300016, guid: f9631ad592e2e5747b5142ff02cf1858, type: 3}
+    Sprites:
+    - {fileID: 21300016, guid: f9631ad592e2e5747b5142ff02cf1858, type: 3}
+    - {fileID: 21300020, guid: f9631ad592e2e5747b5142ff02cf1858, type: 3}
+    - {fileID: 21300018, guid: f9631ad592e2e5747b5142ff02cf1858, type: 3}
+    - {fileID: 21300086, guid: f9631ad592e2e5747b5142ff02cf1858, type: 3}
+    - {fileID: 21300084, guid: f9631ad592e2e5747b5142ff02cf1858, type: 3}
+    - {fileID: 21300066, guid: f9631ad592e2e5747b5142ff02cf1858, type: 3}
+    - {fileID: 21300056, guid: f9631ad592e2e5747b5142ff02cf1858, type: 3}
+    - {fileID: 21300012, guid: f9631ad592e2e5747b5142ff02cf1858, type: 3}
+    - {fileID: 21300022, guid: f9631ad592e2e5747b5142ff02cf1858, type: 3}
+    - {fileID: 21300024, guid: f9631ad592e2e5747b5142ff02cf1858, type: 3}
+    - {fileID: 21300006, guid: f9631ad592e2e5747b5142ff02cf1858, type: 3}
+    - {fileID: 21300002, guid: f9631ad592e2e5747b5142ff02cf1858, type: 3}
+    - {fileID: 21300004, guid: f9631ad592e2e5747b5142ff02cf1858, type: 3}
+    - {fileID: 21300054, guid: f9631ad592e2e5747b5142ff02cf1858, type: 3}
+    - {fileID: 21300062, guid: f9631ad592e2e5747b5142ff02cf1858, type: 3}
+    - {fileID: 21300000, guid: f9631ad592e2e5747b5142ff02cf1858, type: 3}
+    - {fileID: 21300010, guid: f9631ad592e2e5747b5142ff02cf1858, type: 3}
+    - {fileID: 21300008, guid: f9631ad592e2e5747b5142ff02cf1858, type: 3}
+    - {fileID: 21300070, guid: f9631ad592e2e5747b5142ff02cf1858, type: 3}
+    - {fileID: 21300076, guid: f9631ad592e2e5747b5142ff02cf1858, type: 3}
+    - {fileID: 21300100, guid: f9631ad592e2e5747b5142ff02cf1858, type: 3}
+    - {fileID: 21300092, guid: f9631ad592e2e5747b5142ff02cf1858, type: 3}
+    - {fileID: 21300094, guid: f9631ad592e2e5747b5142ff02cf1858, type: 3}
+    - {fileID: 21300108, guid: f9631ad592e2e5747b5142ff02cf1858, type: 3}
+    - {fileID: 21300102, guid: f9631ad592e2e5747b5142ff02cf1858, type: 3}
+    - {fileID: 21300104, guid: f9631ad592e2e5747b5142ff02cf1858, type: 3}
+    - {fileID: 21300090, guid: f9631ad592e2e5747b5142ff02cf1858, type: 3}
+    - {fileID: 21300098, guid: f9631ad592e2e5747b5142ff02cf1858, type: 3}
+    - {fileID: 21300096, guid: f9631ad592e2e5747b5142ff02cf1858, type: 3}
+    - {fileID: 21300106, guid: f9631ad592e2e5747b5142ff02cf1858, type: 3}
+    Tags: []
+    Meta: 
+  Ears:
+  - Name: Type1
+    Id: HeroEditor4D.Goblin.Ears.Type1
+    Edition: HeroEditor4D
+    Collection: Goblin
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Ears/Goblin/Type1.png
+    Sprite: {fileID: 4475375876111409798, guid: 3923c8ce50671b94594dbff57c21891e, type: 3}
+    Sprites:
+    - {fileID: 4475375876111409798, guid: 3923c8ce50671b94594dbff57c21891e, type: 3}
+    - {fileID: 8749302817991680212, guid: 3923c8ce50671b94594dbff57c21891e, type: 3}
+    - {fileID: 3386398104049418772, guid: 3923c8ce50671b94594dbff57c21891e, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type2
+    Id: HeroEditor4D.Goblin.Ears.Type2
+    Edition: HeroEditor4D
+    Collection: Goblin
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Ears/Goblin/Type2.png
+    Sprite: {fileID: 4475375876111409798, guid: b9dc565f1d1f6774eab060c5778dd346, type: 3}
+    Sprites:
+    - {fileID: 4475375876111409798, guid: b9dc565f1d1f6774eab060c5778dd346, type: 3}
+    - {fileID: 8749302817991680212, guid: b9dc565f1d1f6774eab060c5778dd346, type: 3}
+    - {fileID: 3386398104049418772, guid: b9dc565f1d1f6774eab060c5778dd346, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type3
+    Id: HeroEditor4D.Goblin.Ears.Type3
+    Edition: HeroEditor4D
+    Collection: Goblin
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Ears/Goblin/Type3.png
+    Sprite: {fileID: 4475375876111409798, guid: 78f0e3a68085941499f17eba5353fd03, type: 3}
+    Sprites:
+    - {fileID: 4475375876111409798, guid: 78f0e3a68085941499f17eba5353fd03, type: 3}
+    - {fileID: 8749302817991680212, guid: 78f0e3a68085941499f17eba5353fd03, type: 3}
+    - {fileID: 3386398104049418772, guid: 78f0e3a68085941499f17eba5353fd03, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type4
+    Id: HeroEditor4D.Goblin.Ears.Type4
+    Edition: HeroEditor4D
+    Collection: Goblin
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Ears/Goblin/Type4.png
+    Sprite: {fileID: 4475375876111409798, guid: ce375968048405a4da550611b1d641f6, type: 3}
+    Sprites:
+    - {fileID: 4475375876111409798, guid: ce375968048405a4da550611b1d641f6, type: 3}
+    - {fileID: 8749302817991680212, guid: ce375968048405a4da550611b1d641f6, type: 3}
+    - {fileID: 3386398104049418772, guid: ce375968048405a4da550611b1d641f6, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type5
+    Id: HeroEditor4D.Goblin.Ears.Type5
+    Edition: HeroEditor4D
+    Collection: Goblin
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Ears/Goblin/Type5.png
+    Sprite: {fileID: 21300004, guid: 23f7e7ff81a2d224ca579764c4b18854, type: 3}
+    Sprites:
+    - {fileID: 21300004, guid: 23f7e7ff81a2d224ca579764c4b18854, type: 3}
+    - {fileID: 21300006, guid: 23f7e7ff81a2d224ca579764c4b18854, type: 3}
+    - {fileID: 21300000, guid: 23f7e7ff81a2d224ca579764c4b18854, type: 3}
+    - {fileID: 21300002, guid: 23f7e7ff81a2d224ca579764c4b18854, type: 3}
+    - {fileID: 21300008, guid: 23f7e7ff81a2d224ca579764c4b18854, type: 3}
+    - {fileID: 21300010, guid: 23f7e7ff81a2d224ca579764c4b18854, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type6
+    Id: HeroEditor4D.Goblin.Ears.Type6
+    Edition: HeroEditor4D
+    Collection: Goblin
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Ears/Goblin/Type6.png
+    Sprite: {fileID: 21300006, guid: 13d1b36b22ff13b4cb90cf34fe9e6fb9, type: 3}
+    Sprites:
+    - {fileID: 21300006, guid: 13d1b36b22ff13b4cb90cf34fe9e6fb9, type: 3}
+    - {fileID: 21300004, guid: 13d1b36b22ff13b4cb90cf34fe9e6fb9, type: 3}
+    - {fileID: 21300000, guid: 13d1b36b22ff13b4cb90cf34fe9e6fb9, type: 3}
+    - {fileID: 21300002, guid: 13d1b36b22ff13b4cb90cf34fe9e6fb9, type: 3}
+    - {fileID: 21300008, guid: 13d1b36b22ff13b4cb90cf34fe9e6fb9, type: 3}
+    - {fileID: 21300010, guid: 13d1b36b22ff13b4cb90cf34fe9e6fb9, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type7
+    Id: HeroEditor4D.Goblin.Ears.Type7
+    Edition: HeroEditor4D
+    Collection: Goblin
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Ears/Goblin/Type7.png
+    Sprite: {fileID: 21300006, guid: 5e33bad9ad783f04ca910fddacd80193, type: 3}
+    Sprites:
+    - {fileID: 21300006, guid: 5e33bad9ad783f04ca910fddacd80193, type: 3}
+    - {fileID: 21300004, guid: 5e33bad9ad783f04ca910fddacd80193, type: 3}
+    - {fileID: 21300000, guid: 5e33bad9ad783f04ca910fddacd80193, type: 3}
+    - {fileID: 21300002, guid: 5e33bad9ad783f04ca910fddacd80193, type: 3}
+    - {fileID: 21300008, guid: 5e33bad9ad783f04ca910fddacd80193, type: 3}
+    - {fileID: 21300010, guid: 5e33bad9ad783f04ca910fddacd80193, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type8
+    Id: HeroEditor4D.Goblin.Ears.Type8
+    Edition: HeroEditor4D
+    Collection: Goblin
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Ears/Goblin/Type8.png
+    Sprite: {fileID: 21300006, guid: 86cc7472e88529a4db8cb6d4bf88d323, type: 3}
+    Sprites:
+    - {fileID: 21300006, guid: 86cc7472e88529a4db8cb6d4bf88d323, type: 3}
+    - {fileID: 21300004, guid: 86cc7472e88529a4db8cb6d4bf88d323, type: 3}
+    - {fileID: 21300000, guid: 86cc7472e88529a4db8cb6d4bf88d323, type: 3}
+    - {fileID: 21300002, guid: 86cc7472e88529a4db8cb6d4bf88d323, type: 3}
+    - {fileID: 21300008, guid: 86cc7472e88529a4db8cb6d4bf88d323, type: 3}
+    - {fileID: 21300010, guid: 86cc7472e88529a4db8cb6d4bf88d323, type: 3}
+    Tags: []
+    Meta: 
+  Hair:
+  - Name: Mohawk
+    Id: HeroEditor4D.Goblin.Hair.Mohawk
+    Edition: HeroEditor4D
+    Collection: Goblin
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Goblin/Mohawk.png
+    Sprite: {fileID: -8137581963233685907, guid: 6a3c18a77a874214782e1b53a2f3e884, type: 3}
+    Sprites:
+    - {fileID: -8137581963233685907, guid: 6a3c18a77a874214782e1b53a2f3e884, type: 3}
+    - {fileID: 6591478365344907407, guid: 6a3c18a77a874214782e1b53a2f3e884, type: 3}
+    - {fileID: 8968894577945027273, guid: 6a3c18a77a874214782e1b53a2f3e884, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type1
+    Id: HeroEditor4D.Goblin.Hair.Type1
+    Edition: HeroEditor4D
+    Collection: Goblin
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Goblin/Type1.png
+    Sprite: {fileID: -8137581963233685907, guid: f1de4b5a5fa33784386df3d27f654267, type: 3}
+    Sprites:
+    - {fileID: -8137581963233685907, guid: f1de4b5a5fa33784386df3d27f654267, type: 3}
+    - {fileID: 6591478365344907407, guid: f1de4b5a5fa33784386df3d27f654267, type: 3}
+    - {fileID: 8968894577945027273, guid: f1de4b5a5fa33784386df3d27f654267, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type2
+    Id: HeroEditor4D.Goblin.Hair.Type2
+    Edition: HeroEditor4D
+    Collection: Goblin
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Goblin/Type2.png
+    Sprite: {fileID: -8137581963233685907, guid: b54775a584ed26142bb5a092b7d04657, type: 3}
+    Sprites:
+    - {fileID: -8137581963233685907, guid: b54775a584ed26142bb5a092b7d04657, type: 3}
+    - {fileID: 6591478365344907407, guid: b54775a584ed26142bb5a092b7d04657, type: 3}
+    - {fileID: 8968894577945027273, guid: b54775a584ed26142bb5a092b7d04657, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type3
+    Id: HeroEditor4D.Goblin.Hair.Type3
+    Edition: HeroEditor4D
+    Collection: Goblin
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Goblin/Type3.png
+    Sprite: {fileID: -8137581963233685907, guid: 8e99e656d4526f149a8a6c92cda3423d, type: 3}
+    Sprites:
+    - {fileID: -8137581963233685907, guid: 8e99e656d4526f149a8a6c92cda3423d, type: 3}
+    - {fileID: 6591478365344907407, guid: 8e99e656d4526f149a8a6c92cda3423d, type: 3}
+    - {fileID: 8968894577945027273, guid: 8e99e656d4526f149a8a6c92cda3423d, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type4
+    Id: HeroEditor4D.Goblin.Hair.Type4
+    Edition: HeroEditor4D
+    Collection: Goblin
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Goblin/Type4.png
+    Sprite: {fileID: -8137581963233685907, guid: 073859eda1459974cac549e4d977ba91, type: 3}
+    Sprites:
+    - {fileID: -8137581963233685907, guid: 073859eda1459974cac549e4d977ba91, type: 3}
+    - {fileID: 6591478365344907407, guid: 073859eda1459974cac549e4d977ba91, type: 3}
+    - {fileID: 8968894577945027273, guid: 073859eda1459974cac549e4d977ba91, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type5
+    Id: HeroEditor4D.Goblin.Hair.Type5
+    Edition: HeroEditor4D
+    Collection: Goblin
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Goblin/Type5.png
+    Sprite: {fileID: -8137581963233685907, guid: dca275dc8268bd94e8aa290bbb85f216, type: 3}
+    Sprites:
+    - {fileID: -8137581963233685907, guid: dca275dc8268bd94e8aa290bbb85f216, type: 3}
+    - {fileID: 6591478365344907407, guid: dca275dc8268bd94e8aa290bbb85f216, type: 3}
+    - {fileID: 8968894577945027273, guid: dca275dc8268bd94e8aa290bbb85f216, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type6
+    Id: HeroEditor4D.Goblin.Hair.Type6
+    Edition: HeroEditor4D
+    Collection: Goblin
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Goblin/Type6.png
+    Sprite: {fileID: -8137581963233685907, guid: f8994c5084f47ca4a94128acd8fa0c13, type: 3}
+    Sprites:
+    - {fileID: -8137581963233685907, guid: f8994c5084f47ca4a94128acd8fa0c13, type: 3}
+    - {fileID: 6591478365344907407, guid: f8994c5084f47ca4a94128acd8fa0c13, type: 3}
+    - {fileID: 8968894577945027273, guid: f8994c5084f47ca4a94128acd8fa0c13, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type7
+    Id: HeroEditor4D.Goblin.Hair.Type7
+    Edition: HeroEditor4D
+    Collection: Goblin
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Goblin/Type7.png
+    Sprite: {fileID: -8137581963233685907, guid: 4542262938e29004382294fae3135007, type: 3}
+    Sprites:
+    - {fileID: -8137581963233685907, guid: 4542262938e29004382294fae3135007, type: 3}
+    - {fileID: 6591478365344907407, guid: 4542262938e29004382294fae3135007, type: 3}
+    - {fileID: 8968894577945027273, guid: 4542262938e29004382294fae3135007, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type8
+    Id: HeroEditor4D.Goblin.Hair.Type8
+    Edition: HeroEditor4D
+    Collection: Goblin
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Goblin/Type8.png
+    Sprite: {fileID: -8137581963233685907, guid: 5125ac597e2c7a548b6076a648cf568c, type: 3}
+    Sprites:
+    - {fileID: -8137581963233685907, guid: 5125ac597e2c7a548b6076a648cf568c, type: 3}
+    - {fileID: 6591478365344907407, guid: 5125ac597e2c7a548b6076a648cf568c, type: 3}
+    - {fileID: 8968894577945027273, guid: 5125ac597e2c7a548b6076a648cf568c, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type9
+    Id: HeroEditor4D.Goblin.Hair.Type9
+    Edition: HeroEditor4D
+    Collection: Goblin
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Hair/Goblin/Type9.png
+    Sprite: {fileID: -8137581963233685907, guid: 13535ae4f24059342ae6e8989f7b4b16, type: 3}
+    Sprites:
+    - {fileID: -8137581963233685907, guid: 13535ae4f24059342ae6e8989f7b4b16, type: 3}
+    - {fileID: 6591478365344907407, guid: 13535ae4f24059342ae6e8989f7b4b16, type: 3}
+    - {fileID: 8968894577945027273, guid: 13535ae4f24059342ae6e8989f7b4b16, type: 3}
+    Tags: []
+    Meta: 
+  Beard:
+  - Name: Type1
+    Id: HeroEditor4D.Goblin.Beard.Type1
+    Edition: HeroEditor4D
+    Collection: Goblin
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Beard/Goblin/Type1.png
+    Sprite: {fileID: 6591478365344907407, guid: ccf447a9472c64046a250e4c1331cee2, type: 3}
+    Sprites:
+    - {fileID: 6591478365344907407, guid: ccf447a9472c64046a250e4c1331cee2, type: 3}
+    - {fileID: 8968894577945027273, guid: ccf447a9472c64046a250e4c1331cee2, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type2
+    Id: HeroEditor4D.Goblin.Beard.Type2
+    Edition: HeroEditor4D
+    Collection: Goblin
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Beard/Goblin/Type2.png
+    Sprite: {fileID: 6591478365344907407, guid: 8b4ee3bc1e87ff849aa4f15269d530ed, type: 3}
+    Sprites:
+    - {fileID: 6591478365344907407, guid: 8b4ee3bc1e87ff849aa4f15269d530ed, type: 3}
+    - {fileID: 8968894577945027273, guid: 8b4ee3bc1e87ff849aa4f15269d530ed, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type3
+    Id: HeroEditor4D.Goblin.Beard.Type3
+    Edition: HeroEditor4D
+    Collection: Goblin
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Beard/Goblin/Type3.png
+    Sprite: {fileID: 6591478365344907407, guid: 69076c9094bd49a4da8eaea1c971aefb, type: 3}
+    Sprites:
+    - {fileID: 6591478365344907407, guid: 69076c9094bd49a4da8eaea1c971aefb, type: 3}
+    - {fileID: 8968894577945027273, guid: 69076c9094bd49a4da8eaea1c971aefb, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type4
+    Id: HeroEditor4D.Goblin.Beard.Type4
+    Edition: HeroEditor4D
+    Collection: Goblin
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Beard/Goblin/Type4.png
+    Sprite: {fileID: 6591478365344907407, guid: 92d07c2a58110664799d4105fee8982c, type: 3}
+    Sprites:
+    - {fileID: 6591478365344907407, guid: 92d07c2a58110664799d4105fee8982c, type: 3}
+    - {fileID: 8968894577945027273, guid: 92d07c2a58110664799d4105fee8982c, type: 3}
+    Tags: []
+    Meta: 
+  Eyebrows: []
+  Eyes:
+  - Name: Angry
+    Id: HeroEditor4D.Goblin.Eyes.Angry
+    Edition: HeroEditor4D
+    Collection: Goblin
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Goblin/Angry.png
+    Sprite: {fileID: 6591478365344907407, guid: ac3058d31519f0a4a858717de45a6217, type: 3}
+    Sprites:
+    - {fileID: 6591478365344907407, guid: ac3058d31519f0a4a858717de45a6217, type: 3}
+    - {fileID: 8968894577945027273, guid: ac3058d31519f0a4a858717de45a6217, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Dead
+    Id: HeroEditor4D.Goblin.Eyes.Dead
+    Edition: HeroEditor4D
+    Collection: Goblin
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Goblin/Dead.png
+    Sprite: {fileID: 21300000, guid: 18ed6b9824d3be34badce9fb8c278f56, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 18ed6b9824d3be34badce9fb8c278f56, type: 3}
+    - {fileID: 21300004, guid: 18ed6b9824d3be34badce9fb8c278f56, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type1
+    Id: HeroEditor4D.Goblin.Eyes.Type1
+    Edition: HeroEditor4D
+    Collection: Goblin
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Goblin/Type1.png
+    Sprite: {fileID: 21300000, guid: cf67503a21a902341b02c0c6fcfe8e86, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: cf67503a21a902341b02c0c6fcfe8e86, type: 3}
+    - {fileID: 21300004, guid: cf67503a21a902341b02c0c6fcfe8e86, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type2
+    Id: HeroEditor4D.Goblin.Eyes.Type2
+    Edition: HeroEditor4D
+    Collection: Goblin
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Goblin/Type2.png
+    Sprite: {fileID: 21300000, guid: 6cba9f90a2e573346912da99d5625d59, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 6cba9f90a2e573346912da99d5625d59, type: 3}
+    - {fileID: 21300004, guid: 6cba9f90a2e573346912da99d5625d59, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type3
+    Id: HeroEditor4D.Goblin.Eyes.Type3
+    Edition: HeroEditor4D
+    Collection: Goblin
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Goblin/Type3.png
+    Sprite: {fileID: 21300000, guid: 0ad2125d276975a4e9ad1d3af7cbc72c, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 0ad2125d276975a4e9ad1d3af7cbc72c, type: 3}
+    - {fileID: 21300004, guid: 0ad2125d276975a4e9ad1d3af7cbc72c, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type4
+    Id: HeroEditor4D.Goblin.Eyes.Type4
+    Edition: HeroEditor4D
+    Collection: Goblin
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Eyes/Goblin/Type4.png
+    Sprite: {fileID: 21300000, guid: 643f589ccb205e144a5a647b6d1a2ef4, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 643f589ccb205e144a5a647b6d1a2ef4, type: 3}
+    - {fileID: 21300004, guid: 643f589ccb205e144a5a647b6d1a2ef4, type: 3}
+    Tags: []
+    Meta: 
+  Mouth:
+  - Name: Dead1
+    Id: HeroEditor4D.Goblin.Mouth.Dead1
+    Edition: HeroEditor4D
+    Collection: Goblin
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Goblin/Dead1.png
+    Sprite: {fileID: 21300000, guid: 7bca1bb38618692469629172ade65633, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 7bca1bb38618692469629172ade65633, type: 3}
+    - {fileID: 21300004, guid: 7bca1bb38618692469629172ade65633, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Dead2
+    Id: HeroEditor4D.Goblin.Mouth.Dead2
+    Edition: HeroEditor4D
+    Collection: Goblin
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Goblin/Dead2.png
+    Sprite: {fileID: 21300000, guid: 9fb9a968dbfe4304b9d413f364a09331, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 9fb9a968dbfe4304b9d413f364a09331, type: 3}
+    - {fileID: 21300004, guid: 9fb9a968dbfe4304b9d413f364a09331, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type1
+    Id: HeroEditor4D.Goblin.Mouth.Type1
+    Edition: HeroEditor4D
+    Collection: Goblin
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Goblin/Type1.png
+    Sprite: {fileID: 21300000, guid: 3bbe4e0adf1f4614081a6d7e634f593d, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 3bbe4e0adf1f4614081a6d7e634f593d, type: 3}
+    - {fileID: 21300004, guid: 3bbe4e0adf1f4614081a6d7e634f593d, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type2
+    Id: HeroEditor4D.Goblin.Mouth.Type2
+    Edition: HeroEditor4D
+    Collection: Goblin
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Goblin/Type2.png
+    Sprite: {fileID: 21300000, guid: 0bf323f4b211e184d9ffda5c40aa3cef, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 0bf323f4b211e184d9ffda5c40aa3cef, type: 3}
+    - {fileID: 21300004, guid: 0bf323f4b211e184d9ffda5c40aa3cef, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type3
+    Id: HeroEditor4D.Goblin.Mouth.Type3
+    Edition: HeroEditor4D
+    Collection: Goblin
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Goblin/Type3.png
+    Sprite: {fileID: 21300000, guid: f0f8fdddd9d75c04fb8e26e248d7dabb, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: f0f8fdddd9d75c04fb8e26e248d7dabb, type: 3}
+    - {fileID: 21300004, guid: f0f8fdddd9d75c04fb8e26e248d7dabb, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type4
+    Id: HeroEditor4D.Goblin.Mouth.Type4
+    Edition: HeroEditor4D
+    Collection: Goblin
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Goblin/Type4.png
+    Sprite: {fileID: 21300000, guid: de442f5aff407be4abe34d6ef5c09e5d, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: de442f5aff407be4abe34d6ef5c09e5d, type: 3}
+    - {fileID: 21300004, guid: de442f5aff407be4abe34d6ef5c09e5d, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type5
+    Id: HeroEditor4D.Goblin.Mouth.Type5
+    Edition: HeroEditor4D
+    Collection: Goblin
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Goblin/Type5.png
+    Sprite: {fileID: 21300000, guid: 3a7160ea3af466a48897ba6e2299ea1a, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 3a7160ea3af466a48897ba6e2299ea1a, type: 3}
+    - {fileID: 21300004, guid: 3a7160ea3af466a48897ba6e2299ea1a, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type6
+    Id: HeroEditor4D.Goblin.Mouth.Type6
+    Edition: HeroEditor4D
+    Collection: Goblin
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Goblin/Type6.png
+    Sprite: {fileID: 21300000, guid: 37f9c13b045335a4eb2e0af1c9668b17, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 37f9c13b045335a4eb2e0af1c9668b17, type: 3}
+    - {fileID: 21300004, guid: 37f9c13b045335a4eb2e0af1c9668b17, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Type7
+    Id: HeroEditor4D.Goblin.Mouth.Type7
+    Edition: HeroEditor4D
+    Collection: Goblin
+    Path: Assets/Plugins/HeroEditor4D/Common/Sprites/BodyParts/Mouth/Goblin/Type7.png
+    Sprite: {fileID: 21300000, guid: 77a14fd5ce455ae4795e79aa8c5bcb9e, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: 77a14fd5ce455ae4795e79aa8c5bcb9e, type: 3}
+    - {fileID: 21300004, guid: 77a14fd5ce455ae4795e79aa8c5bcb9e, type: 3}
+    Tags: []
+    Meta: 
+  Armor: []
+  MeleeWeapon1H: []
+  MeleeWeapon2H: []
+  Bow: []
+  Crossbow: []
+  Firearm1H: []
+  Firearm2H: []
+  Shield: []
+  Back: []
+  Throwable: []
+  Supplies: []
+  Makeup: []
+  Mask: []
+  Earrings: []
+  Wings: []
+  IncludePsd: 1
+  DebugLogging: 1

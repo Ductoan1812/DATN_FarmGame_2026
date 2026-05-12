@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d852df2efe40b404a8c2edc600cedb96, type: 3}
+  m_Name: TileData
+  m_EditorClassIdentifier: 
+  landTile: {fileID: 11400000, guid: 491e3ce419fcd7c47a8681d748a658ae, type: 2}
+  plowedTile: {fileID: 11400000, guid: 14100b9bf02b67b4991c212bc8ce0ef4, type: 2}
+  wateredTile: {fileID: 11400000, guid: ebc08a2e90d59be4787347fa26e7dc97, type: 2}
+  grassTile: {fileID: 11400000, guid: e8b112f3ebadf9641b56c32d9e3e841c, type: 2}
+  tileTagEntries:
+  - tile: {fileID: 11400000, guid: 14100b9bf02b67b4991c212bc8ce0ef4, type: 2}
+    tags: 1

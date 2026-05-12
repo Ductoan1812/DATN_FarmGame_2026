@@ -8,7 +8,11 @@
         "com.unity.inputsystem": "1.1.1",
         "com.unity.cloud.gltfast": "6.12.1"
       },
+<<<<<<< HEAD
       "hash": "9d45c4518791307476bbf314aaef68280d22f6b9"
+=======
+      "hash": "2b7638c0b66865a97df7a0069fcbdffa31034aec"
+>>>>>>> BranchFixCrash
     },
     "com.unity.2d.animation": {
       "version": "9.2.0",
@@ -198,6 +202,13 @@
     "com.unity.mathematics": {
       "version": "1.2.6",
       "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.nuget.newtonsoft-json": {
+      "version": "3.2.1",
+      "depth": 0,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
