@@ -37,8 +37,13 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
+<<<<<<< HEAD:Assets/Project/Prefabs/WorldEntities/PlantPrefab.prefab
   m_IsActive: 1
 --- !u!4 &5790778344908451771
+=======
+  m_IsActive: 0
+--- !u!4 &343572698949451286
+>>>>>>> 888ec29c68b2b70711a676afb7310e7d9ce9d36f:Assets/Prefabs/Player.prefab
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

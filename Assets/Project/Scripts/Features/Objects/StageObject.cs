@@ -16,6 +16,7 @@ public class StageObject : MonoBehaviour
     {
 <<<<<<< HEAD:Assets/Scripts/Features/Objects/StageObject.cs
         var root = GetComponent<EntityRoot>();
+<<<<<<< HEAD:Assets/Project/Scripts/Features/Objects/StageObject.cs
         if (root != null)
             root.OnEntityReady += OnEntityReady;
 =======
@@ -44,6 +45,8 @@ public class StageObject : MonoBehaviour
                 subscribed = true;
             }
         }
+=======
+>>>>>>> 888ec29c68b2b70711a676afb7310e7d9ce9d36f:Assets/Scripts/Features/Objects/StageObject.cs
     }
 
     private void OnDisable()
