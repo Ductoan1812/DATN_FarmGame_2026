@@ -20,5 +20,9 @@ public enum StatType
     [InspectorName("Chiều rộng vùng chiếm (ô)")]
     AreaX,
     [InspectorName("Chiều cao vùng chiếm (ô)")]
-    AreaY
+    AreaY,
+    [InspectorName("Hồi chiêu")]
+    CoolDown,
+    [InspectorName("Tầm đánh")]
+    Range
 }

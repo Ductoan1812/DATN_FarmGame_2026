@@ -47,17 +47,6 @@ public class InventoryService
                 }
             }
         }
-<<<<<<< HEAD:Assets/Scripts/Systems/Service/InventoryService.cs
-        
-        if (totalReceived > 0)
-        {
-            UnityEngine.Debug.Log($"[InventoryService] {receiverEntity.entityData.name} nhận được:{pickupEntity.entityData.name} x{totalReceived}");
-        }
-        else
-        {
-            UnityEngine.Debug.Log($"[InventoryService] {receiverEntity.entityData.name} không nhận được gì");
-        }
-=======
 
         if (totalReceived > 0)
         {
@@ -69,7 +58,6 @@ public class InventoryService
             Debug.LogWarning($"[InventoryService] Pickup thất bại: không thể nhặt {itemName} vào {receiverName}");
         }
 
->>>>>>> BranchFixCrash:Assets/Project/Scripts/Core/Service/InventoryService.cs
         return totalReceived;
     }
 

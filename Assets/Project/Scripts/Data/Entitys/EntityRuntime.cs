@@ -8,10 +8,6 @@ public class EntityRuntime
     public string id { get; internal set; }
     public EntityData entityData { get; private set; }
     public IEntityContainer Owner { get; set; }
-<<<<<<< HEAD:Assets/Scripts/Data/Entitys/EntityRuntime.cs
-  
-    public int Amount { get; private set; } = 1;
-=======
     public StatsRuntime stats = new();
     internal List<IModuleRuntime> modules = new();
 
@@ -19,13 +15,11 @@ public class EntityRuntime
     // NOTE: Setter là `internal` — CHỈ EntityService được phép set (qua SetAmount).
     //       Không set trực tiếp ở bất kỳ nơi nào khác.
     public int Amount { get; internal set; } = 1;
->>>>>>> BranchFixCrash:Assets/Project/Scripts/Data/Entitys/EntityRuntime.cs
     public int MaxStack => entityData != null ? entityData.maxStack : 1;
     public int FreeSpace => MaxStack - Amount;
     public bool IsEmpty => Amount <= 0;
     public bool IsFull => Amount >= MaxStack;
-    public StatsRuntime stats = new();
-    private List<IModuleRuntime> modules = new();
+
     public EntityRuntime(EntityData data, int amount = 1)
     {
         id = Guid.NewGuid().ToString("N").Substring(0, 8);

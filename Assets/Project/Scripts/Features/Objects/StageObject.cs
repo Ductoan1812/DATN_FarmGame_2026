@@ -14,39 +14,25 @@ public class StageObject : MonoBehaviour
 
     private void Awake()
     {
-<<<<<<< HEAD:Assets/Scripts/Features/Objects/StageObject.cs
-        var root = GetComponent<EntityRoot>();
-<<<<<<< HEAD:Assets/Project/Scripts/Features/Objects/StageObject.cs
-        if (root != null)
-            root.OnEntityReady += OnEntityReady;
-=======
         _root = GetComponent<EntityRoot>();
->>>>>>> BranchFixCrash:Assets/Project/Scripts/Features/Objects/StageObject.cs
     }
 
-    private void OnEntityReady(EntityRuntime e)
+    private void OnEnable()
     {
-<<<<<<< HEAD:Assets/Scripts/Features/Objects/StageObject.cs
-        entity = e;
+        if (_root != null)
+        {
+            _root.OnEntityReady += SetEntityRoot;
 
-        // Subscribe NextDay nếu chưa
-        if (!subscribed)
-=======
-        if (_root != null) _root.OnEntityReady += SetEntityRoot;
+            if (_root.IsReady)
+                SetEntityRoot(_root.GetEntity());
+        }
 
         eventBus = GameManager.Instance?.EventBus;
         if (eventBus != null && !subscribed)
->>>>>>> BranchFixCrash:Assets/Project/Scripts/Features/Objects/StageObject.cs
         {
-            eventBus = GameManager.Instance?.EventBus;
-            if (eventBus != null)
-            {
-                eventBus.Subscribe<NextDayEventPublish>(OnGlobalNextDay);
-                subscribed = true;
-            }
+            eventBus.Subscribe<NextDayEventPublish>(OnGlobalNextDay);
+            subscribed = true;
         }
-=======
->>>>>>> 888ec29c68b2b70711a676afb7310e7d9ce9d36f:Assets/Scripts/Features/Objects/StageObject.cs
     }
 
     private void OnDisable()
@@ -68,13 +54,10 @@ public class StageObject : MonoBehaviour
             return;
         }
         entity.TriggerEvent(new NextDayEvent());
-<<<<<<< HEAD:Assets/Scripts/Features/Objects/StageObject.cs
-=======
     }
 
     public void SetEntityRoot(EntityRuntime entityRuntime)
     {
         entity = entityRuntime;
->>>>>>> BranchFixCrash:Assets/Project/Scripts/Features/Objects/StageObject.cs
     }
 }

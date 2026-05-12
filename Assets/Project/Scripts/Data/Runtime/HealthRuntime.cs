@@ -1,13 +1,7 @@
 using UnityEngine;
+using System;
 
 /// <summary>
-<<<<<<< HEAD:Assets/Scripts/Data/Runtime/HealthRuntime.cs
-/// Quản lý Hp — trừ dame, phát hiện chết.
-/// Trách nhiệm DUY NHẤT:
-///   - Init Hp khi spawn
-///   - Nhận TakeDamageEvent → tính defense → trừ Hp
-///   - Hp <= 0 → TriggerEvent(DieEvent) — KHÔNG tự xử lý hậu quả
-=======
 /// Xử lý nhận sát thương cho entity (Player, Enemy...).
 /// - Đọc canTakeDamage từ HealthModule config.
 /// - Tính giảm dame theo Defense.
@@ -18,14 +12,13 @@ using UnityEngine;
 ///   - DropRuntime  (IHandleEvent&lt;DieEvent&gt;) → spawn drops.
 ///   - MortalRuntime  (IHandleEvent&lt;DieEvent&gt;) → hủy entity vĩnh viễn.
 ///   - RespawnRuntime (IHandleEvent&lt;DieEvent&gt;) → despawn + respawn sau delay.
->>>>>>> BranchFixCrash:Assets/Project/Scripts/Data/Runtime/HealthRuntime.cs
 /// </summary>
 public class HealthRuntime : IModuleRuntime, IHandleEvent<SpawnedEvent>, IHandleEvent<TakeDamageEvent>
 {
     private readonly HealthModule _data;
     private EntityRuntime _entity;
 
-    /// <summary>Có thể tắt tạm thời từ bên ngoài (HarvestRuntime, invincibility frame...).</summary>
+    /// <summary>Có thể tắt tạm thời từ bên ngoài (invincibility frame, cutscene...).</summary>
     public bool CanTakeDamage
     {
         get => _data.canTakeDamage && _canTakeDamageOverride;
@@ -33,12 +26,9 @@ public class HealthRuntime : IModuleRuntime, IHandleEvent<SpawnedEvent>, IHandle
     }
     private bool _canTakeDamageOverride = true;
 
-<<<<<<< HEAD:Assets/Scripts/Data/Runtime/HealthRuntime.cs
-=======
     /// <summary>Fired khi entity chết (Hp &lt;= 0). Dành cho external listener (UI…).</summary>
     public event Action<EntityRuntime> OnDied;
 
->>>>>>> BranchFixCrash:Assets/Project/Scripts/Data/Runtime/HealthRuntime.cs
     public HealthRuntime(HealthModule data)
     {
         _data = data;
@@ -75,12 +65,6 @@ public class HealthRuntime : IModuleRuntime, IHandleEvent<SpawnedEvent>, IHandle
                   $"HP: {newHp:F1}/{_entity.stats.Get(StatType.MaxHp):F1}");
 
         if (newHp <= 0f)
-<<<<<<< HEAD:Assets/Scripts/Data/Runtime/HealthRuntime.cs
-        {
-            Debug.Log($"[HealthRuntime] {_entity.entityData?.keyName} Hp <= 0 → TriggerEvent(DieEvent).");
-            _entity.TriggerEvent(new DieEvent(_entity));
-        }
-=======
             Die();
     }
 
@@ -92,7 +76,6 @@ public class HealthRuntime : IModuleRuntime, IHandleEvent<SpawnedEvent>, IHandle
         OnDied?.Invoke(_entity);
         _entity.TriggerEvent(new DieEvent(_entity));
         // Việc Despawn/Destroy/Respawn/Drop do các module khác xử lý.
->>>>>>> BranchFixCrash:Assets/Project/Scripts/Data/Runtime/HealthRuntime.cs
     }
 
     // ── Save / Load ───────────────────────────────────────────────────────────

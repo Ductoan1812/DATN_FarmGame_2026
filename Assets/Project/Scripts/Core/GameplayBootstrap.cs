@@ -13,18 +13,18 @@ public class GameplayBootstrap : MonoBehaviour
     {
         EnsureEventBus();
 
-        // Subscribe ngay sau khi có eventBus — WorldReady sẽ fire sau GameManager.Start
+        // Subscribe ngay sau khi có eventBus. GameReadyPublish là boot event hiện tại.
         if (eventBus != null)
-            eventBus.Subscribe<WorldReady>(OnWorldReady);
+            eventBus.Subscribe<GameReadyPublish>(OnGameReady);
     }
 
     private void OnDestroy()
     {
         if (eventBus != null)
-            eventBus.Unsubscribe<WorldReady>(OnWorldReady);
+            eventBus.Unsubscribe<GameReadyPublish>(OnGameReady);
     }
 
-    private void OnWorldReady(WorldReady _)
+    private void OnGameReady(GameReadyPublish _)
     {
         if (autoSetupPlayerToolStack)
             EnsurePlayerToolStack();

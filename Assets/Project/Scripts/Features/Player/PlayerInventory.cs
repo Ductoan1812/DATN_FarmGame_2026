@@ -35,16 +35,7 @@ public class PlayerInventory : MonoBehaviour
     private void OnEnable()
     {
         var bus = GameManager.Instance?.EventBus;
-<<<<<<< HEAD:Assets/Scripts/Features/Player/PlayerInventory.cs
-        if (bus != null) bus.Subscribe<WorldReady>(OnWorldReady);
-
-        // Player spawn runtime → OnEnable chạy SAU WorldReady đã publish
-        // Nếu GameManager đã sẵn sàng (InventoryService != null) → init ngay
-        if (!_ready && GameManager.Instance?.InventoryService != null)
-            OnWorldReady(default);
-=======
         if (bus != null) bus.Subscribe<GameReadyPublish>(OnGameReady);
->>>>>>> BranchFixCrash:Assets/Project/Scripts/Features/Player/PlayerInventory.cs
     }
 
     private void OnDisable()
@@ -59,7 +50,6 @@ public class PlayerInventory : MonoBehaviour
 
     private void OnGameReady(GameReadyPublish _)
     {
-        if (_ready) return; // Đã init rồi (từ OnEnable hoặc WorldReady — cái nào đến trước)
         _inventoryService = GameManager.Instance.InventoryService;
         _ready = true;
 

@@ -1,8 +1,6 @@
 using UnityEngine;
 using System;
 
-<<<<<<< HEAD:Assets/Project/Scripts/Features/Objects/EntityRoot.cs
-=======
 /// <summary>
 /// Pure container — chỉ giữ reference tới EntityRuntime và các service cần thiết.
 /// KHÔNG chứa logic gameplay. Nhiệm vụ duy nhất:
@@ -13,7 +11,6 @@ using System;
 /// Prefab phải được lưu ở trạng thái Inactive để các Module khác
 /// không Awake/OnEnable trước khi refs được inject.
 /// </summary>
->>>>>>> 888ec29c68b2b70711a676afb7310e7d9ce9d36f:Assets/Scripts/Features/Objects/EntityRoot.cs
 [DisallowMultipleComponent]
 public class EntityRoot : MonoBehaviour, IEntityContainer
 {
@@ -29,18 +26,13 @@ public class EntityRoot : MonoBehaviour, IEntityContainer
     private EntityRuntime entity;
     public bool IsReady { get; private set; }
 
-<<<<<<< HEAD:Assets/Project/Scripts/Features/Objects/EntityRoot.cs
-=======
-    // ── Getter ─────────────────────────────────────────────
-    public EntityRuntime GetEntity() => entity;
+    // ── Backward-compatible direct init ───────────────────
+    public void Init(EntityRuntime runtime)
+    {
+        entity = runtime;
+        if (entity != null) entity.Owner = this;
+    }
 
-    /// <summary>
-    /// Gán entity vào root. Quy ước: GameObject đang Inactive khi gọi Add.
-    /// Thứ tự: set entity → fire SpawnedEvent → SetActive(true).
-    /// Sau bước này, Awake/OnEnable/Start của các Module khác mới chạy
-    /// và chắc chắn đã có đủ entity + refs.
-    /// </summary>
->>>>>>> 888ec29c68b2b70711a676afb7310e7d9ce9d36f:Assets/Scripts/Features/Objects/EntityRoot.cs
     public bool Add(EntityRuntime entity)
     {
         if (entity == null)
@@ -55,16 +47,13 @@ public class EntityRoot : MonoBehaviour, IEntityContainer
 
         // 2. Fire SpawnedEvent TRƯỚC khi GameObject active
         entity.TriggerEvent(new SpawnedEvent(entity));
-<<<<<<< HEAD:Assets/Project/Scripts/Features/Objects/EntityRoot.cs
-        OnEntityReady?.Invoke(entity);
-=======
         IsReady = true;
+        OnEntityReady?.Invoke(entity);
 
         // 3. Bây giờ mới cho phép các Module chạy
         if (!gameObject.activeSelf)
             gameObject.SetActive(true);
 
->>>>>>> 888ec29c68b2b70711a676afb7310e7d9ce9d36f:Assets/Scripts/Features/Objects/EntityRoot.cs
         return true;
     }
 
