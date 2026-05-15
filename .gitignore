@@ -49,6 +49,7 @@
 ExportedObj/
 .consulo/
 *.csproj
+*.csproj.lscache
 *.unityproj
 *.sln
 *.suo
