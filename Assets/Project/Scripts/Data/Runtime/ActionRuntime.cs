@@ -59,8 +59,29 @@ public class ActionRuntime : IModuleRuntime, IHandleEvent<PrimaryActionEvent>, I
             return;
         }
 
+        var context = new InteractionContext(actor, target);
+
         // Forward SecondaryActionEvent sang target
-        target.TriggerEvent(new SecondaryActionEvent(actor));
+        target.TriggerEvent(new SecondaryActionEvent(actor, target, context));
+
+        if (context.HasOptions)
+        {
+            var eventBus = GameManager.Instance?.EventBus;
+            if (eventBus == null)
+            {
+                Debug.LogWarning("[ActionRuntime] Có interaction options nhưng GameManager.EventBus đang null nên UI không nhận được event.");
+                return;
+            }
+
+            eventBus.Publish(new InteractionOptionsReadyPublish(actor, target, context.GetOptions()));
+        }
+        else
+        {
+            Debug.LogWarning(
+                $"[ActionRuntime] Target '{target.entityData?.keyName}' tương tác được nhưng không có option nào. " +
+                "Hãy kiểm tra EntityData có DialogueModule/QuestModule/ShopModule và module đã gán data hợp lệ chưa.");
+        }
+
         Debug.Log($"[ActionRuntime] Interact: actor='{actor.entityData?.keyName}' → target='{target.entityData?.keyName}'");
     }
 
@@ -69,4 +90,44 @@ public class ActionRuntime : IModuleRuntime, IHandleEvent<PrimaryActionEvent>, I
     public ModuleSaveData ToSaveData() => null;
     public void ApplySaveData(ModuleSaveData save) { }
     public bool Equals(IModuleRuntime other) => other is ActionRuntime;
+}
+
+/// <summary>
+/// Runtime cho ScenePortalModule.
+/// Đưa ra option chuyển scene khi player tương tác target.
+/// </summary>
+public class ScenePortalRuntime : IModuleRuntime, IHandleEvent<SecondaryActionEvent>
+{
+    private readonly ScenePortalModule data;
+    private EntityRuntime owner;
+
+    public ScenePortalRuntime(ScenePortalModule data)
+    {
+        this.data = data;
+    }
+
+    public void Handle(SecondaryActionEvent e)
+    {
+        owner ??= e.target;
+        if (e.context == null || owner == null) return;
+        if (string.IsNullOrWhiteSpace(data.targetSceneName)) return;
+
+        string optionId = $"scene.portal.{owner.id}";
+        string textKey = string.IsNullOrWhiteSpace(data.optionTextKey) ? "ui.scene.enter" : data.optionTextKey;
+        int priority = Mathf.Max(0, data.priority);
+
+        e.context.AddOption(
+            optionId,
+            textKey,
+            priority,
+            () => SceneTransitionService.RequestTransition(
+                e.initiator,
+                data.targetSceneName,
+                data.targetSpawnPointId,
+                data.saveBeforeTransition));
+    }
+
+    public ModuleSaveData ToSaveData() => null;
+    public void ApplySaveData(ModuleSaveData save) { }
+    public bool Equals(IModuleRuntime other) => other is ScenePortalRuntime;
 }

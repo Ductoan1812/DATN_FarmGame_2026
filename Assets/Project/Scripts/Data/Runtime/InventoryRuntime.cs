@@ -219,5 +219,9 @@ public class InventoryRuntime : IModuleRuntime
     }
 
     [System.Serializable]
-    private class InventoryTypeHint { public int type; }
+    private class InventoryTypeHint
+    {
+        // Giá trị này được JsonUtility điền từ save JSON.
+        public int type = -1;
+    }
 }

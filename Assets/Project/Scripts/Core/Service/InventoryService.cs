@@ -199,6 +199,27 @@ public class InventoryService
     public bool Contains(EntityRuntime ownerEntity, EntityRuntime entity)
         => FindInventoryOf(ownerEntity, entity) != null;
 
+    public int CanReceive(EntityRuntime receiverEntity, EntityRuntime entity, int amount = -1)
+    {
+        if (receiverEntity == null || entity == null || entity.IsEmpty) return 0;
+
+        int remaining = amount < 0 ? entity.Amount : Mathf.Min(amount, entity.Amount);
+        int total = 0;
+
+        foreach (var inv in GetInventoriesByPriority(receiverEntity))
+        {
+            if (remaining <= 0) break;
+
+            int canReceive = Mathf.Min(inv.CanReceive(entity), remaining);
+            if (canReceive <= 0) continue;
+
+            total += canReceive;
+            remaining -= canReceive;
+        }
+
+        return total;
+    }
+
     public int CountEntity(EntityRuntime ownerEntity, string entityDataId)
     {
         int total = 0;

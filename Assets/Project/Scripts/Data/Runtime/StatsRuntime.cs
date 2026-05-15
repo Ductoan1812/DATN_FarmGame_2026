@@ -94,6 +94,11 @@ public class StatsRuntime
         return stats[type].GetValue();
     }
 
+    public bool Has(StatType type)
+    {
+        return stats != null && stats.ContainsKey(type);
+    }
+
     /// <summary>Fired khi bất kỳ stat nào thay đổi. (StatType, newValue)</summary>
     public event System.Action<StatType, float> OnChanged;
 

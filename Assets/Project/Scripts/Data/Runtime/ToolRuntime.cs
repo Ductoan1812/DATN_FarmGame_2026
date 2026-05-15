@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 /// <summary>
 /// Base class cho tất cả tool runtime.
@@ -66,4 +67,87 @@ public abstract class ToolRuntime : IModuleRuntime, IHandleEvent<PrimaryActionEv
     public virtual ModuleSaveData ToSaveData() => null;
     public virtual void ApplySaveData(ModuleSaveData save) { }
     public virtual bool Equals(IModuleRuntime other) => other?.GetType() == GetType();
+}
+
+/// <summary>
+/// Shared runtime cho các tool gây damage trực tiếp lên entity world.
+/// Dùng để tránh duplicate logic giữa Scythe/Axe/Pickaxe.
+/// </summary>
+public abstract class DamageToolRuntime : ToolRuntime
+{
+    private readonly ToolType damageToolType;
+    private readonly bool hitAllTargets;
+    private readonly float defaultRange;
+    private readonly float defaultDamage;
+
+    protected DamageToolRuntime(
+        ToolModule data,
+        ToolType damageToolType,
+        bool hitAllTargets,
+        float defaultRange = 1.5f,
+        float defaultDamage = 1f) : base(data)
+    {
+        this.damageToolType = damageToolType;
+        this.hitAllTargets = hitAllTargets;
+        this.defaultRange = defaultRange;
+        this.defaultDamage = defaultDamage;
+    }
+
+    protected override bool Validate(GameObject actorGO, PrimaryActionEvent e)
+    {
+        return true;
+    }
+
+    protected override void Execute(GameObject actorGO, EntityRuntime actor, EntityRuntime item)
+    {
+        float range = item?.stats.Get(StatType.Range) ?? defaultRange;
+        float damage = item?.stats.Get(StatType.Attack) ?? defaultDamage;
+        if (range <= 0f) range = defaultRange;
+        if (damage <= 0f) damage = defaultDamage;
+
+        List<EntityRuntime> targets = EntityScanSystem.GetAll(actorGO, range);
+        if (targets == null || targets.Count == 0)
+        {
+            Debug.Log($"[{GetType().Name}] Không có target trong tầm.");
+            return;
+        }
+
+        if (hitAllTargets)
+        {
+            foreach (var target in targets)
+                ApplyDamage(target, item, damage);
+            return;
+        }
+
+        var nearest = FindNearest(actorGO.transform.position, targets);
+        if (nearest != null)
+            ApplyDamage(nearest, item, damage);
+    }
+
+    private void ApplyDamage(EntityRuntime target, EntityRuntime item, float damage)
+    {
+        if (target == null) return;
+        target.TriggerEvent(new TakeDamageEvent(item, damage, damageToolType));
+    }
+
+    private static EntityRuntime FindNearest(Vector3 from, List<EntityRuntime> targets)
+    {
+        EntityRuntime nearest = null;
+        float bestDistance = float.MaxValue;
+
+        foreach (var target in targets)
+        {
+            var targetGo = target?.Owner?.GameObject;
+            if (targetGo == null) continue;
+
+            float distance = Vector2.Distance(from, targetGo.transform.position);
+            if (distance < bestDistance)
+            {
+                bestDistance = distance;
+                nearest = target;
+            }
+        }
+
+        return nearest;
+    }
 }

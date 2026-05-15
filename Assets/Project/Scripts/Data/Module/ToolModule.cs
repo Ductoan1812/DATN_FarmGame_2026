@@ -26,6 +26,10 @@ public class ToolModule : IModuleData
                 return new HoeRuntime(this);
             case ToolType.Scythe:
                 return new ScytheRuntime(this);
+            case ToolType.Axe:
+                return new AxeRuntime(this);
+            case ToolType.Pickaxe:
+                return new PickaxeRuntime(this);
             default:
                 Debug.LogWarning($"[ToolModule] ToolType {toolType} chưa có Runtime.");
                 return null;

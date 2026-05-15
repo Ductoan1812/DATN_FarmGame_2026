@@ -49,7 +49,20 @@ public class PrimaryActionEvent : IGameEvent
 public class SecondaryActionEvent : IGameEvent
 {
     public readonly EntityRuntime initiator;
-    public SecondaryActionEvent(EntityRuntime initiator) { this.initiator = initiator; }
+    public readonly EntityRuntime target;
+    public readonly InteractionContext context;
+
+    public SecondaryActionEvent(EntityRuntime initiator)
+    {
+        this.initiator = initiator;
+    }
+
+    public SecondaryActionEvent(EntityRuntime initiator, EntityRuntime target, InteractionContext context)
+    {
+        this.initiator = initiator;
+        this.target = target;
+        this.context = context;
+    }
 }
 
 

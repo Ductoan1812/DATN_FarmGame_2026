@@ -11,6 +11,8 @@ public enum StatType
     Defense,
     [InspectorName("Tốc độ")]
     Speed,
+    [InspectorName("Thể lực")]
+    Stamina,
     [InspectorName("Thể lực tối đa")]
     MaxStamina,
     [InspectorName("Tỷ lệ chí mạng")]
@@ -24,5 +26,17 @@ public enum StatType
     [InspectorName("Hồi chiêu")]
     CoolDown,
     [InspectorName("Tầm đánh")]
-    Range
+    Range,
+    [InspectorName("Tiền")]
+    Money,
+    [InspectorName("Năng lượng")]
+    Mp,
+    [InspectorName("Năng lượng tối đa")]
+    MaxMp,
+    [InspectorName("Kinh nghiệm")]
+    Exp,
+    [InspectorName("Kinh nghiệm tối đa")]
+    MaxExp,
+    [InspectorName("Cấp độ")]
+    Level
 }
