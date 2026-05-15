@@ -89,7 +89,6 @@ MonoBehaviour:
   iconImage: {fileID: 2553410482008929296}
   nameText: {fileID: 7508444272058327716}
   valueText: {fileID: 4084247941620363511}
-  nameLocalized: {fileID: 8703713100159941002}
 --- !u!1 &2886518108737002658
 GameObject:
   m_ObjectHideFlags: 0
@@ -157,7 +156,7 @@ MonoBehaviour:
     m_Bottom: 0
   m_ChildAlignment: 0
   m_Spacing: 4
-  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
   m_ChildControlHeight: 1
@@ -378,7 +377,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 2100627753, guid: 165689c13262d634cbfdc9664021a221, type: 3}
+  m_Sprite: {fileID: -931065661, guid: d38fadcd370c6b54ab3ef7ea1eda75b8, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

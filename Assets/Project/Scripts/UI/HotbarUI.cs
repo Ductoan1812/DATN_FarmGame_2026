@@ -20,16 +20,24 @@ public class HotbarUI : MonoBehaviour
 
     // ══════ Lifecycle ══════
 
-    private void Start()
+    private void Awake()
     {
         CacheSlots();
         CacheSelectIndicator();
+    }
+
+    private void Start()
+    {
+        EnsureCached();
         TrySubscribe();
+        PublishVisualRefreshRequest();
     }
 
     private void OnEnable()
     {
+        EnsureCached();
         TrySubscribe();
+        PublishVisualRefreshRequest();
     }
 
     private void OnDestroy()
@@ -52,7 +60,21 @@ public class HotbarUI : MonoBehaviour
         _subscribed = true;
     }
 
+    private void PublishVisualRefreshRequest()
+    {
+        GameManager.Instance?.EventBus?.Publish(new InventoryVisualRefreshRequestPublish());
+    }
+
     // ══════ Cache ══════
+
+    private void EnsureCached()
+    {
+        if (_slots == null || _slots.Length != transform.childCount)
+            CacheSlots();
+
+        if (_selectIndicator == null)
+            CacheSelectIndicator();
+    }
 
     private void CacheSlots()
     {
@@ -81,6 +103,7 @@ public class HotbarUI : MonoBehaviour
 
     private void OnSlotChanged(HotbarSlotChangedPublish e)
     {
+        EnsureCached();
         if (_slots == null || e.index < 0 || e.index >= _slots.Length) return;
 
         _slots[e.index].SetIcon(e.icon);
@@ -89,6 +112,7 @@ public class HotbarUI : MonoBehaviour
 
     private void OnSelectionChanged(HotbarSelectionChangedPublish e)
     {
+        EnsureCached();
         if (e.selectedIndex != _currentSelected)
             MoveSelect(e.selectedIndex);
     }
