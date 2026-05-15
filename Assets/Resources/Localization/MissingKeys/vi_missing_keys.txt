@@ -1,0 +1,8 @@
+NPC
+dialogue.line.key
+quest.description.key
+quest.title.key
+Helmet01_name
+Helmet01_desc
+Helmet02_name
+Helmet02_desc

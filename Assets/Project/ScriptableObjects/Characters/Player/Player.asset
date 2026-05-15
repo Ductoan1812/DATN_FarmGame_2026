@@ -24,8 +24,28 @@ MonoBehaviour:
     baseStats:
     - statType: 0
       value: 100
+    - statType: 1
+      value: 100
+    - statType: 18
+      value: 0
+    - statType: 15
+      value: 80
+    - statType: 14
+      value: 80
+    - statType: 17
+      value: 500
+    - statType: 16
+      value: 0
     - statType: 2
-      value: 5
+      value: 2
+    - statType: 7
+      value: 0.2
+    - statType: 3
+      value: 0
+    - statType: 13
+      value: 500
+    - statType: 4
+      value: 4
   placementRule:
     occupyLayer: 0
     requireTags: 0
@@ -35,10 +55,10 @@ MonoBehaviour:
   - rid: 2376239469260439552
   - rid: 2376239469260439553
   - rid: 2376239498774446080
-  - rid: 2376239686607699968
   - rid: 2376239686607699969
-  - rid: 2376239726483210245
-  - rid: 2376239726483210247
+  - rid: 8196222910859575296
+  - rid: 8196222910859575297
+  - rid: 8196222910859575298
   references:
     version: 2
     RefIds:
@@ -55,21 +75,21 @@ MonoBehaviour:
     - rid: 2376239498774446080
       type: {class: EquipmentModule, ns: , asm: Assembly-CSharp}
       data:
-        supportedParts: 010000000200000003000000040000000c0000000d00000000000000
-    - rid: 2376239686607699968
-      type: {class: AttackModule, ns: , asm: Assembly-CSharp}
-      data:
-        attackRange: 1.5
-        attackCooldown: 0.5
+        supportedParts: 010000000200000003000000040000000c0000001000000010000000
     - rid: 2376239686607699969
       type: {class: HealthModule, ns: , asm: Assembly-CSharp}
       data:
         canTakeDamage: 1
-    - rid: 2376239726483210245
+    - rid: 8196222910859575296
+      type: {class: RespawnModule, ns: , asm: Assembly-CSharp}
+      data:
+        defaultRespawnPosition: {x: 10, y: 10}
+        respawnDelay: 3
+        restoreFullHp: 1
+        respawnPrefabId: 1
+    - rid: 8196222910859575297
       type: {class: ActionModule, ns: , asm: Assembly-CSharp}
       data: 
-    - rid: 2376239726483210247
-      type: {class: AttackModule, ns: , asm: Assembly-CSharp}
-      data:
-        attackRange: 1.5
-        attackCooldown: 0.5
+    - rid: 8196222910859575298
+      type: {class: QuestLogModule, ns: , asm: Assembly-CSharp}
+      data: 
