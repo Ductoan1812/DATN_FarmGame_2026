@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -115,6 +116,82 @@ public class DebugConsole : MonoBehaviour
         });
 
         AddCommand("clear", "Xóa log", _ => { logLines.Clear(); logText.text = ""; });
+
+        AddCommand("save", "save — Lưu game ngay", _ =>
+        {
+            var gm = GM(); if (gm == null) return;
+            gm.EventBus.Publish(new SaveGameRequestPublish());
+            LogSuccess("Đã gửi yêu cầu SaveGameRequestPublish.");
+        });
+
+        AddCommand("load", "load — Load save (reload scene hiện tại)", _ =>
+        {
+            var gm = GM(); if (gm == null) return;
+            gm.EventBus.Publish(new LoadGameRequestPublish());
+            LogSuccess("Đã gửi yêu cầu LoadGameRequestPublish.");
+        });
+
+        AddCommand("scene", "scene <sceneName> [spawnPointId] — Chuyển scene qua SceneTransitionService", args =>
+        {
+            if (args.Length < 1) { LogError("scene <sceneName> [spawnPointId]"); return; }
+
+            var player = FindAnyObjectByType<PlayerControler>();
+            var playerEntity = player != null ? player.GetComponent<EntityRoot>()?.GetEntity() : null;
+
+            string sceneName = args[0];
+            string spawnPointId = args.Length > 1 ? args[1] : string.Empty;
+
+            bool ok = SceneTransitionService.RequestTransition(
+                playerEntity,
+                sceneName,
+                spawnPointId,
+                saveBeforeTransition: true);
+
+            if (ok) LogSuccess($"Đang chuyển scene '{sceneName}' (spawn='{spawnPointId}').");
+            else LogError($"Không thể chuyển scene '{sceneName}'.");
+        });
+
+        AddCommand("set", "set <target> <stat> <value> — Set stat runtime của EntityRoot", args =>
+        {
+            if (args.Length < 3) { LogError("set <target> <stat> <value>"); return; }
+
+            var root = FindEntityRoot(args[0]);
+            if (root == null) { LogError($"EntityRoot '{args[0]}' không tìm thấy. Dùng 'entities'."); return; }
+
+            var entity = root.GetEntity();
+            if (entity == null) { LogError($"'{root.gameObject.name}' chưa có EntityRuntime."); return; }
+
+            if (!System.Enum.TryParse(args[1], true, out StatType statType))
+            {
+                LogError($"Stat '{args[1]}' không hợp lệ. Ví dụ: Money, Hp, MaxHp, Speed.");
+                return;
+            }
+
+            if (!TryParseFloat(args[2], out float value))
+            {
+                LogError($"Value '{args[2]}' không hợp lệ.");
+                return;
+            }
+
+            entity.stats.Set(statType, value);
+            LogSuccess($"{root.gameObject.name}.{statType} = {entity.stats.Get(statType):0.###}");
+        });
+
+        AddCommand("entities", "Liệt kê EntityRoot runtime trong scene", _ =>
+        {
+            var roots = FindObjectsOfType<EntityRoot>();
+            int count = 0;
+            foreach (var root in roots)
+            {
+                var entity = root.GetEntity();
+                if (entity == null) continue;
+
+                Log($"  {root.gameObject.name} — runtime:{entity.id} data:{entity.entityData?.keyName ?? "-"} id:{entity.entityData?.id ?? "-"}");
+                count++;
+            }
+
+            if (count == 0) Log("Không có EntityRoot runtime nào.");
+        });
 
         // ── give <target> <item> [amount] ──
         AddCommand("give", "give <target> <item> [amount]", args =>
@@ -296,6 +373,10 @@ public class DebugConsole : MonoBehaviour
                 AddContainerSuggestions(parts[1], "give", max);
             else if (cmd == "give" && parts.Length >= 3)
                 AddEntityDataSuggestions(parts[2], $"give {parts[1]}", max);
+            else if (cmd == "set" && parts.Length == 2)
+                AddEntityRootSuggestions(parts[1], "set", max);
+            else if (cmd == "set" && parts.Length == 3)
+                AddStatSuggestions(parts[2], $"set {parts[1]}", max);
             else if (cmd == "list")
                 AddEntityDataSuggestions(parts[1], "list", max);
             else if (cmd == "spawn" || cmd == "objects")
@@ -315,6 +396,36 @@ public class DebugConsole : MonoBehaviour
             if (e.GetModules<InventoryRuntime>().Count == 0) continue;
             if (r.gameObject.name.ToLowerInvariant().Contains(q))
                 currentSuggestions.Add($"{prefix} {r.gameObject.name}");
+        }
+    }
+
+    private void AddEntityRootSuggestions(string query, string prefix, int max)
+    {
+        var q = query.ToLowerInvariant();
+        foreach (var r in FindObjectsOfType<EntityRoot>())
+        {
+            if (currentSuggestions.Count >= max) break;
+            var e = r.GetEntity();
+            if (e == null) continue;
+
+            if (r.gameObject.name.ToLowerInvariant().Contains(q)
+                || (!string.IsNullOrWhiteSpace(e.id) && e.id.ToLowerInvariant().Contains(q))
+                || (!string.IsNullOrWhiteSpace(e.entityData?.id) && e.entityData.id.ToLowerInvariant().Contains(q))
+                || (!string.IsNullOrWhiteSpace(e.entityData?.keyName) && e.entityData.keyName.ToLowerInvariant().Contains(q)))
+            {
+                currentSuggestions.Add($"{prefix} {r.gameObject.name}");
+            }
+        }
+    }
+
+    private void AddStatSuggestions(string query, string prefix, int max)
+    {
+        var q = query.ToLowerInvariant();
+        foreach (var name in System.Enum.GetNames(typeof(StatType)))
+        {
+            if (currentSuggestions.Count >= max) break;
+            if (name.ToLowerInvariant().StartsWith(q))
+                currentSuggestions.Add($"{prefix} {name}");
         }
     }
 
@@ -442,6 +553,44 @@ public class DebugConsole : MonoBehaviour
         return null;
     }
 
+    private EntityRoot FindEntityRoot(string query)
+    {
+        if (string.IsNullOrWhiteSpace(query)) return null;
+
+        var q = query.ToLowerInvariant();
+        var roots = FindObjectsOfType<EntityRoot>();
+
+        foreach (var root in roots)
+        {
+            var entity = root.GetEntity();
+            if (entity == null) continue;
+
+            if (root.gameObject.name.ToLowerInvariant() == q
+                || (!string.IsNullOrWhiteSpace(entity.id) && entity.id.ToLowerInvariant() == q)
+                || (!string.IsNullOrWhiteSpace(entity.entityData?.id) && entity.entityData.id.ToLowerInvariant() == q)
+                || (!string.IsNullOrWhiteSpace(entity.entityData?.keyName) && entity.entityData.keyName.ToLowerInvariant() == q))
+            {
+                return root;
+            }
+        }
+
+        foreach (var root in roots)
+        {
+            var entity = root.GetEntity();
+            if (entity == null) continue;
+
+            if (root.gameObject.name.ToLowerInvariant().Contains(q)
+                || (!string.IsNullOrWhiteSpace(entity.id) && entity.id.ToLowerInvariant().Contains(q))
+                || (!string.IsNullOrWhiteSpace(entity.entityData?.id) && entity.entityData.id.ToLowerInvariant().Contains(q))
+                || (!string.IsNullOrWhiteSpace(entity.entityData?.keyName) && entity.entityData.keyName.ToLowerInvariant().Contains(q)))
+            {
+                return root;
+            }
+        }
+
+        return null;
+    }
+
     private static bool HasInventory(EntityRoot r)
     {
         var e = r.GetEntity();
@@ -453,10 +602,25 @@ public class DebugConsole : MonoBehaviour
         return int.TryParse(s, out int v) ? v : fallback;
     }
 
+    private static bool TryParseFloat(string text, out float value)
+    {
+        if (float.TryParse(text, NumberStyles.Float, CultureInfo.InvariantCulture, out value))
+            return true;
+
+        return float.TryParse(text, NumberStyles.Float, CultureInfo.CurrentCulture, out value);
+    }
+
     /// <summary>Tự tìm refs nếu chưa gán từ Inspector.</summary>
     private void AutoFindRefs()
     {
         var canvas = GetComponentInChildren<Canvas>(true);
+        if (canvas == null)
+        {
+            var debugCanvas = GameObject.Find("Canvas_Debug");
+            if (debugCanvas != null)
+                canvas = debugCanvas.GetComponent<Canvas>();
+        }
+
         if (canvas == null) return;
 
         if (panel == null)

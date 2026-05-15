@@ -15,10 +15,15 @@ public static class SetupDebugConsoleUI
         // Xóa canvas cũ nếu có
         var oldCanvas = debug.transform.Find("DebugConsole_Canvas");
         if (oldCanvas != null) Object.DestroyImmediate(oldCanvas.gameObject);
+        var oldMigratedCanvas = GameObject.Find("Canvas_Debug");
+        if (oldMigratedCanvas != null) Object.DestroyImmediate(oldMigratedCanvas);
+
+        var uiRoot = GameObject.Find("UIRoot");
+        if (uiRoot == null) uiRoot = new GameObject("UIRoot");
 
         // ── Canvas ──
-        var canvasGO = new GameObject("DebugConsole_Canvas", typeof(RectTransform));
-        canvasGO.transform.SetParent(debug.transform, false);
+        var canvasGO = new GameObject("Canvas_Debug", typeof(RectTransform));
+        canvasGO.transform.SetParent(uiRoot.transform, false);
         var canvas = canvasGO.AddComponent<Canvas>();
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
         canvas.sortingOrder = 9999;

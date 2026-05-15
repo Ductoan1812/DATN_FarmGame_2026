@@ -3,25 +3,53 @@ using TMPro;
 
 /// <summary>
 /// Gắn lên bất kỳ GameObject nào có thể tương tác.
-/// Khi Player vào vùng trigger → hiện dòng chữ phía trên đầu (vd: "[E] Thu hoạch").
-/// Khi Player ra khỏi → ẩn.
+/// Khi Player đứng trong interactionCollider → hiện prompt "[E] Tương tác".
 ///
 /// Yêu cầu:
-///   - GameObject cần có Collider2D (isTrigger = true).
+///   - Gán interactionCollider là vùng tương tác mong muốn.
+///   - interactionCollider nên là trigger collider.
 ///   - Player cần có tag "Player" và Rigidbody2D.
 /// </summary>
 public class InteractablePrompt : MonoBehaviour, IInteractable
 {
+    [Header("Interaction")]
+    [SerializeField] private Collider2D interactionCollider;
+    [SerializeField] private bool autoAssignCollider = true;
+    [SerializeField] private bool warnIfColliderIsNotTrigger = true;
+    [SerializeField] private string playerTag = "Player";
+
     [Header("Prompt")]
-    [SerializeField] private string promptText = "[RMB] Tương tác";
+    [SerializeField] private string promptText = "[E] Tương tác";
     [SerializeField] private Vector2 offset = new(0f, 1f);
     [SerializeField] private float fontSize = 3f;
     [SerializeField] private Color textColor = Color.white;
     [SerializeField] private Color bgColor = new(0f, 0f, 0f, 0.6f);
 
+    private readonly Collider2D[] overlapBuffer = new Collider2D[8];
     private GameObject _promptGO;
     private TextMeshPro _tmp;
     private bool _isShowing;
+    private bool _playerInside;
+
+    public Collider2D InteractionCollider => interactionCollider;
+
+    private void Reset()
+    {
+        AutoAssignCollider();
+    }
+
+    private void Awake()
+    {
+        if (interactionCollider == null && autoAssignCollider)
+            AutoAssignCollider();
+
+        if (interactionCollider != null && warnIfColliderIsNotTrigger && !interactionCollider.isTrigger)
+        {
+            Debug.LogWarning(
+                $"[InteractablePrompt] '{name}' interactionCollider is not trigger. Prompt can still work, but a trigger collider is recommended.",
+                this);
+        }
+    }
 
     private void Start()
     {
@@ -29,18 +57,16 @@ public class InteractablePrompt : MonoBehaviour, IInteractable
         _promptGO.SetActive(false);
     }
 
-    // ── Trigger ───────────────────────────────────────────────────────────────
-
-    private void OnTriggerEnter2D(Collider2D other)
+    private void Update()
     {
-        if (!other.CompareTag("Player")) return;
-        Show();
+        RefreshPromptState();
     }
 
-    private void OnTriggerExit2D(Collider2D other)
+    public bool AcceptsScanCollider(Collider2D candidate)
     {
-        if (!other.CompareTag("Player")) return;
-        Hide();
+        if (candidate == null) return false;
+        if (interactionCollider == null) return true;
+        return candidate == interactionCollider;
     }
 
     // ── IInteractable ─────────────────────────────────────────────────────────
@@ -61,14 +87,14 @@ public class InteractablePrompt : MonoBehaviour, IInteractable
 
     public void Show()
     {
-        if (_promptGO == null) return;
+        if (_promptGO == null || _isShowing) return;
         _isShowing = true;
         _promptGO.SetActive(true);
     }
 
     public void Hide()
     {
-        if (_promptGO == null) return;
+        if (_promptGO == null || !_isShowing) return;
         _isShowing = false;
         _promptGO.SetActive(false);
     }
@@ -92,6 +118,75 @@ public class InteractablePrompt : MonoBehaviour, IInteractable
         // Auto-size vừa text
         _tmp.enableAutoSizing = false;
         _tmp.rectTransform.sizeDelta = new Vector2(4f, 1f);
+    }
+
+    private void RefreshPromptState()
+    {
+        if (_promptGO == null || interactionCollider == null)
+        {
+            if (_playerInside)
+            {
+                _playerInside = false;
+                Hide();
+            }
+            return;
+        }
+
+        bool hasPlayer = false;
+        var filter = new ContactFilter2D();
+        filter.NoFilter();
+
+        int count = interactionCollider.OverlapCollider(filter, overlapBuffer);
+        for (int i = 0; i < count; i++)
+        {
+            var hit = overlapBuffer[i];
+            if (hit == null) continue;
+            if (!IsPlayerCollider(hit)) continue;
+
+            hasPlayer = true;
+            break;
+        }
+
+        if (hasPlayer == _playerInside)
+            return;
+
+        _playerInside = hasPlayer;
+        if (_playerInside) Show();
+        else Hide();
+    }
+
+    private void AutoAssignCollider()
+    {
+        interactionCollider = GetComponent<Collider2D>();
+        if (interactionCollider != null) return;
+
+        interactionCollider = GetComponentInChildren<Collider2D>();
+    }
+
+    private bool IsPlayerCollider(Collider2D hit)
+    {
+        var current = hit.transform;
+        while (current != null)
+        {
+            if (current.CompareTag(playerTag))
+                return true;
+
+            current = current.parent;
+        }
+
+        return false;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (interactionCollider == null) return;
+
+        Gizmos.color = new Color(0.2f, 0.9f, 0.45f, 0.35f);
+        var bounds = interactionCollider.bounds;
+        Gizmos.DrawCube(bounds.center, bounds.size);
+
+        Gizmos.color = new Color(0.2f, 0.9f, 0.45f, 1f);
+        Gizmos.DrawWireCube(bounds.center, bounds.size);
     }
 
     private void OnDestroy()

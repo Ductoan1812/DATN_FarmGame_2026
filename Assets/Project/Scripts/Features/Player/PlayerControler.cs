@@ -8,6 +8,8 @@ public class PlayerControler : MonoBehaviour
     [SerializeField] private EventBus eventBus;
     [SerializeField] private Character4D character4D;
     [SerializeField] private AnimationManager _anim ;
+    [SerializeField] private KeyCode interactKey = KeyCode.E;
+    [SerializeField] private bool allowRightMouseInteract;
 
     private Vector3 lastMoveDirection = Vector3.up;
     public Vector3 LastMoveDirection => lastMoveDirection;
@@ -91,8 +93,8 @@ public class PlayerControler : MonoBehaviour
             playerEntity.TriggerEvent(new PrimaryActionEvent(playerEntity));
         }
 
-        // ── Chuột phải: SecondaryAction ───────────────────────────────────────
-        if (Input.GetMouseButtonDown(1))
+        // ── E: SecondaryAction / Interact ─────────────────────────────────────
+        if (Input.GetKeyDown(interactKey) || (allowRightMouseInteract && Input.GetMouseButtonDown(1)))
         {
             playerEntity.TriggerEvent(new SecondaryActionEvent(playerEntity));
         }

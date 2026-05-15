@@ -12,6 +12,7 @@ public class PlayerBridge : MonoBehaviour
     private EntityRoot _entityRoot;
     private EntityRuntime _entity;
     private EventBus _eventBus;
+    private bool _bound;
 
     // ── Hotbar ──
     private InventoryRuntime _hotbar;
@@ -42,6 +43,13 @@ public class PlayerBridge : MonoBehaviour
     {
         _entityRoot = GetComponent<EntityRoot>();
         _eventBus = GameManager.Instance?.EventBus;
+        Bind();
+    }
+
+    private void Update()
+    {
+        if (!_bound)
+            Bind();
     }
 
     private void OnEnable()
@@ -60,9 +68,6 @@ public class PlayerBridge : MonoBehaviour
     private void OnInventoryDataRestored(InventoryDataRestoredPublish _)
     {
         Bind();
-        // PlayerBridge đã bind xong → publish PlayerReadyPublish
-        _eventBus?.Publish(new PlayerReadyPublish());
-        Debug.Log("[PlayerBridge] PlayerReadyPublish published.");
     }
 
     // ══════════════════════════════════════════════════════════
@@ -71,6 +76,8 @@ public class PlayerBridge : MonoBehaviour
 
     private void Bind()
     {
+        if (_bound) return;
+
         if (_entityRoot == null) _entityRoot = GetComponent<EntityRoot>();
         _entity = _entityRoot?.GetEntity();
         _eventBus = GameManager.Instance?.EventBus;
@@ -81,18 +88,76 @@ public class PlayerBridge : MonoBehaviour
         BindBackpack();
         BindEquipment();
         BindDragDrop();
+        BindVisualRefresh();
 
+        _bound = true;
+        PublishPlayerInfo();
+        _eventBus.Publish(new PlayerReadyPublish());
+        Debug.Log("[PlayerBridge] PlayerReadyPublish published.");
         Debug.Log("[PlayerBridge] Bound to entity: " + _entity.entityData?.keyName);
     }
 
     private void Unbind()
     {
+        if (!_bound) return;
+
         UnbindStats();
         UnbindHotbar();
         UnbindBackpack();
         UnbindEquipment();
         UnbindDragDrop();
+        UnbindVisualRefresh();
         _entity = null;
+        _bound = false;
+    }
+
+    // ══════════════════════════════════════════════════════════
+    //  UI Refresh Request
+    // ══════════════════════════════════════════════════════════
+
+    private void BindVisualRefresh()
+    {
+        _eventBus.Subscribe<InventoryVisualRefreshRequestPublish>(OnInventoryVisualRefreshRequest);
+    }
+
+    private void UnbindVisualRefresh()
+    {
+        _eventBus?.Unsubscribe<InventoryVisualRefreshRequestPublish>(OnInventoryVisualRefreshRequest);
+    }
+
+    private void OnInventoryVisualRefreshRequest(InventoryVisualRefreshRequestPublish _)
+    {
+        PublishPlayerInfo();
+        PublishAllHotbarSlots();
+        PublishAllBackpackSlots();
+        PublishBackpackSelection(_selectedBackpackIndex);
+        PublishAllEquipmentSlots();
+    }
+
+    private void PublishPlayerInfo()
+    {
+        if (_entity == null || _eventBus == null) return;
+
+        _eventBus.Publish(new PlayerInfoChangedPublish(
+            _entity.id,
+            _entity.entityData != null ? _entity.entityData.keyName : string.Empty,
+            BuildPlayerStatDisplays()));
+    }
+
+    private StatDisplay[] BuildPlayerStatDisplays()
+    {
+        if (_entity?.stats == null)
+            return System.Array.Empty<StatDisplay>();
+
+        var result = new List<StatDisplay>();
+
+        foreach (StatType statType in System.Enum.GetValues(typeof(StatType)))
+        {
+            if (!_entity.stats.Has(statType)) continue;
+            result.Add(new StatDisplay(statType, _entity.stats.Get(statType)));
+        }
+
+        return result.ToArray();
     }
 
     // ══════════════════════════════════════════════════════════
@@ -113,6 +178,7 @@ public class PlayerBridge : MonoBehaviour
     private void OnStatsChanged(StatType statType, float newValue)
     {
         _eventBus?.Publish(new StatsChangedPublish(_entity.id, statType, newValue));
+        PublishPlayerInfo();
     }
 
     // ══════════════════════════════════════════════════════════
@@ -206,7 +272,7 @@ public class PlayerBridge : MonoBehaviour
     }
 
     // ══════════════════════════════════════════════════════════
-    //  #region BACKPACK
+    //  BACKPACK - Bind / Unbind
     // ══════════════════════════════════════════════════════════
 
     private void BindBackpack()
@@ -238,6 +304,11 @@ public class PlayerBridge : MonoBehaviour
         _backpackSnapshot = null;
         _selectedBackpackIndex = -1;
     }
+
+    // ══════════════════════════════════════════════════════════
+    //  BACKPACK - Subscribe Event Handlers
+    //  UI/Service -> PlayerBridge
+    // ══════════════════════════════════════════════════════════
 
     private void OnBackpackInventoryChanged(InventoryChangedPublish e)
     {
@@ -324,6 +395,11 @@ public class PlayerBridge : MonoBehaviour
             entity,
             bypassValidation: true));
     }
+
+    // ══════════════════════════════════════════════════════════
+    //  BACKPACK - Publish Events
+    //  PlayerBridge -> UI
+    // ══════════════════════════════════════════════════════════
 
     private void PublishChangedBackpackSlots()
     {
@@ -460,8 +536,8 @@ public class PlayerBridge : MonoBehaviour
     }
 
     /// <summary>
-    /// Public — UI (btn_sort) gọi trực tiếp.
     /// Sort backpack rồi publish lại toàn bộ slot.
+    /// Hiện được gọi từ OnBackpackSortRequest để UI không gọi trực tiếp vào bridge.
     /// </summary>
     public void BridgeSort()
     {

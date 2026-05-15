@@ -62,8 +62,13 @@ public static class EntityScanSystem
             if (col == null) continue;
             if (col.gameObject == actorGO) continue;
 
-            // Chỉ lấy entity có IInteractable trên GameObject
-            if (col.GetComponentInParent<IInteractable>() == null) continue;
+            // Chỉ lấy entity có IInteractable trên GameObject.
+            // Nếu dùng InteractablePrompt thì chỉ collider được chọn làm interactionCollider mới hợp lệ.
+            var interactable = col.GetComponentInParent<IInteractable>();
+            if (interactable == null) continue;
+
+            var prompt = interactable as InteractablePrompt;
+            if (prompt != null && !prompt.AcceptsScanCollider(col)) continue;
 
             var entityRoot = col.GetComponentInParent<EntityRoot>();
             if (entityRoot == null) continue;
@@ -71,7 +76,11 @@ public static class EntityScanSystem
             var entity = entityRoot.GetEntity();
             if (entity == null) continue;
 
-            float dist = Vector2.Distance(actorGO.transform.position, col.transform.position);
+            Vector2 distancePoint = prompt?.InteractionCollider != null
+                ? prompt.InteractionCollider.ClosestPoint(actorGO.transform.position)
+                : (Vector2)col.transform.position;
+
+            float dist = Vector2.Distance(actorGO.transform.position, distancePoint);
             if (dist < closestDist)
             {
                 closestDist = dist;
