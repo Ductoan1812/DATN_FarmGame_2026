@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Plant
+  - NPC
   layers:
   - Default
   - TransparentFX
@@ -18,8 +19,8 @@ TagManager:
   - Interactable
   - Projectile
   - Trigger
-  - 
-  - 
+  - NPC
+  - Lighting
   - 
   - 
   - 

@@ -15,12 +15,11 @@ public class DraggableSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     private Image _iconImage;
     private Toggle _toggle;
-    private bool _wasDragging;
     private static DraggableSlot _dragging;
     private static GameObject _ghost;
     private static RectTransform _ghostRect;
     private static Image _ghostImage;
-    private static Canvas _rootCanvas;
+    private static Canvas _dragCanvas;
 
     public void Init(InventoryType type, int index, Image iconImage)
     {
@@ -31,12 +30,10 @@ public class DraggableSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     }
 
     // ══════ IPointerDownHandler / IPointerUpHandler ══════
-    // Cho phép Toggle hoạt động bình thường khi click (không drag).
-    // Khi drag xảy ra, _wasDragging = true → Toggle sẽ không bị trigger.
+    // Giữ hooks này để sau này dễ mở rộng custom click-vs-drag behavior.
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        _wasDragging = false;
     }
 
     public void OnPointerUp(PointerEventData eventData)
@@ -55,7 +52,6 @@ public class DraggableSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             return;
         }
 
-        _wasDragging = true;
         _dragging = this;
 
         // Tắt Toggle tạm thời để drag không trigger toggle
@@ -126,14 +122,12 @@ public class DraggableSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         if (_ghost != null) return;
 
-        // Tìm root canvas
-        if (_rootCanvas == null)
-            _rootCanvas = GetComponentInParent<Canvas>()?.rootCanvas;
-
-        if (_rootCanvas == null) return;
+        var sourceCanvas = GetComponentInParent<Canvas>()?.rootCanvas;
+        EnsureDragCanvas(sourceCanvas);
+        if (_dragCanvas == null) return;
 
         _ghost = new GameObject("DragGhost");
-        _ghost.transform.SetParent(_rootCanvas.transform, false);
+        _ghost.transform.SetParent(_dragCanvas.transform, false);
         _ghost.transform.SetAsLastSibling();
 
         _ghostRect = _ghost.AddComponent<RectTransform>();
@@ -153,20 +147,47 @@ public class DraggableSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     private void UpdateGhostPosition(PointerEventData eventData)
     {
-        if (_ghostRect == null || _rootCanvas == null) return;
+        if (_ghostRect == null || _dragCanvas == null) return;
 
-        if (_rootCanvas.renderMode == RenderMode.ScreenSpaceOverlay)
+        if (_dragCanvas.renderMode == RenderMode.ScreenSpaceOverlay)
         {
             _ghostRect.position = eventData.position;
         }
         else
         {
             RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                _rootCanvas.transform as RectTransform,
+                _dragCanvas.transform as RectTransform,
                 eventData.position,
                 eventData.pressEventCamera,
                 out var localPoint);
             _ghostRect.localPosition = localPoint;
         }
+    }
+
+    private static void EnsureDragCanvas(Canvas sourceCanvas)
+    {
+        if (_dragCanvas != null) return;
+
+        var canvasGo = new GameObject("DragGhostCanvas");
+        _dragCanvas = canvasGo.AddComponent<Canvas>();
+        _dragCanvas.renderMode = sourceCanvas != null ? sourceCanvas.renderMode : RenderMode.ScreenSpaceOverlay;
+        _dragCanvas.worldCamera = sourceCanvas != null ? sourceCanvas.worldCamera : null;
+        _dragCanvas.planeDistance = sourceCanvas != null ? sourceCanvas.planeDistance : 100f;
+        _dragCanvas.overrideSorting = true;
+        _dragCanvas.sortingLayerID = sourceCanvas != null ? sourceCanvas.sortingLayerID : 0;
+        _dragCanvas.sortingOrder = short.MaxValue;
+
+        var scaler = canvasGo.AddComponent<CanvasScaler>();
+        if (sourceCanvas != null && sourceCanvas.TryGetComponent<CanvasScaler>(out var sourceScaler))
+        {
+            scaler.uiScaleMode = sourceScaler.uiScaleMode;
+            scaler.referenceResolution = sourceScaler.referenceResolution;
+            scaler.screenMatchMode = sourceScaler.screenMatchMode;
+            scaler.matchWidthOrHeight = sourceScaler.matchWidthOrHeight;
+            scaler.referencePixelsPerUnit = sourceScaler.referencePixelsPerUnit;
+        }
+
+        canvasGo.AddComponent<GraphicRaycaster>().enabled = false;
+        Object.DontDestroyOnLoad(canvasGo);
     }
 }

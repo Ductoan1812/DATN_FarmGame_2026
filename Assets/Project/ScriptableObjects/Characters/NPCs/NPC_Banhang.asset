@@ -1,0 +1,96 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8393fbdfdb650e5418aad1c82ae5b8b5, type: 3}
+  m_Name: NPC_Banhang
+  m_EditorClassIdentifier: 
+  id: npc_banhang
+  keyName: npc_banhang_name
+  descKey: npc_banhang_desc
+  icon: {fileID: 0}
+  category: 0
+  maxStack: 1
+  buyPrice: 0
+  sellPrice: 0
+  baseStats:
+    baseStats:
+    - statType: 12
+      value: 99999
+  placementRule:
+    occupyLayer: 0
+    requireTags: 0
+    provideTags: 0
+    blockLayers: 
+  modules:
+  - rid: 5598704321880018944
+  - rid: 5598704321880018945
+  - rid: 5598704321880018946
+  - rid: 5598704321880018947
+  references:
+    version: 2
+    RefIds:
+    - rid: 5598704321880018944
+      type: {class: DialogueModule, ns: , asm: Assembly-CSharp}
+      data:
+        graph: {fileID: 11400000, guid: 2ae8159d3fdb43b79a640e9c3a127f01, type: 2}
+        optionTextKey: ui.dialogue.talk
+        priority: 10
+    - rid: 5598704321880018945
+      type: {class: InventoryModule, ns: , asm: Assembly-CSharp}
+      data:
+        inventoryType: 0
+        size: 20
+    - rid: 5598704321880018946
+      type: {class: ShopModule, ns: , asm: Assembly-CSharp}
+      data:
+        optionTextKey: ui.shop.open
+        priority: 30
+        sellsToPlayer: 1
+        buysFromPlayer: 1
+        buysAllItems: 1
+        infiniteStock: 1
+        stockInventoryType: 0
+        buyWhitelist:
+        - {fileID: 11400000, guid: e2dd62fb110f4204babbcdc5f6009a52, type: 2}
+        - {fileID: 11400000, guid: ee625868acb5dd9458cf499f10d46e74, type: 2}
+        initialStock:
+        - itemData: {fileID: 11400000, guid: cb901c282659d5e4babb60e30e228468, type: 2}
+          amount: 2
+        - itemData: {fileID: 11400000, guid: d430c76342ea20046920defe790ac265, type: 2}
+          amount: 2
+        - itemData: {fileID: 11400000, guid: 0fc84c59772212245b1e695231597d79, type: 2}
+          amount: 2
+        - itemData: {fileID: 11400000, guid: 2a95ed31c571b814dadb4c704cb5b654, type: 2}
+          amount: 2
+        - itemData: {fileID: 11400000, guid: baea188629c9ef64193eb95c499f3c2c, type: 2}
+          amount: 2
+        - itemData: {fileID: 11400000, guid: f8de689acd5336c448709b266c932a5f, type: 2}
+          amount: 2
+        - itemData: {fileID: 11400000, guid: c037268b411d57e42b0c61bc33048304, type: 2}
+          amount: 2
+        - itemData: {fileID: 11400000, guid: 9f9ebed809f07fe49818626624e1d573, type: 2}
+          amount: 2
+        - itemData: {fileID: 11400000, guid: b24f1cd258b326c49a27483fe5b578a7, type: 2}
+          amount: 2
+        - itemData: {fileID: 11400000, guid: 09c3f3172e41c6d409a9eb40712e4b70, type: 2}
+          amount: 2
+        - itemData: {fileID: 11400000, guid: 175067337eb251b4580a33b69513abc6, type: 2}
+          amount: 2
+        - itemData: {fileID: 11400000, guid: 7b70ad021ce4e6846a23c28626801abb, type: 2}
+          amount: 2
+        - itemData: {fileID: 11400000, guid: 53512c14c130fee4c9c6c06a153c9e7f, type: 2}
+          amount: 2
+    - rid: 5598704321880018947
+      type: {class: QuestModule, ns: , asm: Assembly-CSharp}
+      data:
+        quests:
+        - {fileID: 11400000, guid: a9f33b7f9d8e4af9a2e0b8bf29f4c0a1, type: 2}
+        priority: 20

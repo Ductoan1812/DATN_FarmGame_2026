@@ -33,6 +33,9 @@ public class LocalizationManager : MonoBehaviour
         }
 
         Instance = this;
+        if (transform.parent != null)
+            transform.SetParent(null, false);
+
         DontDestroyOnLoad(gameObject);
 
         if (detectSystemLanguageOnStart)

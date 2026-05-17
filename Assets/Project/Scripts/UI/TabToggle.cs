@@ -15,12 +15,12 @@ public class TabToggle : MonoBehaviour
     [SerializeField] private Color inactiveColor = Color.gray;
     [SerializeField] private bool enableVisualEffects = true;
 
-    private Vector3 originalPosition;
+    private Vector2 originalPosition;
     private bool isInitialized;
     private Image[] cachedImages;
     private bool currentState;
     private Color lastAppliedColor;
-    private Vector3 lastAppliedPosition;
+    private Vector2 lastAppliedPosition;
 
     public TabType TabType => tabType;
     public bool IsOn => toggle != null && toggle.isOn;
@@ -56,15 +56,14 @@ public class TabToggle : MonoBehaviour
 
     private void OnToggleValueChanged(bool isOn)
     {
+        // Guard: đang bật mà toggle báo bật → ignore
         if (isOn && currentState) return;
-        if (!isOn && currentState && !HasAnyOtherTabActive())
-        {
-            toggle.isOn = true;
-            return;
-        }
+
         if (currentState == isOn) return;
+
         currentState = isOn;
         if (enableVisualEffects) UpdateVisualState(isOn);
+
         if (isOn) OnTabSelected?.Invoke(tabType);
         else OnTabDeselected?.Invoke(tabType);
     }
@@ -73,8 +72,9 @@ public class TabToggle : MonoBehaviour
     {
         if (!enableVisualEffects || toggleTransform == null) return;
 
-        Vector3 targetPos = originalPosition;
+        Vector2 targetPos = originalPosition;
         if (isOn) targetPos.y += activeOffsetY;
+
         if (lastAppliedPosition != targetPos)
         {
             toggleTransform.anchoredPosition = targetPos;
@@ -90,9 +90,15 @@ public class TabToggle : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Set trạng thái tab từ bên ngoài.
+    /// triggerEvent = true → fire event bình thường qua Unity toggle.
+    /// triggerEvent = false → set silent, không fire event.
+    /// </summary>
     public void SetTabState(bool isOn, bool triggerEvent = false)
     {
         if (toggle == null || currentState == isOn) return;
+
         if (triggerEvent)
         {
             toggle.isOn = isOn;
@@ -107,13 +113,6 @@ public class TabToggle : MonoBehaviour
         }
     }
 
-    private bool HasAnyOtherTabActive()
-    {
-        var all = FindObjectsOfType<TabToggle>();
-        foreach (var t in all)
-            if (t != this && t.IsOn) return true;
-        return false;
-    }
 }
 
 public enum TabType
@@ -127,5 +126,6 @@ public enum TabType
     Achievements,
     Social,
     Pet,
-    Settings
+    Settings,
+    Shop
 }

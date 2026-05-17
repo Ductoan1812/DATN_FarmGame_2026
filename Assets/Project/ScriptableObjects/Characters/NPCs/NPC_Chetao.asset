@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8393fbdfdb650e5418aad1c82ae5b8b5, type: 3}
+  m_Name: NPC_Chetao
+  m_EditorClassIdentifier: 
+  id: npc_chetao
+  keyName: npc_chetao_name
+  descKey: npc_chetao_desc
+  icon: {fileID: 0}
+  category: 0
+  maxStack: 1
+  buyPrice: 0
+  sellPrice: 0
+  baseStats:
+    baseStats:
+    - statType: 13
+      value: 5000
+  placementRule:
+    occupyLayer: 0
+    requireTags: 0
+    provideTags: 0
+    blockLayers: 
+  modules:
+  - rid: 8196222910859575303
+  - rid: 8196222910859575304
+  references:
+    version: 2
+    RefIds:
+    - rid: 8196222910859575303
+      type: {class: DialogueModule, ns: , asm: Assembly-CSharp}
+      data:
+        graph: {fileID: 11400000, guid: 2ae8159d3fdb43b79a640e9c3a127f01, type: 2}
+        optionTextKey: ui.dialogue.talk
+        priority: 10
+    - rid: 8196222910859575304
+      type: {class: InventoryModule, ns: , asm: Assembly-CSharp}
+      data:
+        inventoryType: 0
+        size: 20

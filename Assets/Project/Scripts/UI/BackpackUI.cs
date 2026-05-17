@@ -1,106 +1,214 @@
 using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 /// <summary>
-/// FE Backpack — gắn vào UIManager (luôn active, không bao giờ miss event).
-/// Cache data từ BackpackSlotChangedPublish và render info panel từ BackpackItemInfoChangedPublish.
+/// FE Backpack view.
+/// Owns UI binding/rendering only; gameplay mutations are requested through EventBus and handled by PlayerBridge.
 /// </summary>
 public class BackpackUI : MonoBehaviour
 {
-    [Header("Refs")]
+    // ══════════════════════════════════════════════════════════
+    //  Panel Main
+    // ══════════════════════════════════════════════════════════
+
+    [Header("Panel Main")]
+    [Tooltip("Root chứa toàn bộ slot item. Thường là BackpackWindow/.../Viewport/Content.")]
     [SerializeField] private Transform slotsContainer;
+
+    [Tooltip("Text hiển thị tổng tiền hiện tại.")]
+    [SerializeField] private TMP_Text totalMoneyText;
+
+    [FormerlySerializedAs("btnSort")]
     [SerializeField] private Button btnSort;
-    [SerializeField] private Image infoIcon;
-    [SerializeField] private TMP_Text infoAmountText;
-    [SerializeField] private TMP_Text nameText;
-    [SerializeField] private TMP_Text descText;
-    [SerializeField] private TMP_Text categoryText;
-    [SerializeField] private TMP_Text priceText;
-    [SerializeField] private GameObject rareObject;
-    [SerializeField] private Button btnUse;
-    [SerializeField] private Button btnSeparate;
+
+    [Tooltip("Giảm giá trị trong Split Input.")]
+    [SerializeField] private Button btnReturn;
+
+    [Tooltip("Tăng giá trị trong Split Input.")]
+    [SerializeField] private Button btnNext;
+
+    [FormerlySerializedAs("splitInput")]
     [SerializeField] private TMP_InputField splitInput;
+
+    [FormerlySerializedAs("btnSeparate")]
+    [SerializeField] private Button btnSplit;
+
+    // ══════════════════════════════════════════════════════════
+    //  Header InfoItem
+    // ══════════════════════════════════════════════════════════
+
+    [Header("Header InfoItem")]
+    [FormerlySerializedAs("infoIcon")]
+    [SerializeField] private Image itemIcon;
+
+    [FormerlySerializedAs("infoAmountText")]
+    [SerializeField] private TMP_Text itemAmountText;
+
+    [FormerlySerializedAs("nameText")]
+    [SerializeField] private TMP_Text itemNameText;
+
+    [FormerlySerializedAs("categoryText")]
+    [SerializeField] private TMP_Text categoryText;
+
+    [SerializeField] private TMP_Text rareText;
+
+    [FormerlySerializedAs("rareObject")]
+    [SerializeField] private GameObject rareObject;
+
+    [FormerlySerializedAs("descText")]
+    [SerializeField] private TMP_Text descText;
+
+    [FormerlySerializedAs("priceText")]
+    [SerializeField] private TMP_Text priceText;
+
+    [FormerlySerializedAs("btnUse")]
+    [SerializeField] private Button btnUse;
+
+    [FormerlySerializedAs("btnDrop")]
     [SerializeField] private Button btnDrop;
-    [SerializeField] private StatListUI statListUI;
+
+    // ══════════════════════════════════════════════════════════
+    //  Item Stats
+    // ══════════════════════════════════════════════════════════
+
+    [Header("Item Stats")]
+    [SerializeField] private StatDefinitionDatabase statDatabase;
+    [SerializeField] private Transform statsContent;
+    [SerializeField] private StatRowUI statRowPrefab;
 
     private const int MaxDisplayAmount = 99999;
+    private const int DefaultSplitAmount = 1;
 
-    private struct SlotData
-    {
-        public Sprite icon;
-        public int amount;
-    }
+    private InventoryGridItemData[] cache;
+    private InventoryGridView gridView;
+    private LocalizedText itemNameLocalized;
+    private LocalizedText descLocalized;
+    private LocalizedText categoryLocalized;
+    private readonly List<GameObject> spawnedStatRows = new();
+    private bool viewsReady;
+    private bool wasActive;
+    private bool dirty;
+    private bool subscribed;
+    private bool refreshRequestedAfterSubscribe;
+    private int selectedIndex = -1;
+    private int selectedAmount;
 
-    private SlotData[] _cache;
-    private SlotView[] _views;
-    private LocalizedText _nameLocalized;
-    private LocalizedText _descLocalized;
-    private LocalizedText _categoryLocalized;
-    private bool _viewsReady;
-    private bool _wasActive;
-    private bool _dirty;
-    private bool _subscribed;
-    private int _selectedIndex = -1;
+    // ══════════════════════════════════════════════════════════
+    //  Unity Lifecycle
+    // ══════════════════════════════════════════════════════════
 
     private void Start()
     {
-        CacheInfoRefs();
-        TrySubscribe();
+        AutoBindReferences();
+        SubscribeEvents();
         ClearInfoPanel();
+        SetSplitAmount(DefaultSplitAmount);
+        PublishVisualRefreshRequest();
     }
 
     private void OnEnable()
     {
-        TrySubscribe();
-
-        if (btnSort != null)
-            btnSort.onClick.AddListener(OnSortClicked);
-        if (btnSeparate != null)
-            btnSeparate.onClick.AddListener(OnSeparateClicked);
-        if (btnDrop != null)
-            btnDrop.onClick.AddListener(OnDropClicked);
+        AutoBindReferences();
+        SubscribeEvents();
+        RegisterButtonEvents();
+        PublishVisualRefreshRequest();
     }
 
     private void OnDisable()
     {
-        if (_subscribed)
-        {
-            var bus = GameManager.Instance?.EventBus;
-            if (bus != null)
-            {
-                bus.Unsubscribe<BackpackSlotChangedPublish>(OnSlotChanged);
-                bus.Unsubscribe<BackpackItemInfoChangedPublish>(OnItemInfoChanged);
-            }
-            _subscribed = false;
-        }
-
-        if (btnSort != null)
-            btnSort.onClick.RemoveListener(OnSortClicked);
-        if (btnSeparate != null)
-            btnSeparate.onClick.RemoveListener(OnSeparateClicked);
-        if (btnDrop != null)
-            btnDrop.onClick.RemoveListener(OnDropClicked);
+        UnsubscribeEvents();
+        UnregisterButtonEvents();
     }
 
-    private void TrySubscribe()
+    private void LateUpdate()
     {
-        if (_subscribed) return;
+        if (!subscribed)
+            SubscribeEvents();
+
+        bool active = IsContainerActive();
+        if (active && subscribed && cache == null)
+            PublishVisualRefreshRequest();
+
+        if (active && (!wasActive || dirty))
+        {
+            EnsureViews();
+            RefreshAllSlots();
+            dirty = false;
+        }
+
+        wasActive = active;
+    }
+
+    // ══════════════════════════════════════════════════════════
+    //  Subscribe Events
+    // ══════════════════════════════════════════════════════════
+
+    private void SubscribeEvents()
+    {
+        if (subscribed) return;
 
         var bus = GameManager.Instance?.EventBus;
         if (bus == null) return;
 
-        bus.Subscribe<BackpackSlotChangedPublish>(OnSlotChanged);
-        bus.Subscribe<BackpackItemInfoChangedPublish>(OnItemInfoChanged);
-        _subscribed = true;
+        bus.Subscribe<BackpackSlotChangedPublish>(OnBackpackSlotChanged);
+        bus.Subscribe<BackpackItemInfoChangedPublish>(OnBackpackItemInfoChanged);
+        bus.Subscribe<StatsChangedPublish>(OnStatsChanged);
+        subscribed = true;
+
+        if (!refreshRequestedAfterSubscribe)
+        {
+            refreshRequestedAfterSubscribe = true;
+            PublishVisualRefreshRequest();
+        }
     }
 
-    private void OnSlotChanged(BackpackSlotChangedPublish e)
+    private void UnsubscribeEvents()
+    {
+        if (!subscribed) return;
+
+        var bus = GameManager.Instance?.EventBus;
+        if (bus != null)
+        {
+            bus.Unsubscribe<BackpackSlotChangedPublish>(OnBackpackSlotChanged);
+            bus.Unsubscribe<BackpackItemInfoChangedPublish>(OnBackpackItemInfoChanged);
+            bus.Unsubscribe<StatsChangedPublish>(OnStatsChanged);
+        }
+
+        subscribed = false;
+        refreshRequestedAfterSubscribe = false;
+    }
+
+    private void RegisterButtonEvents()
+    {
+        if (btnSort != null) btnSort.onClick.AddListener(PublishSortRequest);
+        if (btnReturn != null) btnReturn.onClick.AddListener(DecreaseSplitAmount);
+        if (btnNext != null) btnNext.onClick.AddListener(IncreaseSplitAmount);
+        if (btnSplit != null) btnSplit.onClick.AddListener(PublishSplitRequest);
+        if (btnDrop != null) btnDrop.onClick.AddListener(PublishDropRequest);
+    }
+
+    private void UnregisterButtonEvents()
+    {
+        if (btnSort != null) btnSort.onClick.RemoveListener(PublishSortRequest);
+        if (btnReturn != null) btnReturn.onClick.RemoveListener(DecreaseSplitAmount);
+        if (btnNext != null) btnNext.onClick.RemoveListener(IncreaseSplitAmount);
+        if (btnSplit != null) btnSplit.onClick.RemoveListener(PublishSplitRequest);
+        if (btnDrop != null) btnDrop.onClick.RemoveListener(PublishDropRequest);
+    }
+
+    // ══════════════════════════════════════════════════════════
+    //  Event Handlers
+    // ══════════════════════════════════════════════════════════
+
+    private void OnBackpackSlotChanged(BackpackSlotChangedPublish e)
     {
         EnsureCache(e.index + 1);
-        _cache[e.index] = new SlotData { icon = e.icon, amount = e.amount };
-        _dirty = true;
+        cache[e.index] = new InventoryGridItemData(e.icon, e.amount);
+        dirty = true;
 
         if (IsContainerActive())
         {
@@ -109,10 +217,12 @@ public class BackpackUI : MonoBehaviour
         }
     }
 
-    private void OnItemInfoChanged(BackpackItemInfoChangedPublish e)
+    private void OnBackpackItemInfoChanged(BackpackItemInfoChangedPublish e)
     {
-        _selectedIndex = e.slotIndex;
+        selectedIndex = e.slotIndex;
+        selectedAmount = e.amount;
         UpdateSelectionVisual();
+        UpdateSplitControls();
 
         if (e.isEmpty)
         {
@@ -120,17 +230,15 @@ public class BackpackUI : MonoBehaviour
             return;
         }
 
-        SetIcon(infoIcon, e.icon);
-        SetAmountText(infoAmountText, e.amount, true);
-        SetLocalizedOrText(_nameLocalized, nameText, e.nameKey);
-        SetLocalizedOrText(_descLocalized, descText, e.descKey);
-        SetLocalizedOrText(_categoryLocalized, categoryText, e.categoryKey);
+        SetIcon(itemIcon, e.icon);
+        SetAmountText(itemAmountText, e.amount, true);
+        SetOptionalLocalizedOrText(itemNameLocalized, itemNameText, e.nameKey, itemNameText?.gameObject);
+        SetOptionalLocalizedOrText(descLocalized, descText, e.descKey, GetDescriptionRoot()?.gameObject ?? descText?.gameObject);
+        SetOptionalLocalizedOrText(categoryLocalized, categoryText, e.categoryKey, GetFieldRoot(categoryText, "Category"));
 
-        if (priceText != null)
-            priceText.text = e.sellPrice > 0 ? e.sellPrice.ToString() : string.Empty;
+        SetOptionalText(priceText, e.sellPrice > 0 ? e.sellPrice.ToString() : string.Empty, GetFieldRoot(priceText, "Price"));
 
-        if (rareObject != null)
-            rareObject.SetActive(false);
+        SetOptionalText(rareText, string.Empty, rareObject != null ? rareObject : rareText?.gameObject);
 
         if (btnUse != null)
             btnUse.interactable = true;
@@ -138,239 +246,541 @@ public class BackpackUI : MonoBehaviour
         ApplyStats(e.stats);
     }
 
-    private void LateUpdate()
+    private void OnStatsChanged(StatsChangedPublish e)
     {
-        if (!_subscribed)
-            TrySubscribe();
-
-        bool active = IsContainerActive();
-        if (active && (!_wasActive || _dirty))
-        {
-            EnsureViews();
-            RefreshAll();
-            _dirty = false;
-        }
-
-        _wasActive = active;
+        if (e.statType != StatType.Money) return;
+        SetTotalMoney(e.newValue);
     }
 
-    private void RefreshAll()
+    // ══════════════════════════════════════════════════════════
+    //  Publish Events
+    // ══════════════════════════════════════════════════════════
+
+    private void PublishSlotSelectedRequest(int index)
     {
-        if (_cache == null || _views == null) return;
-
-        for (int i = 0; i < _cache.Length && i < _views.Length; i++)
-            ApplySlot(i);
-
+        selectedIndex = index;
         UpdateSelectionVisual();
+        GameManager.Instance?.EventBus?.Publish(new BackpackSlotSelectedRequestPublish(index));
     }
 
-    private void OnSortClicked()
+    private void PublishSortRequest()
     {
         GameManager.Instance?.EventBus?.Publish(new BackpackSortRequestPublish());
     }
 
-    private void OnSeparateClicked()
+    private void PublishSplitRequest()
     {
-        if (_selectedIndex < 0) return;
+        if (selectedIndex < 0) return;
 
-        int amount = 1;
-        if (splitInput != null && !string.IsNullOrEmpty(splitInput.text))
-            int.TryParse(splitInput.text, out amount);
-
+        int amount = GetSplitAmount();
         if (amount <= 0) return;
 
         GameManager.Instance?.EventBus?.Publish(
-            new BackpackSplitRequestPublish(_selectedIndex, amount));
+            new BackpackSplitRequestPublish(selectedIndex, amount));
     }
 
-    private void OnDropClicked()
+    private void PublishDropRequest()
     {
-        if (_selectedIndex < 0) return;
+        if (selectedIndex < 0) return;
 
         GameManager.Instance?.EventBus?.Publish(
-            new InventoryDropRequestPublish(InventoryType.Backpack, _selectedIndex));
+            new InventoryDropRequestPublish(InventoryType.Backpack, selectedIndex));
     }
+
+    private void PublishVisualRefreshRequest()
+    {
+        GameManager.Instance?.EventBus?.Publish(new InventoryVisualRefreshRequestPublish());
+    }
+
+    // ══════════════════════════════════════════════════════════
+    //  Render / Grid View
+    // ══════════════════════════════════════════════════════════
+
+    private void RefreshAllSlots()
+    {
+        if (cache == null || gridView == null) return;
+        gridView.Render(cache, selectedIndex);
+    }
+
+    private void ApplySlot(int index)
+    {
+        if (cache == null || index < 0 || index >= cache.Length) return;
+        gridView?.SetSlot(index, cache[index]);
+    }
+
+    private void EnsureViews()
+    {
+        AutoAssignSlotsContainer();
+        if (viewsReady || slotsContainer == null) return;
+
+        gridView = slotsContainer.GetComponent<InventoryGridView>();
+        if (gridView == null)
+            gridView = slotsContainer.gameObject.AddComponent<InventoryGridView>();
+
+        gridView.Configure(
+            slotsContainer,
+            dragDropEnabled: true,
+            dragType: InventoryType.Backpack);
+        gridView.SetClickHandler((index, _) => PublishSlotSelectedRequest(index));
+
+        viewsReady = true;
+    }
+
+    private void UpdateSelectionVisual()
+    {
+        gridView?.SetSelectedIndex(selectedIndex);
+    }
+
+    private void ClearInfoPanel()
+    {
+        selectedAmount = 0;
+
+        SetIcon(itemIcon, null);
+        SetAmountText(itemAmountText, 0, true);
+        SetOptionalLocalizedOrText(itemNameLocalized, itemNameText, string.Empty, itemNameText?.gameObject);
+        SetOptionalLocalizedOrText(descLocalized, descText, string.Empty, GetDescriptionRoot()?.gameObject ?? descText?.gameObject);
+        SetOptionalLocalizedOrText(categoryLocalized, categoryText, string.Empty, GetFieldRoot(categoryText, "Category"));
+
+        SetOptionalText(rareText, string.Empty, rareObject != null ? rareObject : rareText?.gameObject);
+        SetOptionalText(priceText, string.Empty, GetFieldRoot(priceText, "Price"));
+        if (btnUse != null) btnUse.interactable = false;
+        ClearStats();
+
+        UpdateSplitControls();
+    }
+
+    private void ApplyStats(StatDisplay[] stats)
+    {
+        ClearStats();
+
+        if (stats == null || stats.Length == 0)
+            return;
+
+        AutoAssignStatsRefs();
+
+        if (statDatabase == null || statsContent == null)
+            return;
+
+        for (int i = 0; i < stats.Length; i++)
+        {
+            if (!statDatabase.TryGet(stats[i].statType, out var definition))
+                continue;
+
+            var row = CreateStatRow();
+            if (row == null)
+                continue;
+
+            row.Setup(definition, stats[i].value);
+            spawnedStatRows.Add(row.gameObject);
+        }
+
+        MoveDescriptionToBottom();
+    }
+
+    private void ClearStats()
+    {
+        for (int i = spawnedStatRows.Count - 1; i >= 0; i--)
+        {
+            if (spawnedStatRows[i] != null)
+                Destroy(spawnedStatRows[i]);
+        }
+
+        spawnedStatRows.Clear();
+        MoveDescriptionToBottom();
+    }
+
+    private StatRowUI CreateStatRow()
+    {
+        if (statsContent == null)
+            return null;
+
+        if (statRowPrefab != null)
+        {
+            var row = Instantiate(statRowPrefab, statsContent);
+            PlaceStatRowBeforeDescription(row.transform);
+            row.gameObject.SetActive(true);
+            return row;
+        }
+
+        var rowObject = new GameObject("StatRow", typeof(RectTransform), typeof(HorizontalLayoutGroup), typeof(StatRowUI));
+        rowObject.transform.SetParent(statsContent, false);
+        PlaceStatRowBeforeDescription(rowObject.transform);
+
+        var layout = rowObject.GetComponent<HorizontalLayoutGroup>();
+        layout.childAlignment = TextAnchor.MiddleLeft;
+        layout.spacing = 8f;
+        layout.childControlWidth = true;
+        layout.childControlHeight = true;
+        layout.childForceExpandWidth = false;
+        layout.childForceExpandHeight = false;
+
+        var nameObject = new GameObject("Name", typeof(RectTransform), typeof(TextMeshProUGUI));
+        nameObject.transform.SetParent(rowObject.transform, false);
+        nameObject.GetComponent<TextMeshProUGUI>().fontSize = 18f;
+
+        var valueObject = new GameObject("Value", typeof(RectTransform), typeof(TextMeshProUGUI));
+        valueObject.transform.SetParent(rowObject.transform, false);
+        valueObject.GetComponent<TextMeshProUGUI>().fontSize = 18f;
+
+        return rowObject.GetComponent<StatRowUI>();
+    }
+
+    private void PlaceStatRowBeforeDescription(Transform row)
+    {
+        if (row == null || statsContent == null)
+            return;
+
+        var descRoot = GetDescriptionRoot();
+        if (descRoot == null || descRoot.parent != statsContent)
+            return;
+
+        row.SetSiblingIndex(descRoot.GetSiblingIndex());
+    }
+
+    private void MoveDescriptionToBottom()
+    {
+        var descRoot = GetDescriptionRoot();
+        if (descRoot == null)
+            return;
+
+        descRoot.SetAsLastSibling();
+    }
+
+    private Transform GetDescriptionRoot()
+    {
+        AutoAssignStatsRefs();
+
+        if (statsContent == null)
+            return null;
+
+        return FindDirectChild(statsContent, "Desc_info")
+            ?? FindDirectChild(statsContent, "Desc_Info")
+            ?? FindDeepChild(statsContent, "Desc_info")
+            ?? FindDeepChild(statsContent, "Desc_Info");
+    }
+
+    private void SetTotalMoney(float value)
+    {
+        if (totalMoneyText != null)
+            totalMoneyText.text = Mathf.FloorToInt(value).ToString();
+    }
+
+    // ══════════════════════════════════════════════════════════
+    //  Split Controls
+    // ══════════════════════════════════════════════════════════
+
+    private void DecreaseSplitAmount()
+    {
+        SetSplitAmount(GetSplitAmount() - 1);
+    }
+
+    private void IncreaseSplitAmount()
+    {
+        SetSplitAmount(GetSplitAmount() + 1);
+    }
+
+    private int GetSplitAmount()
+    {
+        if (splitInput == null || string.IsNullOrWhiteSpace(splitInput.text))
+            return DefaultSplitAmount;
+
+        return int.TryParse(splitInput.text, out int value)
+            ? value
+            : DefaultSplitAmount;
+    }
+
+    private void SetSplitAmount(int value)
+    {
+        int max = selectedAmount > 1 ? selectedAmount - 1 : 1;
+        int clamped = Mathf.Clamp(value, 1, max);
+
+        if (splitInput != null)
+            splitInput.SetTextWithoutNotify(clamped.ToString());
+
+        UpdateSplitControls();
+    }
+
+    private void UpdateSplitControls()
+    {
+        bool canSplit = selectedIndex >= 0 && selectedAmount > 1;
+        int current = GetSplitAmount();
+        int max = selectedAmount > 1 ? selectedAmount - 1 : 1;
+
+        if (btnReturn != null) btnReturn.interactable = canSplit && current > 1;
+        if (btnNext != null) btnNext.interactable = canSplit && current < max;
+        if (btnSplit != null) btnSplit.interactable = canSplit;
+        if (splitInput != null) splitInput.interactable = canSplit;
+    }
+
+    // ══════════════════════════════════════════════════════════
+    //  Cache / State
+    // ══════════════════════════════════════════════════════════
 
     private bool IsContainerActive()
     {
+        AutoAssignSlotsContainer();
         return slotsContainer != null && slotsContainer.gameObject.activeInHierarchy;
     }
 
     private void EnsureCache(int minSize)
     {
-        if (_cache == null)
+        if (cache == null)
         {
-            _cache = new SlotData[minSize];
+            cache = new InventoryGridItemData[minSize];
             return;
         }
 
-        if (_cache.Length < minSize)
-        {
-            var old = _cache;
-            _cache = new SlotData[minSize];
-            old.CopyTo(_cache, 0);
-        }
+        if (cache.Length >= minSize) return;
+
+        var old = cache;
+        cache = new InventoryGridItemData[minSize];
+        old.CopyTo(cache, 0);
     }
 
-    private void EnsureViews()
+    // ══════════════════════════════════════════════════════════
+    //  Auto Bind References
+    // ══════════════════════════════════════════════════════════
+
+    private void AutoBindReferences()
     {
-        if (_viewsReady || slotsContainer == null) return;
+        AutoAssignSlotsContainer();
+        AutoAssignMainPanelRefs();
+        AutoAssignInfoItemRefs();
+        AutoAssignStatsRefs();
 
-        int count = slotsContainer.childCount;
-        _views = new SlotView[count];
-        for (int i = 0; i < count; i++)
-            _views[i] = new SlotView(slotsContainer.GetChild(i), HandleSlotSelected, i, InventoryType.Backpack);
-
-        _viewsReady = true;
+        if (itemNameText != null) itemNameLocalized = itemNameText.GetComponent<LocalizedText>();
+        if (descText != null) descLocalized = descText.GetComponent<LocalizedText>();
+        if (categoryText != null) categoryLocalized = categoryText.GetComponent<LocalizedText>();
     }
 
-    private void ApplySlot(int index)
+    private void AutoAssignMainPanelRefs()
     {
-        if (_views == null || index < 0 || index >= _views.Length) return;
-        if (_cache == null || index >= _cache.Length) return;
+        var window = ResolveBackpackWindow();
+        var root = window != null ? window : transform.root;
+        var footer = FindDeepChild(window, "GridFooter") ?? FindDeepChild(root, "BackPack_menu");
 
-        _views[index].SetIcon(_cache[index].icon);
-        _views[index].SetAmount(_cache[index].amount);
+        totalMoneyText ??= FindText(root, "total_money")
+                        ?? FindText(root, "MoneyText");
+
+        btnSort ??= FindButton(footer, "btn_sort")
+                ?? FindButton(footer, "SortButton");
+
+        btnReturn ??= FindButton(footer, "btn_return")
+                  ?? FindButton(footer, "PrevPageButton");
+
+        btnNext ??= FindButton(footer, "btn_next")
+                ?? FindButton(footer, "NextPageButton");
+
+        splitInput ??= FindInput(footer, "Number_inputText")
+                   ?? FindInput(footer, "SplitInput")
+                   ?? FindInput(footer, "PageInput");
+
+        btnSplit ??= FindButton(footer, "btnSplit")
+                 ?? FindButton(footer, "Btn_Split")
+                 ?? FindButton(footer, "btn_Separate")
+                 ?? FindButton(footer, "SplitButton");
     }
 
-    private void HandleSlotSelected(int index)
+    private void AutoAssignInfoItemRefs()
     {
-        _selectedIndex = index;
-        UpdateSelectionVisual();
-        GameManager.Instance?.EventBus?.Publish(new BackpackSlotSelectedRequestPublish(index));
-    }
-
-    private void CacheInfoRefs()
-    {
-        AutoAssignInfoRefs();
-
-        if (nameText != null) _nameLocalized = nameText.GetComponent<LocalizedText>();
-        if (descText != null) _descLocalized = descText.GetComponent<LocalizedText>();
-        if (categoryText != null) _categoryLocalized = categoryText.GetComponent<LocalizedText>();
-    }
-
-    private void AutoAssignInfoRefs()
-    {
-        var infoRoot = FindDeepChild(transform.root, "Info_Item");
+        var window = ResolveBackpackWindow();
+        var root = window != null ? window : transform.root;
+        var infoRoot = FindDeepChild(root, "Info_Item");
         if (infoRoot == null) return;
 
-        if (infoIcon == null)
-        {
-            var icon = FindDeepChild(infoRoot, "icon") ?? FindDeepChild(infoRoot, "Icon") ?? FindDeepChild(infoRoot, "Image");
-            if (icon != null) infoIcon = icon.GetComponent<Image>();
-        }
+        itemIcon ??= FindImage(infoRoot, "icon")
+                  ?? FindImage(infoRoot, "Icon")
+                  ?? FindImage(infoRoot, "Image");
 
-        if (nameText == null)
-        {
-            var target = FindDeepChild(infoRoot, "Name_Tmp");
-            if (target != null) nameText = target.GetComponent<TMP_Text>();
-        }
+        itemNameText ??= FindText(infoRoot, "itemName")
+                      ?? FindText(infoRoot, "Name_Tmp")
+                      ?? FindText(infoRoot, "ItemName");
 
-        if (descText == null)
-        {
-            var target = FindDeepChild(infoRoot, "desc_tmp");
-            if (target != null) descText = target.GetComponent<TMP_Text>();
-        }
+        categoryText ??= FindText(infoRoot, "Category")
+                      ?? FindText(infoRoot, "Category_tmp")
+                      ?? FindText(infoRoot, "ItemType");
 
-        if (categoryText == null)
-        {
-            var target = FindDeepChild(infoRoot, "Category_tmp");
-            if (target != null) categoryText = target.GetComponent<TMP_Text>();
-        }
+        rareText ??= FindText(infoRoot, "rare")
+                  ?? FindText(infoRoot, "Rare")
+                  ?? FindText(infoRoot, "Rarity_tmp")
+                  ?? FindText(infoRoot, "ItemRarity");
 
-        if (priceText == null)
-        {
-            var panel = FindDeepChild(infoRoot, "Price_panel");
-            if (panel != null)
-            {
-                var value = FindDeepChild(panel, "value") ?? FindDeepChild(panel, "Value");
-                if (value != null) priceText = value.GetComponent<TMP_Text>();
-            }
-        }
+        descText ??= FindText(infoRoot, "descText")
+                  ?? FindText(infoRoot, "desc_tmp")
+                  ?? FindText(infoRoot, "Description");
 
-        if (btnUse == null)
-        {
-            var target = FindDeepChild(infoRoot, "Btn_use") ?? FindDeepChild(infoRoot, "Btn_Use");
-            if (target != null) btnUse = target.GetComponent<Button>();
-        }
+        var pricePanel = FindDeepChild(infoRoot, "Price_panel");
+        priceText ??= FindText(pricePanel, "value")
+                   ?? FindText(pricePanel, "Value")
+                   ?? FindText(infoRoot, "priceText");
 
-        if (statListUI == null)
-        {
-            var scroll = FindDeepChild(infoRoot, "attribute_SclView");
-            if (scroll != null)
-            {
-                statListUI = scroll.GetComponentInChildren<StatListUI>(true);
+        btnUse ??= FindButton(infoRoot, "Btn_use")
+                ?? FindButton(infoRoot, "Btn_Use")
+                ?? FindButton(infoRoot, "UseButton");
 
-                if (statListUI == null)
-                {
-                    var content = FindDeepChild(scroll, "content") ?? FindDeepChild(scroll, "Content");
-                    if (content != null)
-                        statListUI = content.GetComponent<StatListUI>();
-                }
-            }
+        btnDrop ??= FindButton(infoRoot, "Btn_Drop")
+                 ?? FindButton(infoRoot, "DropButton");
 
-            if (statListUI == null)
-                statListUI = infoRoot.GetComponentInChildren<StatListUI>(true);
-        }
-
-        if (btnDrop == null)
-        {
-            var target = FindDeepChild(infoRoot, "Btn_Drop");
-            if (target != null) btnDrop = target.GetComponent<Button>();
-        }
-
-        // btn_Separate và Number_inputText nằm trong Button panel (cùng cấp với btn_sort)
-        var backpackMenu = FindDeepChild(transform.root, "BackPack_menu");
-        if (backpackMenu != null)
-        {
-            if (btnSeparate == null)
-            {
-                var target = FindDeepChild(backpackMenu, "btn_Separate");
-                if (target != null) btnSeparate = target.GetComponent<Button>();
-            }
-
-            if (splitInput == null)
-            {
-                var target = FindDeepChild(backpackMenu, "Number_inputText");
-                if (target != null) splitInput = target.GetComponent<TMP_InputField>();
-            }
-        }
+        AutoAssignStatsRefs();
     }
 
-    private void ApplyStats(StatDisplay[] stats)
+    private void AutoAssignStatsRefs()
     {
-        if (statListUI != null)
-            statListUI.Show(stats);
+        statDatabase ??= Resources.Load<StatDefinitionDatabase>("StatDefinitionDatabase");
+
+        var window = ResolveBackpackWindow();
+        var root = window != null ? window : transform.root;
+        var infoRoot = FindDeepChild(root, "Info_Item");
+
+        if (statsContent == null)
+        {
+            var statScroll = FindDeepChild(infoRoot, "attribute_SclView");
+            var content = FindDeepChild(statScroll, "content")
+                       ?? FindDeepChild(statScroll, "Content")
+                       ?? FindDeepChild(infoRoot, "StatsContent")
+                       ?? FindDeepChild(infoRoot, "AttributeContent");
+
+            statsContent = content;
+        }
+
+        if (statRowPrefab == null && statsContent != null)
+        {
+            statRowPrefab = statsContent.GetComponentInChildren<StatRowUI>(true);
+
+            if (statRowPrefab != null && statRowPrefab.transform.IsChildOf(statsContent))
+                statRowPrefab.gameObject.SetActive(false);
+        }
     }
 
-    private void UpdateSelectionVisual()
+    private void AutoAssignSlotsContainer()
     {
-        if (_views == null) return;
+        if (slotsContainer != null && IsValidSlotsContainerOwner(slotsContainer))
+            return;
 
-        for (int i = 0; i < _views.Length; i++)
-            _views[i].SetSelected(i == _selectedIndex);
+        slotsContainer = null;
+
+        var root = transform.root;
+        var backpackWindow = ResolveBackpackWindow();
+        var backpackPanel = backpackWindow != null
+            ? FindDeepChild(backpackWindow, "Backpack_Panel")
+            : FindDeepChild(root, "Backpack_Panel");
+
+        var found = FindSlotContainer(backpackPanel)
+                 ?? FindSlotContainer(backpackWindow)
+                 ?? FindSlotContainer(root);
+
+        if (found != null)
+        {
+            slotsContainer = found;
+            viewsReady = false;
+        }
+
+        if (slotsContainer == null)
+            Debug.LogWarning("[BackpackUI] Không tìm thấy slotsContainer cho BackpackWindow/BackpackWindow_Template.");
     }
 
-    private void ClearInfoPanel()
+    private Transform ResolveBackpackWindow()
     {
-        SetIcon(infoIcon, null);
-        SetAmountText(infoAmountText, 0, true);
-        SetLocalizedOrText(_nameLocalized, nameText, string.Empty);
-        SetLocalizedOrText(_descLocalized, descText, string.Empty);
-        SetLocalizedOrText(_categoryLocalized, categoryText, string.Empty);
+        var owner = FindAncestorBackpackWindow(transform);
+        if (owner != null) return owner;
 
-        if (priceText != null)
-            priceText.text = string.Empty;
+        var root = transform.root;
 
-        if (rareObject != null)
-            rareObject.SetActive(false);
+        var template = FindDeepChild(root, "BackpackWindow_Template");
+        if (template != null) return template;
 
-        if (btnUse != null)
-            btnUse.interactable = false;
-
-        if (statListUI != null)
-            statListUI.Clear();
+        return FindDeepChild(root, "BackpackWindow");
     }
+
+    private static Transform FindAncestorBackpackWindow(Transform target)
+    {
+        while (target != null)
+        {
+            if (target.name.Equals("BackpackWindow_Template", StringComparison.OrdinalIgnoreCase) ||
+                target.name.Equals("BackpackWindow", StringComparison.OrdinalIgnoreCase))
+            {
+                return target;
+            }
+
+            target = target.parent;
+        }
+
+        return null;
+    }
+
+    private bool IsValidSlotsContainerOwner(Transform candidate)
+    {
+        if (candidate == null) return false;
+
+        var expectedWindow = ResolveBackpackWindow();
+        if (expectedWindow == null) return true;
+
+        return candidate == expectedWindow || candidate.IsChildOf(expectedWindow);
+    }
+
+    private static bool IsTemplateTransform(Transform target)
+    {
+        while (target != null)
+        {
+            if (target.name.IndexOf("_Template", StringComparison.OrdinalIgnoreCase) >= 0)
+                return true;
+
+            target = target.parent;
+        }
+
+        return false;
+    }
+
+    private static Transform FindSlotContainer(Transform root)
+    {
+        if (root == null) return null;
+
+        var preferred = FindDeepChild(root, "Content");
+        if (LooksLikeSlotContainer(preferred)) return preferred;
+
+        var grid = FindDeepChild(root, "Grid");
+        if (LooksLikeSlotContainer(grid)) return grid;
+
+        return FindFirstSlotContainer(root);
+    }
+
+    private static Transform FindFirstSlotContainer(Transform root)
+    {
+        if (root == null) return null;
+        if (LooksLikeSlotContainer(root)) return root;
+
+        for (int i = 0; i < root.childCount; i++)
+        {
+            var found = FindFirstSlotContainer(root.GetChild(i));
+            if (found != null) return found;
+        }
+
+        return null;
+    }
+
+    private static bool LooksLikeSlotContainer(Transform candidate)
+    {
+        if (candidate == null || candidate.childCount < 4) return false;
+
+        int slotLike = 0;
+        for (int i = 0; i < candidate.childCount; i++)
+        {
+            var child = candidate.GetChild(i);
+            if (child.name.IndexOf("slot", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                FindDirectChild(child, "Icon") != null ||
+                FindDirectChild(child, "icon") != null ||
+                FindDirectChild(child, "Amount") != null)
+            {
+                slotLike++;
+            }
+        }
+
+        return slotLike >= 4;
+    }
+
+    // ══════════════════════════════════════════════════════════
+    //  UI Helpers
+    // ══════════════════════════════════════════════════════════
 
     private static void SetLocalizedOrText(LocalizedText localized, TMP_Text text, string key)
     {
@@ -384,12 +794,61 @@ public class BackpackUI : MonoBehaviour
             text.text = key ?? string.Empty;
     }
 
+    private static void SetOptionalLocalizedOrText(LocalizedText localized, TMP_Text text, string key, GameObject displayRoot)
+    {
+        bool hasValue = !string.IsNullOrWhiteSpace(key);
+
+        SetActiveIfNotNull(displayRoot, hasValue);
+
+        if (!hasValue)
+        {
+            if (localized != null) localized.SetKey(string.Empty);
+            if (text != null) text.text = string.Empty;
+            return;
+        }
+
+        SetLocalizedOrText(localized, text, key);
+    }
+
+    private static void SetOptionalText(TMP_Text text, string value, GameObject displayRoot)
+    {
+        bool hasValue = !string.IsNullOrWhiteSpace(value);
+
+        SetActiveIfNotNull(displayRoot, hasValue);
+
+        if (text != null)
+            text.text = hasValue ? value : string.Empty;
+    }
+
+    private static void SetActiveIfNotNull(GameObject target, bool active)
+    {
+        if (target != null && target.activeSelf != active)
+            target.SetActive(active);
+    }
+
+    private static GameObject GetFieldRoot(TMP_Text text, string parentNameHint)
+    {
+        if (text == null)
+            return null;
+
+        var parent = text.transform.parent;
+        if (parent != null &&
+            !string.IsNullOrEmpty(parentNameHint) &&
+            parent.name.IndexOf(parentNameHint, StringComparison.OrdinalIgnoreCase) >= 0)
+        {
+            return parent.gameObject;
+        }
+
+        return text.gameObject;
+    }
+
     private static void SetIcon(Image image, Sprite sprite)
     {
         if (image == null) return;
 
         image.sprite = sprite;
         image.color = sprite != null ? Color.white : new Color(1f, 1f, 1f, 0f);
+        image.enabled = sprite != null;
     }
 
     private static void SetAmountText(TMP_Text text, int amount, bool showWhenOne)
@@ -407,6 +866,44 @@ public class BackpackUI : MonoBehaviour
             : amount.ToString();
     }
 
+    private static Button FindButton(Transform root, string name)
+    {
+        var target = FindDeepChild(root, name);
+        return target != null ? target.GetComponent<Button>() : null;
+    }
+
+    private static TMP_Text FindText(Transform root, string name)
+    {
+        var target = FindDeepChild(root, name);
+        return target != null ? target.GetComponent<TMP_Text>() : null;
+    }
+
+    private static TMP_InputField FindInput(Transform root, string name)
+    {
+        var target = FindDeepChild(root, name);
+        return target != null ? target.GetComponent<TMP_InputField>() : null;
+    }
+
+    private static Image FindImage(Transform root, string name)
+    {
+        var target = FindDeepChild(root, name);
+        return target != null ? target.GetComponent<Image>() : null;
+    }
+
+    private static Transform FindDirectChild(Transform root, string name)
+    {
+        if (root == null) return null;
+
+        for (int i = 0; i < root.childCount; i++)
+        {
+            var child = root.GetChild(i);
+            if (string.Equals(child.name, name, StringComparison.OrdinalIgnoreCase))
+                return child;
+        }
+
+        return null;
+    }
+
     private static Transform FindDeepChild(Transform root, string name)
     {
         if (root == null || string.IsNullOrEmpty(name)) return null;
@@ -420,75 +917,4 @@ public class BackpackUI : MonoBehaviour
 
         return null;
     }
-
-    private class SlotView
-    {
-        private readonly Image _icon;
-        private readonly TextMeshProUGUI _amount;
-        private readonly GameObject _selected;
-        private readonly Toggle _toggle;
-
-        public SlotView(Transform root, Action<int> onSelected, int index, InventoryType invType)
-        {
-            var iconT = root.Find("icon") ?? root.Find("Icon") ?? root.Find("Image");
-            if (iconT != null) _icon = iconT.GetComponent<Image>();
-
-            var amountT = root.Find("Amount") ?? root.Find("Quantity");
-            if (amountT != null) _amount = amountT.GetComponent<TextMeshProUGUI>();
-
-            var selectedT = root.Find("Select") ?? root.Find("Selected") ?? root.Find("Highlight");
-            if (selectedT != null) _selected = selectedT.gameObject;
-
-            // Drag & drop
-            var drag = root.GetComponent<DraggableSlot>();
-            if (drag == null) drag = root.gameObject.AddComponent<DraggableSlot>();
-            drag.Init(invType, index, _icon);
-
-            _toggle = root.GetComponent<Toggle>();
-            if (_toggle != null)
-            {
-                _toggle.onValueChanged.AddListener(isOn =>
-                {
-                    if (isOn) onSelected?.Invoke(index);
-                });
-                return;
-            }
-
-            var button = root.GetComponent<Button>();
-            if (button != null)
-                button.onClick.AddListener(() => onSelected?.Invoke(index));
-        }
-
-        public void SetIcon(Sprite sprite)
-        {
-            if (_icon == null) return;
-            _icon.sprite = sprite;
-            _icon.color = sprite != null ? Color.white : new Color(1f, 1f, 1f, 0f);
-        }
-
-        public void SetAmount(int amount)
-        {
-            if (_amount == null) return;
-
-            if (amount <= 0)
-            {
-                _amount.text = string.Empty;
-                return;
-            }
-
-            _amount.text = amount > MaxDisplayAmount
-                ? MaxDisplayAmount.ToString()
-                : amount.ToString();
-        }
-
-        public void SetSelected(bool selected)
-        {
-            if (_toggle != null)
-                _toggle.SetIsOnWithoutNotify(selected);
-
-            if (_selected != null)
-                _selected.SetActive(selected);
-        }
-    }
-
 }

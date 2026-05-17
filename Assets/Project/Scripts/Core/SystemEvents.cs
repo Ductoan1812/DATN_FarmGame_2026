@@ -1,4 +1,6 @@
 using Assets.HeroEditor4D.Common.Scripts.Enums;
+using DialogueGraphTool;
+using System.Collections.Generic;
 using UnityEngine;
 
 // ══════════════════════════════════════════════════════════
@@ -79,6 +81,21 @@ public struct InventoryDataRestoredPublish { }
 /// <summary>Phase 4: PlayerBridge đã bind xong Player entity ↔ UI.</summary>
 public struct PlayerReadyPublish { }
 
+/// <summary>Thông tin định danh player hiện tại. PlayerBridge publish cho UI hiển thị tên/key.</summary>
+public struct PlayerInfoChangedPublish
+{
+    public readonly string entityId;
+    public readonly string keyName;
+    public readonly StatDisplay[] stats;
+
+    public PlayerInfoChangedPublish(string entityId, string keyName, StatDisplay[] stats = null)
+    {
+        this.entityId = entityId;
+        this.keyName = keyName;
+        this.stats = stats ?? System.Array.Empty<StatDisplay>();
+    }
+}
+
 /// <summary>Phase 5: Toàn bộ boot sequence hoàn tất — game sẵn sàng chơi.</summary>
 public struct GameReadyPublish { }
 
@@ -110,6 +127,12 @@ public struct InventoryChangedPublish
     public InventoryChangedPublish(string entityId, InventoryType inventoryType)
     { this.entityId = entityId; this.inventoryType = inventoryType; }
 }
+
+/// <summary>
+/// UI request PlayerBridge publish lại snapshot hiện tại của hotbar/backpack/equipment.
+/// Dùng khi UI vừa enable hoặc vừa cache xong view, tránh miss event đã publish trước đó.
+/// </summary>
+public struct InventoryVisualRefreshRequestPublish { }
 
 /// <summary>
 /// Nội dung 1 slot hotbar thay đổi (icon, amount).
@@ -325,4 +348,125 @@ public struct DestroyEntityRequestPublish
 {
     public readonly string idRuntime;
     public DestroyEntityRequestPublish(string idRuntime) { this.idRuntime = idRuntime; }
+}
+
+// ── Interaction / Dialogue / Quest ───────────────────────
+
+public struct InteractionOptionsReadyPublish
+{
+    public readonly EntityRuntime interactor;
+    public readonly EntityRuntime target;
+    public readonly IReadOnlyList<InteractionOptionRuntime> options;
+
+    public InteractionOptionsReadyPublish(
+        EntityRuntime interactor,
+        EntityRuntime target,
+        IReadOnlyList<InteractionOptionRuntime> options)
+    {
+        this.interactor = interactor;
+        this.target = target;
+        this.options = options;
+    }
+}
+
+public struct DialogueViewPublish
+{
+    public readonly DialogueViewData viewData;
+
+    public DialogueViewPublish(DialogueViewData viewData)
+    {
+        this.viewData = viewData;
+    }
+}
+
+public struct DialogueEventNodePublish
+{
+    public readonly DialogueViewData context;
+    public readonly string eventKey;
+    public readonly string payload;
+
+    public DialogueEventNodePublish(DialogueViewData context, string eventKey, string payload)
+    {
+        this.context = context;
+        this.eventKey = eventKey;
+        this.payload = payload;
+    }
+}
+
+public struct DialogueAudioNodePublish
+{
+    public readonly DialogueViewData context;
+    public readonly string audioKey;
+    public readonly DialogueAudioMode audioMode;
+
+    public DialogueAudioNodePublish(DialogueViewData context, string audioKey, DialogueAudioMode audioMode)
+    {
+        this.context = context;
+        this.audioKey = audioKey;
+        this.audioMode = audioMode;
+    }
+}
+
+public struct DialoguePortraitNodePublish
+{
+    public readonly DialogueViewData context;
+    public readonly string portraitKey;
+    public readonly DialoguePortraitSlot portraitSlot;
+    public readonly string emotionKey;
+
+    public DialoguePortraitNodePublish(DialogueViewData context, string portraitKey, DialoguePortraitSlot portraitSlot, string emotionKey)
+    {
+        this.context = context;
+        this.portraitKey = portraitKey;
+        this.portraitSlot = portraitSlot;
+        this.emotionKey = emotionKey;
+    }
+}
+
+public struct QuestViewPublish
+{
+    public readonly QuestViewData viewData;
+
+    public QuestViewPublish(QuestViewData viewData)
+    {
+        this.viewData = viewData;
+    }
+}
+
+public struct QuestStateChangedPublish
+{
+    public readonly string playerEntityId;
+    public readonly string questId;
+    public readonly QuestState state;
+
+    public QuestStateChangedPublish(string playerEntityId, string questId, QuestState state)
+    {
+        this.playerEntityId = playerEntityId;
+        this.questId = questId;
+        this.state = state;
+    }
+}
+
+public struct ShopViewPublish
+{
+    public readonly ShopViewData viewData;
+
+    public ShopViewPublish(ShopViewData viewData)
+    {
+        this.viewData = viewData;
+    }
+}
+
+public struct ShopTransactionResultPublish
+{
+    public readonly EntityRuntime customer;
+    public readonly EntityRuntime merchant;
+    public readonly ShopTransactionResult result;
+
+    public ShopTransactionResultPublish(EntityRuntime customer, EntityRuntime merchant, ShopTransactionResult result)
+    {
+        this.customer = customer;
+        this.merchant = merchant;
+        this.result = result;
+    }
 }

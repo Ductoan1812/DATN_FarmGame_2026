@@ -1,38 +1,25 @@
-using UnityEngine;
-using System.Collections.Generic;
-
 /// <summary>
 /// Tool Scythe: quét damage tất cả entity trong tầm.
-/// Validate: luôn cho phép vung.
-/// Execute: gây damage (gọi tại frame "Hit" của animation).
 /// </summary>
-public class ScytheRuntime : ToolRuntime
+public class ScytheRuntime : DamageToolRuntime
 {
-    public ScytheRuntime(ToolModule data) : base(data) { }
+    public ScytheRuntime(ToolModule data) : base(data, ToolType.Scythe, hitAllTargets: true) { }
+}
 
-    protected override bool Validate(GameObject actorGO, PrimaryActionEvent e)
-    {
-        return true;
-    }
+/// <summary>
+/// Tool Axe: gây damage đơn mục tiêu bằng ToolType.Axe.
+/// Thường dùng cho cây/gỗ hoặc enemy gần nhất phía trước.
+/// </summary>
+public class AxeRuntime : DamageToolRuntime
+{
+    public AxeRuntime(ToolModule data) : base(data, ToolType.Axe, hitAllTargets: false) { }
+}
 
-    protected override void Execute(GameObject actorGO, EntityRuntime actor, EntityRuntime item)
-    {
-        float range  = item?.stats.Get(StatType.Range) ?? 1.5f;
-        float damage = item?.stats.Get(StatType.Attack) ?? 1f;
-        if (range <= 0f) range = 1.5f;
-        if (damage <= 0f) damage = 1f;
-
-        List<EntityRuntime> targets = EntityScanSystem.GetAll(actorGO, range);
-
-        if (targets == null || targets.Count == 0)
-        {
-            Debug.Log("[ScytheRuntime] Không có target trong tầm.");
-            return;
-        }
-
-        foreach (var target in targets)
-        {
-            target.TriggerEvent(new TakeDamageEvent(item, damage, ToolType.Scythe));
-        }
-    }
+/// <summary>
+/// Tool Pickaxe: gây damage đơn mục tiêu bằng ToolType.Pickaxe.
+/// Dùng cho quặng/đá hoặc target gần nhất phía trước.
+/// </summary>
+public class PickaxeRuntime : DamageToolRuntime
+{
+    public PickaxeRuntime(ToolModule data) : base(data, ToolType.Pickaxe, hitAllTargets: false) { }
 }

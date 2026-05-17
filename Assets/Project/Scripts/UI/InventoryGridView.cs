@@ -1,0 +1,299 @@
+using System;
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
+/// <summary>
+/// Shared UI renderer for inventory-like slot grids.
+/// It owns only visual slot binding and click routing; gameplay actions stay in the caller.
+/// </summary>
+public class InventoryGridView : MonoBehaviour
+{
+    [SerializeField] private Transform slotsContainer;
+    [SerializeField] private Button slotTemplate;
+    [SerializeField] private int visibleSlots;
+    [SerializeField] private bool enableDragDrop;
+    [SerializeField] private InventoryType dragInventoryType = InventoryType.Backpack;
+    [SerializeField] private bool showAmountWhenOne;
+
+    private readonly List<SlotView> views = new();
+    private readonly List<GameObject> spawnedSlots = new();
+    private Action<int, InventoryGridItemData> onSlotClicked;
+    private IReadOnlyList<InventoryGridItemData> currentItems;
+    private bool viewsReady;
+    private int selectedIndex = -1;
+
+    public void Configure(
+        Transform container,
+        Button template = null,
+        int visibleSlotCount = 0,
+        bool dragDropEnabled = false,
+        InventoryType dragType = InventoryType.Backpack,
+        bool showOneAmount = false)
+    {
+        slotsContainer = container;
+        slotTemplate = template;
+        visibleSlots = visibleSlotCount;
+        enableDragDrop = dragDropEnabled;
+        dragInventoryType = dragType;
+        showAmountWhenOne = showOneAmount;
+        viewsReady = false;
+    }
+
+    public void SetClickHandler(Action<int, InventoryGridItemData> handler)
+    {
+        onSlotClicked = handler;
+    }
+
+    public void Render(IReadOnlyList<InventoryGridItemData> items, int selected = -1, int visibleSlotOverride = -1)
+    {
+        currentItems = items ?? Array.Empty<InventoryGridItemData>();
+        selectedIndex = selected;
+
+        int targetSlotCount = visibleSlotOverride > 0
+            ? visibleSlotOverride
+            : visibleSlots > 0
+                ? visibleSlots
+                : currentItems.Count;
+
+        EnsureViews(Mathf.Max(targetSlotCount, currentItems.Count));
+        RefreshAll();
+        ForceRebuild();
+    }
+
+    public void SetSlot(int index, InventoryGridItemData item)
+    {
+        if (index < 0) return;
+
+        EnsureViews(index + 1);
+        if (index >= views.Count) return;
+
+        views[index].Set(item, index == selectedIndex);
+    }
+
+    public void SetSelectedIndex(int index)
+    {
+        selectedIndex = index;
+        for (int i = 0; i < views.Count; i++)
+            views[i].SetSelected(i == selectedIndex);
+    }
+
+    public void Clear()
+    {
+        currentItems = Array.Empty<InventoryGridItemData>();
+        selectedIndex = -1;
+
+        foreach (var slot in spawnedSlots)
+        {
+            if (slot != null) Destroy(slot);
+        }
+
+        spawnedSlots.Clear();
+        views.Clear();
+        viewsReady = false;
+    }
+
+    private void EnsureViews(int count)
+    {
+        if (slotsContainer == null) return;
+
+        if (!viewsReady)
+        {
+            views.Clear();
+
+            int existingCount = slotsContainer.childCount;
+            for (int i = 0; i < existingCount; i++)
+            {
+                var child = slotsContainer.GetChild(i);
+                if (slotTemplate != null && child == slotTemplate.transform)
+                    continue;
+
+                views.Add(CreateView(child, views.Count));
+            }
+
+            viewsReady = true;
+        }
+
+        while (views.Count < count && slotTemplate != null)
+        {
+            var slot = Instantiate(slotTemplate, slotsContainer);
+            slot.gameObject.SetActive(true);
+            spawnedSlots.Add(slot.gameObject);
+            views.Add(CreateView(slot.transform, views.Count));
+        }
+
+        for (int i = 0; i < views.Count; i++)
+            views[i].RebindDrag(i, enableDragDrop, dragInventoryType);
+    }
+
+    private SlotView CreateView(Transform root, int index)
+    {
+        return new SlotView(
+            root,
+            index,
+            enableDragDrop,
+            dragInventoryType,
+            showAmountWhenOne,
+            HandleSlotClicked);
+    }
+
+    private void RefreshAll()
+    {
+        for (int i = 0; i < views.Count; i++)
+        {
+            var item = i < currentItems.Count ? currentItems[i] : InventoryGridItemData.Empty;
+            views[i].Set(item, i == selectedIndex);
+        }
+    }
+
+    private void HandleSlotClicked(int index)
+    {
+        var item = index >= 0 && currentItems != null && index < currentItems.Count
+            ? currentItems[index]
+            : InventoryGridItemData.Empty;
+
+        if (!item.Interactable) return;
+
+        selectedIndex = index;
+        SetSelectedIndex(index);
+        onSlotClicked?.Invoke(index, item);
+    }
+
+    private void ForceRebuild()
+    {
+        if (slotsContainer is not RectTransform rect) return;
+
+        Canvas.ForceUpdateCanvases();
+        LayoutRebuilder.ForceRebuildLayoutImmediate(rect);
+    }
+
+    private sealed class SlotView
+    {
+        private const int MaxDisplayAmount = 99999;
+
+        private readonly Image icon;
+        private readonly TMP_Text amountText;
+        private readonly GameObject selectedObject;
+        private readonly Toggle toggle;
+        private readonly Button button;
+        private readonly Transform root;
+        private readonly bool showAmountWhenOne;
+
+        public SlotView(
+            Transform root,
+            int index,
+            bool enableDragDrop,
+            InventoryType dragType,
+            bool showAmountWhenOne,
+            Action<int> onSelected)
+        {
+            this.root = root;
+            this.showAmountWhenOne = showAmountWhenOne;
+
+            var iconT = root.Find("icon") ?? root.Find("Icon") ?? root.Find("Image");
+            if (iconT != null) icon = iconT.GetComponent<Image>();
+
+            var amountT = root.Find("Amount") ?? root.Find("Quantity") ?? root.Find("AmountText");
+            if (amountT != null) amountText = amountT.GetComponent<TMP_Text>();
+
+            var selectedT = root.Find("Select") ?? root.Find("Selected") ?? root.Find("Highlight");
+            if (selectedT != null) selectedObject = selectedT.gameObject;
+
+            if (enableDragDrop)
+            {
+                var drag = root.GetComponent<DraggableSlot>();
+                if (drag == null) drag = root.gameObject.AddComponent<DraggableSlot>();
+                drag.Init(dragType, index, icon);
+            }
+
+            toggle = root.GetComponent<Toggle>();
+            if (toggle != null)
+            {
+                toggle.onValueChanged.AddListener(isOn =>
+                {
+                    if (isOn) onSelected?.Invoke(index);
+                });
+                return;
+            }
+
+            button = root.GetComponent<Button>();
+            if (button != null)
+                button.onClick.AddListener(() => onSelected?.Invoke(index));
+        }
+
+        public void RebindDrag(int index, bool enableDragDrop, InventoryType dragType)
+        {
+            if (!enableDragDrop) return;
+
+            var drag = root.GetComponent<DraggableSlot>();
+            if (drag == null) drag = root.gameObject.AddComponent<DraggableSlot>();
+            drag.Init(dragType, index, icon);
+        }
+
+        public void Set(InventoryGridItemData item, bool selected)
+        {
+            SetIcon(item.Icon);
+            SetAmount(item.Amount);
+            SetSelected(selected);
+
+            if (button != null)
+                button.interactable = item.Interactable;
+
+            if (toggle != null)
+                toggle.interactable = item.Interactable;
+        }
+
+        public void SetSelected(bool selected)
+        {
+            if (toggle != null)
+                toggle.SetIsOnWithoutNotify(selected);
+
+            if (selectedObject != null)
+                selectedObject.SetActive(selected);
+        }
+
+        private void SetIcon(Sprite sprite)
+        {
+            if (icon == null) return;
+
+            icon.sprite = sprite;
+            icon.color = sprite != null ? Color.white : new Color(1f, 1f, 1f, 0f);
+            icon.enabled = sprite != null;
+            icon.preserveAspect = true;
+        }
+
+        private void SetAmount(int amount)
+        {
+            if (amountText == null) return;
+
+            if (amount <= 0 || (!showAmountWhenOne && amount <= 1))
+            {
+                amountText.text = string.Empty;
+                return;
+            }
+
+            amountText.text = amount > MaxDisplayAmount
+                ? MaxDisplayAmount.ToString()
+                : amount.ToString();
+        }
+    }
+}
+
+public readonly struct InventoryGridItemData
+{
+    public static InventoryGridItemData Empty => new(null, 0, null, false);
+
+    public Sprite Icon { get; }
+    public int Amount { get; }
+    public object Payload { get; }
+    public bool Interactable { get; }
+
+    public InventoryGridItemData(Sprite icon, int amount, object payload = null, bool interactable = true)
+    {
+        Icon = icon;
+        Amount = amount;
+        Payload = payload;
+        Interactable = interactable;
+    }
+}

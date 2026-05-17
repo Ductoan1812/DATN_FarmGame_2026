@@ -14,3 +14,22 @@ public class ActionModule : IModuleData
         return new ActionRuntime(this);
     }
 }
+
+/// <summary>
+/// Module portal chuyển scene qua interaction option.
+/// Gắn vào EntityData của cổng/cửa/NPC vận chuyển.
+/// </summary>
+[System.Serializable]
+public class ScenePortalModule : IModuleData
+{
+    public string optionTextKey = "ui.scene.enter";
+    public int priority = 40;
+    public string targetSceneName;
+    public string targetSpawnPointId;
+    public bool saveBeforeTransition = true;
+
+    public override IModuleRuntime CreateRuntime()
+    {
+        return new ScenePortalRuntime(this);
+    }
+}
