@@ -91,40 +91,17 @@ public class QuestPanelUI : MonoBehaviour
 
     private void Show()
     {
-        if (TryOpenViaRoot("quest")) return;
-
         if (panel != null) panel.SetActive(true);
         else gameObject.SetActive(true);
-        UIRootController.Instance?.NotifyWindowStateChanged();
     }
 
     private void Hide()
     {
         ClearObjectives();
         currentViewData = null;
-        if (TryCloseViaRoot("quest")) return;
 
         if (panel != null) panel.SetActive(false);
         else gameObject.SetActive(false);
-        UIRootController.Instance?.NotifyWindowStateChanged();
-    }
-
-    private bool TryOpenViaRoot(string id)
-    {
-        var root = UIRootController.Instance;
-        if (root == null || !root.TryGetEntry(id, out _)) return false;
-
-        root.Open(id);
-        return true;
-    }
-
-    private bool TryCloseViaRoot(string id)
-    {
-        var root = UIRootController.Instance;
-        if (root == null || !root.TryGetEntry(id, out _)) return false;
-
-        root.Close(id);
-        return true;
     }
 
     private void ClearObjectives()

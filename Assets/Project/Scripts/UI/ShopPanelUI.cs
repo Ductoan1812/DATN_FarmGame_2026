@@ -21,7 +21,7 @@ public class ShopPanelUI : MonoBehaviour
 
     [Header("Buy Page")]
     [SerializeField] private Transform buyListRoot;
-    [SerializeField] private Button buyRowTemplate;
+    [SerializeField] private ShopBuyRowUI buyRowTemplate;
 
     [Header("Sell Page")]
     [SerializeField] private Transform sellInventoryGridRoot;
@@ -133,7 +133,6 @@ public class ShopPanelUI : MonoBehaviour
         ClearSpawned();
         if (buyListRoot == null || currentView?.StockItems == null) return;
 
-        EnsureBuyRowTemplate();
         if (buyRowTemplate == null) return;
 
         foreach (var item in currentView.StockItems)
@@ -144,64 +143,22 @@ public class ShopPanelUI : MonoBehaviour
             row.gameObject.SetActive(true);
             spawnedObjects.Add(row.gameObject);
 
-            BindBuyRow(row.gameObject, item);
+            row.Init(item, currentView.CustomerMoney, OnBuyItem);
         }
 
         ForceRebuild(buyListRoot);
     }
 
-    private void BindBuyRow(GameObject row, ShopItemViewData item)
+    private void OnBuyItem(ShopItemViewData item, int quantity)
     {
-        int quantity = 1;
-        int maxQuantity = item.InfiniteStock
-            ? InfiniteStockMaxQuantity
-            : Mathf.Max(1, item.Amount);
-
-        var icon = FindImage(row.transform, "Icon");
-        var nameText = FindText(row.transform, "NameText");
-        var descriptionText = FindText(row.transform, "DescriptionText");
-        var priceText = FindText(row.transform, "PriceText");
-        var amountText = FindText(row.transform, "AmountText");
-        var minusButton = FindButton(row.transform, "MinusButton");
-        var plusButton = FindButton(row.transform, "PlusButton");
-        var actionButton = FindButton(row.transform, "BuyButton");
-
-        SetIcon(icon, item.ItemData);
-        SetLocalizedText(nameText, item.NameKey);
-        SetLocalizedText(descriptionText, item.ItemData != null ? item.ItemData.descKey : string.Empty);
-
-        void Refresh()
-        {
-            SetPlainText(priceText, (item.BuyPrice * quantity).ToString());
-            SetPlainText(amountText, quantity.ToString());
-        }
-
-        if (minusButton != null)
-            minusButton.onClick.AddListener(() =>
-            {
-                quantity = Mathf.Max(1, quantity - 1);
-                Refresh();
-            });
-
-        if (plusButton != null)
-            plusButton.onClick.AddListener(() =>
-            {
-                quantity = Mathf.Min(maxQuantity, quantity + 1);
-                Refresh();
-            });
-
-        if (actionButton != null)
-            actionButton.onClick.AddListener(() =>
-            {
-                var result = ShopService.TryBuy(currentView.Customer, currentView.Merchant, item, quantity);
-                if (result.Success)
-                    ShopService.Open(currentView.Customer, currentView.Merchant, currentView.Shop);
-                else
-                    Debug.LogWarning($"[ShopPanelUI] Buy failed: {result.FailReason}.");
-            });
-
-        Refresh();
+        var result = ShopService.TryBuy(currentView.Customer, currentView.Merchant, item, quantity);
+        if (result.Success)
+            ShopService.Open(currentView.Customer, currentView.Merchant, currentView.Shop);
+        else
+            Debug.LogWarning($"[ShopPanelUI] Buy failed: {result.FailReason}.");
     }
+
+
 
     private void RebuildSellGrid()
     {
@@ -273,11 +230,8 @@ public class ShopPanelUI : MonoBehaviour
 
     private void Show()
     {
-        if (TryOpenViaRoot("shop")) return;
-
         if (panel != null) panel.SetActive(true);
         else gameObject.SetActive(true);
-        UIRootController.Instance?.NotifyWindowStateChanged();
     }
 
     private void Hide()
@@ -286,29 +240,9 @@ public class ShopPanelUI : MonoBehaviour
         sellGridView?.Clear();
         currentView = null;
         selectedSellItem = null;
-        if (TryCloseViaRoot("shop")) return;
 
         if (panel != null) panel.SetActive(false);
         else gameObject.SetActive(false);
-        UIRootController.Instance?.NotifyWindowStateChanged();
-    }
-
-    private bool TryOpenViaRoot(string id)
-    {
-        var root = UIRootController.Instance;
-        if (root == null || !root.TryGetEntry(id, out _)) return false;
-
-        root.Open(id);
-        return true;
-    }
-
-    private bool TryCloseViaRoot(string id)
-    {
-        var root = UIRootController.Instance;
-        if (root == null || !root.TryGetEntry(id, out _)) return false;
-
-        root.Close(id);
-        return true;
     }
 
     private void SetTitle()
@@ -366,20 +300,7 @@ public class ShopPanelUI : MonoBehaviour
         });
     }
 
-    private void EnsureBuyRowTemplate()
-    {
-        if (buyRowTemplate != null)
-            return;
 
-        buyRowTemplate = FindButton(transform, "ShopBuyRowTemplate");
-        if (buyRowTemplate != null)
-            return;
-
-        if (buyListRoot == null)
-            return;
-
-        buyRowTemplate = CreateFallbackBuyRowTemplate(buyListRoot);
-    }
 
     private void EnsureSellSlotTemplate()
     {
@@ -396,68 +317,7 @@ public class ShopPanelUI : MonoBehaviour
         sellSlotTemplate = CreateFallbackSellSlotTemplate(sellInventoryGridRoot);
     }
 
-    private static Button CreateFallbackBuyRowTemplate(Transform parent)
-    {
-        var root = CreateTemplateButton("ShopBuyRowTemplate", parent);
-        root.gameObject.SetActive(false);
 
-        var rootLayout = GetOrAdd<HorizontalLayoutGroup>(root.gameObject);
-        rootLayout.spacing = 10f;
-        rootLayout.padding = new RectOffset(12, 12, 8, 8);
-        rootLayout.childAlignment = TextAnchor.MiddleLeft;
-        rootLayout.childControlWidth = false;
-        rootLayout.childControlHeight = false;
-        rootLayout.childForceExpandWidth = false;
-        rootLayout.childForceExpandHeight = false;
-
-        var rootSize = GetOrAdd<LayoutElement>(root.gameObject);
-        rootSize.minHeight = 86f;
-        rootSize.preferredHeight = 86f;
-        rootSize.flexibleWidth = 1f;
-
-        var icon = CreateStretchImage("Icon", root.transform, new Vector2(66f, 66f));
-        icon.preserveAspect = true;
-
-        var textBlock = CreateChild("TextBlock", root.transform);
-        var textLayout = GetOrAdd<VerticalLayoutGroup>(textBlock);
-        textLayout.spacing = 4f;
-        textLayout.childAlignment = TextAnchor.MiddleLeft;
-        textLayout.childControlWidth = true;
-        textLayout.childControlHeight = false;
-        textLayout.childForceExpandWidth = true;
-        textLayout.childForceExpandHeight = false;
-        var textSize = GetOrAdd<LayoutElement>(textBlock);
-        textSize.minWidth = 250f;
-        textSize.flexibleWidth = 1f;
-
-        CreateTemplateLabel("NameText", textBlock.transform, 28, FontStyles.Bold);
-        CreateTemplateLabel("DescriptionText", textBlock.transform, 22, FontStyles.Normal);
-
-        var priceText = CreateTemplateLabel("PriceText", root.transform, 24, FontStyles.Normal);
-        var priceSize = GetOrAdd<LayoutElement>(priceText.gameObject);
-        priceSize.minWidth = 100f;
-        priceSize.preferredWidth = 100f;
-
-        var minus = CreateTemplateButton("MinusButton", root.transform);
-        CreateTemplateLabel("Label", minus.transform, 24, FontStyles.Bold).text = "-";
-        SetButtonSize(minus, 48f, 48f);
-
-        var amount = CreateTemplateLabel("AmountText", root.transform, 24, FontStyles.Bold);
-        var amountSize = GetOrAdd<LayoutElement>(amount.gameObject);
-        amountSize.minWidth = 42f;
-        amountSize.preferredWidth = 42f;
-        amount.text = "1";
-
-        var plus = CreateTemplateButton("PlusButton", root.transform);
-        CreateTemplateLabel("Label", plus.transform, 24, FontStyles.Bold).text = "+";
-        SetButtonSize(plus, 48f, 48f);
-
-        var buyButton = CreateTemplateButton("BuyButton", root.transform);
-        CreateTemplateLabel("Label", buyButton.transform, 24, FontStyles.Bold).text = "Mua";
-        SetButtonSize(buyButton, 124f, 56f);
-
-        return root;
-    }
 
     private static Button CreateFallbackSellSlotTemplate(Transform parent)
     {

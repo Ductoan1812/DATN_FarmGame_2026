@@ -1,334 +1,248 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 
+/// <summary>
+/// Quản lý tab system bên trong MenuWindow.
+/// 
+/// Kết hợp với UIController: khi tab được chọn, UIController.Open(id) sẽ
+/// được gọi để hiện panel tương ứng.
+/// 
+/// Cách sử dụng:
+/// - Đặt component này trên MenuWindow (hoặc object cha chứa TabToggle).
+/// - Assign UIController reference (component trên cùng object hoặc drag trong Inspector).
+/// - Kéo thả các TabToggle vào tabToggles theo thứ tự.
+/// - Đặt tabToggles rỗng để auto-bind từ children.
+/// </summary>
 public class InventoryWindowUI : MonoBehaviour
 {
-    [Header("Tab Management")]
-    [SerializeField] private TabToggle[] tabToggles;
-    [SerializeField] private GameObject[] tabPanels;
-    [Header("Root Entry Mapping")]
-    [SerializeField] private string menuEntryId = "menu";
-    [SerializeField] private string backpackEntryId = "backpack";
-    [SerializeField] private string equipmentEntryId = "equipment";
-    [SerializeField] private string menuWindowName = "MenuWindow";
+    [Header("References")]
+    [SerializeField] private UIController uiController;
+    [SerializeField] private GameObject menuWindowRef;
 
-    private readonly Dictionary<TabType, GameObject> tabPanelMap = new();
+    [Header("Tab Toggles")]
+    [Tooltip("Để trống để auto-bind từ children")]
+    [SerializeField] private TabToggle[] tabToggles;
+
+    [Header("Legacy Mapping (Optional)")]
+    [SerializeField] private List<TabEntryMapping> tabEntryMappings = new();
+
     private readonly Dictionary<TabType, TabToggle> tabToggleMap = new();
     private TabType currentActiveTab;
     private bool tabsInitialized;
-    private bool rootSubscribed;
 
-    protected virtual void OnEnable()
+    // ─── Unity Lifecycle ────────────────────────────────────────────────
+
+    protected virtual void Awake()
     {
-        TrySubscribeRootController();
+        ResolveUIControllerReference();
     }
 
     protected virtual void Start()
     {
-        InitializeTabSystem();
-        TrySubscribeRootController();
-        ForceSetInventoryTab();
+        ResolveUIControllerReference();
+        AutoBindFromChildren();
+        BuildTabMaps();
+        // Mặc định chọn tab Inventory khi MenuWindow mở
+        SetActiveTabSilent(TabType.Inventory);
+    }
+
+    protected virtual void OnEnable()
+    {
+        // Mỗi khi MenuWindow được bật, reset về tab mặc định
+        if (tabsInitialized)
+            SetActiveTab(TabType.Inventory);
     }
 
     protected virtual void OnDestroy()
     {
-        UnsubscribeRootController();
-        UnsubscribeFromTabEvents();
+        UnsubscribeTabEvents();
     }
 
-    public void SetActiveTab(TabType tabType, bool triggerEvent = true)
+    // ─── Public API ─────────────────────────────────────────────────────
+
+    /// <summary>
+    /// Chọn tab và mở window tương ứng qua UIController.
+    /// </summary>
+    public void SetActiveTab(TabType tabType)
     {
-        if (!tabsInitialized)
-            InitializeTabSystem();
+        if (!tabsInitialized) BuildTabMaps();
+        ApplyTabSwitch(tabType);
+    }
 
-        if (currentActiveTab == tabType && tabPanelMap.ContainsKey(tabType))
-        {
-            if (tabPanelMap[tabType].activeSelf) return;
-        }
+    // ─── Private: Tab Switch ─────────────────────────────────────────────
 
-        bool usedMappedPanel = false;
-        HideAllTabPanels();
+    private void ApplyTabSwitch(TabType newTab)
+    {
+        var prevTab = currentActiveTab;
+        currentActiveTab = newTab;
 
-        if (tabPanelMap.TryGetValue(tabType, out var panel) && panel != null)
-        {
-            panel.SetActive(true);
-            usedMappedPanel = true;
-        }
+        // Sync toggle visuals
+        SyncToggles(newTab, prevTab);
 
-        if (tabToggleMap.TryGetValue(tabType, out var targetToggle) && targetToggle != null && !targetToggle.IsOn)
-            targetToggle.SetTabState(true, triggerEvent);
+        // Thông báo UIController mở window tương ứng
+        NotifyUIController(newTab);
+    }
 
-        if (tabToggleMap.TryGetValue(currentActiveTab, out var currentToggle) && currentToggle != null && currentToggle.IsOn)
-            currentToggle.SetTabState(false, false);
-
+    private void SetActiveTabSilent(TabType tabType)
+    {
         currentActiveTab = tabType;
 
-        if (triggerEvent)
-        {
-            if (!usedMappedPanel)
-                ApplyRootEntryForTab(tabType);
+        // Sync toggles không fire event
+        foreach (var pair in tabToggleMap)
+            pair.Value?.SetTabState(pair.Key == tabType, false);
+    }
 
-            UIRootController.Instance?.NotifyWindowStateChanged();
+    private void SyncToggles(TabType activeTab, TabType prevTab)
+    {
+        if (tabToggleMap.TryGetValue(activeTab, out var newToggle) && newToggle != null && !newToggle.IsOn)
+            newToggle.SetTabState(true, false);
+
+        if (prevTab != activeTab && tabToggleMap.TryGetValue(prevTab, out var oldToggle) && oldToggle != null && oldToggle.IsOn)
+            oldToggle.SetTabState(false, false);
+    }
+
+    /// <summary>
+    /// Lấy id window tương ứng với TabType rồi gọi UIController.Open(id).
+    /// Quy tắc mapping: dùng tên tab viết thường.
+    /// Ví dụ: Inventory → "backpack", InfoPlayer → "equipment".
+    /// </summary>
+    private void NotifyUIController(TabType tabType)
+    {
+        if (uiController == null) return;
+
+        var id = GetWindowIdForTab(tabType);
+        if (!string.IsNullOrWhiteSpace(id))
+            uiController.Open(id);
+    }
+
+    /// <summary>
+    /// Mapping từ TabType → window id trong UIController.
+    /// Override method này trong subclass nếu cần thay đổi mapping.
+    /// </summary>
+    protected virtual string GetWindowIdForTab(TabType tabType)
+    {
+        for (int i = 0; i < tabEntryMappings.Count; i++)
+        {
+            var mapping = tabEntryMappings[i];
+            if (mapping == null) continue;
+            if (mapping.tabType != tabType) continue;
+            if (!string.IsNullOrWhiteSpace(mapping.rootEntryId))
+                return mapping.rootEntryId;
+        }
+
+        return tabType switch
+        {
+            TabType.Inventory  => "backpack",
+            TabType.InfoPlayer => "equipment",
+            TabType.Quest      => "quest",
+            TabType.Shop       => "shop",
+            TabType.Skills     => "skills",
+            TabType.Map        => "map",
+            TabType.Settings   => "settings",
+            _                  => null
+        };
+    }
+
+    private void ResolveUIControllerReference()
+    {
+        if (uiController != null) return;
+
+        uiController = GetComponent<UIController>();
+        if (uiController != null) return;
+
+        uiController = GetComponentInParent<UIController>(true);
+        if (uiController != null) return;
+
+        if (menuWindowRef != null)
+        {
+            uiController = menuWindowRef.GetComponent<UIController>();
+            if (uiController == null)
+                uiController = menuWindowRef.GetComponentInParent<UIController>(true);
+            if (uiController != null) return;
+        }
+
+        uiController = FindAnyObjectByType<UIController>(FindObjectsInactive.Include);
+    }
+
+    // ─── Private: Initialization ─────────────────────────────────────────
+
+    private void AutoBindFromChildren()
+    {
+        if (tabToggles != null && tabToggles.Length > 0) return;
+
+        var found = new List<TabToggle>();
+        CollectTabToggles(transform, found);
+        found.Sort((a, b) => a.transform.GetSiblingIndex().CompareTo(b.transform.GetSiblingIndex()));
+        tabToggles = found.ToArray();
+    }
+
+    private static void CollectTabToggles(Transform root, List<TabToggle> result)
+    {
+        for (int i = 0; i < root.childCount; i++)
+        {
+            var child = root.GetChild(i);
+            var tt = child.GetComponent<TabToggle>();
+            if (tt != null)
+            {
+                result.Add(tt);
+                continue; // không đi sâu vào con của TabToggle
+            }
+            // Tránh đi vào object có InventoryWindowUI riêng
+            if (child.GetComponent<InventoryWindowUI>() == null)
+                CollectTabToggles(child, result);
         }
     }
 
-    private void ForceSetInventoryTab()
-    {
-        SetActiveTab(TabType.Inventory, false);
-        if (tabToggleMap.TryGetValue(TabType.Inventory, out var toggle) && toggle != null)
-            toggle.SetTabState(true, false);
-    }
-
-    private void TrySubscribeRootController()
-    {
-        if (rootSubscribed) return;
-        if (UIRootController.Instance == null) return;
-
-        UIRootController.Instance.EntryOpened += OnEntryOpened;
-        rootSubscribed = true;
-    }
-
-    private void UnsubscribeRootController()
-    {
-        if (!rootSubscribed || UIRootController.Instance == null) return;
-
-        UIRootController.Instance.EntryOpened -= OnEntryOpened;
-        rootSubscribed = false;
-    }
-
-    private void OnEntryOpened(string id)
-    {
-        if (string.Equals(id, menuEntryId, StringComparison.OrdinalIgnoreCase) ||
-            string.Equals(id, backpackEntryId, StringComparison.OrdinalIgnoreCase))
-            ForceSetInventoryTab();
-
-        if (string.Equals(id, equipmentEntryId, StringComparison.OrdinalIgnoreCase))
-            SyncTabVisualOnly(TabType.InfoPlayer);
-    }
-
-    private void InitializeTabSystem()
+    private void BuildTabMaps()
     {
         if (tabsInitialized) return;
 
-        tabPanelMap.Clear();
         tabToggleMap.Clear();
 
-        AutoBindTabsIfNeeded();
-
-        if (tabToggles != null)
+        foreach (var toggle in tabToggles)
         {
-            for (int i = 0; i < tabToggles.Length; i++)
-            {
-                var toggle = tabToggles[i];
-                if (toggle == null) continue;
-
-                tabToggleMap[toggle.TabType] = toggle;
-
-                GameObject panel = ResolvePanelForToggle(i, toggle.TabType);
-                if (panel != null)
-                    tabPanelMap[toggle.TabType] = panel;
-
-                if (tabPanels != null && i < tabPanels.Length && tabPanels[i] == null)
-                    tabPanels[i] = panel;
-            }
+            if (toggle == null) continue;
+            tabToggleMap[toggle.TabType] = toggle;
         }
 
-        SubscribeToTabEvents();
+        SubscribeTabEvents();
         tabsInitialized = true;
     }
 
-    private void SubscribeToTabEvents()
+    private void SubscribeTabEvents()
     {
         if (tabToggles == null) return;
         foreach (var toggle in tabToggles)
         {
             if (toggle == null) continue;
             toggle.OnTabSelected += OnTabSelected;
-            toggle.OnTabDeselected += OnTabDeselected;
         }
     }
 
-    private void UnsubscribeFromTabEvents()
+    private void UnsubscribeTabEvents()
     {
         if (tabToggles == null) return;
         foreach (var toggle in tabToggles)
         {
             if (toggle == null) continue;
             toggle.OnTabSelected -= OnTabSelected;
-            toggle.OnTabDeselected -= OnTabDeselected;
         }
     }
+
+    // ─── Tab Event Handler ───────────────────────────────────────────────
 
     private void OnTabSelected(TabType tabType)
     {
-        SetActiveTab(tabType, true);
+        if (!tabsInitialized) BuildTabMaps();
+        ApplyTabSwitch(tabType);
     }
+}
 
-    private void OnTabDeselected(TabType tabType) { }
+// ─── Supporting Types ────────────────────────────────────────────────────
 
-    private void HideAllTabPanels()
-    {
-        foreach (var panel in tabPanelMap.Values.Distinct())
-        {
-            if (panel != null)
-                panel.SetActive(false);
-        }
-    }
-
-    private void AutoBindTabsIfNeeded()
-    {
-        bool needsToggleBinding = tabToggles == null || tabToggles.Length == 0;
-        if (needsToggleBinding)
-        {
-            tabToggles = GetComponentsInChildren<TabToggle>(true)
-                .Where(t => t != null)
-                .OrderBy(t => t.transform.GetSiblingIndex())
-                .ToArray();
-
-            if (tabToggles.Length == 0)
-            {
-                var menuWindow = ResolveMenuWindow();
-                if (menuWindow != null)
-                {
-                    tabToggles = menuWindow.GetComponentsInChildren<TabToggle>(true)
-                        .Where(t => t != null)
-                        .OrderBy(t => t.transform.GetSiblingIndex())
-                        .ToArray();
-                }
-            }
-        }
-
-        if (tabToggles == null)
-            tabToggles = Array.Empty<TabToggle>();
-
-        if (tabPanels == null || tabPanels.Length != tabToggles.Length)
-            tabPanels = new GameObject[tabToggles.Length];
-    }
-
-    private GameObject ResolveMenuWindow()
-    {
-        var root = UIRootController.Instance;
-        if (root != null &&
-            !string.IsNullOrWhiteSpace(menuEntryId) &&
-            root.TryGetEntry(menuEntryId, out var entry) &&
-            entry?.Target != null)
-        {
-            return entry.Target;
-        }
-
-        if (!string.IsNullOrWhiteSpace(menuWindowName))
-        {
-            var byName = GameObject.Find(menuWindowName);
-            if (byName != null)
-                return byName;
-        }
-
-        return null;
-    }
-
-    private GameObject ResolvePanelForToggle(int index, TabType tabType)
-    {
-        if (tabPanels != null && index >= 0 && index < tabPanels.Length && tabPanels[index] != null)
-            return tabPanels[index];
-
-        return tabType switch
-        {
-            TabType.Inventory => FindPanelByNames("BackpackWindow", "InventoryWindow", "BackpackPanel"),
-            TabType.InfoPlayer => FindPanelByNames("EquipmentWindow", "EquipmentPanel"),
-            TabType.Quest => FindPanelByNames("QuestPanel", "QuestWindow"),
-            _ => null
-        };
-    }
-
-    private GameObject FindPanelByNames(params string[] names)
-    {
-        for (int i = 0; i < names.Length; i++)
-        {
-            var name = names[i];
-            if (string.IsNullOrWhiteSpace(name))
-                continue;
-
-            var child = transform.Find(name);
-            if (child != null)
-                return child.gameObject;
-
-            var menuWindow = ResolveMenuWindow();
-            if (menuWindow != null)
-            {
-                var nested = FindDeepChild(menuWindow.transform, name);
-                if (nested != null)
-                    return nested.gameObject;
-            }
-
-            var global = GameObject.Find(name);
-            if (global != null)
-                return global;
-        }
-
-        return null;
-    }
-
-    private static Transform FindDeepChild(Transform root, string name)
-    {
-        if (root == null || string.IsNullOrWhiteSpace(name))
-            return null;
-
-        if (string.Equals(root.name, name, StringComparison.Ordinal))
-            return root;
-
-        for (int i = 0; i < root.childCount; i++)
-        {
-            var found = FindDeepChild(root.GetChild(i), name);
-            if (found != null)
-                return found;
-        }
-
-        return null;
-    }
-
-    private void ApplyRootEntryForTab(TabType tabType)
-    {
-        var root = UIRootController.Instance;
-        if (root == null)
-            return;
-
-        if (tabType == TabType.Inventory)
-        {
-            if (!string.IsNullOrWhiteSpace(menuEntryId) && root.TryGetEntry(menuEntryId, out _))
-                root.Open(menuEntryId);
-            else if (!string.IsNullOrWhiteSpace(backpackEntryId) && root.TryGetEntry(backpackEntryId, out _))
-                root.Open(backpackEntryId);
-
-            if (!string.IsNullOrWhiteSpace(equipmentEntryId) && root.TryGetEntry(equipmentEntryId, out _))
-                root.Close(equipmentEntryId);
-            return;
-        }
-
-        if (tabType == TabType.InfoPlayer)
-        {
-            if (!string.IsNullOrWhiteSpace(menuEntryId) && root.TryGetEntry(menuEntryId, out _))
-                root.Open(menuEntryId);
-
-            if (!string.IsNullOrWhiteSpace(equipmentEntryId) && root.TryGetEntry(equipmentEntryId, out _))
-                root.Open(equipmentEntryId);
-        }
-    }
-
-    private void SyncTabVisualOnly(TabType activeTab)
-    {
-        if (!tabsInitialized)
-            InitializeTabSystem();
-
-        HideAllTabPanels();
-        if (tabPanelMap.TryGetValue(activeTab, out var panel) && panel != null)
-            panel.SetActive(true);
-
-        foreach (var pair in tabToggleMap)
-            pair.Value?.SetTabState(pair.Key == activeTab, false);
-
-        currentActiveTab = activeTab;
-    }
+[System.Serializable]
+public class TabEntryMapping
+{
+    public TabType tabType;
+    public string rootEntryId;
 }

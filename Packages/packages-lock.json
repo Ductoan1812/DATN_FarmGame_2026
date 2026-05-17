@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.anklebreaker.unity-mcp": {
+      "version": "https://github.com/AnkleBreaker-Studio/unity-mcp-plugin.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "f40a5c771e16fd0e0b682186f51f7a112599b707"
+    },
     "com.coplaydev.coplay": {
       "version": "https://github.com/CoplayDev/coplay-unity-plugin.git#beta",
       "depth": 0,
@@ -8,7 +15,7 @@
         "com.unity.inputsystem": "1.1.1",
         "com.unity.cloud.gltfast": "6.12.1"
       },
-      "hash": "9d45c4518791307476bbf314aaef68280d22f6b9"
+      "hash": "2b7638c0b66865a97df7a0069fcbdffa31034aec"
     },
     "com.unity.2d.animation": {
       "version": "9.2.0",

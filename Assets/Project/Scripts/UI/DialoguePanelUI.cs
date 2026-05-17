@@ -20,6 +20,7 @@ public class DialoguePanelUI : MonoBehaviour
     [FormerlySerializedAs("choiceButtonPrefab")]
     [SerializeField] private Button optionButtonPrefab;
     [SerializeField] private Button closeButton;
+    [SerializeField] private string externalWindowId = "dialogue";
 
     [Header("Dynamic Layout")]
     [SerializeField] private float panelMinHeight = 250f;
@@ -36,17 +37,20 @@ public class DialoguePanelUI : MonoBehaviour
     private VerticalLayoutGroup optionsLayout;
     private LayoutElement panelLayoutElement;
     private LayoutElement optionsRootLayoutElement;
+    private UIController uiController;
 
     private void Awake()
     {
         CacheLayoutReferences();
         ConfigureDynamicLayout();
+        ResolveUIController();
     }
 
     private void OnEnable()
     {
         CacheLayoutReferences();
         ConfigureDynamicLayout();
+        ResolveUIController();
         TrySubscribe();
 
         if (closeButton != null && !closeListenerRegistered)
@@ -65,6 +69,9 @@ public class DialoguePanelUI : MonoBehaviour
 
     private void Update()
     {
+        if (uiController == null)
+            ResolveUIController();
+
         if (subscribedBus == null)
             TrySubscribe();
     }
@@ -85,6 +92,8 @@ public class DialoguePanelUI : MonoBehaviour
             closeButton.onClick.RemoveListener(Hide);
             closeListenerRegistered = false;
         }
+
+        uiController?.CloseExternalExclusiveWindow(externalWindowId);
     }
 
     private void OnInteractionOptionsReady(InteractionOptionsReadyPublish e)
@@ -153,40 +162,22 @@ public class DialoguePanelUI : MonoBehaviour
 
     private void Show()
     {
-        if (TryOpenViaRoot("dialogue")) return;
+        ResolveUIController();
+        uiController?.OpenExternalExclusiveWindow(externalWindowId);
 
         if (panel != null) panel.SetActive(true);
         else gameObject.SetActive(true);
-        UIRootController.Instance?.NotifyWindowStateChanged();
     }
 
     private void Hide()
     {
         ClearOptions();
         ResetLayoutToMinimum();
-        if (TryCloseViaRoot("dialogue")) return;
 
         if (panel != null) panel.SetActive(false);
         else gameObject.SetActive(false);
-        UIRootController.Instance?.NotifyWindowStateChanged();
-    }
 
-    private bool TryOpenViaRoot(string id)
-    {
-        var root = UIRootController.Instance;
-        if (root == null || !root.TryGetEntry(id, out _)) return false;
-
-        root.Open(id);
-        return true;
-    }
-
-    private bool TryCloseViaRoot(string id)
-    {
-        var root = UIRootController.Instance;
-        if (root == null || !root.TryGetEntry(id, out _)) return false;
-
-        root.Close(id);
-        return true;
+        uiController?.CloseExternalExclusiveWindow(externalWindowId);
     }
 
     private void ClearOptions()
@@ -403,5 +394,18 @@ public class DialoguePanelUI : MonoBehaviour
         bus.Subscribe<ShopViewPublish>(OnShopView);
         subscribedBus = bus;
         Debug.Log("[DialoguePanelUI] Subscribed to NPC interaction dialogue events.");
+    }
+
+    private void ResolveUIController()
+    {
+        if (uiController != null) return;
+
+        uiController = GetComponent<UIController>();
+        if (uiController != null) return;
+
+        uiController = GetComponentInParent<UIController>(true);
+        if (uiController != null) return;
+
+        uiController = FindAnyObjectByType<UIController>(FindObjectsInactive.Include);
     }
 }

@@ -55,16 +55,38 @@ MonoBehaviour:
         priority: 30
         sellsToPlayer: 1
         buysFromPlayer: 1
-        buysAllItems: 0
-        infiniteStock: 0
+        buysAllItems: 1
+        infiniteStock: 1
         stockInventoryType: 0
         buyWhitelist:
         - {fileID: 11400000, guid: e2dd62fb110f4204babbcdc5f6009a52, type: 2}
         - {fileID: 11400000, guid: ee625868acb5dd9458cf499f10d46e74, type: 2}
         initialStock:
+        - itemData: {fileID: 11400000, guid: cb901c282659d5e4babb60e30e228468, type: 2}
+          amount: 2
+        - itemData: {fileID: 11400000, guid: d430c76342ea20046920defe790ac265, type: 2}
+          amount: 2
+        - itemData: {fileID: 11400000, guid: 0fc84c59772212245b1e695231597d79, type: 2}
+          amount: 2
+        - itemData: {fileID: 11400000, guid: 2a95ed31c571b814dadb4c704cb5b654, type: 2}
+          amount: 2
         - itemData: {fileID: 11400000, guid: baea188629c9ef64193eb95c499f3c2c, type: 2}
-          amount: 3
+          amount: 2
         - itemData: {fileID: 11400000, guid: f8de689acd5336c448709b266c932a5f, type: 2}
+          amount: 2
+        - itemData: {fileID: 11400000, guid: c037268b411d57e42b0c61bc33048304, type: 2}
+          amount: 2
+        - itemData: {fileID: 11400000, guid: 9f9ebed809f07fe49818626624e1d573, type: 2}
+          amount: 2
+        - itemData: {fileID: 11400000, guid: b24f1cd258b326c49a27483fe5b578a7, type: 2}
+          amount: 2
+        - itemData: {fileID: 11400000, guid: 09c3f3172e41c6d409a9eb40712e4b70, type: 2}
+          amount: 2
+        - itemData: {fileID: 11400000, guid: 175067337eb251b4580a33b69513abc6, type: 2}
+          amount: 2
+        - itemData: {fileID: 11400000, guid: 7b70ad021ce4e6846a23c28626801abb, type: 2}
+          amount: 2
+        - itemData: {fileID: 11400000, guid: 53512c14c130fee4c9c6c06a153c9e7f, type: 2}
           amount: 2
     - rid: 5598704321880018947
       type: {class: QuestModule, ns: , asm: Assembly-CSharp}
