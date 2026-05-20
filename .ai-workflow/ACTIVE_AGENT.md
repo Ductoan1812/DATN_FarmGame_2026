@@ -2,7 +2,7 @@
 
 ACTIVE: CODEX
 MODEL: gpt-5
-TASK: Review and close Sprint 3.1 progression EXP rebalance
-STATUS: reviewing Kiro output
+TASK: Review Sprint 3.2 MasteryUnlockData result and prepare Sprint 3.3
+STATUS: verifying Kiro output
 
 Rule: only the active agent edits project files. When Kiro is active, Codex reviews only after Kiro finishes.

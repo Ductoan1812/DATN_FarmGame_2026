@@ -84,3 +84,18 @@ Result:
 - Effective EXP by source is now: Harvest 1.5x, Quest 1.25x, Craft 0.5x min 1, other listed sources unchanged.
 - Kiro test passed across all source types.
 - Compile remains 0 errors.
+
+## Sprint 3.2 - Mastery Unlock Data
+
+Status: Done
+
+Goal:
+- Add a ScriptableObject container for mastery unlock table data.
+
+Initial Kiro model: `claude-sonnet-4.5`.
+
+Result:
+- Added `Assets/Project/Scripts/Data/Structs/MasteryUnlockData.cs`.
+- `MasteryUnlockData` is a `ScriptableObject` with a serializable `UnlockEntry` array.
+- Each entry stores `masteryLevel`, `unlockId`, and `description`.
+- Compile check passed with 0 errors.
