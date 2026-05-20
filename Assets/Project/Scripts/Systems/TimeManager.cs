@@ -49,6 +49,19 @@ public class TimeManager : MonoBehaviour
     public int Hour => TotalMinutes / 60;
     public int Minute => TotalMinutes % 60;
     public bool IsRunning => _isRunning;
+    public int CurrentTotalMinutes
+    {
+        get
+        {
+            int seasonsPerYear = (int)Season.Winter + 1;
+            int completedYears = Mathf.Max(0, _year - 1);
+            int completedSeasons = Mathf.Clamp((int)_season, 0, seasonsPerYear - 1);
+            int completedDays = completedYears * seasonsPerYear * DaysPerSeason
+                              + completedSeasons * DaysPerSeason
+                              + Mathf.Max(0, _day - 1);
+            return completedDays * MinutesPerDay + TotalMinutes;
+        }
+    }
 
     /// <summary>0..1 trong ngày (0 = 00:00, 0.5 = 12:00, 1 = 24:00).</summary>
     public float NormalizedTime => config == null || config.dayDurationRealSeconds <= 0f

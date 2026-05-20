@@ -209,6 +209,32 @@ public class DebugConsole : MonoBehaviour
             if (got > 0) LogSuccess($"+{got}x {data.keyName} → {root.gameObject.name}");
             else LogError($"Inventory đầy.");
         });
+
+        AddCommand("exp", "exp <amount> [target] — Cộng EXP cho player hoặc EntityRoot", args =>
+        {
+            if (args.Length < 1) { LogError("exp <amount> [target]"); return; }
+            var gm = GM(); if (gm == null) return;
+
+            int amount = ParseInt(args[0], 0);
+            if (amount <= 0) { LogError("amount phải > 0."); return; }
+
+            EntityRuntime target = null;
+            if (args.Length >= 2)
+            {
+                var root = FindEntityRoot(args[1]);
+                target = root != null ? root.GetEntity() : null;
+            }
+            else
+            {
+                var player = FindAnyObjectByType<PlayerControler>();
+                target = player != null ? player.GetComponent<EntityRoot>()?.GetEntity() : null;
+            }
+
+            if (target == null) { LogError("Không tìm thấy target nhận EXP."); return; }
+
+            gm.ProgressionService.GrantExp(target, amount, ExpSourceType.Debug);
+            LogSuccess($"{target.entityData?.keyName ?? target.id}: Lv {target.stats.Get(StatType.Level):0}, EXP {target.stats.Get(StatType.Exp):0}/{target.stats.Get(StatType.MaxExp):0}");
+        });
         AddCommand("NextDay", "Tiến tới ngày tiếp theo", _ =>
         {
             var tm = FindAnyObjectByType<TimeManager>();
@@ -377,6 +403,8 @@ public class DebugConsole : MonoBehaviour
                 AddEntityRootSuggestions(parts[1], "set", max);
             else if (cmd == "set" && parts.Length == 3)
                 AddStatSuggestions(parts[2], $"set {parts[1]}", max);
+            else if (cmd == "exp" && parts.Length == 3)
+                AddEntityRootSuggestions(parts[2], $"exp {parts[1]}", max);
             else if (cmd == "list")
                 AddEntityDataSuggestions(parts[1], "list", max);
             else if (cmd == "spawn" || cmd == "objects")

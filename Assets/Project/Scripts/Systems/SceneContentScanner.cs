@@ -1,0 +1,112 @@
+using System.Collections;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.Tilemaps;
+
+[DefaultExecutionOrder(-100)]
+public class SceneContentScanner : MonoBehaviour
+{
+    [SerializeField] private SceneContext sceneContext;
+    [SerializeField] private bool scanOnStart = true;
+
+    private EventBus subscribedBus;
+    private bool hasScanned;
+
+    private IEnumerator Start()
+    {
+        if (!scanOnStart) yield break;
+
+        while (GameManager.Instance == null || GameManager.Instance.EventBus == null || GameManager.Instance.WorldService == null)
+            yield return null;
+
+        subscribedBus = GameManager.Instance.EventBus;
+        subscribedBus.Subscribe<InventoryDataRestoredPublish>(OnInventoryDataRestored);
+    }
+
+    private void OnDisable()
+    {
+        if (subscribedBus != null)
+        {
+            subscribedBus.Unsubscribe<InventoryDataRestoredPublish>(OnInventoryDataRestored);
+            subscribedBus = null;
+        }
+    }
+
+    private void OnInventoryDataRestored(InventoryDataRestoredPublish _)
+    {
+        if (hasScanned) return;
+        hasScanned = true;
+        ScanAndSeed();
+    }
+
+    public void ScanAndSeed()
+    {
+        sceneContext ??= SceneContext.Current ?? FindAnyObjectByType<SceneContext>();
+        if (sceneContext == null) return;
+
+        sceneContext.AutoBind();
+        Tilemap markerMap = sceneContext.RuntimeMarkers;
+        if (markerMap == null) return;
+
+        var gameManager = GameManager.Instance;
+        var worldService = gameManager?.WorldService;
+        var eventBus = gameManager?.EventBus;
+        if (worldService == null || eventBus == null) return;
+
+        string sceneName = SceneManager.GetActiveScene().name;
+        var bounds = markerMap.cellBounds;
+        int seededCount = 0;
+
+        foreach (var cell in bounds.allPositionsWithin)
+        {
+            var tile = markerMap.GetTile<SceneSpawnTile>(cell);
+            if (tile == null) continue;
+            if (tile.markerKind == SceneMarkerKind.PlayerSpawn)
+                continue;
+
+            string persistentId = SceneSpawnPayload.BuildPersistentId(
+                sceneName,
+                tile.markerKind,
+                tile.objectType,
+                cell,
+                tile.spawnGroupId);
+
+            if (worldService.HasPersistentId(persistentId))
+                continue;
+
+            if (tile.entityData == null)
+            {
+                Debug.LogWarning($"[SceneContentScanner] Marker '{persistentId}' missing EntityData.");
+                continue;
+            }
+
+            var payload = new SceneSpawnPayload
+            {
+                sceneName = sceneName,
+                markerKind = tile.markerKind,
+                objectType = tile.objectType,
+                cell = cell,
+                spawnGroupId = tile.spawnGroupId,
+                persistentId = persistentId,
+                savePolicy = tile.savePolicy,
+                respawnMinutes = Mathf.Max(0, tile.respawnMinutes),
+                initialAmount = Mathf.Max(1, tile.initialAmount),
+                availableAtGameMinute = 0
+            };
+
+            Vector3 world = markerMap.GetCellCenterWorld(cell);
+            eventBus.Publish(new SpawnRequestPublish(
+                worldPos: new Vector2(world.x, world.y),
+                idPrefab: tile.objectType,
+                entityData: tile.entityData,
+                spawnAmount: payload.initialAmount,
+                bypassValidation: tile.bypassPlacementValidation,
+                payload: payload));
+
+            seededCount++;
+        }
+
+        if (seededCount > 0)
+            Debug.Log($"[SceneContentScanner] Seeded {seededCount} marker entity/entities for scene '{sceneName}'.");
+    }
+}

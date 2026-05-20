@@ -30,6 +30,11 @@ public class SpawnSystem : MonoBehaviour
         _bus.Subscribe<DestroyEntityRequestPublish>(OnDestroyEntityRequest);
     }
 
+    public void RebindWorldService(WorldEntityService worldService)
+    {
+        _worldService = worldService;
+    }
+
     private void OnDestroy()
     {
         if (_bus == null) return;
@@ -73,6 +78,7 @@ public class SpawnSystem : MonoBehaviour
             occupiedCells = cells,
             layer         = rule.occupyLayer
         };
+        ApplyScenePayload(ep, req);
 
         // Đăng ký vào SpatialEntityRegistry
         if (req.bypassValidation)
@@ -107,6 +113,10 @@ public class SpawnSystem : MonoBehaviour
         {
             spawnEntity = spawnRuntime;
         }
+
+        var respawnRuntime = spawnEntity.GetModule<RespawnRuntime>();
+        if (respawnRuntime != null)
+            respawnRuntime.CurrentRespawnPosition = req.worldPos;
 
         // Instantiate GameObject
         var obj = Instantiate(prefab, new Vector3(req.worldPos.x, req.worldPos.y, 0), Quaternion.identity);
@@ -191,6 +201,25 @@ public class SpawnSystem : MonoBehaviour
             return req.runtime;
 
         return _entityService.Split(req.runtime, req.spawnAmount);
+    }
+
+    private static void ApplyScenePayload(EntityPosition ep, SpawnRequestPublish req)
+    {
+        if (ep == null) return;
+
+        if (req.payload is SceneSpawnPayload scenePayload)
+        {
+            ep.persistentId = scenePayload.persistentId;
+            ep.savePolicy = scenePayload.savePolicy;
+            ep.spawnGroupId = scenePayload.spawnGroupId;
+            ep.respawnMinutes = Mathf.Max(0, scenePayload.respawnMinutes);
+            ep.initialAmount = Mathf.Max(1, scenePayload.initialAmount);
+            ep.availableAtGameMinute = Mathf.Max(0, scenePayload.availableAtGameMinute);
+            return;
+        }
+
+        if (req.idPrefab == ObjectType.EntityDrop || req.idPrefab == ObjectType.Player01)
+            ep.savePolicy = SceneEntitySavePolicy.Temporary;
     }
 
     private static Vector2Int WorldToCell(Vector2 worldPos) =>

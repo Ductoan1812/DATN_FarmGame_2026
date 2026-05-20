@@ -11,6 +11,13 @@ public class EntityPositionSave
 {
     public string idRuntime;
     public string idPrefab;
+    public string objectType;
+    public string persistentId;
+    public int savePolicy;
+    public string spawnGroupId;
+    public int respawnMinutes;
+    public int initialAmount;
+    public int availableAtGameMinute;
     public float posX, posY;
     public int[] cellsX, cellsY;
     public int layer; // EntityLayer as int
@@ -180,6 +187,30 @@ public class WorldEntityService
     public IEnumerable<string> GetEntitiesAt(Vector2Int cell) => _spatial.GetEntitiesAt(cell);
     public EntityPosition GetEntityPosition(string idRuntime)  => _spatial.GetEntity(idRuntime);
 
+    public bool HasPersistentId(string persistentId)
+    {
+        if (string.IsNullOrWhiteSpace(persistentId)) return false;
+        foreach (var ep in _spatial.GetAllEntities())
+        {
+            if (ep == null) continue;
+            if (string.Equals(ep.persistentId, persistentId, StringComparison.Ordinal))
+                return true;
+        }
+        return false;
+    }
+
+    public EntityPosition FindByPersistentId(string persistentId)
+    {
+        if (string.IsNullOrWhiteSpace(persistentId)) return null;
+        foreach (var ep in _spatial.GetAllEntities())
+        {
+            if (ep == null) continue;
+            if (string.Equals(ep.persistentId, persistentId, StringComparison.Ordinal))
+                return ep;
+        }
+        return null;
+    }
+
     /// <summary>Truy cập TileRegistry (cho các hệ thống cần đọc tile trực tiếp).</summary>
     public TileRegistry TileRegistry => _tileRegistry;
 
@@ -212,10 +243,20 @@ public class WorldEntityService
         var entitySaves = new List<EntityPositionSave>();
         foreach (var ep in _spatial.GetAllEntities())
         {
+            if (ep.savePolicy == SceneEntitySavePolicy.Temporary)
+                continue;
+
             var s = new EntityPositionSave
             {
                 idRuntime = ep.idRuntime,
                 idPrefab  = ep.idPrefab.ToString(),
+                objectType = ep.idPrefab.ToString(),
+                persistentId = ep.persistentId,
+                savePolicy = (int)ep.savePolicy,
+                spawnGroupId = ep.spawnGroupId,
+                respawnMinutes = ep.respawnMinutes,
+                initialAmount = ep.initialAmount,
+                availableAtGameMinute = ep.availableAtGameMinute,
                 posX  = ep.pos.x,
                 posY  = ep.pos.y,
                 layer = (int)ep.layer
@@ -270,9 +311,10 @@ public class WorldEntityService
                     ? BuildCells(s.cellsX, s.cellsY)
                     : new[] { WorldToCell(new Vector2(s.posX, s.posY)) };
 
-                if (!Enum.TryParse<ObjectType>(s.idPrefab, out var objType))
+                string objectTypeRaw = !string.IsNullOrWhiteSpace(s.objectType) ? s.objectType : s.idPrefab;
+                if (!Enum.TryParse<ObjectType>(objectTypeRaw, out var objType))
                 {
-                    Debug.LogWarning($"[WorldEntityService] Unknown ObjectType '{s.idPrefab}', skipping.");
+                    Debug.LogWarning($"[WorldEntityService] Unknown ObjectType '{objectTypeRaw}', skipping.");
                     continue;
                 }
 
@@ -282,7 +324,15 @@ public class WorldEntityService
                     idPrefab      = objType,
                     pos           = new Vector2(s.posX, s.posY),
                     occupiedCells = cells,
-                    layer         = (EntityLayer)s.layer
+                    layer         = (EntityLayer)s.layer,
+                    persistentId  = s.persistentId,
+                    savePolicy    = Enum.IsDefined(typeof(SceneEntitySavePolicy), s.savePolicy)
+                        ? (SceneEntitySavePolicy)s.savePolicy
+                        : SceneEntitySavePolicy.Persistent,
+                    spawnGroupId = s.spawnGroupId,
+                    respawnMinutes = s.respawnMinutes,
+                    initialAmount = Mathf.Max(1, s.initialAmount),
+                    availableAtGameMinute = s.availableAtGameMinute
                 };
                 positions[s.idRuntime] = ep;
 

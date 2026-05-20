@@ -20,5 +20,17 @@ public enum ObjectType
     [InspectorName("Quặng 01")]
     OreNode01,
     [InspectorName("Enemy 01")]
-    Enemy01
+    Enemy01,
+    [InspectorName("Tree Node 01")]
+    TreeNode01,
+    [InspectorName("Rock Node 01")]
+    RockNode01,
+    [InspectorName("Forage Node 01")]
+    ForageNode01,
+    [InspectorName("Portal 01")]
+    Portal01,
+    [InspectorName("Bed 01")]
+    Bed01,
+    [InspectorName("Animal 01")]
+    Animal01
 }

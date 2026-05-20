@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Orchestrator cho boot sequence:
@@ -24,7 +25,7 @@ public class SaveLoadManager
 
     private readonly EntityService _entityService;
     private readonly EntityDataRegistry _entityDataRegistry;
-    private readonly WorldEntityService _worldService;
+    private WorldEntityService _worldService;
     private readonly SpawnSystem _spawnSystem;
     private readonly EventBus _eventBus;
     private TimeManager _timeManager;
@@ -33,6 +34,7 @@ public class SaveLoadManager
     private readonly ObjectType _playerPrefabId;
     private readonly string _playerEntityDataId;
     private readonly Vector2 _defaultPlayerPos;
+    private readonly StarterLoadoutData _starterLoadout;
 
     public SaveLoadManager(
         EntityService entityService,
@@ -42,7 +44,8 @@ public class SaveLoadManager
         EventBus eventBus,
         ObjectType playerPrefabId = ObjectType.Player01,
         string playerEntityDataId = "player",
-        Vector2 defaultPlayerPos = default)
+        Vector2 defaultPlayerPos = default,
+        StarterLoadoutData starterLoadout = null)
     {
         _entityService = entityService;
         _entityDataRegistry = entityDataRegistry;
@@ -52,10 +55,13 @@ public class SaveLoadManager
         _playerPrefabId = playerPrefabId;
         _playerEntityDataId = playerEntityDataId;
         _defaultPlayerPos = defaultPlayerPos;
+        _starterLoadout = starterLoadout;
     }
 
     /// <summary>Gọi sau khi TimeManager được tạo (trong GameManager.Start hoặc Awake).</summary>
     public void SetTimeManager(TimeManager tm) => _timeManager = tm;
+
+    public void SetWorldService(WorldEntityService worldService) => _worldService = worldService;
 
     // ══════════════════════════════════════
     //  BOOT (gọi 1 lần khi game start)
@@ -110,14 +116,22 @@ public class SaveLoadManager
         }
 
         var playerEntity = _entityService.Create(playerData);
+        GameManager.Instance?.ProgressionService?.EnsureInitialized(playerEntity);
         Debug.Log($"[SaveLoadManager] Created Player entity: {playerEntity.id}");
 
         // Spawn Player qua SpawnSystem event
+        Vector2 spawnPosition = SceneSpawnResolver.Resolve(
+            _starterLoadout != null ? _starterLoadout.startSpawnPointId : SceneSpawnResolver.DefaultPlayerSpawnPointId,
+            _defaultPlayerPos);
+
         _eventBus.Publish(new SpawnRequestPublish(
-            _defaultPlayerPos,
+            spawnPosition,
             _playerPrefabId,
-            playerEntity
+            playerEntity,
+            payload: new SceneSpawnPayload { savePolicy = SceneEntitySavePolicy.Temporary }
         ));
+
+        StarterLoadoutService.Apply(_entityService, _eventBus, playerEntity, _starterLoadout);
     }
 
     // ══════════════════════════════════════
@@ -132,14 +146,17 @@ public class SaveLoadManager
             EntitiesSaveFile,
             true
         );
+        EnsureLoadedPlayerProgression();
 
         // Phase 2: Load SpatialEntityRegistry + TileRegistry dirty + Spawn GameObjects
         // → EntityRoot.Add → inv.Container được set
-        _worldService.Load(WorldSaveFile, ep =>
+        _worldService.Load(GetCurrentWorldSaveFile(), ep =>
         {
             var runtime = _entityService.Get(ep.idRuntime);
             _spawnSystem.ReinstantiateFromSave(ep, runtime);
         });
+
+        EnsurePlayerSpawnedAt();
     }
 
     // ══════════════════════════════════════
@@ -149,9 +166,27 @@ public class SaveLoadManager
     public void SaveAll()
     {
         _entityService.SaveData(EntitiesSaveFile, true);
-        _worldService.Save(WorldSaveFile);
+        _worldService.Save(GetCurrentWorldSaveFile());
         SaveSystemData();
         Debug.Log("[SaveLoadManager] All data saved.");
+    }
+
+    public void LoadCurrentSceneWorld()
+    {
+        if (_worldService == null || _spawnSystem == null) return;
+        string worldFile = GetCurrentWorldSaveFile();
+        string path = System.IO.Path.Combine(Application.persistentDataPath, worldFile);
+        if (!System.IO.File.Exists(path))
+        {
+            Debug.Log($"[SaveLoadManager] No scene world save for '{SceneManager.GetActiveScene().name}'. Marker scanner can seed defaults.");
+            return;
+        }
+
+        _worldService.Load(worldFile, ep =>
+        {
+            var runtime = _entityService.Get(ep.idRuntime);
+            _spawnSystem.ReinstantiateFromSave(ep, runtime);
+        });
     }
 
     // ══════════════════════════════════════
@@ -197,5 +232,75 @@ public class SaveLoadManager
     {
         var path = System.IO.Path.Combine(Application.persistentDataPath, EntitiesSaveFile);
         return System.IO.File.Exists(path);
+    }
+
+    private static string GetCurrentWorldSaveFile()
+    {
+        string sceneName = SceneManager.GetActiveScene().name;
+        if (string.IsNullOrWhiteSpace(sceneName))
+            return WorldSaveFile;
+
+        foreach (var invalid in System.IO.Path.GetInvalidFileNameChars())
+            sceneName = sceneName.Replace(invalid, '_');
+
+        return $"world_{sceneName}.json";
+    }
+
+    private void EnsureLoadedPlayerProgression()
+    {
+        var progressionService = GameManager.Instance?.ProgressionService;
+        if (progressionService == null) return;
+
+        foreach (var entity in _entityService.GetAll())
+        {
+            if (entity?.entityData == null) continue;
+            if (entity.entityData.id == _playerEntityDataId)
+                progressionService.EnsureInitialized(entity);
+        }
+    }
+
+    public void EnsurePlayerSpawnedAt(string spawnPointId = null)
+    {
+        if (UnityEngine.Object.FindAnyObjectByType<PlayerControler>() != null)
+            return;
+
+        var playerEntity = FindPlayerEntity();
+        if (playerEntity == null)
+        {
+            var playerData = _entityDataRegistry.Find(_playerEntityDataId);
+            if (playerData == null)
+            {
+                Debug.LogError($"[SaveLoadManager] Cannot spawn player: EntityData '{_playerEntityDataId}' not found.");
+                return;
+            }
+
+            playerEntity = _entityService.Create(playerData);
+        }
+
+        GameManager.Instance?.ProgressionService?.EnsureInitialized(playerEntity);
+        string resolvedSpawnPointId = string.IsNullOrWhiteSpace(spawnPointId)
+            ? SceneSpawnResolver.DefaultPlayerSpawnPointId
+            : spawnPointId.Trim();
+        Vector2 spawnPosition = SceneSpawnResolver.Resolve(resolvedSpawnPointId, _defaultPlayerPos);
+
+        _eventBus.Publish(new SpawnRequestPublish(
+            spawnPosition,
+            _playerPrefabId,
+            playerEntity,
+            payload: new SceneSpawnPayload { savePolicy = SceneEntitySavePolicy.Temporary }));
+
+        Debug.Log($"[SaveLoadManager] Player spawned at '{resolvedSpawnPointId}' position {spawnPosition}.");
+    }
+
+    private EntityRuntime FindPlayerEntity()
+    {
+        foreach (var entity in _entityService.GetAll())
+        {
+            if (entity?.entityData == null) continue;
+            if (entity.entityData.id == _playerEntityDataId)
+                return entity;
+        }
+
+        return null;
     }
 }

@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.SceneManagement;
 using System;
+using System.Collections;
 using System.Globalization;
 using System.Linq;
 using DialogueGraphTool;
@@ -21,8 +22,11 @@ public class GameManager : MonoBehaviour
     public EntityService        EntityService      { get; private set; }
     public InventoryService     InventoryService   { get; private set; }
     public WorldEntityService   WorldService       { get; private set; }
+    public ProgressionService   ProgressionService { get; private set; }
+    public CraftingService      CraftingService    { get; private set; }
     public SpawnSystem          SpawnSystem        { get; private set; }
     public SaveLoadManager      SaveLoadManager    { get; private set; }
+    public WateredTileTracker   WateredTileTracker { get; private set; }
 
     // ── Shared ────────────────────────────────────────────
     public EventBus             EventBus           { get; private set; }
@@ -33,6 +37,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Tilemap References")]
     [SerializeField] private Tilemap tmGround;
+    [SerializeField] private Tilemap tmWatered;
     [SerializeField] private Tilemap tmGroundDetail;
     [SerializeField] private Tilemap tmCollision;
     [SerializeField] private Tilemap tmDecoration;
@@ -42,12 +47,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] private ObjectType playerPrefabId = ObjectType.Player01;
     [SerializeField] private string playerEntityDataId = "player";
     [SerializeField] private Vector2 defaultPlayerPos = Vector2.zero;
+    [SerializeField] private StarterLoadoutData starterLoadout;
     private bool isReloadingScene;
+    private bool bootCompleted;
 
     private void Awake()
     {
         if (Instance != null && Instance != this) { Destroy(gameObject); return; }
         Instance = this;
+        SceneManager.sceneLoaded += OnSceneLoaded;
 
         // Phase 1: Init tất cả systems
         InitEventBus();
@@ -58,8 +66,10 @@ public class GameManager : MonoBehaviour
         InitWorldEntitySystem();
         InitSpawnSystem();
         InitTimeManager();
+        InitWateredTileTracker();
         InitDialogueGameplayBridge();
         InitSceneTransitionBridge();
+        InitInteractionPreviewBridge();
         InitSaveLoadManager();
 
         // Subscribe save/load events
@@ -72,16 +82,23 @@ public class GameManager : MonoBehaviour
     {
         // Boot sequence: DataReady → WorldObjectsSpawned → InventoryDataRestored → PlayerReady → GameReady
         SaveLoadManager.Boot();
+        bootCompleted = true;
     }
 
     private void OnDestroy()
     {
+        if (Instance == this)
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+
         if (EventBus != null)
         {
             EventBus.Unsubscribe<SaveGameRequestPublish>(OnSaveRequest);
             EventBus.Unsubscribe<LoadGameRequestPublish>(OnLoadRequest);
             EventBus.Unsubscribe<PlayerReadyPublish>(OnPlayerReady);
         }
+
+        if (Instance == this)
+            Instance = null;
     }
 
     // ── Init methods ──────────────────────────────────────
@@ -118,6 +135,8 @@ public class GameManager : MonoBehaviour
         EntityRegistry   = new EntityRegistry();
         EntityService    = new EntityService(EntityRegistry);
         InventoryService = new InventoryService(EntityService);
+        ProgressionService = new ProgressionService(EventBus);
+        CraftingService = new CraftingService(EntityService, InventoryService, ProgressionService, EventBus);
     }
 
     private void InitWorldObjects()
@@ -194,6 +213,20 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning("[GameManager] TimeManager not found.");
     }
 
+    private void InitWateredTileTracker()
+    {
+        if (tmWatered == null)
+        {
+            Debug.LogWarning("[GameManager] tmWatered tilemap chưa gán! WateredTileTracker sẽ không hoạt động.");
+            return;
+        }
+
+        WateredTileTracker = new WateredTileTracker(tmWatered, tmGround, tileData);
+
+        // Reset watered tiles mỗi đầu ngày mới
+        EventBus.Subscribe<DayChangedPublish>(_ => WateredTileTracker?.ResetAll());
+    }
+
     private void InitDialogueGameplayBridge()
     {
         if (GetComponent<DialogueGameplayBridge>() == null)
@@ -204,6 +237,12 @@ public class GameManager : MonoBehaviour
     {
         if (GetComponent<SceneTransitionBridge>() == null)
             gameObject.AddComponent<SceneTransitionBridge>();
+    }
+
+    private void InitInteractionPreviewBridge()
+    {
+        if (GetComponent<InteractionPreviewSystem>() == null)
+            gameObject.AddComponent<InteractionPreviewSystem>();
     }
 
     private void InitSpawnSystem()
@@ -222,9 +261,18 @@ public class GameManager : MonoBehaviour
             EventBus,
             playerPrefabId,
             playerEntityDataId,
-            defaultPlayerPos
+            defaultPlayerPos,
+            ResolveStarterLoadout()
         );
         SaveLoadManager.SetTimeManager(TimeManager);
+    }
+
+    private StarterLoadoutData ResolveStarterLoadout()
+    {
+        if (starterLoadout != null)
+            return starterLoadout;
+
+        return Resources.Load<StarterLoadoutData>("Data/StarterLoadouts/DefaultStarterLoadout");
     }
 
     // ── Event handlers ────────────────────────────────────
@@ -255,6 +303,46 @@ public class GameManager : MonoBehaviour
     {
         EventBus.Publish(new GameReadyPublish());
         Debug.Log("[GameManager] GameReadyPublish published — boot sequence complete.");
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (!bootCompleted || Instance != this)
+            return;
+
+        StartCoroutine(RestoreActiveSceneAfterLoad(scene.name));
+    }
+
+    private IEnumerator RestoreActiveSceneAfterLoad(string sceneName)
+    {
+        // Wait one frame so SceneContext/SceneContentScanner in the new scene can run Awake/Start.
+        yield return null;
+
+        RebindSceneScopedServices();
+        SaveLoadManager.LoadCurrentSceneWorld();
+
+        SceneTransitionService.TryPeekPendingSpawnPointForCurrentScene(out var spawnPointId);
+        SaveLoadManager.EnsurePlayerSpawnedAt(spawnPointId);
+
+        EventBus.Publish(new WorldObjectsSpawnedPublish());
+        EventBus.Publish(new InventoryDataRestoredPublish());
+
+        isReloadingScene = false;
+        Debug.Log($"[GameManager] Restored scene-scoped services and player for scene '{sceneName}'.");
+    }
+
+    private void RebindSceneScopedServices()
+    {
+        tmGround = null;
+        tmGroundDetail = null;
+        tmCollision = null;
+        tmDecoration = null;
+        tmOverlay = null;
+
+        InitTileRegistry();
+        InitWorldEntitySystem();
+        SpawnSystem?.RebindWorldService(WorldService);
+        SaveLoadManager?.SetWorldService(WorldService);
     }
 }
 
@@ -317,6 +405,21 @@ public static class SceneTransitionService
         pendingSpawnPointId = null;
         return true;
     }
+
+    public static bool TryPeekPendingSpawnPointForCurrentScene(out string spawnPointId)
+    {
+        spawnPointId = null;
+
+        if (string.IsNullOrWhiteSpace(pendingSceneName))
+            return false;
+
+        string currentScene = SceneManager.GetActiveScene().name;
+        if (!string.Equals(currentScene, pendingSceneName, StringComparison.Ordinal))
+            return false;
+
+        spawnPointId = pendingSpawnPointId;
+        return true;
+    }
 }
 
 /// <summary>
@@ -374,25 +477,8 @@ public class SceneTransitionBridge : MonoBehaviour
         var player = FindAnyObjectByType<PlayerControler>();
         if (player == null) return;
 
-        SceneSpawnPoint[] points = FindObjectsByType<SceneSpawnPoint>(FindObjectsSortMode.None);
-        if (points == null || points.Length == 0) return;
-
-        SceneSpawnPoint chosen = null;
-        if (!string.IsNullOrWhiteSpace(spawnPointId))
-        {
-            foreach (var point in points)
-            {
-                if (point == null) continue;
-                if (string.Equals(point.spawnPointId, spawnPointId, StringComparison.OrdinalIgnoreCase))
-                {
-                    chosen = point;
-                    break;
-                }
-            }
-        }
-
-        chosen ??= points[0];
-        player.transform.position = chosen.transform.position;
+        Vector2 fallback = player.transform.position;
+        player.transform.position = SceneSpawnResolver.Resolve(spawnPointId, fallback);
     }
 }
 
