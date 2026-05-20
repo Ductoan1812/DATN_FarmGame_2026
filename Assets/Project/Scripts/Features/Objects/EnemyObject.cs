@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 /// <summary>
@@ -17,6 +18,8 @@ public class EnemyObject : MonoBehaviour, IDamageable
     [SerializeField] private float stopDistance = 0.65f;
     [SerializeField] private float moveSpeed = 2f;
     [SerializeField] private float attackCooldown = 1f;
+    [SerializeField] private float attackWindup = 0.35f;
+    [SerializeField] private Color telegraphColor = new Color(1f, 0.35f, 0.25f, 1f);
     [SerializeField] private int fallbackAttackDamage = 2;
 
     [Header("Legacy Fallback HP")]
@@ -27,7 +30,10 @@ public class EnemyObject : MonoBehaviour, IDamageable
     private EntityRuntime selfEntity;
     private PlayerControler player;
     private EntityRoot playerRoot;
+    private SpriteRenderer spriteRenderer;
+    private Color defaultColor = Color.white;
     private float lastAttackTime = -999f;
+    private bool isTelegraphing;
 
     public int CurrentHp
     {
@@ -60,6 +66,9 @@ public class EnemyObject : MonoBehaviour, IDamageable
     {
         currentHp = maxHp;
         selfRoot = GetComponent<EntityRoot>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        if (spriteRenderer != null)
+            defaultColor = spriteRenderer.color;
     }
 
     private void Update()
@@ -87,8 +96,8 @@ public class EnemyObject : MonoBehaviour, IDamageable
 
         if (distance <= attackRange && Time.time - lastAttackTime >= attackCooldown)
         {
-            TryAttackPlayer();
             lastAttackTime = Time.time;
+            StartCoroutine(TelegraphAndAttack());
         }
     }
 
@@ -115,6 +124,23 @@ public class EnemyObject : MonoBehaviour, IDamageable
         return false;
     }
 
+    private IEnumerator TelegraphAndAttack()
+    {
+        if (isTelegraphing) yield break;
+
+        isTelegraphing = true;
+        if (spriteRenderer != null)
+            spriteRenderer.color = telegraphColor;
+
+        yield return new WaitForSeconds(Mathf.Max(0f, attackWindup));
+
+        if (spriteRenderer != null)
+            spriteRenderer.color = defaultColor;
+
+        TryAttackPlayer();
+        isTelegraphing = false;
+    }
+
     private void TryAttackPlayer()
     {
         if (playerRoot == null)
@@ -122,6 +148,9 @@ public class EnemyObject : MonoBehaviour, IDamageable
 
         var playerEntity = playerRoot?.GetEntity();
         if (playerEntity == null) return;
+        if (player == null) return;
+        if (Vector2.Distance(transform.position, player.transform.position) > attackRange)
+            return;
 
         float attack = selfEntity.stats.Get(StatType.Attack);
         if (attack <= 0f) attack = fallbackAttackDamage;

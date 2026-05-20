@@ -115,19 +115,19 @@ public abstract class DamageToolRuntime : ToolRuntime
         if (hitAllTargets)
         {
             foreach (var target in targets)
-                ApplyDamage(target, item, damage);
+                ApplyDamage(target, actor, damage);
             return;
         }
 
         var nearest = FindNearest(actorGO.transform.position, targets);
         if (nearest != null)
-            ApplyDamage(nearest, item, damage);
+            ApplyDamage(nearest, actor, damage);
     }
 
-    private void ApplyDamage(EntityRuntime target, EntityRuntime item, float damage)
+    private void ApplyDamage(EntityRuntime target, EntityRuntime actor, float damage)
     {
         if (target == null) return;
-        target.TriggerEvent(new TakeDamageEvent(item, damage, damageToolType));
+        target.TriggerEvent(new TakeDamageEvent(actor, damage, damageToolType));
     }
 
     private static EntityRuntime FindNearest(Vector3 from, List<EntityRuntime> targets)

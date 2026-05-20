@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 using Assets.HeroEditor4D.Common.Scripts.CharacterScripts;
 using Assets.HeroEditor4D.Common.Scripts.Enums;
 
@@ -10,6 +11,11 @@ public class PlayerControler : MonoBehaviour
     [SerializeField] private AnimationManager _anim ;
     [SerializeField] private KeyCode interactKey = KeyCode.E;
     [SerializeField] private bool allowRightMouseInteract;
+    [Header("Dodge")]
+    [SerializeField] private KeyCode dodgeKey = KeyCode.LeftShift;
+    [SerializeField] private float dodgeDistance = 1.25f;
+    [SerializeField] private float dodgeDuration = 0.16f;
+    [SerializeField] private float dodgeStaminaCost = 12f;
 
     private Vector3 lastMoveDirection = Vector3.up;
     public Vector3 LastMoveDirection => lastMoveDirection;
@@ -19,6 +25,7 @@ public class PlayerControler : MonoBehaviour
     private PlayerInventory _inventory;
     private EntityRoot _entityRoot;
     private ToolActionBridge _toolBridge;
+    private bool isDodging;
 
     private void Awake()
     {
@@ -43,7 +50,10 @@ public class PlayerControler : MonoBehaviour
         if (!InputEnabled) return;
 
         // Animation đang chạy → block movement + action
-        if (IsActionBusy) return;
+        if (IsActionBusy || isDodging) return;
+
+        if (TryStartDodge())
+            return;
 
         HandleMovement();
         HandleActions();
@@ -123,5 +133,67 @@ public class PlayerControler : MonoBehaviour
             eventBus?.Publish(new SaveGameRequestPublish());
             Debug.Log("[Player] Save requested.");
         }
+    }
+
+    private bool TryStartDodge()
+    {
+        if (!Input.GetKeyDown(dodgeKey)) return false;
+
+        var playerEntity = _entityRoot?.GetEntity();
+        if (playerEntity == null) return false;
+
+        if (!TrySpendStamina(playerEntity, dodgeStaminaCost))
+        {
+            Debug.Log("[Player] Không đủ thể lực để né.");
+            return false;
+        }
+
+        Vector3 direction = ReadInputDirection();
+        if (direction.sqrMagnitude <= 0.001f)
+            direction = lastMoveDirection.sqrMagnitude > 0.001f ? lastMoveDirection : Vector3.down;
+
+        StartCoroutine(DodgeRoutine(direction.normalized));
+        return true;
+    }
+
+    private IEnumerator DodgeRoutine(Vector3 direction)
+    {
+        isDodging = true;
+
+        float elapsed = 0f;
+        Vector3 start = transform.position;
+        Vector3 end = start + direction * dodgeDistance;
+
+        while (elapsed < dodgeDuration)
+        {
+            float t = dodgeDuration <= 0f ? 1f : elapsed / dodgeDuration;
+            transform.position = Vector3.Lerp(start, end, t);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.position = end;
+        isDodging = false;
+    }
+
+    private Vector3 ReadInputDirection()
+    {
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        float vertical = Input.GetAxisRaw("Vertical");
+        return new Vector3(horizontal, vertical, 0f).normalized;
+    }
+
+    private static bool TrySpendStamina(EntityRuntime entity, float cost)
+    {
+        if (entity?.stats == null || cost <= 0f) return true;
+
+        float maxStamina = entity.stats.Get(StatType.MaxStamina);
+        if (maxStamina <= 0f) return true;
+
+        float stamina = entity.stats.Get(StatType.Stamina);
+        if (stamina < cost) return false;
+
+        entity.stats.Set(StatType.Stamina, Mathf.Max(0f, stamina - cost));
+        return true;
     }
 }

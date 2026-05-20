@@ -63,7 +63,7 @@ public class HarvestRuntime : IModuleRuntime, IHandleEvent<TakeDamageEvent>, IHa
             return;
         }
 
-        _entity.TriggerEvent(new DieEvent(_entity));
+        _entity.TriggerEvent(new DieEvent(_entity, e.initiator));
     }
 
     /// <summary>
