@@ -69,7 +69,13 @@ public class SecondaryActionEvent : IGameEvent
 public class DieEvent : IGameEvent
 {
     public readonly EntityRuntime entity;
-    public DieEvent(EntityRuntime entity) { this.entity = entity; }
+    public readonly EntityRuntime killer;
+
+    public DieEvent(EntityRuntime entity, EntityRuntime killer = null)
+    {
+        this.entity = entity;
+        this.killer = killer;
+    }
 }
 
 /// <summary>

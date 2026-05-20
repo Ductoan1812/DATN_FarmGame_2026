@@ -44,9 +44,7 @@ public class AttackRuntime : IModuleRuntime, IHandleEvent<PrimaryActionEvent>
             return;
         }
         foreach (var target in targets)
-        {
-            target.TriggerEvent(new TakeDamageEvent(weapon, finalDamage));
-        }
+            target.TriggerEvent(new TakeDamageEvent(e.actor, finalDamage));
 
         _lastAttackTime = Time.time;
     }

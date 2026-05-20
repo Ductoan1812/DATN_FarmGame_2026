@@ -17,6 +17,7 @@ public class HealthRuntime : IModuleRuntime, IHandleEvent<SpawnedEvent>, IHandle
 {
     private readonly HealthModule _data;
     private EntityRuntime _entity;
+    private EntityRuntime _lastAttacker;
 
     /// <summary>Có thể tắt tạm thời từ bên ngoài (invincibility frame, cutscene...).</summary>
     public bool CanTakeDamage
@@ -50,6 +51,7 @@ public class HealthRuntime : IModuleRuntime, IHandleEvent<SpawnedEvent>, IHandle
     {
         if (_entity == null) return;
         if (!CanTakeDamage) return;
+        _lastAttacker = e.attacker;
 
         // Tính giảm dame theo Defense: finalDamage = damage - Defense (tối thiểu 1)
         float defense     = _entity.stats.Get(StatType.Defense);
@@ -74,7 +76,7 @@ public class HealthRuntime : IModuleRuntime, IHandleEvent<SpawnedEvent>, IHandle
     {
         Debug.Log($"[HealthRuntime] {_entity.id} đã chết.");
         OnDied?.Invoke(_entity);
-        _entity.TriggerEvent(new DieEvent(_entity));
+        _entity.TriggerEvent(new DieEvent(_entity, _lastAttacker));
         // Việc Despawn/Destroy/Respawn/Drop do các module khác xử lý.
     }
 

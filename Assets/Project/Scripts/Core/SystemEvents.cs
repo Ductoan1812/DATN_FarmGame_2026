@@ -119,6 +119,50 @@ public struct StatsChangedPublish
     { this.entityId = entityId; this.statType = statType; this.newValue = newValue; }
 }
 
+public struct ProgressionChangedPublish
+{
+    public readonly EntityRuntime target;
+    public readonly ExpSourceType source;
+    public readonly EntityRuntime sourceEntity;
+    public readonly int amount;
+    public readonly int oldLevel;
+    public readonly int newLevel;
+    public readonly int exp;
+    public readonly int maxExp;
+
+    public ProgressionChangedPublish(
+        EntityRuntime target,
+        ExpSourceType source,
+        EntityRuntime sourceEntity,
+        int amount,
+        int oldLevel,
+        int newLevel,
+        int exp,
+        int maxExp)
+    {
+        this.target = target;
+        this.source = source;
+        this.sourceEntity = sourceEntity;
+        this.amount = amount;
+        this.oldLevel = oldLevel;
+        this.newLevel = newLevel;
+        this.exp = exp;
+        this.maxExp = maxExp;
+    }
+}
+
+public struct LevelUpPublish
+{
+    public readonly EntityRuntime target;
+    public readonly int level;
+
+    public LevelUpPublish(EntityRuntime target, int level)
+    {
+        this.target = target;
+        this.level = level;
+    }
+}
+
 /// <summary>Inventory thay đổi (pickup, consume, swap...). InventoryService publish.</summary>
 public struct InventoryChangedPublish
 {
@@ -366,6 +410,16 @@ public struct InteractionOptionsReadyPublish
         this.interactor = interactor;
         this.target = target;
         this.options = options;
+    }
+}
+
+public struct InteractionPreviewChangedPublish
+{
+    public readonly InteractionPreviewData preview;
+
+    public InteractionPreviewChangedPublish(InteractionPreviewData preview)
+    {
+        this.preview = preview;
     }
 }
 

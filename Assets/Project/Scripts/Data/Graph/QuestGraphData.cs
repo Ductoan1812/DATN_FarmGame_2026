@@ -15,11 +15,15 @@ public class QuestGraphData : ScriptableObject
     public string completeOptionKey = "ui.quest.complete";
     public string completedOptionKey = "ui.quest.completed";
 
+    [Header("Unlock")]
+    public UnlockRequirementData visibilityRequirement = new();
+
     [Header("Objectives")]
     public List<QuestObjectiveData> objectives = new();
 
     [Header("Rewards")]
     public int rewardMoney;
+    public int rewardExp;
     public List<QuestRewardItemData> rewardItems = new();
 }
 

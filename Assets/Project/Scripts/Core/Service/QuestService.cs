@@ -13,6 +13,9 @@ public static class QuestService
         if (player == null || graph == null || string.IsNullOrWhiteSpace(graph.id))
             return null;
 
+        if (!UnlockService.IsUnlocked(player, graph.visibilityRequirement))
+            return null;
+
         var log = player.GetModule<QuestLogRuntime>();
         var state = log?.GetState(graph.id) ?? QuestState.NotStarted;
 
@@ -173,6 +176,9 @@ public static class QuestService
             float currentMoney = player.stats.Get(StatType.Money);
             player.stats.Set(StatType.Money, currentMoney + graph.rewardMoney);
         }
+
+        if (graph.rewardExp > 0)
+            GameManager.Instance?.ProgressionService?.GrantExp(player, graph.rewardExp, ExpSourceType.Quest);
 
         if (graph.rewardItems == null || graph.rewardItems.Count == 0)
             return;
