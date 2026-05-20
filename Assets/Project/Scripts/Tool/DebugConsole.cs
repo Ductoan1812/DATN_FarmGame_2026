@@ -444,6 +444,28 @@ public class DebugConsole : MonoBehaviour
             Log($"── WorldObjects ({results.Count()}) ──");
             foreach (var id in results) Log($"  {id}");
         });
+
+        // ── Weather — Hiển thị thời tiết hiện tại ──
+        AddCommand("Weather", "Weather — Hiển thị thời tiết hiện tại", _ =>
+        {
+            var gm = GM(); if (gm == null) return;
+            var ws = gm.WeatherSystem;
+            if (ws == null) { LogError("WeatherSystem null!"); return; }
+            Log($"Thời tiết hiện tại: {ws.CurrentWeather}");
+        });
+
+        // ── SetWeather <Sunny|Rainy> ──
+        AddCommand("SetWeather", "SetWeather <Sunny|Rainy> — Đặt thời tiết", args =>
+        {
+            if (args.Length < 1) { LogError("SetWeather <Sunny|Rainy>"); return; }
+            var gm = GM(); if (gm == null) return;
+            var ws = gm.WeatherSystem;
+            if (ws == null) { LogError("WeatherSystem null!"); return; }
+            if (!System.Enum.TryParse(args[0], true, out WeatherType wt))
+            { LogError($"Thời tiết '{args[0]}' không hợp lệ. Dùng: Sunny, Rainy"); return; }
+            ws.SetWeather(wt);
+            LogSuccess($"Thời tiết đã đặt: {wt}");
+        });
     }
 
     #endregion

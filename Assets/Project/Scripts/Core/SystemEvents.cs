@@ -67,6 +67,15 @@ public struct GameHourChangedPublish
     }
 }
 
+// ── Weather ───────────────────────────────────────────────
+
+/// <summary>Thời tiết thay đổi (Sunny → Rainy, v.v.).</summary>
+public struct WeatherChangedPublish
+{
+    public readonly WeatherType weather;
+    public WeatherChangedPublish(WeatherType weather) { this.weather = weather; }
+}
+
 // ── Boot / Save-Load ──────────────────────────────────────
 
 /// <summary>Phase 1: SaveLoadManager đã load/tạo xong EntityRegistry (data sẵn sàng).</summary>

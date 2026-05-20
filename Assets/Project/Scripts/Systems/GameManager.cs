@@ -27,11 +27,13 @@ public class GameManager : MonoBehaviour
     public SpawnSystem          SpawnSystem        { get; private set; }
     public SaveLoadManager      SaveLoadManager    { get; private set; }
     public WateredTileTracker   WateredTileTracker { get; private set; }
+    public WeatherSystem        WeatherSystem      { get; private set; }
 
     // ── Shared ────────────────────────────────────────────
     public EventBus             EventBus           { get; private set; }
     public TimeManager          TimeManager        { get; private set; }
 
+    [SerializeField] private WeatherConfig weatherConfig;
     [SerializeField] private TileData tileData;
     public TileData TileData => tileData;
 
@@ -67,6 +69,7 @@ public class GameManager : MonoBehaviour
         InitSpawnSystem();
         InitTimeManager();
         InitWateredTileTracker();
+        InitWeatherSystem();
         InitDialogueGameplayBridge();
         InitSceneTransitionBridge();
         InitInteractionPreviewBridge();
@@ -223,9 +226,23 @@ public class GameManager : MonoBehaviour
 
         WateredTileTracker = new WateredTileTracker(tmWatered, tmGround, tileData);
 
-        // Reset watered tiles khi DayChangedPublish (publish SAU NextDayEventPublish)
-        // Thứ tự đúng: NextDayEventPublish (cây grow) → DayChangedPublish (reset watered)
-        EventBus.Subscribe<DayChangedPublish>(_ => WateredTileTracker?.ResetAll());
+        // Thứ tự đúng: NextDayEventPublish (cây grow) → DayChangedPublish (roll weather → reset watered → rain waters plowed)
+        EventBus.Subscribe<DayChangedPublish>(_ =>
+        {
+            WeatherSystem?.RollNextDayWeather();
+            WateredTileTracker?.ResetAll();
+            WeatherSystem?.ApplyRainForNewDay(WateredTileTracker);
+        });
+    }
+
+    private void InitWeatherSystem()
+    {
+        if (weatherConfig == null)
+            weatherConfig = Resources.Load<WeatherConfig>("Data/WeatherConfig");
+
+        WeatherSystem = new WeatherSystem(EventBus, weatherConfig);
+        // Roll weather for day 1 on new game (sunny default is fine; save/load will restore)
+        Debug.Log($"[GameManager] WeatherSystem initialized. Weather={WeatherSystem.CurrentWeather}");
     }
 
     private void InitDialogueGameplayBridge()

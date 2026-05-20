@@ -210,6 +210,10 @@ public class SaveLoadManager
         if (tracker != null)
             data.wateredCells = tracker.ExportWateredCells();
 
+        var weather = GameManager.Instance?.WeatherSystem;
+        if (weather != null)
+            data.currentWeather = weather.CurrentWeather;
+
         var json = JsonUtility.ToJson(data, true);
         var path = System.IO.Path.Combine(Application.persistentDataPath, SystemSaveFile);
         System.IO.File.WriteAllText(path, json);
@@ -232,7 +236,11 @@ public class SaveLoadManager
         if (tracker != null)
             tracker.ImportWateredCells(data.wateredCells);
 
-        Debug.Log($"[SaveLoadManager] System data loaded: {data.time}, watered={data.wateredCells?.Count ?? 0}");
+        var weather = GameManager.Instance?.WeatherSystem;
+        if (weather != null)
+            weather.SetWeather(data.currentWeather);
+
+        Debug.Log($"[SaveLoadManager] System data loaded: {data.time}, watered={data.wateredCells?.Count ?? 0}, weather={data.currentWeather}");
     }
 
     // ══════════════════════════════════════
