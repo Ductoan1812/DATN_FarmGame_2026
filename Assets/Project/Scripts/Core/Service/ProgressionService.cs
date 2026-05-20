@@ -85,6 +85,13 @@ public class ProgressionService
             ApplyLevelUpStats(target, level);
             eventBus?.Publish(new LevelUpPublish(target, level));
 
+            var newUnlocks = UnlockService.GetNewlyUnlockedMasteries(level - 1, level);
+            if (newUnlocks.Length > 0)
+            {
+                foreach (var unlock in newUnlocks)
+                    Debug.Log($"[ProgressionService] Mastery Unlock at Lv{level}: [{unlock.unlockId}] {unlock.description}");
+            }
+
             if (level >= LevelCap)
             {
                 maxExp = RequiredExp(LevelCap);

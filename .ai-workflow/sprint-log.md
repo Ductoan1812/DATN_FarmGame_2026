@@ -114,3 +114,18 @@ Result:
 - Added `IsMasteryUnlocked(EntityRuntime, string)` and `GetMasteryRequirement(string)`.
 - Existing `IsUnlocked` and `GetLockedReasonKey` behavior for shop/crafting/quest paths was left intact.
 - Compile check passed with 0 errors.
+
+## Sprint 3.4 - Progression Mastery Hook
+
+Status: Done
+
+Goal:
+- Call UnlockService when level up happens and surface newly unlocked mastery entries.
+
+Initial Kiro model: `claude-sonnet-4.5`.
+
+Result:
+- `UnlockService` now exposes `GetNewlyUnlockedMasteries(int oldLevel, int newLevel)`.
+- `ProgressionService` calls the helper after each `LevelUpPublish`.
+- Newly unlocked mastery entries are logged as `[ProgressionService] Mastery Unlock at Lv{level}: [...]`.
+- Compile check passed with 0 errors.

@@ -138,6 +138,28 @@ public static class UnlockService
         return 0;
     }
 
+    /// <summary>
+    /// Get all mastery unlocks newly achieved between oldLevel and newLevel (inclusive).
+    /// Returns empty array if no unlocks exist in that range.
+    /// </summary>
+    public static MasteryUnlockData.UnlockEntry[] GetNewlyUnlockedMasteries(int oldLevel, int newLevel)
+    {
+        if (newLevel <= oldLevel) return System.Array.Empty<MasteryUnlockData.UnlockEntry>();
+
+        LoadMasteryUnlockDataIfNeeded();
+        if (_masteryUnlockData == null || _masteryUnlockData.unlocks == null || _masteryUnlockData.unlocks.Length == 0)
+            return System.Array.Empty<MasteryUnlockData.UnlockEntry>();
+
+        var result = new System.Collections.Generic.List<MasteryUnlockData.UnlockEntry>();
+        foreach (var entry in _masteryUnlockData.unlocks)
+        {
+            if (entry != null && entry.masteryLevel > oldLevel && entry.masteryLevel <= newLevel)
+                result.Add(entry);
+        }
+
+        return result.ToArray();
+    }
+
     private static void LoadMasteryUnlockDataIfNeeded()
     {
         if (_masteryUnlockData != null) return;
