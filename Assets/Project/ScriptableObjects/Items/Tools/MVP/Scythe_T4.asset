@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8393fbdfdb650e5418aad1c82ae5b8b5, type: 3}
+  m_Name: Scythe_T4
+  m_EditorClassIdentifier: 
+  id: tool_scythe_t4
+  keyName: mvp.tool.scythe.t4.name
+  descKey: mvp.tool.scythe.t4.desc
+  icon: {fileID: 21300000, guid: c131f254028520043b01ba707fc9c3c7, type: 3}
+  category: 1
+  maxStack: 1
+  buyPrice: -1
+  sellPrice: 1050
+  baseStats:
+    baseStats:
+    - statType: 2
+      value: 24
+    - statType: 12
+      value: 1.9
+    - statType: 11
+      value: 0.46
+  placementRule:
+    occupyLayer: 0
+    requireTags: 0
+    provideTags: 0
+    blockLayers: 
+  modules:
+  - rid: 8196222991998910554
+  - rid: 8196222991998910555
+  references:
+    version: 2
+    RefIds:
+    - rid: 8196222991998910554
+      type: {class: ToolModule, ns: , asm: Assembly-CSharp}
+      data:
+        toolType: 3
+        animTrigger: Harvert
+    - rid: 8196222991998910555
+      type: {class: AppearanceModule, ns: , asm: Assembly-CSharp}
+      data:
+        spriteId: Art.Equipment.MeleeWeapon1H.Scythe02
+        equipmentPart: 5

@@ -15,7 +15,7 @@ MonoBehaviour:
   id: npc_chetao
   keyName: npc_chetao_name
   descKey: npc_chetao_desc
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 15670fa15a7412b4fb541f749d773c96, type: 3}
   category: 0
   maxStack: 1
   buyPrice: 0
@@ -23,7 +23,7 @@ MonoBehaviour:
   baseStats:
     baseStats:
     - statType: 13
-      value: 5000
+      value: 999999
   placementRule:
     occupyLayer: 0
     requireTags: 0
@@ -32,6 +32,7 @@ MonoBehaviour:
   modules:
   - rid: 8196222910859575303
   - rid: 8196222910859575304
+  - rid: 8196222980765515841
   references:
     version: 2
     RefIds:
@@ -45,4 +46,23 @@ MonoBehaviour:
       type: {class: InventoryModule, ns: , asm: Assembly-CSharp}
       data:
         inventoryType: 0
-        size: 20
+        size: 60
+    - rid: 8196222980765515841
+      type: {class: CraftingModule, ns: , asm: Assembly-CSharp}
+      data:
+        optionTextKey: ui.crafting.open
+        priority: 35
+        recipes:
+        - {fileID: 11400000, guid: 9276bdaad4569664cb5cbfcca77416ec, type: 2}
+        - {fileID: 11400000, guid: 2d7e3fd04d9be2a42b8f1267545e0cc0, type: 2}
+        - {fileID: 11400000, guid: df82cd69dd8c6174a8f0e1d8eb612394, type: 2}
+        - {fileID: 11400000, guid: 9206fc6d0a64c884e8e6f0d282bf4051, type: 2}
+        - {fileID: 11400000, guid: c3ff9a82f65828249b5deacf10089188, type: 2}
+        - {fileID: 11400000, guid: 5e0139ae1eb26634590b00c1905c8d16, type: 2}
+        - {fileID: 11400000, guid: 6738fbee101b5ce4bb6ecd17cd3b7421, type: 2}
+        - {fileID: 11400000, guid: 00dc6e9297212d24a9634ed4c0bb1807, type: 2}
+        - {fileID: 11400000, guid: 2d979a4b7b007734788ee52367e424be, type: 2}
+        - {fileID: 11400000, guid: f9e9005b69ace164da65084d116d2efb, type: 2}
+        - {fileID: 11400000, guid: daad23d7453d7f7438cc6fbf0dd0106c, type: 2}
+        - {fileID: 11400000, guid: efcfa88ed639cea479b1ad059fb7ceca, type: 2}
+        - {fileID: 11400000, guid: c93d70979f44c934a99255ba7e39bd6f, type: 2}

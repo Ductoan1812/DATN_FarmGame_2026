@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8393fbdfdb650e5418aad1c82ae5b8b5, type: 3}
+  m_Name: Portal_Town_To_Farm
+  m_EditorClassIdentifier: 
+  id: portal_town_to_farm
+  keyName: m1.portal.town_to_farm.name
+  descKey: m3.portal.desc
+  icon: {fileID: 21300000, guid: b2c2a30854cb1624aaad44f193fe7381, type: 3}
+  category: 9
+  maxStack: 1
+  buyPrice: -1
+  sellPrice: 0
+  baseStats:
+    baseStats: []
+  placementRule:
+    occupyLayer: 0
+    requireTags: 0
+    provideTags: 0
+    blockLayers: 
+  modules:
+  - rid: 8196222991998910731
+  references:
+    version: 2
+    RefIds:
+    - rid: 8196222991998910731
+      type: {class: ScenePortalModule, ns: , asm: Assembly-CSharp}
+      data:
+        optionTextKey: ui.scene.enter
+        priority: 40
+        targetSceneName: FarmScene
+        targetSpawnPointId: player_start
+        saveBeforeTransition: 1

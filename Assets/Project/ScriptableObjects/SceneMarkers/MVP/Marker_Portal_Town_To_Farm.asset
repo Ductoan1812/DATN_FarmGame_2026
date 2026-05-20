@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d88d43265a2517a40b86c58484bc1f8e, type: 3}
+  m_Name: Marker_Portal_Town_To_Farm
+  m_EditorClassIdentifier: 
+  markerKind: 3
+  objectType: 13
+  entityData: {fileID: 11400000, guid: a71be3bbb8691c0428cf5cde3995cb21, type: 2}
+  savePolicy: 0
+  spawnGroupId: town_to_farm
+  spawnPointId: 
+  respawnMinutes: 0
+  initialAmount: 1
+  bypassPlacementValidation: 1
+  editorSprite: {fileID: 21300000, guid: b2c2a30854cb1624aaad44f193fe7381, type: 3}
+  editorColor: {r: 0.5, g: 0.95, b: 0.65, a: 0.8}

@@ -15,7 +15,7 @@ MonoBehaviour:
   id: OreNode01
   keyName: ore_node_name
   descKey: ore_node_desc
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: caa2e894f543b3440b9416e5b5acf64e, type: 3}
   category: 9
   maxStack: 1
   buyPrice: 0
@@ -36,6 +36,7 @@ MonoBehaviour:
   - rid: 8196222910859575306
   - rid: 8196222910859575307
   - rid: 8196222910859575308
+  - rid: 8196222980765516389
   references:
     version: 2
     RefIds:
@@ -59,3 +60,9 @@ MonoBehaviour:
     - rid: 8196222910859575308
       type: {class: MortalModule, ns: , asm: Assembly-CSharp}
       data: 
+    - rid: 8196222980765516389
+      type: {class: ExpRewardModule, ns: , asm: Assembly-CSharp}
+      data:
+        rewardExp: 0
+        sourceType: 6
+        requireKiller: 1

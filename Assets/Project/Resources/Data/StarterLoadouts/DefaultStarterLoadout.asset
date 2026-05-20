@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 780611ab01e47c44daeeecf7d9250e60, type: 3}
+  m_Name: DefaultStarterLoadout
+  m_EditorClassIdentifier: 
+  startSpawnPointId: player_start
+  initialMoney: 500
+  selectedHotbarIndex: 0
+  entries:
+  - inventoryType: 1
+    slotIndex: 0
+    itemData: {fileID: 11400000, guid: c037268b411d57e42b0c61bc33048304, type: 2}
+    amount: 1
+  - inventoryType: 1
+    slotIndex: 1
+    itemData: {fileID: 11400000, guid: 09c3f3172e41c6d409a9eb40712e4b70, type: 2}
+    amount: 1
+  - inventoryType: 1
+    slotIndex: 2
+    itemData: {fileID: 11400000, guid: 53512c14c130fee4c9c6c06a153c9e7f, type: 2}
+    amount: 1
+  - inventoryType: 1
+    slotIndex: 3
+    itemData: {fileID: 11400000, guid: cb901c282659d5e4babb60e30e228468, type: 2}
+    amount: 1
+  - inventoryType: 1
+    slotIndex: 4
+    itemData: {fileID: 11400000, guid: 0437a2ca1c6258d48a8d307aaa02076d, type: 2}
+    amount: 10
+  - inventoryType: 1
+    slotIndex: 5
+    itemData: {fileID: 11400000, guid: 8d55ac336e54d9146a76da8a03c88c45, type: 2}
+    amount: 1
+  - inventoryType: 0
+    slotIndex: 0
+    itemData: {fileID: 11400000, guid: 61ed8cad932a67148b1f062d12bc0912, type: 2}
+    amount: 1

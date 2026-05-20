@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8393fbdfdb650e5418aad1c82ae5b8b5, type: 3}
+  m_Name: Pickaxe_T5
+  m_EditorClassIdentifier: 
+  id: tool_pickaxe_t5
+  keyName: mvp.tool.pickaxe.t5.name
+  descKey: mvp.tool.pickaxe.t5.desc
+  icon: {fileID: 21300000, guid: 7f04096051a32f241be6eb411e007734, type: 3}
+  category: 1
+  maxStack: 1
+  buyPrice: -1
+  sellPrice: 2500
+  baseStats:
+    baseStats:
+    - statType: 2
+      value: 30
+    - statType: 12
+      value: 1.8
+    - statType: 11
+      value: 0.2
+  placementRule:
+    occupyLayer: 0
+    requireTags: 0
+    provideTags: 0
+    blockLayers: 
+  modules:
+  - rid: 8196222991998910641
+  - rid: 8196222991998910642
+  references:
+    version: 2
+    RefIds:
+    - rid: 8196222991998910641
+      type: {class: ToolModule, ns: , asm: Assembly-CSharp}
+      data:
+        toolType: 5
+        animTrigger: Pickaxe
+    - rid: 8196222991998910642
+      type: {class: AppearanceModule, ns: , asm: Assembly-CSharp}
+      data:
+        spriteId: Tools.Pickaxe01
+        equipmentPart: 5

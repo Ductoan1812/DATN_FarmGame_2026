@@ -15,7 +15,7 @@ MonoBehaviour:
   id: player
   keyName: Player
   descKey: 
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 21c96ddae0b6a2b449ff29f46da44d84, type: 3}
   category: 0
   maxStack: 1
   buyPrice: 0
@@ -27,13 +27,13 @@ MonoBehaviour:
     - statType: 1
       value: 100
     - statType: 18
-      value: 0
+      value: 1
     - statType: 15
       value: 80
     - statType: 14
       value: 80
     - statType: 17
-      value: 500
+      value: 130
     - statType: 16
       value: 0
     - statType: 2
@@ -46,6 +46,10 @@ MonoBehaviour:
       value: 500
     - statType: 4
       value: 4
+    - statType: 6
+      value: 100
+    - statType: 5
+      value: 100
   placementRule:
     occupyLayer: 0
     requireTags: 0

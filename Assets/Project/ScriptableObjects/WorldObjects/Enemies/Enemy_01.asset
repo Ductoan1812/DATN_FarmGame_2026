@@ -15,7 +15,7 @@ MonoBehaviour:
   id: Enemy01
   keyName: enemy_01_name
   descKey: enemy_01_desc
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: b4c508020a79d0847bdd3bdc02739ac5, type: 3}
   category: 0
   maxStack: 1
   buyPrice: 0
@@ -39,6 +39,8 @@ MonoBehaviour:
   - rid: 8196222910859575300
   - rid: 8196222910859575301
   - rid: 8196222910859575302
+  - rid: 8196222980765516399
+  - rid: 8196222980765516400
   references:
     version: 2
     RefIds:
@@ -61,3 +63,14 @@ MonoBehaviour:
         respawnDelay: 25
         restoreFullHp: 1
         respawnPrefabId: 9
+    - rid: 8196222980765516399
+      type: {class: AttackModule, ns: , asm: Assembly-CSharp}
+      data:
+        attackRange: 1.5
+        attackCooldown: 0.5
+    - rid: 8196222980765516400
+      type: {class: ExpRewardModule, ns: , asm: Assembly-CSharp}
+      data:
+        rewardExp: 0
+        sourceType: 6
+        requireKiller: 1

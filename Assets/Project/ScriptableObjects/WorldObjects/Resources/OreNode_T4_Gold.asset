@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8393fbdfdb650e5418aad1c82ae5b8b5, type: 3}
+  m_Name: OreNode_T4_Gold
+  m_EditorClassIdentifier: 
+  id: ore_node_t4_gold
+  keyName: mvp.ore_node.t4.gold.name
+  descKey: mvp.ore_node.t4.gold.desc
+  icon: {fileID: 21300000, guid: 2b4cda0ecfc9d424dba0e3fe1dbb8112, type: 3}
+  category: 9
+  maxStack: 1
+  buyPrice: -1
+  sellPrice: 0
+  baseStats:
+    baseStats:
+    - statType: 0
+      value: 70
+    - statType: 1
+      value: 70
+  placementRule:
+    occupyLayer: 1
+    requireTags: 0
+    provideTags: 0
+    blockLayers: 
+  modules:
+  - rid: 8196222991998910617
+  - rid: 8196222991998910618
+  - rid: 8196222991998910619
+  - rid: 8196222991998910620
+  - rid: 8196222991998910621
+  references:
+    version: 2
+    RefIds:
+    - rid: 8196222991998910617
+      type: {class: HarvestModule, ns: , asm: Assembly-CSharp}
+      data:
+        harvestTool: 5
+        wrongToolPenalty: 0.25
+    - rid: 8196222991998910618
+      type: {class: HealthModule, ns: , asm: Assembly-CSharp}
+      data:
+        canTakeDamage: 1
+    - rid: 8196222991998910619
+      type: {class: DropModule, ns: , asm: Assembly-CSharp}
+      data:
+        harvestDrops:
+        - item: {fileID: 11400000, guid: 6c6049a7732d5d44ba4b435d0692e7ba, type: 2}
+          minAmount: 1
+          maxAmount: 3
+          dropChance: 1
+    - rid: 8196222991998910620
+      type: {class: ExpRewardModule, ns: , asm: Assembly-CSharp}
+      data:
+        rewardExp: 180
+        sourceType: 2
+        requireKiller: 1
+    - rid: 8196222991998910621
+      type: {class: MortalModule, ns: , asm: Assembly-CSharp}
+      data: 

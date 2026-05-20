@@ -41,6 +41,7 @@ MonoBehaviour:
       type: {class: ToolModule, ns: , asm: Assembly-CSharp}
       data:
         toolType: 4
+        animTrigger: Axe
     - rid: 8196222611227148289
       type: {class: AppearanceModule, ns: , asm: Assembly-CSharp}
       data:

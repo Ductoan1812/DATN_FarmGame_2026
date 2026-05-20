@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8393fbdfdb650e5418aad1c82ae5b8b5, type: 3}
+  m_Name: WateringCan_01
+  m_EditorClassIdentifier: 
+  id: WateringCan01
+  keyName: WateringCanBasic
+  descKey: "B\xECnh t\u01B0\u1EDBi c\u01A1 b\u1EA3n"
+  icon: {fileID: 325664127, guid: 163ba03f3b439ab48b5f238ac2b407f0, type: 3}
+  category: 1
+  maxStack: 1
+  buyPrice: 0
+  sellPrice: 0
+  baseStats:
+    baseStats:
+    - statType: 10
+      value: 0.4
+  placementRule:
+    occupyLayer: 0
+    requireTags: 0
+    provideTags: 0
+    blockLayers: 
+  modules:
+  - rid: 2376239539840090112
+  - rid: 2376239868009775104
+  references:
+    version: 2
+    RefIds:
+    - rid: 2376239539840090112
+      type: {class: ToolModule, ns: , asm: Assembly-CSharp}
+      data:
+        toolType: 2
+        animTrigger: Hoe
+    - rid: 2376239868009775104
+      type: {class: AppearanceModule, ns: , asm: Assembly-CSharp}
+      data:
+        spriteId: Art.Equipment.MeleeWeapon1H.Axe01
+        equipmentPart: 5
