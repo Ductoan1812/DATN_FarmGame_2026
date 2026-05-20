@@ -24,6 +24,8 @@ public class ToolModule : IModuleData
         {
             case ToolType.Hoe:
                 return new HoeRuntime(this);
+            case ToolType.WateringCan:
+                return new WateringCanRuntime(this);
             case ToolType.Scythe:
                 return new ScytheRuntime(this);
             case ToolType.Axe:

@@ -39,13 +39,14 @@ public class PlacementRuntime : IModuleRuntime, IHandleEvent<PrimaryActionEvent>
 
         // Lấy PlacementRule từ EntityData của item (hạt giống/đồ vật đang cầm)
         var itemData = e.item?.entityData;
+        var placedData = _data.placedEntityData != null ? _data.placedEntityData : itemData;
         if (itemData == null)
         {
             Debug.LogWarning("[PlacementRuntime] item.entityData null.");
             return;
         }
 
-        if (!ws.CanPlaceAt(itemData.placementRule, cell2d, out var reason))
+        if (!ws.CanPlaceAt(placedData.placementRule, cell2d, out var reason))
         {
             Debug.Log($"[PlacementRuntime] Không thể đặt tại {cell2d}: {reason}");
             return;
@@ -79,7 +80,20 @@ public class PlacementRuntime : IModuleRuntime, IHandleEvent<PrimaryActionEvent>
 
         if (_data.centerTile) worldPos += new Vector2(0.5f, 0.5f);
 
-        gm.EventBus.Publish(new SpawnRequestPublish(worldPos, _data.objectTypeToSpawn, e.item, splitOnSpawn: true));
+        if (_data.placedEntityData == null)
+        {
+            gm.EventBus.Publish(new SpawnRequestPublish(worldPos, _data.objectTypeToSpawn, e.item, splitOnSpawn: true));
+            return;
+        }
+
+        if (gm.InventoryService == null || !gm.InventoryService.Consume(e.item, e.actor, 1))
+            return;
+
+        gm.EventBus.Publish(new SpawnRequestPublish(
+            worldPos,
+            _data.objectTypeToSpawn,
+            _data.placedEntityData,
+            spawnAmount: 1));
     }
 
     // ── Save / Load ───────────────────────────────────────────────────────────
