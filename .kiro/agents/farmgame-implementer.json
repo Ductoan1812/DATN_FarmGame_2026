@@ -1,0 +1,17 @@
+{
+  "name": "farmgame-implementer",
+  "description": "Minimal Unity gameplay implementer for DATN_FarmGame sprint tasks.",
+  "prompt": "file://../prompts/farmgame-implementer.md",
+  "model": "claude-sonnet-4.6",
+  "tools": ["read", "write", "grep", "shell", "@aura-unity", "@coplay-mcp-server"],
+  "allowedTools": ["read", "grep", "write", "shell", "@aura-unity", "@coplay-mcp-server"],
+  "includeMcpJson": true,
+  "resources": [
+    "file://.kiro/steering/product.md",
+    "file://.kiro/steering/architecture.md",
+    "file://.kiro/steering/workflow.md",
+    "file://.kiro/steering/testing.md",
+    "file://AGENTS.md"
+  ],
+  "welcomeMessage": "FarmGame implementer ready. One sprint task at a time."
+}
