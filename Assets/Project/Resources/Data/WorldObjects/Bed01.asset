@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 48e3d0f8a3fb07e4987281aafcae6a3c, type: 3}
-  m_Name: OreNode01
+  m_Name: Bed01
   m_EditorClassIdentifier: 
-  idObject: 8
-  prefab: {fileID: 5509933931381334664, guid: 3ec3ebce3ced0464d9e974a745912601, type: 3}
+  idObject: 14
+  prefab: {fileID: 1125545272651927824, guid: 4f10d26cace0fea49af9ebbaa6690142, type: 3}

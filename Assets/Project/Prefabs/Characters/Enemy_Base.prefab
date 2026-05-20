@@ -13,14 +13,13 @@ GameObject:
   - component: {fileID: 8432077148913827741}
   - component: {fileID: 6837121242065063137}
   - component: {fileID: 6665677410701190088}
-  - component: {fileID: -8375953660360131802}
-  - component: {fileID: 3763826657939634124}
   - component: {fileID: 1791237718592334842}
   - component: {fileID: -2059209477160372625}
-  - component: {fileID: 5637692776461172270}
-  m_Layer: 12
-  m_Name: NPC
-  m_TagString: NPC
+  - component: {fileID: 556918161955629708}
+  - component: {fileID: 9171773494065306707}
+  m_Layer: 8
+  m_Name: Enemy_Base
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -117,7 +116,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1125545272651927824}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -136,62 +135,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &-8375953660360131802
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1125545272651927824}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6174c7540fcb204487cb0eb0698e8c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interactionCollider: {fileID: 3763826657939634124}
-  autoAssignCollider: 1
-  warnIfColliderIsNotTrigger: 1
-  playerTag: Player
-  promptText: "[RMB] T\u01B0\u01A1ng t\xE1c"
-  offset: {x: 0, y: 1}
-  fontSize: 9
-  textColor: {r: 1, g: 1, b: 1, a: 1}
-  bgColor: {r: 0, g: 0, b: 0, a: 0.6}
---- !u!58 &3763826657939634124
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1125545272651927824}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.6287749}
-  serializedVersion: 2
-  m_Radius: 2.526614
 --- !u!212 &1791237718592334842
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -234,7 +177,7 @@ SpriteRenderer:
   m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: -1981265805, guid: e38a3fb1a06bfc744950fa179f9040a1, type: 3}
-  m_Color: {r: 0.55, g: 0.75, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.35, b: 0.35, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -265,7 +208,30 @@ MonoBehaviour:
   highlightedTextColor: {r: 1, g: 1, b: 0.85, a: 1}
   sortingLayerName: Effect
   sortingOrder: 50
---- !u!114 &5637692776461172270
+--- !u!114 &556918161955629708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1125545272651927824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 082149a46ac5a5b408bb1ae866515274, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useEntityRuntime: 1
+  detectRange: 5
+  attackRange: 1.1
+  stopDistance: 0.65
+  moveSpeed: 2
+  attackCooldown: 1
+  attackWindup: 0.35
+  telegraphColor: {r: 1, g: 0.35, b: 0.25, a: 1}
+  fallbackAttackDamage: 2
+  maxHp: 10
+  currentHp: 0
+--- !u!114 &9171773494065306707
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -277,4 +243,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f80044c35f321b4b8a83e6c87c17686, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  role: 2
+  role: 3

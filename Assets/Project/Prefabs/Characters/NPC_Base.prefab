@@ -17,9 +17,9 @@ GameObject:
   - component: {fileID: 3763826657939634124}
   - component: {fileID: 1791237718592334842}
   - component: {fileID: -2059209477160372625}
-  - component: {fileID: 5637692776461172270}
+  - component: {fileID: 5313900875112012965}
   m_Layer: 12
-  m_Name: NPC
+  m_Name: NPC_Base
   m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -265,7 +265,7 @@ MonoBehaviour:
   highlightedTextColor: {r: 1, g: 1, b: 0.85, a: 1}
   sortingLayerName: Effect
   sortingOrder: 50
---- !u!114 &5637692776461172270
+--- !u!114 &5313900875112012965
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

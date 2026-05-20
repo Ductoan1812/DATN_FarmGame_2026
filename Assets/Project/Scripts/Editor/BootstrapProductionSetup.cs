@@ -1,0 +1,1378 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using Assets.HeroEditor4D.Common.Scripts.Enums;
+using UnityEditor;
+using UnityEditor.SceneManagement;
+using UnityEditorInternal;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.Tilemaps;
+
+public static class BootstrapProductionSetup
+{
+    private const string SampleScenePath = "Assets/Project/Scenes/Main/SampleScene.unity";
+
+    private const string PlayerPrefabPath = "Assets/Project/Prefabs/Characters/Player.prefab";
+    private const string LegacyNpcPrefabPath = "Assets/Project/Prefabs/Characters/NPC.prefab";
+    private const string PlantPrefabPath = "Assets/Project/Prefabs/WorldEntities/PlantPrefab.prefab";
+    private const string DropPrefabPath = "Assets/Project/Prefabs/Items/EntityDrop.prefab";
+
+    private const string NpcBasePrefabPath = "Assets/Project/Prefabs/Characters/NPC_Base.prefab";
+    private const string NpcShopPrefabPath = "Assets/Project/Prefabs/Characters/NPC_Shop.prefab";
+    private const string NpcCraftingPrefabPath = "Assets/Project/Prefabs/Characters/NPC_Crafting.prefab";
+    private const string NpcQuestPrefabPath = "Assets/Project/Prefabs/Characters/NPC_Quest.prefab";
+    private const string EnemyBasePrefabPath = "Assets/Project/Prefabs/Characters/Enemy_Base.prefab";
+    private const string CropPlantPrefabPath = "Assets/Project/Prefabs/WorldEntities/CropPlant_Base.prefab";
+    private const string OreNodePrefabPath = "Assets/Project/Prefabs/WorldEntities/OreNode_Base.prefab";
+    private const string TreeNodePrefabPath = "Assets/Project/Prefabs/WorldEntities/TreeNode_Base.prefab";
+    private const string RockNodePrefabPath = "Assets/Project/Prefabs/WorldEntities/RockNode_Base.prefab";
+    private const string ForageNodePrefabPath = "Assets/Project/Prefabs/WorldEntities/ForageNode_Base.prefab";
+    private const string PortalPrefabPath = "Assets/Project/Prefabs/WorldEntities/Portal_Base.prefab";
+    private const string BedPrefabPath = "Assets/Project/Prefabs/WorldEntities/Bed_Base.prefab";
+    private const string AnimalPrefabPath = "Assets/Project/Prefabs/Characters/Animal_Base.prefab";
+
+    private const string StarterLoadoutPath = "Assets/Project/Resources/Data/StarterLoadouts/DefaultStarterLoadout.asset";
+    private const string MarkerFolder = "Assets/Project/ScriptableObjects/SceneMarkers/MVP";
+    private const string PlayerStartMarkerPath = MarkerFolder + "/Marker_Player_Start.asset";
+    private const string GeneratedIconFolder = "Assets/Project/Generated/Icons";
+    private const string CropPlantFolder = "Assets/Project/ScriptableObjects/WorldObjects/Plants/Placed";
+
+    [MenuItem("Tools/DATN/Production/Bootstrap Production Setup")]
+    public static void Execute()
+    {
+        BootstrapCoreplayM5Content.ExecuteAndStampSampleScene();
+        EnsureFolders();
+        EnsureProductionPrefabs();
+        EnsureM3PrefabAndWorldObjectDefinitions();
+        RepointWorldObjects();
+        ConfigureDataContracts();
+        EnsureM4WeaponData();
+        EnsureM6AnimalData();
+        EnsureStarterLoadout();
+        EnsureGeneratedIcons();
+        EnsurePlayerStartMarker();
+        StampPlayerStartMarker();
+        ValidateSetup(logSuccess: true);
+
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
+        Debug.Log("[BootstrapProductionSetup] Production prefab/data/spawn/icon setup completed.");
+    }
+
+    public static void ExecuteBatch() => Execute();
+
+    [MenuItem("Tools/DATN/Production/Validate Production Setup")]
+    public static void ValidateMenu() => ValidateSetup(logSuccess: true);
+
+    private static void EnsureProductionPrefabs()
+    {
+        EnsureTag("Player");
+        EnsureTag("NPC");
+        EnsureTag("Plant");
+        EnsureTag("Enemy");
+
+        ConfigurePrefab(PlayerPrefabPath, WorldEntityPrefabRoleType.Player, "Player", "Player", Color.white,
+            removeNameplate: true,
+            addEnemyObject: false,
+            removeInteraction: false,
+            removeStageObject: false);
+        ConfigurePrefab(LegacyNpcPrefabPath, WorldEntityPrefabRoleType.Npc, "NPC", "NPC", new Color(0.55f, 0.75f, 1f, 1f),
+            removeNameplate: false, addEnemyObject: false, removeInteraction: false, removeStageObject: false);
+
+        CopyAssetIfMissing(LegacyNpcPrefabPath, NpcBasePrefabPath);
+        CopyAssetIfMissing(LegacyNpcPrefabPath, NpcShopPrefabPath);
+        CopyAssetIfMissing(LegacyNpcPrefabPath, NpcCraftingPrefabPath);
+        CopyAssetIfMissing(LegacyNpcPrefabPath, NpcQuestPrefabPath);
+        CopyAssetIfMissing(LegacyNpcPrefabPath, EnemyBasePrefabPath);
+        CopyAssetIfMissing(PlantPrefabPath, CropPlantPrefabPath);
+        CopyAssetIfMissing(PlantPrefabPath, OreNodePrefabPath);
+        CopyAssetIfMissing(OreNodePrefabPath, TreeNodePrefabPath);
+        CopyAssetIfMissing(OreNodePrefabPath, RockNodePrefabPath);
+        CopyAssetIfMissing(CropPlantPrefabPath, ForageNodePrefabPath);
+        CopyAssetIfMissing(LegacyNpcPrefabPath, PortalPrefabPath);
+        CopyAssetIfMissing(LegacyNpcPrefabPath, BedPrefabPath);
+        CopyAssetIfMissing(LegacyNpcPrefabPath, AnimalPrefabPath);
+
+        ConfigurePrefab(NpcBasePrefabPath, WorldEntityPrefabRoleType.Npc, "NPC", "NPC", new Color(0.55f, 0.75f, 1f, 1f),
+            removeNameplate: false, addEnemyObject: false, removeInteraction: false, removeStageObject: false);
+        ConfigurePrefab(NpcShopPrefabPath, WorldEntityPrefabRoleType.Npc, "NPC", "NPC", new Color(0.5f, 1f, 0.55f, 1f),
+            removeNameplate: false, addEnemyObject: false, removeInteraction: false, removeStageObject: false);
+        ConfigurePrefab(NpcCraftingPrefabPath, WorldEntityPrefabRoleType.Npc, "NPC", "NPC", new Color(0.45f, 0.95f, 1f, 1f),
+            removeNameplate: false, addEnemyObject: false, removeInteraction: false, removeStageObject: false);
+        ConfigurePrefab(NpcQuestPrefabPath, WorldEntityPrefabRoleType.Npc, "NPC", "NPC", new Color(1f, 0.9f, 0.35f, 1f),
+            removeNameplate: false, addEnemyObject: false, removeInteraction: false, removeStageObject: false);
+        ConfigurePrefab(EnemyBasePrefabPath, WorldEntityPrefabRoleType.Enemy, "Enemy", "Enemy", new Color(1f, 0.35f, 0.35f, 1f),
+            removeNameplate: false, addEnemyObject: true, removeInteraction: true, removeStageObject: false);
+        ConfigurePrefab(CropPlantPrefabPath, WorldEntityPrefabRoleType.Crop, "Plant", "Interactable", Color.white,
+            removeNameplate: true, addEnemyObject: false, removeInteraction: false, removeStageObject: false);
+        ConfigurePrefab(OreNodePrefabPath, WorldEntityPrefabRoleType.Resource, "Plant", "Interactable", new Color(0.7f, 0.75f, 0.85f, 1f),
+            removeNameplate: true, addEnemyObject: false, removeInteraction: false, removeStageObject: true);
+        ConfigurePrefab(TreeNodePrefabPath, WorldEntityPrefabRoleType.Resource, "Plant", "Interactable", new Color(0.4f, 0.72f, 0.42f, 1f),
+            removeNameplate: true, addEnemyObject: false, removeInteraction: false, removeStageObject: true);
+        ConfigurePrefab(RockNodePrefabPath, WorldEntityPrefabRoleType.Resource, "Plant", "Interactable", new Color(0.55f, 0.57f, 0.62f, 1f),
+            removeNameplate: true, addEnemyObject: false, removeInteraction: false, removeStageObject: true);
+        ConfigurePrefab(ForageNodePrefabPath, WorldEntityPrefabRoleType.Resource, "Plant", "Interactable", new Color(0.58f, 0.86f, 0.52f, 1f),
+            removeNameplate: true, addEnemyObject: false, removeInteraction: false, removeStageObject: true);
+        ConfigurePrefab(PortalPrefabPath, WorldEntityPrefabRoleType.Resource, "NPC", "Interactable", new Color(0.45f, 0.8f, 1f, 1f),
+            removeNameplate: false, addEnemyObject: false, removeInteraction: false, removeStageObject: true);
+        ConfigurePrefab(BedPrefabPath, WorldEntityPrefabRoleType.Resource, "NPC", "Interactable", new Color(0.95f, 0.85f, 0.6f, 1f),
+            removeNameplate: false, addEnemyObject: false, removeInteraction: false, removeStageObject: true);
+        ConfigurePrefab(AnimalPrefabPath, WorldEntityPrefabRoleType.Npc, "NPC", "NPC", new Color(1f, 0.92f, 0.75f, 1f),
+            removeNameplate: false, addEnemyObject: false, removeInteraction: false, removeStageObject: true);
+        EnsureAnimalPrefabBridge();
+        ConfigurePrefab(DropPrefabPath, WorldEntityPrefabRoleType.Drop, "Untagged", "Default", Color.white,
+            removeNameplate: true, addEnemyObject: false, removeInteraction: false, removeStageObject: false);
+    }
+
+    private static void EnsureM3PrefabAndWorldObjectDefinitions()
+    {
+        EnsureWorldObjectDefinition("Assets/Project/Resources/Data/WorldObjects/TreeNode01.asset", ObjectType.TreeNode01, TreeNodePrefabPath);
+        EnsureWorldObjectDefinition("Assets/Project/Resources/Data/WorldObjects/RockNode01.asset", ObjectType.RockNode01, RockNodePrefabPath);
+        EnsureWorldObjectDefinition("Assets/Project/Resources/Data/WorldObjects/ForageNode01.asset", ObjectType.ForageNode01, ForageNodePrefabPath);
+        EnsureWorldObjectDefinition("Assets/Project/Resources/Data/WorldObjects/Portal01.asset", ObjectType.Portal01, PortalPrefabPath);
+        EnsureWorldObjectDefinition("Assets/Project/Resources/Data/WorldObjects/Bed01.asset", ObjectType.Bed01, BedPrefabPath);
+        EnsureWorldObjectDefinition("Assets/Project/Resources/Data/WorldObjects/Animal01.asset", ObjectType.Animal01, AnimalPrefabPath);
+    }
+
+    private static void ConfigurePrefab(
+        string prefabPath,
+        WorldEntityPrefabRoleType role,
+        string tag,
+        string layerName,
+        Color spriteColor,
+        bool removeNameplate,
+        bool addEnemyObject,
+        bool removeInteraction,
+        bool removeStageObject)
+    {
+        var root = PrefabUtility.LoadPrefabContents(prefabPath);
+        if (root == null)
+        {
+            Debug.LogWarning($"[BootstrapProductionSetup] Missing prefab: {prefabPath}");
+            return;
+        }
+
+        try
+        {
+            root.name = Path.GetFileNameWithoutExtension(prefabPath);
+            root.SetActive(false);
+            SetTagAndLayer(root, tag, layerName);
+            RemovePlayerOnlyComponents(root);
+
+            if (role == WorldEntityPrefabRoleType.Player)
+            {
+                EnsureComponent<PlayerControler>(root);
+                EnsureComponent<PlayerInventory>(root);
+                EnsureComponent<PlayerEquipment>(root);
+                EnsureComponent<PlayerBridge>(root);
+                EnsureComponent<ToolActionBridge>(root);
+            }
+
+            if (role != WorldEntityPrefabRoleType.Player)
+            {
+                RemoveComponent<PlayerControler>(root);
+                RemoveComponent<PlayerInventory>(root);
+                RemoveComponent<PlayerEquipment>(root);
+                RemoveComponent<PlayerBridge>(root);
+                RemoveComponent<ToolActionBridge>(root);
+                RemoveComponent<TileCursorHighlight>(root);
+            }
+
+            if (removeInteraction)
+            {
+                RemoveComponent<InteractablePrompt>(root);
+                foreach (var circle in root.GetComponents<CircleCollider2D>())
+                    UnityEngine.Object.DestroyImmediate(circle);
+            }
+
+            if (removeStageObject)
+                RemoveComponent<StageObject>(root);
+
+            if (removeNameplate)
+                RemoveComponent<WorldEntityNameplate>(root);
+            else
+                EnsureComponent<WorldEntityNameplate>(root);
+
+            if (addEnemyObject)
+                EnsureComponent<EnemyObject>(root);
+            else
+                RemoveComponent<EnemyObject>(root);
+
+            EnsureComponent<EntityRoot>(root);
+            EnsureRole(root, role);
+            ConfigureRigidbody(root, role);
+            TintSpriteRenderer(root, spriteColor);
+
+            PrefabUtility.SaveAsPrefabAsset(root, prefabPath);
+        }
+        finally
+        {
+            PrefabUtility.UnloadPrefabContents(root);
+        }
+    }
+
+    private static void RemovePlayerOnlyComponents(GameObject root)
+    {
+        if (root == null) return;
+        if (root.GetComponent<WorldEntityPrefabRole>()?.role == WorldEntityPrefabRoleType.Player) return;
+
+        RemoveComponent<PlayerControler>(root);
+        RemoveComponent<PlayerInventory>(root);
+        RemoveComponent<PlayerEquipment>(root);
+        RemoveComponent<PlayerBridge>(root);
+        RemoveComponent<ToolActionBridge>(root);
+        RemoveComponent<TileCursorHighlight>(root);
+    }
+
+    private static void RepointWorldObjects()
+    {
+        SetWorldObjectPrefab("Assets/Project/Resources/Data/WorldObjects/Player.asset", PlayerPrefabPath);
+        SetWorldObjectPrefab("Assets/Project/Resources/Data/WorldObjects/NPC01.asset", NpcBasePrefabPath);
+        SetWorldObjectPrefab("Assets/Project/Resources/Data/WorldObjects/NPCShop01.asset", NpcShopPrefabPath);
+        SetWorldObjectPrefab("Assets/Project/Resources/Data/WorldObjects/NPCCrafting01.asset", NpcCraftingPrefabPath);
+        SetWorldObjectPrefab("Assets/Project/Resources/Data/WorldObjects/NPCEvent01.asset", NpcQuestPrefabPath);
+        SetWorldObjectPrefab("Assets/Project/Resources/Data/WorldObjects/Enemy01.asset", EnemyBasePrefabPath);
+        SetWorldObjectPrefab("Assets/Project/Resources/Data/WorldObjects/OreNode01.asset", OreNodePrefabPath);
+        SetWorldObjectPrefab("Assets/Project/Resources/Data/WorldObjects/Plant01.asset", CropPlantPrefabPath);
+        SetWorldObjectPrefab("Assets/Project/Resources/Data/WorldObjects/Plant02.asset", CropPlantPrefabPath);
+        SetWorldObjectPrefab("Assets/Project/Resources/Data/WorldObjects/EntityDrop.asset", DropPrefabPath);
+        SetWorldObjectPrefab("Assets/Project/Resources/Data/WorldObjects/TreeNode01.asset", TreeNodePrefabPath);
+        SetWorldObjectPrefab("Assets/Project/Resources/Data/WorldObjects/RockNode01.asset", RockNodePrefabPath);
+        SetWorldObjectPrefab("Assets/Project/Resources/Data/WorldObjects/ForageNode01.asset", ForageNodePrefabPath);
+        SetWorldObjectPrefab("Assets/Project/Resources/Data/WorldObjects/Portal01.asset", PortalPrefabPath);
+        SetWorldObjectPrefab("Assets/Project/Resources/Data/WorldObjects/Bed01.asset", BedPrefabPath);
+        SetWorldObjectPrefab("Assets/Project/Resources/Data/WorldObjects/Animal01.asset", AnimalPrefabPath);
+    }
+
+    private static void ConfigureDataContracts()
+    {
+        ConfigurePlayerData();
+        ConfigureNpcData("Assets/Project/ScriptableObjects/Characters/NPCs/NPC_Banhang.asset", requireShop: true, requireCrafting: false, requireQuest: false);
+        ConfigureNpcData("Assets/Project/ScriptableObjects/Characters/NPCs/NPC_Chetao.asset", requireShop: false, requireCrafting: true, requireQuest: false);
+        ConfigureNpcData("Assets/Project/ScriptableObjects/Characters/NPCs/NPC_Sukien.asset", requireShop: false, requireCrafting: false, requireQuest: true);
+        ConfigureCropPlacementData();
+        ConfigureEnemyData();
+        ConfigureOreData();
+        ConfigureM3ResourceData();
+    }
+
+    private static void ConfigureM3ResourceData()
+    {
+        var wood = EnsureMaterialItem("Assets/Project/ScriptableObjects/Items/Materials/Wood_01.asset", "mat_wood_01", "m3.mat.wood.name", "m3.mat.wood.desc", 8);
+        var sap = EnsureMaterialItem("Assets/Project/ScriptableObjects/Items/Materials/Sap_01.asset", "mat_sap_01", "m3.mat.sap.name", "m3.mat.sap.desc", 12);
+        var stone = EnsureMaterialItem("Assets/Project/ScriptableObjects/Items/Materials/Stone_01.asset", "mat_stone_01", "m3.mat.stone.name", "m3.mat.stone.desc", 10);
+        var coal = EnsureMaterialItem("Assets/Project/ScriptableObjects/Items/Materials/Coal_01.asset", "mat_coal_01", "m3.mat.coal.name", "m3.mat.coal.desc", 18);
+        var fiber = EnsureMaterialItem("Assets/Project/ScriptableObjects/Items/Materials/Fiber_01.asset", "mat_fiber_01", "m3.mat.fiber.name", "m3.mat.fiber.desc", 7);
+        var forage = EnsureMaterialItem("Assets/Project/ScriptableObjects/Items/Materials/Forage_01.asset", "mat_forage_01", "m3.mat.forage.name", "m3.mat.forage.desc", 14);
+
+        ConfigureResourceEntity(
+            assetPath: "Assets/Project/ScriptableObjects/WorldObjects/Resources/TreeNode_01.asset",
+            id: "tree_node_01",
+            keyName: "m3.tree.name",
+            descKey: "m3.tree.desc",
+            hp: 8f,
+            requiredTool: ToolType.Axe,
+            drops: new[] { Drop(wood, 1, 2, 1f), Drop(sap, 1, 1, 0.35f) },
+            rewardExp: 12);
+
+        ConfigureResourceEntity(
+            assetPath: "Assets/Project/ScriptableObjects/WorldObjects/Resources/RockNode_01.asset",
+            id: "rock_node_01",
+            keyName: "m3.rock.name",
+            descKey: "m3.rock.desc",
+            hp: 10f,
+            requiredTool: ToolType.Pickaxe,
+            drops: new[] { Drop(stone, 1, 2, 1f), Drop(coal, 1, 1, 0.25f) },
+            rewardExp: 14);
+
+        ConfigureResourceEntity(
+            assetPath: "Assets/Project/ScriptableObjects/WorldObjects/Resources/ForageNode_01.asset",
+            id: "forage_node_01",
+            keyName: "m3.forage.name",
+            descKey: "m3.forage.desc",
+            hp: 5f,
+            requiredTool: ToolType.Scythe,
+            drops: new[] { Drop(fiber, 1, 2, 1f), Drop(forage, 1, 1, 0.4f) },
+            rewardExp: 10);
+
+        ConfigurePortalEntity();
+        ConfigureBedEntity();
+        ConfigureAnimalPlaceholderEntity();
+    }
+
+    private static EntityData EnsureMaterialItem(string assetPath, string id, string keyName, string descKey, int sellPrice)
+    {
+        var item = LoadOrCreateEntity(assetPath);
+        item.id = id;
+        item.keyName = keyName;
+        item.descKey = descKey;
+        item.category = ItemCategory.Material;
+        item.maxStack = Mathf.Max(1, item.maxStack > 0 ? item.maxStack : 99);
+        item.buyPrice = -1;
+        item.sellPrice = sellPrice;
+        item.modules ??= new List<IModuleData>();
+        item.modules.Clear();
+        item.baseStats = new StatsData { baseStats = new List<StatEntry>() };
+        EditorUtility.SetDirty(item);
+        return item;
+    }
+
+    private static void ConfigureResourceEntity(
+        string assetPath,
+        string id,
+        string keyName,
+        string descKey,
+        float hp,
+        ToolType requiredTool,
+        DropEntry[] drops,
+        int rewardExp)
+    {
+        var resource = LoadOrCreateEntity(assetPath);
+        resource.id = id;
+        resource.keyName = keyName;
+        resource.descKey = descKey;
+        resource.category = ItemCategory.Placeable;
+        resource.maxStack = 1;
+        resource.buyPrice = -1;
+        resource.sellPrice = 0;
+        resource.placementRule = new PlacementRule
+        {
+            occupyLayer = EntityLayer.Furniture,
+            requireTags = PlacementTag.None,
+            provideTags = PlacementTag.None,
+            blockLayers = Array.Empty<EntityLayer>()
+        };
+
+        resource.modules = resource.modules ?? new List<IModuleData>();
+        resource.modules.Clear();
+        resource.modules.Add(new HealthModule { canTakeDamage = true });
+        resource.modules.Add(new HarvestModule { harvestTool = requiredTool, wrongToolPenalty = 0f });
+        resource.modules.Add(new DropModule { harvestDrops = drops });
+        resource.modules.Add(new ExpRewardModule { rewardExp = rewardExp, sourceType = ExpSourceType.Harvest, requireKiller = false });
+        resource.modules.Add(new MortalModule());
+
+        SetOrAddStat(resource, StatType.MaxHp, hp);
+        SetOrAddStat(resource, StatType.Hp, hp);
+        SetOrAddStat(resource, StatType.Defense, 0f);
+        EditorUtility.SetDirty(resource);
+    }
+
+    private static void ConfigurePortalEntity()
+    {
+        var portal = LoadOrCreateEntity("Assets/Project/ScriptableObjects/WorldObjects/Utility/Portal_01.asset");
+        portal.id = "portal_01";
+        portal.keyName = "m3.portal.name";
+        portal.descKey = "m3.portal.desc";
+        portal.category = ItemCategory.Placeable;
+        portal.maxStack = 1;
+        portal.buyPrice = -1;
+        portal.sellPrice = 0;
+        portal.modules = portal.modules ?? new List<IModuleData>();
+        portal.modules.Clear();
+        portal.modules.Add(new ScenePortalModule
+        {
+            optionTextKey = "ui.scene.enter",
+            priority = 40,
+            targetSceneName = "TownScene",
+            targetSpawnPointId = "town_entry",
+            saveBeforeTransition = true
+        });
+        portal.modules.Add(new DialogueModule
+        {
+            graph = null,
+            optionTextKey = "ui.scene.enter",
+            priority = 80
+        });
+        EditorUtility.SetDirty(portal);
+    }
+
+    private static void ConfigureBedEntity()
+    {
+        var bed = LoadOrCreateEntity("Assets/Project/ScriptableObjects/WorldObjects/Utility/Bed_01.asset");
+        bed.id = "bed_01";
+        bed.keyName = "m3.bed.name";
+        bed.descKey = "m3.bed.desc";
+        bed.category = ItemCategory.Placeable;
+        bed.maxStack = 1;
+        bed.buyPrice = -1;
+        bed.sellPrice = 0;
+        bed.modules = bed.modules ?? new List<IModuleData>();
+        bed.modules.Clear();
+        bed.modules.Add(new DialogueModule
+        {
+            graph = null,
+            optionTextKey = "ui.common.use",
+            priority = 20
+        });
+        EditorUtility.SetDirty(bed);
+    }
+
+    private static void ConfigureAnimalPlaceholderEntity()
+    {
+        var animal = LoadOrCreateEntity("Assets/Project/ScriptableObjects/WorldObjects/Animals/Animal_Chicken_01.asset");
+        var feed = AssetDatabase.LoadAssetAtPath<EntityData>("Assets/Project/ScriptableObjects/Items/Animal/AnimalFeed.asset");
+        var egg = AssetDatabase.LoadAssetAtPath<EntityData>("Assets/Project/ScriptableObjects/Items/Animal/Egg.asset");
+        animal.id = "animal_chicken_01";
+        animal.keyName = "m3.animal.chicken.name";
+        animal.descKey = "m3.animal.chicken.desc";
+        animal.category = ItemCategory.Placeable;
+        animal.maxStack = 1;
+        animal.buyPrice = -1;
+        animal.sellPrice = 0;
+        animal.modules = animal.modules ?? new List<IModuleData>();
+        animal.modules.Clear();
+        animal.modules.Add(new AnimalModule
+        {
+            speciesKey = "m3.animal.chicken.name",
+            feedItem = feed,
+            productItem = egg,
+            productAmount = 1,
+            priority = 25
+        });
+        EditorUtility.SetDirty(animal);
+    }
+
+    private static void EnsureM6AnimalData()
+    {
+        EnsureSimpleItem(
+            "Assets/Project/ScriptableObjects/Items/Animal/AnimalFeed.asset",
+            "animal_feed",
+            "m6.item.animal_feed.name",
+            "m6.item.animal_feed.desc",
+            ItemCategory.Consumable,
+            maxStack: 99,
+            buyPrice: 20,
+            sellPrice: 8);
+
+        EnsureSimpleItem(
+            "Assets/Project/ScriptableObjects/Items/Animal/Egg.asset",
+            "egg",
+            "m6.item.egg.name",
+            "m6.item.egg.desc",
+            ItemCategory.AnimalProduct,
+            maxStack: 99,
+            buyPrice: -1,
+            sellPrice: 45);
+
+        ConfigureAnimalPlaceholderEntity();
+        EnsureAnimalFeedRecipe();
+    }
+
+    private static EntityData EnsureSimpleItem(
+        string path,
+        string id,
+        string keyName,
+        string descKey,
+        ItemCategory category,
+        int maxStack,
+        int buyPrice,
+        int sellPrice)
+    {
+        var item = LoadOrCreateEntity(path);
+        item.id = id;
+        item.keyName = keyName;
+        item.descKey = descKey;
+        item.category = category;
+        item.maxStack = Mathf.Max(1, maxStack);
+        item.buyPrice = buyPrice;
+        item.sellPrice = sellPrice;
+        item.modules = new List<IModuleData>();
+        item.baseStats = new StatsData { baseStats = new List<StatEntry>() };
+        EditorUtility.SetDirty(item);
+        return item;
+    }
+
+    private static void EnsureAnimalFeedRecipe()
+    {
+        var feed = AssetDatabase.LoadAssetAtPath<EntityData>("Assets/Project/ScriptableObjects/Items/Animal/AnimalFeed.asset");
+        var fiber = AssetDatabase.LoadAssetAtPath<EntityData>("Assets/Project/ScriptableObjects/Items/Materials/Fiber_01.asset");
+        var turnip = AssetDatabase.LoadAssetAtPath<EntityData>("Assets/Project/ScriptableObjects/Items/Crops/Crop_T1_Turnip.asset");
+        if (feed == null || fiber == null || turnip == null) return;
+
+        string recipePath = "Assets/Project/ScriptableObjects/Graph/recipes/mvp/Recipe_AnimalFeed.asset";
+        var recipe = AssetDatabase.LoadAssetAtPath<RecipeData>(recipePath);
+        if (recipe == null)
+        {
+            EnsureFolder(Path.GetDirectoryName(recipePath)?.Replace('\\', '/'));
+            recipe = ScriptableObject.CreateInstance<RecipeData>();
+            recipe.name = Path.GetFileNameWithoutExtension(recipePath);
+            AssetDatabase.CreateAsset(recipe, recipePath);
+        }
+
+        recipe.id = "recipe_animal_feed";
+        recipe.titleKey = "m6.recipe.animal_feed.name";
+        recipe.requiredLevel = 1;
+        recipe.craftExp = 10;
+        recipe.ingredients = new List<RecipeIngredient>
+        {
+            new RecipeIngredient { item = fiber, amount = 2 },
+            new RecipeIngredient { item = turnip, amount = 1 }
+        };
+        recipe.outputs = new List<RecipeIngredient>
+        {
+            new RecipeIngredient { item = feed, amount = 2 }
+        };
+        EditorUtility.SetDirty(recipe);
+
+        var npc = AssetDatabase.LoadAssetAtPath<EntityData>("Assets/Project/ScriptableObjects/Characters/NPCs/NPC_Chetao.asset");
+        var crafting = npc?.modules?.OfType<CraftingModule>().FirstOrDefault();
+        if (crafting != null && !crafting.recipes.Contains(recipe))
+        {
+            crafting.recipes.Add(recipe);
+            EditorUtility.SetDirty(npc);
+        }
+    }
+
+    private static void EnsureAnimalPrefabBridge()
+    {
+        var root = PrefabUtility.LoadPrefabContents(AnimalPrefabPath);
+        if (root == null) return;
+
+        try
+        {
+            EnsureComponent<NextDayEntityBridge>(root);
+            PrefabUtility.SaveAsPrefabAsset(root, AnimalPrefabPath);
+        }
+        finally
+        {
+            PrefabUtility.UnloadPrefabContents(root);
+        }
+    }
+
+    private static DropEntry Drop(EntityData item, int minAmount, int maxAmount, float chance)
+    {
+        return new DropEntry
+        {
+            item = item,
+            minAmount = minAmount,
+            maxAmount = maxAmount,
+            dropChance = chance
+        };
+    }
+
+    private static void EnsureWorldObjectDefinition(string path, ObjectType id, string prefabPath)
+    {
+        var def = AssetDatabase.LoadAssetAtPath<WorldObjectDefinition>(path);
+        if (def == null)
+        {
+            EnsureFolder(Path.GetDirectoryName(path)?.Replace('\\', '/'));
+            def = ScriptableObject.CreateInstance<WorldObjectDefinition>();
+            def.name = Path.GetFileNameWithoutExtension(path);
+            AssetDatabase.CreateAsset(def, path);
+        }
+
+        def.idObject = id;
+        def.prefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
+        EditorUtility.SetDirty(def);
+    }
+
+    private static void ConfigurePlayerData()
+    {
+        var player = AssetDatabase.LoadAssetAtPath<EntityData>("Assets/Project/ScriptableObjects/Characters/Player/Player.asset");
+        if (player == null) return;
+
+        EnsureInventory(player, InventoryType.Backpack, 60);
+        EnsureInventory(player, InventoryType.Hotbar, 10);
+        EnsureModule<EquipmentModule>(player);
+        EnsureModule<ActionModule>(player);
+        EnsureModule<HealthModule>(player);
+        EnsureModule<QuestLogModule>(player);
+        RemoveModule<DialogueModule>(player);
+        RemoveModule<ShopModule>(player);
+        RemoveModule<CraftingModule>(player);
+        RemoveModule<QuestModule>(player);
+        RemoveModule<ExpRewardModule>(player);
+
+        player.category = ItemCategory.None;
+        SetOrAddStat(player, StatType.Level, 1);
+        SetOrAddStat(player, StatType.Exp, 0);
+        SetOrAddStat(player, StatType.MaxExp, ProgressionService.RequiredExp(1));
+        SetOrAddStat(player, StatType.MaxHp, Mathf.Max(100, FindStat(player, StatType.MaxHp, 100)));
+        SetOrAddStat(player, StatType.Hp, FindStat(player, StatType.MaxHp, 100));
+        SetOrAddStat(player, StatType.MaxStamina, Mathf.Max(100, FindStat(player, StatType.MaxStamina, 100)));
+        SetOrAddStat(player, StatType.Stamina, FindStat(player, StatType.MaxStamina, 100));
+        SetOrAddStat(player, StatType.Attack, Mathf.Max(2, FindStat(player, StatType.Attack, 2)));
+        SetOrAddStat(player, StatType.Defense, Mathf.Max(0, FindStat(player, StatType.Defense, 0)));
+        SetOrAddStat(player, StatType.Money, 500);
+        EditorUtility.SetDirty(player);
+    }
+
+    private static void EnsureM4WeaponData()
+    {
+        EnsureWeapon(
+            "Assets/Project/ScriptableObjects/Items/Weapons/Sword_T1.asset",
+            "sword_t1",
+            "m4.weapon.sword_t1.name",
+            "m4.weapon.sword_t1.desc",
+            WeaponArchetype.Sword,
+            attack: 7f,
+            range: 1.35f,
+            cooldown: 0.45f,
+            staminaCost: 5f,
+            knockback: 1.2f,
+            buyPrice: 150,
+            sellPrice: 50,
+            animTrigger: "Slash1H",
+            spriteId: "Art.Equipment.MeleeWeapon1H.Sword01",
+            part: EquipmentPart.MeleeWeapon1H);
+
+        EnsureWeapon(
+            "Assets/Project/ScriptableObjects/Items/Weapons/Spear_T1.asset",
+            "spear_t1",
+            "m4.weapon.spear_t1.name",
+            "m4.weapon.spear_t1.desc",
+            WeaponArchetype.Spear,
+            attack: 6f,
+            range: 1.8f,
+            cooldown: 0.65f,
+            staminaCost: 7f,
+            knockback: 1.8f,
+            buyPrice: 180,
+            sellPrice: 60,
+            animTrigger: "Jab",
+            spriteId: "Art.Equipment.MeleeWeapon1H.Spear01",
+            part: EquipmentPart.MeleeWeapon2H);
+    }
+
+    private static void EnsureWeapon(
+        string path,
+        string id,
+        string keyName,
+        string descKey,
+        WeaponArchetype archetype,
+        float attack,
+        float range,
+        float cooldown,
+        float staminaCost,
+        float knockback,
+        int buyPrice,
+        int sellPrice,
+        string animTrigger,
+        string spriteId,
+        EquipmentPart part)
+    {
+        var weapon = LoadOrCreateEntity(path);
+        weapon.id = id;
+        weapon.keyName = keyName;
+        weapon.descKey = descKey;
+        weapon.category = ItemCategory.Weapon;
+        weapon.maxStack = 1;
+        weapon.buyPrice = buyPrice;
+        weapon.sellPrice = sellPrice;
+        weapon.modules = new List<IModuleData>
+        {
+            new WeaponModule
+            {
+                archetype = archetype,
+                animTrigger = animTrigger,
+                baseRange = range,
+                baseDamage = attack,
+                cooldown = cooldown,
+                staminaCost = staminaCost,
+                knockback = knockback
+            },
+            new AppearanceModule
+            {
+                spriteId = spriteId,
+                equipmentPart = part
+            }
+        };
+
+        SetOrAddStat(weapon, StatType.Attack, attack);
+        SetOrAddStat(weapon, StatType.Range, range);
+        SetOrAddStat(weapon, StatType.CoolDown, cooldown);
+        SetOrAddStat(weapon, StatType.CritChance, archetype == WeaponArchetype.Sword ? 0.05f : 0.03f);
+        SetOrAddStat(weapon, StatType.CritDamage, 0.5f);
+        EditorUtility.SetDirty(weapon);
+    }
+
+    private static void ConfigureNpcData(string path, bool requireShop, bool requireCrafting, bool requireQuest)
+    {
+        var npc = AssetDatabase.LoadAssetAtPath<EntityData>(path);
+        if (npc == null) return;
+
+        EnsureModule<DialogueModule>(npc);
+        if (requireShop) EnsureModule<ShopModule>(npc); else RemoveModule<ShopModule>(npc);
+        if (requireCrafting) EnsureModule<CraftingModule>(npc); else RemoveModule<CraftingModule>(npc);
+        if (requireQuest) EnsureModule<QuestModule>(npc); else RemoveModule<QuestModule>(npc);
+
+        RemoveModule<AttackModule>(npc);
+        RemoveModule<HealthModule>(npc);
+        RemoveModule<DropModule>(npc);
+        RemoveModule<ExpRewardModule>(npc);
+        RemoveModule<MortalModule>(npc);
+        RemoveModule<RespawnModule>(npc);
+        RemoveModule<PlacementModule>(npc);
+        RemoveModule<StageModule>(npc);
+        RemoveModule<HarvestModule>(npc);
+        EditorUtility.SetDirty(npc);
+    }
+
+    private static void ConfigureCropPlacementData()
+    {
+        foreach (var seed in LoadAllEntities("Assets/Project/ScriptableObjects/WorldObjects/Plants", "Seed_T"))
+        {
+            if (seed == null) continue;
+            string suffix = seed.name.StartsWith("Seed_", StringComparison.Ordinal) ? seed.name["Seed_".Length..] : seed.name;
+            string plantPath = $"{CropPlantFolder}/CropPlant_{suffix}.asset";
+            var plant = LoadOrCreateEntity(plantPath);
+
+            plant.id = $"crop_plant_{suffix.ToLowerInvariant()}";
+            plant.keyName = seed.keyName;
+            plant.descKey = seed.descKey;
+            plant.category = ItemCategory.Placeable;
+            plant.maxStack = 1;
+            plant.buyPrice = -1;
+            plant.sellPrice = 0;
+            plant.icon = seed.icon;
+            plant.placementRule = seed.placementRule;
+            CopyStats(seed, plant);
+            plant.modules = CloneModules(seed.modules)
+                .Where(module => module is not PlacementModule)
+                .ToList();
+            EditorUtility.SetDirty(plant);
+
+            seed.modules = new List<IModuleData>
+            {
+                new PlacementModule
+                {
+                    objectTypeToSpawn = ObjectType.Plant01,
+                    placedEntityData = plant,
+                    centerTile = true,
+                    animTrigger = "PutDown"
+                }
+            };
+            EditorUtility.SetDirty(seed);
+        }
+    }
+
+    private static void ConfigureEnemyData()
+    {
+        foreach (var enemy in LoadAllEntities("Assets/Project/ScriptableObjects/WorldObjects/Enemies", "Enemy_"))
+        {
+            if (enemy == null) continue;
+
+            EnsureModule<HealthModule>(enemy).canTakeDamage = true;
+            EnsureModule<AttackModule>(enemy);
+            if (!HasModule<DropModule>(enemy)) EnsureModule<DropModule>(enemy);
+            if (!HasModule<ExpRewardModule>(enemy)) EnsureModule<ExpRewardModule>(enemy);
+            if (!HasModule<RespawnModule>(enemy)) EnsureModule<RespawnModule>(enemy).respawnPrefabId = ObjectType.Enemy01;
+
+            RemoveModule<DialogueModule>(enemy);
+            RemoveModule<ShopModule>(enemy);
+            RemoveModule<CraftingModule>(enemy);
+            RemoveModule<QuestModule>(enemy);
+            RemoveModule<PlacementModule>(enemy);
+            RemoveModule<StageModule>(enemy);
+            RemoveModule<HarvestModule>(enemy);
+            EditorUtility.SetDirty(enemy);
+        }
+    }
+
+    private static void ConfigureOreData()
+    {
+        foreach (var ore in LoadAllEntities("Assets/Project/ScriptableObjects/WorldObjects/Resources", "OreNode_"))
+        {
+            if (ore == null) continue;
+            EnsureModule<HealthModule>(ore).canTakeDamage = true;
+            if (!HasModule<HarvestModule>(ore)) EnsureModule<HarvestModule>(ore).harvestTool = ToolType.Pickaxe;
+            if (!HasModule<DropModule>(ore)) EnsureModule<DropModule>(ore);
+            if (!HasModule<ExpRewardModule>(ore)) EnsureModule<ExpRewardModule>(ore);
+            RemoveModule<DialogueModule>(ore);
+            RemoveModule<ShopModule>(ore);
+            RemoveModule<CraftingModule>(ore);
+            RemoveModule<QuestModule>(ore);
+            RemoveModule<AttackModule>(ore);
+            RemoveModule<PlacementModule>(ore);
+            RemoveModule<StageModule>(ore);
+            EditorUtility.SetDirty(ore);
+        }
+    }
+
+    private static void EnsureStarterLoadout()
+    {
+        var loadout = AssetDatabase.LoadAssetAtPath<StarterLoadoutData>(StarterLoadoutPath);
+        if (loadout == null)
+        {
+            EnsureFolder(Path.GetDirectoryName(StarterLoadoutPath)?.Replace('\\', '/'));
+            loadout = ScriptableObject.CreateInstance<StarterLoadoutData>();
+            loadout.name = Path.GetFileNameWithoutExtension(StarterLoadoutPath);
+            AssetDatabase.CreateAsset(loadout, StarterLoadoutPath);
+        }
+
+        loadout.startSpawnPointId = SceneSpawnResolver.DefaultPlayerSpawnPointId;
+        loadout.initialMoney = 500;
+        loadout.selectedHotbarIndex = 0;
+        loadout.entries = new[]
+        {
+            Entry(InventoryType.Hotbar, 0, "Assets/Project/ScriptableObjects/Items/Tools/Hoe_01.asset", 1),
+            Entry(InventoryType.Hotbar, 1, "Assets/Project/ScriptableObjects/Items/Tools/Pickaxe_01.asset", 1),
+            Entry(InventoryType.Hotbar, 2, "Assets/Project/ScriptableObjects/Items/Tools/Scythe_01.asset", 1),
+            Entry(InventoryType.Hotbar, 3, "Assets/Project/ScriptableObjects/Items/Tools/Axe_01.asset", 1),
+            Entry(InventoryType.Hotbar, 4, "Assets/Project/ScriptableObjects/WorldObjects/Plants/Seed_T1_Turnip.asset", 10),
+            Entry(InventoryType.Hotbar, 5, "Assets/Project/ScriptableObjects/Items/Weapons/Sword_T1.asset", 1),
+            Entry(InventoryType.Backpack, 0, "Assets/Project/ScriptableObjects/Items/Weapons/Spear_T1.asset", 1)
+        }.Where(entry => entry.itemData != null).ToArray();
+
+        EditorUtility.SetDirty(loadout);
+    }
+
+    private static void EnsureGeneratedIcons()
+    {
+        foreach (var data in LoadAllEntities("Assets/Project", null))
+        {
+            if (data == null || data.icon != null) continue;
+            data.icon = EnsurePlaceholderIcon(data);
+            EditorUtility.SetDirty(data);
+        }
+    }
+
+    private static Sprite EnsurePlaceholderIcon(EntityData data)
+    {
+        EnsureFolder(GeneratedIconFolder);
+        string safeName = SanitizeFileName(string.IsNullOrWhiteSpace(data.id) ? data.name : data.id);
+        string path = $"{GeneratedIconFolder}/{safeName}.png";
+
+        if (!File.Exists(path))
+        {
+            var texture = BuildIconTexture(data);
+            File.WriteAllBytes(path, texture.EncodeToPNG());
+            UnityEngine.Object.DestroyImmediate(texture);
+        }
+
+        AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceUpdate);
+        var importer = AssetImporter.GetAtPath(path) as TextureImporter;
+        if (importer != null)
+        {
+            importer.textureType = TextureImporterType.Sprite;
+            importer.spriteImportMode = SpriteImportMode.Single;
+            importer.spritePixelsPerUnit = 32;
+            importer.filterMode = FilterMode.Point;
+            importer.textureCompression = TextureImporterCompression.Uncompressed;
+            importer.SaveAndReimport();
+        }
+
+        return AssetDatabase.LoadAssetAtPath<Sprite>(path);
+    }
+
+    private static Texture2D BuildIconTexture(EntityData data)
+    {
+        const int size = 32;
+        var texture = new Texture2D(size, size, TextureFormat.RGBA32, false);
+        var background = CategoryColor(data);
+        var accent = Color.Lerp(background, Color.white, 0.45f);
+
+        for (int y = 0; y < size; y++)
+        for (int x = 0; x < size; x++)
+            texture.SetPixel(x, y, new Color(0, 0, 0, 0));
+
+        FillRect(texture, 3, 3, 26, 26, new Color(background.r, background.g, background.b, 0.95f));
+
+        string id = (data.id + " " + data.name).ToLowerInvariant();
+        if (data.category == ItemCategory.Tool || id.Contains("pickaxe") || id.Contains("hoe") || id.Contains("axe") || id.Contains("scythe"))
+        {
+            DrawLine(texture, 8, 23, 23, 8, Color.white);
+            DrawLine(texture, 15, 7, 25, 10, accent);
+            DrawLine(texture, 7, 15, 11, 25, accent);
+        }
+        else if (id.Contains("enemy") || id.Contains("monster"))
+        {
+            FillCircle(texture, 16, 16, 9, accent);
+            FillCircle(texture, 12, 18, 2, Color.black);
+            FillCircle(texture, 20, 18, 2, Color.black);
+        }
+        else if (data.category == ItemCategory.Seed)
+        {
+            FillCircle(texture, 12, 14, 4, accent);
+            FillCircle(texture, 19, 18, 5, Color.white);
+        }
+        else if (data.category == ItemCategory.Crop)
+        {
+            FillCircle(texture, 16, 16, 9, accent);
+            FillRect(texture, 15, 7, 3, 8, new Color(0.25f, 0.7f, 0.25f, 1f));
+        }
+        else if (data.category == ItemCategory.Material || id.Contains("ore"))
+        {
+            DrawDiamond(texture, 16, 16, 11, accent);
+        }
+        else if (data.category == ItemCategory.Armor)
+        {
+            DrawShield(texture, accent);
+        }
+        else
+        {
+            FillCircle(texture, 16, 16, 10, accent);
+        }
+
+        texture.Apply();
+        return texture;
+    }
+
+    private static void EnsurePlayerStartMarker()
+    {
+        var marker = AssetDatabase.LoadAssetAtPath<SceneSpawnTile>(PlayerStartMarkerPath);
+        if (marker == null)
+        {
+            marker = ScriptableObject.CreateInstance<SceneSpawnTile>();
+            marker.name = "Marker_Player_Start";
+            AssetDatabase.CreateAsset(marker, PlayerStartMarkerPath);
+        }
+
+        marker.markerKind = SceneMarkerKind.PlayerSpawn;
+        marker.objectType = ObjectType.Player01;
+        marker.entityData = null;
+        marker.savePolicy = SceneEntitySavePolicy.Temporary;
+        marker.spawnGroupId = "player";
+        marker.spawnPointId = SceneSpawnResolver.DefaultPlayerSpawnPointId;
+        marker.respawnMinutes = 0;
+        marker.initialAmount = 1;
+        marker.bypassPlacementValidation = true;
+        marker.editorSprite = null;
+        marker.editorColor = new Color(0.2f, 0.8f, 1f, 0.75f);
+        EditorUtility.SetDirty(marker);
+    }
+
+    private static void StampPlayerStartMarker()
+    {
+        if (!File.Exists(SampleScenePath))
+            return;
+
+        var scene = EditorSceneManager.OpenScene(SampleScenePath, OpenSceneMode.Single);
+        var markerMap = EnsureRuntimeMarkerTilemap();
+        var marker = AssetDatabase.LoadAssetAtPath<SceneSpawnTile>(PlayerStartMarkerPath);
+        if (markerMap != null && marker != null)
+            markerMap.SetTile(new Vector3Int(0, 0, 0), marker);
+
+        EnsureSceneMarkerComponents(markerMap);
+        EditorSceneManager.MarkSceneDirty(scene);
+        EditorSceneManager.SaveScene(scene);
+    }
+
+    private static void ValidateSetup(bool logSuccess)
+    {
+        int errors = 0;
+        errors += ValidateWorldObject("Player", "Assets/Project/Resources/Data/WorldObjects/Player.asset", WorldEntityPrefabRoleType.Player);
+        errors += ValidateWorldObject("NPCShop01", "Assets/Project/Resources/Data/WorldObjects/NPCShop01.asset", WorldEntityPrefabRoleType.Npc);
+        errors += ValidateWorldObject("NPCCrafting01", "Assets/Project/Resources/Data/WorldObjects/NPCCrafting01.asset", WorldEntityPrefabRoleType.Npc);
+        errors += ValidateWorldObject("NPCEvent01", "Assets/Project/Resources/Data/WorldObjects/NPCEvent01.asset", WorldEntityPrefabRoleType.Npc);
+        errors += ValidateWorldObject("Enemy01", "Assets/Project/Resources/Data/WorldObjects/Enemy01.asset", WorldEntityPrefabRoleType.Enemy);
+        errors += ValidateWorldObject("OreNode01", "Assets/Project/Resources/Data/WorldObjects/OreNode01.asset", WorldEntityPrefabRoleType.Resource);
+        errors += ValidateWorldObject("Plant01", "Assets/Project/Resources/Data/WorldObjects/Plant01.asset", WorldEntityPrefabRoleType.Crop);
+
+        var starter = AssetDatabase.LoadAssetAtPath<StarterLoadoutData>(StarterLoadoutPath);
+        if (starter == null || starter.entries == null || starter.entries.Length == 0)
+        {
+            Debug.LogError("[BootstrapProductionSetup] Starter loadout is missing or empty.");
+            errors++;
+        }
+
+        foreach (var data in LoadAllEntities("Assets/Project", null))
+        {
+            if (data != null && data.icon == null)
+            {
+                Debug.LogError($"[BootstrapProductionSetup] EntityData missing icon: {AssetDatabase.GetAssetPath(data)}");
+                errors++;
+            }
+        }
+
+        if (errors == 0 && logSuccess)
+            Debug.Log("[BootstrapProductionSetup] Validation passed.");
+    }
+
+    private static int ValidateWorldObject(string label, string path, WorldEntityPrefabRoleType expectedRole)
+    {
+        var def = AssetDatabase.LoadAssetAtPath<WorldObjectDefinition>(path);
+        var role = def?.prefab != null ? def.prefab.GetComponent<WorldEntityPrefabRole>() : null;
+        if (def?.prefab != null && role != null && role.role == expectedRole)
+            return 0;
+
+        Debug.LogError($"[BootstrapProductionSetup] {label} prefab role invalid at {path}.");
+        return 1;
+    }
+
+    private static void SetWorldObjectPrefab(string definitionPath, string prefabPath)
+    {
+        var def = AssetDatabase.LoadAssetAtPath<WorldObjectDefinition>(definitionPath);
+        var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
+        if (def == null || prefab == null)
+        {
+            Debug.LogWarning($"[BootstrapProductionSetup] Cannot repoint world object '{definitionPath}' -> '{prefabPath}'.");
+            return;
+        }
+
+        def.prefab = prefab;
+        EditorUtility.SetDirty(def);
+    }
+
+    private static void EnsureRole(GameObject root, WorldEntityPrefabRoleType roleType)
+    {
+        var role = EnsureComponent<WorldEntityPrefabRole>(root);
+        role.role = roleType;
+    }
+
+    private static void SetTagAndLayer(GameObject root, string tag, string layerName)
+    {
+        if (!string.IsNullOrWhiteSpace(tag))
+        {
+            EnsureTag(tag);
+            root.tag = tag;
+        }
+
+        int layer = LayerMask.NameToLayer(layerName);
+        if (layer >= 0)
+            SetLayerRecursive(root, layer);
+    }
+
+    private static void SetLayerRecursive(GameObject root, int layer)
+    {
+        root.layer = layer;
+        foreach (Transform child in root.transform)
+            SetLayerRecursive(child.gameObject, layer);
+    }
+
+    private static void EnsureTag(string tag)
+    {
+        if (string.IsNullOrWhiteSpace(tag) || tag == "Untagged")
+            return;
+
+        if (InternalEditorUtility.tags.Contains(tag))
+            return;
+
+        var tagManagerAssets = AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/TagManager.asset");
+        if (tagManagerAssets == null || tagManagerAssets.Length == 0)
+            return;
+
+        var serializedObject = new SerializedObject(tagManagerAssets[0]);
+        var tagsProperty = serializedObject.FindProperty("tags");
+        if (tagsProperty == null) return;
+
+        int index = tagsProperty.arraySize;
+        tagsProperty.InsertArrayElementAtIndex(index);
+        tagsProperty.GetArrayElementAtIndex(index).stringValue = tag;
+        serializedObject.ApplyModifiedProperties();
+    }
+
+    private static void ConfigureRigidbody(GameObject root, WorldEntityPrefabRoleType role)
+    {
+        var rb = root.GetComponent<Rigidbody2D>();
+        if (rb == null) return;
+
+        rb.gravityScale = 0f;
+        rb.freezeRotation = true;
+        if (role == WorldEntityPrefabRoleType.Npc || role == WorldEntityPrefabRoleType.Crop || role == WorldEntityPrefabRoleType.Resource)
+            rb.bodyType = RigidbodyType2D.Kinematic;
+    }
+
+    private static void TintSpriteRenderer(GameObject root, Color color)
+    {
+        var renderer = root.GetComponentInChildren<SpriteRenderer>(true);
+        if (renderer != null)
+            renderer.color = color;
+    }
+
+    private static T EnsureComponent<T>(GameObject root) where T : Component
+    {
+        return root.GetComponent<T>() ?? root.AddComponent<T>();
+    }
+
+    private static void RemoveComponent<T>(GameObject root) where T : Component
+    {
+        var component = root.GetComponent<T>();
+        if (component != null)
+            UnityEngine.Object.DestroyImmediate(component);
+    }
+
+    private static void EnsureInventory(EntityData data, InventoryType type, int size)
+    {
+        data.modules ??= new List<IModuleData>();
+        var inventory = data.modules.OfType<InventoryModule>().FirstOrDefault(module => module.inventoryType == type);
+        if (inventory == null)
+        {
+            inventory = new InventoryModule { inventoryType = type };
+            data.modules.Add(inventory);
+        }
+
+        inventory.size = Mathf.Max(size, inventory.size);
+    }
+
+    private static T EnsureModule<T>(EntityData data) where T : IModuleData
+    {
+        data.modules ??= new List<IModuleData>();
+        var module = data.modules.OfType<T>().FirstOrDefault();
+        if (module != null)
+            return module;
+
+        module = Activator.CreateInstance<T>();
+        data.modules.Add(module);
+        return module;
+    }
+
+    private static bool HasModule<T>(EntityData data) where T : IModuleData
+    {
+        return data?.modules != null && data.modules.OfType<T>().Any();
+    }
+
+    private static void RemoveModule<T>(EntityData data) where T : IModuleData
+    {
+        if (data?.modules == null) return;
+        for (int i = data.modules.Count - 1; i >= 0; i--)
+        {
+            if (data.modules[i] is T)
+                data.modules.RemoveAt(i);
+        }
+    }
+
+    private static List<IModuleData> CloneModules(IEnumerable<IModuleData> modules)
+    {
+        var result = new List<IModuleData>();
+        if (modules == null) return result;
+
+        foreach (var module in modules)
+        {
+            if (module == null) continue;
+            var clone = Activator.CreateInstance(module.GetType()) as IModuleData;
+            if (clone == null) continue;
+            EditorJsonUtility.FromJsonOverwrite(EditorJsonUtility.ToJson(module), clone);
+            result.Add(clone);
+        }
+
+        return result;
+    }
+
+    private static void SetOrAddStat(EntityData data, StatType type, float value)
+    {
+        data.baseStats ??= new StatsData();
+        data.baseStats.baseStats ??= new List<StatEntry>();
+        foreach (var stat in data.baseStats.baseStats)
+        {
+            if (stat == null || stat.statType != type) continue;
+            stat.value = value;
+            return;
+        }
+
+        data.baseStats.baseStats.Add(new StatEntry { statType = type, value = value });
+    }
+
+    private static float FindStat(EntityData data, StatType type, float fallback)
+    {
+        if (data?.baseStats?.baseStats == null) return fallback;
+        foreach (var stat in data.baseStats.baseStats)
+        {
+            if (stat != null && stat.statType == type)
+                return stat.value;
+        }
+
+        return fallback;
+    }
+
+    private static void CopyStats(EntityData source, EntityData target)
+    {
+        target.baseStats ??= new StatsData();
+        target.baseStats.baseStats = source?.baseStats?.baseStats?
+            .Where(stat => stat != null)
+            .Select(stat => new StatEntry { statType = stat.statType, value = stat.value })
+            .ToList() ?? new List<StatEntry>();
+    }
+
+    private static StarterLoadoutEntry Entry(InventoryType type, int slot, string itemPath, int amount)
+    {
+        return new StarterLoadoutEntry
+        {
+            inventoryType = type,
+            slotIndex = slot,
+            itemData = AssetDatabase.LoadAssetAtPath<EntityData>(itemPath),
+            amount = amount
+        };
+    }
+
+    private static IEnumerable<EntityData> LoadAllEntities(string folder, string namePrefix)
+    {
+        string filter = string.IsNullOrWhiteSpace(namePrefix) ? "t:EntityData" : $"{namePrefix} t:EntityData";
+        return AssetDatabase.FindAssets(filter, new[] { folder })
+            .Select(AssetDatabase.GUIDToAssetPath)
+            .Select(AssetDatabase.LoadAssetAtPath<EntityData>)
+            .Where(data => data != null);
+    }
+
+    private static EntityData LoadOrCreateEntity(string path)
+    {
+        var data = AssetDatabase.LoadAssetAtPath<EntityData>(path);
+        if (data != null) return data;
+
+        EnsureFolder(Path.GetDirectoryName(path)?.Replace('\\', '/'));
+        data = ScriptableObject.CreateInstance<EntityData>();
+        data.name = Path.GetFileNameWithoutExtension(path);
+        AssetDatabase.CreateAsset(data, path);
+        return data;
+    }
+
+    private static void CopyAssetIfMissing(string sourcePath, string targetPath)
+    {
+        if (AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(targetPath) != null)
+            return;
+
+        EnsureFolder(Path.GetDirectoryName(targetPath)?.Replace('\\', '/'));
+        if (!AssetDatabase.CopyAsset(sourcePath, targetPath))
+            Debug.LogWarning($"[BootstrapProductionSetup] CopyAsset failed: {sourcePath} -> {targetPath}");
+    }
+
+    private static Tilemap EnsureRuntimeMarkerTilemap()
+    {
+        var marker = FindTilemap(SceneContext.RuntimeMarkersTilemapName);
+        if (marker != null) return marker;
+
+        var grid = UnityEngine.Object.FindAnyObjectByType<Grid>();
+        if (grid == null)
+            grid = new GameObject("Grid").AddComponent<Grid>();
+
+        var go = new GameObject(SceneContext.RuntimeMarkersTilemapName);
+        go.transform.SetParent(grid.transform);
+        marker = go.AddComponent<Tilemap>();
+        go.AddComponent<TilemapRenderer>();
+        return marker;
+    }
+
+    private static void EnsureSceneMarkerComponents(Tilemap markerMap)
+    {
+        var context = UnityEngine.Object.FindAnyObjectByType<SceneContext>();
+        if (context == null)
+            context = new GameObject("SceneContext").AddComponent<SceneContext>();
+
+        context.AutoBind();
+        if (context.GetComponent<SceneContentScanner>() == null)
+            context.gameObject.AddComponent<SceneContentScanner>();
+
+        if (markerMap != null)
+            EditorUtility.SetDirty(markerMap);
+        EditorUtility.SetDirty(context);
+    }
+
+    private static Tilemap FindTilemap(string tilemapName)
+    {
+        foreach (var tilemap in UnityEngine.Object.FindObjectsByType<Tilemap>(FindObjectsSortMode.None))
+        {
+            if (tilemap != null && string.Equals(tilemap.gameObject.name, tilemapName, StringComparison.Ordinal))
+                return tilemap;
+        }
+
+        return null;
+    }
+
+    private static void EnsureFolders()
+    {
+        EnsureFolder("Assets/Project/Prefabs/Characters");
+        EnsureFolder("Assets/Project/Prefabs/WorldEntities");
+        EnsureFolder("Assets/Project/ScriptableObjects/WorldObjects/Resources");
+        EnsureFolder("Assets/Project/ScriptableObjects/WorldObjects/Utility");
+        EnsureFolder("Assets/Project/ScriptableObjects/WorldObjects/Animals");
+        EnsureFolder("Assets/Project/Resources/Data/StarterLoadouts");
+        EnsureFolder(MarkerFolder);
+        EnsureFolder(GeneratedIconFolder);
+        EnsureFolder(CropPlantFolder);
+    }
+
+    private static void EnsureFolder(string folderPath)
+    {
+        if (string.IsNullOrWhiteSpace(folderPath) || AssetDatabase.IsValidFolder(folderPath))
+            return;
+
+        var parts = folderPath.Split('/');
+        var current = parts[0];
+        for (int i = 1; i < parts.Length; i++)
+        {
+            var next = $"{current}/{parts[i]}";
+            if (!AssetDatabase.IsValidFolder(next))
+                AssetDatabase.CreateFolder(current, parts[i]);
+            current = next;
+        }
+    }
+
+    private static Color CategoryColor(EntityData data)
+    {
+        string id = (data.id + data.name).ToLowerInvariant();
+        if (id.Contains("enemy") || id.Contains("monster")) return new Color(0.8f, 0.18f, 0.2f, 1f);
+        if (id.Contains("npc")) return new Color(0.2f, 0.55f, 0.95f, 1f);
+        if (id.Contains("ore")) return new Color(0.45f, 0.5f, 0.65f, 1f);
+
+        return data.category switch
+        {
+            ItemCategory.Tool => new Color(0.45f, 0.42f, 0.36f, 1f),
+            ItemCategory.Seed => new Color(0.3f, 0.72f, 0.35f, 1f),
+            ItemCategory.Crop => new Color(0.95f, 0.45f, 0.25f, 1f),
+            ItemCategory.Material => new Color(0.55f, 0.55f, 0.7f, 1f),
+            ItemCategory.Armor => new Color(0.28f, 0.38f, 0.85f, 1f),
+            _ => new Color(0.55f, 0.65f, 0.75f, 1f)
+        };
+    }
+
+    private static string SanitizeFileName(string value)
+    {
+        foreach (var c in Path.GetInvalidFileNameChars())
+            value = value.Replace(c, '_');
+        return string.IsNullOrWhiteSpace(value) ? "icon" : value;
+    }
+
+    private static void FillRect(Texture2D tex, int x, int y, int width, int height, Color color)
+    {
+        for (int yy = y; yy < y + height; yy++)
+        for (int xx = x; xx < x + width; xx++)
+            SetPixelSafe(tex, xx, yy, color);
+    }
+
+    private static void FillCircle(Texture2D tex, int cx, int cy, int radius, Color color)
+    {
+        int r2 = radius * radius;
+        for (int y = cy - radius; y <= cy + radius; y++)
+        for (int x = cx - radius; x <= cx + radius; x++)
+        {
+            int dx = x - cx;
+            int dy = y - cy;
+            if (dx * dx + dy * dy <= r2)
+                SetPixelSafe(tex, x, y, color);
+        }
+    }
+
+    private static void DrawLine(Texture2D tex, int x0, int y0, int x1, int y1, Color color)
+    {
+        int dx = Mathf.Abs(x1 - x0);
+        int sx = x0 < x1 ? 1 : -1;
+        int dy = -Mathf.Abs(y1 - y0);
+        int sy = y0 < y1 ? 1 : -1;
+        int err = dx + dy;
+
+        while (true)
+        {
+            FillCircle(tex, x0, y0, 1, color);
+            if (x0 == x1 && y0 == y1) break;
+            int e2 = 2 * err;
+            if (e2 >= dy) { err += dy; x0 += sx; }
+            if (e2 <= dx) { err += dx; y0 += sy; }
+        }
+    }
+
+    private static void DrawDiamond(Texture2D tex, int cx, int cy, int radius, Color color)
+    {
+        for (int y = -radius; y <= radius; y++)
+        {
+            int half = radius - Mathf.Abs(y);
+            for (int x = -half; x <= half; x++)
+                SetPixelSafe(tex, cx + x, cy + y, color);
+        }
+    }
+
+    private static void DrawShield(Texture2D tex, Color color)
+    {
+        FillRect(tex, 10, 9, 12, 10, color);
+        for (int i = 0; i < 6; i++)
+            FillRect(tex, 11 + i, 19 + i, 10 - i * 2, 1, color);
+    }
+
+    private static void SetPixelSafe(Texture2D tex, int x, int y, Color color)
+    {
+        if (x < 0 || y < 0 || x >= tex.width || y >= tex.height)
+            return;
+        tex.SetPixel(x, y, color);
+    }
+}
