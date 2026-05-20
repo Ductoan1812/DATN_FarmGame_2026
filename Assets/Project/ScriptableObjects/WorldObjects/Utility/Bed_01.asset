@@ -29,6 +29,7 @@ MonoBehaviour:
     blockLayers: 
   modules:
   - rid: 8196222991998910712
+  - rid: 8196223032269996032
   references:
     version: 2
     RefIds:
@@ -38,3 +39,6 @@ MonoBehaviour:
         graph: {fileID: 0}
         optionTextKey: ui.common.use
         priority: 20
+    - rid: 8196223032269996032
+      type: {class: BedModule, ns: , asm: Assembly-CSharp}
+      data: 

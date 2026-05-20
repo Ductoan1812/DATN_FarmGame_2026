@@ -223,7 +223,8 @@ public class GameManager : MonoBehaviour
 
         WateredTileTracker = new WateredTileTracker(tmWatered, tmGround, tileData);
 
-        // Reset watered tiles mỗi đầu ngày mới
+        // Reset watered tiles khi DayChangedPublish (publish SAU NextDayEventPublish)
+        // Thứ tự đúng: NextDayEventPublish (cây grow) → DayChangedPublish (reset watered)
         EventBus.Subscribe<DayChangedPublish>(_ => WateredTileTracker?.ResetAll());
     }
 

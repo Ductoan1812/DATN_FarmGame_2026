@@ -73,6 +73,30 @@ public class WateredTileTracker
         Debug.Log("[WateredTileTracker] Mưa đã tưới tất cả ô đã cày.");
     }
 
+    /// <summary>Export tất cả ô đang được tưới (dùng cho save).</summary>
+    public System.Collections.Generic.List<WateredCellDto> ExportWateredCells()
+    {
+        var result = new System.Collections.Generic.List<WateredCellDto>();
+        if (_tmWatered == null) return result;
+
+        var bounds = _tmWatered.cellBounds;
+        for (int x = bounds.xMin; x < bounds.xMax; x++)
+            for (int y = bounds.yMin; y < bounds.yMax; y++)
+                if (_tmWatered.GetTile(new Vector3Int(x, y, 0)) != null)
+                    result.Add(new WateredCellDto { x = x, y = y });
+        return result;
+    }
+
+    /// <summary>Import danh sách ô đã tưới từ save (clear trước, rồi restore).</summary>
+    public void ImportWateredCells(System.Collections.Generic.List<WateredCellDto> cells)
+    {
+        if (_tmWatered == null) return;
+        _tmWatered.ClearAllTiles();
+        if (cells == null) return;
+        foreach (var c in cells)
+            _tmWatered.SetTile(new Vector3Int(c.x, c.y, 0), _wateredTile);
+    }
+
     /// <summary>Đếm số ô đã tưới (cho AI Assistant / UI).</summary>
     public int GetWateredCount()
     {

@@ -63,6 +63,9 @@ public class SaveLoadManager
 
     public void SetWorldService(WorldEntityService worldService) => _worldService = worldService;
 
+    /// <summary>Public wrapper for testing — reloads system save (time + watered tiles).</summary>
+    public void LoadSystemDataPublic() => LoadSystemData();
+
     // ══════════════════════════════════════
     //  BOOT (gọi 1 lần khi game start)
     // ══════════════════════════════════════
@@ -203,10 +206,14 @@ public class SaveLoadManager
         if (_timeManager != null)
             data.time = _timeManager.GetSaveState();
 
+        var tracker = GameManager.Instance?.WateredTileTracker;
+        if (tracker != null)
+            data.wateredCells = tracker.ExportWateredCells();
+
         var json = JsonUtility.ToJson(data, true);
         var path = System.IO.Path.Combine(Application.persistentDataPath, SystemSaveFile);
         System.IO.File.WriteAllText(path, json);
-        Debug.Log($"[SaveLoadManager] System data saved: {data.time}");
+        Debug.Log($"[SaveLoadManager] System data saved: {data.time}, watered={data.wateredCells?.Count ?? 0}");
     }
 
     private void LoadSystemData()
@@ -221,7 +228,11 @@ public class SaveLoadManager
         if (_timeManager != null)
             _timeManager.ApplySaveState(data.time);
 
-        Debug.Log($"[SaveLoadManager] System data loaded: {data.time}");
+        var tracker = GameManager.Instance?.WateredTileTracker;
+        if (tracker != null)
+            tracker.ImportWateredCells(data.wateredCells);
+
+        Debug.Log($"[SaveLoadManager] System data loaded: {data.time}, watered={data.wateredCells?.Count ?? 0}");
     }
 
     // ══════════════════════════════════════

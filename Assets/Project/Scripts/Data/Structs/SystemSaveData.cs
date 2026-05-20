@@ -6,4 +6,12 @@
 public class SystemSaveData
 {
     public TimeState time;
+    public System.Collections.Generic.List<WateredCellDto> wateredCells = new System.Collections.Generic.List<WateredCellDto>();
+}
+
+[System.Serializable]
+public struct WateredCellDto
+{
+    public int x;
+    public int y;
 }

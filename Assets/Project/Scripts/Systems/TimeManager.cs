@@ -226,9 +226,12 @@ public class TimeManager : MonoBehaviour
         }
 
         var bus = ResolveEventBus();
-        // Publish DayChangedPublish (mới) + NextDayEventPublish (backward compatible)
-        bus?.Publish(new DayChangedPublish(_year, _season, _day));
+        // Thứ tự publish quan trọng:
+        // 1. NextDayEventPublish TRƯỚC → StageObject/AnimalObject xử lý grow/produce
+        // 2. DayChangedPublish SAU → reset watered tiles, UI update, etc.
+        // Nếu đảo ngược: watered tiles bị reset trước khi cây check → cây không grow
         bus?.Publish(new NextDayEventPublish());
+        bus?.Publish(new DayChangedPublish(_year, _season, _day));
 
         Debug.Log($"[TimeManager] Ngày mới: {CurrentState}");
     }

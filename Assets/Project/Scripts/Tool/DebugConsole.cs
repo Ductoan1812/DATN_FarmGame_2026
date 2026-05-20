@@ -251,6 +251,111 @@ public class DebugConsole : MonoBehaviour
             }
         });
 
+        // ── water <x> <y> — Tưới nước tại cell ──
+        AddCommand("water", "water <x> <y> — Tưới nước tại cell (x,y)", args =>
+        {
+            if (args.Length < 2) { LogError("water <x> <y>"); return; }
+            var gm = GM(); if (gm == null) return;
+            if (!int.TryParse(args[0], out int x) || !int.TryParse(args[1], out int y))
+            { LogError("Tọa độ không hợp lệ."); return; }
+
+            var tracker = gm.WateredTileTracker;
+            if (tracker == null) { LogError("WateredTileTracker null!"); return; }
+
+            var cell = new Vector2Int(x, y);
+            tracker.SetWatered(cell);
+            LogSuccess($"Đã tưới cell ({x},{y}). IsWatered={tracker.IsWatered(cell)}");
+        });
+
+        // ── hoe <x> <y> — Cuốc đất tại cell ──
+        AddCommand("hoe", "hoe <x> <y> — Cuốc đất tại cell (x,y)", args =>
+        {
+            if (args.Length < 2) { LogError("hoe <x> <y>"); return; }
+            var gm = GM(); if (gm == null) return;
+            if (!int.TryParse(args[0], out int x) || !int.TryParse(args[1], out int y))
+            { LogError("Tọa độ không hợp lệ."); return; }
+
+            var ws = gm.WorldService;
+            var tileData = gm.TileData;
+            if (tileData?.plowedTile == null) { LogError("plowedTile null!"); return; }
+
+            var cell = new Vector2Int(x, y);
+            ws.SetGround(cell, tileData.plowedTile);
+            LogSuccess($"Đã cuốc đất tại ({x},{y})");
+        });
+
+        // ── sleep — Ngủ: restore stamina/HP + NextDay ──
+        AddCommand("sleep", "sleep — Ngủ: restore stamina/HP + sang ngày mới", _ =>
+        {
+            var gm = GM(); if (gm == null) return;
+            var player = FindAnyObjectByType<PlayerControler>();
+            var playerEntity = player?.GetComponent<EntityRoot>()?.GetEntity();
+            if (playerEntity == null) { LogError("Player entity null!"); return; }
+
+            float maxSta = playerEntity.stats.Get(StatType.MaxStamina);
+            float maxHp = playerEntity.stats.Get(StatType.MaxHp);
+            if (maxSta > 0) playerEntity.stats.Set(StatType.Stamina, maxSta);
+            if (maxHp > 0) playerEntity.stats.Set(StatType.Hp, maxHp);
+
+            gm.TimeManager?.SkipToNextDay();
+            LogSuccess($"Đã ngủ! Stamina={maxSta}, HP={maxHp}. Sang ngày mới.");
+        });
+
+        // ── inspect <x> <y> — Kiểm tra state tại cell ──
+        AddCommand("inspect", "inspect <x> <y> — Kiểm tra state tại cell (x,y)", args =>
+        {
+            if (args.Length < 2) { LogError("inspect <x> <y>"); return; }
+            var gm = GM(); if (gm == null) return;
+            if (!int.TryParse(args[0], out int x) || !int.TryParse(args[1], out int y))
+            { LogError("Tọa độ không hợp lệ."); return; }
+
+            var cell = new Vector2Int(x, y);
+            var tracker = gm.WateredTileTracker;
+            var ws = gm.WorldService;
+
+            bool watered = tracker?.IsWatered(cell) ?? false;
+            bool hasPlant = ws?.HasBlockerAt(cell, EntityLayer.Plant) ?? false;
+            bool hasGround = ws?.HasBlockerAt(cell, EntityLayer.Ground) ?? false;
+            var groundTile = ws?.GetGround(cell);
+
+            Log($"Cell ({x},{y}): watered={watered}, hasPlant={hasPlant}, hasGround={hasGround}, groundTile={groundTile?.name ?? "null"}");
+
+            // Find plant entity at this cell
+            foreach (var root in FindObjectsOfType<EntityRoot>())
+            {
+                var entity = root.GetEntity();
+                if (entity == null) continue;
+                var stage = entity.GetModule<StageRuntime>();
+                if (stage == null) continue;
+
+                var pos = root.gameObject.transform.position;
+                var entityCell3 = GridSystem.WorldToCell(pos);
+                var entityCell = new Vector2Int(entityCell3.x, entityCell3.y);
+                if (entityCell == cell)
+                {
+                    Log($"  Plant: {root.gameObject.name} | stage={stage.currentStageIndex} | daysWithoutWater={stage.DaysWithoutWater} | canHarvest={stage.CanHarvest}");
+                }
+            }
+        });
+
+        // ── refill — Lấy nước đầy cho WateringCan ──
+        AddCommand("refill", "refill — Lấy nước đầy cho WateringCan đang cầm", _ =>
+        {
+            var player = FindAnyObjectByType<PlayerControler>();
+            var playerEntity = player?.GetComponent<EntityRoot>()?.GetEntity();
+            if (playerEntity == null) { LogError("Player null!"); return; }
+
+            var hotbar = playerEntity.GetModules<InventoryRuntime>().Find(i => i.Type == InventoryType.Hotbar);
+            var item = hotbar?.SelectedEntity;
+            if (item == null) { LogError("Không có item trên tay!"); return; }
+
+            var wateringCan = item.GetModule<WateringCanRuntime>();
+            if (wateringCan == null) { LogError("Item đang cầm không phải WateringCan!"); return; }
+
+            wateringCan.Refill();
+            LogSuccess($"Đã lấy nước đầy! {wateringCan.CurrentCharges}/{wateringCan.MaxCharges}");
+        });
+
         AddCommand("SetTime", "SetTime <hour> [minute] — Đặt giờ game", args =>
         {
             var tm = FindAnyObjectByType<TimeManager>();
