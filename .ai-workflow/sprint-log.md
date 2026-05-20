@@ -49,3 +49,22 @@ Result:
 Next candidate:
 - Review remaining Sprint 1 editor/asset hookups: watered tile assignment, bed/watering can EntityData, FarmScene placement.
 - Or begin Sprint 2 with WeatherSystem after confirming Sprint 1 asset setup is complete.
+
+## Sprint 2.1-2.4 - Weather Foundation
+
+Status: Done
+
+Goal:
+- Add WeatherType, WeatherConfig, WeatherSystem.
+- Generate/hold current day weather.
+- Rain should auto-water plowed cells for the current day.
+- Preserve day transition order: plants process yesterday water first, watered tiles reset second, rain applies to the new day third.
+
+Initial Kiro model: `claude-sonnet-4.6`.
+
+Review note:
+- Kiro implemented weather state, rain auto-water, save/load, debug commands, and automatic next-day weather roll.
+- Codex verified compile: 0 errors.
+- Kiro Play Mode test passed across multiple day transitions.
+- Rain now rolls and applies inside the same day-change handler, after plant growth and before/after reset in explicit order.
+- Next sprint candidate: Weather UI hook, weather asset tuning, then Sprint 2.5+ fertilizer/quality work.
