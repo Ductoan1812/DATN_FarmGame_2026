@@ -26,6 +26,7 @@ public class DropRuntime : IModuleRuntime, IHandleEvent<DieEvent>
 
     public void Handle(DieEvent e)
     {
+        if (e.suppressWorldDrops) return;
         if (harvestDrops == null || harvestDrops.Length == 0) return;
 
         var owner = e.entity?.Owner;
@@ -58,5 +59,45 @@ public class DropRuntime : IModuleRuntime, IHandleEvent<DieEvent>
 
             GameManager.Instance.EventBus.Publish(req);
         }
+    }
+
+    public int GrantDropsTo(EntityRuntime receiver, Vector2 fallbackWorldPos)
+    {
+        if (receiver == null || harvestDrops == null || harvestDrops.Length == 0)
+            return 0;
+
+        var gm = GameManager.Instance;
+        var entityService = gm?.EntityService;
+        var inventoryService = gm?.InventoryService;
+        if (entityService == null || inventoryService == null)
+            return 0;
+
+        int totalReceived = 0;
+
+        foreach (var entry in harvestDrops)
+        {
+            if (entry == null || entry.item == null) continue;
+            if (Random.value > entry.dropChance) continue;
+
+            int amount = Random.Range(entry.minAmount, entry.maxAmount + 1);
+            if (amount <= 0) continue;
+
+            var item = entityService.Create(entry.item, amount);
+            int received = inventoryService.Pickup(item, receiver);
+            totalReceived += received;
+
+            if (item != null && !item.IsEmpty)
+            {
+                gm.EventBus?.Publish(new SpawnRequestPublish(
+                    worldPos: fallbackWorldPos,
+                    idPrefab: ObjectType.EntityDrop,
+                    runtime: item,
+                    bypassValidation: true));
+            }
+
+            Debug.Log($"[DropRuntime] Nhận {entry.item.keyName} x{received}/{amount}.");
+        }
+
+        return totalReceived;
     }
 }

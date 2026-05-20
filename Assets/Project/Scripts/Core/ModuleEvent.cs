@@ -70,11 +70,13 @@ public class DieEvent : IGameEvent
 {
     public readonly EntityRuntime entity;
     public readonly EntityRuntime killer;
+    public readonly bool suppressWorldDrops;
 
-    public DieEvent(EntityRuntime entity, EntityRuntime killer = null)
+    public DieEvent(EntityRuntime entity, EntityRuntime killer = null, bool suppressWorldDrops = false)
     {
         this.entity = entity;
         this.killer = killer;
+        this.suppressWorldDrops = suppressWorldDrops;
     }
 }
 

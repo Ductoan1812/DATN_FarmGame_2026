@@ -50,6 +50,14 @@ public class HealthRuntime : IModuleRuntime, IHandleEvent<SpawnedEvent>, IHandle
     public void Handle(TakeDamageEvent e)
     {
         if (_entity == null) return;
+        var harvest = _entity.GetModule<HarvestRuntime>();
+        if (harvest != null && !harvest.CanReceiveDamage(e, out string blockedReason))
+        {
+            if (!string.IsNullOrWhiteSpace(blockedReason))
+                Debug.Log(blockedReason);
+            return;
+        }
+
         if (!CanTakeDamage) return;
         _lastAttacker = e.attacker;
 

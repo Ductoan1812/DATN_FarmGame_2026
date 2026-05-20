@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-public class HarvestRuntime : IModuleRuntime, IHandleEvent<TakeDamageEvent>, IHandleEvent<SecondaryActionEvent>, IHandleEvent<SpawnedEvent>
+public class HarvestRuntime : IModuleRuntime, IHandleEvent<SecondaryActionEvent>, IHandleEvent<SpawnedEvent>
 {
     public HarvestModule data;
     private EntityRuntime _entity;
@@ -14,37 +14,6 @@ public class HarvestRuntime : IModuleRuntime, IHandleEvent<TakeDamageEvent>, IHa
     public void Handle(SpawnedEvent e)
     {
         _entity = e.entity;
-    }
-
-    public void Handle(TakeDamageEvent e)
-    {
-        if (_entity == null) return;
-        if (data.harvestTool == ToolType.None)
-        {
-            Debug.Log("[HarvestRuntime] Entity này thu hoạch bằng tay, không nhận damage.");
-            var health = _entity.GetModule<HealthRuntime>();
-            if (health != null) health.CanTakeDamage = false;
-            return;
-        }
-        if (e.toolType != data.harvestTool)
-        {
-            Debug.Log($"[HarvestRuntime] Sai tool. Cần {data.harvestTool}, dùng {e.toolType}");
-            var health = _entity.GetModule<HealthRuntime>();
-            if (health != null) health.CanTakeDamage = false;
-            return;
-        }
-
-        // Kiểm tra stage có cho phép thu hoạch không
-        if (!IsHarvestable())
-        {
-            Debug.Log($"[HarvestRuntime] Chưa đến giai đoạn thu hoạch.");
-            var health = _entity.GetModule<HealthRuntime>();
-            if (health != null) health.CanTakeDamage = false;
-            return;
-        }
-
-        var hp = _entity.GetModule<HealthRuntime>();
-        if (hp != null) hp.CanTakeDamage = true;
     }
 
     public void Handle(SecondaryActionEvent e)
@@ -63,7 +32,50 @@ public class HarvestRuntime : IModuleRuntime, IHandleEvent<TakeDamageEvent>, IHa
             return;
         }
 
-        _entity.TriggerEvent(new DieEvent(_entity, e.initiator));
+        bool grantedDirectly = TryGrantDropsToInteractor(e.initiator);
+        _entity.TriggerEvent(new DieEvent(_entity, e.initiator, suppressWorldDrops: grantedDirectly));
+    }
+
+    public bool CanReceiveDamage(TakeDamageEvent e, out string reason)
+    {
+        reason = string.Empty;
+        if (_entity == null) return true;
+
+        if (data.harvestTool == ToolType.None)
+        {
+            reason = "[HarvestRuntime] Entity này thu hoạch bằng tay, không nhận damage.";
+            return false;
+        }
+
+        if (e.toolType != data.harvestTool)
+        {
+            reason = $"[HarvestRuntime] Sai tool. Cần {data.harvestTool}, dùng {e.toolType}";
+            return false;
+        }
+
+        if (!IsHarvestable())
+        {
+            reason = "[HarvestRuntime] Chưa đến giai đoạn thu hoạch.";
+            return false;
+        }
+
+        return true;
+    }
+
+    private bool TryGrantDropsToInteractor(EntityRuntime interactor)
+    {
+        if (interactor == null) return false;
+
+        var drop = _entity.GetModule<DropRuntime>();
+        if (drop == null) return false;
+
+        Vector2 position = Vector2.zero;
+        var go = _entity.Owner?.GameObject;
+        if (go != null)
+            position = go.transform.position;
+
+        int received = drop.GrantDropsTo(interactor, position);
+        return received > 0;
     }
 
     /// <summary>
