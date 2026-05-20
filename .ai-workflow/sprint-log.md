@@ -68,3 +68,19 @@ Review note:
 - Kiro Play Mode test passed across multiple day transitions.
 - Rain now rolls and applies inside the same day-change handler, after plant growth and before/after reset in explicit order.
 - Next sprint candidate: Weather UI hook, weather asset tuning, then Sprint 2.5+ fertilizer/quality work.
+
+## Sprint 3.1 - Progression EXP Rebalance
+
+Status: Done
+
+Goal:
+- Rebalance EXP by source so farming becomes the primary progression path.
+- Keep the change centralized in progression logic rather than duplicating source math in every exp reward caller.
+
+Initial Kiro model: `claude-sonnet-4.6`.
+
+Result:
+- `ProgressionService` now applies centralized source multipliers.
+- Effective EXP by source is now: Harvest 1.5x, Quest 1.25x, Craft 0.5x min 1, other listed sources unchanged.
+- Kiro test passed across all source types.
+- Compile remains 0 errors.

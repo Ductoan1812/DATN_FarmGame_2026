@@ -45,9 +45,21 @@ public class ProgressionService
         }
     }
 
+    private static int ApplySourceMultiplier(int amount, ExpSourceType source)
+    {
+        return source switch
+        {
+            ExpSourceType.Harvest => amount * 3 / 2,          // 1.5x
+            ExpSourceType.Quest   => amount * 5 / 4,          // 1.25x
+            ExpSourceType.Craft   => Mathf.Max(1, amount / 2),// 0.5x, min 1
+            _                     => amount,                   // 1.0x
+        };
+    }
+
     public bool GrantExp(EntityRuntime target, int amount, ExpSourceType source, EntityRuntime sourceEntity = null)
     {
         if (target?.stats == null || amount <= 0) return false;
+        amount = ApplySourceMultiplier(amount, source);
 
         EnsureInitialized(target);
 
@@ -92,15 +104,17 @@ public class ProgressionService
         return level > oldLevel;
     }
 
-    private static void ApplyLevelUpStats(EntityRuntime target, int newLevel)
+    private void ApplyLevelUpStats(EntityRuntime target, int newLevel)
     {
         if (target?.stats == null) return;
 
         float maxHp = target.stats.Get(StatType.MaxHp) + 5f;
-        float maxStamina = target.stats.Get(StatType.MaxStamina) + 2f;
+        float maxMp = target.stats.Get(StatType.MaxMp) + 2f;
 
         target.stats.Set(StatType.MaxHp, maxHp);
-        target.stats.Set(StatType.MaxStamina, maxStamina);
+        target.stats.Set(StatType.MaxMp, maxMp);
+        target.stats.Set(StatType.Hp, maxHp);
+        target.stats.Set(StatType.Mp, maxMp);
 
         if (newLevel % 2 == 0)
             target.stats.Set(StatType.Attack, target.stats.Get(StatType.Attack) + 1f);
@@ -108,8 +122,11 @@ public class ProgressionService
         if (newLevel % 5 == 0)
             target.stats.Set(StatType.Defense, target.stats.Get(StatType.Defense) + 1f);
 
-        target.stats.Set(StatType.Hp, maxHp);
-        target.stats.Set(StatType.Stamina, maxStamina);
+        // Publish để UI (HealthBarUI, PlayerInfoHUDUI) cập nhật ngay sau level up
+        eventBus?.Publish(new StatsChangedPublish(target.id, StatType.Hp,    maxHp));
+        eventBus?.Publish(new StatsChangedPublish(target.id, StatType.MaxHp, maxHp));
+        eventBus?.Publish(new StatsChangedPublish(target.id, StatType.Mp,    maxMp));
+        eventBus?.Publish(new StatsChangedPublish(target.id, StatType.MaxMp, maxMp));
     }
 
     private void PublishChanged(
