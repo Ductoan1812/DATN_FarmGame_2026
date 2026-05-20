@@ -1,24 +1,4 @@
 NPC
 dialogue.line.key
-Axe01_name
-Axe01_desc
-bracer01_name
-Helmet02_desc
-GreenonionsTree_name
-Greenonions_desc
-Helmet01_name
-Helmet01_desc
-Helmet02_name
-Hoebasic
-Cuốc cơ bản
-legging01_name
-OnionTree_name
-Onion_desc
-StrawberryTree_name
-Strawberry_desc
-PotatoTree_name
-Potato_desc
-Scrythe01_Name
-Scrythe01_Desc
-armors01_name
-ui.category.armor
+quest.description.key
+quest.title.key

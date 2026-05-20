@@ -81,10 +81,6 @@
       "value": "Thông tin vật phẩm"
     },
     {
-      "key": "ui.shop.buy",
-      "value": "Mua"
-    },
-    {
       "key": "ui.equipment.infoPlayer",
       "value": "Chỉ số nhân vật"
     },
@@ -375,6 +371,954 @@
     {
       "key": "quest.sample_farmer_work.objective.collect_onion",
       "value": "Thu hoạch hành tây"
+    },
+    {
+      "key": "mvp.seed.t1.turnip.name",
+      "value": "Hạt củ cải"
+    },
+    {
+      "key": "mvp.seed.t1.turnip.desc",
+      "value": "Hạt giống cơ bản, lớn nhanh và dễ bán."
+    },
+    {
+      "key": "mvp.crop.t1.turnip.name",
+      "value": "Củ cải"
+    },
+    {
+      "key": "mvp.crop.t1.turnip.desc",
+      "value": "Nông sản cấp 1, phù hợp để kiếm vốn đầu game."
+    },
+    {
+      "key": "mvp.seed.t2.tomato.name",
+      "value": "Hạt cà chua"
+    },
+    {
+      "key": "mvp.seed.t2.tomato.desc",
+      "value": "Hạt giống cấp 2, lợi nhuận tốt hơn sau vài ngày."
+    },
+    {
+      "key": "mvp.crop.t2.tomato.name",
+      "value": "Cà chua"
+    },
+    {
+      "key": "mvp.crop.t2.tomato.desc",
+      "value": "Nông sản cấp 2, dùng để bán hoặc hoàn thành nhiệm vụ."
+    },
+    {
+      "key": "mvp.seed.t3.pumpkin.name",
+      "value": "Hạt bí ngô"
+    },
+    {
+      "key": "mvp.seed.t3.pumpkin.desc",
+      "value": "Hạt giống cấp 3, cần nhiều ngày hơn nhưng giá trị cao."
+    },
+    {
+      "key": "mvp.crop.t3.pumpkin.name",
+      "value": "Bí ngô"
+    },
+    {
+      "key": "mvp.crop.t3.pumpkin.desc",
+      "value": "Nông sản cấp 3, bắt đầu tạo nguồn tiền ổn định."
+    },
+    {
+      "key": "mvp.seed.t4.melon.name",
+      "value": "Hạt dưa lưới"
+    },
+    {
+      "key": "mvp.seed.t4.melon.desc",
+      "value": "Hạt giống cấp 4, phù hợp cho giai đoạn trung-cao."
+    },
+    {
+      "key": "mvp.crop.t4.melon.name",
+      "value": "Dưa lưới"
+    },
+    {
+      "key": "mvp.crop.t4.melon.desc",
+      "value": "Nông sản cấp 4, bán được giá cao."
+    },
+    {
+      "key": "mvp.seed.t5.starfruit.name",
+      "value": "Hạt khế sao"
+    },
+    {
+      "key": "mvp.seed.t5.starfruit.desc",
+      "value": "Hạt giống cấp 5, dành cho người chơi đã mở khóa cuối game."
+    },
+    {
+      "key": "mvp.crop.t5.starfruit.name",
+      "value": "Khế sao"
+    },
+    {
+      "key": "mvp.crop.t5.starfruit.desc",
+      "value": "Nông sản cấp 5, đem lại lợi nhuận rất lớn."
+    },
+    {
+      "key": "mvp.ore.t1.copper.name",
+      "value": "Quặng đồng"
+    },
+    {
+      "key": "mvp.ore.t1.copper.desc",
+      "value": "Nguyên liệu khai thác cấp 1, dùng cho nâng cấp đầu tiên."
+    },
+    {
+      "key": "mvp.ore_node.t1.copper.name",
+      "value": "Mỏ đồng"
+    },
+    {
+      "key": "mvp.ore_node.t1.copper.desc",
+      "value": "Mỏ quặng mềm, khai thác bằng cuốc chim."
+    },
+    {
+      "key": "mvp.ore.t2.iron.name",
+      "value": "Quặng sắt"
+    },
+    {
+      "key": "mvp.ore.t2.iron.desc",
+      "value": "Nguyên liệu cấp 2, cần cho công cụ và trang bị tốt hơn."
+    },
+    {
+      "key": "mvp.ore_node.t2.iron.name",
+      "value": "Mỏ sắt"
+    },
+    {
+      "key": "mvp.ore_node.t2.iron.desc",
+      "value": "Mỏ quặng cứng hơn, nên dùng cuốc chim đã nâng cấp."
+    },
+    {
+      "key": "mvp.ore.t3.silver.name",
+      "value": "Quặng bạc"
+    },
+    {
+      "key": "mvp.ore.t3.silver.desc",
+      "value": "Nguyên liệu cấp 3, có giá trị chế tạo và buôn bán cao."
+    },
+    {
+      "key": "mvp.ore_node.t3.silver.name",
+      "value": "Mỏ bạc"
+    },
+    {
+      "key": "mvp.ore_node.t3.silver.desc",
+      "value": "Mỏ quặng cấp 3, phù hợp cho khu mỏ sâu hơn."
+    },
+    {
+      "key": "mvp.ore.t4.gold.name",
+      "value": "Quặng vàng"
+    },
+    {
+      "key": "mvp.ore.t4.gold.desc",
+      "value": "Nguyên liệu cấp 4, cần cho nâng cấp mạnh."
+    },
+    {
+      "key": "mvp.ore_node.t4.gold.name",
+      "value": "Mỏ vàng"
+    },
+    {
+      "key": "mvp.ore_node.t4.gold.desc",
+      "value": "Mỏ quặng bền, nên khai thác khi đã có công cụ tốt."
+    },
+    {
+      "key": "mvp.ore.t5.mythril.name",
+      "value": "Quặng mythril"
+    },
+    {
+      "key": "mvp.ore.t5.mythril.desc",
+      "value": "Nguyên liệu cấp 5, dùng cho trang bị mạnh nhất MVP."
+    },
+    {
+      "key": "mvp.ore_node.t5.mythril.name",
+      "value": "Mỏ mythril"
+    },
+    {
+      "key": "mvp.ore_node.t5.mythril.desc",
+      "value": "Mỏ quặng cuối game, rất cứng nhưng phần thưởng lớn."
+    },
+    {
+      "key": "mvp.monster.t1.slime.name",
+      "value": "Dịch slime"
+    },
+    {
+      "key": "mvp.monster.t1.slime.desc",
+      "value": "Nguyên liệu rơi từ slime, dùng cho chế tạo cấp thấp."
+    },
+    {
+      "key": "mvp.enemy.t1.slime.name",
+      "value": "Slime đồng cỏ"
+    },
+    {
+      "key": "mvp.enemy.t1.slime.desc",
+      "value": "Kẻ địch yếu, phù hợp để làm quen với chiến đấu."
+    },
+    {
+      "key": "mvp.monster.t2.bat.name",
+      "value": "Cánh dơi"
+    },
+    {
+      "key": "mvp.monster.t2.bat.desc",
+      "value": "Nguyên liệu rơi từ dơi mỏ."
+    },
+    {
+      "key": "mvp.enemy.t2.bat.name",
+      "value": "Dơi mỏ"
+    },
+    {
+      "key": "mvp.enemy.t2.bat.desc",
+      "value": "Kẻ địch cấp 2, nhanh và nguy hiểm hơn slime."
+    },
+    {
+      "key": "mvp.monster.t3.golem.name",
+      "value": "Mảnh lõi golem"
+    },
+    {
+      "key": "mvp.monster.t3.golem.desc",
+      "value": "Mảnh lõi cứng, dùng cho nâng cấp trung cấp."
+    },
+    {
+      "key": "mvp.enemy.t3.golem.name",
+      "value": "Golem đá"
+    },
+    {
+      "key": "mvp.enemy.t3.golem.desc",
+      "value": "Kẻ địch cấp 3, nhiều máu và đánh đau."
+    },
+    {
+      "key": "mvp.monster.t4.wraith.name",
+      "value": "Tinh chất u linh"
+    },
+    {
+      "key": "mvp.monster.t4.wraith.desc",
+      "value": "Nguyên liệu hiếm từ bóng ma hầm sâu."
+    },
+    {
+      "key": "mvp.enemy.t4.wraith.name",
+      "value": "Bóng ma hầm sâu"
+    },
+    {
+      "key": "mvp.enemy.t4.wraith.desc",
+      "value": "Kẻ địch cấp 4, yêu cầu trang bị phòng thủ tốt."
+    },
+    {
+      "key": "mvp.monster.t5.ancient.name",
+      "value": "Lõi cổ đại"
+    },
+    {
+      "key": "mvp.monster.t5.ancient.desc",
+      "value": "Nguyên liệu cuối game, dùng cho chế tạo mạnh nhất."
+    },
+    {
+      "key": "mvp.enemy.t5.ancient.name",
+      "value": "Cổ vật thức tỉnh"
+    },
+    {
+      "key": "mvp.enemy.t5.ancient.desc",
+      "value": "Kẻ địch cấp 5, thử thách chính trước level 50."
+    },
+    {
+      "key": "mvp.tool.pickaxe.t1.name",
+      "value": "Cuốc chim cấp I"
+    },
+    {
+      "key": "mvp.tool.pickaxe.t1.desc",
+      "value": "Công cụ khai thác cơ bản."
+    },
+    {
+      "key": "mvp.tool.pickaxe.t2.name",
+      "value": "Cuốc chim cấp II"
+    },
+    {
+      "key": "mvp.tool.pickaxe.t2.desc",
+      "value": "Khai thác nhanh hơn và gây sát thương tốt hơn."
+    },
+    {
+      "key": "mvp.tool.pickaxe.t3.name",
+      "value": "Cuốc chim cấp III"
+    },
+    {
+      "key": "mvp.tool.pickaxe.t3.desc",
+      "value": "Phù hợp cho mỏ cấp 3."
+    },
+    {
+      "key": "mvp.tool.pickaxe.t4.name",
+      "value": "Cuốc chim cấp IV"
+    },
+    {
+      "key": "mvp.tool.pickaxe.t4.desc",
+      "value": "Công cụ mạnh cho khu mỏ sâu."
+    },
+    {
+      "key": "mvp.tool.pickaxe.t5.name",
+      "value": "Cuốc chim cấp V"
+    },
+    {
+      "key": "mvp.tool.pickaxe.t5.desc",
+      "value": "Cuốc chim mạnh nhất trong bản MVP."
+    },
+    {
+      "key": "mvp.tool.scythe.t1.name",
+      "value": "Liềm cấp I"
+    },
+    {
+      "key": "mvp.tool.scythe.t1.desc",
+      "value": "Dùng để thu hoạch cây và đánh nhiều mục tiêu gần."
+    },
+    {
+      "key": "mvp.tool.scythe.t2.name",
+      "value": "Liềm cấp II"
+    },
+    {
+      "key": "mvp.tool.scythe.t2.desc",
+      "value": "Thu hoạch và chiến đấu ổn định hơn."
+    },
+    {
+      "key": "mvp.tool.scythe.t3.name",
+      "value": "Liềm cấp III"
+    },
+    {
+      "key": "mvp.tool.scythe.t3.desc",
+      "value": "Tầm quét rộng hơn, sát thương tốt hơn."
+    },
+    {
+      "key": "mvp.tool.scythe.t4.name",
+      "value": "Liềm cấp IV"
+    },
+    {
+      "key": "mvp.tool.scythe.t4.desc",
+      "value": "Phù hợp với các khu tài nguyên cấp cao."
+    },
+    {
+      "key": "mvp.tool.scythe.t5.name",
+      "value": "Liềm cấp V"
+    },
+    {
+      "key": "mvp.tool.scythe.t5.desc",
+      "value": "Liềm mạnh nhất trong bản MVP."
+    },
+    {
+      "key": "mvp.gear.t1.armor.name",
+      "value": "Áo giáp cấp I"
+    },
+    {
+      "key": "mvp.gear.t1.armor.desc",
+      "value": "Trang bị phòng thủ cơ bản."
+    },
+    {
+      "key": "mvp.gear.t1.helmet.name",
+      "value": "Mũ cấp I"
+    },
+    {
+      "key": "mvp.gear.t1.helmet.desc",
+      "value": "Tăng nhẹ máu tối đa."
+    },
+    {
+      "key": "mvp.gear.t1.bracer.name",
+      "value": "Bao tay cấp I"
+    },
+    {
+      "key": "mvp.gear.t1.bracer.desc",
+      "value": "Trang bị tay cơ bản."
+    },
+    {
+      "key": "mvp.gear.t1.legging.name",
+      "value": "Quần giáp cấp I"
+    },
+    {
+      "key": "mvp.gear.t1.legging.desc",
+      "value": "Trang bị chân cơ bản."
+    },
+    {
+      "key": "mvp.gear.t2.armor.name",
+      "value": "Áo giáp cấp II"
+    },
+    {
+      "key": "mvp.gear.t2.armor.desc",
+      "value": "Tăng máu và phòng thủ cho khu mỏ cấp 2."
+    },
+    {
+      "key": "mvp.gear.t2.helmet.name",
+      "value": "Mũ cấp II"
+    },
+    {
+      "key": "mvp.gear.t2.helmet.desc",
+      "value": "Giúp chịu đòn tốt hơn."
+    },
+    {
+      "key": "mvp.gear.t2.bracer.name",
+      "value": "Bao tay cấp II"
+    },
+    {
+      "key": "mvp.gear.t2.bracer.desc",
+      "value": "Tăng nhẹ sức tấn công."
+    },
+    {
+      "key": "mvp.gear.t2.legging.name",
+      "value": "Quần giáp cấp II"
+    },
+    {
+      "key": "mvp.gear.t2.legging.desc",
+      "value": "Tăng khả năng sống sót khi đi mỏ."
+    },
+    {
+      "key": "mvp.gear.t3.armor.name",
+      "value": "Áo giáp cấp III"
+    },
+    {
+      "key": "mvp.gear.t3.armor.desc",
+      "value": "Trang bị trung cấp cho các trận đánh dài hơn."
+    },
+    {
+      "key": "mvp.gear.t3.helmet.name",
+      "value": "Mũ cấp III"
+    },
+    {
+      "key": "mvp.gear.t3.helmet.desc",
+      "value": "Tăng mạnh máu và phòng thủ."
+    },
+    {
+      "key": "mvp.gear.t3.bracer.name",
+      "value": "Bao tay cấp III"
+    },
+    {
+      "key": "mvp.gear.t3.bracer.desc",
+      "value": "Tăng sát thương để hạ quái nhanh hơn."
+    },
+    {
+      "key": "mvp.gear.t3.legging.name",
+      "value": "Quần giáp cấp III"
+    },
+    {
+      "key": "mvp.gear.t3.legging.desc",
+      "value": "Trang bị chân cho khu mỏ cấp 3."
+    },
+    {
+      "key": "mvp.gear.t4.armor.name",
+      "value": "Áo giáp cấp IV"
+    },
+    {
+      "key": "mvp.gear.t4.armor.desc",
+      "value": "Giáp mạnh cho kẻ địch cấp cao."
+    },
+    {
+      "key": "mvp.gear.t4.helmet.name",
+      "value": "Mũ cấp IV"
+    },
+    {
+      "key": "mvp.gear.t4.helmet.desc",
+      "value": "Giảm rủi ro bị hạ gục khi đi sâu."
+    },
+    {
+      "key": "mvp.gear.t4.bracer.name",
+      "value": "Bao tay cấp IV"
+    },
+    {
+      "key": "mvp.gear.t4.bracer.desc",
+      "value": "Tăng đáng kể sức tấn công."
+    },
+    {
+      "key": "mvp.gear.t4.legging.name",
+      "value": "Quần giáp cấp IV"
+    },
+    {
+      "key": "mvp.gear.t4.legging.desc",
+      "value": "Trang bị bền cho khu mỏ nguy hiểm."
+    },
+    {
+      "key": "mvp.gear.t5.armor.name",
+      "value": "Áo giáp cấp V"
+    },
+    {
+      "key": "mvp.gear.t5.armor.desc",
+      "value": "Áo giáp mạnh nhất trong bản MVP."
+    },
+    {
+      "key": "mvp.gear.t5.helmet.name",
+      "value": "Mũ cấp V"
+    },
+    {
+      "key": "mvp.gear.t5.helmet.desc",
+      "value": "Bảo vệ tốt nhất cho thử thách cuối game."
+    },
+    {
+      "key": "mvp.gear.t5.bracer.name",
+      "value": "Bao tay cấp V"
+    },
+    {
+      "key": "mvp.gear.t5.bracer.desc",
+      "value": "Tăng sức tấn công cao nhất trong bộ trang bị MVP."
+    },
+    {
+      "key": "mvp.gear.t5.legging.name",
+      "value": "Quần giáp cấp V"
+    },
+    {
+      "key": "mvp.gear.t5.legging.desc",
+      "value": "Trang bị chân mạnh nhất cho khu mỏ cuối."
+    },
+    {
+      "key": "mvp.recipe.pickaxe.t2.name",
+      "value": "Nâng cấp cuốc chim cấp II"
+    },
+    {
+      "key": "mvp.recipe.pickaxe.t3.name",
+      "value": "Nâng cấp cuốc chim cấp III"
+    },
+    {
+      "key": "mvp.recipe.pickaxe.t4.name",
+      "value": "Nâng cấp cuốc chim cấp IV"
+    },
+    {
+      "key": "mvp.recipe.pickaxe.t5.name",
+      "value": "Nâng cấp cuốc chim cấp V"
+    },
+    {
+      "key": "mvp.recipe.scythe.t2.name",
+      "value": "Nâng cấp liềm cấp II"
+    },
+    {
+      "key": "mvp.recipe.scythe.t3.name",
+      "value": "Nâng cấp liềm cấp III"
+    },
+    {
+      "key": "mvp.recipe.scythe.t4.name",
+      "value": "Nâng cấp liềm cấp IV"
+    },
+    {
+      "key": "mvp.recipe.scythe.t5.name",
+      "value": "Nâng cấp liềm cấp V"
+    },
+    {
+      "key": "mvp.recipe.gear_set.t2.name",
+      "value": "Chế tạo bộ giáp cấp II"
+    },
+    {
+      "key": "mvp.recipe.gear_set.t3.name",
+      "value": "Chế tạo bộ giáp cấp III"
+    },
+    {
+      "key": "mvp.recipe.gear_set.t4.name",
+      "value": "Chế tạo bộ giáp cấp IV"
+    },
+    {
+      "key": "mvp.recipe.gear_set.t5.name",
+      "value": "Chế tạo bộ giáp cấp V"
+    },
+    {
+      "key": "mvp.quest.crop.t1.title",
+      "value": "Vụ mùa đầu tiên"
+    },
+    {
+      "key": "mvp.quest.crop.t1.desc",
+      "value": "Trồng và thu hoạch củ cải để tạo vốn ban đầu."
+    },
+    {
+      "key": "mvp.quest.obj.crop.t1",
+      "value": "Giao củ cải"
+    },
+    {
+      "key": "mvp.quest.crop.t2.title",
+      "value": "Cà chua cho khu chợ"
+    },
+    {
+      "key": "mvp.quest.crop.t2.desc",
+      "value": "Thu hoạch cà chua để chứng minh nông trại đã phát triển."
+    },
+    {
+      "key": "mvp.quest.obj.crop.t2",
+      "value": "Giao cà chua"
+    },
+    {
+      "key": "mvp.quest.crop.t3.title",
+      "value": "Bí ngô mùa lớn"
+    },
+    {
+      "key": "mvp.quest.crop.t3.desc",
+      "value": "Mang bí ngô chất lượng cao về thị trấn."
+    },
+    {
+      "key": "mvp.quest.obj.crop.t3",
+      "value": "Giao bí ngô"
+    },
+    {
+      "key": "mvp.quest.crop.t4.title",
+      "value": "Dưa lưới cao cấp"
+    },
+    {
+      "key": "mvp.quest.crop.t4.desc",
+      "value": "Thu hoạch dưa lưới để mở rộng nguồn thu."
+    },
+    {
+      "key": "mvp.quest.obj.crop.t4",
+      "value": "Giao dưa lưới"
+    },
+    {
+      "key": "mvp.quest.crop.t5.title",
+      "value": "Khế sao cuối vụ"
+    },
+    {
+      "key": "mvp.quest.crop.t5.desc",
+      "value": "Mang khế sao, loại nông sản giá trị nhất hiện tại."
+    },
+    {
+      "key": "mvp.quest.obj.crop.t5",
+      "value": "Giao khế sao"
+    },
+    {
+      "key": "mvp.quest.ore.t1.title",
+      "value": "Đồng cho lò rèn"
+    },
+    {
+      "key": "mvp.quest.ore.t1.desc",
+      "value": "Khai thác quặng đồng để bắt đầu nâng cấp công cụ."
+    },
+    {
+      "key": "mvp.quest.obj.ore.t1",
+      "value": "Giao quặng đồng"
+    },
+    {
+      "key": "mvp.quest.ore.t2.title",
+      "value": "Nguồn sắt ổn định"
+    },
+    {
+      "key": "mvp.quest.ore.t2.desc",
+      "value": "Thu thập quặng sắt cho các công thức cấp 2."
+    },
+    {
+      "key": "mvp.quest.obj.ore.t2",
+      "value": "Giao quặng sắt"
+    },
+    {
+      "key": "mvp.quest.ore.t3.title",
+      "value": "Ánh bạc trong mỏ"
+    },
+    {
+      "key": "mvp.quest.ore.t3.desc",
+      "value": "Đi sâu hơn và mang về quặng bạc."
+    },
+    {
+      "key": "mvp.quest.obj.ore.t3",
+      "value": "Giao quặng bạc"
+    },
+    {
+      "key": "mvp.quest.ore.t4.title",
+      "value": "Vàng cho nâng cấp lớn"
+    },
+    {
+      "key": "mvp.quest.ore.t4.desc",
+      "value": "Khai thác quặng vàng để chuẩn bị cho thử thách cao hơn."
+    },
+    {
+      "key": "mvp.quest.obj.ore.t4",
+      "value": "Giao quặng vàng"
+    },
+    {
+      "key": "mvp.quest.ore.t5.title",
+      "value": "Mythril hiếm"
+    },
+    {
+      "key": "mvp.quest.ore.t5.desc",
+      "value": "Mang về mythril từ khu mỏ nguy hiểm nhất."
+    },
+    {
+      "key": "mvp.quest.obj.ore.t5",
+      "value": "Giao quặng mythril"
+    },
+    {
+      "key": "mvp.quest.mixed.t1.title",
+      "value": "Dọn đường vào mỏ"
+    },
+    {
+      "key": "mvp.quest.mixed.t1.desc",
+      "value": "Thu thập nguyên liệu từ slime và mỏ đồng để mở nhịp chơi chiến đấu."
+    },
+    {
+      "key": "mvp.quest.obj.monster.t1",
+      "value": "Giao dịch slime"
+    },
+    {
+      "key": "mvp.quest.obj.mixed_ore.t1",
+      "value": "Giao quặng đồng"
+    },
+    {
+      "key": "mvp.quest.mixed.t2.title",
+      "value": "Dấu hiệu trong hang"
+    },
+    {
+      "key": "mvp.quest.mixed.t2.desc",
+      "value": "Đánh bại dơi mỏ và mang thêm quặng sắt về thị trấn."
+    },
+    {
+      "key": "mvp.quest.obj.monster.t2",
+      "value": "Giao cánh dơi"
+    },
+    {
+      "key": "mvp.quest.obj.mixed_ore.t2",
+      "value": "Giao quặng sắt"
+    },
+    {
+      "key": "mvp.quest.mixed.t3.title",
+      "value": "Lõi đá biết chuyển động"
+    },
+    {
+      "key": "mvp.quest.mixed.t3.desc",
+      "value": "Thu thập lõi golem và quặng bạc để chuẩn bị nâng cấp lớn."
+    },
+    {
+      "key": "mvp.quest.obj.monster.t3",
+      "value": "Giao mảnh lõi golem"
+    },
+    {
+      "key": "mvp.quest.obj.mixed_ore.t3",
+      "value": "Giao quặng bạc"
+    },
+    {
+      "key": "mvp.quest.mixed.t4.title",
+      "value": "Bóng tối tầng sâu"
+    },
+    {
+      "key": "mvp.quest.mixed.t4.desc",
+      "value": "Mang tinh chất u linh và quặng vàng về để rèn trang bị cao cấp."
+    },
+    {
+      "key": "mvp.quest.obj.monster.t4",
+      "value": "Giao tinh chất u linh"
+    },
+    {
+      "key": "mvp.quest.obj.mixed_ore.t4",
+      "value": "Giao quặng vàng"
+    },
+    {
+      "key": "mvp.quest.mixed.t5.title",
+      "value": "Thử thách cuối mỏ"
+    },
+    {
+      "key": "mvp.quest.mixed.t5.desc",
+      "value": "Đối mặt kẻ địch mạnh nhất và mang về vật liệu cuối game."
+    },
+    {
+      "key": "mvp.quest.obj.monster.t5",
+      "value": "Giao lõi cổ đại"
+    },
+    {
+      "key": "mvp.quest.obj.mixed_ore.t5",
+      "value": "Giao quặng mythril"
+    },
+    {
+      "key": "ui.interaction.prompt_format",
+      "value": "E - {0}: {1}"
+    },
+    {
+      "key": "ui.interaction.harvest",
+      "value": "Thu hoạch"
+    },
+    {
+      "key": "ui.interaction.not_ready",
+      "value": "Chưa sẵn sàng"
+    },
+    {
+      "key": "ui.interaction.need_tool_format",
+      "value": "Cần {0}"
+    },
+    {
+      "key": "ui.tool.axe",
+      "value": "Rìu"
+    },
+    {
+      "key": "ui.tool.pickaxe",
+      "value": "Cuốc chim"
+    },
+    {
+      "key": "ui.tool.scythe",
+      "value": "Liềm"
+    },
+    {
+      "key": "ui.tool.hoe",
+      "value": "Cuốc"
+    },
+    {
+      "key": "ui.tool.watering_can",
+      "value": "Bình tưới"
+    },
+    {
+      "key": "ui.tool.fishing_rod",
+      "value": "Cần câu"
+    },
+    {
+      "key": "ui.tool.unknown",
+      "value": "Công cụ phù hợp"
+    },
+    {
+      "key": "m3.tree.name",
+      "value": "Cây gỗ"
+    },
+    {
+      "key": "m3.tree.desc",
+      "value": "Cần rìu để chặt lấy gỗ."
+    },
+    {
+      "key": "m3.rock.name",
+      "value": "Đá tảng"
+    },
+    {
+      "key": "m3.rock.desc",
+      "value": "Cần cuốc chim để đập lấy đá."
+    },
+    {
+      "key": "m3.forage.name",
+      "value": "Bụi cỏ"
+    },
+    {
+      "key": "m3.forage.desc",
+      "value": "Cắt bằng liềm để lấy sợi và nguyên liệu."
+    },
+    {
+      "key": "m3.portal.name",
+      "value": "Cổng dịch chuyển"
+    },
+    {
+      "key": "m3.portal.desc",
+      "value": "Dùng để di chuyển giữa các khu vực."
+    },
+    {
+      "key": "m3.bed.name",
+      "value": "Giường ngủ"
+    },
+    {
+      "key": "m3.bed.desc",
+      "value": "Nghỉ qua đêm để sang ngày mới."
+    },
+    {
+      "key": "m3.animal.chicken.name",
+      "value": "Gà"
+    },
+    {
+      "key": "m3.animal.chicken.desc",
+      "value": "Vật nuôi cơ bản của nông trại."
+    },
+    {
+      "key": "m3.mat.wood.name",
+      "value": "Gỗ"
+    },
+    {
+      "key": "m3.mat.wood.desc",
+      "value": "Nguyên liệu cơ bản từ cây."
+    },
+    {
+      "key": "m3.mat.sap.name",
+      "value": "Nhựa cây"
+    },
+    {
+      "key": "m3.mat.sap.desc",
+      "value": "Nguyên liệu phụ thu được khi chặt cây."
+    },
+    {
+      "key": "m3.mat.stone.name",
+      "value": "Đá"
+    },
+    {
+      "key": "m3.mat.stone.desc",
+      "value": "Nguyên liệu cơ bản từ đá tảng."
+    },
+    {
+      "key": "m3.mat.coal.name",
+      "value": "Than"
+    },
+    {
+      "key": "m3.mat.coal.desc",
+      "value": "Nguyên liệu đốt và chế tạo."
+    },
+    {
+      "key": "m3.mat.fiber.name",
+      "value": "Sợi cỏ"
+    },
+    {
+      "key": "m3.mat.fiber.desc",
+      "value": "Sợi lấy từ cỏ, dùng cho chế tạo cơ bản."
+    },
+    {
+      "key": "m3.mat.forage.name",
+      "value": "Thảo mộc"
+    },
+    {
+      "key": "m3.mat.forage.desc",
+      "value": "Nguyên liệu thu nhặt từ bụi cỏ."
+    },
+    {
+      "key": "m1.portal.farm_to_town.name",
+      "value": "Cổng tới thị trấn"
+    },
+    {
+      "key": "m1.portal.town_to_farm.name",
+      "value": "Cổng về nông trại"
+    },
+    {
+      "key": "m1.portal.town_to_mine.name",
+      "value": "Cổng tới hầm mỏ"
+    },
+    {
+      "key": "m1.portal.mine_to_town.name",
+      "value": "Cổng về thị trấn"
+    },
+    {
+      "key": "m4.weapon.sword_t1.name",
+      "value": "Kiếm sắt cũ"
+    },
+    {
+      "key": "m4.weapon.sword_t1.desc",
+      "value": "Vũ khí cận chiến dễ dùng, phù hợp để bắt đầu đi hầm mỏ."
+    },
+    {
+      "key": "m4.weapon.spear_t1.name",
+      "value": "Giáo gỗ"
+    },
+    {
+      "key": "m4.weapon.spear_t1.desc",
+      "value": "Tầm đánh xa hơn kiếm nhưng ra đòn chậm hơn."
+    },
+    {
+      "key": "ui.unlock.level_required",
+      "value": "Chưa đủ cấp để mở khóa."
+    },
+    {
+      "key": "ui.unlock.quest_required",
+      "value": "Cần hoàn thành nhiệm vụ mở khóa."
+    },
+    {
+      "key": "ui.animal.feed",
+      "value": "Cho ăn"
+    },
+    {
+      "key": "ui.animal.collect",
+      "value": "Thu sản phẩm"
+    },
+    {
+      "key": "ui.animal.status.hungry",
+      "value": "Đang đói"
+    },
+    {
+      "key": "ui.animal.status.fed",
+      "value": "Đã ăn hôm nay"
+    },
+    {
+      "key": "ui.animal.status.product_ready",
+      "value": "Có sản phẩm"
+    },
+    {
+      "key": "m6.item.animal_feed.name",
+      "value": "Thức ăn gà"
+    },
+    {
+      "key": "m6.item.animal_feed.desc",
+      "value": "Dùng để cho gà ăn. Có thể mua hoặc chế tạo từ nguyên liệu nông trại."
+    },
+    {
+      "key": "m6.item.egg.name",
+      "value": "Trứng gà"
+    },
+    {
+      "key": "m6.item.egg.desc",
+      "value": "Sản phẩm từ gà, dùng để bán, giao nhiệm vụ hoặc chế biến."
+    },
+    {
+      "key": "m6.recipe.animal_feed.name",
+      "value": "Chế tạo thức ăn gà"
     }
   ]
 }
