@@ -99,3 +99,18 @@ Result:
 - `MasteryUnlockData` is a `ScriptableObject` with a serializable `UnlockEntry` array.
 - Each entry stores `masteryLevel`, `unlockId`, and `description`.
 - Compile check passed with 0 errors.
+
+## Sprint 3.3 - UnlockService Mastery Checks
+
+Status: Done
+
+Goal:
+- Let UnlockService read mastery unlock data safely without regressing existing unlock paths.
+
+Initial Kiro model: `claude-sonnet-4.5`.
+
+Result:
+- `UnlockService` now lazily loads `MasteryUnlockData` from `Resources/Data/MasteryUnlockData`.
+- Added `IsMasteryUnlocked(EntityRuntime, string)` and `GetMasteryRequirement(string)`.
+- Existing `IsUnlocked` and `GetLockedReasonKey` behavior for shop/crafting/quest paths was left intact.
+- Compile check passed with 0 errors.

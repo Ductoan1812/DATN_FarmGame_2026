@@ -4,11 +4,14 @@ using UnityEngine;
 /// <summary>
 /// API duy nhất kiểm tra unlock level/quest cho shop, recipe, quest visibility và zone gate.
 /// Nếu có cả level và quest, chỉ cần đạt level hoặc hoàn thành toàn bộ quest yêu cầu.
+/// Hỗ trợ mastery unlock table từ MasteryUnlockData.
 /// </summary>
 public static class UnlockService
 {
     public const string LockedLevelKey = "ui.unlock.level_required";
     public const string LockedQuestKey = "ui.unlock.quest_required";
+
+    private static MasteryUnlockData _masteryUnlockData;
 
     public static bool IsUnlocked(EntityRuntime player, UnlockRequirementData requirement)
     {
@@ -91,5 +94,56 @@ public static class UnlockService
         }
 
         return foundRequirement;
+    }
+
+    /// <summary>
+    /// Check if an unlock ID is available based on player's mastery level.
+    /// Returns true if no mastery requirement exists or if player meets the requirement.
+    /// Safe fallback: returns true if MasteryUnlockData asset is missing.
+    /// </summary>
+    public static bool IsMasteryUnlocked(EntityRuntime player, string unlockId)
+    {
+        if (string.IsNullOrWhiteSpace(unlockId)) return true;
+        if (player?.stats == null) return false;
+
+        LoadMasteryUnlockDataIfNeeded();
+        if (_masteryUnlockData == null || _masteryUnlockData.unlocks == null || _masteryUnlockData.unlocks.Length == 0)
+            return true;
+
+        int requiredLevel = GetMasteryRequirement(unlockId);
+        if (requiredLevel <= 0) return true;
+
+        int currentLevel = GetLevel(player);
+        return currentLevel >= requiredLevel;
+    }
+
+    /// <summary>
+    /// Get the mastery level required for an unlock ID.
+    /// Returns 0 if no requirement exists.
+    /// </summary>
+    public static int GetMasteryRequirement(string unlockId)
+    {
+        if (string.IsNullOrWhiteSpace(unlockId)) return 0;
+
+        LoadMasteryUnlockDataIfNeeded();
+        if (_masteryUnlockData == null || _masteryUnlockData.unlocks == null)
+            return 0;
+
+        foreach (var entry in _masteryUnlockData.unlocks)
+        {
+            if (entry != null && entry.unlockId == unlockId)
+                return Mathf.Max(0, entry.masteryLevel);
+        }
+
+        return 0;
+    }
+
+    private static void LoadMasteryUnlockDataIfNeeded()
+    {
+        if (_masteryUnlockData != null) return;
+
+        _masteryUnlockData = Resources.Load<MasteryUnlockData>("Data/MasteryUnlockData");
+        if (_masteryUnlockData == null)
+            Debug.LogWarning("[UnlockService] MasteryUnlockData not found at Resources/Data/MasteryUnlockData. Mastery unlock checks will always return true.");
     }
 }
