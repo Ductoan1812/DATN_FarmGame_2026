@@ -39,7 +39,9 @@ public class ShopBuyRowUI : MonoBehaviour
 
         SetIcon(item.ItemData);
         SetLocalizedText(nameText, item.NameKey);
-        SetLocalizedText(descriptionText, item.ItemData != null ? item.ItemData.descKey : string.Empty);
+        SetLocalizedText(descriptionText, !item.Unlocked && !string.IsNullOrWhiteSpace(item.LockedReasonKey)
+            ? item.LockedReasonKey
+            : item.ItemData != null ? item.ItemData.descKey : string.Empty);
 
         if (minusButton != null)
         {
@@ -91,15 +93,16 @@ public class ShopBuyRowUI : MonoBehaviour
         SetPlainText(amountText, quantity.ToString());
         
         bool canAfford = currentCustomerMoney >= totalPrice;
+        bool canBuy = currentItem.Buyable && canAfford;
         
         if (actionButton != null)
         {
-            actionButton.interactable = canAfford;
+            actionButton.interactable = canBuy;
             
             Image btnImage = actionButton.GetComponent<Image>();
             if (btnImage != null)
             {
-                if (canAfford)
+                if (canBuy)
                 {
                     if (defaultButtonSprite != null) btnImage.sprite = defaultButtonSprite;
                 }

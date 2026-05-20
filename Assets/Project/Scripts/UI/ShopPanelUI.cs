@@ -30,10 +30,17 @@ public class ShopPanelUI : MonoBehaviour
     [SerializeField] private TMP_Text selectedSellNameText;
     [SerializeField] private TMP_Text selectedSellHintText;
     [SerializeField] private TMP_Text selectedSellTotalText;
+    [SerializeField] private TMP_Text selectedSellQuantityText;
+    [SerializeField] private TMP_Text sellCartSummaryText;
+    [SerializeField] private Button sellMinusButton;
+    [SerializeField] private Button sellPlusButton;
+    [SerializeField] private Button sellMaxButton;
+    [SerializeField] private Button sellClearButton;
     [SerializeField] private Button sellButton;
     [SerializeField] private int visibleSellSlots = 30;
 
     private readonly List<GameObject> spawnedObjects = new();
+    private readonly Dictionary<EntityRuntime, SellCartEntry> sellCart = new();
     private InventoryGridView sellGridView;
     private EventBus subscribedBus;
     private bool listenersRegistered;
@@ -88,7 +95,12 @@ public class ShopPanelUI : MonoBehaviour
         if (closeButton != null) closeButton.onClick.AddListener(Hide);
         if (buyTabButton != null) buyTabButton.onClick.AddListener(ShowBuyPage);
         if (sellTabButton != null) sellTabButton.onClick.AddListener(ShowSellPage);
-        if (sellButton != null) sellButton.onClick.AddListener(SellSelectedItem);
+        EnsureSellCartControls();
+        if (sellMinusButton != null) sellMinusButton.onClick.AddListener(DecreaseSelectedSellQuantity);
+        if (sellPlusButton != null) sellPlusButton.onClick.AddListener(IncreaseSelectedSellQuantity);
+        if (sellMaxButton != null) sellMaxButton.onClick.AddListener(MaxSelectedSellQuantity);
+        if (sellClearButton != null) sellClearButton.onClick.AddListener(ClearSellCart);
+        if (sellButton != null) sellButton.onClick.AddListener(SellCart);
 
         listenersRegistered = true;
     }
@@ -100,7 +112,11 @@ public class ShopPanelUI : MonoBehaviour
         if (closeButton != null) closeButton.onClick.RemoveListener(Hide);
         if (buyTabButton != null) buyTabButton.onClick.RemoveListener(ShowBuyPage);
         if (sellTabButton != null) sellTabButton.onClick.RemoveListener(ShowSellPage);
-        if (sellButton != null) sellButton.onClick.RemoveListener(SellSelectedItem);
+        if (sellMinusButton != null) sellMinusButton.onClick.RemoveListener(DecreaseSelectedSellQuantity);
+        if (sellPlusButton != null) sellPlusButton.onClick.RemoveListener(IncreaseSelectedSellQuantity);
+        if (sellMaxButton != null) sellMaxButton.onClick.RemoveListener(MaxSelectedSellQuantity);
+        if (sellClearButton != null) sellClearButton.onClick.RemoveListener(ClearSellCart);
+        if (sellButton != null) sellButton.onClick.RemoveListener(SellCart);
 
         listenersRegistered = false;
     }
@@ -124,6 +140,7 @@ public class ShopPanelUI : MonoBehaviour
         if (sellPage != null) sellPage.SetActive(true);
 
         selectedSellItem = null;
+        sellCart.Clear();
         RebuildSellGrid();
         RefreshSellSelection();
     }
@@ -137,7 +154,7 @@ public class ShopPanelUI : MonoBehaviour
 
         foreach (var item in currentView.StockItems)
         {
-            if (item == null || !item.Buyable) continue;
+            if (item == null) continue;
 
             var row = Instantiate(buyRowTemplate, buyListRoot);
             row.gameObject.SetActive(true);
@@ -189,6 +206,9 @@ public class ShopPanelUI : MonoBehaviour
     {
         bool hasSelection = selectedSellItem?.ItemData != null;
         bool canSellSelection = hasSelection && selectedSellItem != null && selectedSellItem.Sellable && selectedSellItem.Amount > 0;
+        int selectedQuantity = GetCartQuantity(selectedSellItem);
+        int cartTotal = GetSellCartTotal();
+        int cartItemCount = GetSellCartItemCount();
 
         if (selectedSellIcon != null)
         {
@@ -204,28 +224,45 @@ public class ShopPanelUI : MonoBehaviour
         else
             SetPlainText(selectedSellHintText, "NPC khong thu mua vat pham nay.");
 
-        SetPlainText(selectedSellTotalText, hasSelection ? selectedSellItem.SellPrice.ToString() : "0");
+        SetPlainText(selectedSellQuantityText, hasSelection ? $"{selectedQuantity}/{selectedSellItem.Amount}" : "0/0");
+        SetPlainText(sellCartSummaryText, $"Da chon: {cartItemCount} item");
+        SetPlainText(selectedSellTotalText, cartTotal.ToString("N0"));
 
+        if (sellMinusButton != null)
+            sellMinusButton.interactable = canSellSelection && selectedQuantity > 0;
+        if (sellPlusButton != null)
+            sellPlusButton.interactable = canSellSelection && selectedQuantity < selectedSellItem.Amount;
+        if (sellMaxButton != null)
+            sellMaxButton.interactable = canSellSelection;
+        if (sellClearButton != null)
+            sellClearButton.interactable = sellCart.Count > 0;
         if (sellButton != null)
-            sellButton.interactable = canSellSelection;
+            sellButton.interactable = sellCart.Count > 0;
     }
 
-    private void SellSelectedItem()
+    private void SellCart()
     {
-        if (currentView == null || selectedSellItem?.Item == null) return;
-        if (!selectedSellItem.Sellable) return;
+        if (currentView == null || sellCart.Count == 0) return;
 
-        var result = ShopService.TrySell(
-            currentView.Customer,
-            currentView.Merchant,
-            selectedSellItem.Item,
-            1,
-            currentView.Shop);
+        var entries = new List<SellCartEntry>(sellCart.Values);
+        foreach (var entry in entries)
+        {
+            if (entry.Item?.Item == null || entry.Quantity <= 0)
+                continue;
 
-        if (result.Success)
-            ShopService.Open(currentView.Customer, currentView.Merchant, currentView.Shop);
-        else
-            Debug.LogWarning($"[ShopPanelUI] Sell failed: {result.FailReason}.");
+            var result = ShopService.TrySell(
+                currentView.Customer,
+                currentView.Merchant,
+                entry.Item.Item,
+                entry.Quantity,
+                currentView.Shop);
+
+            if (!result.Success)
+                Debug.LogWarning($"[ShopPanelUI] Sell failed for '{entry.Item.NameKey}': {result.FailReason}.");
+        }
+
+        sellCart.Clear();
+        ShopService.Open(currentView.Customer, currentView.Merchant, currentView.Shop);
     }
 
     private void Show()
@@ -240,6 +277,7 @@ public class ShopPanelUI : MonoBehaviour
         sellGridView?.Clear();
         currentView = null;
         selectedSellItem = null;
+        sellCart.Clear();
 
         if (panel != null) panel.SetActive(false);
         else gameObject.SetActive(false);
@@ -296,8 +334,148 @@ public class ShopPanelUI : MonoBehaviour
         sellGridView.SetClickHandler((_, gridItem) =>
         {
             selectedSellItem = gridItem.Payload as ShopItemViewData;
+            AddSelectedSellQuantity(1);
             RefreshSellSelection();
         });
+    }
+
+    private void IncreaseSelectedSellQuantity()
+    {
+        AddSelectedSellQuantity(1);
+    }
+
+    private void DecreaseSelectedSellQuantity()
+    {
+        if (selectedSellItem?.Item == null) return;
+        int quantity = GetCartQuantity(selectedSellItem);
+        SetSellCartQuantity(selectedSellItem, quantity - 1);
+        RefreshSellSelection();
+    }
+
+    private void MaxSelectedSellQuantity()
+    {
+        if (selectedSellItem?.Item == null) return;
+        SetSellCartQuantity(selectedSellItem, selectedSellItem.Amount);
+        RefreshSellSelection();
+    }
+
+    private void ClearSellCart()
+    {
+        sellCart.Clear();
+        RefreshSellSelection();
+    }
+
+    private void AddSelectedSellQuantity(int amount)
+    {
+        if (selectedSellItem?.Item == null || !selectedSellItem.Sellable)
+            return;
+
+        int currentQuantity = GetCartQuantity(selectedSellItem);
+        SetSellCartQuantity(selectedSellItem, currentQuantity + amount);
+    }
+
+    private void SetSellCartQuantity(ShopItemViewData item, int quantity)
+    {
+        if (item?.Item == null)
+            return;
+
+        quantity = Mathf.Clamp(quantity, 0, item.Amount);
+        if (quantity <= 0)
+        {
+            sellCart.Remove(item.Item);
+            return;
+        }
+
+        sellCart[item.Item] = new SellCartEntry(item, quantity);
+    }
+
+    private int GetCartQuantity(ShopItemViewData item)
+    {
+        if (item?.Item == null)
+            return 0;
+
+        return sellCart.TryGetValue(item.Item, out var entry) ? entry.Quantity : 0;
+    }
+
+    private int GetSellCartTotal()
+    {
+        int total = 0;
+        foreach (var entry in sellCart.Values)
+        {
+            if (entry.Item == null || entry.Quantity <= 0)
+                continue;
+
+            total += Mathf.Max(0, entry.Item.SellPrice) * entry.Quantity;
+        }
+
+        return total;
+    }
+
+    private int GetSellCartItemCount()
+    {
+        int count = 0;
+        foreach (var entry in sellCart.Values)
+            count += Mathf.Max(0, entry.Quantity);
+
+        return count;
+    }
+
+    private void EnsureSellCartControls()
+    {
+        if (selectedSellTotalText == null)
+            return;
+
+        var parent = selectedSellTotalText.transform.parent;
+        if (parent == null)
+            return;
+
+        var controlsRoot = parent.Find("SellQuantityControls");
+        if (controlsRoot == null)
+        {
+            var controlsObject = CreateChild("SellQuantityControls", parent);
+            controlsRoot = controlsObject.transform;
+
+            var rect = controlsObject.GetComponent<RectTransform>();
+            rect.anchorMin = new Vector2(0.32f, 0f);
+            rect.anchorMax = new Vector2(0.78f, 1f);
+            rect.pivot = new Vector2(0.5f, 0.5f);
+            rect.offsetMin = new Vector2(0f, 10f);
+            rect.offsetMax = new Vector2(-12f, -10f);
+
+            var layout = GetOrAdd<HorizontalLayoutGroup>(controlsObject);
+            layout.spacing = 8f;
+            layout.childAlignment = TextAnchor.MiddleCenter;
+            layout.childControlWidth = false;
+            layout.childControlHeight = false;
+            layout.childForceExpandWidth = false;
+            layout.childForceExpandHeight = false;
+        }
+
+        selectedSellQuantityText ??= FindText(controlsRoot, "SelectedSellQuantityText");
+        sellCartSummaryText ??= FindText(controlsRoot, "SellCartSummaryText");
+        sellMinusButton ??= FindButton(controlsRoot, "SellMinusButton");
+        sellPlusButton ??= FindButton(controlsRoot, "SellPlusButton");
+        sellMaxButton ??= FindButton(controlsRoot, "SellMaxButton");
+        sellClearButton ??= FindButton(controlsRoot, "SellClearButton");
+
+        if (selectedSellQuantityText == null)
+        {
+            selectedSellQuantityText = CreateTemplateLabel("SelectedSellQuantityText", controlsRoot, 22, FontStyles.Bold);
+            SetLayoutSize(selectedSellQuantityText.gameObject, 58f, 36f);
+        }
+        if (sellCartSummaryText == null)
+        {
+            sellCartSummaryText = CreateTemplateLabel("SellCartSummaryText", controlsRoot, 18, FontStyles.Normal);
+            SetLayoutSize(sellCartSummaryText.gameObject, 100f, 36f);
+        }
+        if (sellMinusButton == null)
+            sellMinusButton = CreateCartButton("SellMinusButton", controlsRoot, "-");
+        if (sellPlusButton == null)
+            sellPlusButton = CreateCartButton("SellPlusButton", controlsRoot, "+");
+        if (sellMaxButton == null)
+            sellMaxButton = CreateCartButton("SellMaxButton", controlsRoot, "Max");
+        if (sellClearButton == null)
+            sellClearButton = CreateCartButton("SellClearButton", controlsRoot, "Clear");
     }
 
 
@@ -350,6 +528,18 @@ public class ShopPanelUI : MonoBehaviour
         return button;
     }
 
+    private static Button CreateCartButton(string name, Transform parent, string label)
+    {
+        var button = CreateTemplateButton(name, parent);
+        SetButtonSize(button, label.Length > 1 ? 70f : 44f, 38f);
+
+        var text = CreateTemplateLabel("Label", button.transform, 18, FontStyles.Bold);
+        text.alignment = TextAlignmentOptions.Center;
+        text.color = new Color(0.96f, 0.84f, 0.62f, 1f);
+        text.text = label;
+        return button;
+    }
+
     private static TMP_Text CreateTemplateLabel(string name, Transform parent, float size, FontStyles style)
     {
         var go = CreateChild(name, parent);
@@ -393,15 +583,22 @@ public class ShopPanelUI : MonoBehaviour
     {
         if (button == null) return;
 
-        var layout = GetOrAdd<LayoutElement>(button.gameObject);
-        layout.minWidth = width;
-        layout.minHeight = height;
-        layout.preferredWidth = width;
-        layout.preferredHeight = height;
+        SetLayoutSize(button.gameObject, width, height);
 
         var rect = button.GetComponent<RectTransform>();
         if (rect != null)
             rect.sizeDelta = new Vector2(width, height);
+    }
+
+    private static void SetLayoutSize(GameObject go, float width, float height)
+    {
+        if (go == null) return;
+
+        var layout = GetOrAdd<LayoutElement>(go);
+        layout.minWidth = width;
+        layout.minHeight = height;
+        layout.preferredWidth = width;
+        layout.preferredHeight = height;
     }
 
     private static void SetAnchorStretch(RectTransform rect)
@@ -496,5 +693,17 @@ public class ShopPanelUI : MonoBehaviour
 
         Canvas.ForceUpdateCanvases();
         LayoutRebuilder.ForceRebuildLayoutImmediate(rect);
+    }
+
+    private readonly struct SellCartEntry
+    {
+        public readonly ShopItemViewData Item;
+        public readonly int Quantity;
+
+        public SellCartEntry(ShopItemViewData item, int quantity)
+        {
+            Item = item;
+            Quantity = quantity;
+        }
     }
 }
