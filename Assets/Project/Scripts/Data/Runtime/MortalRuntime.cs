@@ -30,7 +30,25 @@ public class MortalRuntime : IModuleRuntime, IHandleEvent<DieEvent>
         var bus = GameManager.Instance?.EventBus;
         if (bus == null) return;
 
+        TryScheduleSceneMarkerRespawn(e.entity);
         bus.Publish(new DestroyEntityRequestPublish(e.entity.id));
+    }
+
+    private static void TryScheduleSceneMarkerRespawn(EntityRuntime entity)
+    {
+        var gm = GameManager.Instance;
+        var worldService = gm?.WorldService;
+        var timeManager = gm?.TimeManager;
+        if (entity == null || worldService == null || timeManager == null)
+            return;
+
+        var ep = worldService.GetEntityPosition(entity.id);
+        if (ep == null || ep.respawnMinutes <= 0)
+            return;
+
+        int availableAt = timeManager.CurrentTotalMinutes + ep.respawnMinutes;
+        if (worldService.ScheduleInactiveRespawn(entity, availableAt))
+            Debug.Log($"[MortalRuntime] Scheduled marker respawn for {entity.entityData?.keyName} at game minute {availableAt}.");
     }
 
     public ModuleSaveData ToSaveData() =>

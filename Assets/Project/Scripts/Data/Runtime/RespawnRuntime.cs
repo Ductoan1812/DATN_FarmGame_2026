@@ -35,11 +35,34 @@ public class RespawnRuntime : IModuleRuntime, IHandleEvent<DieEvent>
             return;
         }
 
+        if (TryScheduleSceneMarkerRespawn(gm))
+            return;
+
         // 1. Despawn GameObject (ẩn khỏi world) — entity vẫn còn trong registry.
         gm.EventBus.Publish(new DespawnRequestPublish(_entity.id));
 
         // 2. Schedule respawn sau delay.
         gm.EventBus.StartCoroutine(RespawnAfterDelay(gm));
+    }
+
+    private bool TryScheduleSceneMarkerRespawn(GameManager gm)
+    {
+        var worldService = gm.WorldService;
+        var timeManager = gm.TimeManager;
+        if (worldService == null || timeManager == null || _entity == null)
+            return false;
+
+        var ep = worldService.GetEntityPosition(_entity.id);
+        if (ep == null || ep.respawnMinutes <= 0)
+            return false;
+
+        int availableAt = timeManager.CurrentTotalMinutes + ep.respawnMinutes;
+        if (!worldService.ScheduleInactiveRespawn(_entity, availableAt))
+            return false;
+
+        gm.EventBus.Publish(new DestroyEntityRequestPublish(_entity.id));
+        Debug.Log($"[RespawnRuntime] Scheduled marker respawn for {_entity.entityData?.keyName} at game minute {availableAt}.");
+        return true;
     }
 
     private IEnumerator RespawnAfterDelay(GameManager gm)

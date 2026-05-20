@@ -38,6 +38,7 @@ public class LayerEntitySave
 public class WorldSaveContainer
 {
     public EntityPositionSave[] entities;
+    public EntityPositionSave[] inactiveEntities;
     public TileChangeSave[]     tileChanges; // dirty tiles only
 }
 
@@ -61,6 +62,7 @@ public class WorldEntityService
     private readonly PlacementValidator    _validator;
     private readonly TileData              _tileData;
     private readonly Tilemap               _tilemap; // reference tilemap cho WorldToCell
+    private readonly Dictionary<string, EntityPosition> _inactiveRegenerating = new();
 
     public WorldEntityService(
         SpatialEntityRegistry spatial,
@@ -196,7 +198,7 @@ public class WorldEntityService
             if (string.Equals(ep.persistentId, persistentId, StringComparison.Ordinal))
                 return true;
         }
-        return false;
+        return _inactiveRegenerating.ContainsKey(persistentId);
     }
 
     public EntityPosition FindByPersistentId(string persistentId)
@@ -208,7 +210,50 @@ public class WorldEntityService
             if (string.Equals(ep.persistentId, persistentId, StringComparison.Ordinal))
                 return ep;
         }
+        if (_inactiveRegenerating.TryGetValue(persistentId, out var inactive))
+            return inactive;
         return null;
+    }
+
+    public bool TryGetInactiveRespawn(string persistentId, out EntityPosition ep)
+    {
+        ep = null;
+        if (string.IsNullOrWhiteSpace(persistentId)) return false;
+        return _inactiveRegenerating.TryGetValue(persistentId, out ep);
+    }
+
+    public bool TryConsumeInactiveRespawn(string persistentId, int currentGameMinute, out EntityPosition ep)
+    {
+        ep = null;
+        if (!TryGetInactiveRespawn(persistentId, out var inactive))
+            return false;
+
+        if (currentGameMinute < inactive.availableAtGameMinute)
+        {
+            ep = inactive;
+            return false;
+        }
+
+        ep = inactive;
+        _inactiveRegenerating.Remove(persistentId);
+        return true;
+    }
+
+    public bool ScheduleInactiveRespawn(EntityRuntime entity, int availableAtGameMinute)
+    {
+        if (entity == null || string.IsNullOrWhiteSpace(entity.id)) return false;
+
+        var ep = _spatial.GetEntity(entity.id);
+        if (ep == null || string.IsNullOrWhiteSpace(ep.persistentId))
+            return false;
+
+        if (ep.savePolicy != SceneEntitySavePolicy.Regenerating || ep.respawnMinutes <= 0)
+            return false;
+
+        var inactive = ClonePosition(ep);
+        inactive.availableAtGameMinute = Mathf.Max(0, availableAtGameMinute);
+        _inactiveRegenerating[inactive.persistentId] = inactive;
+        return true;
     }
 
     /// <summary>Truy cập TileRegistry (cho các hệ thống cần đọc tile trực tiếp).</summary>
@@ -279,12 +324,13 @@ public class WorldEntityService
 
         var container = new WorldSaveContainer
         {
-            entities    = entitySaves.ToArray(),
-            tileChanges = tileChanges.ToArray()
+            entities         = entitySaves.ToArray(),
+            inactiveEntities = BuildInactiveSaveList().ToArray(),
+            tileChanges      = tileChanges.ToArray()
         };
 
         File.WriteAllText(SavePath(filename), JsonUtility.ToJson(container, true));
-        Debug.Log($"[WorldEntityService] Saved {entitySaves.Count} entities, {tileChanges.Count} tile changes (dirty only).");
+        Debug.Log($"[WorldEntityService] Saved {entitySaves.Count} entities, {_inactiveRegenerating.Count} inactive respawn marker(s), {tileChanges.Count} tile changes (dirty only).");
     }
 
     // ── Load ──────────────────────────────────────────────────────────────────
@@ -307,37 +353,12 @@ public class WorldEntityService
         {
             foreach (var s in container.entities)
             {
-                var cells = (s.cellsX != null && s.cellsX.Length > 0)
-                    ? BuildCells(s.cellsX, s.cellsY)
-                    : new[] { WorldToCell(new Vector2(s.posX, s.posY)) };
-
-                string objectTypeRaw = !string.IsNullOrWhiteSpace(s.objectType) ? s.objectType : s.idPrefab;
-                if (!Enum.TryParse<ObjectType>(objectTypeRaw, out var objType))
-                {
-                    Debug.LogWarning($"[WorldEntityService] Unknown ObjectType '{objectTypeRaw}', skipping.");
-                    continue;
-                }
-
-                var ep = new EntityPosition
-                {
-                    idRuntime     = s.idRuntime,
-                    idPrefab      = objType,
-                    pos           = new Vector2(s.posX, s.posY),
-                    occupiedCells = cells,
-                    layer         = (EntityLayer)s.layer,
-                    persistentId  = s.persistentId,
-                    savePolicy    = Enum.IsDefined(typeof(SceneEntitySavePolicy), s.savePolicy)
-                        ? (SceneEntitySavePolicy)s.savePolicy
-                        : SceneEntitySavePolicy.Persistent,
-                    spawnGroupId = s.spawnGroupId,
-                    respawnMinutes = s.respawnMinutes,
-                    initialAmount = Mathf.Max(1, s.initialAmount),
-                    availableAtGameMinute = s.availableAtGameMinute
-                };
+                var ep = FromSave(s);
+                if (ep == null) continue;
                 positions[s.idRuntime] = ep;
 
                 // Rebuild spatial map
-                foreach (var cell in cells)
+                foreach (var cell in ep.occupiedCells)
                 {
                     if (!spatial.TryGetValue(cell, out var entry))
                         spatial[cell] = entry = new TileEntry();
@@ -347,6 +368,17 @@ public class WorldEntityService
         }
 
         _spatial.ReplaceAll(positions, spatial);
+
+        _inactiveRegenerating.Clear();
+        if (container.inactiveEntities != null)
+        {
+            foreach (var s in container.inactiveEntities)
+            {
+                var ep = FromSave(s);
+                if (ep == null || string.IsNullOrWhiteSpace(ep.persistentId)) continue;
+                _inactiveRegenerating[ep.persistentId] = ep;
+            }
+        }
 
         // 2. Apply tile dirty changes lên TileRegistry
         // (TileRegistry đã ScanBaseline trước đó, giờ chỉ áp dirty)
@@ -363,7 +395,7 @@ public class WorldEntityService
             foreach (var ep in positions.Values)
                 onEntityLoaded(ep);
 
-        Debug.Log($"[WorldEntityService] Loaded {positions.Count} entities, {container.tileChanges?.Length ?? 0} tile changes.");
+        Debug.Log($"[WorldEntityService] Loaded {positions.Count} entities, {_inactiveRegenerating.Count} inactive respawn marker(s), {container.tileChanges?.Length ?? 0} tile changes.");
     }
 
     // ── Private ───────────────────────────────────────────────────────────────
@@ -397,4 +429,95 @@ public class WorldEntityService
 
     private static string SavePath(string filename) =>
         Path.Combine(Application.persistentDataPath, filename);
+
+    private static EntityPosition ClonePosition(EntityPosition ep)
+    {
+        return new EntityPosition
+        {
+            idRuntime = ep.idRuntime,
+            idPrefab = ep.idPrefab,
+            pos = ep.pos,
+            occupiedCells = ep.occupiedCells != null ? (Vector2Int[])ep.occupiedCells.Clone() : null,
+            layer = ep.layer,
+            persistentId = ep.persistentId,
+            savePolicy = ep.savePolicy,
+            spawnGroupId = ep.spawnGroupId,
+            respawnMinutes = ep.respawnMinutes,
+            initialAmount = Mathf.Max(1, ep.initialAmount),
+            availableAtGameMinute = ep.availableAtGameMinute
+        };
+    }
+
+    private List<EntityPositionSave> BuildInactiveSaveList()
+    {
+        var saves = new List<EntityPositionSave>();
+        foreach (var ep in _inactiveRegenerating.Values)
+            saves.Add(ToSave(ep));
+        return saves;
+    }
+
+    private static EntityPositionSave ToSave(EntityPosition ep)
+    {
+        var s = new EntityPositionSave
+        {
+            idRuntime = ep.idRuntime,
+            idPrefab = ep.idPrefab.ToString(),
+            objectType = ep.idPrefab.ToString(),
+            persistentId = ep.persistentId,
+            savePolicy = (int)ep.savePolicy,
+            spawnGroupId = ep.spawnGroupId,
+            respawnMinutes = ep.respawnMinutes,
+            initialAmount = ep.initialAmount,
+            availableAtGameMinute = ep.availableAtGameMinute,
+            posX = ep.pos.x,
+            posY = ep.pos.y,
+            layer = (int)ep.layer
+        };
+
+        if (ep.occupiedCells != null)
+        {
+            s.cellsX = new int[ep.occupiedCells.Length];
+            s.cellsY = new int[ep.occupiedCells.Length];
+            for (int i = 0; i < ep.occupiedCells.Length; i++)
+            {
+                s.cellsX[i] = ep.occupiedCells[i].x;
+                s.cellsY[i] = ep.occupiedCells[i].y;
+            }
+        }
+
+        return s;
+    }
+
+    private EntityPosition FromSave(EntityPositionSave s)
+    {
+        if (s == null) return null;
+
+        var cells = (s.cellsX != null && s.cellsX.Length > 0)
+            ? BuildCells(s.cellsX, s.cellsY)
+            : new[] { WorldToCell(new Vector2(s.posX, s.posY)) };
+
+        string objectTypeRaw = !string.IsNullOrWhiteSpace(s.objectType) ? s.objectType : s.idPrefab;
+        if (!Enum.TryParse<ObjectType>(objectTypeRaw, out var objType))
+        {
+            Debug.LogWarning($"[WorldEntityService] Unknown ObjectType '{objectTypeRaw}', skipping.");
+            return null;
+        }
+
+        return new EntityPosition
+        {
+            idRuntime = s.idRuntime,
+            idPrefab = objType,
+            pos = new Vector2(s.posX, s.posY),
+            occupiedCells = cells,
+            layer = (EntityLayer)s.layer,
+            persistentId = s.persistentId,
+            savePolicy = Enum.IsDefined(typeof(SceneEntitySavePolicy), s.savePolicy)
+                ? (SceneEntitySavePolicy)s.savePolicy
+                : SceneEntitySavePolicy.Persistent,
+            spawnGroupId = s.spawnGroupId,
+            respawnMinutes = s.respawnMinutes,
+            initialAmount = Mathf.Max(1, s.initialAmount),
+            availableAtGameMinute = s.availableAtGameMinute
+        };
+    }
 }

@@ -54,6 +54,7 @@ public class SceneContentScanner : MonoBehaviour
         if (worldService == null || eventBus == null) return;
 
         string sceneName = SceneManager.GetActiveScene().name;
+        int currentGameMinute = gameManager.TimeManager != null ? gameManager.TimeManager.CurrentTotalMinutes : 0;
         var bounds = markerMap.cellBounds;
         int seededCount = 0;
 
@@ -71,8 +72,18 @@ public class SceneContentScanner : MonoBehaviour
                 cell,
                 tile.spawnGroupId);
 
-            if (worldService.HasPersistentId(persistentId))
+            if (worldService.TryGetInactiveRespawn(persistentId, out var inactiveRespawn))
+            {
+                if (!worldService.TryConsumeInactiveRespawn(persistentId, currentGameMinute, out _))
+                {
+                    Debug.Log($"[SceneContentScanner] Marker '{persistentId}' waiting respawn until game minute {inactiveRespawn.availableAtGameMinute}.");
+                    continue;
+                }
+            }
+            else if (worldService.HasPersistentId(persistentId))
+            {
                 continue;
+            }
 
             if (tile.entityData == null)
             {
