@@ -18,6 +18,7 @@ public class HealthRuntime : IModuleRuntime, IHandleEvent<SpawnedEvent>, IHandle
     private readonly HealthModule _data;
     private EntityRuntime _entity;
     private EntityRuntime _lastAttacker;
+    private bool _isDead;
 
     /// <summary>Có thể tắt tạm thời từ bên ngoài (invincibility frame, cutscene...).</summary>
     public bool CanTakeDamage
@@ -40,6 +41,7 @@ public class HealthRuntime : IModuleRuntime, IHandleEvent<SpawnedEvent>, IHandle
     public void Handle(SpawnedEvent e)
     {
         _entity = e.entity;
+        _isDead = false;
         float maxHp = _entity.stats.Get(StatType.MaxHp);
         if (maxHp > 0)
             _entity.stats.Set(StatType.Hp, maxHp);
@@ -50,6 +52,7 @@ public class HealthRuntime : IModuleRuntime, IHandleEvent<SpawnedEvent>, IHandle
     public void Handle(TakeDamageEvent e)
     {
         if (_entity == null) return;
+        if (_isDead) return;
         var harvest = _entity.GetModule<HarvestRuntime>();
         if (harvest != null && !harvest.CanReceiveDamage(e, out string blockedReason))
         {
@@ -82,6 +85,8 @@ public class HealthRuntime : IModuleRuntime, IHandleEvent<SpawnedEvent>, IHandle
 
     private void Die()
     {
+        if (_isDead) return;
+        _isDead = true;
         Debug.Log($"[HealthRuntime] {_entity.id} đã chết.");
         OnDied?.Invoke(_entity);
         _entity.TriggerEvent(new DieEvent(_entity, _lastAttacker));
