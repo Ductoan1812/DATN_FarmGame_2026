@@ -32,16 +32,16 @@ MonoBehaviour:
     provideTags: 0
     blockLayers: 
   modules:
-  - rid: 8196222991998910677
-  - rid: 8196222991998910678
-  - rid: 8196222991998910679
-  - rid: 8196222991998910680
-  - rid: 8196222991998910681
-  - rid: 8196222991998910682
+  - rid: 8196223032269996366
+  - rid: 8196223032269996367
+  - rid: 8196223032269996368
+  - rid: 8196223032269996369
+  - rid: 8196223032269996370
+  - rid: 8196223032269996371
   references:
     version: 2
     RefIds:
-    - rid: 8196222991998910677
+    - rid: 8196223032269996366
       type: {class: StageModule, ns: , asm: Assembly-CSharp}
       data:
         stages:
@@ -54,16 +54,18 @@ MonoBehaviour:
         - sprite: {fileID: 1493262304, guid: c12a6ea23e1f6d7499a148d2a6789928, type: 3}
           daysToGrow: 999
           canHarvest: 1
-    - rid: 8196222991998910678
+        wiltSprite: {fileID: 0}
+        regrowStageIndex: 2
+    - rid: 8196223032269996367
       type: {class: HarvestModule, ns: , asm: Assembly-CSharp}
       data:
         harvestTool: 3
         wrongToolPenalty: 0.3
-    - rid: 8196222991998910679
+    - rid: 8196223032269996368
       type: {class: HealthModule, ns: , asm: Assembly-CSharp}
       data:
         canTakeDamage: 1
-    - rid: 8196222991998910680
+    - rid: 8196223032269996369
       type: {class: DropModule, ns: , asm: Assembly-CSharp}
       data:
         harvestDrops:
@@ -71,12 +73,12 @@ MonoBehaviour:
           minAmount: 1
           maxAmount: 1
           dropChance: 1
-    - rid: 8196222991998910681
+    - rid: 8196223032269996370
       type: {class: ExpRewardModule, ns: , asm: Assembly-CSharp}
       data:
         rewardExp: 18
         sourceType: 1
         requireKiller: 1
-    - rid: 8196222991998910682
+    - rid: 8196223032269996371
       type: {class: MortalModule, ns: , asm: Assembly-CSharp}
       data: 

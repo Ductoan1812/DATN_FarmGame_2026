@@ -10,6 +10,11 @@ Required loop:
 5. Stop Play mode.
 6. Fix failures before claiming pass.
 
+Token efficiency rules:
+- Use MCP logs and diagnostics first instead of shelling out long text dumps.
+- Prefer targeted log filters and narrow searches over full console exports.
+- If a long investigation is needed, have Kiro do the search and return a short summary.
+
 Use `[TEST PASS]` and `[TEST FAIL]` in test logs.
 
 Do not test by bypassing the real event/system chain:

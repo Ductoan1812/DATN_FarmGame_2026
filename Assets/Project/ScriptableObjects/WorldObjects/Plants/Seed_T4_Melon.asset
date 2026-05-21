@@ -32,11 +32,11 @@ MonoBehaviour:
     provideTags: 0
     blockLayers: 
   modules:
-  - rid: 8196222991998910720
+  - rid: 8196223032269996409
   references:
     version: 2
     RefIds:
-    - rid: 8196222991998910720
+    - rid: 8196223032269996409
       type: {class: PlacementModule, ns: , asm: Assembly-CSharp}
       data:
         objectTypeToSpawn: 2

@@ -28,6 +28,8 @@ public class GameManager : MonoBehaviour
     public SaveLoadManager      SaveLoadManager    { get; private set; }
     public WateredTileTracker   WateredTileTracker { get; private set; }
     public WeatherSystem        WeatherSystem      { get; private set; }
+    public SprinklerRegistry    SprinklerRegistry  { get; private set; }
+    public SoilQualityTracker   SoilQualityTracker { get; private set; }
 
     // ── Shared ────────────────────────────────────────────
     public EventBus             EventBus           { get; private set; }
@@ -70,6 +72,8 @@ public class GameManager : MonoBehaviour
         InitTimeManager();
         InitWateredTileTracker();
         InitWeatherSystem();
+        InitSprinklerRegistry();
+        InitSoilQualityTracker();
         InitDialogueGameplayBridge();
         InitSceneTransitionBridge();
         InitInteractionPreviewBridge();
@@ -220,19 +224,33 @@ public class GameManager : MonoBehaviour
     {
         if (tmWatered == null)
         {
-            Debug.LogWarning("[GameManager] tmWatered tilemap chưa gán! WateredTileTracker sẽ không hoạt động.");
-            return;
+            Debug.LogWarning("[GameManager] tmWatered tilemap chưa gán; dùng watered tracker in-memory.");
         }
 
         WateredTileTracker = new WateredTileTracker(tmWatered, tmGround, tileData);
 
-        // Thứ tự đúng: NextDayEventPublish (cây grow) → DayChangedPublish (roll weather → reset watered → rain waters plowed)
+        // Thứ tự đúng: NextDayEventPublish (sprinklers water → cây grow) → DayChangedPublish (roll weather → reset watered → rain waters plowed)
+        EventBus.Subscribe<NextDayEventPublish>(_ =>
+        {
+            SprinklerRegistry?.TickAll();
+        });
+
         EventBus.Subscribe<DayChangedPublish>(_ =>
         {
             WeatherSystem?.RollNextDayWeather();
             WateredTileTracker?.ResetAll();
             WeatherSystem?.ApplyRainForNewDay(WateredTileTracker);
         });
+    }
+
+    private void InitSprinklerRegistry()
+    {
+        SprinklerRegistry = new SprinklerRegistry();
+    }
+
+    private void InitSoilQualityTracker()
+    {
+        SoilQualityTracker = new SoilQualityTracker();
     }
 
     private void InitWeatherSystem()
@@ -359,6 +377,7 @@ public class GameManager : MonoBehaviour
 
         InitTileRegistry();
         InitWorldEntitySystem();
+        SprinklerRegistry?.Clear();
         SpawnSystem?.RebindWorldService(WorldService);
         SaveLoadManager?.SetWorldService(WorldService);
     }

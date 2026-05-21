@@ -26,6 +26,33 @@ public class StageRuntime : IModuleRuntime, IHandleEvent<NextDayEvent>, IHandleE
     /// <summary>Cây đang héo?</summary>
     public bool IsWilting => isWilting;
 
+    /// <summary>Cây có thể tái thu hoạch?</summary>
+    public bool IsRegrowable => data != null && data.regrowStageIndex >= 0 && data.regrowStageIndex < (data.stages?.Length ?? 0);
+
+    /// <summary>Reset cây về regrow stage sau harvest (chỉ dùng cho regrowable crops).</summary>
+    public void ResetToRegrowStage()
+    {
+        if (!IsRegrowable) return;
+
+        currentStageIndex = data.regrowStageIndex;
+        daysInCurrentStage = 0;
+        daysWithoutWater = 0;
+        isWilting = false;
+        TotaldaysInCurrentStage = data.stages[currentStageIndex].daysToGrow;
+
+        if (spriteRenderer != null && data.stages != null && currentStageIndex < data.stages.Length)
+            spriteRenderer.sprite = data.stages[currentStageIndex].sprite;
+
+        if (_entity?.stats != null)
+        {
+            float maxHp = _entity.stats.Get(StatType.MaxHp);
+            if (maxHp > 0f)
+                _entity.stats.Set(StatType.Hp, maxHp);
+        }
+
+        Debug.Log($"[StageRuntime] '{Owner?.GameObject?.name}' reset về regrow stage {currentStageIndex}.");
+    }
+
     public StageRuntime(StageModule data)
     {
         this.data = data;

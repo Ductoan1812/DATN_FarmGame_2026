@@ -14,5 +14,7 @@ public enum ToolType
     [InspectorName("Cuốc chim")]
     Pickaxe,
     [InspectorName("Cần câu")]
-    FishingRod
+    FishingRod,
+    [InspectorName("Phân bón")]
+    Fertilizer
 }

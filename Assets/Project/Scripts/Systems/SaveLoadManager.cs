@@ -210,6 +210,10 @@ public class SaveLoadManager
         if (tracker != null)
             data.wateredCells = tracker.ExportWateredCells();
 
+        var soil = GameManager.Instance?.SoilQualityTracker;
+        if (soil != null)
+            data.soilCells = soil.ExportSoilCells();
+
         var weather = GameManager.Instance?.WeatherSystem;
         if (weather != null)
             data.currentWeather = weather.CurrentWeather;
@@ -236,11 +240,15 @@ public class SaveLoadManager
         if (tracker != null)
             tracker.ImportWateredCells(data.wateredCells);
 
+        var soil = GameManager.Instance?.SoilQualityTracker;
+        if (soil != null)
+            soil.ImportSoilCells(data.soilCells);
+
         var weather = GameManager.Instance?.WeatherSystem;
         if (weather != null)
             weather.SetWeather(data.currentWeather);
 
-        Debug.Log($"[SaveLoadManager] System data loaded: {data.time}, watered={data.wateredCells?.Count ?? 0}, weather={data.currentWeather}");
+        Debug.Log($"[SaveLoadManager] System data loaded: {data.time}, watered={data.wateredCells?.Count ?? 0}, soil={data.soilCells?.Count ?? 0}, weather={data.currentWeather}");
     }
 
     // ══════════════════════════════════════

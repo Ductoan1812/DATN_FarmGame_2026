@@ -32,6 +32,8 @@ public class ToolModule : IModuleData
                 return new AxeRuntime(this);
             case ToolType.Pickaxe:
                 return new PickaxeRuntime(this);
+            case ToolType.Fertilizer:
+                return new FertilizerRuntime(this);
             default:
                 Debug.LogWarning($"[ToolModule] ToolType {toolType} chưa có Runtime.");
                 return null;

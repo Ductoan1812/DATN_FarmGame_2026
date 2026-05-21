@@ -34,6 +34,7 @@ public static class BootstrapProductionSetup
     private const string AnimalPrefabPath = "Assets/Project/Prefabs/Characters/Animal_Base.prefab";
 
     private const string StarterLoadoutPath = "Assets/Project/Resources/Data/StarterLoadouts/DefaultStarterLoadout.asset";
+    private const string MasteryUnlockPath = "Assets/Project/Resources/Data/MasteryUnlockData.asset";
     private const string MarkerFolder = "Assets/Project/ScriptableObjects/SceneMarkers/MVP";
     private const string PlayerStartMarkerPath = MarkerFolder + "/Marker_Player_Start.asset";
     private const string GeneratedIconFolder = "Assets/Project/Generated/Icons";
@@ -53,6 +54,7 @@ public static class BootstrapProductionSetup
         EnsureStarterLoadout();
         EnsureGeneratedIcons();
         EnsurePlayerStartMarker();
+        EnsureMasteryUnlockData();
         StampPlayerStartMarker();
         ValidateSetup(logSuccess: true);
 
@@ -134,6 +136,8 @@ public static class BootstrapProductionSetup
         EnsureWorldObjectDefinition("Assets/Project/Resources/Data/WorldObjects/Portal01.asset", ObjectType.Portal01, PortalPrefabPath);
         EnsureWorldObjectDefinition("Assets/Project/Resources/Data/WorldObjects/Bed01.asset", ObjectType.Bed01, BedPrefabPath);
         EnsureWorldObjectDefinition("Assets/Project/Resources/Data/WorldObjects/Animal01.asset", ObjectType.Animal01, AnimalPrefabPath);
+        EnsureWorldObjectDefinition("Assets/Project/Resources/Data/WorldObjects/Sprinkler01.asset", ObjectType.Sprinkler01, CropPlantPrefabPath);
+        EnsureWorldObjectDefinition("Assets/Project/Resources/Data/WorldObjects/Sprinkler02.asset", ObjectType.Sprinkler02, CropPlantPrefabPath);
     }
 
     private static void ConfigurePrefab(
@@ -244,6 +248,8 @@ public static class BootstrapProductionSetup
         SetWorldObjectPrefab("Assets/Project/Resources/Data/WorldObjects/Portal01.asset", PortalPrefabPath);
         SetWorldObjectPrefab("Assets/Project/Resources/Data/WorldObjects/Bed01.asset", BedPrefabPath);
         SetWorldObjectPrefab("Assets/Project/Resources/Data/WorldObjects/Animal01.asset", AnimalPrefabPath);
+        SetWorldObjectPrefab("Assets/Project/Resources/Data/WorldObjects/Sprinkler01.asset", CropPlantPrefabPath);
+        SetWorldObjectPrefab("Assets/Project/Resources/Data/WorldObjects/Sprinkler02.asset", CropPlantPrefabPath);
     }
 
     private static void ConfigureDataContracts()
@@ -934,6 +940,29 @@ public static class BootstrapProductionSetup
         EditorUtility.SetDirty(marker);
     }
 
+    private static void EnsureMasteryUnlockData()
+    {
+        var data = AssetDatabase.LoadAssetAtPath<MasteryUnlockData>(MasteryUnlockPath);
+        if (data == null)
+        {
+            EnsureFolder(Path.GetDirectoryName(MasteryUnlockPath)?.Replace('\\', '/'));
+            data = ScriptableObject.CreateInstance<MasteryUnlockData>();
+            data.name = Path.GetFileNameWithoutExtension(MasteryUnlockPath);
+            AssetDatabase.CreateAsset(data, MasteryUnlockPath);
+        }
+
+        data.unlocks = new[]
+        {
+            new MasteryUnlockData.UnlockEntry { masteryLevel = 3, unlockId = "recipe.fertilizer.t1", description = "Unlock fertilizer crafting" },
+            new MasteryUnlockData.UnlockEntry { masteryLevel = 5, unlockId = "tool.fertilizer.t1", description = "Unlock fertilizer use" },
+            new MasteryUnlockData.UnlockEntry { masteryLevel = 10, unlockId = "recipe.sprinkler.t1", description = "Unlock sprinkler T1 crafting" },
+            new MasteryUnlockData.UnlockEntry { masteryLevel = 10, unlockId = "tool.sprinkler.t1", description = "Unlock sprinkler T1 use" },
+            new MasteryUnlockData.UnlockEntry { masteryLevel = 20, unlockId = "recipe.sprinkler.t2", description = "Unlock sprinkler T2 crafting" },
+            new MasteryUnlockData.UnlockEntry { masteryLevel = 20, unlockId = "tool.sprinkler.t2", description = "Unlock sprinkler T2 use" }
+        };
+        EditorUtility.SetDirty(data);
+    }
+
     private static void StampPlayerStartMarker()
     {
         if (!File.Exists(SampleScenePath))
@@ -960,6 +989,8 @@ public static class BootstrapProductionSetup
         errors += ValidateWorldObject("Enemy01", "Assets/Project/Resources/Data/WorldObjects/Enemy01.asset", WorldEntityPrefabRoleType.Enemy);
         errors += ValidateWorldObject("OreNode01", "Assets/Project/Resources/Data/WorldObjects/OreNode01.asset", WorldEntityPrefabRoleType.Resource);
         errors += ValidateWorldObject("Plant01", "Assets/Project/Resources/Data/WorldObjects/Plant01.asset", WorldEntityPrefabRoleType.Crop);
+        errors += ValidateWorldObject("Sprinkler01", "Assets/Project/Resources/Data/WorldObjects/Sprinkler01.asset", WorldEntityPrefabRoleType.Crop);
+        errors += ValidateWorldObject("Sprinkler02", "Assets/Project/Resources/Data/WorldObjects/Sprinkler02.asset", WorldEntityPrefabRoleType.Crop);
 
         var starter = AssetDatabase.LoadAssetAtPath<StarterLoadoutData>(StarterLoadoutPath);
         if (starter == null || starter.entries == null || starter.entries.Length == 0)
@@ -1267,6 +1298,7 @@ public static class BootstrapProductionSetup
         EnsureFolder("Assets/Project/ScriptableObjects/WorldObjects/Resources");
         EnsureFolder("Assets/Project/ScriptableObjects/WorldObjects/Utility");
         EnsureFolder("Assets/Project/ScriptableObjects/WorldObjects/Animals");
+        EnsureFolder("Assets/Project/Resources/Data");
         EnsureFolder("Assets/Project/Resources/Data/StarterLoadouts");
         EnsureFolder(MarkerFolder);
         EnsureFolder(GeneratedIconFolder);

@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8393fbdfdb650e5418aad1c82ae5b8b5, type: 3}
+  m_Name: Sprinkler_T1
+  m_EditorClassIdentifier: 
+  id: tool_sprinkler_t1
+  keyName: mvp.tool.sprinkler.t1.name
+  descKey: mvp.tool.sprinkler.t1.desc
+  icon: {fileID: 21300000, guid: 5a77cf1bf9ffba341ba8c864db82d82b, type: 3}
+  category: 9
+  maxStack: 1
+  buyPrice: 180
+  sellPrice: 60
+  baseStats:
+    baseStats: []
+  placementRule:
+    occupyLayer: 0
+    requireTags: 0
+    provideTags: 0
+    blockLayers: 
+  modules:
+  - rid: 8196223032269996238
+  - rid: 8196223032269996239
+  references:
+    version: 2
+    RefIds:
+    - rid: 8196223032269996238
+      type: {class: PlacementModule, ns: , asm: Assembly-CSharp}
+      data:
+        objectTypeToSpawn: 16
+        placedEntityData: {fileID: 11400000, guid: 6b3d22d663795f84391caa7f8271c93a, type: 2}
+        centerTile: 1
+        animTrigger: PutDown
+    - rid: 8196223032269996239
+      type: {class: AppearanceModule, ns: , asm: Assembly-CSharp}
+      data:
+        spriteId: Art.Equipment.MeleeWeapon1H.Axe01
+        equipmentPart: 5

@@ -16,6 +16,13 @@ Implementation rules for Kiro:
 - Do not modify scenes, prefabs, ScriptableObjects, or meta files unless the task asks for it.
 - Report changed files, reason for each change, and known risks.
 
+Token efficiency rules:
+- Prefer MCP tools for Unity/project inspection, logs, component lookup, and compilation checks.
+- Use shell only for short commands or when no MCP tool can do the job.
+- Never dump large file contents unless the task truly needs them.
+- For long search or investigation work, let Kiro search and summarize instead of pasting raw output.
+- Keep responses concise and task-focused; summarize results instead of repeating command output.
+
 Output format:
 - Summary
 - Changed files

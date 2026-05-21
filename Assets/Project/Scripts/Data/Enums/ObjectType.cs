@@ -32,5 +32,9 @@ public enum ObjectType
     [InspectorName("Bed 01")]
     Bed01,
     [InspectorName("Animal 01")]
-    Animal01
+    Animal01,
+    [InspectorName("Sprinkler 01")]
+    Sprinkler01,
+    [InspectorName("Sprinkler 02")]
+    Sprinkler02
 }

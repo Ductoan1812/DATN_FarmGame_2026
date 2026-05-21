@@ -32,14 +32,15 @@ public static class BootstrapCoreplayM5Content
     private const string RecipeFolder = "Assets/Project/ScriptableObjects/Graph/recipes/mvp";
     private const string QuestFolder = "Assets/Project/ScriptableObjects/Graph/quest/mvp";
     private const string MarkerFolder = "Assets/Project/ScriptableObjects/SceneMarkers/MVP";
+    private const string UtilityFolder = "Assets/Project/ScriptableObjects/WorldObjects/Utility";
 
     private static readonly CropSpec[] Crops =
     {
-        new(1, "turnip", "Turnip", 20, 45, 2, 8, 1),
-        new(2, "tomato", "Tomato", 35, 80, 3, 18, 10),
-        new(3, "pumpkin", "Pumpkin", 70, 160, 4, 35, 20),
-        new(4, "melon", "Melon", 120, 300, 5, 60, 30),
-        new(5, "starfruit", "Starfruit", 220, 600, 6, 100, 40)
+        new(1, "turnip", "Turnip", 20, 45, 2, 8, 1, false),
+        new(2, "tomato", "Tomato", 35, 80, 3, 18, 10, true),
+        new(3, "pumpkin", "Pumpkin", 70, 160, 4, 35, 20, true),
+        new(4, "melon", "Melon", 120, 300, 5, 60, 30, true),
+        new(5, "starfruit", "Starfruit", 220, 600, 6, 100, 40, true)
     };
 
     private static readonly OreSpec[] Ores =
@@ -110,6 +111,37 @@ public static class BootstrapCoreplayM5Content
         foreach (var crop in Crops)
             content.Crops.Add(EnsureCrop(crop, cropSprites));
 
+        content.Sprinklers[1] = EnsureSprinkler(
+            tier: 1,
+            radius: 1,
+            itemPath: $"{ToolFolder}/Sprinkler_T1.asset",
+            placedPath: $"{UtilityFolder}/Sprinkler_T1.asset",
+            itemId: "tool_sprinkler_t1",
+            placedId: "sprinkler_t1",
+            itemKey: "mvp.tool.sprinkler.t1.name",
+            itemDesc: "mvp.tool.sprinkler.t1.desc",
+            placedKey: "mvp.sprinkler.t1.name",
+            placedDesc: "mvp.sprinkler.t1.desc",
+            placementType: ObjectType.Sprinkler01,
+            buyPrice: 180,
+            sellPrice: 60,
+            appearanceCopy: CopyAppearance(T1HoePath));
+        content.Sprinklers[2] = EnsureSprinkler(
+            tier: 2,
+            radius: 2,
+            itemPath: $"{ToolFolder}/Sprinkler_T2.asset",
+            placedPath: $"{UtilityFolder}/Sprinkler_T2.asset",
+            itemId: "tool_sprinkler_t2",
+            placedId: "sprinkler_t2",
+            itemKey: "mvp.tool.sprinkler.t2.name",
+            itemDesc: "mvp.tool.sprinkler.t2.desc",
+            placedKey: "mvp.sprinkler.t2.name",
+            placedDesc: "mvp.sprinkler.t2.desc",
+            placementType: ObjectType.Sprinkler02,
+            buyPrice: 420,
+            sellPrice: 160,
+            appearanceCopy: CopyAppearance(T1HoePath));
+
         foreach (var ore in Ores)
             content.Ores.Add(EnsureOre(ore));
 
@@ -148,6 +180,21 @@ public static class BootstrapCoreplayM5Content
             string path = $"{ToolFolder}/Scythe_T{stat.tier}.asset";
             content.Scythes[stat.tier] = EnsureTool(path, $"tool_scythe_t{stat.tier}", $"mvp.tool.scythe.t{stat.tier}.name", $"mvp.tool.scythe.t{stat.tier}.desc", ToolType.Scythe, stat.tier, stat.attack, stat.range, stat.cooldown, -1, stat.sell, "Harvert", CopyAppearance(T1ScythePath));
         }
+
+        content.Fertilizers[1] = EnsureTool(
+            $"{ToolFolder}/Fertilizer_T1.asset",
+            "tool_fertilizer_t1",
+            "mvp.tool.fertilizer.t1.name",
+            "mvp.tool.fertilizer.t1.desc",
+            ToolType.Fertilizer,
+            1,
+            0f,
+            1f,
+            0.5f,
+            120,
+            45,
+            "Use",
+            CopyAppearance(T1HoePath));
 
         for (int tier = 1; tier <= 5; tier++)
             content.GearByTier[tier] = EnsureGearSet(tier);
@@ -195,8 +242,17 @@ public static class BootstrapCoreplayM5Content
             Stat(StatType.Hp, Mathf.Max(5, 3 + spec.Tier * 4)));
         seed.modules = new List<IModuleData>
         {
-            new PlacementModule { objectTypeToSpawn = ObjectType.Plant01, centerTile = true, animTrigger = "PutDown" },
-            new StageModule { stages = CreateGrowthStages(spec.GrowthDays, stageSprites) },
+            new PlacementModule
+            {
+                objectTypeToSpawn = spec.Regrowable ? ObjectType.Plant02 : ObjectType.Plant01,
+                centerTile = true,
+                animTrigger = "PutDown"
+            },
+            new StageModule
+            {
+                stages = CreateGrowthStages(spec.GrowthDays, stageSprites),
+                regrowStageIndex = spec.Regrowable ? 2 : -1
+            },
             new HarvestModule { harvestTool = ToolType.Scythe, wrongToolPenalty = 0.3f },
             new HealthModule { canTakeDamage = true },
             new DropModule
@@ -370,6 +426,73 @@ public static class BootstrapCoreplayM5Content
         return tool;
     }
 
+    private static EntityData EnsureSprinkler(
+        int tier,
+        int radius,
+        string itemPath,
+        string placedPath,
+        string itemId,
+        string placedId,
+        string itemKey,
+        string itemDesc,
+        string placedKey,
+        string placedDesc,
+        ObjectType placementType,
+        int buyPrice,
+        int sellPrice,
+        AppearanceCopy appearanceCopy)
+    {
+        var placed = LoadOrCreateEntity(placedPath);
+        placed.id = placedId;
+        placed.keyName = placedKey;
+        placed.descKey = placedDesc;
+        placed.category = ItemCategory.Placeable;
+        placed.maxStack = 1;
+        placed.buyPrice = -1;
+        placed.sellPrice = 0;
+        placed.placementRule = new PlacementRule
+        {
+            occupyLayer = EntityLayer.Furniture,
+            requireTags = PlacementTag.None,
+            provideTags = PlacementTag.None,
+            blockLayers = Array.Empty<EntityLayer>()
+        };
+        placed.modules = new List<IModuleData>
+        {
+            new SprinklerModule { waterRadius = Mathf.Max(1, radius) }
+        };
+        SetStats(placed);
+        EditorUtility.SetDirty(placed);
+
+        var item = LoadOrCreateEntity(itemPath);
+        item.id = itemId;
+        item.keyName = itemKey;
+        item.descKey = itemDesc;
+        item.category = ItemCategory.Placeable;
+        item.maxStack = 1;
+        item.buyPrice = buyPrice;
+        item.sellPrice = sellPrice;
+        item.placementRule = EmptyGroundRule();
+        SetStats(item);
+        item.modules = new List<IModuleData>
+        {
+            new PlacementModule
+            {
+                objectTypeToSpawn = placementType,
+                placedEntityData = placed,
+                centerTile = true,
+                animTrigger = "PutDown"
+            },
+            new AppearanceModule
+            {
+                spriteId = string.IsNullOrWhiteSpace(appearanceCopy.SpriteId) ? $"MVP.Tool.Sprinkler.T{tier}" : appearanceCopy.SpriteId,
+                equipmentPart = appearanceCopy.Part == default ? EquipmentPart.MeleeWeapon1H : appearanceCopy.Part
+            }
+        };
+        EditorUtility.SetDirty(item);
+        return item;
+    }
+
     private static GearSetContent EnsureGearSet(int tier)
     {
         var set = new GearSetContent(tier);
@@ -498,6 +621,47 @@ public static class BootstrapCoreplayM5Content
                     Ingredient(gearSet.Legging, 1)
                 }));
         }
+
+        content.Recipes.Add(EnsureRecipe(
+            $"{RecipeFolder}/Recipe_Fertilizer_T1.asset",
+            "recipe.fertilizer.t1",
+            "mvp.recipe.fertilizer.t1.name",
+            5,
+            25,
+            new[]
+            {
+                Ingredient(content.Crops[0].CropItem, 2),
+                Ingredient(content.Ores[0].Material, 2)
+            },
+            new[] { Ingredient(content.Fertilizers[1], 3) }));
+
+        content.Recipes.Add(EnsureRecipe(
+            $"{RecipeFolder}/Recipe_Sprinkler_T1.asset",
+            "recipe.sprinkler.t1",
+            "mvp.recipe.sprinkler.t1.name",
+            10,
+            45,
+            new[]
+            {
+                Ingredient(content.Ores[0].Material, 4),
+                Ingredient(content.Ores[1].Material, 2),
+                Ingredient(content.Fertilizers[1], 1)
+            },
+            new[] { Ingredient(content.Sprinklers[1], 1) }));
+
+        content.Recipes.Add(EnsureRecipe(
+            $"{RecipeFolder}/Recipe_Sprinkler_T2.asset",
+            "recipe.sprinkler.t2",
+            "mvp.recipe.sprinkler.t2.name",
+            20,
+            80,
+            new[]
+            {
+                Ingredient(content.Ores[2].Material, 4),
+                Ingredient(content.Ores[3].Material, 2),
+                Ingredient(content.Crops[2].CropItem, 2)
+            },
+            new[] { Ingredient(content.Sprinklers[2], 1) }));
     }
 
     private static RecipeData EnsureRecipe(
@@ -636,6 +800,9 @@ public static class BootstrapCoreplayM5Content
 
         foreach (var crop in content.Crops)
             shop.initialStock.Add(new ShopStockEntry { itemData = crop.Seed, amount = 10, requiredLevel = crop.Spec.RequiredLevel });
+        shop.initialStock.Add(new ShopStockEntry { itemData = content.Fertilizers[1], amount = 10, requiredLevel = 5 });
+        shop.initialStock.Add(new ShopStockEntry { itemData = content.Sprinklers[1], amount = 5, requiredLevel = 10 });
+        shop.initialStock.Add(new ShopStockEntry { itemData = content.Sprinklers[2], amount = 3, requiredLevel = 20 });
 
         AddShopItem(shop, content.BasicHoe, 1, 1);
         AddShopItem(shop, content.BasicAxe, 1, 1);
@@ -648,6 +815,9 @@ public static class BootstrapCoreplayM5Content
         shop.buyWhitelist.AddRange(content.Crops.Select(c => c.CropItem));
         shop.buyWhitelist.AddRange(content.Ores.Select(o => o.Material));
         shop.buyWhitelist.AddRange(content.Enemies.Select(e => e.Material));
+        shop.buyWhitelist.Add(content.Fertilizers[1]);
+        shop.buyWhitelist.Add(content.Sprinklers[1]);
+        shop.buyWhitelist.Add(content.Sprinklers[2]);
         RemoveModule<QuestModule>(npc);
 
         EditorUtility.SetDirty(npc);
@@ -841,6 +1011,7 @@ public static class BootstrapCoreplayM5Content
         EnsureFolder(RecipeFolder);
         EnsureFolder(QuestFolder);
         EnsureFolder(MarkerFolder);
+        EnsureFolder(UtilityFolder);
     }
 
     private static EntityData LoadOrCreateEntity(string path) => LoadOrCreateAsset<EntityData>(path);
@@ -1028,6 +1199,8 @@ public static class BootstrapCoreplayM5Content
         public readonly List<EnemyContent> Enemies = new();
         public readonly Dictionary<int, EntityData> Pickaxes = new();
         public readonly Dictionary<int, EntityData> Scythes = new();
+        public readonly Dictionary<int, EntityData> Fertilizers = new();
+        public readonly Dictionary<int, EntityData> Sprinklers = new();
         public readonly Dictionary<int, GearSetContent> GearByTier = new();
         public readonly List<RecipeData> Recipes = new();
         public readonly List<QuestGraphData> Quests = new();
@@ -1109,8 +1282,9 @@ public static class BootstrapCoreplayM5Content
         public readonly int GrowthDays;
         public readonly int ExpReward;
         public readonly int RequiredLevel;
+        public readonly bool Regrowable;
 
-        public CropSpec(int tier, string idSuffix, string namePascal, int seedBuyPrice, int sellPrice, int growthDays, int expReward, int requiredLevel)
+        public CropSpec(int tier, string idSuffix, string namePascal, int seedBuyPrice, int sellPrice, int growthDays, int expReward, int requiredLevel, bool regrowable)
         {
             Tier = tier;
             IdSuffix = idSuffix;
@@ -1120,6 +1294,7 @@ public static class BootstrapCoreplayM5Content
             GrowthDays = growthDays;
             ExpReward = expReward;
             RequiredLevel = requiredLevel;
+            Regrowable = regrowable;
         }
     }
 

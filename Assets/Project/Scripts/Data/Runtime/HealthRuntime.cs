@@ -61,6 +61,9 @@ public class HealthRuntime : IModuleRuntime, IHandleEvent<SpawnedEvent>, IHandle
             return;
         }
 
+        if (harvest != null && harvest.TryHarvest(e.attacker))
+            return;
+
         if (!CanTakeDamage) return;
         _lastAttacker = e.attacker;
 
@@ -78,7 +81,12 @@ public class HealthRuntime : IModuleRuntime, IHandleEvent<SpawnedEvent>, IHandle
                   $"HP: {newHp:F1}/{_entity.stats.Get(StatType.MaxHp):F1}");
 
         if (newHp <= 0f)
+        {
+            if (harvest != null && harvest.TryRegrowableHarvest(e.attacker))
+                return;
+
             Die();
+        }
     }
 
     // ── Chết ─────────────────────────────────────────────────────────────────

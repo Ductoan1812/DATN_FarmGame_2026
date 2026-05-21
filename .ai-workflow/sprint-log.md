@@ -129,3 +129,19 @@ Result:
 - `ProgressionService` calls the helper after each `LevelUpPublish`.
 - Newly unlocked mastery entries are logged as `[ProgressionService] Mastery Unlock at Lv{level}: [...]`.
 - Compile check passed with 0 errors.
+
+## Sprint 3.5-3.12 - Sprinkler, Regrow, Soil Quality, Fertilizer
+
+Status: Done
+
+Goal:
+- Add sprinkler automation, regrowable crop handling, soil quality tracking, fertilizer use, and mastery unlock hooks for crop tools.
+
+Result:
+- Added sprinkler runtime/registry flow and sprinkler item/world object data.
+- Added regrowable crop reset flow and direct harvest handling for harvestable crops.
+- Added soil quality tracker, fertilizer tool runtime, and save/load support.
+- Added production/bootstrap content for sprinkler and fertilizer assets plus mastery unlock entries.
+- `WateredTileTracker` now supports an in-memory fallback when the scene has no dedicated watered tilemap.
+- Independent Play Mode QA passed: `[TEST PASS] Sprint 3 sprinkler + regrow + soil quality flow works.`
+- Unity compilation after cleanup: 0 errors.

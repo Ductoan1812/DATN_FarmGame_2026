@@ -32,8 +32,7 @@ public class HarvestRuntime : IModuleRuntime, IHandleEvent<SecondaryActionEvent>
             return;
         }
 
-        bool grantedDirectly = TryGrantDropsToInteractor(e.initiator);
-        _entity.TriggerEvent(new DieEvent(_entity, e.initiator, suppressWorldDrops: grantedDirectly));
+        TryHarvest(e.initiator);
     }
 
     public bool CanReceiveDamage(TakeDamageEvent e, out string reason)
@@ -59,6 +58,39 @@ public class HarvestRuntime : IModuleRuntime, IHandleEvent<SecondaryActionEvent>
             return false;
         }
 
+        return true;
+    }
+
+    /// <summary>
+    /// Try harvest: grant drops, then either reset regrow stage or die for non-regrow crops.
+    /// Returns true if handled.
+    /// </summary>
+    public bool TryHarvest(EntityRuntime interactor)
+    {
+        var stage = _entity.GetModule<StageRuntime>();
+        if (stage == null || !stage.CanHarvest) return false;
+
+        if (stage.IsRegrowable)
+        {
+            TryGrantDropsToInteractor(interactor);
+            stage.ResetToRegrowStage();
+            Debug.Log($"[HarvestRuntime] Regrowable crop reset to stage {stage.currentStageIndex}.");
+            return true;
+        }
+
+        bool grantedDirectly = TryGrantDropsToInteractor(interactor);
+        _entity.TriggerEvent(new DieEvent(_entity, interactor, suppressWorldDrops: grantedDirectly));
+        return true;
+    }
+
+    public bool TryRegrowableHarvest(EntityRuntime interactor)
+    {
+        var stage = _entity.GetModule<StageRuntime>();
+        if (stage == null || !stage.IsRegrowable) return false;
+
+        TryGrantDropsToInteractor(interactor);
+        stage.ResetToRegrowStage();
+        Debug.Log($"[HarvestRuntime] Regrowable crop reset to stage {stage.currentStageIndex}.");
         return true;
     }
 

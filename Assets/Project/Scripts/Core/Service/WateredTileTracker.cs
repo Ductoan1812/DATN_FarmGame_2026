@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using System.Collections.Generic;
 
 /// <summary>
 /// Track ô đã tưới nước trong ngày hiện tại.
@@ -15,6 +16,7 @@ public class WateredTileTracker
     private readonly TileBase _wateredTile;
     private readonly Tilemap _tmGround;
     private readonly TileData _tileData;
+    private readonly HashSet<Vector2Int> _wateredCells = new();
 
     public WateredTileTracker(Tilemap tmWatered, Tilemap tmGround, TileData tileData)
     {
@@ -31,6 +33,7 @@ public class WateredTileTracker
     /// <summary>Đánh dấu ô đã tưới (đặt tile lên tmWatered).</summary>
     public void SetWatered(Vector2Int cell)
     {
+        _wateredCells.Add(cell);
         if (_tmWatered == null || _wateredTile == null) return;
         _tmWatered.SetTile(new Vector3Int(cell.x, cell.y, 0), _wateredTile);
     }
@@ -38,6 +41,7 @@ public class WateredTileTracker
     /// <summary>Check ô đã tưới chưa (có tile trên tmWatered?).</summary>
     public bool IsWatered(Vector2Int cell)
     {
+        if (_wateredCells.Contains(cell)) return true;
         if (_tmWatered == null) return false;
         return _tmWatered.GetTile(new Vector3Int(cell.x, cell.y, 0)) != null;
     }
@@ -45,6 +49,7 @@ public class WateredTileTracker
     /// <summary>Reset toàn bộ — xóa hết tiles trên tmWatered. Gọi mỗi đầu ngày mới.</summary>
     public void ResetAll()
     {
+        _wateredCells.Clear();
         if (_tmWatered == null) return;
         _tmWatered.ClearAllTiles();
     }
@@ -52,7 +57,7 @@ public class WateredTileTracker
     /// <summary>Tưới tất cả ô đã cày (plowed) — gọi khi trời mưa.</summary>
     public void WaterAllPlowedCells()
     {
-        if (_tmWatered == null || _tmGround == null || _tileData == null) return;
+        if (_tmGround == null || _tileData == null) return;
 
         var bounds = _tmGround.cellBounds;
         var plowedTile = _tileData.plowedTile;
@@ -65,7 +70,10 @@ public class WateredTileTracker
                 var groundTile = _tmGround.GetTile(pos);
                 if (groundTile == plowedTile)
                 {
-                    _tmWatered.SetTile(pos, _wateredTile);
+                    var cell = new Vector2Int(x, y);
+                    _wateredCells.Add(cell);
+                    if (_tmWatered != null && _wateredTile != null)
+                        _tmWatered.SetTile(pos, _wateredTile);
                 }
             }
         }
@@ -77,37 +85,28 @@ public class WateredTileTracker
     public System.Collections.Generic.List<WateredCellDto> ExportWateredCells()
     {
         var result = new System.Collections.Generic.List<WateredCellDto>();
-        if (_tmWatered == null) return result;
-
-        var bounds = _tmWatered.cellBounds;
-        for (int x = bounds.xMin; x < bounds.xMax; x++)
-            for (int y = bounds.yMin; y < bounds.yMax; y++)
-                if (_tmWatered.GetTile(new Vector3Int(x, y, 0)) != null)
-                    result.Add(new WateredCellDto { x = x, y = y });
+        foreach (var cell in _wateredCells)
+            result.Add(new WateredCellDto { x = cell.x, y = cell.y });
         return result;
     }
 
     /// <summary>Import danh sách ô đã tưới từ save (clear trước, rồi restore).</summary>
     public void ImportWateredCells(System.Collections.Generic.List<WateredCellDto> cells)
     {
-        if (_tmWatered == null) return;
-        _tmWatered.ClearAllTiles();
+        _wateredCells.Clear();
         if (cells == null) return;
         foreach (var c in cells)
-            _tmWatered.SetTile(new Vector3Int(c.x, c.y, 0), _wateredTile);
+        {
+            var cell = new Vector2Int(c.x, c.y);
+            _wateredCells.Add(cell);
+            if (_tmWatered != null && _wateredTile != null)
+                _tmWatered.SetTile(new Vector3Int(c.x, c.y, 0), _wateredTile);
+        }
     }
 
     /// <summary>Đếm số ô đã tưới (cho AI Assistant / UI).</summary>
     public int GetWateredCount()
     {
-        if (_tmWatered == null) return 0;
-
-        int count = 0;
-        var bounds = _tmWatered.cellBounds;
-        for (int x = bounds.xMin; x < bounds.xMax; x++)
-            for (int y = bounds.yMin; y < bounds.yMax; y++)
-                if (_tmWatered.GetTile(new Vector3Int(x, y, 0)) != null)
-                    count++;
-        return count;
+        return _wateredCells.Count;
     }
 }
