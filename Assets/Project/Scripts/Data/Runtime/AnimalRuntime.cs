@@ -1,11 +1,12 @@
 using System;
 using UnityEngine;
 
-public class AnimalRuntime : IModuleRuntime, IHandleEvent<SecondaryActionEvent>, IHandleEvent<NextDayEvent>
+public class AnimalRuntime : IModuleRuntime, IHandleEvent<SpawnedEvent>, IHandleEvent<SecondaryActionEvent>, IHandleEvent<NextDayEvent>
 {
     private readonly AnimalModule data;
     private AnimalState state = AnimalState.Hungry;
     private EntityRuntime owner;
+    private int daysNotFed;
 
     public AnimalRuntime(AnimalModule data)
     {
@@ -18,17 +19,28 @@ public class AnimalRuntime : IModuleRuntime, IHandleEvent<SecondaryActionEvent>,
     {
         AnimalState.ProductReady => data.statusProductReadyKey,
         AnimalState.Fed => data.statusFedKey,
+        AnimalState.Dead => data.statusDeadKey,
         _ => data.statusHungryKey
     };
 
-    public string PrimaryOptionTextKey => state == AnimalState.ProductReady
-        ? data.collectOptionTextKey
-        : data.feedOptionTextKey;
+    public string PrimaryOptionTextKey => state switch
+    {
+        AnimalState.ProductReady => data.collectOptionTextKey,
+        AnimalState.Dead => string.Empty,
+        _ => data.feedOptionTextKey
+    };
+
+    public int DaysNotFed => daysNotFed;
+
+    public void Handle(SpawnedEvent e)
+    {
+        owner = e.entity;
+    }
 
     public void Handle(SecondaryActionEvent e)
     {
         owner ??= e.target;
-        if (e.context == null || e.initiator == null) return;
+        if (state == AnimalState.Dead || e.context == null || e.initiator == null) return;
 
         var animal = owner ?? e.target;
         if (animal == null) return;
@@ -42,8 +54,19 @@ public class AnimalRuntime : IModuleRuntime, IHandleEvent<SecondaryActionEvent>,
 
     public void Handle(NextDayEvent e)
     {
+        if (state == AnimalState.Dead)
+            return;
+
         if (state == AnimalState.Fed)
+        {
             state = AnimalState.ProductReady;
+            daysNotFed = 0;
+            return;
+        }
+
+        daysNotFed++;
+        if (daysNotFed >= Mathf.Max(1, data.daysWithoutFoodToDie))
+            DieFromStarvation();
     }
 
     private void Interact(EntityRuntime player)
@@ -83,6 +106,7 @@ public class AnimalRuntime : IModuleRuntime, IHandleEvent<SecondaryActionEvent>,
         }
 
         state = AnimalState.Fed;
+        daysNotFed = 0;
         Debug.Log($"[AnimalRuntime] Fed animal with '{data.feedItem.id}'.");
     }
 
@@ -112,12 +136,28 @@ public class AnimalRuntime : IModuleRuntime, IHandleEvent<SecondaryActionEvent>,
         Debug.Log($"[AnimalRuntime] Collected '{data.productItem.id}' x{received}.");
     }
 
+    private void DieFromStarvation()
+    {
+        if (state == AnimalState.Dead)
+            return;
+
+        state = AnimalState.Dead;
+        if (owner == null)
+        {
+            Debug.LogWarning("[AnimalRuntime] Animal died from starvation but owner is missing.");
+            return;
+        }
+
+        GameManager.Instance?.EventBus?.Publish(new DestroyEntityRequestPublish(owner.id));
+        Debug.Log($"[AnimalRuntime] Animal '{owner.entityData?.id ?? owner.id}' died from starvation after {daysNotFed} day(s) without food.");
+    }
+
     public ModuleSaveData ToSaveData()
     {
         return new ModuleSaveData
         {
             moduleType = "Animal",
-            dataJson = JsonUtility.ToJson(new AnimalSaveData { state = state })
+            dataJson = JsonUtility.ToJson(new AnimalSaveData { state = state, daysNotFed = daysNotFed })
         };
     }
 
@@ -125,8 +165,9 @@ public class AnimalRuntime : IModuleRuntime, IHandleEvent<SecondaryActionEvent>,
     {
         if (save == null || string.IsNullOrWhiteSpace(save.dataJson)) return;
 
-        var data = JsonUtility.FromJson<AnimalSaveData>(save.dataJson);
-        state = data != null ? data.state : AnimalState.Hungry;
+        var saveData = JsonUtility.FromJson<AnimalSaveData>(save.dataJson);
+        state = saveData != null ? saveData.state : AnimalState.Hungry;
+        daysNotFed = saveData != null ? Mathf.Max(0, saveData.daysNotFed) : 0;
     }
 
     public bool MatchesSave(ModuleSaveData save) => save?.moduleType == "Animal";
@@ -136,5 +177,6 @@ public class AnimalRuntime : IModuleRuntime, IHandleEvent<SecondaryActionEvent>,
     private class AnimalSaveData
     {
         public AnimalState state;
+        public int daysNotFed;
     }
 }

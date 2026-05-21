@@ -40,6 +40,45 @@ public static class BootstrapCoreplayM1Scenes
 
     public static void ExecuteBatch() => Execute();
 
+    [MenuItem("Tools/DATN/Coreplay/Sprint 4 - Add Clear Zone")]
+    public static void ExecuteSprint4ClearZoneOnly()
+    {
+        EnsureFolder(MarkerFolder);
+        CreateClearZoneMarker();
+        
+        var scene = EditorSceneManager.OpenScene(FarmScenePath, OpenSceneMode.Single);
+        var markerMap = PrepareScene("FarmScene");
+        
+        SetTiles(markerMap, "Marker_ClearZone_Rock_01",
+            new Vector3Int(10, 4, 0),
+            new Vector3Int(11, 4, 0),
+            new Vector3Int(10, 3, 0),
+            new Vector3Int(11, 3, 0),
+            new Vector3Int(12, 3, 0));
+        
+        SaveScene(scene);
+        AssetDatabase.SaveAssets();
+        Debug.Log("[Sprint4] Clear-zone markers added at farm edge (10,4), (11,4), (10,3), (11,3), (12,3)");
+    }
+
+    private static void CreateClearZoneMarker()
+    {
+        var entity = AssetDatabase.LoadAssetAtPath<EntityData>($"{ResourceFolder}/RockNode_01.asset");
+        var tile = LoadOrCreateAsset<SceneSpawnTile>($"{MarkerFolder}/Marker_ClearZone_Rock_01.asset");
+        tile.markerKind = SceneMarkerKind.ResourceNode;
+        tile.objectType = ObjectType.RockNode01;
+        tile.entityData = entity;
+        tile.savePolicy = SceneEntitySavePolicy.Persistent;
+        tile.spawnGroupId = "farm_clear_edge";
+        tile.spawnPointId = string.Empty;
+        tile.respawnMinutes = 0;
+        tile.initialAmount = 1;
+        tile.bypassPlacementValidation = true;
+        tile.editorSprite = entity != null ? entity.icon : null;
+        tile.editorColor = new Color(1f, 0.4f, 0.1f, 0.8f);
+        EditorUtility.SetDirty(tile);
+    }
+
     private static void EnsureScenesExist()
     {
         CopySceneIfMissing(FarmScenePath);

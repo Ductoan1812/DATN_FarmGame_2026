@@ -64,6 +64,10 @@ public class SceneContentScanner : MonoBehaviour
             if (tile == null) continue;
             if (tile.markerKind == SceneMarkerKind.PlayerSpawn)
                 continue;
+            if (tile.savePolicy == SceneEntitySavePolicy.Persistent
+                && gameManager?.ClearZoneTracker != null
+                && gameManager.ClearZoneTracker.IsZoneCleared(tile.spawnGroupId))
+                continue;
 
             string persistentId = SceneSpawnPayload.BuildPersistentId(
                 sceneName,

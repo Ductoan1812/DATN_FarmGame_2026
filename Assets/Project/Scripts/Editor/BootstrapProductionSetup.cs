@@ -65,6 +65,15 @@ public static class BootstrapProductionSetup
 
     public static void ExecuteBatch() => Execute();
 
+    [MenuItem("Tools/DATN/Production/Sprint 4 Data Only")]
+    public static void ExecuteSprint4DataOnly()
+    {
+        EnsureSprint4Data();
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
+        Debug.Log("[BootstrapProductionSetup] Sprint 4 data created/updated.");
+    }
+
     [MenuItem("Tools/DATN/Production/Validate Production Setup")]
     public static void ValidateMenu() => ValidateSetup(logSuccess: true);
 
@@ -528,6 +537,111 @@ public static class BootstrapProductionSetup
         {
             crafting.recipes.Add(recipe);
             EditorUtility.SetDirty(npc);
+        }
+    }
+
+    private static void EnsureSprint4Data()
+    {
+        var feed = AssetDatabase.LoadAssetAtPath<EntityData>("Assets/Project/ScriptableObjects/Items/Animal/AnimalFeed.asset");
+
+        var milk = EnsureSimpleItem("Assets/Project/ScriptableObjects/Items/Animal/Milk.asset", "milk", "s4.item.milk.name", "s4.item.milk.desc", ItemCategory.AnimalProduct, 99, -1, 80);
+        var wool = EnsureSimpleItem("Assets/Project/ScriptableObjects/Items/Animal/Wool.asset", "wool", "s4.item.wool.name", "s4.item.wool.desc", ItemCategory.AnimalProduct, 99, -1, 110);
+
+        var cowEntity = LoadOrCreateEntity("Assets/Project/ScriptableObjects/WorldObjects/Animals/Animal_Cow_01.asset");
+        cowEntity.id = "animal_cow_01";
+        cowEntity.keyName = "s4.animal.cow.name";
+        cowEntity.descKey = "s4.animal.cow.desc";
+        cowEntity.category = ItemCategory.Placeable;
+        cowEntity.maxStack = 1;
+        cowEntity.buyPrice = -1;
+        cowEntity.sellPrice = 0;
+        cowEntity.modules = new List<IModuleData> { new AnimalModule { speciesKey = "s4.animal.cow.name", feedItem = feed, productItem = milk, productAmount = 1, daysWithoutFoodToDie = 3, priority = 25 } };
+        EditorUtility.SetDirty(cowEntity);
+
+        var sheepEntity = LoadOrCreateEntity("Assets/Project/ScriptableObjects/WorldObjects/Animals/Animal_Sheep_01.asset");
+        sheepEntity.id = "animal_sheep_01";
+        sheepEntity.keyName = "s4.animal.sheep.name";
+        sheepEntity.descKey = "s4.animal.sheep.desc";
+        sheepEntity.category = ItemCategory.Placeable;
+        sheepEntity.maxStack = 1;
+        sheepEntity.buyPrice = -1;
+        sheepEntity.sellPrice = 0;
+        sheepEntity.modules = new List<IModuleData> { new AnimalModule { speciesKey = "s4.animal.sheep.name", feedItem = feed, productItem = wool, productAmount = 1, daysWithoutFoodToDie = 3, priority = 25 } };
+        EditorUtility.SetDirty(sheepEntity);
+
+        var coopEntity = LoadOrCreateEntity("Assets/Project/ScriptableObjects/WorldObjects/Buildings/Building_ChickenCoop.asset");
+        coopEntity.id = "building_chicken_coop";
+        coopEntity.keyName = "s4.building.coop.name";
+        coopEntity.descKey = "s4.building.coop.desc";
+        coopEntity.category = ItemCategory.Placeable;
+        coopEntity.maxStack = 1;
+        coopEntity.buyPrice = -1;
+        coopEntity.sellPrice = 0;
+        coopEntity.placementRule = new PlacementRule { occupyLayer = EntityLayer.Furniture, blockLayers = new[] { EntityLayer.Furniture, EntityLayer.Plant, EntityLayer.Decoration }, requireTags = PlacementTag.None, provideTags = PlacementTag.None };
+        coopEntity.baseStats = new StatsData { baseStats = new List<StatEntry> { new StatEntry { statType = StatType.AreaX, value = 3 }, new StatEntry { statType = StatType.AreaY, value = 2 } } };
+        coopEntity.modules = new List<IModuleData>();
+        EditorUtility.SetDirty(coopEntity);
+
+        var barnEntity = LoadOrCreateEntity("Assets/Project/ScriptableObjects/WorldObjects/Buildings/Building_CowBarn.asset");
+        barnEntity.id = "building_cow_barn";
+        barnEntity.keyName = "s4.building.barn.name";
+        barnEntity.descKey = "s4.building.barn.desc";
+        barnEntity.category = ItemCategory.Placeable;
+        barnEntity.maxStack = 1;
+        barnEntity.buyPrice = -1;
+        barnEntity.sellPrice = 0;
+        barnEntity.placementRule = new PlacementRule { occupyLayer = EntityLayer.Furniture, blockLayers = new[] { EntityLayer.Furniture, EntityLayer.Plant, EntityLayer.Decoration }, requireTags = PlacementTag.None, provideTags = PlacementTag.None };
+        barnEntity.baseStats = new StatsData { baseStats = new List<StatEntry> { new StatEntry { statType = StatType.AreaX, value = 4 }, new StatEntry { statType = StatType.AreaY, value = 3 } } };
+        barnEntity.modules = new List<IModuleData>();
+        EditorUtility.SetDirty(barnEntity);
+
+        var coopItem = LoadOrCreateEntity("Assets/Project/ScriptableObjects/Items/Buildings/Item_ChickenCoop.asset");
+        coopItem.id = "item_chicken_coop";
+        coopItem.keyName = "s4.building.coop.name";
+        coopItem.descKey = "s4.building.coop.desc";
+        coopItem.category = ItemCategory.Placeable;
+        coopItem.maxStack = 1;
+        coopItem.buyPrice = -1;
+        coopItem.sellPrice = 0;
+        coopItem.modules = new List<IModuleData> { new BuildingModule { buildingEntity = coopEntity, buildingPrefabId = ObjectType.Bed01, consumeItemOnSuccess = true } };
+        EditorUtility.SetDirty(coopItem);
+
+        var barnItem = LoadOrCreateEntity("Assets/Project/ScriptableObjects/Items/Buildings/Item_CowBarn.asset");
+        barnItem.id = "item_cow_barn";
+        barnItem.keyName = "s4.building.barn.name";
+        barnItem.descKey = "s4.building.barn.desc";
+        barnItem.category = ItemCategory.Placeable;
+        barnItem.maxStack = 1;
+        barnItem.buyPrice = -1;
+        barnItem.sellPrice = 0;
+        barnItem.modules = new List<IModuleData> { new BuildingModule { buildingEntity = barnEntity, buildingPrefabId = ObjectType.Bed01, consumeItemOnSuccess = true } };
+        EditorUtility.SetDirty(barnItem);
+
+        var mutantMat = EnsureSimpleItem("Assets/Project/ScriptableObjects/Items/Materials/MutantMaterial_01.asset", "mutant_material_01", "s4.mat.mutant.name", "s4.mat.mutant.desc", ItemCategory.Material, 99, -1, 25);
+
+        string[] enemyPaths = {
+            "Assets/Project/ScriptableObjects/WorldObjects/Enemies/Enemy_T1_Slime.asset",
+            "Assets/Project/ScriptableObjects/WorldObjects/Enemies/Enemy_T2_Bat.asset",
+            "Assets/Project/ScriptableObjects/WorldObjects/Enemies/Enemy_T3_Golem.asset",
+            "Assets/Project/ScriptableObjects/WorldObjects/Enemies/Enemy_T4_Wraith.asset",
+            "Assets/Project/ScriptableObjects/WorldObjects/Enemies/Enemy_T5_Ancient.asset"
+        };
+
+        foreach (var path in enemyPaths)
+        {
+            var enemy = AssetDatabase.LoadAssetAtPath<EntityData>(path);
+            if (enemy == null) continue;
+            var drop = enemy.modules?.OfType<DropModule>().FirstOrDefault();
+            if (drop == null) continue;
+            drop.harvestDrops ??= Array.Empty<DropEntry>();
+            bool hasMutant = drop.harvestDrops.Any(d => d.item == mutantMat);
+            if (!hasMutant)
+            {
+                var list = drop.harvestDrops.ToList();
+                list.Add(new DropEntry { item = mutantMat, minAmount = 1, maxAmount = 2, dropChance = 0.4f });
+                drop.harvestDrops = list.ToArray();
+                EditorUtility.SetDirty(enemy);
+            }
         }
     }
 

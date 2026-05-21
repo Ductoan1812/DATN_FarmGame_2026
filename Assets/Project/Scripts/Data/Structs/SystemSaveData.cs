@@ -8,6 +8,7 @@ public class SystemSaveData
     public TimeState time;
     public System.Collections.Generic.List<WateredCellDto> wateredCells = new System.Collections.Generic.List<WateredCellDto>();
     public System.Collections.Generic.List<SoilCellDto> soilCells = new System.Collections.Generic.List<SoilCellDto>();
+    public System.Collections.Generic.List<ClearZoneDto> clearZones = new System.Collections.Generic.List<ClearZoneDto>();
     public WeatherType currentWeather = WeatherType.Sunny;
 }
 
@@ -24,4 +25,18 @@ public struct SoilCellDto
     public int x;
     public int y;
     public int quality;
+}
+
+[System.Serializable]
+public class ClearZoneDto
+{
+    public string zoneId;
+    public System.Collections.Generic.List<CellDto> cells = new System.Collections.Generic.List<CellDto>();
+}
+
+[System.Serializable]
+public struct CellDto
+{
+    public int x;
+    public int y;
 }

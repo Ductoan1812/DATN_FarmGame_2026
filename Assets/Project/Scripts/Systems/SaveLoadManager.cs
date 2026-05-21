@@ -214,6 +214,10 @@ public class SaveLoadManager
         if (soil != null)
             data.soilCells = soil.ExportSoilCells();
 
+        var clearZones = GameManager.Instance?.ClearZoneTracker;
+        if (clearZones != null)
+            data.clearZones = clearZones.ExportClearZones();
+
         var weather = GameManager.Instance?.WeatherSystem;
         if (weather != null)
             data.currentWeather = weather.CurrentWeather;
@@ -221,7 +225,7 @@ public class SaveLoadManager
         var json = JsonUtility.ToJson(data, true);
         var path = System.IO.Path.Combine(Application.persistentDataPath, SystemSaveFile);
         System.IO.File.WriteAllText(path, json);
-        Debug.Log($"[SaveLoadManager] System data saved: {data.time}, watered={data.wateredCells?.Count ?? 0}");
+        Debug.Log($"[SaveLoadManager] System data saved: {data.time}, watered={data.wateredCells?.Count ?? 0}, soil={data.soilCells?.Count ?? 0}, clearZones={data.clearZones?.Count ?? 0}");
     }
 
     private void LoadSystemData()
@@ -244,11 +248,15 @@ public class SaveLoadManager
         if (soil != null)
             soil.ImportSoilCells(data.soilCells);
 
+        var clearZones = GameManager.Instance?.ClearZoneTracker;
+        if (clearZones != null)
+            clearZones.ImportClearZones(data.clearZones);
+
         var weather = GameManager.Instance?.WeatherSystem;
         if (weather != null)
             weather.SetWeather(data.currentWeather);
 
-        Debug.Log($"[SaveLoadManager] System data loaded: {data.time}, watered={data.wateredCells?.Count ?? 0}, soil={data.soilCells?.Count ?? 0}, weather={data.currentWeather}");
+        Debug.Log($"[SaveLoadManager] System data loaded: {data.time}, watered={data.wateredCells?.Count ?? 0}, soil={data.soilCells?.Count ?? 0}, clearZones={data.clearZones?.Count ?? 0}, weather={data.currentWeather}");
     }
 
     // ══════════════════════════════════════

@@ -28,11 +28,11 @@ MonoBehaviour:
     provideTags: 0
     blockLayers: 
   modules:
-  - rid: 8196222991998910686
+  - rid: 8196223032269996375
   references:
     version: 2
     RefIds:
-    - rid: 8196222991998910686
+    - rid: 8196223032269996375
       type: {class: AnimalModule, ns: , asm: Assembly-CSharp}
       data:
         speciesKey: m3.animal.chicken.name

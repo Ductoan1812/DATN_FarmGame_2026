@@ -118,6 +118,12 @@ public class SpawnSystem : MonoBehaviour
         if (respawnRuntime != null)
             respawnRuntime.CurrentRespawnPosition = req.worldPos;
 
+        GameManager.Instance?.ClearZoneTracker?.RegisterSpawn(
+            spawnEntity.id,
+            ep.spawnGroupId,
+            ep.occupiedCells,
+            ep.savePolicy);
+
         // Instantiate GameObject
         var obj = Instantiate(prefab, new Vector3(req.worldPos.x, req.worldPos.y, 0), Quaternion.identity);
         obj.name = $"{req.idPrefab}_{spawnEntity.id[..8]}";
@@ -166,6 +172,7 @@ public class SpawnSystem : MonoBehaviour
         var obj = GameObject.Find($"{ep.idPrefab}_{idRuntime[..8]}");
         if (obj != null) Destroy(obj);
 
+        GameManager.Instance?.ClearZoneTracker?.NotifyEntityRemoved(idRuntime);
         _worldService.TryUnregister(idRuntime);
         Debug.Log($"[SpawnSystem] Despawned GameObject '{idRuntime[..8]}'");
     }
@@ -185,6 +192,12 @@ public class SpawnSystem : MonoBehaviour
             var root = obj.GetComponent<EntityRoot>();
             if (root != null) { root.entityService = _entityService; root.Add(runtime); }
         }
+
+        GameManager.Instance?.ClearZoneTracker?.RegisterSpawn(
+            ep.idRuntime,
+            ep.spawnGroupId,
+            ep.occupiedCells,
+            ep.savePolicy);
     }
 
     // ── Private ────────────────────────────────────────────

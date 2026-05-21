@@ -2,5 +2,6 @@ public enum AnimalState
 {
     Hungry,
     Fed,
-    ProductReady
+    ProductReady,
+    Dead
 }

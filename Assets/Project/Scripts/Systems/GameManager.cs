@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     public WeatherSystem        WeatherSystem      { get; private set; }
     public SprinklerRegistry    SprinklerRegistry  { get; private set; }
     public SoilQualityTracker   SoilQualityTracker { get; private set; }
+    public ClearZoneTracker     ClearZoneTracker   { get; private set; }
 
     // ── Shared ────────────────────────────────────────────
     public EventBus             EventBus           { get; private set; }
@@ -68,6 +69,7 @@ public class GameManager : MonoBehaviour
         InitWorldObjects();
         InitTileRegistry();
         InitWorldEntitySystem();
+        InitClearZoneTracker();
         InitSpawnSystem();
         InitTimeManager();
         InitWateredTileTracker();
@@ -77,6 +79,7 @@ public class GameManager : MonoBehaviour
         InitDialogueGameplayBridge();
         InitSceneTransitionBridge();
         InitInteractionPreviewBridge();
+        InitPlayerDeathHandler();
         InitSaveLoadManager();
 
         // Subscribe save/load events
@@ -253,6 +256,11 @@ public class GameManager : MonoBehaviour
         SoilQualityTracker = new SoilQualityTracker();
     }
 
+    private void InitClearZoneTracker()
+    {
+        ClearZoneTracker = new ClearZoneTracker(WorldService, tileData);
+    }
+
     private void InitWeatherSystem()
     {
         if (weatherConfig == null)
@@ -279,6 +287,12 @@ public class GameManager : MonoBehaviour
     {
         if (GetComponent<InteractionPreviewSystem>() == null)
             gameObject.AddComponent<InteractionPreviewSystem>();
+    }
+
+    private void InitPlayerDeathHandler()
+    {
+        if (GetComponent<PlayerDeathHandler>() == null)
+            gameObject.AddComponent<PlayerDeathHandler>();
     }
 
     private void InitSpawnSystem()
@@ -377,6 +391,7 @@ public class GameManager : MonoBehaviour
 
         InitTileRegistry();
         InitWorldEntitySystem();
+        ClearZoneTracker?.RebindWorldService(WorldService, tileData);
         SprinklerRegistry?.Clear();
         SpawnSystem?.RebindWorldService(WorldService);
         SaveLoadManager?.SetWorldService(WorldService);

@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8393fbdfdb650e5418aad1c82ae5b8b5, type: 3}
+  m_Name: Item_ChickenCoop
+  m_EditorClassIdentifier: 
+  id: item_chicken_coop
+  keyName: s4.building.coop.name
+  descKey: s4.building.coop.desc
+  icon: {fileID: 0}
+  category: 9
+  maxStack: 1
+  buyPrice: -1
+  sellPrice: 0
+  baseStats:
+    baseStats: []
+  placementRule:
+    occupyLayer: 0
+    requireTags: 0
+    provideTags: 0
+    blockLayers: 
+  modules:
+  - rid: 8196223049287335941
+  references:
+    version: 2
+    RefIds:
+    - rid: 8196223049287335941
+      type: {class: BuildingModule, ns: , asm: Assembly-CSharp}
+      data:
+        buildingEntity: {fileID: 11400000, guid: 3b10dd4becb402340860d1981003c6a5, type: 2}
+        buildingPrefabId: 14
+        consumeItemOnSuccess: 1
+        priority: 20
