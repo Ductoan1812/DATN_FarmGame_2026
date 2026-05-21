@@ -59,18 +59,10 @@ public class AIAssistantUI : MonoBehaviour
 
     private void CreateUI()
     {
-        // Canvas
-        var canvasGO = new GameObject("AIAssistantCanvas");
-        canvasGO.transform.SetParent(transform, false);
-        _canvas = canvasGO.AddComponent<Canvas>();
-        _canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        _canvas.sortingOrder = 100;
-        canvasGO.AddComponent<UnityEngine.UI.CanvasScaler>();
-        canvasGO.AddComponent<UnityEngine.UI.GraphicRaycaster>();
+        var root = OverlayUIHelper.GetOrCreateOverlayRoot(gameObject, 100);
 
-        // Panel
         _panel = new GameObject("TipPanel");
-        _panel.transform.SetParent(canvasGO.transform, false);
+        _panel.transform.SetParent(root, false);
         var panelRect = _panel.AddComponent<RectTransform>();
         panelRect.anchorMin = new Vector2(0, 0);
         panelRect.anchorMax = new Vector2(0, 0);

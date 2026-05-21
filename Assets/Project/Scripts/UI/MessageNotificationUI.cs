@@ -32,18 +32,13 @@ public class MessageNotificationUI : MonoBehaviour
 
     private void CreateUI()
     {
-        canvas = gameObject.AddComponent<Canvas>();
-        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        canvas.sortingOrder = 100;
-
-        var scaler = gameObject.AddComponent<CanvasScaler>();
-        scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-        scaler.referenceResolution = new Vector2(1920, 1080);
-
-        gameObject.AddComponent<GraphicRaycaster>();
+        var root = OverlayUIHelper.GetOrCreateOverlayRoot(gameObject, 100);
+        canvas = root.GetComponentInParent<Canvas>() ?? root.GetComponent<Canvas>() ?? gameObject.GetComponent<Canvas>();
+        if (canvas == null)
+            canvas = gameObject.AddComponent<Canvas>();
 
         var panel = new GameObject("NotificationPanel");
-        panel.transform.SetParent(transform, false);
+        panel.transform.SetParent(root, false);
         var panelRect = panel.AddComponent<RectTransform>();
         panelRect.anchorMin = new Vector2(1, 1);
         panelRect.anchorMax = new Vector2(1, 1);

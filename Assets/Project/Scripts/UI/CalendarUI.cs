@@ -29,16 +29,10 @@ public class CalendarUI : MonoBehaviour
 
     private void BuildUI()
     {
-        var canvasGO = new GameObject("CalendarCanvas");
-        canvasGO.transform.SetParent(transform, false);
-        _canvas = canvasGO.AddComponent<Canvas>();
-        _canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        _canvas.sortingOrder = 95;
-        canvasGO.AddComponent<CanvasScaler>();
-        canvasGO.AddComponent<GraphicRaycaster>();
+        var root = OverlayUIHelper.GetOrCreateOverlayRoot(gameObject, 95);
 
         _panel = new GameObject("CalendarPanel");
-        _panel.transform.SetParent(canvasGO.transform, false);
+        _panel.transform.SetParent(root, false);
         var rect = _panel.AddComponent<RectTransform>();
         rect.anchorMin = new Vector2(0.5f, 0.5f);
         rect.anchorMax = new Vector2(0.5f, 0.5f);

@@ -38,18 +38,10 @@ public class DiaryUI : MonoBehaviour
 
     private void CreateUI()
     {
-        canvas = gameObject.AddComponent<Canvas>();
-        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        canvas.sortingOrder = 50;
-
-        var scaler = gameObject.AddComponent<CanvasScaler>();
-        scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-        scaler.referenceResolution = new Vector2(1920, 1080);
-
-        gameObject.AddComponent<GraphicRaycaster>();
+        var root = OverlayUIHelper.GetOrCreateOverlayRoot(gameObject, 50);
 
         panel = new GameObject("DiaryPanel");
-        panel.transform.SetParent(transform, false);
+        panel.transform.SetParent(root, false);
         var panelRect = panel.AddComponent<RectTransform>();
         panelRect.anchorMin = new Vector2(0.5f, 0.5f);
         panelRect.anchorMax = new Vector2(0.5f, 0.5f);

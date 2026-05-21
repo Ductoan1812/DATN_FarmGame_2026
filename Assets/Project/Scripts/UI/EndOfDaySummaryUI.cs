@@ -12,14 +12,10 @@ public class EndOfDaySummaryUI : MonoBehaviour
 
     private void Awake()
     {
-        _canvas = gameObject.AddComponent<Canvas>();
-        _canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        _canvas.sortingOrder = 1000;
-        gameObject.AddComponent<CanvasScaler>();
-        gameObject.AddComponent<GraphicRaycaster>();
+        var root = OverlayUIHelper.GetOrCreateOverlayRoot(gameObject, 1000);
 
         _panel = new GameObject("Panel");
-        _panel.transform.SetParent(transform, false);
+        _panel.transform.SetParent(root, false);
         var rect = _panel.AddComponent<RectTransform>();
         rect.anchorMin = new Vector2(0.5f, 0.5f);
         rect.anchorMax = new Vector2(0.5f, 0.5f);

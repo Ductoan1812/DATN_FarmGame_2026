@@ -32,18 +32,10 @@ public class NewsBroadcastUI : MonoBehaviour
 
     private void CreateUI()
     {
-        canvas = gameObject.AddComponent<Canvas>();
-        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        canvas.sortingOrder = 100;
-
-        var scaler = gameObject.AddComponent<CanvasScaler>();
-        scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-        scaler.referenceResolution = new Vector2(1920, 1080);
-
-        gameObject.AddComponent<GraphicRaycaster>();
+        var root = OverlayUIHelper.GetOrCreateOverlayRoot(gameObject, 100);
 
         var panel = new GameObject("NewsPanel");
-        panel.transform.SetParent(transform, false);
+        panel.transform.SetParent(root, false);
         var panelRect = panel.AddComponent<RectTransform>();
         panelRect.anchorMin = new Vector2(0.5f, 1);
         panelRect.anchorMax = new Vector2(0.5f, 1);

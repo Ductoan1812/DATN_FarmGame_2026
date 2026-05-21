@@ -285,6 +285,45 @@ public class SaveLoadManager
         return System.IO.File.Exists(path);
     }
 
+    /// <summary>Public API: check if any save data exists.</summary>
+    public static bool HasAnySaveData()
+    {
+        var path = System.IO.Path.Combine(Application.persistentDataPath, EntitiesSaveFile);
+        return System.IO.File.Exists(path);
+    }
+
+    /// <summary>Public API: delete all save files. Logs warnings for missing files, does not throw.</summary>
+    public static void DeleteAllSaveData()
+    {
+        string[] files = { EntitiesSaveFile, SystemSaveFile, WorldSaveFile };
+        foreach (var file in files)
+        {
+            var path = System.IO.Path.Combine(Application.persistentDataPath, file);
+            if (System.IO.File.Exists(path))
+            {
+                try { System.IO.File.Delete(path); }
+                catch (Exception ex) { Debug.LogWarning($"[SaveLoadManager] Failed to delete {file}: {ex.Message}"); }
+            }
+        }
+
+        // Delete world_*.json files
+        try
+        {
+            var dir = Application.persistentDataPath;
+            if (System.IO.Directory.Exists(dir))
+            {
+                foreach (var worldFile in System.IO.Directory.GetFiles(dir, "world_*.json"))
+                {
+                    try { System.IO.File.Delete(worldFile); }
+                    catch (Exception ex) { Debug.LogWarning($"[SaveLoadManager] Failed to delete {worldFile}: {ex.Message}"); }
+                }
+            }
+        }
+        catch (Exception ex) { Debug.LogWarning($"[SaveLoadManager] Failed to scan world files: {ex.Message}"); }
+
+        Debug.Log("[SaveLoadManager] All save data deleted.");
+    }
+
     private static string GetCurrentWorldSaveFile()
     {
         string sceneName = SceneManager.GetActiveScene().name;
