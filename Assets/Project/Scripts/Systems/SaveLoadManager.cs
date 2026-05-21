@@ -222,10 +222,18 @@ public class SaveLoadManager
         if (weather != null)
             data.currentWeather = weather.CurrentWeather;
 
+        var narrative = GameManager.Instance?.NarrativeService;
+        if (narrative != null)
+            data.triggeredStoryEventIds = narrative.ExportTriggered();
+
+        var research = GameManager.Instance?.ResearchService;
+        if (research != null)
+            data.unlockedResearch = research.ExportUnlocked();
+
         var json = JsonUtility.ToJson(data, true);
         var path = System.IO.Path.Combine(Application.persistentDataPath, SystemSaveFile);
         System.IO.File.WriteAllText(path, json);
-        Debug.Log($"[SaveLoadManager] System data saved: {data.time}, watered={data.wateredCells?.Count ?? 0}, soil={data.soilCells?.Count ?? 0}, clearZones={data.clearZones?.Count ?? 0}");
+        Debug.Log($"[SaveLoadManager] System data saved: {data.time}, watered={data.wateredCells?.Count ?? 0}, soil={data.soilCells?.Count ?? 0}, clearZones={data.clearZones?.Count ?? 0}, narrative={data.triggeredStoryEventIds?.Count ?? 0}, research={data.unlockedResearch?.Count ?? 0}");
     }
 
     private void LoadSystemData()
@@ -256,7 +264,15 @@ public class SaveLoadManager
         if (weather != null)
             weather.SetWeather(data.currentWeather);
 
-        Debug.Log($"[SaveLoadManager] System data loaded: {data.time}, watered={data.wateredCells?.Count ?? 0}, soil={data.soilCells?.Count ?? 0}, clearZones={data.clearZones?.Count ?? 0}, weather={data.currentWeather}");
+        var narrative = GameManager.Instance?.NarrativeService;
+        if (narrative != null)
+            narrative.ImportTriggered(data.triggeredStoryEventIds);
+
+        var research = GameManager.Instance?.ResearchService;
+        if (research != null)
+            research.ImportUnlocked(data.unlockedResearch);
+
+        Debug.Log($"[SaveLoadManager] System data loaded: {data.time}, watered={data.wateredCells?.Count ?? 0}, soil={data.soilCells?.Count ?? 0}, clearZones={data.clearZones?.Count ?? 0}, weather={data.currentWeather}, narrative={data.triggeredStoryEventIds?.Count ?? 0}, research={data.unlockedResearch?.Count ?? 0}");
     }
 
     // ══════════════════════════════════════

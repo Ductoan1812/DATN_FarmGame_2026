@@ -533,3 +533,18 @@ public struct ShopTransactionResultPublish
         this.result = result;
     }
 }
+
+// ── Narrative ─────────────────────────────────────────────
+
+/// <summary>Story event được unlock.</summary>
+public struct StoryEventUnlockedPublish
+{
+    public readonly StoryEventData data;
+    public StoryEventUnlockedPublish(StoryEventData data) { this.data = data; }
+}
+
+public struct ResearchUnlockedPublish
+{
+    public readonly ResearchData data;
+    public ResearchUnlockedPublish(ResearchData data) { this.data = data; }
+}

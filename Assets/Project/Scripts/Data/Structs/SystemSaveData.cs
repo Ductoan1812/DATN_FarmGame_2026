@@ -10,6 +10,8 @@ public class SystemSaveData
     public System.Collections.Generic.List<SoilCellDto> soilCells = new System.Collections.Generic.List<SoilCellDto>();
     public System.Collections.Generic.List<ClearZoneDto> clearZones = new System.Collections.Generic.List<ClearZoneDto>();
     public WeatherType currentWeather = WeatherType.Sunny;
+    public System.Collections.Generic.List<string> triggeredStoryEventIds = new System.Collections.Generic.List<string>();
+    public System.Collections.Generic.List<string> unlockedResearch = new System.Collections.Generic.List<string>();
 }
 
 [System.Serializable]

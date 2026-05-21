@@ -55,6 +55,8 @@ public static class BootstrapProductionSetup
         EnsureGeneratedIcons();
         EnsurePlayerStartMarker();
         EnsureMasteryUnlockData();
+        EnsureSprint5NarrativeData();
+        EnsureSprint5ResearchData();
         StampPlayerStartMarker();
         ValidateSetup(logSuccess: true);
 
@@ -72,6 +74,25 @@ public static class BootstrapProductionSetup
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
         Debug.Log("[BootstrapProductionSetup] Sprint 4 data created/updated.");
+    }
+
+    [MenuItem("Tools/DATN/Production/Sprint 5 Narrative Data Only")]
+    public static void ExecuteSprint5NarrativeDataOnly()
+    {
+        EnsureSprint5NarrativeData();
+        EnsureSprint5ResearchData();
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
+        Debug.Log("[BootstrapProductionSetup] Sprint 5 narrative/research data created/updated.");
+    }
+
+    [MenuItem("Tools/DATN/Production/Sprint 5 Research Data Only")]
+    public static void ExecuteSprint5ResearchDataOnly()
+    {
+        EnsureSprint5ResearchData();
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
+        Debug.Log("[BootstrapProductionSetup] Sprint 5 research data created/updated.");
     }
 
     [MenuItem("Tools/DATN/Production/Validate Production Setup")]
@@ -538,6 +559,71 @@ public static class BootstrapProductionSetup
             crafting.recipes.Add(recipe);
             EditorUtility.SetDirty(npc);
         }
+    }
+
+    private static void EnsureSprint5NarrativeData()
+    {
+        const string narrativeFolder = "Assets/Project/Resources/Data/Narrative";
+        EnsureFolder(narrativeFolder);
+
+        LoadOrCreateStoryEvent($"{narrativeFolder}/Story_Day01_Welcome.asset", "story_day01_welcome", "s5.story.day01.title", "s5.story.day01.body", 1, StoryEventChannel.Message, true);
+        LoadOrCreateStoryEvent($"{narrativeFolder}/Story_Day03_FarmRoutine.asset", "story_day03_farm_routine", "s5.story.day03.title", "s5.story.day03.body", 3, StoryEventChannel.Diary, true);
+        LoadOrCreateStoryEvent($"{narrativeFolder}/Story_Day07_News_MutantRumor.asset", "story_day07_news_mutant_rumor", "s5.story.day07.title", "s5.story.day07.body", 7, StoryEventChannel.News, true);
+        LoadOrCreateStoryEvent($"{narrativeFolder}/Story_Day10_MutantThreat.asset", "story_day10_mutant_threat", "s5.story.day10.title", "s5.story.day10.body", 10, StoryEventChannel.Message, true);
+        LoadOrCreateStoryEvent($"{narrativeFolder}/Story_Day14_ClearFarmEdge.asset", "story_day14_clear_farm_edge", "s5.story.day14.title", "s5.story.day14.body", 14, StoryEventChannel.Diary, true);
+        LoadOrCreateStoryEvent($"{narrativeFolder}/Story_Day21_BuildingPlan.asset", "story_day21_building_plan", "s5.story.day21.title", "s5.story.day21.body", 21, StoryEventChannel.Message, true);
+    }
+
+    private static StoryEventData LoadOrCreateStoryEvent(string path, string id, string titleKey, string bodyKey, int triggerDay, StoryEventChannel channel, bool showNotification)
+    {
+        var story = AssetDatabase.LoadAssetAtPath<StoryEventData>(path);
+        if (story == null)
+        {
+            story = ScriptableObject.CreateInstance<StoryEventData>();
+            story.name = Path.GetFileNameWithoutExtension(path);
+            AssetDatabase.CreateAsset(story, path);
+        }
+
+        story.id = id;
+        story.titleKey = titleKey;
+        story.bodyKey = bodyKey;
+        story.triggerDay = triggerDay;
+        story.channel = channel;
+        story.showNotification = showNotification;
+        EditorUtility.SetDirty(story);
+        return story;
+    }
+
+    private static void EnsureSprint5ResearchData()
+    {
+        const string researchFolder = "Assets/Project/Resources/Data/Research";
+        EnsureFolder(researchFolder);
+
+        LoadOrCreateResearch($"{researchFolder}/Research_Day03_WateringRoutine.asset", "research_day03_watering_routine", "s5.research.day03.title", "s5.research.day03.body", 3, "", "watering_routine");
+        LoadOrCreateResearch($"{researchFolder}/Research_Day07_MiningSurvey.asset", "research_day07_mining_survey", "s5.research.day07.title", "s5.research.day07.body", 7, "", "mining_survey");
+        LoadOrCreateResearch($"{researchFolder}/Research_Day10_MutantNotes.asset", "research_day10_mutant_notes", "s5.research.day10.title", "s5.research.day10.body", 10, "", "mutant_notes");
+        LoadOrCreateResearch($"{researchFolder}/Research_Day14_FieldExpansion.asset", "research_day14_field_expansion", "s5.research.day14.title", "s5.research.day14.body", 14, "", "field_expansion");
+        LoadOrCreateResearch($"{researchFolder}/Research_Day21_BuildingMethods.asset", "research_day21_building_methods", "s5.research.day21.title", "s5.research.day21.body", 21, "", "building_methods");
+    }
+
+    private static ResearchData LoadOrCreateResearch(string path, string id, string titleKey, string descriptionKey, int unlockDay, string unlockedRecipeId, string rewardId)
+    {
+        var research = AssetDatabase.LoadAssetAtPath<ResearchData>(path);
+        if (research == null)
+        {
+            research = ScriptableObject.CreateInstance<ResearchData>();
+            research.name = Path.GetFileNameWithoutExtension(path);
+            AssetDatabase.CreateAsset(research, path);
+        }
+
+        research.id = id;
+        research.titleKey = titleKey;
+        research.descriptionKey = descriptionKey;
+        research.unlockDay = unlockDay;
+        research.unlockedRecipeId = unlockedRecipeId;
+        research.rewardId = rewardId;
+        EditorUtility.SetDirty(research);
+        return research;
     }
 
     private static void EnsureSprint4Data()

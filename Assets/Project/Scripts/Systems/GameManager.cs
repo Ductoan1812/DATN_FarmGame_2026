@@ -31,6 +31,9 @@ public class GameManager : MonoBehaviour
     public SprinklerRegistry    SprinklerRegistry  { get; private set; }
     public SoilQualityTracker   SoilQualityTracker { get; private set; }
     public ClearZoneTracker     ClearZoneTracker   { get; private set; }
+    public NarrativeService     NarrativeService   { get; private set; }
+    public ResearchService      ResearchService    { get; private set; }
+    public AIAssistantService   AIAssistantService { get; private set; }
 
     // ── Shared ────────────────────────────────────────────
     public EventBus             EventBus           { get; private set; }
@@ -76,16 +79,21 @@ public class GameManager : MonoBehaviour
         InitWeatherSystem();
         InitSprinklerRegistry();
         InitSoilQualityTracker();
+        InitNarrativeService();
+        InitResearchService();
         InitDialogueGameplayBridge();
         InitSceneTransitionBridge();
         InitInteractionPreviewBridge();
         InitPlayerDeathHandler();
+        InitNarrativeUI();
+        InitAIAssistant();
         InitSaveLoadManager();
 
         // Subscribe save/load events
         EventBus.Subscribe<SaveGameRequestPublish>(OnSaveRequest);
         EventBus.Subscribe<LoadGameRequestPublish>(OnLoadRequest);
         EventBus.Subscribe<PlayerReadyPublish>(OnPlayerReady);
+        EventBus.Subscribe<StoryEventUnlockedPublish>(OnStoryEventUnlocked);
     }
 
     private void Start()
@@ -105,7 +113,11 @@ public class GameManager : MonoBehaviour
             EventBus.Unsubscribe<SaveGameRequestPublish>(OnSaveRequest);
             EventBus.Unsubscribe<LoadGameRequestPublish>(OnLoadRequest);
             EventBus.Unsubscribe<PlayerReadyPublish>(OnPlayerReady);
+            EventBus.Unsubscribe<StoryEventUnlockedPublish>(OnStoryEventUnlocked);
         }
+
+        NarrativeService?.Shutdown();
+        ResearchService?.Shutdown();
 
         if (Instance == this)
             Instance = null;
@@ -261,6 +273,24 @@ public class GameManager : MonoBehaviour
         ClearZoneTracker = new ClearZoneTracker(WorldService, tileData);
     }
 
+    private void InitNarrativeService()
+    {
+#if UNITY_EDITOR
+        var guids = UnityEditor.AssetDatabase.FindAssets("t:StoryEventData");
+        var events = new System.Collections.Generic.List<StoryEventData>();
+        foreach (var guid in guids)
+        {
+            var path = UnityEditor.AssetDatabase.GUIDToAssetPath(guid);
+            var data = UnityEditor.AssetDatabase.LoadAssetAtPath<StoryEventData>(path);
+            if (data != null) events.Add(data);
+        }
+        NarrativeService = new NarrativeService(EventBus, events);
+#else
+        var events = Resources.LoadAll<StoryEventData>("");
+        NarrativeService = new NarrativeService(EventBus, events);
+#endif
+    }
+
     private void InitWeatherSystem()
     {
         if (weatherConfig == null)
@@ -293,6 +323,46 @@ public class GameManager : MonoBehaviour
     {
         if (GetComponent<PlayerDeathHandler>() == null)
             gameObject.AddComponent<PlayerDeathHandler>();
+    }
+
+    private void InitNarrativeUI()
+    {
+        EnsureNarrativeUIComponent<MessageNotificationUI>("NarrativeUI_MessageNotification");
+        EnsureNarrativeUIComponent<NewsBroadcastUI>("NarrativeUI_NewsBroadcast");
+        EnsureNarrativeUIComponent<DiaryUI>("NarrativeUI_Diary");
+        EnsureNarrativeUIComponent<CalendarUI>("CalendarUI");
+    }
+
+    private void InitResearchService()
+    {
+#if UNITY_EDITOR
+        var guids = UnityEditor.AssetDatabase.FindAssets("t:ResearchData");
+        var research = new System.Collections.Generic.List<ResearchData>();
+        foreach (var guid in guids)
+        {
+            var path = UnityEditor.AssetDatabase.GUIDToAssetPath(guid);
+            var data = UnityEditor.AssetDatabase.LoadAssetAtPath<ResearchData>(path);
+            if (data != null) research.Add(data);
+        }
+        ResearchService = new ResearchService(EventBus, TimeManager, research);
+#else
+        var research = Resources.LoadAll<ResearchData>("");
+        ResearchService = new ResearchService(EventBus, TimeManager, research);
+#endif
+    }
+
+    private void InitAIAssistant()
+    {
+        AIAssistantService = new AIAssistantService(WateredTileTracker, WeatherSystem, TimeManager);
+        EnsureNarrativeUIComponent<AIAssistantUI>("AIAssistantUI");
+    }
+
+    private T EnsureNarrativeUIComponent<T>(string childName) where T : Component
+    {
+        var child = transform.Find(childName);
+        var go = child != null ? child.gameObject : new GameObject(childName);
+        go.transform.SetParent(transform, false);
+        return go.GetComponent<T>() ?? go.AddComponent<T>();
     }
 
     private void InitSpawnSystem()
@@ -353,6 +423,47 @@ public class GameManager : MonoBehaviour
     {
         EventBus.Publish(new GameReadyPublish());
         Debug.Log("[GameManager] GameReadyPublish published — boot sequence complete.");
+    }
+
+    private void OnStoryEventUnlocked(StoryEventUnlockedPublish evt)
+    {
+        if (evt.data == null || evt.data.id != "story_day10_mutant_threat")
+            return;
+
+        SpawnNarrativeMutant();
+    }
+
+    private void SpawnNarrativeMutant()
+    {
+        var enemyData = EntityDataRegistry?.GetById("enemy_t2_bat")
+                     ?? EntityDataRegistry?.GetById("enemy_t1_slime");
+        if (enemyData == null)
+        {
+            Debug.LogWarning("[GameManager] Narrative mutant spawn skipped: no enemy data found.");
+            return;
+        }
+
+        var spawnPos = defaultPlayerPos + new Vector2(3f, 0f);
+        var player = FindAnyObjectByType<PlayerControler>();
+        if (player != null)
+            spawnPos = (Vector2)player.transform.position + new Vector2(3f, 0f);
+
+        var sceneName = SceneManager.GetActiveScene().name;
+        var cell = new Vector3Int(Mathf.FloorToInt(spawnPos.x), Mathf.FloorToInt(spawnPos.y), 0);
+        var payload = new SceneSpawnPayload
+        {
+            sceneName = sceneName,
+            markerKind = SceneMarkerKind.Enemy,
+            objectType = ObjectType.Enemy01,
+            cell = cell,
+            spawnGroupId = "narrative_day10_mutant",
+            persistentId = SceneSpawnPayload.BuildPersistentId(sceneName, SceneMarkerKind.Enemy, ObjectType.Enemy01, cell, "narrative_day10_mutant"),
+            savePolicy = SceneEntitySavePolicy.Persistent,
+            initialAmount = 1
+        };
+
+        EventBus.Publish(new SpawnRequestPublish(spawnPos, ObjectType.Enemy01, enemyData, 1, true, payload));
+        Debug.Log($"[GameManager] Narrative mutant spawn requested: {enemyData.id} at {spawnPos}");
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
