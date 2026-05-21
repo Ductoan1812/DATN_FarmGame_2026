@@ -6,13 +6,19 @@ using UnityEngine;
 ///   - Lắng nghe DieEvent
 ///   - Spawn drop items
 /// </summary>
-public class DropRuntime : IModuleRuntime, IHandleEvent<DieEvent>
+public class DropRuntime : IModuleRuntime, IHandleEvent<DieEvent>, IHandleEvent<SpawnedEvent>
 {
     public DropEntry[] harvestDrops;
+    private EntityRuntime sourceEntity;
 
     public DropRuntime(DropModule data)
     {
         harvestDrops = data.harvestDrops;
+    }
+
+    public void Handle(SpawnedEvent e)
+    {
+        sourceEntity = e.entity;
     }
 
     // ── Save / Load ───────────────────────────────────────────────────────────
@@ -37,6 +43,9 @@ public class DropRuntime : IModuleRuntime, IHandleEvent<DieEvent>
 
         var pos3 = go.transform.position;
         var dropPos = new Vector2(pos3.x, pos3.y);
+        var gm = GameManager.Instance;
+        var entityService = gm?.EntityService;
+        int quality = GetDropQuality(e.entity);
 
         foreach (var entry in harvestDrops)
         {
@@ -49,15 +58,28 @@ public class DropRuntime : IModuleRuntime, IHandleEvent<DieEvent>
             int amount = Random.Range(entry.minAmount, entry.maxAmount + 1);
             if (amount <= 0) continue;
 
-            var req = new SpawnRequestPublish(
-                worldPos:         dropPos,
-                idPrefab:         ObjectType.EntityDrop,
-                entityData:       entry.item,
-                spawnAmount:      amount,
-                bypassValidation: true
-            );
+            SpawnRequestPublish req;
+            if (entityService != null)
+            {
+                var item = entityService.Create(entry.item, amount);
+                item.SetQuality(quality);
+                req = new SpawnRequestPublish(
+                    worldPos: dropPos,
+                    idPrefab: ObjectType.EntityDrop,
+                    runtime: item,
+                    bypassValidation: true);
+            }
+            else
+            {
+                req = new SpawnRequestPublish(
+                    worldPos: dropPos,
+                    idPrefab: ObjectType.EntityDrop,
+                    entityData: entry.item,
+                    spawnAmount: amount,
+                    bypassValidation: true);
+            }
 
-            GameManager.Instance.EventBus.Publish(req);
+            gm?.EventBus?.Publish(req);
         }
     }
 
@@ -72,6 +94,7 @@ public class DropRuntime : IModuleRuntime, IHandleEvent<DieEvent>
         if (entityService == null || inventoryService == null)
             return 0;
 
+        int quality = GetDropQuality(sourceEntity);
         int totalReceived = 0;
 
         foreach (var entry in harvestDrops)
@@ -83,6 +106,7 @@ public class DropRuntime : IModuleRuntime, IHandleEvent<DieEvent>
             if (amount <= 0) continue;
 
             var item = entityService.Create(entry.item, amount);
+            item.SetQuality(quality);
             int received = inventoryService.Pickup(item, receiver);
             totalReceived += received;
 
@@ -95,9 +119,14 @@ public class DropRuntime : IModuleRuntime, IHandleEvent<DieEvent>
                     bypassValidation: true));
             }
 
-            Debug.Log($"[DropRuntime] Nhận {entry.item.keyName} x{received}/{amount}.");
+            Debug.Log($"[DropRuntime] Nhận {entry.item.keyName} x{received}/{amount} (quality {quality}).");
         }
 
         return totalReceived;
+    }
+
+    private static int GetDropQuality(EntityRuntime source)
+    {
+        return source?.GetModule<QualityRuntime>()?.GetHarvestQuality() ?? 1;
     }
 }

@@ -152,6 +152,7 @@ public static class ShopService
         AddMoney(merchant, -totalPrice);
 
         var result = new ShopTransactionResult(true, ShopTransactionFailReason.None, transferred, totalPrice);
+        GameManager.Instance?.DailyTracker?.RecordIncome(totalPrice);
         PublishResult(seller, merchant, result);
         return result;
     }

@@ -55,6 +55,7 @@ public static class BootstrapProductionSetup
         EnsureGeneratedIcons();
         EnsurePlayerStartMarker();
         EnsureMasteryUnlockData();
+        EnsureCropQualityModules();
         EnsureSprint5NarrativeData();
         EnsureSprint5ResearchData();
         StampPlayerStartMarker();
@@ -71,9 +72,19 @@ public static class BootstrapProductionSetup
     public static void ExecuteSprint4DataOnly()
     {
         EnsureSprint4Data();
+        EnsureCropQualityModules();
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
         Debug.Log("[BootstrapProductionSetup] Sprint 4 data created/updated.");
+    }
+
+    [MenuItem("Tools/DATN/Production/Sprint 2 Quality Data Only")]
+    public static void ExecuteSprint2QualityDataOnly()
+    {
+        EnsureCropQualityModules();
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
+        Debug.Log("[BootstrapProductionSetup] Sprint 2 quality modules created/updated.");
     }
 
     [MenuItem("Tools/DATN/Production/Sprint 5 Narrative Data Only")]
@@ -624,6 +635,27 @@ public static class BootstrapProductionSetup
         research.rewardId = rewardId;
         EditorUtility.SetDirty(research);
         return research;
+    }
+
+    private static void EnsureCropQualityModules()
+    {
+        var guids = AssetDatabase.FindAssets("t:EntityData", new[] { "Assets/Project/ScriptableObjects/WorldObjects/Plants" });
+        foreach (var guid in guids)
+        {
+            var path = AssetDatabase.GUIDToAssetPath(guid);
+            var data = AssetDatabase.LoadAssetAtPath<EntityData>(path);
+            if (data?.modules == null) continue;
+
+            bool isCrop = data.modules.OfType<StageModule>().Any()
+                       && data.modules.OfType<HarvestModule>().Any(module => module.harvestTool == ToolType.None);
+            if (!isCrop) continue;
+
+            var quality = EnsureModule<QualityModule>(data);
+            quality.minQuality = Mathf.Max(1, quality.minQuality);
+            quality.maxQuality = Mathf.Max(quality.minQuality, quality.maxQuality);
+            quality.soilQualityPerStar = Mathf.Max(1, quality.soilQualityPerStar);
+            EditorUtility.SetDirty(data);
+        }
     }
 
     private static void EnsureSprint4Data()

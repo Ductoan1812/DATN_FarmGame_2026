@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
     public NarrativeService     NarrativeService   { get; private set; }
     public ResearchService      ResearchService    { get; private set; }
     public AIAssistantService   AIAssistantService { get; private set; }
+    public DailyTracker         DailyTracker       { get; private set; }
 
     // ── Shared ────────────────────────────────────────────
     public EventBus             EventBus           { get; private set; }
@@ -87,6 +88,8 @@ public class GameManager : MonoBehaviour
         InitPlayerDeathHandler();
         InitNarrativeUI();
         InitAIAssistant();
+        InitDailyTracker();
+        InitEndOfDaySummaryUI();
         InitSaveLoadManager();
 
         // Subscribe save/load events
@@ -118,6 +121,7 @@ public class GameManager : MonoBehaviour
 
         NarrativeService?.Shutdown();
         ResearchService?.Shutdown();
+        DailyTracker?.Shutdown();
 
         if (Instance == this)
             Instance = null;
@@ -355,6 +359,16 @@ public class GameManager : MonoBehaviour
     {
         AIAssistantService = new AIAssistantService(WateredTileTracker, WeatherSystem, TimeManager);
         EnsureNarrativeUIComponent<AIAssistantUI>("AIAssistantUI");
+    }
+
+    private void InitDailyTracker()
+    {
+        DailyTracker = new DailyTracker(EventBus, TimeManager);
+    }
+
+    private void InitEndOfDaySummaryUI()
+    {
+        EnsureNarrativeUIComponent<EndOfDaySummaryUI>("EndOfDaySummaryUI");
     }
 
     private T EnsureNarrativeUIComponent<T>(string childName) where T : Component
