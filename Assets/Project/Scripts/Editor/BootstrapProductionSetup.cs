@@ -106,6 +106,16 @@ public static class BootstrapProductionSetup
         Debug.Log("[BootstrapProductionSetup] Sprint 5 research data created/updated.");
     }
 
+    [MenuItem("Tools/DATN/Production/Vertical Slice VS-1 Crop Data Only")]
+    public static void ExecuteVerticalSliceCropDataOnly()
+    {
+        EnsureVerticalSliceCropData();
+        EnsureCropQualityModules();
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
+        Debug.Log("[BootstrapProductionSetup] VS-1 crop/seed data created/updated.");
+    }
+
     [MenuItem("Tools/DATN/Production/Validate Production Setup")]
     public static void ValidateMenu() => ValidateSetup(logSuccess: true);
 
@@ -656,6 +666,118 @@ public static class BootstrapProductionSetup
             quality.soilQualityPerStar = Mathf.Max(1, quality.soilQualityPerStar);
             EditorUtility.SetDirty(data);
         }
+    }
+
+    private static void EnsureVerticalSliceCropData()
+    {
+        var crops = new[] {
+            new { tier = 1, suffix = "tomato", keyName = "vs.crop.tomato.name", descKey = "vs.crop.tomato.desc", growthDays = 4, sellPrice = 35, regrow = 0 },
+            new { tier = 1, suffix = "potato", keyName = "vs.crop.potato.name", descKey = "vs.crop.potato.desc", growthDays = 5, sellPrice = 40, regrow = 0 },
+            new { tier = 1, suffix = "cucumber", keyName = "vs.crop.cucumber.name", descKey = "vs.crop.cucumber.desc", growthDays = 6, sellPrice = 50, regrow = 2 },
+            new { tier = 2, suffix = "corn", keyName = "vs.crop.corn.name", descKey = "vs.crop.corn.desc", growthDays = 8, sellPrice = 80, regrow = 0 },
+            new { tier = 2, suffix = "watermelon", keyName = "vs.crop.watermelon.name", descKey = "vs.crop.watermelon.desc", growthDays = 10, sellPrice = 150, regrow = 0 },
+            new { tier = 2, suffix = "pepper", keyName = "vs.crop.pepper.name", descKey = "vs.crop.pepper.desc", growthDays = 7, sellPrice = 70, regrow = 3 },
+            new { tier = 3, suffix = "pumpkin", keyName = "vs.crop.pumpkin.name", descKey = "vs.crop.pumpkin.desc", growthDays = 12, sellPrice = 200, regrow = 0 },
+            new { tier = 3, suffix = "grape", keyName = "vs.crop.grape.name", descKey = "vs.crop.grape.desc", growthDays = 10, sellPrice = 180, regrow = 3 },
+            new { tier = 3, suffix = "coffee", keyName = "vs.crop.coffee.name", descKey = "vs.crop.coffee.desc", growthDays = 14, sellPrice = 250, regrow = 4 },
+            new { tier = 4, suffix = "ginseng", keyName = "vs.crop.ginseng.name", descKey = "vs.crop.ginseng.desc", growthDays = 18, sellPrice = 500, regrow = 0 },
+            new { tier = 4, suffix = "orchid", keyName = "vs.crop.orchid.name", descKey = "vs.crop.orchid.desc", growthDays = 16, sellPrice = 400, regrow = 0 },
+            new { tier = 5, suffix = "forbidden_fruit", keyName = "vs.crop.forbidden_fruit.name", descKey = "vs.crop.forbidden_fruit.desc", growthDays = 22, sellPrice = 1000, regrow = 0 },
+            new { tier = 5, suffix = "golden_mushroom", keyName = "vs.crop.golden_mushroom.name", descKey = "vs.crop.golden_mushroom.desc", growthDays = 20, sellPrice = 800, regrow = 5 }
+        };
+
+        foreach (var spec in crops)
+        {
+            string pascalName = ToPascalCase(spec.suffix);
+            string cropPath = $"Assets/Project/ScriptableObjects/Items/Crops/VerticalSlice/Crop_T{spec.tier}_{pascalName}.asset";
+            string seedPath = $"Assets/Project/ScriptableObjects/WorldObjects/Plants/VerticalSlice/Seed_T{spec.tier}_{pascalName}.asset";
+            string plantPath = $"Assets/Project/ScriptableObjects/WorldObjects/Plants/Placed/VerticalSlice/CropPlant_T{spec.tier}_{pascalName}.asset";
+
+            EnsureFolder(Path.GetDirectoryName(cropPath)?.Replace('\\', '/'));
+            EnsureFolder(Path.GetDirectoryName(seedPath)?.Replace('\\', '/'));
+            EnsureFolder(Path.GetDirectoryName(plantPath)?.Replace('\\', '/'));
+
+            var cropItem = LoadOrCreateEntity(cropPath);
+            cropItem.id = $"vs_crop_t{spec.tier}_{spec.suffix}";
+            cropItem.keyName = spec.keyName;
+            cropItem.descKey = spec.descKey;
+            cropItem.category = ItemCategory.Crop;
+            cropItem.maxStack = 999;
+            cropItem.buyPrice = -1;
+            cropItem.sellPrice = spec.sellPrice;
+            cropItem.modules = new List<IModuleData>();
+            cropItem.baseStats = new StatsData { baseStats = new List<StatEntry>() };
+            EditorUtility.SetDirty(cropItem);
+
+            var plantEntity = LoadOrCreateEntity(plantPath);
+            plantEntity.id = $"vs_crop_plant_t{spec.tier}_{spec.suffix}";
+            plantEntity.keyName = spec.keyName;
+            plantEntity.descKey = spec.descKey;
+            plantEntity.category = ItemCategory.Placeable;
+            plantEntity.maxStack = 1;
+            plantEntity.buyPrice = -1;
+            plantEntity.sellPrice = 0;
+            plantEntity.placementRule = new PlacementRule { occupyLayer = EntityLayer.Plant, requireTags = PlacementTag.Plantable, provideTags = PlacementTag.None, blockLayers = new[] { EntityLayer.Plant } };
+            var stageModule = new StageModule { stages = CreateGrowthStages(spec.growthDays, spec.regrow), wiltSprite = null, regrowStageIndex = spec.regrow > 0 ? 2 : -1 };
+            plantEntity.modules = new List<IModuleData>
+            {
+                stageModule,
+                new HarvestModule { harvestTool = ToolType.Scythe, wrongToolPenalty = 0f },
+                new HealthModule { canTakeDamage = true },
+                new DropModule { harvestDrops = new[] { new DropEntry { item = cropItem, minAmount = 1, maxAmount = 1, dropChance = 1f } } },
+                new ExpRewardModule { rewardExp = 5 + spec.tier * 3, sourceType = ExpSourceType.Harvest, requireKiller = true },
+                new MortalModule(),
+                new QualityModule { minQuality = 1, maxQuality = 5, soilQualityPerStar = 10 }
+            };
+            SetOrAddStat(plantEntity, StatType.MaxHp, 10f);
+            SetOrAddStat(plantEntity, StatType.Hp, 10f);
+            EditorUtility.SetDirty(plantEntity);
+
+            var seedItem = LoadOrCreateEntity(seedPath);
+            seedItem.id = $"vs_seed_t{spec.tier}_{spec.suffix}";
+            seedItem.keyName = spec.keyName;
+            seedItem.descKey = spec.descKey;
+            seedItem.category = ItemCategory.Seed;
+            seedItem.maxStack = 999;
+            seedItem.buyPrice = Mathf.RoundToInt(spec.sellPrice * 0.5f);
+            seedItem.sellPrice = -1;
+            seedItem.placementRule = plantEntity.placementRule;
+            seedItem.modules = new List<IModuleData>
+            {
+                new PlacementModule { objectTypeToSpawn = spec.tier <= 2 ? ObjectType.Plant01 : ObjectType.Plant02, placedEntityData = plantEntity, centerTile = true, animTrigger = "PutDown" }
+            };
+            EditorUtility.SetDirty(seedItem);
+        }
+    }
+
+    private static GrowthStage[] CreateGrowthStages(int growthDays, int regrowDays)
+    {
+        int safeGrowthDays = Mathf.Max(1, growthDays);
+        int safeRegrowDays = Mathf.Max(0, regrowDays);
+
+        if (safeRegrowDays > 0)
+        {
+            return new[]
+            {
+                new GrowthStage { sprite = null, daysToGrow = 1, canHarvest = false },
+                new GrowthStage { sprite = null, daysToGrow = Mathf.Max(1, safeGrowthDays - safeRegrowDays - 1), canHarvest = false },
+                new GrowthStage { sprite = null, daysToGrow = safeRegrowDays, canHarvest = false },
+                new GrowthStage { sprite = null, daysToGrow = 999, canHarvest = true }
+            };
+        }
+
+        return new[]
+        {
+            new GrowthStage { sprite = null, daysToGrow = 1, canHarvest = false },
+            new GrowthStage { sprite = null, daysToGrow = Mathf.Max(1, safeGrowthDays - 1), canHarvest = false },
+            new GrowthStage { sprite = null, daysToGrow = 999, canHarvest = true }
+        };
+    }
+
+    private static string ToPascalCase(string input)
+    {
+        var parts = input.Split('_');
+        return string.Concat(parts.Select(p => char.ToUpperInvariant(p[0]) + p.Substring(1).ToLowerInvariant()));
     }
 
     private static void EnsureSprint4Data()

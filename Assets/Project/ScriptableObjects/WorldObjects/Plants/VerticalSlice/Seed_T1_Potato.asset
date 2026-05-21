@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8393fbdfdb650e5418aad1c82ae5b8b5, type: 3}
+  m_Name: Seed_T1_Potato
+  m_EditorClassIdentifier: 
+  id: vs_seed_t1_potato
+  keyName: vs.crop.potato.name
+  descKey: vs.crop.potato.desc
+  icon: {fileID: 0}
+  category: 2
+  maxStack: 999
+  buyPrice: 20
+  sellPrice: -1
+  baseStats:
+    baseStats: []
+  placementRule:
+    occupyLayer: 2
+    requireTags: 1
+    provideTags: 0
+    blockLayers: 02000000
+  modules:
+  - rid: 8196223049287335962
+  references:
+    version: 2
+    RefIds:
+    - rid: 8196223049287335962
+      type: {class: PlacementModule, ns: , asm: Assembly-CSharp}
+      data:
+        objectTypeToSpawn: 2
+        placedEntityData: {fileID: 11400000, guid: 1120a9aef5d58994994a7af829c91355, type: 2}
+        centerTile: 1
+        animTrigger: PutDown
