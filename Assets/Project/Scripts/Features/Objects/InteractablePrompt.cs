@@ -12,6 +12,8 @@ using TMPro;
 /// </summary>
 public class InteractablePrompt : MonoBehaviour, IInteractable
 {
+    private const string DefaultFontResourcePath = "Fonts & Materials/Roboto-Bold SDF";
+
     [Header("Interaction")]
     [SerializeField] private Collider2D interactionCollider;
     [SerializeField] private bool autoAssignCollider = true;
@@ -24,6 +26,7 @@ public class InteractablePrompt : MonoBehaviour, IInteractable
     [SerializeField] private float fontSize = 3f;
     [SerializeField] private Color textColor = Color.white;
     [SerializeField] private Color bgColor = new(0f, 0f, 0f, 0.6f);
+    [SerializeField] private TMP_FontAsset fontAsset;
 
     private readonly Collider2D[] overlapBuffer = new Collider2D[8];
     private GameObject _promptGO;
@@ -109,6 +112,10 @@ public class InteractablePrompt : MonoBehaviour, IInteractable
         _promptGO.transform.localScale = Vector3.one;
 
         _tmp = _promptGO.AddComponent<TextMeshPro>();
+        if (fontAsset == null)
+            fontAsset = Resources.Load<TMP_FontAsset>(DefaultFontResourcePath);
+        if (fontAsset != null)
+            _tmp.font = fontAsset;
         _tmp.text = promptText;
         _tmp.fontSize = fontSize;
         _tmp.color = textColor;

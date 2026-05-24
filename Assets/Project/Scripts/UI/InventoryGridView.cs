@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 /// <summary>
@@ -20,6 +21,8 @@ public class InventoryGridView : MonoBehaviour
     private readonly List<SlotView> views = new();
     private readonly List<GameObject> spawnedSlots = new();
     private Action<int, InventoryGridItemData> onSlotClicked;
+    private Action<int, InventoryGridItemData, RectTransform> onSlotHovered;
+    private Action<int> onSlotHoverExited;
     private IReadOnlyList<InventoryGridItemData> currentItems;
     private bool viewsReady;
     private int selectedIndex = -1;
@@ -44,6 +47,14 @@ public class InventoryGridView : MonoBehaviour
     public void SetClickHandler(Action<int, InventoryGridItemData> handler)
     {
         onSlotClicked = handler;
+    }
+
+    public void SetHoverHandlers(
+        Action<int, InventoryGridItemData, RectTransform> hovered,
+        Action<int> exited)
+    {
+        onSlotHovered = hovered;
+        onSlotHoverExited = exited;
     }
 
     public void Render(IReadOnlyList<InventoryGridItemData> items, int selected = -1, int visibleSlotOverride = -1)
@@ -135,7 +146,9 @@ public class InventoryGridView : MonoBehaviour
             enableDragDrop,
             dragInventoryType,
             showAmountWhenOne,
-            HandleSlotClicked);
+            HandleSlotClicked,
+            HandleSlotHovered,
+            HandleSlotHoverExited);
     }
 
     private void RefreshAll()
@@ -158,6 +171,26 @@ public class InventoryGridView : MonoBehaviour
         selectedIndex = index;
         SetSelectedIndex(index);
         onSlotClicked?.Invoke(index, item);
+    }
+
+    private void HandleSlotHovered(int index, RectTransform slotRect)
+    {
+        var item = index >= 0 && currentItems != null && index < currentItems.Count
+            ? currentItems[index]
+            : InventoryGridItemData.Empty;
+
+        if (!item.Interactable)
+        {
+            onSlotHoverExited?.Invoke(index);
+            return;
+        }
+
+        onSlotHovered?.Invoke(index, item, slotRect);
+    }
+
+    private void HandleSlotHoverExited(int index)
+    {
+        onSlotHoverExited?.Invoke(index);
     }
 
     private void ForceRebuild()
@@ -186,7 +219,9 @@ public class InventoryGridView : MonoBehaviour
             bool enableDragDrop,
             InventoryType dragType,
             bool showAmountWhenOne,
-            Action<int> onSelected)
+            Action<int> onSelected,
+            Action<int, RectTransform> onHovered,
+            Action<int> onHoverExited)
         {
             this.root = root;
             this.showAmountWhenOne = showAmountWhenOne;
@@ -206,6 +241,10 @@ public class InventoryGridView : MonoBehaviour
                 if (drag == null) drag = root.gameObject.AddComponent<DraggableSlot>();
                 drag.Init(dragType, index, icon);
             }
+
+            var hover = root.GetComponent<InventorySlotHoverRelay>();
+            if (hover == null) hover = root.gameObject.AddComponent<InventorySlotHoverRelay>();
+            hover.Configure(index, root as RectTransform, onHovered, onHoverExited);
 
             toggle = root.GetComponent<Toggle>();
             if (toggle != null)
@@ -277,6 +316,36 @@ public class InventoryGridView : MonoBehaviour
                 ? MaxDisplayAmount.ToString()
                 : amount.ToString();
         }
+    }
+}
+
+public sealed class InventorySlotHoverRelay : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+{
+    private int index;
+    private RectTransform slotRect;
+    private Action<int, RectTransform> hovered;
+    private Action<int> exited;
+
+    public void Configure(
+        int slotIndex,
+        RectTransform rect,
+        Action<int, RectTransform> onHovered,
+        Action<int> onExited)
+    {
+        index = slotIndex;
+        slotRect = rect;
+        hovered = onHovered;
+        exited = onExited;
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        hovered?.Invoke(index, slotRect);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        exited?.Invoke(index);
     }
 }
 

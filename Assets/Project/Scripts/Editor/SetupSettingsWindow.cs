@@ -23,6 +23,8 @@ public static class SetupSettingsWindow
             return;
         }
 
+        AlignWithCoreMenuContent(windowGo);
+
         // Xoá children cũ
         for (int i = windowGo.transform.childCount - 1; i >= 0; i--)
             Object.DestroyImmediate(windowGo.transform.GetChild(i).gameObject);
@@ -55,17 +57,20 @@ public static class SetupSettingsWindow
         AddLayoutElement(header, minH: 60f, prefH: 60f, flexW: 1f);
         var headerImg = header.AddComponent<Image>();
         headerImg.color = new Color(0.30f, 0.17f, 0.07f, 0.95f);
+        var fontAsset = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Roboto-Bold SDF.asset");
+
         var headerHL = header.AddComponent<HorizontalLayoutGroup>();
         headerHL.padding          = new RectOffset(20, 12, 0, 0);
         headerHL.spacing          = 8f;
-        headerHL.childAlignment   = TextAnchor.MiddleLeft;
+        headerHL.childAlignment   = TextAnchor.MiddleCenter;
         headerHL.childControlWidth  = true;
         headerHL.childControlHeight = true;
         headerHL.childForceExpandWidth  = false;
-        headerHL.childForceExpandHeight = true;
+        headerHL.childForceExpandHeight = false;
 
         var headerTitle = CreateChild("TitleText", header.transform);
         var headerTitleTMP = headerTitle.AddComponent<TextMeshProUGUI>();
+        if (fontAsset != null) headerTitleTMP.font = fontAsset;
         headerTitleTMP.text      = "Cài đặt";
         headerTitleTMP.fontSize  = 26f;
         headerTitleTMP.fontStyle = FontStyles.Bold;
@@ -82,6 +87,7 @@ public static class SetupSettingsWindow
         var closeLabelGo = CreateChild("Label", closeBtnGo.transform);
         SetStretchFull(closeLabelGo);
         var closeLabelTMP = closeLabelGo.AddComponent<TextMeshProUGUI>();
+        if (fontAsset != null) closeLabelTMP.font = fontAsset;
         closeLabelTMP.text      = "✕";
         closeLabelTMP.fontSize  = 22f;
         closeLabelTMP.alignment = TextAlignmentOptions.Center;
@@ -103,6 +109,7 @@ public static class SetupSettingsWindow
         var volSectionLabel = CreateChild("SectionVolume", body.transform);
         AddLayoutElement(volSectionLabel, minH: 32f, prefH: 32f, flexW: 1f);
         var volSectionTMP = volSectionLabel.AddComponent<TextMeshProUGUI>();
+        if (fontAsset != null) volSectionTMP.font = fontAsset;
         volSectionTMP.text      = "Âm lượng";
         volSectionTMP.fontSize  = 22f;
         volSectionTMP.fontStyle = FontStyles.Bold;
@@ -123,6 +130,7 @@ public static class SetupSettingsWindow
         var langLabel = CreateChild("SectionLanguage", body.transform);
         AddLayoutElement(langLabel, minH: 32f, prefH: 32f, flexW: 1f);
         var langLabelTMP = langLabel.AddComponent<TextMeshProUGUI>();
+        if (fontAsset != null) langLabelTMP.font = fontAsset;
         langLabelTMP.text      = "Ngôn ngữ";
         langLabelTMP.fontSize  = 22f;
         langLabelTMP.fontStyle = FontStyles.Bold;
@@ -141,6 +149,7 @@ public static class SetupSettingsWindow
         var langNameGo = CreateChild("LangName", langRow.transform);
         AddLayoutElement(langNameGo, minW: 140f, prefW: 140f);
         var langNameTMP = langNameGo.AddComponent<TextMeshProUGUI>();
+        if (fontAsset != null) langNameTMP.font = fontAsset;
         langNameTMP.text      = "Ngôn ngữ";
         langNameTMP.fontSize  = 20f;
         langNameTMP.color     = new Color(0.90f, 0.80f, 0.58f);
@@ -157,6 +166,7 @@ public static class SetupSettingsWindow
         var ddLabel = CreateChild("Label", dropdownGo.transform);
         SetStretchFull(ddLabel);
         var ddLabelTMP = ddLabel.AddComponent<TextMeshProUGUI>();
+        if (fontAsset != null) ddLabelTMP.font = fontAsset;
         ddLabelTMP.text      = string.Empty;
         ddLabelTMP.fontSize  = 18f;
         ddLabelTMP.color     = new Color(0.95f, 0.85f, 0.60f);
@@ -175,6 +185,7 @@ public static class SetupSettingsWindow
         arrowRect.sizeDelta        = new Vector2(24f, 24f);
         arrowRect.anchoredPosition = new Vector2(-6f, 0f);
         var arrowTMP = arrowGo.AddComponent<TextMeshProUGUI>();
+        if (fontAsset != null) arrowTMP.font = fontAsset;
         arrowTMP.text      = "▼";
         arrowTMP.fontSize  = 14f;
         arrowTMP.color     = new Color(0.95f, 0.85f, 0.60f);
@@ -194,6 +205,7 @@ public static class SetupSettingsWindow
         var saveLabelGo = CreateChild("Label", saveBtnGo.transform);
         SetStretchFull(saveLabelGo);
         var saveLabelTMP = saveLabelGo.AddComponent<TextMeshProUGUI>();
+        if (fontAsset != null) saveLabelTMP.font = fontAsset;
         saveLabelTMP.text      = "Lưu & Đóng";
         saveLabelTMP.fontSize  = 22f;
         saveLabelTMP.fontStyle = FontStyles.Bold;
@@ -220,9 +232,18 @@ public static class SetupSettingsWindow
 
     // ── Factory ───────────────────────────────────────────────────
 
+    private static void AlignWithCoreMenuContent(GameObject windowGo)
+    {
+        var rect = windowGo.GetComponent<RectTransform>();
+        if (rect == null) return;
+
+        rect.anchoredPosition = new Vector2(-120f, 30f);
+    }
+
     private static (Slider slider, TMP_Text valueLabel) CreateSliderRow(
         GameObject parent, string rowName, string sliderName, string valueName, string labelStr)
     {
+        var fontAsset = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Roboto-Bold SDF.asset");
         var row = CreateChild("Row_" + rowName, parent.transform);
         AddLayoutElement(row, minH: 44f, prefH: 44f, flexW: 1f);
         var rowHL = row.AddComponent<HorizontalLayoutGroup>();
@@ -237,6 +258,7 @@ public static class SetupSettingsWindow
         var labelGo = CreateChild("Label_" + rowName, row.transform);
         AddLayoutElement(labelGo, minW: 140f, prefW: 140f);
         var labelTMP = labelGo.AddComponent<TextMeshProUGUI>();
+        if (fontAsset != null) labelTMP.font = fontAsset;
         labelTMP.text      = labelStr;
         labelTMP.fontSize  = 20f;
         labelTMP.color     = new Color(0.90f, 0.80f, 0.58f);
@@ -293,6 +315,7 @@ public static class SetupSettingsWindow
         var valueLabelGo = CreateChild(valueName, row.transform);
         AddLayoutElement(valueLabelGo, minW: 56f, prefW: 56f);
         var valueLabelTMP = valueLabelGo.AddComponent<TextMeshProUGUI>();
+        if (fontAsset != null) valueLabelTMP.font = fontAsset;
         valueLabelTMP.text      = "100%";
         valueLabelTMP.fontSize  = 18f;
         valueLabelTMP.fontStyle = FontStyles.Bold;

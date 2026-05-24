@@ -106,6 +106,8 @@ public static class SetupNpcInteractionUI
     private static QuestRefs BuildQuestPanel(Transform root, Transform templates)
     {
         var panel = GetOrCreatePanel("QuestPanel", root, PanelColor);
+        for (var i = panel.transform.childCount - 1; i >= 0; i--)
+            Object.DestroyImmediate(panel.transform.GetChild(i).gameObject);
         SetupRect(panel, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(720f, 520f));
         AddOutline(panel, new Color(0.25f, 0.13f, 0.05f, 1f), new Vector2(4f, -4f));
 
@@ -116,9 +118,12 @@ public static class SetupNpcInteractionUI
         var closeButton = CreateButton("CloseButton", panel.transform, "X", 24, new Vector2(40f, 40f), ButtonColor, LightTextColor);
         SetupRect(closeButton.gameObject, new Vector2(1f, 1f), new Vector2(1f, 1f), new Vector2(1f, 1f), new Vector2(-14f, -14f), new Vector2(40f, 40f));
 
-        var stateText = GetOrCreateText("StateText", panel.transform, "ui.quest.state.not_started", 22, TextAlignmentOptions.Center, LightTextColor);
-        SetupRect(stateText.gameObject, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(0f, -78f), new Vector2(300f, 34f));
-        GetOrCreateImage("StateBackground", stateText.transform, PanelDarkColor);
+        var stateBadge = GetOrCreatePanel("StateBadge", panel.transform, PanelDarkColor);
+        SetupRect(stateBadge, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(0f, -78f), new Vector2(300f, 42f));
+        AddOutline(stateBadge, new Color(0.18f, 0.09f, 0.03f, 1f), new Vector2(2f, -2f));
+
+        var stateText = GetOrCreateText("StateText", stateBadge.transform, "ui.quest.state.not_started", 22, TextAlignmentOptions.Center, LightTextColor);
+        Stretch(stateText.rectTransform, new Vector2(10f, 4f), new Vector2(-10f, -4f));
         EnsureLocalizedText(stateText);
 
         var descriptionText = GetOrCreateText("DescriptionText", panel.transform, "quest.description.key", 23, TextAlignmentOptions.TopLeft, TextColor);

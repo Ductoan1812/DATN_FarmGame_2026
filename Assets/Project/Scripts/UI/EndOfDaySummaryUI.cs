@@ -9,12 +9,13 @@ public class EndOfDaySummaryUI : MonoBehaviour
     private TextMeshProUGUI _text;
     private float _timer;
     private bool _visible;
+    private EventBus _subscribedBus;
 
     private void Awake()
     {
         var root = OverlayUIHelper.GetOrCreateOverlayRoot(gameObject, 1000);
 
-        _panel = new GameObject("Panel");
+        _panel = new GameObject("EndOfDaySummaryPanel");
         _panel.transform.SetParent(root, false);
         var rect = _panel.AddComponent<RectTransform>();
         rect.anchorMin = new Vector2(0.5f, 0.5f);
@@ -36,12 +37,36 @@ public class EndOfDaySummaryUI : MonoBehaviour
         _text.alignment = TextAlignmentOptions.Center;
 
         _panel.SetActive(false);
-        GameManager.Instance?.EventBus?.Subscribe<DayChangedPublish>(OnDayChanged);
     }
 
-    private void OnDestroy()
+    private void OnEnable()
     {
-        GameManager.Instance?.EventBus?.Unsubscribe<DayChangedPublish>(OnDayChanged);
+        TrySubscribe();
+    }
+
+    private void Start()
+    {
+        TrySubscribe();
+    }
+
+    private void OnDisable()
+    {
+        if (_subscribedBus == null)
+            return;
+
+        _subscribedBus.Unsubscribe<DayChangedPublish>(OnDayChanged);
+        _subscribedBus = null;
+    }
+
+    private void TrySubscribe()
+    {
+        var bus = GameManager.Instance?.EventBus;
+        if (bus == null || bus == _subscribedBus)
+            return;
+
+        _subscribedBus?.Unsubscribe<DayChangedPublish>(OnDayChanged);
+        _subscribedBus = bus;
+        _subscribedBus.Subscribe<DayChangedPublish>(OnDayChanged);
     }
 
     private void OnDayChanged(DayChangedPublish e)

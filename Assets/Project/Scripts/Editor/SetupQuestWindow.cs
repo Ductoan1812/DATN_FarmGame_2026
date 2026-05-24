@@ -23,6 +23,8 @@ public static class SetupQuestWindow
             return;
         }
 
+        AlignWithCoreMenuContent(windowGo);
+
         // Xoá children cũ (nếu có) trừ khi đã build
         if (windowGo.transform.childCount > 0)
         {
@@ -55,16 +57,19 @@ public static class SetupQuestWindow
         var headerImg = header.AddComponent<Image>();
         headerImg.color = new Color(0.30f, 0.17f, 0.07f, 0.95f);
 
+        var fontAsset = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Roboto-Bold SDF.asset");
+
         var headerLayout = header.AddComponent<HorizontalLayoutGroup>();
         headerLayout.padding          = new RectOffset(20, 12, 0, 0);
-        headerLayout.childAlignment   = TextAnchor.MiddleLeft;
+        headerLayout.childAlignment   = TextAnchor.MiddleCenter;
         headerLayout.childControlWidth  = true;
         headerLayout.childControlHeight = true;
         headerLayout.childForceExpandWidth  = false;
-        headerLayout.childForceExpandHeight = true;
+        headerLayout.childForceExpandHeight = false;
 
         var titleGo = CreateChild("TitleText", header.transform);
         var titleText = titleGo.AddComponent<TextMeshProUGUI>();
+        if (fontAsset != null) titleText.font = fontAsset;
         titleText.text      = "Nhật ký nhiệm vụ";
         titleText.fontSize  = 26f;
         titleText.fontStyle = FontStyles.Bold;
@@ -82,6 +87,7 @@ public static class SetupQuestWindow
         closeBtn.targetGraphic = closeBtnImg;
         var closeLabelGo = CreateChild("Label", closeBtnGo.transform);
         var closeLabelText = closeLabelGo.AddComponent<TextMeshProUGUI>();
+        if (fontAsset != null) closeLabelText.font = fontAsset;
         closeLabelText.text      = "✕";
         closeLabelText.fontSize  = 22f;
         closeLabelText.alignment = TextAlignmentOptions.Center;
@@ -99,7 +105,12 @@ public static class SetupQuestWindow
 
         // Viewport
         var viewportGo = CreateChild("Viewport", scrollGo.transform);
-        SetStretchFull(viewportGo);
+        var vpRect = viewportGo.GetComponent<RectTransform>();
+        vpRect.anchorMin = Vector2.zero;
+        vpRect.anchorMax = Vector2.one;
+        vpRect.pivot = new Vector2(0.5f, 0.5f);
+        vpRect.offsetMin = Vector2.zero;
+        vpRect.offsetMax = new Vector2(-24f, 0f); // reserve space for scrollbar
         viewportGo.AddComponent<RectMask2D>();
         scrollRect.viewport = viewportGo.GetComponent<RectTransform>();
 
@@ -130,6 +141,7 @@ public static class SetupQuestWindow
         // Empty label
         var emptyGo = CreateChild("EmptyLabel", contentGo.transform);
         var emptyText = emptyGo.AddComponent<TextMeshProUGUI>();
+        if (fontAsset != null) emptyText.font = fontAsset;
         emptyText.text      = "Chưa có nhiệm vụ nào.";
         emptyText.fontSize  = 20f;
         emptyText.color     = new Color(0.75f, 0.65f, 0.45f, 0.80f);
@@ -152,8 +164,8 @@ public static class SetupQuestWindow
         sbRect.anchorMin        = new Vector2(1f, 0f);
         sbRect.anchorMax        = new Vector2(1f, 1f);
         sbRect.pivot            = new Vector2(1f, 0.5f);
-        sbRect.sizeDelta        = new Vector2(10f, 0f);
-        sbRect.anchoredPosition = Vector2.zero;
+        sbRect.sizeDelta        = new Vector2(16f, -12f);
+        sbRect.anchoredPosition = new Vector2(-6f, 0f);
 
         var sbImg = sbGo.AddComponent<Image>();
         sbImg.color = new Color(0.20f, 0.12f, 0.05f, 0.50f);
@@ -162,6 +174,7 @@ public static class SetupQuestWindow
         sb.direction = Scrollbar.Direction.BottomToTop;
 
         var sbHandleGo = CreateChild("Handle", sbGo.transform);
+        SetStretchFull(sbHandleGo);
         var sbHandleImg = sbHandleGo.AddComponent<Image>();
         sbHandleImg.color = new Color(0.75f, 0.50f, 0.20f, 0.85f);
         sb.handleRect   = sbHandleGo.GetComponent<RectTransform>();
@@ -175,6 +188,14 @@ public static class SetupQuestWindow
     }
 
     // ── Helpers ──────────────────────────────────────────────────
+
+    private static void AlignWithCoreMenuContent(GameObject windowGo)
+    {
+        var rect = windowGo.GetComponent<RectTransform>();
+        if (rect == null) return;
+
+        rect.anchoredPosition = new Vector2(-120f, 30f);
+    }
 
     private static GameObject CreateChild(string name, Transform parent)
     {

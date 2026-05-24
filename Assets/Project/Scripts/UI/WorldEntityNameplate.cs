@@ -9,8 +9,11 @@ using UnityEngine;
 [RequireComponent(typeof(EntityRoot))]
 public class WorldEntityNameplate : MonoBehaviour
 {
+    private const string DefaultFontResourcePath = "Fonts & Materials/Roboto-Bold SDF";
+
     [SerializeField] private EntityRoot entityRoot;
     [SerializeField] private TMP_Text nameText;
+    [SerializeField] private TMP_FontAsset fontAsset;
     [SerializeField] private Vector3 localOffset = new(0f, 2.05f, 0f);
     [SerializeField] private float localScale = 0.16f;
     [SerializeField] private float fontSize = 32f;
@@ -130,6 +133,10 @@ public class WorldEntityNameplate : MonoBehaviour
         textTransform.localScale = Vector3.one * Mathf.Max(0.01f, localScale);
 
         nameText.alignment = TextAlignmentOptions.Center;
+        if (fontAsset == null)
+            fontAsset = Resources.Load<TMP_FontAsset>(DefaultFontResourcePath);
+        if (fontAsset != null)
+            nameText.font = fontAsset;
         nameText.enableWordWrapping = false;
         nameText.fontSize = fontSize;
         nameText.fontStyle = FontStyles.Bold;

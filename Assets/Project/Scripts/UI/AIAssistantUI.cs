@@ -7,6 +7,8 @@ using TMPro;
 /// </summary>
 public class AIAssistantUI : MonoBehaviour
 {
+    private const string DefaultFontResourcePath = "Fonts & Materials/Roboto-Bold SDF";
+
     private Canvas _canvas;
     private TextMeshProUGUI _tipText;
     private GameObject _panel;
@@ -83,6 +85,9 @@ public class AIAssistantUI : MonoBehaviour
         textRect.offsetMax = new Vector2(-5, -5);
 
         _tipText = textGO.AddComponent<TextMeshProUGUI>();
+        var fontAsset = Resources.Load<TMP_FontAsset>(DefaultFontResourcePath);
+        if (fontAsset != null)
+            _tipText.font = fontAsset;
         _tipText.fontSize = 14;
         _tipText.color = Color.white;
         _tipText.alignment = TextAlignmentOptions.TopLeft;

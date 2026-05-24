@@ -51,7 +51,7 @@ public class HealthBarUI : MonoBehaviour
 
         if (e.statType == StatType.Hp || e.statType == StatType.MaxHp)
             RefreshHP();
-        else if (e.statType == StatType.MaxStamina)
+        else if (e.statType == StatType.Mp || e.statType == StatType.MaxMp)
             RefreshStamina();
     }
 
@@ -76,8 +76,8 @@ public class HealthBarUI : MonoBehaviour
     private void RefreshStamina()
     {
         if (_playerEntity == null) return;
-        float stamina    = _playerEntity.stats.Get(StatType.MaxStamina);
-        float maxStamina = _playerEntity.stats.Get(StatType.MaxStamina);
+        float stamina    = _playerEntity.stats.Get(StatType.Mp);
+        float maxStamina = _playerEntity.stats.Get(StatType.MaxMp);
 
         if (staminaFill != null)
             staminaFill.fillAmount = maxStamina > 0 ? stamina / maxStamina : 0f;

@@ -1,7 +1,9 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
@@ -82,9 +84,13 @@ public class BackpackUI : MonoBehaviour
 
     private const int MaxDisplayAmount = 99999;
     private const int DefaultSplitAmount = 1;
+    private const float InfoTooltipHideDelay = 0.08f;
 
     private InventoryGridItemData[] cache;
     private InventoryGridView gridView;
+    private RectTransform itemInfoPanelRoot;
+    private RectTransform itemInfoBodyRoot;
+    private RectTransform hoveredSlotRoot;
     private LocalizedText itemNameLocalized;
     private LocalizedText descLocalized;
     private LocalizedText categoryLocalized;
@@ -94,8 +100,11 @@ public class BackpackUI : MonoBehaviour
     private bool dirty;
     private bool subscribed;
     private bool refreshRequestedAfterSubscribe;
+    private bool infoTooltipPointerInside;
     private int selectedIndex = -1;
+    private int hoveredIndex = -1;
     private int selectedAmount;
+    private Coroutine hideInfoTooltipRoutine;
 
     // ══════════════════════════════════════════════════════════
     //  Unity Lifecycle
@@ -120,6 +129,11 @@ public class BackpackUI : MonoBehaviour
 
     private void OnDisable()
     {
+        CancelInfoTooltipHide();
+        hoveredIndex = -1;
+        hoveredSlotRoot = null;
+        infoTooltipPointerInside = false;
+        SetInfoTooltipVisible(false);
         UnsubscribeEvents();
         UnregisterButtonEvents();
     }
@@ -219,14 +233,18 @@ public class BackpackUI : MonoBehaviour
 
     private void OnBackpackItemInfoChanged(BackpackItemInfoChangedPublish e)
     {
-        selectedIndex = e.slotIndex;
-        selectedAmount = e.amount;
-        UpdateSelectionVisual();
-        UpdateSplitControls();
+        if (!e.isPreview)
+        {
+            selectedIndex = e.slotIndex;
+            selectedAmount = e.amount;
+            UpdateSelectionVisual();
+            UpdateSplitControls();
+        }
 
         if (e.isEmpty)
         {
             ClearInfoPanel();
+            SetInfoTooltipVisible(false);
             return;
         }
 
@@ -244,6 +262,12 @@ public class BackpackUI : MonoBehaviour
             btnUse.interactable = true;
 
         ApplyStats(e.stats);
+
+        if (e.isPreview)
+        {
+            PositionInfoTooltip(hoveredSlotRoot);
+            SetInfoTooltipVisible(true);
+        }
     }
 
     private void OnStatsChanged(StatsChangedPublish e)
@@ -322,6 +346,9 @@ public class BackpackUI : MonoBehaviour
             dragDropEnabled: true,
             dragType: InventoryType.Backpack);
         gridView.SetClickHandler((index, _) => PublishSlotSelectedRequest(index));
+        gridView.SetHoverHandlers(
+            (index, _, slotRect) => PublishSlotPreviewRequest(index, slotRect),
+            OnSlotPreviewExited);
 
         viewsReady = true;
     }
@@ -347,6 +374,25 @@ public class BackpackUI : MonoBehaviour
         ClearStats();
 
         UpdateSplitControls();
+    }
+
+    private void PublishSlotPreviewRequest(int index, RectTransform slotRect)
+    {
+        CancelInfoTooltipHide();
+        hoveredIndex = index;
+        hoveredSlotRoot = slotRect;
+        GameManager.Instance?.EventBus?.Publish(new BackpackSlotPreviewRequestPublish(index));
+    }
+
+    private void OnSlotPreviewExited(int index)
+    {
+        if (hoveredIndex == index)
+        {
+            hoveredIndex = -1;
+            hoveredSlotRoot = null;
+        }
+
+        ScheduleInfoTooltipHide();
     }
 
     private void ApplyStats(StatDisplay[] stats)
@@ -546,6 +592,7 @@ public class BackpackUI : MonoBehaviour
         AutoAssignSlotsContainer();
         AutoAssignMainPanelRefs();
         AutoAssignInfoItemRefs();
+        AutoAssignInfoTooltipRefs();
         AutoAssignStatsRefs();
 
         if (itemNameText != null) itemNameLocalized = itemNameText.GetComponent<LocalizedText>();
@@ -622,6 +669,121 @@ public class BackpackUI : MonoBehaviour
                  ?? FindButton(infoRoot, "DropButton");
 
         AutoAssignStatsRefs();
+    }
+
+    private void AutoAssignInfoTooltipRefs()
+    {
+        if (itemInfoPanelRoot != null && itemInfoBodyRoot != null)
+            return;
+
+        var window = ResolveBackpackWindow();
+        var body = FindDeepChild(window, "Body");
+        var panel = FindDeepChild(body, "ItemInfoPanel");
+        if (body is not RectTransform bodyRect || panel is not RectTransform panelRect)
+            return;
+
+        itemInfoBodyRoot = bodyRect;
+        itemInfoPanelRoot = panelRect;
+        var hoverRelay = itemInfoPanelRoot.GetComponent<BackpackInfoTooltipHoverRelay>();
+        if (hoverRelay == null)
+            hoverRelay = itemInfoPanelRoot.gameObject.AddComponent<BackpackInfoTooltipHoverRelay>();
+
+        hoverRelay.Initialize(this);
+        ConfigureInfoTooltipLayout();
+    }
+
+    private void ConfigureInfoTooltipLayout()
+    {
+        if (itemInfoPanelRoot == null || itemInfoBodyRoot == null)
+            return;
+
+        var gridPanel = FindDeepChild(itemInfoBodyRoot, "GridPanel") as RectTransform;
+        if (gridPanel != null)
+        {
+            gridPanel.anchorMin = Vector2.zero;
+            gridPanel.anchorMax = Vector2.one;
+            gridPanel.pivot = new Vector2(0f, 0f);
+            gridPanel.offsetMin = Vector2.zero;
+            gridPanel.offsetMax = Vector2.zero;
+        }
+
+        itemInfoPanelRoot.anchorMin = new Vector2(0f, 1f);
+        itemInfoPanelRoot.anchorMax = new Vector2(0f, 1f);
+        itemInfoPanelRoot.pivot = new Vector2(0f, 1f);
+        itemInfoPanelRoot.sizeDelta = new Vector2(420f, 560f);
+        itemInfoPanelRoot.SetAsLastSibling();
+
+        SetInfoTooltipVisible(false);
+    }
+
+    private void PositionInfoTooltip(RectTransform slotRect)
+    {
+        if (itemInfoPanelRoot == null || itemInfoBodyRoot == null || slotRect == null)
+            return;
+
+        var slotBounds = RectTransformUtility.CalculateRelativeRectTransformBounds(itemInfoBodyRoot, slotRect);
+        var bodyRect = itemInfoBodyRoot.rect;
+        var panelSize = itemInfoPanelRoot.rect.size;
+        if (panelSize.x <= 0f || panelSize.y <= 0f)
+            panelSize = itemInfoPanelRoot.sizeDelta;
+
+        var x = slotBounds.max.x + 16f;
+        if (x + panelSize.x > bodyRect.xMax - 10f)
+            x = slotBounds.min.x - panelSize.x - 16f;
+
+        x = Mathf.Clamp(x, bodyRect.xMin + 10f, bodyRect.xMax - panelSize.x - 10f);
+
+        var y = Mathf.Clamp(
+            slotBounds.max.y,
+            bodyRect.yMin + panelSize.y + 10f,
+            bodyRect.yMax - 10f);
+
+        itemInfoPanelRoot.anchoredPosition = new Vector2(
+            x - bodyRect.xMin,
+            y - bodyRect.yMax);
+    }
+
+    private void SetInfoTooltipVisible(bool visible)
+    {
+        if (itemInfoPanelRoot != null && itemInfoPanelRoot.gameObject.activeSelf != visible)
+            itemInfoPanelRoot.gameObject.SetActive(visible);
+    }
+
+    public void OnInfoTooltipPointerEnter()
+    {
+        infoTooltipPointerInside = true;
+        CancelInfoTooltipHide();
+    }
+
+    public void OnInfoTooltipPointerExit()
+    {
+        infoTooltipPointerInside = false;
+        if (hoveredIndex < 0)
+            ScheduleInfoTooltipHide();
+    }
+
+    private void ScheduleInfoTooltipHide()
+    {
+        CancelInfoTooltipHide();
+        hideInfoTooltipRoutine = StartCoroutine(HideInfoTooltipAfterDelay());
+    }
+
+    private IEnumerator HideInfoTooltipAfterDelay()
+    {
+        yield return new WaitForSecondsRealtime(InfoTooltipHideDelay);
+        hideInfoTooltipRoutine = null;
+
+        if (hoveredIndex < 0 && !infoTooltipPointerInside)
+            SetInfoTooltipVisible(false);
+    }
+
+    private void CancelInfoTooltipHide()
+    {
+        if (hideInfoTooltipRoutine == null)
+            return;
+
+        StopCoroutine(hideInfoTooltipRoutine);
+        hideInfoTooltipRoutine = null;
     }
 
     private void AutoAssignStatsRefs()
@@ -791,7 +953,9 @@ public class BackpackUI : MonoBehaviour
         }
 
         if (text != null)
-            text.text = key ?? string.Empty;
+            text.text = LocalizationManager.Instance != null
+                ? LocalizationManager.Instance.GetText(key)
+                : key ?? string.Empty;
     }
 
     private static void SetOptionalLocalizedOrText(LocalizedText localized, TMP_Text text, string key, GameObject displayRoot)
@@ -916,5 +1080,25 @@ public class BackpackUI : MonoBehaviour
         }
 
         return null;
+    }
+}
+
+public sealed class BackpackInfoTooltipHoverRelay : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+{
+    private BackpackUI owner;
+
+    public void Initialize(BackpackUI target)
+    {
+        owner = target;
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        owner?.OnInfoTooltipPointerEnter();
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        owner?.OnInfoTooltipPointerExit();
     }
 }

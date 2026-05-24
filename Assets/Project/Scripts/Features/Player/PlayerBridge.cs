@@ -285,6 +285,7 @@ public class PlayerBridge : MonoBehaviour
 
         _eventBus.Subscribe<InventoryChangedPublish>(OnBackpackInventoryChanged);
         _eventBus.Subscribe<BackpackSlotSelectedRequestPublish>(OnBackpackSlotSelectedRequest);
+        _eventBus.Subscribe<BackpackSlotPreviewRequestPublish>(OnBackpackSlotPreviewRequest);
         _eventBus.Subscribe<BackpackSortRequestPublish>(OnBackpackSortRequest);
         _eventBus.Subscribe<BackpackSplitRequestPublish>(OnBackpackSplitRequest);
         _eventBus.Subscribe<InventoryDropRequestPublish>(OnInventoryDropRequest);
@@ -297,6 +298,7 @@ public class PlayerBridge : MonoBehaviour
     {
         _eventBus?.Unsubscribe<InventoryChangedPublish>(OnBackpackInventoryChanged);
         _eventBus?.Unsubscribe<BackpackSlotSelectedRequestPublish>(OnBackpackSlotSelectedRequest);
+        _eventBus?.Unsubscribe<BackpackSlotPreviewRequestPublish>(OnBackpackSlotPreviewRequest);
         _eventBus?.Unsubscribe<BackpackSortRequestPublish>(OnBackpackSortRequest);
         _eventBus?.Unsubscribe<BackpackSplitRequestPublish>(OnBackpackSplitRequest);
         _eventBus?.Unsubscribe<InventoryDropRequestPublish>(OnInventoryDropRequest);
@@ -321,6 +323,11 @@ public class PlayerBridge : MonoBehaviour
     private void OnBackpackSlotSelectedRequest(BackpackSlotSelectedRequestPublish e)
     {
         PublishBackpackSelection(e.slotIndex);
+    }
+
+    private void OnBackpackSlotPreviewRequest(BackpackSlotPreviewRequestPublish e)
+    {
+        PublishBackpackItemInfo(e.slotIndex, isPreview: true);
     }
 
     private void OnBackpackSortRequest(BackpackSortRequestPublish _)
@@ -451,11 +458,19 @@ public class PlayerBridge : MonoBehaviour
             return;
 
         _selectedBackpackIndex = slotIndex;
+        PublishBackpackItemInfo(slotIndex, isPreview: false);
+    }
+
+    private void PublishBackpackItemInfo(int slotIndex, bool isPreview)
+    {
+        if (_eventBus == null || _backpack == null)
+            return;
 
         if (slotIndex < 0 || slotIndex >= _backpack.MaxSlots)
         {
             _eventBus.Publish(new BackpackItemInfoChangedPublish(
                 slotIndex,
+                isPreview,
                 true,
                 null,
                 0,
@@ -473,6 +488,7 @@ public class PlayerBridge : MonoBehaviour
         {
             _eventBus.Publish(new BackpackItemInfoChangedPublish(
                 slotIndex,
+                isPreview,
                 true,
                 null,
                 0,
@@ -489,6 +505,7 @@ public class PlayerBridge : MonoBehaviour
 
         _eventBus.Publish(new BackpackItemInfoChangedPublish(
             slotIndex,
+            isPreview,
             false,
             data.icon,
             entity.Amount,

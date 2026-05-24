@@ -40,8 +40,11 @@ public class ShopPanelUI : MonoBehaviour
     [SerializeField] private int visibleSellSlots = 30;
 
     private readonly List<GameObject> spawnedObjects = new();
+    private readonly List<GameObject> spawnedSellCartRows = new();
     private readonly Dictionary<EntityRuntime, SellCartEntry> sellCart = new();
     private InventoryGridView sellGridView;
+    private Transform sellCartListRoot;
+    private TMP_Text sellCartEmptyText;
     private EventBus subscribedBus;
     private bool listenersRegistered;
     private ShopViewData currentView;
@@ -95,6 +98,7 @@ public class ShopPanelUI : MonoBehaviour
         if (closeButton != null) closeButton.onClick.AddListener(Hide);
         if (buyTabButton != null) buyTabButton.onClick.AddListener(ShowBuyPage);
         if (sellTabButton != null) sellTabButton.onClick.AddListener(ShowSellPage);
+        EnsureSellBasketLayout();
         EnsureSellCartControls();
         if (sellMinusButton != null) sellMinusButton.onClick.AddListener(DecreaseSelectedSellQuantity);
         if (sellPlusButton != null) sellPlusButton.onClick.AddListener(IncreaseSelectedSellQuantity);
@@ -141,6 +145,7 @@ public class ShopPanelUI : MonoBehaviour
 
         selectedSellItem = null;
         sellCart.Clear();
+        EnsureSellBasketLayout();
         RebuildSellGrid();
         RefreshSellSelection();
     }
@@ -227,6 +232,7 @@ public class ShopPanelUI : MonoBehaviour
         SetPlainText(selectedSellQuantityText, hasSelection ? $"{selectedQuantity}/{selectedSellItem.Amount}" : "0/0");
         SetPlainText(sellCartSummaryText, $"Da chon: {cartItemCount} item");
         SetPlainText(selectedSellTotalText, cartTotal.ToString("N0"));
+        RebuildSellCartRows();
 
         if (sellMinusButton != null)
             sellMinusButton.interactable = canSellSelection && selectedQuantity > 0;
@@ -274,6 +280,7 @@ public class ShopPanelUI : MonoBehaviour
     private void Hide()
     {
         ClearSpawned();
+        ClearSellCartRows();
         sellGridView?.Clear();
         currentView = null;
         selectedSellItem = null;
@@ -430,52 +437,231 @@ public class ShopPanelUI : MonoBehaviour
             return;
 
         var controlsRoot = parent.Find("SellQuantityControls");
-        if (controlsRoot == null)
+        if (controlsRoot != null)
+            controlsRoot.gameObject.SetActive(false);
+    }
+
+    private void EnsureSellBasketLayout()
+    {
+        if (sellPage == null || sellCartListRoot != null)
+            return;
+
+        var targetPanel = sellPage.transform.Find("SellTargetPanel");
+        if (targetPanel == null)
+            return;
+
+        var arrow = sellPage.transform.Find("SellArrowText");
+        if (arrow != null)
+            arrow.gameObject.SetActive(false);
+
+        var selectedArea = targetPanel.Find("SelectedSellArea");
+        if (selectedArea != null)
+            selectedArea.gameObject.SetActive(false);
+
+        var totalPanel = selectedSellTotalText != null ? selectedSellTotalText.transform.parent as RectTransform : null;
+        if (totalPanel != null)
         {
-            var controlsObject = CreateChild("SellQuantityControls", parent);
-            controlsRoot = controlsObject.transform;
-
-            var rect = controlsObject.GetComponent<RectTransform>();
-            rect.anchorMin = new Vector2(0.32f, 0f);
-            rect.anchorMax = new Vector2(0.78f, 1f);
-            rect.pivot = new Vector2(0.5f, 0.5f);
-            rect.offsetMin = new Vector2(0f, 10f);
-            rect.offsetMax = new Vector2(-12f, -10f);
-
-            var layout = GetOrAdd<HorizontalLayoutGroup>(controlsObject);
-            layout.spacing = 8f;
-            layout.childAlignment = TextAnchor.MiddleCenter;
-            layout.childControlWidth = false;
-            layout.childControlHeight = false;
-            layout.childForceExpandWidth = false;
-            layout.childForceExpandHeight = false;
+            totalPanel.anchorMin = new Vector2(0f, 0f);
+            totalPanel.anchorMax = new Vector2(1f, 0f);
+            totalPanel.pivot = new Vector2(0.5f, 0f);
+            totalPanel.anchoredPosition = new Vector2(0f, 18f);
+            totalPanel.sizeDelta = new Vector2(-40f, 108f);
         }
 
-        selectedSellQuantityText ??= FindText(controlsRoot, "SelectedSellQuantityText");
-        sellCartSummaryText ??= FindText(controlsRoot, "SellCartSummaryText");
-        sellMinusButton ??= FindButton(controlsRoot, "SellMinusButton");
-        sellPlusButton ??= FindButton(controlsRoot, "SellPlusButton");
-        sellMaxButton ??= FindButton(controlsRoot, "SellMaxButton");
-        sellClearButton ??= FindButton(controlsRoot, "SellClearButton");
+        var basketArea = targetPanel.Find("SellBasketArea");
+        if (basketArea == null)
+        {
+            var basketObject = CreateChild("SellBasketArea", targetPanel);
+            basketArea = basketObject.transform;
+            var basketRect = basketObject.GetComponent<RectTransform>();
+            basketRect.anchorMin = new Vector2(0f, 0f);
+            basketRect.anchorMax = new Vector2(1f, 1f);
+            basketRect.pivot = new Vector2(0.5f, 0.5f);
+            basketRect.offsetMin = new Vector2(20f, 142f);
+            basketRect.offsetMax = new Vector2(-20f, -64f);
 
-        if (selectedSellQuantityText == null)
-        {
-            selectedSellQuantityText = CreateTemplateLabel("SelectedSellQuantityText", controlsRoot, 22, FontStyles.Bold);
-            SetLayoutSize(selectedSellQuantityText.gameObject, 58f, 36f);
+            var basketImage = GetOrAdd<Image>(basketObject);
+            basketImage.color = new Color(0.78f, 0.53f, 0.26f, 0.26f);
         }
-        if (sellCartSummaryText == null)
+
+        var scrollRoot = basketArea.Find("SellCartScrollView");
+        if (scrollRoot == null)
+            scrollRoot = CreateSellCartScrollView(basketArea);
+
+        sellCartListRoot = scrollRoot.Find("Viewport/Content");
+        if (sellCartListRoot == null)
+            return;
+
+        sellCartEmptyText = FindText(sellCartListRoot, "SellCartEmptyText");
+        if (sellCartEmptyText == null)
         {
-            sellCartSummaryText = CreateTemplateLabel("SellCartSummaryText", controlsRoot, 18, FontStyles.Normal);
-            SetLayoutSize(sellCartSummaryText.gameObject, 100f, 36f);
+            sellCartEmptyText = CreateTemplateLabel("SellCartEmptyText", sellCartListRoot, 21, FontStyles.Normal);
+            sellCartEmptyText.alignment = TextAlignmentOptions.Center;
+            sellCartEmptyText.enableWordWrapping = true;
+            SetLayoutSize(sellCartEmptyText.gameObject, 0f, 78f);
+            SetLocalizedText(sellCartEmptyText, "ui.shop.sell_empty_hint");
         }
-        if (sellMinusButton == null)
-            sellMinusButton = CreateCartButton("SellMinusButton", controlsRoot, "-");
-        if (sellPlusButton == null)
-            sellPlusButton = CreateCartButton("SellPlusButton", controlsRoot, "+");
-        if (sellMaxButton == null)
-            sellMaxButton = CreateCartButton("SellMaxButton", controlsRoot, "Max");
-        if (sellClearButton == null)
-            sellClearButton = CreateCartButton("SellClearButton", controlsRoot, "Clear");
+    }
+
+    private Transform CreateSellCartScrollView(Transform parent)
+    {
+        var scrollObject = CreateChild("SellCartScrollView", parent);
+        SetAnchorStretch(scrollObject.GetComponent<RectTransform>());
+
+        var scrollRect = GetOrAdd<ScrollRect>(scrollObject);
+        scrollRect.horizontal = false;
+
+        var viewportObject = CreateChild("Viewport", scrollObject.transform);
+        var viewportRect = viewportObject.GetComponent<RectTransform>();
+        SetAnchorStretch(viewportRect);
+        viewportRect.offsetMin = new Vector2(10f, 10f);
+        viewportRect.offsetMax = new Vector2(-10f, -10f);
+        GetOrAdd<RectMask2D>(viewportObject);
+        var viewportImage = GetOrAdd<Image>(viewportObject);
+        viewportImage.color = new Color(1f, 1f, 1f, 0.01f);
+
+        var contentObject = CreateChild("Content", viewportObject.transform);
+        var contentRect = contentObject.GetComponent<RectTransform>();
+        contentRect.anchorMin = new Vector2(0f, 1f);
+        contentRect.anchorMax = new Vector2(1f, 1f);
+        contentRect.pivot = new Vector2(0.5f, 1f);
+        contentRect.offsetMin = Vector2.zero;
+        contentRect.offsetMax = Vector2.zero;
+
+        var layout = GetOrAdd<VerticalLayoutGroup>(contentObject);
+        layout.padding = new RectOffset(0, 8, 0, 0);
+        layout.spacing = 8f;
+        layout.childAlignment = TextAnchor.UpperCenter;
+        layout.childControlWidth = true;
+        layout.childControlHeight = true;
+        layout.childForceExpandWidth = true;
+        layout.childForceExpandHeight = false;
+
+        var fitter = GetOrAdd<ContentSizeFitter>(contentObject);
+        fitter.horizontalFit = ContentSizeFitter.FitMode.Unconstrained;
+        fitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+
+        scrollRect.viewport = viewportRect;
+        scrollRect.content = contentRect;
+        return scrollObject.transform;
+    }
+
+    private void RebuildSellCartRows()
+    {
+        EnsureSellBasketLayout();
+        ClearSellCartRows();
+
+        if (sellCartListRoot == null)
+            return;
+
+        bool hasEntries = sellCart.Count > 0;
+        if (sellCartEmptyText != null)
+            sellCartEmptyText.gameObject.SetActive(!hasEntries);
+
+        if (!hasEntries)
+        {
+            ForceRebuild(sellCartListRoot);
+            return;
+        }
+
+        foreach (var entry in sellCart.Values)
+        {
+            if (entry.Item?.ItemData == null || entry.Quantity <= 0)
+                continue;
+
+            spawnedSellCartRows.Add(CreateSellCartRow(entry));
+        }
+
+        ForceRebuild(sellCartListRoot);
+    }
+
+    private GameObject CreateSellCartRow(SellCartEntry entry)
+    {
+        var row = CreateChild("SellCartRow", sellCartListRoot);
+        var background = GetOrAdd<Image>(row);
+        background.color = new Color(0.95f, 0.75f, 0.42f, 0.62f);
+        SetLayoutSize(row, 0f, 72f);
+
+        var layout = GetOrAdd<HorizontalLayoutGroup>(row);
+        layout.padding = new RectOffset(10, 10, 8, 8);
+        layout.spacing = 8f;
+        layout.childAlignment = TextAnchor.MiddleLeft;
+        layout.childControlWidth = true;
+        layout.childControlHeight = true;
+        layout.childForceExpandWidth = false;
+        layout.childForceExpandHeight = false;
+
+        var iconFrame = CreateChild("IconFrame", row.transform);
+        var iconFrameImage = GetOrAdd<Image>(iconFrame);
+        iconFrameImage.color = new Color(0.35f, 0.2f, 0.08f, 0.82f);
+        SetLayoutSize(iconFrame, 52f, 52f);
+        var icon = CreateStretchImage("Icon", iconFrame.transform, Vector2.zero);
+        SetAnchorStretch(icon.rectTransform);
+        icon.rectTransform.offsetMin = new Vector2(5f, 5f);
+        icon.rectTransform.offsetMax = new Vector2(-5f, -5f);
+        icon.preserveAspect = true;
+        SetIcon(icon, entry.Item.ItemData);
+        icon.enabled = entry.Item.ItemData.icon != null;
+
+        var itemInfo = CreateChild("ItemInfo", row.transform);
+        var itemInfoLayout = GetOrAdd<VerticalLayoutGroup>(itemInfo);
+        itemInfoLayout.spacing = 1f;
+        itemInfoLayout.childAlignment = TextAnchor.MiddleLeft;
+        itemInfoLayout.childControlWidth = true;
+        itemInfoLayout.childControlHeight = true;
+        itemInfoLayout.childForceExpandWidth = true;
+        itemInfoLayout.childForceExpandHeight = false;
+        var itemInfoSize = GetOrAdd<LayoutElement>(itemInfo);
+        itemInfoSize.minWidth = 126f;
+        itemInfoSize.flexibleWidth = 1f;
+
+        var nameText = CreateTemplateLabel("NameText", itemInfo.transform, 18, FontStyles.Bold);
+        nameText.overflowMode = TextOverflowModes.Ellipsis;
+        SetLocalizedText(nameText, entry.Item.NameKey);
+
+        var priceText = CreateTemplateLabel("PriceText", itemInfo.transform, 15, FontStyles.Normal);
+        priceText.overflowMode = TextOverflowModes.Ellipsis;
+        SetPlainText(priceText, $"{Mathf.Max(0, entry.Item.SellPrice):N0} x {entry.Quantity} = {Mathf.Max(0, entry.Item.SellPrice) * entry.Quantity:N0}");
+
+        var minusButton = CreateCartButton("MinusButton", row.transform, "-");
+        minusButton.onClick.AddListener(() =>
+        {
+            SetSellCartQuantity(entry.Item, GetCartQuantity(entry.Item) - 1);
+            RefreshSellSelection();
+        });
+
+        var quantityText = CreateTemplateLabel("QuantityText", row.transform, 18, FontStyles.Bold);
+        quantityText.alignment = TextAlignmentOptions.Center;
+        SetLayoutSize(quantityText.gameObject, 34f, 38f);
+        SetPlainText(quantityText, entry.Quantity.ToString());
+
+        var plusButton = CreateCartButton("PlusButton", row.transform, "+");
+        plusButton.interactable = entry.Quantity < entry.Item.Amount;
+        plusButton.onClick.AddListener(() =>
+        {
+            SetSellCartQuantity(entry.Item, GetCartQuantity(entry.Item) + 1);
+            RefreshSellSelection();
+        });
+
+        var removeButton = CreateCartButton("RemoveButton", row.transform, "X");
+        removeButton.onClick.AddListener(() =>
+        {
+            SetSellCartQuantity(entry.Item, 0);
+            RefreshSellSelection();
+        });
+
+        return row;
+    }
+
+    private void ClearSellCartRows()
+    {
+        foreach (var row in spawnedSellCartRows)
+        {
+            if (row != null)
+                Destroy(row);
+        }
+
+        spawnedSellCartRows.Clear();
     }
 
 

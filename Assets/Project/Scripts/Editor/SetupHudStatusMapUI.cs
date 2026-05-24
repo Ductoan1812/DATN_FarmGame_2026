@@ -8,6 +8,12 @@ using UnityEngine.UI;
 public static class SetupHudStatusMapUI
 {
     private const string UiFontAssetPath = "Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Roboto-Bold SDF.asset";
+    private static readonly string[] CoreplayScenePaths =
+    {
+        "Assets/Project/Scenes/Coreplay/FarmScene.unity",
+        "Assets/Project/Scenes/Coreplay/TownScene.unity",
+        "Assets/Project/Scenes/Coreplay/MineScene.unity"
+    };
 
     private static readonly Color Panel = new(0.34f, 0.20f, 0.08f, 0.94f);
     private static readonly Color PanelLight = new(0.86f, 0.64f, 0.34f, 0.96f);
@@ -24,6 +30,18 @@ public static class SetupHudStatusMapUI
 
         var hudRoot = GetOrCreateUI("HUDRoot", canvas.transform);
         Stretch(hudRoot.GetComponent<RectTransform>());
+        BuildCanonicalStatusMap(hudRoot.transform);
+
+        EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
+        Selection.activeGameObject = hudRoot.transform.Find("HudStatusMapPanel")?.gameObject;
+
+        Debug.Log("[SetupHudStatusMapUI] Created HUD status/map UI.");
+    }
+
+    public static void BuildCanonicalStatusMap(Transform hudRoot)
+    {
+        if (hudRoot == null)
+            return;
 
         var root = GetOrCreatePanel("HudStatusMapPanel", hudRoot.transform, new Color(0f, 0f, 0f, 0f));
         ClearChildren(root.transform);
@@ -50,10 +68,32 @@ public static class SetupHudStatusMapUI
 
         EditorUtility.SetDirty(ui);
         EditorUtility.SetDirty(root);
-        EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
-        Selection.activeGameObject = root;
+    }
 
-        Debug.Log($"[SetupHudStatusMapUI] Created HUD status/map UI. Minimap='{minimapPanel.name}'.");
+    [MenuItem("Tools/DATN/UI/Sync Coreplay HUD Status Map")]
+    public static void SyncCoreplayScenes()
+    {
+        var originalScenePath = EditorSceneManager.GetActiveScene().path;
+
+        foreach (var scenePath in CoreplayScenePaths)
+        {
+            var scene = EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Single);
+            var hudRoot = GameObject.Find("UIRoot/Canvas_HUD/HUDRoot")?.transform;
+            if (hudRoot == null)
+            {
+                Debug.LogWarning($"[SetupHudStatusMapUI] Skip '{scenePath}': missing UIRoot/Canvas_HUD/HUDRoot.");
+                continue;
+            }
+
+            BuildCanonicalStatusMap(hudRoot);
+            EditorSceneManager.MarkSceneDirty(scene);
+            EditorSceneManager.SaveScene(scene);
+        }
+
+        if (!string.IsNullOrEmpty(originalScenePath))
+            EditorSceneManager.OpenScene(originalScenePath, OpenSceneMode.Single);
+
+        Debug.Log("[SetupHudStatusMapUI] Synced HUD status/map UI across coreplay scenes.");
     }
 
     private static StatusRefs BuildStatusPanel(Transform parent)
@@ -278,7 +318,17 @@ public static class SetupHudStatusMapUI
     private static T GetOrAdd<T>(GameObject go) where T : Component
     {
         var component = go.GetComponent<T>();
-        return component != null ? component : go.AddComponent<T>();
+        if (component != null)
+            return component;
+
+        if (typeof(LayoutGroup).IsAssignableFrom(typeof(T)))
+        {
+            var existingLayout = go.GetComponent<LayoutGroup>();
+            if (existingLayout != null)
+                Object.DestroyImmediate(existingLayout);
+        }
+
+        return go.AddComponent<T>();
     }
 
     private readonly struct StatusRefs

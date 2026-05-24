@@ -4,6 +4,8 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class WorldInteractionHintUI : MonoBehaviour
 {
+    private const string DefaultFontResourcePath = "Fonts & Materials/Roboto-Bold SDF";
+
     [SerializeField] private Vector3 worldOffset = new(0f, 1.9f, 0f);
     [SerializeField] private float textScale = 0.13f;
     [SerializeField] private float fontSize = 36f;
@@ -11,6 +13,7 @@ public class WorldInteractionHintUI : MonoBehaviour
     [SerializeField] private Color blockedColor = new(1f, 0.72f, 0.72f, 1f);
     [SerializeField] private string sortingLayerName = "UI";
     [SerializeField] private int sortingOrder = 200;
+    [SerializeField] private TMP_FontAsset fontAsset;
 
     private EventBus eventBus;
     private TextMeshPro hintText;
@@ -148,6 +151,10 @@ public class WorldInteractionHintUI : MonoBehaviour
         }
 
         hintText.alignment = TextAlignmentOptions.Center;
+        if (fontAsset == null)
+            fontAsset = Resources.Load<TMP_FontAsset>(DefaultFontResourcePath);
+        if (fontAsset != null)
+            hintText.font = fontAsset;
         hintText.enableWordWrapping = false;
         hintText.fontSize = fontSize;
         hintText.color = normalColor;

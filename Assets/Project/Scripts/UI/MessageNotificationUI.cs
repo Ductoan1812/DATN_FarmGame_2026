@@ -8,7 +8,6 @@ using System.Collections;
 /// </summary>
 public class MessageNotificationUI : MonoBehaviour
 {
-    private Canvas canvas;
     private CanvasGroup canvasGroup;
     private TextMeshProUGUI titleText;
     private TextMeshProUGUI bodyText;
@@ -33,9 +32,6 @@ public class MessageNotificationUI : MonoBehaviour
     private void CreateUI()
     {
         var root = OverlayUIHelper.GetOrCreateOverlayRoot(gameObject, 100);
-        canvas = root.GetComponentInParent<Canvas>() ?? root.GetComponent<Canvas>() ?? gameObject.GetComponent<Canvas>();
-        if (canvas == null)
-            canvas = gameObject.AddComponent<Canvas>();
 
         var panel = new GameObject("NotificationPanel");
         panel.transform.SetParent(root, false);
@@ -50,6 +46,8 @@ public class MessageNotificationUI : MonoBehaviour
         panelImage.color = new Color(0.1f, 0.1f, 0.1f, 0.9f);
 
         canvasGroup = panel.AddComponent<CanvasGroup>();
+        canvasGroup.interactable = false;
+        canvasGroup.blocksRaycasts = false;
 
         var titleObj = new GameObject("Title");
         titleObj.transform.SetParent(panel.transform, false);
@@ -96,7 +94,6 @@ public class MessageNotificationUI : MonoBehaviour
         bodyText.text = GetLocalizedText(data.bodyKey);
 
         canvasGroup.alpha = 1f;
-        canvas.enabled = true;
 
         if (hideCoroutine != null) StopCoroutine(hideCoroutine);
         hideCoroutine = StartCoroutine(HideAfterDelay(4f));
@@ -105,7 +102,6 @@ public class MessageNotificationUI : MonoBehaviour
     private void Hide()
     {
         canvasGroup.alpha = 0f;
-        canvas.enabled = false;
     }
 
     private IEnumerator HideAfterDelay(float delay)

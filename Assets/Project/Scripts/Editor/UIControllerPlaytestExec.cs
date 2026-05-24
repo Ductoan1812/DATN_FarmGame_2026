@@ -2,6 +2,7 @@ using System.Text;
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public static class UIControllerPlaytestExec
@@ -44,7 +45,10 @@ public static class UIControllerPlaytestExec
     public static string OpenMap() => OpenById("map");
     public static string OpenQuest() => OpenById("quest");
     public static string OpenSettings() => OpenById("settings");
+    public static string HoverFirstBackpackSlot() => SendBackpackPointerEvent(ExecuteEvents.pointerEnterHandler);
+    public static string ExitFirstBackpackSlot() => SendBackpackPointerEvent(ExecuteEvents.pointerExitHandler);
     public static string InspectController() => Inspect();
+    public static string InspectWindowChain() => InspectChain();
 
     public static string Snapshot()
     {
@@ -95,6 +99,21 @@ public static class UIControllerPlaytestExec
         if (controller == null) return "[UIControllerPlaytestExec] UIController not found.";
 
         controller.Open(id);
+        Canvas.ForceUpdateCanvases();
+        return Snapshot();
+    }
+
+    private static string SendBackpackPointerEvent<T>(ExecuteEvents.EventFunction<T> eventFunction)
+        where T : IEventSystemHandler
+    {
+        var slot = FindPath(
+            "UIRoot/Canvas_Windows/WindowsRoot/BackpackWindow/Body/GridPanel/SlotScrollView/Viewport/Content/Slot_toggle");
+        if (slot == null) return "[UIControllerPlaytestExec] First backpack slot not found.";
+
+        var eventSystem = Object.FindAnyObjectByType<EventSystem>(FindObjectsInactive.Include);
+        if (eventSystem == null) return "[UIControllerPlaytestExec] EventSystem not found.";
+
+        ExecuteEvents.Execute(slot, new PointerEventData(eventSystem), eventFunction);
         Canvas.ForceUpdateCanvases();
         return Snapshot();
     }
@@ -156,6 +175,37 @@ public static class UIControllerPlaytestExec
         return sb.ToString();
     }
 
+    private static string InspectChain()
+    {
+        var sb = new StringBuilder();
+        string[] paths =
+        {
+            "UIRoot",
+            "UIRoot/Canvas_HUD",
+            "UIRoot/Canvas_HUD/HUDRoot",
+            "UIRoot/Canvas_Windows",
+            "UIRoot/Canvas_Windows/WindowsRoot",
+            "UIRoot/Canvas_Windows/WindowsRoot/MenuWindow",
+            "UIRoot/Canvas_Windows/WindowsRoot/SettingsWindow",
+            "UIRoot/Canvas_Windows/WindowsRoot/SkillsWindow",
+            "UIRoot/Canvas_Windows/WindowsRoot/QuestWindow"
+        };
+
+        for (int i = 0; i < paths.Length; i++)
+        {
+            var go = FindPathIncludingInactive(paths[i]);
+            if (go == null)
+            {
+                sb.AppendLine($"{paths[i]} => <missing>");
+                continue;
+            }
+
+            sb.AppendLine($"{paths[i]} => activeSelf={go.activeSelf}, activeInHierarchy={go.activeInHierarchy}");
+        }
+
+        return sb.ToString();
+    }
+
     private static void AppendActive(StringBuilder sb, string label, string path)
     {
         var go = FindPath(path);
@@ -176,6 +226,35 @@ public static class UIControllerPlaytestExec
         {
             current = current.Find(segments[i]);
             if (current == null) return null;
+        }
+
+        return current.gameObject;
+    }
+
+    private static GameObject FindPathIncludingInactive(string path)
+    {
+        if (string.IsNullOrWhiteSpace(path))
+            return null;
+
+        var segments = path.Split('/');
+        Transform root = null;
+        var all = Object.FindObjectsByType<Transform>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        for (int i = 0; i < all.Length; i++)
+        {
+            if (all[i] != null && all[i].parent == null && all[i].name == segments[0])
+            {
+                root = all[i];
+                break;
+            }
+        }
+        if (root == null) return null;
+
+        Transform current = root;
+        for (int i = 1; i < segments.Length; i++)
+        {
+            var next = current.Find(segments[i]);
+            if (next == null) return null;
+            current = next;
         }
 
         return current.gameObject;

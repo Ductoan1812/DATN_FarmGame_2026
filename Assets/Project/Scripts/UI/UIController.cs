@@ -652,7 +652,8 @@ public class UIController : MonoBehaviour
             showHotbar = gameplayState || backpackState;
         }
 
-        hotbarRoot.SetActive(showHotbar);
+        if (hotbarRoot.activeSelf != showHotbar)
+            hotbarRoot.SetActive(showHotbar);
     }
 
     private void UpdateMenuButtonVisibility()

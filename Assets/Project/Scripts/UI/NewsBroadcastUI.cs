@@ -8,7 +8,6 @@ using System.Collections;
 /// </summary>
 public class NewsBroadcastUI : MonoBehaviour
 {
-    private Canvas canvas;
     private CanvasGroup canvasGroup;
     private TextMeshProUGUI titleText;
     private TextMeshProUGUI bodyText;
@@ -47,6 +46,8 @@ public class NewsBroadcastUI : MonoBehaviour
         panelImage.color = new Color(0.2f, 0.1f, 0.05f, 0.95f);
 
         canvasGroup = panel.AddComponent<CanvasGroup>();
+        canvasGroup.interactable = false;
+        canvasGroup.blocksRaycasts = false;
 
         var titleObj = new GameObject("Title");
         titleObj.transform.SetParent(panel.transform, false);
@@ -93,7 +94,6 @@ public class NewsBroadcastUI : MonoBehaviour
         bodyText.text = GetLocalizedText(data.bodyKey);
 
         canvasGroup.alpha = 1f;
-        canvas.enabled = true;
 
         if (hideCoroutine != null) StopCoroutine(hideCoroutine);
         hideCoroutine = StartCoroutine(HideAfterDelay(5f));
@@ -102,7 +102,6 @@ public class NewsBroadcastUI : MonoBehaviour
     private void Hide()
     {
         canvasGroup.alpha = 0f;
-        canvas.enabled = false;
     }
 
     private IEnumerator HideAfterDelay(float delay)
