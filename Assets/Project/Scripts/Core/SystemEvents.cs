@@ -114,6 +114,31 @@ public struct SaveGameRequestPublish { }
 /// <summary>Yêu cầu load game.</summary>
 public struct LoadGameRequestPublish { }
 
+/// <summary>Hiển thị màn hình loading khi chuyển scene.</summary>
+public struct LoadingScreenShowPublish
+{
+    public readonly string targetSceneName;
+
+    public LoadingScreenShowPublish(string targetSceneName)
+    {
+        this.targetSceneName = targetSceneName;
+    }
+}
+
+/// <summary>Cập nhật tiến độ loading scene, giá trị 0..1.</summary>
+public struct LoadingScreenProgressPublish
+{
+    public readonly float progress;
+
+    public LoadingScreenProgressPublish(float progress)
+    {
+        this.progress = progress;
+    }
+}
+
+/// <summary>Ẩn màn hình loading sau khi scene mới đã restore xong.</summary>
+public struct LoadingScreenHidePublish { }
+
 // ══════════════════════════════════════════════════════════
 //  UI Events — PlayerBridge / Service publish, UI subscribe.
 // ══════════════════════════════════════════════════════════
@@ -234,6 +259,17 @@ public struct BackpackSlotSelectedRequestPublish
 }
 
 /// <summary>
+/// UI request preview 1 slot backpack khi con trỏ hover.
+/// Không thay đổi slot đang chọn.
+/// </summary>
+public struct BackpackSlotPreviewRequestPublish
+{
+    public readonly int slotIndex;
+    public BackpackSlotPreviewRequestPublish(int slotIndex)
+    { this.slotIndex = slotIndex; }
+}
+
+/// <summary>
 /// UI request sort backpack. BackpackUI publish, PlayerBridge subscribe.
 /// </summary>
 public struct BackpackSortRequestPublish { }
@@ -294,6 +330,7 @@ public struct StatDisplay
 public struct BackpackItemInfoChangedPublish
 {
     public readonly int slotIndex;
+    public readonly bool isPreview;
     public readonly bool isEmpty;
     public readonly Sprite icon;
     public readonly int amount;
@@ -305,6 +342,7 @@ public struct BackpackItemInfoChangedPublish
 
     public BackpackItemInfoChangedPublish(
         int slotIndex,
+        bool isPreview,
         bool isEmpty,
         Sprite icon,
         int amount,
@@ -315,6 +353,7 @@ public struct BackpackItemInfoChangedPublish
         StatDisplay[] stats)
     {
         this.slotIndex = slotIndex;
+        this.isPreview = isPreview;
         this.isEmpty = isEmpty;
         this.icon = icon;
         this.amount = amount;

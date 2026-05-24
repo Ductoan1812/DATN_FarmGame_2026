@@ -10,6 +10,7 @@ using DialogueGraphTool;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+    private static GameObject persistentUIRoot;
 
     // ── Registries ────────────────────────────────────────
     public EntityRegistry          EntityRegistry     { get; private set; }
@@ -59,11 +60,19 @@ public class GameManager : MonoBehaviour
     [SerializeField] private StarterLoadoutData starterLoadout;
     private bool isReloadingScene;
     private bool bootCompleted;
+    private bool isRestoringScene;
 
     private void Awake()
     {
-        if (Instance != null && Instance != this) { Destroy(gameObject); return; }
+        if (Instance != null && Instance != this)
+        {
+            DestroyDuplicateRuntimeRoot();
+            return;
+        }
+
         Instance = this;
+        DontDestroyOnLoad(transform.root.gameObject);
+        EnsurePersistentUIRoot();
         SceneManager.sceneLoaded += OnSceneLoaded;
 
         // Phase 1: Init tất cả systems
@@ -86,6 +95,7 @@ public class GameManager : MonoBehaviour
         InitSceneTransitionBridge();
         InitInteractionPreviewBridge();
         InitPlayerDeathHandler();
+        InitLoadingScreenUI();
         InitNarrativeUI();
         InitAIAssistant();
         InitDailyTracker();
@@ -337,6 +347,11 @@ public class GameManager : MonoBehaviour
         EnsureNarrativeUIComponent<CalendarUI>("CalendarUI");
     }
 
+    private void InitLoadingScreenUI()
+    {
+        EnsureNarrativeUIComponent<LoadingScreenUI>("LoadingScreenUI");
+    }
+
     private void InitResearchService()
     {
 #if UNITY_EDITOR
@@ -482,10 +497,16 @@ public class GameManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (!bootCompleted || Instance != this)
+        BeginRestoreActiveSceneAfterLoad(scene.name);
+    }
+
+    public void BeginRestoreActiveSceneAfterLoad(string sceneName)
+    {
+        if (!bootCompleted || Instance != this || isRestoringScene)
             return;
 
-        StartCoroutine(RestoreActiveSceneAfterLoad(scene.name));
+        isRestoringScene = true;
+        StartCoroutine(RestoreActiveSceneAfterLoad(sceneName));
     }
 
     private IEnumerator RestoreActiveSceneAfterLoad(string sceneName)
@@ -493,6 +514,7 @@ public class GameManager : MonoBehaviour
         // Wait one frame so SceneContext/SceneContentScanner in the new scene can run Awake/Start.
         yield return null;
 
+        EnsurePersistentUIRoot();
         RebindSceneScopedServices();
         SaveLoadManager.LoadCurrentSceneWorld();
 
@@ -501,8 +523,10 @@ public class GameManager : MonoBehaviour
 
         EventBus.Publish(new WorldObjectsSpawnedPublish());
         EventBus.Publish(new InventoryDataRestoredPublish());
+        EventBus.Publish(new LoadingScreenHidePublish());
 
         isReloadingScene = false;
+        isRestoringScene = false;
         Debug.Log($"[GameManager] Restored scene-scoped services and player for scene '{sceneName}'.");
     }
 
@@ -520,6 +544,59 @@ public class GameManager : MonoBehaviour
         SprinklerRegistry?.Clear();
         SpawnSystem?.RebindWorldService(WorldService);
         SaveLoadManager?.SetWorldService(WorldService);
+    }
+
+    private void DestroyDuplicateRuntimeRoot()
+    {
+        var root = transform.root.gameObject;
+        if (root != null && root != gameObject)
+            Destroy(root);
+        else
+            Destroy(gameObject);
+    }
+
+    private void EnsurePersistentUIRoot()
+    {
+        var roots = FindNamedGameObjects("UIRoot");
+        if (persistentUIRoot == null)
+        {
+            foreach (var root in roots)
+            {
+                if (root == null) continue;
+                persistentUIRoot = root;
+                DontDestroyOnLoad(persistentUIRoot);
+                break;
+            }
+        }
+
+        foreach (var root in roots)
+        {
+            if (root == null || root == persistentUIRoot)
+                continue;
+
+            Destroy(root);
+        }
+    }
+
+    private static GameObject[] FindNamedGameObjects(string objectName)
+    {
+        var transforms = FindObjectsByType<Transform>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        int count = 0;
+        for (int i = 0; i < transforms.Length; i++)
+        {
+            if (transforms[i] != null && transforms[i].name == objectName)
+                count++;
+        }
+
+        var results = new GameObject[count];
+        int index = 0;
+        for (int i = 0; i < transforms.Length; i++)
+        {
+            if (transforms[i] != null && transforms[i].name == objectName)
+                results[index++] = transforms[i].gameObject;
+        }
+
+        return results;
     }
 }
 
@@ -554,16 +631,48 @@ public static class SceneTransitionService
 
         try
         {
-            SceneManager.LoadScene(pendingSceneName);
+            if (eventBus != null)
+                eventBus.Publish(new LoadingScreenShowPublish(pendingSceneName));
+
+            var manager = GameManager.Instance;
+            if (manager != null)
+                manager.StartCoroutine(LoadSceneAsyncRoutine(pendingSceneName, eventBus));
+            else
+                SceneManager.LoadScene(pendingSceneName);
+
             return true;
         }
         catch (Exception ex)
         {
             Debug.LogError($"[SceneTransitionService] Failed to load scene '{pendingSceneName}': {ex.Message}");
+            if (eventBus != null)
+                eventBus.Publish(new LoadingScreenHidePublish());
             pendingSceneName = null;
             pendingSpawnPointId = null;
             return false;
         }
+    }
+
+    private static IEnumerator LoadSceneAsyncRoutine(string sceneName, EventBus eventBus)
+    {
+        yield return null;
+
+        var operation = SceneManager.LoadSceneAsync(sceneName);
+        if (operation == null)
+        {
+            SceneManager.LoadScene(sceneName);
+            yield break;
+        }
+
+        while (!operation.isDone)
+        {
+            float progress = Mathf.Clamp01(operation.progress / 0.9f);
+            eventBus?.Publish(new LoadingScreenProgressPublish(progress));
+            yield return null;
+        }
+
+        eventBus?.Publish(new LoadingScreenProgressPublish(1f));
+        GameManager.Instance?.BeginRestoreActiveSceneAfterLoad(sceneName);
     }
 
     public static bool TryConsumePendingSpawnPointForCurrentScene(out string spawnPointId)
