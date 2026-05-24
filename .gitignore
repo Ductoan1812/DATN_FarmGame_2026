@@ -120,3 +120,7 @@ InitTestScene*.unity*
 /Assets/.coplayrules.md
 /Packages/Aura/
 /Packages/Coplay/
+/Assets/Project/Scenes/Coreplay/FarmScene1.unity
+/Assets/Project/Scenes/Coreplay/FarmScene1.unity.meta
+/Assets/Resources/Localization/MissingKeys/
+/tools/
