@@ -34,17 +34,17 @@ MonoBehaviour:
     provideTags: 0
     blockLayers: 
   modules:
-  - rid: 8196222991998910625
-  - rid: 8196222991998910626
+  - rid: 8196223032269996310
+  - rid: 8196223032269996311
   references:
     version: 2
     RefIds:
-    - rid: 8196222991998910625
+    - rid: 8196223032269996310
       type: {class: ToolModule, ns: , asm: Assembly-CSharp}
       data:
         toolType: 3
         animTrigger: Harvert
-    - rid: 8196222991998910626
+    - rid: 8196223032269996311
       type: {class: AppearanceModule, ns: , asm: Assembly-CSharp}
       data:
         spriteId: Art.Equipment.MeleeWeapon1H.Scythe02

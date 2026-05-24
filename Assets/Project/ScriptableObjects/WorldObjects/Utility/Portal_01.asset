@@ -28,12 +28,12 @@ MonoBehaviour:
     provideTags: 0
     blockLayers: 
   modules:
-  - rid: 8196222991998910694
-  - rid: 8196222991998910695
+  - rid: 8196223032269996377
+  - rid: 8196223032269996378
   references:
     version: 2
     RefIds:
-    - rid: 8196222991998910694
+    - rid: 8196223032269996377
       type: {class: ScenePortalModule, ns: , asm: Assembly-CSharp}
       data:
         optionTextKey: ui.scene.enter
@@ -41,7 +41,7 @@ MonoBehaviour:
         targetSceneName: TownScene
         targetSpawnPointId: town_entry
         saveBeforeTransition: 1
-    - rid: 8196222991998910695
+    - rid: 8196223032269996378
       type: {class: DialogueModule, ns: , asm: Assembly-CSharp}
       data:
         graph: {fileID: 0}

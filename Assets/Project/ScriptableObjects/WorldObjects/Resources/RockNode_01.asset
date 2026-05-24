@@ -34,24 +34,24 @@ MonoBehaviour:
     provideTags: 0
     blockLayers: 
   modules:
-  - rid: 8196222991998910700
-  - rid: 8196222991998910701
-  - rid: 8196222991998910702
-  - rid: 8196222991998910703
-  - rid: 8196222991998910704
+  - rid: 8196223032269996389
+  - rid: 8196223032269996390
+  - rid: 8196223032269996391
+  - rid: 8196223032269996392
+  - rid: 8196223032269996393
   references:
     version: 2
     RefIds:
-    - rid: 8196222991998910700
+    - rid: 8196223032269996389
       type: {class: HealthModule, ns: , asm: Assembly-CSharp}
       data:
         canTakeDamage: 1
-    - rid: 8196222991998910701
+    - rid: 8196223032269996390
       type: {class: HarvestModule, ns: , asm: Assembly-CSharp}
       data:
         harvestTool: 5
         wrongToolPenalty: 0
-    - rid: 8196222991998910702
+    - rid: 8196223032269996391
       type: {class: DropModule, ns: , asm: Assembly-CSharp}
       data:
         harvestDrops:
@@ -63,12 +63,12 @@ MonoBehaviour:
           minAmount: 1
           maxAmount: 1
           dropChance: 0.25
-    - rid: 8196222991998910703
+    - rid: 8196223032269996392
       type: {class: ExpRewardModule, ns: , asm: Assembly-CSharp}
       data:
         rewardExp: 14
         sourceType: 1
         requireKiller: 0
-    - rid: 8196222991998910704
+    - rid: 8196223032269996393
       type: {class: MortalModule, ns: , asm: Assembly-CSharp}
       data: 

@@ -28,17 +28,13 @@ MonoBehaviour:
     provideTags: 0
     blockLayers: 
   modules:
-  - rid: 8196222991998910712
-  - rid: 8196223032269996032
+  - rid: 8196223032269996401
   references:
     version: 2
     RefIds:
-    - rid: 8196222991998910712
+    - rid: 8196223032269996401
       type: {class: DialogueModule, ns: , asm: Assembly-CSharp}
       data:
         graph: {fileID: 0}
         optionTextKey: ui.common.use
         priority: 20
-    - rid: 8196223032269996032
-      type: {class: BedModule, ns: , asm: Assembly-CSharp}
-      data: 

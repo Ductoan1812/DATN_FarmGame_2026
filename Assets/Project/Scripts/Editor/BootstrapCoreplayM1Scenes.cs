@@ -40,6 +40,15 @@ public static class BootstrapCoreplayM1Scenes
 
     public static void ExecuteBatch() => Execute();
 
+    [MenuItem("Tools/DATN/Coreplay/Vertical Slice - Restamp Town Layout")]
+    public static void RestampTownLayoutOnly()
+    {
+        StampTownScene();
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
+        Debug.Log("[BootstrapCoreplayM1Scenes] Town vertical-slice layout restamped.");
+    }
+
     [MenuItem("Tools/DATN/Coreplay/Sprint 4 - Add Clear Zone")]
     public static void ExecuteSprint4ClearZoneOnly()
     {
@@ -198,17 +207,17 @@ public static class BootstrapCoreplayM1Scenes
         var markerMap = PrepareScene("TownScene");
         ClearMarkers(markerMap);
 
-        SetTile(markerMap, new Vector3Int(0, 0, 0), "Marker_Player_TownEntry");
-        SetTile(markerMap, new Vector3Int(8, 0, 0), "Marker_Player_TownMineEntry");
-        SetTile(markerMap, new Vector3Int(-8, 0, 0), "Marker_Portal_Town_To_Farm");
-        SetTile(markerMap, new Vector3Int(10, 0, 0), "Marker_Portal_Town_To_Mine");
-        SetTile(markerMap, new Vector3Int(-3, 3, 0), "Marker_NPC_Shop");
-        SetTile(markerMap, new Vector3Int(0, 3, 0), "Marker_NPC_Crafting");
-        SetTile(markerMap, new Vector3Int(3, 3, 0), "Marker_NPC_Quest");
+        SetTile(markerMap, new Vector3Int(-6, -2, 0), "Marker_Player_TownEntry");
+        SetTile(markerMap, new Vector3Int(7, -3, 0), "Marker_Player_TownMineEntry");
+        SetTile(markerMap, new Vector3Int(-9, -2, 0), "Marker_Portal_Town_To_Farm");
+        SetTile(markerMap, new Vector3Int(10, -3, 0), "Marker_Portal_Town_To_Mine");
+        SetTile(markerMap, new Vector3Int(-5, 4, 0), "Marker_NPC_Shop");
+        SetTile(markerMap, new Vector3Int(0, 5, 0), "Marker_NPC_Crafting");
+        SetTile(markerMap, new Vector3Int(5, 2, 0), "Marker_NPC_Quest");
 
         SetTiles(markerMap, "Marker_Forage_01",
-            new Vector3Int(-5, -4, 0),
-            new Vector3Int(5, -4, 0));
+            new Vector3Int(-6, -6, 0),
+            new Vector3Int(5, -5, 0));
 
         SaveScene(scene);
     }
