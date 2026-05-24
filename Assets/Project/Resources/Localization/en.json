@@ -80,8 +80,12 @@
     { "key": "npc_banhang_desc", "value": "Hello, do you want to trade or chat for a moment?" },
     { "key": "npc_chetao_name", "value": "Crafter" },
     { "key": "npc_chetao_desc", "value": "I can craft gear for you if you bring enough materials." },
+    { "key": "npc_channuoi_name", "value": "Animal Keeper" },
+    { "key": "npc_channuoi_desc", "value": "I sell livestock, animal feed, and buy barn products." },
     { "key": "npc_sukien_name", "value": "Messenger" },
     { "key": "npc_sukien_desc", "value": "I have a few tasks that need your help." },
+    { "key": "Axe01_name", "value": "Starter Axe" },
+    { "key": "Axe01_desc", "value": "Used to chop trees and clear wood from the farm." },
     { "key": "Pickaxe01_name", "value": "Copper Pickaxe" },
     { "key": "Pickaxe01_desc", "value": "Used to mine rocks and ore nodes." },
     { "key": "OreChunk01_name", "value": "Ore Chunk" },
@@ -100,6 +104,14 @@
     { "key": "ui.quest.state.completed", "value": "Completed" },
     { "key": "quest.sample_farmer_work.title", "value": "First Farm Job" },
     { "key": "quest.sample_farmer_work.desc", "value": "Harvest 5 onions and bring them back to the farmer." },
-    { "key": "quest.sample_farmer_work.objective.collect_onion", "value": "Harvest onions" }
+    { "key": "quest.sample_farmer_work.objective.collect_onion", "value": "Harvest onions" },
+    { "key": "s5.ai.tip.water_crops", "value": "The sun is out and the field is dry. Water crops before the day ends." },
+    { "key": "s5.ai.tip.rain_waters_crops", "value": "Rain will water crops for you. Use the time for mining or quests." },
+    { "key": "s5.ai.tip.visit_mine_for_materials", "value": "Visit the mine to gather ore and upgrade materials." },
+    { "key": "s5.ai.tip.keep_progressing", "value": "Keep farming, trading, and finishing quests to unlock the next step." },
+    { "key": "s5.story.day01.title", "value": "First Day on the Farm" },
+    { "key": "s5.story.day01.body", "value": "Welcome to the farm. Check your tools, plant your first seeds, and learn the rhythm of the day." },
+    { "key": "s5.story.day03.title", "value": "Farm Routine" },
+    { "key": "s5.story.day03.body", "value": "After a few days, harvest crops, sell produce, and prepare supplies for the next trip." }
   ]
 }

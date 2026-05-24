@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8393fbdfdb650e5418aad1c82ae5b8b5, type: 3}
+  m_Name: NPC_ChanNuoi
+  m_EditorClassIdentifier: 
+  id: npc_channuoi
+  keyName: npc_channuoi_name
+  descKey: npc_channuoi_desc
+  icon: {fileID: 21300000, guid: 425254c3528c93c41b7c29fe411292ce, type: 3}
+  category: 0
+  maxStack: 1
+  buyPrice: 0
+  sellPrice: 0
+  baseStats:
+    baseStats:
+    - statType: 13
+      value: 999999
+  placementRule:
+    occupyLayer: 0
+    requireTags: 0
+    provideTags: 0
+    blockLayers: 
+  modules:
+  - rid: 8196223095882121217
+  - rid: 8196223095882121218
+  - rid: 8196223095882121219
+  references:
+    version: 2
+    RefIds:
+    - rid: 8196223095882121217
+      type: {class: DialogueModule, ns: , asm: Assembly-CSharp}
+      data:
+        graph: {fileID: 11400000, guid: 2ae8159d3fdb43b79a640e9c3a127f01, type: 2}
+        optionTextKey: ui.dialogue.talk
+        priority: 10
+    - rid: 8196223095882121218
+      type: {class: InventoryModule, ns: , asm: Assembly-CSharp}
+      data:
+        inventoryType: 0
+        size: 80
+    - rid: 8196223095882121219
+      type: {class: ShopModule, ns: , asm: Assembly-CSharp}
+      data:
+        optionTextKey: ui.shop.open
+        priority: 30
+        sellsToPlayer: 1
+        buysFromPlayer: 1
+        buysAllItems: 0
+        infiniteStock: 1
+        stockInventoryType: 0
+        buyWhitelist:
+        - {fileID: 11400000, guid: 64dd2ca108a6fef4ba8abebeb5a731ae, type: 2}
+        - {fileID: 11400000, guid: 99b32639a5a7b8f4c8f629a2a87c0272, type: 2}
+        - {fileID: 11400000, guid: a815ea7db5a6e724ca2b8b03888c34d8, type: 2}
+        initialStock:
+        - itemData: {fileID: 11400000, guid: 7b1d8779c5c6fb8408d446df96294e86, type: 2}
+          amount: 1
+          requiredLevel: 1
+          unlockRequirement:
+            requiredLevel: 1
+            requiredQuestIds: []
+        - itemData: {fileID: 11400000, guid: 5ccf8e9d763b3154db417c96192783e5, type: 2}
+          amount: 1
+          requiredLevel: 8
+          unlockRequirement:
+            requiredLevel: 8
+            requiredQuestIds: []
+        - itemData: {fileID: 11400000, guid: 0a87083f16e02b24cb4113d13bdef2d9, type: 2}
+          amount: 1
+          requiredLevel: 12
+          unlockRequirement:
+            requiredLevel: 12
+            requiredQuestIds: []
+        - itemData: {fileID: 11400000, guid: 9bc401d64e3fc0d4d90a285583196bff, type: 2}
+          amount: 20
+          requiredLevel: 1
+          unlockRequirement:
+            requiredLevel: 1
+            requiredQuestIds: []

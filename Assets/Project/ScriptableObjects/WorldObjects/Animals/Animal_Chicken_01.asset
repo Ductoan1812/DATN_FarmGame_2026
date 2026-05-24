@@ -18,7 +18,7 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 3ccda3f2218d31e47a86a3a45c3c82b7, type: 3}
   category: 9
   maxStack: 1
-  buyPrice: -1
+  buyPrice: 1
   sellPrice: 0
   baseStats:
     baseStats: []
@@ -41,7 +41,9 @@ MonoBehaviour:
         statusHungryKey: ui.animal.status.hungry
         statusFedKey: ui.animal.status.fed
         statusProductReadyKey: ui.animal.status.product_ready
+        statusDeadKey: ui.animal.status.dead
         priority: 25
         feedItem: {fileID: 11400000, guid: 9bc401d64e3fc0d4d90a285583196bff, type: 2}
         productItem: {fileID: 11400000, guid: 64dd2ca108a6fef4ba8abebeb5a731ae, type: 2}
         productAmount: 1
+        daysWithoutFoodToDie: 3

@@ -293,12 +293,28 @@
       "value": "Tôi có thể giúp cậu chế tạo nếu có đủ nguyên liệu."
     },
     {
+      "key": "npc_channuoi_name",
+      "value": "Người chăn nuôi"
+    },
+    {
+      "key": "npc_channuoi_desc",
+      "value": "Tôi bán vật nuôi, thức ăn và thu mua sản phẩm từ chuồng trại."
+    },
+    {
       "key": "npc_sukien_name",
       "value": "Người đưa tin"
     },
     {
       "key": "npc_sukien_desc",
       "value": "Tôi có vài việc nhờ cậu giúp đỡ."
+    },
+    {
+      "key": "Axe01_name",
+      "value": "Rìu khởi đầu"
+    },
+    {
+      "key": "Axe01_desc",
+      "value": "Dùng để chặt cây và dọn gỗ trên nông trại."
     },
     {
       "key": "Pickaxe01_name",
@@ -1319,6 +1335,38 @@
     {
       "key": "m6.recipe.animal_feed.name",
       "value": "Chế tạo thức ăn gà"
+    },
+    {
+      "key": "s5.ai.tip.water_crops",
+      "value": "Trời nắng và ruộng chưa được tưới. Hãy tưới cây trước khi hết ngày."
+    },
+    {
+      "key": "s5.ai.tip.rain_waters_crops",
+      "value": "Trời mưa sẽ tưới cây giúp bạn. Hãy dùng thời gian cho khai khoáng hoặc nhiệm vụ."
+    },
+    {
+      "key": "s5.ai.tip.visit_mine_for_materials",
+      "value": "Hãy ghé khu mỏ để lấy quặng và nguyên liệu nâng cấp."
+    },
+    {
+      "key": "s5.ai.tip.keep_progressing",
+      "value": "Tiếp tục trồng trọt, giao dịch và hoàn thành nhiệm vụ để mở tiến trình mới."
+    },
+    {
+      "key": "s5.story.day01.title",
+      "value": "Ngày đầu ở nông trại"
+    },
+    {
+      "key": "s5.story.day01.body",
+      "value": "Chào mừng đến nông trại. Hãy kiểm tra dụng cụ, trồng hạt giống đầu tiên và làm quen với nhịp một ngày."
+    },
+    {
+      "key": "s5.story.day03.title",
+      "value": "Nhịp sống nông trại"
+    },
+    {
+      "key": "s5.story.day03.body",
+      "value": "Sau vài ngày, hãy thu hoạch, bán nông sản và chuẩn bị nguyên liệu cho chuyến đi tiếp theo."
     }
   ]
 }

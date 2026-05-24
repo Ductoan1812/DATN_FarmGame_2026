@@ -38,12 +38,12 @@ MonoBehaviour:
     provideTags: 0
     blockLayers: 
   modules:
-  - rid: 8196222991998910697
-  - rid: 8196222991998910698
+  - rid: 8196223032269996386
+  - rid: 8196223032269996387
   references:
     version: 2
     RefIds:
-    - rid: 8196222991998910697
+    - rid: 8196223032269996386
       type: {class: WeaponModule, ns: , asm: Assembly-CSharp}
       data:
         archetype: 0
@@ -53,7 +53,7 @@ MonoBehaviour:
         cooldown: 0.45
         staminaCost: 5
         knockback: 1.2
-    - rid: 8196222991998910698
+    - rid: 8196223032269996387
       type: {class: AppearanceModule, ns: , asm: Assembly-CSharp}
       data:
         spriteId: Art.Equipment.MeleeWeapon1H.Sword01
