@@ -1,4 +1,0 @@
-NPC
-dialogue.line.key
-quest.description.key
-quest.title.key

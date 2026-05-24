@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.ramenvr.aura-unity": "https://github.com/ramenvr/AuraForUnityPlugin.git",
     "com.anklebreaker.unity-mcp": "https://github.com/AnkleBreaker-Studio/unity-mcp-plugin.git",
     "com.coplaydev.coplay": "https://github.com/CoplayDev/coplay-unity-plugin.git#beta",
     "com.unity.collab-proxy": "2.12.4",
