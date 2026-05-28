@@ -1,7 +1,7 @@
 using UnityEngine;
 using System;
 
-public class StageRuntime : IModuleRuntime, IHandleEvent<NextDayEvent>, IHandleEvent<SpawnedEvent>
+public class StageRuntime : IModuleRuntime, IHandleEvent<NextDayEvent>, IHandleEvent<SpawnedEvent>, IHandleEvent<SeasonChangedEvent>
 {
     public int currentStageIndex = 0;
     private int daysInCurrentStage = 0;
@@ -18,6 +18,7 @@ public class StageRuntime : IModuleRuntime, IHandleEvent<NextDayEvent>, IHandleE
         data?.stages != null
         && currentStageIndex >= 0
         && currentStageIndex < data.stages.Length
+        && !isWilting
         && data.stages[currentStageIndex].canHarvest;
 
     /// <summary>Số ngày liên tiếp không được tưới.</summary>
@@ -118,14 +119,11 @@ public class StageRuntime : IModuleRuntime, IHandleEvent<NextDayEvent>, IHandleE
 
         if (watered)
         {
-            // ── TƯỚI: grow + reset wilt ──
+            // Cây đã héo do qua mùa thì không thể hồi chỉ bằng tưới nước.
             if (isWilting)
             {
-                // Revert sprite từ wilt về stage hiện tại
-                isWilting = false;
-                if (spriteRenderer != null && currentStageIndex < data.stages.Length)
-                    spriteRenderer.sprite = data.stages[currentStageIndex].sprite;
-                Debug.Log($"[StageRuntime] '{Owner.GameObject.name}' hồi phục từ héo!");
+                Debug.Log($"[StageRuntime] '{Owner.GameObject.name}' đã héo do qua mùa, tưới nước không làm cây hồi lại.");
+                return;
             }
 
             daysWithoutWater = 0;
@@ -156,31 +154,9 @@ public class StageRuntime : IModuleRuntime, IHandleEvent<NextDayEvent>, IHandleE
         }
         else
         {
-            // ── KHÔNG TƯỚI: wilt logic ──
-            daysWithoutWater++;
-            Debug.Log($"[StageRuntime] '{Owner.GameObject.name}' KHÔNG tưới! daysWithoutWater={daysWithoutWater}");
-
-            if (daysWithoutWater == 1)
-            {
-                // Ngày 1 không tưới: hiện sprite héo (cảnh báo)
-                isWilting = true;
-                if (data.wiltSprite != null && spriteRenderer != null)
-                {
-                    spriteRenderer.sprite = data.wiltSprite;
-                    Debug.LogWarning($"[StageRuntime] '{Owner.GameObject.name}' đang HÉO! Cần tưới nước.");
-                }
-                else
-                {
-                    Debug.LogWarning($"[StageRuntime] '{Owner.GameObject.name}' đang héo (không có wiltSprite).");
-                }
-            }
-            else if (daysWithoutWater >= 2)
-            {
-                // Ngày 2+ không tưới: cây CHẾT
-                Debug.LogError($"[StageRuntime] '{Owner.GameObject.name}' CHẾT vì không tưới {daysWithoutWater} ngày!");
-                if (_entity != null)
-                    _entity.TriggerEvent(new DieEvent(_entity));
-            }
+            // Rule mới: không tưới thì cây chỉ đứng yên, không phát triển.
+            daysWithoutWater = 0;
+            Debug.Log($"[StageRuntime] '{Owner.GameObject.name}' không được tưới hôm nay nên không phát triển.");
         }
     }
 
@@ -207,5 +183,24 @@ public class StageRuntime : IModuleRuntime, IHandleEvent<NextDayEvent>, IHandleE
     {
         if (Owner == null) return;
         UpdateStage();
+    }
+
+    public void Handle(SeasonChangedEvent e)
+    {
+        if (Owner?.GameObject == null) return;
+        if (data == null || !data.wiltOnSeasonChange) return;
+        if (isWilting) return;
+
+        isWilting = true;
+        daysWithoutWater = 0;
+
+        if (spriteRenderer == null)
+            spriteRenderer = Owner.GameObject.GetComponentInChildren<SpriteRenderer>()
+                          ?? Owner.GameObject.GetComponent<SpriteRenderer>();
+
+        if (data.wiltSprite != null && spriteRenderer != null)
+            spriteRenderer.sprite = data.wiltSprite;
+
+        Debug.LogWarning($"[StageRuntime] '{Owner.GameObject.name}' đã héo vì sang mùa {e.season} năm {e.year}.");
     }
 }

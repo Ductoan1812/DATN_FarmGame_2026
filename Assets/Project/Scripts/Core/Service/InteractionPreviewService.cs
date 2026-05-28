@@ -88,7 +88,7 @@ public static class InteractionPreviewService
         out string blockedReasonKey,
         out bool isBlocked)
     {
-        requiredTool = harvest.harvestTool;
+        requiredTool = harvest.AllowsHandHarvest ? ToolType.None : harvest.GetPrimaryRequiredTool();
         statusTextKey = string.Empty;
         blockedReasonKey = string.Empty;
         isBlocked = false;
@@ -111,15 +111,17 @@ public static class InteractionPreviewService
             return;
         }
 
-        if (requiredTool == ToolType.None)
+        if (harvest.AllowsHandHarvest)
             return;
 
         ToolType selectedTool = ResolveSelectedTool(interactor);
-        if (selectedTool == requiredTool)
+        if (harvest.AllowsTool(selectedTool))
             return;
 
         isBlocked = true;
-        blockedReasonKey = BuildNeedToolKey(requiredTool);
+        ToolType neededTool = harvest.GetPrimaryRequiredTool();
+        blockedReasonKey = BuildNeedToolKey(neededTool);
+        requiredTool = neededTool;
     }
 
     private static ToolType ResolveSelectedTool(EntityRuntime interactor)

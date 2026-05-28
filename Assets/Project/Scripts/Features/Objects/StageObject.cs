@@ -1,7 +1,7 @@
 using UnityEngine;
 
 /// <summary>
-/// Bridge giữa global NextDayEventPublish (EventBus) → entity NextDayEvent (TriggerEvent).
+/// Bridge giữa global time events (EventBus) → entity local events (TriggerEvent).
 /// Subscribe EntityRoot.OnEntityReady để lấy entity ref.
 /// </summary>
 [DisallowMultipleComponent]
@@ -31,6 +31,7 @@ public class StageObject : MonoBehaviour
         if (eventBus != null && !subscribed)
         {
             eventBus.Subscribe<NextDayEventPublish>(OnGlobalNextDay);
+            eventBus.Subscribe<SeasonChangedPublish>(OnGlobalSeasonChanged);
             subscribed = true;
         }
     }
@@ -42,6 +43,7 @@ public class StageObject : MonoBehaviour
         if (eventBus != null && subscribed)
         {
             eventBus.Unsubscribe<NextDayEventPublish>(OnGlobalNextDay);
+            eventBus.Unsubscribe<SeasonChangedPublish>(OnGlobalSeasonChanged);
             subscribed = false;
         }
     }
@@ -54,6 +56,17 @@ public class StageObject : MonoBehaviour
             return;
         }
         entity.TriggerEvent(new NextDayEvent());
+    }
+
+    public void OnGlobalSeasonChanged(SeasonChangedPublish e)
+    {
+        if (entity == null)
+        {
+            Debug.LogWarning($"[StageObject] {gameObject.name} No EntityRuntime");
+            return;
+        }
+
+        entity.TriggerEvent(new SeasonChangedEvent(e.year, e.season));
     }
 
     public void SetEntityRoot(EntityRuntime entityRuntime)

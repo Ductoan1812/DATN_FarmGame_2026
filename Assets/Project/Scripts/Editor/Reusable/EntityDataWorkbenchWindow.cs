@@ -54,6 +54,7 @@ public class EntityDataWorkbenchWindow : EditorWindow
         public int maxStack;
         public EntityLayer occupyLayer;
         public Type[] requiredModules;
+        public Type[] preferredModuleOrder;
         public KeyValuePair<StatType, float>[] requiredStats;
     }
 
@@ -494,6 +495,7 @@ public class EntityDataWorkbenchWindow : EditorWindow
                     maxStack = 1,
                     occupyLayer = EntityLayer.Ground,
                     requiredModules = Array.Empty<Type>(),
+                    preferredModuleOrder = Array.Empty<Type>(),
                     requiredStats = Array.Empty<KeyValuePair<StatType, float>>()
                 }
             },
@@ -503,17 +505,36 @@ public class EntityDataWorkbenchWindow : EditorWindow
                 {
                     kind = TemplateKind.PlantSeedFlow,
                     label = "Plant Seed Flow",
-                    description = "Flow seed trồng cây: item seed có Placement + Stage + Drop, đặt xuống sẽ lớn theo ngày.",
+                    description = "Flow seed = plant: một EntityData duy nhất có Placement, Stage, Harvest, Health, Drop, Mortal; đặt xuống rồi phát triển, nhận damage và thu hoạch.",
                     defaultFolder = "Assets/Project/ScriptableObjects/WorldObjects/Plants",
                     defaultPrefix = "seed_",
                     category = ItemCategory.Seed,
                     maxStack = 999,
                     occupyLayer = EntityLayer.Plant,
-                    requiredModules = new[] { typeof(PlacementModule), typeof(StageModule), typeof(DropModule) },
+                    requiredModules = new[]
+                    {
+                        typeof(PlacementModule),
+                        typeof(StageModule),
+                        typeof(HarvestModule),
+                        typeof(HealthModule),
+                        typeof(DropModule),
+                        typeof(MortalModule)
+                    },
+                    preferredModuleOrder = new[]
+                    {
+                        typeof(PlacementModule),
+                        typeof(StageModule),
+                        typeof(HarvestModule),
+                        typeof(HealthModule),
+                        typeof(DropModule),
+                        typeof(ExpRewardModule),
+                        typeof(MortalModule),
+                        typeof(QualityModule)
+                    },
                     requiredStats = new[]
                     {
-                        new KeyValuePair<StatType, float>(StatType.MaxHp, 1f),
-                        new KeyValuePair<StatType, float>(StatType.Hp, 1f)
+                        new KeyValuePair<StatType, float>(StatType.MaxHp, 10f),
+                        new KeyValuePair<StatType, float>(StatType.Hp, 10f)
                     }
                 }
             },
@@ -530,6 +551,15 @@ public class EntityDataWorkbenchWindow : EditorWindow
                     maxStack = 999,
                     occupyLayer = EntityLayer.Furniture,
                     requiredModules = new[] { typeof(HealthModule), typeof(HarvestModule), typeof(DropModule), typeof(ExpRewardModule), typeof(MortalModule), typeof(ResourceGrowthModule) },
+                    preferredModuleOrder = new[]
+                    {
+                        typeof(HealthModule),
+                        typeof(HarvestModule),
+                        typeof(DropModule),
+                        typeof(ExpRewardModule),
+                        typeof(MortalModule),
+                        typeof(ResourceGrowthModule)
+                    },
                     requiredStats = new[]
                     {
                         new KeyValuePair<StatType, float>(StatType.MaxHp, 25f),
@@ -550,6 +580,14 @@ public class EntityDataWorkbenchWindow : EditorWindow
                     maxStack = 1,
                     occupyLayer = EntityLayer.Furniture,
                     requiredModules = new[] { typeof(HealthModule), typeof(HarvestModule), typeof(DropModule), typeof(MortalModule), typeof(ExpRewardModule) },
+                    preferredModuleOrder = new[]
+                    {
+                        typeof(HealthModule),
+                        typeof(HarvestModule),
+                        typeof(DropModule),
+                        typeof(ExpRewardModule),
+                        typeof(MortalModule)
+                    },
                     requiredStats = new[]
                     {
                         new KeyValuePair<StatType, float>(StatType.MaxHp, 10f),
@@ -570,6 +608,7 @@ public class EntityDataWorkbenchWindow : EditorWindow
                     maxStack = 1,
                     occupyLayer = EntityLayer.Ground,
                     requiredModules = new[] { typeof(HealthModule), typeof(DropModule), typeof(RespawnModule) },
+                    preferredModuleOrder = new[] { typeof(HealthModule), typeof(DropModule), typeof(RespawnModule) },
                     requiredStats = new[]
                     {
                         new KeyValuePair<StatType, float>(StatType.MaxHp, 20f),
@@ -592,6 +631,7 @@ public class EntityDataWorkbenchWindow : EditorWindow
                     maxStack = 1,
                     occupyLayer = EntityLayer.Ground,
                     requiredModules = new[] { typeof(DialogueModule), typeof(InventoryModule) },
+                    preferredModuleOrder = new[] { typeof(DialogueModule), typeof(InventoryModule) },
                     requiredStats = new[]
                     {
                         new KeyValuePair<StatType, float>(StatType.Money, 0f)
@@ -611,6 +651,7 @@ public class EntityDataWorkbenchWindow : EditorWindow
                     maxStack = 1,
                     occupyLayer = EntityLayer.Ground,
                     requiredModules = new[] { typeof(AnimalModule), typeof(HealthModule), typeof(MortalModule) },
+                    preferredModuleOrder = new[] { typeof(AnimalModule), typeof(HealthModule), typeof(MortalModule) },
                     requiredStats = new[]
                     {
                         new KeyValuePair<StatType, float>(StatType.MaxHp, 10f),
@@ -631,6 +672,7 @@ public class EntityDataWorkbenchWindow : EditorWindow
                     maxStack = 1,
                     occupyLayer = EntityLayer.Ground,
                     requiredModules = new[] { typeof(ToolModule) },
+                    preferredModuleOrder = new[] { typeof(ToolModule) },
                     requiredStats = new[]
                     {
                         new KeyValuePair<StatType, float>(StatType.Range, 1f),
@@ -651,6 +693,7 @@ public class EntityDataWorkbenchWindow : EditorWindow
                     maxStack = 1,
                     occupyLayer = EntityLayer.Ground,
                     requiredModules = new[] { typeof(WeaponModule) },
+                    preferredModuleOrder = new[] { typeof(WeaponModule) },
                     requiredStats = new[]
                     {
                         new KeyValuePair<StatType, float>(StatType.Attack, 4f),
@@ -672,6 +715,7 @@ public class EntityDataWorkbenchWindow : EditorWindow
                     maxStack = 99,
                     occupyLayer = EntityLayer.Ground,
                     requiredModules = new[] { typeof(BuildingModule) },
+                    preferredModuleOrder = new[] { typeof(BuildingModule) },
                     requiredStats = Array.Empty<KeyValuePair<StatType, float>>()
                 }
             }
@@ -846,6 +890,19 @@ public class EntityDataWorkbenchWindow : EditorWindow
             });
         }
 
+        if (config.preferredModuleOrder != null &&
+            config.preferredModuleOrder.Length > 0 &&
+            HasModuleOrderMismatch(data, config.preferredModuleOrder))
+        {
+            issues.Add(new ValidationIssue
+            {
+                severity = IssueSeverity.Warning,
+                message = $"Thứ tự module chưa đúng template `{config.label}`. Khuyến nghị: {FormatModuleOrder(config.preferredModuleOrder)}.",
+                actionLabel = "Reorder modules",
+                fix = entity => MutateEntity(entity, "Reorder modules", () => ReorderModules(entity, config.preferredModuleOrder))
+            });
+        }
+
         ValidateSpecialCases(data, template, path, issues);
         return issues;
     }
@@ -894,6 +951,18 @@ public class EntityDataWorkbenchWindow : EditorWindow
 
         if (HasModule<DropModule>(data))
         {
+            int dropModuleCount = data.modules?.Count(module => module is DropModule) ?? 0;
+            if (dropModuleCount > 1)
+            {
+                issues.Add(new ValidationIssue
+                {
+                    severity = IssueSeverity.Warning,
+                    message = $"EntityData đang có {dropModuleCount} DropModule. Flow harvest hiện tại chỉ dùng module drop đầu tiên.",
+                    actionLabel = null,
+                    fix = null
+                });
+            }
+
             var drop = GetModule<DropModule>(data);
             if (drop.harvestDrops == null)
             {
@@ -908,6 +977,16 @@ public class EntityDataWorkbenchWindow : EditorWindow
                         if (module != null)
                             module.harvestDrops = Array.Empty<DropEntry>();
                     })
+                });
+            }
+            else if (template == TemplateKind.PlantSeedFlow && drop.harvestDrops.Length == 0)
+            {
+                issues.Add(new ValidationIssue
+                {
+                    severity = IssueSeverity.Info,
+                    message = "DropModule đang có `harvestDrops` rỗng. Plant vẫn lớn được nhưng harvest sẽ không cho item nào.",
+                    actionLabel = null,
+                    fix = null
                 });
             }
         }
@@ -930,31 +1009,73 @@ public class EntityDataWorkbenchWindow : EditorWindow
                             {
                                 module.objectTypeToSpawn = ObjectType.Plant01;
                                 module.centerTile = true;
-                                if (string.IsNullOrWhiteSpace(module.animTrigger))
-                                    module.animTrigger = "Sow";
+                                if (string.IsNullOrWhiteSpace(module.animTrigger) || string.Equals(module.animTrigger, "Sow", StringComparison.OrdinalIgnoreCase))
+                                    module.animTrigger = "PutDown";
                             }
                         })
                         : null
+                });
+            }
+
+            if (template == TemplateKind.PlantSeedFlow &&
+                !string.Equals(placement.animTrigger, "PutDown", StringComparison.OrdinalIgnoreCase))
+            {
+                issues.Add(new ValidationIssue
+                {
+                    severity = IssueSeverity.Warning,
+                    message = $"PlacementModule đang dùng animTrigger `{placement.animTrigger}`. Flow plant hiện tại khuyến nghị `PutDown`.",
+                    actionLabel = "Set animTrigger = PutDown",
+                    fix = entity => MutateEntity(entity, "Set plant anim trigger", () =>
+                    {
+                        var module = GetModule<PlacementModule>(entity);
+                        if (module != null)
+                            module.animTrigger = "PutDown";
+                    })
                 });
             }
         }
 
         if (HasModule<HarvestModule>(data))
         {
-            var harvest = GetModule<HarvestModule>(data);
-            if (harvest.harvestTool == ToolType.None)
+            int harvestModuleCount = data.modules?.Count(module => module is HarvestModule) ?? 0;
+            if (harvestModuleCount > 1)
             {
                 issues.Add(new ValidationIssue
                 {
                     severity = IssueSeverity.Warning,
-                    message = "HarvestModule chưa chọn `harvestTool`.",
-                    actionLabel = template == TemplateKind.TreeGrowthFlow || template == TemplateKind.ResourceNode ? "Set harvestTool = Axe" : null,
-                    fix = template == TemplateKind.TreeGrowthFlow || template == TemplateKind.ResourceNode
+                    message = $"EntityData đang có {harvestModuleCount} HarvestModule. Flow hiện tại chỉ dùng HarvestModule đầu tiên, hãy gộp nhiều cách harvest vào cùng một module.",
+                    actionLabel = null,
+                    fix = null
+                });
+            }
+
+            var harvest = GetModule<HarvestModule>(data);
+            if (!harvest.AllowsHandHarvest && !harvest.HasAnyToolHarvest)
+            {
+                string actionLabel = null;
+                ToolType harvestTool = ToolType.None;
+                if (template == TemplateKind.PlantSeedFlow)
+                {
+                    actionLabel = "Set harvestTool = Scythe";
+                    harvestTool = ToolType.Scythe;
+                }
+                else if (template == TemplateKind.TreeGrowthFlow || template == TemplateKind.ResourceNode)
+                {
+                    actionLabel = template == TemplateKind.ResourceNode ? "Set harvestTool = Pickaxe" : "Set harvestTool = Axe";
+                    harvestTool = template == TemplateKind.ResourceNode ? ToolType.Pickaxe : ToolType.Axe;
+                }
+
+                issues.Add(new ValidationIssue
+                {
+                    severity = IssueSeverity.Warning,
+                    message = "HarvestModule chưa cấu hình cách thu hoạch nào.",
+                    actionLabel = actionLabel,
+                    fix = harvestTool != ToolType.None
                         ? entity => MutateEntity(entity, "Set harvest tool", () =>
                         {
                             var module = GetModule<HarvestModule>(entity);
                             if (module != null)
-                                module.harvestTool = ToolType.Axe;
+                                module.harvestTool = harvestTool;
                         })
                         : null
                 });
@@ -1085,6 +1206,8 @@ public class EntityDataWorkbenchWindow : EditorWindow
                 EnsureStat(data, stat.Key, stat.Value);
 
             ApplyModuleDefaults(data, template);
+            if (config.preferredModuleOrder != null && config.preferredModuleOrder.Length > 0)
+                ReorderModules(data, config.preferredModuleOrder);
         });
     }
 
@@ -1097,13 +1220,17 @@ public class EntityDataWorkbenchWindow : EditorWindow
             {
                 placement.objectTypeToSpawn = placement.objectTypeToSpawn == ObjectType.EntityDrop ? ObjectType.Plant01 : placement.objectTypeToSpawn;
                 placement.centerTile = true;
-                if (string.IsNullOrWhiteSpace(placement.animTrigger))
-                    placement.animTrigger = "Sow";
+                if (string.IsNullOrWhiteSpace(placement.animTrigger) || string.Equals(placement.animTrigger, "Sow", StringComparison.OrdinalIgnoreCase))
+                    placement.animTrigger = "PutDown";
             }
 
             var stage = GetModule<StageModule>(data);
             if (stage != null && (stage.stages == null || stage.stages.Length == 0))
                 stage.stages = new[] { new GrowthStage { daysToGrow = 1, canHarvest = true } };
+
+            var harvest = GetModule<HarvestModule>(data);
+            if (harvest != null && harvest.harvestTool == ToolType.None)
+                harvest.harvestTool = ToolType.Scythe;
 
             var drop = GetModule<DropModule>(data);
             if (drop != null && drop.harvestDrops == null)
@@ -1189,6 +1316,54 @@ public class EntityDataWorkbenchWindow : EditorWindow
 
         if (Activator.CreateInstance(moduleType) is IModuleData module)
             data.modules.Add(module);
+    }
+
+    private static bool HasModuleOrderMismatch(EntityData data, IReadOnlyList<Type> preferredOrder)
+    {
+        if (data?.modules == null || preferredOrder == null || preferredOrder.Count == 0)
+            return false;
+
+        int previousIndex = -1;
+        foreach (Type moduleType in preferredOrder)
+        {
+            int currentIndex = data.modules.FindIndex(module => module != null && moduleType.IsInstanceOfType(module));
+            if (currentIndex < 0)
+                continue;
+
+            if (currentIndex < previousIndex)
+                return true;
+
+            previousIndex = currentIndex;
+        }
+
+        return false;
+    }
+
+    private static void ReorderModules(EntityData data, IReadOnlyList<Type> preferredOrder)
+    {
+        if (data?.modules == null || preferredOrder == null || preferredOrder.Count == 0)
+            return;
+
+        var remaining = data.modules.Where(module => module != null).ToList();
+        var reordered = new List<IModuleData>(remaining.Count);
+
+        foreach (Type moduleType in preferredOrder)
+        {
+            var matches = remaining.Where(module => moduleType.IsInstanceOfType(module)).ToList();
+            if (matches.Count == 0)
+                continue;
+
+            reordered.AddRange(matches);
+            remaining.RemoveAll(module => module != null && moduleType.IsInstanceOfType(module));
+        }
+
+        reordered.AddRange(remaining);
+        data.modules = reordered;
+    }
+
+    private static string FormatModuleOrder(IEnumerable<Type> moduleOrder)
+    {
+        return string.Join(" -> ", moduleOrder.Select(type => type.Name));
     }
 
     private static bool HasModule<T>(EntityData data) where T : IModuleData

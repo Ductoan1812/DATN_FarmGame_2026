@@ -117,4 +117,4 @@ MonoBehaviour:
         objectTypeToSpawn: 2
         placedEntityData: {fileID: 0}
         centerTile: 1
-        animTrigger: Sow
+        animTrigger: PutDown

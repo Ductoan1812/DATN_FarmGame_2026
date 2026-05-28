@@ -5,7 +5,7 @@ public class ResourceHitReactionRuntime : IModuleRuntime, IHandleEvent<SpawnedEv
     private readonly ResourceHitReactionModule data;
     private EntityRuntime entity;
     private ResourceHitReactionObject reactionObject;
-    private ToolType requiredTool = ToolType.None;
+    private HarvestModule harvestModule;
 
     public ResourceHitReactionRuntime(ResourceHitReactionModule data)
     {
@@ -15,7 +15,7 @@ public class ResourceHitReactionRuntime : IModuleRuntime, IHandleEvent<SpawnedEv
     public void Handle(SpawnedEvent e)
     {
         entity = e.entity;
-        requiredTool = entity?.GetModule<HarvestRuntime>()?.data?.harvestTool ?? ToolType.None;
+        harvestModule = entity?.GetModule<HarvestRuntime>()?.data;
 
         var owner = entity?.Owner?.GameObject;
         if (owner == null)
@@ -33,7 +33,10 @@ public class ResourceHitReactionRuntime : IModuleRuntime, IHandleEvent<SpawnedEv
         if (reactionObject == null || data == null)
             return;
 
-        if (data.reactOnlyToHarvestTool && requiredTool != ToolType.None && e.toolType != requiredTool)
+        if (data.reactOnlyToHarvestTool &&
+            harvestModule != null &&
+            harvestModule.HasAnyToolHarvest &&
+            !harvestModule.AllowsTool(e.toolType))
             return;
 
         reactionObject.PlayHit();

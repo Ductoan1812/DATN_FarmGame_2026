@@ -84,6 +84,12 @@ public class PlacementValidator
                 tags |= _tileData.GetTags(groundTile);
         }
 
+        // Flow tưới dùng WateredTileTracker + tmWatered riêng, không ghi đè ground tile.
+        // Vì vậy placement cần đọc tracker để seed yêu cầu Waterable thực sự nhìn thấy ô đã tưới.
+        var wateredTracker = GameManager.Instance?.WateredTileTracker;
+        if (wateredTracker != null && wateredTracker.IsWatered(cell))
+            tags |= PlacementTag.Waterable;
+
         // Tags từ các entity đã có tại cell
         if (entry != null)
         {

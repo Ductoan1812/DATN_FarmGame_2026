@@ -74,7 +74,7 @@ public class DropRuntime : IModuleRuntime, IHandleEvent<DieEvent>, IHandleEvent<
             return 0;
 
         int quality = GetDropQuality(sourceEntity);
-        int totalReceived = 0;
+        int totalHandled = 0;
 
         foreach (var entry in harvestDrops)
         {
@@ -96,12 +96,14 @@ public class DropRuntime : IModuleRuntime, IHandleEvent<DieEvent>, IHandleEvent<
 
                 int received = inventoryService.Pickup(chunk, receiver);
                 entryReceived += received;
-                totalReceived += received;
                 remainingToGrant -= chunkAmount;
 
                 int leftoverAmount = Mathf.Max(0, chunkAmount - received);
                 if (leftoverAmount <= 0)
+                {
+                    totalHandled += chunkAmount;
                     continue;
+                }
 
                 if (chunk.IsEmpty || ReferenceEquals(chunk.Owner, receiver.Owner))
                 {
@@ -110,12 +112,38 @@ public class DropRuntime : IModuleRuntime, IHandleEvent<DieEvent>, IHandleEvent<
                 }
 
                 SpawnWorldDropRuntime(fallbackWorldPos, chunk, gm);
+                totalHandled += chunkAmount;
             }
 
             Debug.Log($"[DropRuntime] Nhận {entry.item.keyName} x{entryReceived}/{totalAmount} (quality {quality}).");
         }
 
-        return totalReceived;
+        return totalHandled;
+    }
+
+    public int SpawnDropsToWorld(Vector2 worldPos)
+    {
+        if (harvestDrops == null || harvestDrops.Length == 0)
+            return 0;
+
+        var gm = GameManager.Instance;
+        var entityService = gm?.EntityService;
+        int quality = GetDropQuality(sourceEntity);
+        int totalSpawned = 0;
+
+        foreach (var entry in harvestDrops)
+        {
+            if (entry == null || entry.item == null) continue;
+            if (Random.value > entry.dropChance) continue;
+
+            int totalAmount = Random.Range(entry.minAmount, entry.maxAmount + 1);
+            if (totalAmount <= 0) continue;
+
+            totalSpawned += totalAmount;
+            SpawnWorldDrops(worldPos, entry.item, totalAmount, quality, gm, entityService);
+        }
+
+        return totalSpawned;
     }
 
     private static int GetDropQuality(EntityRuntime source)

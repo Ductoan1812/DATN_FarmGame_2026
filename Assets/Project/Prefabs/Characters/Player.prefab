@@ -396,6 +396,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300024, guid: 76ca77e0c084c82499f6224377bce39c, type: 3}
+    - target: {fileID: 924145465138893101, guid: 9a1f5830054370a46b5a76e6e2f7a725, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1262752341147085926, guid: 9a1f5830054370a46b5a76e6e2f7a725, type: 3}
       propertyPath: Hair
       value: 

@@ -19,7 +19,7 @@ public class HarvestRuntime : IModuleRuntime, IHandleEvent<SecondaryActionEvent>
     public void Handle(SecondaryActionEvent e)
     {
         if (_entity == null) return;
-        if (data.harvestTool != ToolType.None)
+        if (!data.AllowsHandHarvest)
             return;
 
         // Kiểm tra stage có cho phép thu hoạch không
@@ -34,15 +34,15 @@ public class HarvestRuntime : IModuleRuntime, IHandleEvent<SecondaryActionEvent>
         reason = string.Empty;
         if (_entity == null) return true;
 
-        if (data.harvestTool == ToolType.None)
+        if (!data.HasAnyToolHarvest)
         {
-            reason = "Harvest by hand only.";
+            reason = data.AllowsHandHarvest ? "Harvest by hand only." : "No harvest tool configured.";
             return false;
         }
 
-        if (e.toolType != data.harvestTool)
+        if (!data.AllowsTool(e.toolType))
         {
-            reason = $"Wrong tool: need {data.harvestTool}, got {e.toolType}.";
+            reason = $"Wrong tool: got {e.toolType}.";
             return false;
         }
 
@@ -68,14 +68,14 @@ public class HarvestRuntime : IModuleRuntime, IHandleEvent<SecondaryActionEvent>
 
         if (stage != null && stage.IsRegrowable)
         {
-            TryGrantDropsToInteractor(interactor);
+            GrantHarvestDrops(interactor);
             stage.ResetToRegrowStage();
             Debug.Log($"[HarvestRuntime] Regrowable crop reset to stage {stage.currentStageIndex}.");
             return true;
         }
 
-        bool grantedDirectly = TryGrantDropsToInteractor(interactor);
-        _entity.TriggerEvent(new DieEvent(_entity, interactor, suppressWorldDrops: grantedDirectly));
+        bool dropsAlreadyHandled = GrantHarvestDrops(interactor);
+        _entity.TriggerEvent(new DieEvent(_entity, interactor, suppressWorldDrops: dropsAlreadyHandled));
         return true;
     }
 
@@ -84,16 +84,14 @@ public class HarvestRuntime : IModuleRuntime, IHandleEvent<SecondaryActionEvent>
         var stage = _entity.GetModule<StageRuntime>();
         if (stage == null || !stage.IsRegrowable) return false;
 
-        TryGrantDropsToInteractor(interactor);
+        GrantHarvestDrops(interactor);
         stage.ResetToRegrowStage();
         Debug.Log($"[HarvestRuntime] Regrowable crop reset to stage {stage.currentStageIndex}.");
         return true;
     }
 
-    private bool TryGrantDropsToInteractor(EntityRuntime interactor)
+    private bool GrantHarvestDrops(EntityRuntime interactor)
     {
-        if (interactor == null) return false;
-
         var drop = _entity.GetModule<DropRuntime>();
         if (drop == null) return false;
 
@@ -101,6 +99,11 @@ public class HarvestRuntime : IModuleRuntime, IHandleEvent<SecondaryActionEvent>
         var go = _entity.Owner?.GameObject;
         if (go != null)
             position = go.transform.position;
+
+        if (data.dropMode == HarvestDropMode.World)
+            return drop.SpawnDropsToWorld(position) > 0;
+
+        if (interactor == null) return false;
 
         int received = drop.GrantDropsTo(interactor, position);
         return received > 0;
@@ -131,6 +134,29 @@ public class HarvestRuntime : IModuleRuntime, IHandleEvent<SecondaryActionEvent>
     public bool Equals(IModuleRuntime other)
     {
         if (other is not HarvestRuntime o) return false;
-        return data.harvestTool == o.data.harvestTool;
+        return data.harvestTool == o.data.harvestTool
+               && data.allowHandHarvest == o.data.allowHandHarvest
+               && data.dropMode == o.data.dropMode
+               && HaveSameAdditionalTools(data.additionalHarvestTools, o.data.additionalHarvestTools);
+    }
+
+    private static bool HaveSameAdditionalTools(ToolType[] left, ToolType[] right)
+    {
+        if (ReferenceEquals(left, right))
+            return true;
+
+        if (left == null || right == null)
+            return left == null && right == null;
+
+        if (left.Length != right.Length)
+            return false;
+
+        for (int i = 0; i < left.Length; i++)
+        {
+            if (left[i] != right[i])
+                return false;
+        }
+
+        return true;
     }
 }

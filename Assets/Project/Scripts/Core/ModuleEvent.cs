@@ -13,6 +13,18 @@ public class NextDayEvent : IGameEvent
 {
 }
 
+public class SeasonChangedEvent : IGameEvent
+{
+    public readonly int year;
+    public readonly Season season;
+
+    public SeasonChangedEvent(int year, Season season)
+    {
+        this.year = year;
+        this.season = season;
+    }
+}
+
 public class TakeDamageEvent : IGameEvent
 {
     public readonly EntityRuntime attacker;
