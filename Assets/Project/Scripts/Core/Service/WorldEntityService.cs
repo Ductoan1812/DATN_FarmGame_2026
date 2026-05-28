@@ -177,13 +177,14 @@ public class WorldEntityService
     public bool HasBlockerAt(Vector2Int cell, EntityLayer layer)
         => _spatial.HasEntityAtLayer(cell, layer);
 
-    /// <summary>Kiểm tra tile tại ô có thể cuốc được không (tồn tại, chưa plowed/watered).</summary>
+    /// <summary>Kiểm tra tile tại ô có thể cuốc được không (chỉ cho phép trên landTile).</summary>
     public bool IsTillable(Vector2Int cell)
     {
         if (_tileData == null || _tileRegistry == null) return false;
         var tile = _tileRegistry.GetTile("Tm_Ground", cell);
         if (tile == null) return false;
-        return tile != _tileData.plowedTile && tile != _tileData.wateredTile;
+        if (_tileData.landTile == null) return false;
+        return tile == _tileData.landTile;
     }
 
     public IEnumerable<string> GetEntitiesAt(Vector2Int cell) => _spatial.GetEntitiesAt(cell);
