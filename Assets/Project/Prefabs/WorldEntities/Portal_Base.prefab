@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 1791237718592334842}
   - component: {fileID: -2059209477160372625}
   - component: {fileID: 5637692776461172270}
+  - component: {fileID: 4924385881294373998}
   m_Layer: 9
   m_Name: Portal_Base
   m_TagString: NPC
@@ -93,10 +94,10 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.007184699, y: 0.014964268}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -107,7 +108,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.18391916, y: 0.13023832}
+  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
 --- !u!50 &6665677410701190088
 Rigidbody2D:
@@ -157,6 +158,7 @@ MonoBehaviour:
   fontSize: 9
   textColor: {r: 1, g: 1, b: 1, a: 1}
   bgColor: {r: 0, g: 0, b: 0, a: 0.6}
+  fontAsset: {fileID: 0}
 --- !u!58 &3763826657939634124
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -212,7 +214,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -258,6 +260,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entityRoot: {fileID: 8999343799904457157}
   nameText: {fileID: 0}
+  fontAsset: {fileID: 0}
   localOffset: {x: 0, y: 1.55, z: 0}
   localScale: 0.08
   fontSize: 32
@@ -278,3 +281,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   role: 4
+--- !u!114 &4924385881294373998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1125545272651927824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afcb931284f1f69488ddeb126f29e749, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hideRenderersOnPlay: 1
+  cooldownSeconds: 0.5

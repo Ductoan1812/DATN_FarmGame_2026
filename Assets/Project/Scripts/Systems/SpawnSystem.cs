@@ -127,6 +127,7 @@ public class SpawnSystem : MonoBehaviour
         // Instantiate GameObject
         var obj = Instantiate(prefab, new Vector3(req.worldPos.x, req.worldPos.y, 0), Quaternion.identity);
         obj.name = $"{req.idPrefab}_{spawnEntity.id[..8]}";
+        EnsureRuntimeBridges(obj, spawnEntity);
 
         // Gắn EntityRuntime vào EntityRoot
         var root = obj.GetComponent<EntityRoot>();
@@ -186,6 +187,7 @@ public class SpawnSystem : MonoBehaviour
 
         var obj = Instantiate(prefab, new Vector3(ep.pos.x, ep.pos.y, 0), Quaternion.identity);
         obj.name = $"{ep.idPrefab}_{ep.idRuntime[..8]}";
+        EnsureRuntimeBridges(obj, runtime);
 
         if (runtime != null)
         {
@@ -237,4 +239,15 @@ public class SpawnSystem : MonoBehaviour
 
     private static Vector2Int WorldToCell(Vector2 worldPos) =>
         new(Mathf.FloorToInt(worldPos.x), Mathf.FloorToInt(worldPos.y));
+
+    private static void EnsureRuntimeBridges(GameObject obj, EntityRuntime runtime)
+    {
+        if (obj == null || runtime == null) return;
+
+        if (runtime.GetModule<ResourceGrowthRuntime>() != null && obj.GetComponent<NextDayEntityBridge>() == null)
+            obj.AddComponent<NextDayEntityBridge>();
+
+        if (runtime.GetModule<ResourceHitReactionRuntime>() != null && obj.GetComponent<ResourceHitReactionObject>() == null)
+            obj.AddComponent<ResourceHitReactionObject>();
+    }
 }

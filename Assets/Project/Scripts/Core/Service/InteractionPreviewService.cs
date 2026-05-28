@@ -102,6 +102,15 @@ public static class InteractionPreviewService
             return;
         }
 
+        var resourceGrowth = target.GetModule<ResourceGrowthRuntime>();
+        if (resourceGrowth != null && !resourceGrowth.CanHarvest)
+        {
+            isBlocked = true;
+            statusTextKey = HarvestNotReadyTextKey;
+            blockedReasonKey = HarvestNotReadyTextKey;
+            return;
+        }
+
         if (requiredTool == ToolType.None)
             return;
 

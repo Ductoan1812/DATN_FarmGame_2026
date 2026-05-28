@@ -56,15 +56,14 @@ public class HealthRuntime : IModuleRuntime, IHandleEvent<SpawnedEvent>, IHandle
         var harvest = _entity.GetModule<HarvestRuntime>();
         if (harvest != null && !harvest.CanReceiveDamage(e, out string blockedReason))
         {
-            if (!string.IsNullOrWhiteSpace(blockedReason))
-                Debug.Log(blockedReason);
             return;
         }
 
         if (harvest != null && harvest.TryHarvest(e.attacker))
             return;
 
-        if (!CanTakeDamage) return;
+        if (!CanTakeDamage)
+            return;
         _lastAttacker = e.attacker;
 
         // Tính giảm dame theo Defense: finalDamage = damage - Defense (tối thiểu 1)

@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39573ff0d5bd8b84f8eefa7e30bc44ac, type: 3}
+  m_Name: Waterfall_tile
+  m_EditorClassIdentifier: 
+  m_DefaultSprite: {fileID: 1013902203, guid: 5a782fa273cc86343bd215922e3f3a67, type: 3}
+  m_DefaultGameObject: {fileID: 0}
+  m_DefaultColliderType: 1
+  m_TilingRules:
+  - m_Id: 0
+    m_Sprites:
+    - {fileID: 1013902203, guid: 5a782fa273cc86343bd215922e3f3a67, type: 3}
+    - {fileID: 854867603, guid: 5a782fa273cc86343bd215922e3f3a67, type: 3}
+    - {fileID: 1258971182, guid: 5a782fa273cc86343bd215922e3f3a67, type: 3}
+    - {fileID: 376960413, guid: 5a782fa273cc86343bd215922e3f3a67, type: 3}
+    - {fileID: -1601445461, guid: 5a782fa273cc86343bd215922e3f3a67, type: 3}
+    - {fileID: -1181330383, guid: 5a782fa273cc86343bd215922e3f3a67, type: 3}
+    m_GameObject: {fileID: 0}
+    m_MinAnimationSpeed: 1
+    m_MaxAnimationSpeed: 1
+    m_PerlinScale: 0.5
+    m_Output: 2
+    m_ColliderType: 1
+    m_RandomTransform: 0
+    m_Neighbors: 02000000
+    m_NeighborPositions:
+    - {x: 0, y: 1, z: 0}
+    m_RuleTransform: 0
+  - m_Id: 1
+    m_Sprites:
+    - {fileID: -67538210, guid: 5a782fa273cc86343bd215922e3f3a67, type: 3}
+    - {fileID: 1458051274, guid: 5a782fa273cc86343bd215922e3f3a67, type: 3}
+    - {fileID: -1485854792, guid: 5a782fa273cc86343bd215922e3f3a67, type: 3}
+    - {fileID: 1347243837, guid: 5a782fa273cc86343bd215922e3f3a67, type: 3}
+    - {fileID: -2022108710, guid: 5a782fa273cc86343bd215922e3f3a67, type: 3}
+    - {fileID: -2022108710, guid: 5a782fa273cc86343bd215922e3f3a67, type: 3}
+    m_GameObject: {fileID: 0}
+    m_MinAnimationSpeed: 1
+    m_MaxAnimationSpeed: 1
+    m_PerlinScale: 0.5
+    m_Output: 2
+    m_ColliderType: 1
+    m_RandomTransform: 0
+    m_Neighbors: 0100000001000000
+    m_NeighborPositions:
+    - {x: 0, y: -1, z: 0}
+    - {x: 0, y: 1, z: 0}
+    m_RuleTransform: 0
+  - m_Id: 2
+    m_Sprites:
+    - {fileID: 31306114, guid: 5a782fa273cc86343bd215922e3f3a67, type: 3}
+    - {fileID: 807342669, guid: 5a782fa273cc86343bd215922e3f3a67, type: 3}
+    - {fileID: -350047569, guid: 5a782fa273cc86343bd215922e3f3a67, type: 3}
+    - {fileID: 983198397, guid: 5a782fa273cc86343bd215922e3f3a67, type: 3}
+    - {fileID: -1514178278, guid: 5a782fa273cc86343bd215922e3f3a67, type: 3}
+    - {fileID: -81790528, guid: 5a782fa273cc86343bd215922e3f3a67, type: 3}
+    m_GameObject: {fileID: 0}
+    m_MinAnimationSpeed: 1
+    m_MaxAnimationSpeed: 1
+    m_PerlinScale: 0.5
+    m_Output: 2
+    m_ColliderType: 1
+    m_RandomTransform: 0
+    m_Neighbors: 02000000
+    m_NeighborPositions:
+    - {x: 0, y: -1, z: 0}
+    m_RuleTransform: 0
+  m_RandomAnimationSettings: []

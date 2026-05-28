@@ -55,31 +55,10 @@ public class DropRuntime : IModuleRuntime, IHandleEvent<DieEvent>, IHandleEvent<
             if (Random.value > entry.dropChance) continue;
 
             // Random amount
-            int amount = Random.Range(entry.minAmount, entry.maxAmount + 1);
-            if (amount <= 0) continue;
+            int totalAmount = Random.Range(entry.minAmount, entry.maxAmount + 1);
+            if (totalAmount <= 0) continue;
 
-            SpawnRequestPublish req;
-            if (entityService != null)
-            {
-                var item = entityService.Create(entry.item, amount);
-                item.SetQuality(quality);
-                req = new SpawnRequestPublish(
-                    worldPos: dropPos,
-                    idPrefab: ObjectType.EntityDrop,
-                    runtime: item,
-                    bypassValidation: true);
-            }
-            else
-            {
-                req = new SpawnRequestPublish(
-                    worldPos: dropPos,
-                    idPrefab: ObjectType.EntityDrop,
-                    entityData: entry.item,
-                    spawnAmount: amount,
-                    bypassValidation: true);
-            }
-
-            gm?.EventBus?.Publish(req);
+            SpawnWorldDrops(dropPos, entry.item, totalAmount, quality, gm, entityService);
         }
     }
 
@@ -102,24 +81,38 @@ public class DropRuntime : IModuleRuntime, IHandleEvent<DieEvent>, IHandleEvent<
             if (entry == null || entry.item == null) continue;
             if (Random.value > entry.dropChance) continue;
 
-            int amount = Random.Range(entry.minAmount, entry.maxAmount + 1);
-            if (amount <= 0) continue;
+            int totalAmount = Random.Range(entry.minAmount, entry.maxAmount + 1);
+            if (totalAmount <= 0) continue;
 
-            var item = entityService.Create(entry.item, amount);
-            item.SetQuality(quality);
-            int received = inventoryService.Pickup(item, receiver);
-            totalReceived += received;
+            int remainingToGrant = totalAmount;
+            int entryReceived = 0;
+            int stackSize = Mathf.Max(1, entry.item.maxStack);
 
-            if (item != null && !item.IsEmpty)
+            while (remainingToGrant > 0)
             {
-                gm.EventBus?.Publish(new SpawnRequestPublish(
-                    worldPos: fallbackWorldPos,
-                    idPrefab: ObjectType.EntityDrop,
-                    runtime: item,
-                    bypassValidation: true));
+                int chunkAmount = Mathf.Min(remainingToGrant, stackSize);
+                var chunk = entityService.Create(entry.item, chunkAmount);
+                chunk.SetQuality(quality);
+
+                int received = inventoryService.Pickup(chunk, receiver);
+                entryReceived += received;
+                totalReceived += received;
+                remainingToGrant -= chunkAmount;
+
+                int leftoverAmount = Mathf.Max(0, chunkAmount - received);
+                if (leftoverAmount <= 0)
+                    continue;
+
+                if (chunk.IsEmpty || ReferenceEquals(chunk.Owner, receiver.Owner))
+                {
+                    chunk = entityService.Create(entry.item, leftoverAmount);
+                    chunk.SetQuality(quality);
+                }
+
+                SpawnWorldDropRuntime(fallbackWorldPos, chunk, gm);
             }
 
-            Debug.Log($"[DropRuntime] Nhận {entry.item.keyName} x{received}/{amount} (quality {quality}).");
+            Debug.Log($"[DropRuntime] Nhận {entry.item.keyName} x{entryReceived}/{totalAmount} (quality {quality}).");
         }
 
         return totalReceived;
@@ -128,5 +121,54 @@ public class DropRuntime : IModuleRuntime, IHandleEvent<DieEvent>, IHandleEvent<
     private static int GetDropQuality(EntityRuntime source)
     {
         return source?.GetModule<QualityRuntime>()?.GetHarvestQuality() ?? 1;
+    }
+
+    private static void SpawnWorldDrops(
+        Vector2 worldPos,
+        EntityData itemData,
+        int totalAmount,
+        int quality,
+        GameManager gm,
+        EntityService entityService)
+    {
+        if (gm?.EventBus == null || itemData == null || totalAmount <= 0)
+            return;
+
+        int stackSize = Mathf.Max(1, itemData.maxStack);
+        int remaining = totalAmount;
+
+        while (remaining > 0)
+        {
+            int chunkAmount = Mathf.Min(remaining, stackSize);
+            remaining -= chunkAmount;
+
+            if (entityService != null)
+            {
+                var item = entityService.Create(itemData, chunkAmount);
+                item.SetQuality(quality);
+                SpawnWorldDropRuntime(worldPos, item, gm);
+            }
+            else
+            {
+                gm.EventBus.Publish(new SpawnRequestPublish(
+                    worldPos: worldPos,
+                    idPrefab: ObjectType.EntityDrop,
+                    entityData: itemData,
+                    spawnAmount: chunkAmount,
+                    bypassValidation: true));
+            }
+        }
+    }
+
+    private static void SpawnWorldDropRuntime(Vector2 worldPos, EntityRuntime runtime, GameManager gm)
+    {
+        if (runtime == null || gm?.EventBus == null)
+            return;
+
+        gm.EventBus.Publish(new SpawnRequestPublish(
+            worldPos: worldPos,
+            idPrefab: ObjectType.EntityDrop,
+            runtime: runtime,
+            bypassValidation: true));
     }
 }

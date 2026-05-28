@@ -54,10 +54,9 @@ public class InteractionPreviewSystem : MonoBehaviour
 
     private void ScanAndPublish()
     {
-        if (playerEntity?.Owner?.GameObject == null)
+        if (!TryGetOwnerGameObject(playerEntity, out var actorGo))
             return;
 
-        var actorGo = playerEntity.Owner.GameObject;
         var target = EntityScanSystem.GetClosest(actorGo, scanRange);
         var preview = InteractionPreviewService.Build(playerEntity, target);
         string signature = BuildSignature(preview);
@@ -77,15 +76,32 @@ public class InteractionPreviewSystem : MonoBehaviour
             highlightedBridge = null;
         }
 
-        if (target?.Owner?.GameObject == null)
+        if (!TryGetOwnerGameObject(target, out var targetGo))
             return;
 
-        var bridge = target.Owner.GameObject.GetComponent<TargetHighlightBridge>();
+        var bridge = targetGo.GetComponent<TargetHighlightBridge>();
         if (bridge == null)
-            bridge = target.Owner.GameObject.AddComponent<TargetHighlightBridge>();
+            bridge = targetGo.AddComponent<TargetHighlightBridge>();
 
         bridge.SetHighlighted(true);
         highlightedBridge = bridge;
+    }
+
+    private static bool TryGetOwnerGameObject(EntityRuntime entity, out GameObject ownerGo)
+    {
+        ownerGo = null;
+        if (entity?.Owner == null)
+            return false;
+
+        try
+        {
+            ownerGo = entity.Owner.GameObject;
+            return ownerGo != null;
+        }
+        catch (MissingReferenceException)
+        {
+            return false;
+        }
     }
 
     private static string BuildSignature(InteractionPreviewData preview)

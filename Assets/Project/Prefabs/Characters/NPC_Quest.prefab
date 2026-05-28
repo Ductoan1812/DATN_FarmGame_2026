@@ -18,6 +18,8 @@ GameObject:
   - component: {fileID: 1791237718592334842}
   - component: {fileID: -2059209477160372625}
   - component: {fileID: 5058459546025534639}
+  - component: {fileID: 6603203365123909258}
+  - component: {fileID: 7661237820095064518}
   m_Layer: 12
   m_Name: NPC_Quest
   m_TagString: NPC
@@ -157,6 +159,7 @@ MonoBehaviour:
   fontSize: 9
   textColor: {r: 1, g: 1, b: 1, a: 1}
   bgColor: {r: 0, g: 0, b: 0, a: 0.6}
+  fontAsset: {fileID: 0}
 --- !u!58 &3763826657939634124
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -212,7 +215,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -258,6 +261,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entityRoot: {fileID: 8999343799904457157}
   nameText: {fileID: 0}
+  fontAsset: {fileID: 0}
   localOffset: {x: 0, y: 1.55, z: 0}
   localScale: 0.08
   fontSize: 32
@@ -278,3 +282,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   role: 2
+--- !u!114 &6603203365123909258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1125545272651927824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64d928d622d09f7439457777f30940bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 2
+  defaultStopDistance: 0.05
+  repathInterval: 1
+  maxExpandedNodes: 1800
+  collisionTilemapName: Tm_Collision
+  blockedEntityLayers: 010000000300000002000000
+--- !u!114 &7661237820095064518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1125545272651927824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9eda31836e40294d8959939b4f663a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  schedule: {fileID: 0}
+  autoResolveScheduleFromEntityData: 1
+  resourcesScheduleFolder: Data/Schedules
+  standStopDistance: 0.05

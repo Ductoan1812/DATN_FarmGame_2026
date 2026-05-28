@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac7b5e10f4c72274bb0c536b10b501c7, type: 3}
+  m_Name: animal_chicken_01
+  m_EditorClassIdentifier: 
+  scheduleId: animal_chicken_01
+  entries:
+  - startMinuteOfDay: 360
+    targetAnchorId: barn_door
+    action: 1
+    wanderRadius: 2
+    waitSeconds: 2
+    animationState: 
+  - startMinuteOfDay: 600
+    targetAnchorId: farm_field_gate
+    action: 1
+    wanderRadius: 2
+    waitSeconds: 2
+    animationState: 
+  - startMinuteOfDay: 1020
+    targetAnchorId: barn_door
+    action: 1
+    wanderRadius: 1.5
+    waitSeconds: 2
+    animationState: 
+  seasonOverrides: []

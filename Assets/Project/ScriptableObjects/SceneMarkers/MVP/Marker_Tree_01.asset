@@ -21,5 +21,5 @@ MonoBehaviour:
   respawnMinutes: 720
   initialAmount: 1
   bypassPlacementValidation: 1
-  editorSprite: {fileID: 21300000, guid: 21ba93a8204128e478a380f639a69115, type: 3}
-  editorColor: {r: 0.35, g: 0.85, b: 0.35, a: 0.8}
+  editorSprite: {fileID: 277581869, guid: eae7e9e77fa127d4cac1eb556d16b561, type: 3}
+  editorColor: {r: 1, g: 1, b: 1, a: 0.8}

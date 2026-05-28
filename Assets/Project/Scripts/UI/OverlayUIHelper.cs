@@ -16,11 +16,15 @@ public static class OverlayUIHelper
                 return overlay;
         }
 
-        var canvas = owner.GetComponent<Canvas>() ?? owner.AddComponent<Canvas>();
+        var canvas = owner.GetComponent<Canvas>();
+        if (canvas == null)
+            canvas = owner.AddComponent<Canvas>();
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
         canvas.sortingOrder = sortingOrder;
 
-        var scaler = owner.GetComponent<CanvasScaler>() ?? owner.AddComponent<CanvasScaler>();
+        var scaler = owner.GetComponent<CanvasScaler>();
+        if (scaler == null)
+            scaler = owner.AddComponent<CanvasScaler>();
         scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
         scaler.referenceResolution = new Vector2(1920, 1080);
 

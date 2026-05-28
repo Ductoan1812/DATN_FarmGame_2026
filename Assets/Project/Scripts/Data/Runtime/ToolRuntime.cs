@@ -32,7 +32,8 @@ public abstract class ToolRuntime : IModuleRuntime, IHandleEvent<PrimaryActionEv
         var actorGO = e.actor.Owner?.GameObject;
         if (actorGO == null) return;
 
-        if (!Validate(actorGO, e)) return;
+        if (!Validate(actorGO, e))
+            return;
 
         // Lấy trigger name (default = ToolType.ToString())
         var trigger = _data.GetAnimTrigger();
@@ -107,10 +108,7 @@ public abstract class DamageToolRuntime : ToolRuntime
 
         List<EntityRuntime> targets = EntityScanSystem.GetAll(actorGO, range);
         if (targets == null || targets.Count == 0)
-        {
-            Debug.Log($"[{GetType().Name}] Không có target trong tầm.");
             return;
-        }
 
         if (hitAllTargets)
         {

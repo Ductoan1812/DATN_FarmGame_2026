@@ -17,21 +17,26 @@ public class PickUpObject : MonoBehaviour
     [SerializeField] private float pickupDelay = 3f;
 
     private EntityRuntime _entity;
+    private EntityRoot _worldRoot;
     private float _nextTriggerTime;
     private float _enabledTime;
+    private bool _pickupInProgress;
 
     private void OnEnable()
     {
         _enabledTime = Time.time;
+        _worldRoot = GetComponent<EntityRoot>();
     }
 
     private void OnDisable()
     {
         _entity = null;
+        _pickupInProgress = false;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (_pickupInProgress) return;
         if (Time.time < _nextTriggerTime) return;
         if (Time.time < _enabledTime + pickupDelay) return;
         if (!other.CompareTag(targetTag)) return;
@@ -41,6 +46,12 @@ public class PickUpObject : MonoBehaviour
         {
             _entity = GetComponent<EntityRoot>()?.GetEntity();
             if (_entity == null) return;
+        }
+
+        if (!IsStillWorldOwned())
+        {
+            BeginCollectAndDespawn(other.transform, _entity.id);
+            return;
         }
 
         var ownerEntity = other.GetComponent<EntityRoot>()?.GetEntity();
@@ -57,13 +68,41 @@ public class PickUpObject : MonoBehaviour
             return;
         }
 
-        // Nhặt được ít nhất 1 unit → GO không còn ý nghĩa ở world.
-        // Chạy animation fly-to-player nếu có, rồi despawn.
-        var motion = GetComponent<DropMotionObject>();
-        if (motion != null)
-            motion.OnPickedUp(other.transform);
+        if (IsStillWorldOwned())
+            return;
 
-        // Despawn đồng bộ qua EventBus (dọn cả GameObject + spatial registry).
-        GameManager.Instance.EventBus.Publish(new DespawnRequestPublish(entityId));
+        BeginCollectAndDespawn(other.transform, entityId);
+    }
+
+    private bool IsStillWorldOwned()
+    {
+        return _entity != null
+               && !_entity.IsEmpty
+               && _worldRoot != null
+               && ReferenceEquals(_entity.Owner, _worldRoot);
+    }
+
+    private void BeginCollectAndDespawn(Transform target, string entityId)
+    {
+        _pickupInProgress = true;
+
+        var collider = GetComponent<Collider2D>();
+        if (collider != null)
+            collider.enabled = false;
+
+        void DespawnNow()
+        {
+            if (GameManager.Instance?.EventBus == null) return;
+            GameManager.Instance.EventBus.Publish(new DespawnRequestPublish(entityId));
+        }
+
+        var motion = GetComponent<DropMotionObject>();
+        if (motion != null && motion.isActiveAndEnabled)
+        {
+            motion.OnPickedUp(target, DespawnNow);
+            return;
+        }
+
+        DespawnNow();
     }
 }

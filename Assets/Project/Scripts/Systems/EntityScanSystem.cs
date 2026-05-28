@@ -21,6 +21,7 @@ public static class EntityScanSystem
 
         Vector2 facing = GetFacing(actorGO);
         Vector2 origin = (Vector2)actorGO.transform.position + facing * (range * 0.5f);
+        EntityRuntime actorEntity = ResolveEntity(actorGO);
 
         Collider2D[] hits = Physics2D.OverlapCircleAll(origin, range);
 
@@ -28,12 +29,14 @@ public static class EntityScanSystem
         {
             if (col == null) continue;
             if (col.gameObject == actorGO) continue;
+            if (col.transform.IsChildOf(actorGO.transform)) continue;
 
             var entityRoot = col.GetComponentInParent<EntityRoot>();
             if (entityRoot == null) continue;
 
             var entity = entityRoot.GetEntity();
             if (entity == null) continue;
+            if (IsSameEntity(actorEntity, entity)) continue;
 
             if (!result.Contains(entity))
                 result.Add(entity);
@@ -51,6 +54,7 @@ public static class EntityScanSystem
 
         Vector2 facing = GetFacing(actorGO);
         Vector2 origin = (Vector2)actorGO.transform.position + facing * (range * 0.5f);
+        EntityRuntime actorEntity = ResolveEntity(actorGO);
 
         Collider2D[] hits = Physics2D.OverlapCircleAll(origin, range);
 
@@ -61,6 +65,7 @@ public static class EntityScanSystem
         {
             if (col == null) continue;
             if (col.gameObject == actorGO) continue;
+            if (col.transform.IsChildOf(actorGO.transform)) continue;
 
             // Chỉ lấy entity có IInteractable trên GameObject.
             // Nếu dùng InteractablePrompt thì chỉ collider được chọn làm interactionCollider mới hợp lệ.
@@ -75,6 +80,7 @@ public static class EntityScanSystem
 
             var entity = entityRoot.GetEntity();
             if (entity == null) continue;
+            if (IsSameEntity(actorEntity, entity)) continue;
 
             Vector2 distancePoint = prompt?.InteractionCollider != null
                 ? prompt.InteractionCollider.ClosestPoint(actorGO.transform.position)
@@ -135,6 +141,19 @@ public static class EntityScanSystem
                 return new Vector2(dir.x, dir.y).normalized;
         }
         return Vector2.up;
+    }
+
+    private static EntityRuntime ResolveEntity(GameObject actorGO)
+    {
+        if (actorGO == null) return null;
+
+        var root = actorGO.GetComponent<EntityRoot>() ?? actorGO.GetComponentInParent<EntityRoot>();
+        return root?.GetEntity();
+    }
+
+    private static bool IsSameEntity(EntityRuntime actorEntity, EntityRuntime candidate)
+    {
+        return actorEntity != null && candidate != null && ReferenceEquals(actorEntity, candidate);
     }
 
     /// <summary>Vẽ gizmo debug vùng quét.</summary>

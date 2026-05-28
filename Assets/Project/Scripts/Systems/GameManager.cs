@@ -209,7 +209,8 @@ public class GameManager : MonoBehaviour
         {
             switch (tm.gameObject.name)
             {
-                case "Tm_Ground":       if (tmGround       == null) tmGround       = tm; break;
+                case "Tm_Ground":
+                case "Tm_Ground1":      if (tmGround       == null) tmGround       = tm; break;
                 case "Tm_GroundDetail": if (tmGroundDetail == null) tmGroundDetail = tm; break;
                 case "Tm_Collision":    if (tmCollision    == null) tmCollision    = tm; break;
                 case "Tm_Decoration":   if (tmDecoration   == null) tmDecoration   = tm; break;
@@ -229,7 +230,7 @@ public class GameManager : MonoBehaviour
             if (grid != null)
             {
                 foreach (var tm in grid.GetComponentsInChildren<Tilemap>())
-                    if (tm.gameObject.name == "Tm_Ground") { tilemap = tm; break; }
+                    if (tm.gameObject.name == "Tm_Ground" || tm.gameObject.name == "Tm_Ground1") { tilemap = tm; break; }
             }
         }
 

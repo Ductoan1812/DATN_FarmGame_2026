@@ -20,17 +20,11 @@ public class HarvestRuntime : IModuleRuntime, IHandleEvent<SecondaryActionEvent>
     {
         if (_entity == null) return;
         if (data.harvestTool != ToolType.None)
-        {
-            Debug.Log($"[HarvestRuntime] Cần tool: {data.harvestTool}");
             return;
-        }
 
         // Kiểm tra stage có cho phép thu hoạch không
         if (!IsHarvestable())
-        {
-            Debug.Log($"[HarvestRuntime] Chưa đến giai đoạn thu hoạch.");
             return;
-        }
 
         TryHarvest(e.initiator);
     }
@@ -42,19 +36,19 @@ public class HarvestRuntime : IModuleRuntime, IHandleEvent<SecondaryActionEvent>
 
         if (data.harvestTool == ToolType.None)
         {
-            reason = "[HarvestRuntime] Entity này thu hoạch bằng tay, không nhận damage.";
+            reason = "Harvest by hand only.";
             return false;
         }
 
         if (e.toolType != data.harvestTool)
         {
-            reason = $"[HarvestRuntime] Sai tool. Cần {data.harvestTool}, dùng {e.toolType}";
+            reason = $"Wrong tool: need {data.harvestTool}, got {e.toolType}.";
             return false;
         }
 
         if (!IsHarvestable())
         {
-            reason = "[HarvestRuntime] Chưa đến giai đoạn thu hoạch.";
+            reason = "Not harvestable yet.";
             return false;
         }
 
@@ -68,9 +62,11 @@ public class HarvestRuntime : IModuleRuntime, IHandleEvent<SecondaryActionEvent>
     public bool TryHarvest(EntityRuntime interactor)
     {
         var stage = _entity.GetModule<StageRuntime>();
-        if (stage == null || !stage.CanHarvest) return false;
+        var resourceGrowth = _entity.GetModule<ResourceGrowthRuntime>();
+        bool hasGrowthGate = stage != null || resourceGrowth != null;
+        if (hasGrowthGate && !IsHarvestable()) return false;
 
-        if (stage.IsRegrowable)
+        if (stage != null && stage.IsRegrowable)
         {
             TryGrantDropsToInteractor(interactor);
             stage.ResetToRegrowStage();
@@ -118,8 +114,12 @@ public class HarvestRuntime : IModuleRuntime, IHandleEvent<SecondaryActionEvent>
     private bool IsHarvestable()
     {
         var stage = _entity.GetModule<StageRuntime>();
-        if (stage == null) return true; // Không có stage → luôn cho phép
-        return stage.CanHarvest;
+        if (stage != null) return stage.CanHarvest;
+
+        var resourceGrowth = _entity.GetModule<ResourceGrowthRuntime>();
+        if (resourceGrowth != null) return resourceGrowth.CanHarvest;
+
+        return true;
     }
 
     // ── Save / Load ───────────────────────────────────────────────────────────

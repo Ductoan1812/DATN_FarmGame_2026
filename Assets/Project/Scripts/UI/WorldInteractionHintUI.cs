@@ -63,9 +63,13 @@ public class WorldInteractionHintUI : MonoBehaviour
     private void UpdateFollow()
     {
         if (hintText == null) return;
-        if (!currentPreview.HasTarget || currentPreview.target?.Owner?.GameObject == null) return;
+        if (!TryGetTargetTransform(out var targetTransform))
+        {
+            Hide();
+            currentPreview = default;
+            return;
+        }
 
-        var targetTransform = currentPreview.target.Owner.GameObject.transform;
         hintText.transform.position = targetTransform.position + worldOffset;
     }
 
@@ -74,7 +78,7 @@ public class WorldInteractionHintUI : MonoBehaviour
         EnsureText();
         if (hintText == null) return;
 
-        if (!currentPreview.HasTarget || currentPreview.target?.Owner?.GameObject == null)
+        if (!TryGetTargetTransform(out _))
         {
             Hide();
             return;
@@ -94,6 +98,24 @@ public class WorldInteractionHintUI : MonoBehaviour
         hintText.color = currentPreview.isBlocked ? blockedColor : normalColor;
         hintText.text = line;
         hintText.gameObject.SetActive(true);
+    }
+
+    private bool TryGetTargetTransform(out Transform targetTransform)
+    {
+        targetTransform = null;
+        if (!currentPreview.HasTarget || currentPreview.target == null)
+            return false;
+
+        var owner = currentPreview.target.Owner;
+        if (owner is UnityEngine.Object ownerObject && ownerObject == null)
+            return false;
+
+        var go = owner?.GameObject;
+        if (go == null)
+            return false;
+
+        targetTransform = go.transform;
+        return targetTransform != null;
     }
 
     private string ResolveBlockedLine(string key)

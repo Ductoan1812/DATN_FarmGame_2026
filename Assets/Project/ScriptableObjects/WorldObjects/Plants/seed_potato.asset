@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8393fbdfdb650e5418aad1c82ae5b8b5, type: 3}
+  m_Name: seed_potato
+  m_EditorClassIdentifier: 
+  id: seed_potato
+  keyName: seed_potato_name
+  descKey: seed_potato_desc
+  icon: {fileID: 69623676, guid: eb3b66e1fe879524081fd009c50fcee8, type: 3}
+  category: 2
+  maxStack: 999
+  buyPrice: 0
+  sellPrice: 0
+  baseStats:
+    baseStats:
+    - statType: 0
+      value: 1
+    - statType: 1
+      value: 1
+  placementRule:
+    occupyLayer: 2
+    requireTags: 8
+    provideTags: 8
+    blockLayers: 
+  modules:
+  - rid: 8196223203590799362
+  - rid: 8196223203590799363
+  - rid: 8196223212952223746
+  references:
+    version: 2
+    RefIds:
+    - rid: 8196223203590799362
+      type: {class: DropModule, ns: , asm: Assembly-CSharp}
+      data:
+        harvestDrops: []
+    - rid: 8196223203590799363
+      type: {class: StageModule, ns: , asm: Assembly-CSharp}
+      data:
+        stages:
+        - sprite: {fileID: 2011000590, guid: eb3b66e1fe879524081fd009c50fcee8, type: 3}
+          daysToGrow: 1
+          canHarvest: 0
+        - sprite: {fileID: -982580344, guid: eb3b66e1fe879524081fd009c50fcee8, type: 3}
+          daysToGrow: 1
+          canHarvest: 0
+        - sprite: {fileID: -1702268444, guid: eb3b66e1fe879524081fd009c50fcee8, type: 3}
+          daysToGrow: 1
+          canHarvest: 0
+        - sprite: {fileID: 1607763032, guid: eb3b66e1fe879524081fd009c50fcee8, type: 3}
+          daysToGrow: 1
+          canHarvest: 0
+        - sprite: {fileID: 757452780, guid: eb3b66e1fe879524081fd009c50fcee8, type: 3}
+          daysToGrow: 1999
+          canHarvest: 1
+        wiltSprite: {fileID: -1403301404, guid: eb3b66e1fe879524081fd009c50fcee8, type: 3}
+        regrowStageIndex: -1
+    - rid: 8196223212952223746
+      type: {class: PlacementModule, ns: , asm: Assembly-CSharp}
+      data:
+        objectTypeToSpawn: 2
+        placedEntityData: {fileID: 0}
+        centerTile: 1
+        animTrigger: Sow

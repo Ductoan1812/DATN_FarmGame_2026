@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac7b5e10f4c72274bb0c536b10b501c7, type: 3}
+  m_Name: npc_banhang
+  m_EditorClassIdentifier: 
+  scheduleId: npc_banhang
+  entries:
+  - startMinuteOfDay: 360
+    targetAnchorId: farm_house_door
+    action: 0
+    wanderRadius: 0
+    waitSeconds: 2
+    animationState: 
+  - startMinuteOfDay: 480
+    targetAnchorId: farm_field_gate
+    action: 1
+    wanderRadius: 2
+    waitSeconds: 2
+    animationState: 
+  - startMinuteOfDay: 720
+    targetAnchorId: well
+    action: 0
+    wanderRadius: 0
+    waitSeconds: 2
+    animationState: 
+  - startMinuteOfDay: 900
+    targetAnchorId: farm_field_center
+    action: 1
+    wanderRadius: 3
+    waitSeconds: 2
+    animationState: 
+  - startMinuteOfDay: 1080
+    targetAnchorId: farm_house_door
+    action: 0
+    wanderRadius: 0
+    waitSeconds: 2
+    animationState: 
+  seasonOverrides: []
