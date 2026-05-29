@@ -544,21 +544,30 @@ public class EntityDataWorkbenchWindow : EditorWindow
                 {
                     kind = TemplateKind.TreeGrowthFlow,
                     label = "Tree Growth Flow",
-                    description = "Flow cây gỗ kiểu repo hiện tại: asset seed_* lớn thành resource node bằng ResourceGrowth.",
-                    defaultFolder = "Assets/Project/ScriptableObjects/WorldObjects/Resources",
+                    description = "Flow cây theo mẫu seed_apple_tree: một EntityData duy nhất có Placement, Stage loop sau harvest, hand harvest cho quả và Axe để chặt thân.",
+                    defaultFolder = "Assets/Project/ScriptableObjects/WorldObjects/Plants",
                     defaultPrefix = "seed_",
-                    category = ItemCategory.Placeable,
+                    category = ItemCategory.Seed,
                     maxStack = 999,
-                    occupyLayer = EntityLayer.Furniture,
-                    requiredModules = new[] { typeof(HealthModule), typeof(HarvestModule), typeof(DropModule), typeof(ExpRewardModule), typeof(MortalModule), typeof(ResourceGrowthModule) },
+                    occupyLayer = EntityLayer.Plant,
+                    requiredModules = new[]
+                    {
+                        typeof(PlacementModule),
+                        typeof(StageModule),
+                        typeof(HarvestModule),
+                        typeof(HealthModule),
+                        typeof(DropModule),
+                        typeof(MortalModule)
+                    },
                     preferredModuleOrder = new[]
                     {
-                        typeof(HealthModule),
-                        typeof(HarvestModule),
                         typeof(DropModule),
+                        typeof(StageModule),
+                        typeof(HarvestModule),
+                        typeof(HealthModule),
                         typeof(ExpRewardModule),
                         typeof(MortalModule),
-                        typeof(ResourceGrowthModule)
+                        typeof(PlacementModule)
                     },
                     requiredStats = new[]
                     {
@@ -733,7 +742,7 @@ public class EntityDataWorkbenchWindow : EditorWindow
             return TemplateKind.Custom;
 
         if (HasModule<StageModule>(data) && HasModule<PlacementModule>(data))
-            return TemplateKind.PlantSeedFlow;
+            return IsTreeGrowthAsset(data, path) ? TemplateKind.TreeGrowthFlow : TemplateKind.PlantSeedFlow;
         if (HasModule<ResourceGrowthModule>(data))
             return TemplateKind.TreeGrowthFlow;
         if (HasModule<AnimalModule>(data))
@@ -1000,8 +1009,8 @@ public class EntityDataWorkbenchWindow : EditorWindow
                 {
                     severity = IssueSeverity.Warning,
                     message = "PlacementModule vẫn để mặc định `EntityDrop` và chưa gán `placedEntityData`.",
-                    actionLabel = template == TemplateKind.PlantSeedFlow ? "Set objectTypeToSpawn = Plant01" : null,
-                    fix = template == TemplateKind.PlantSeedFlow
+                    actionLabel = template == TemplateKind.PlantSeedFlow || template == TemplateKind.TreeGrowthFlow ? "Set objectTypeToSpawn = Plant01" : null,
+                    fix = template == TemplateKind.PlantSeedFlow || template == TemplateKind.TreeGrowthFlow
                         ? entity => MutateEntity(entity, "Set placement object type", () =>
                         {
                             var module = GetModule<PlacementModule>(entity);
@@ -1017,13 +1026,13 @@ public class EntityDataWorkbenchWindow : EditorWindow
                 });
             }
 
-            if (template == TemplateKind.PlantSeedFlow &&
+            if ((template == TemplateKind.PlantSeedFlow || template == TemplateKind.TreeGrowthFlow) &&
                 !string.Equals(placement.animTrigger, "PutDown", StringComparison.OrdinalIgnoreCase))
             {
                 issues.Add(new ValidationIssue
                 {
                     severity = IssueSeverity.Warning,
-                    message = $"PlacementModule đang dùng animTrigger `{placement.animTrigger}`. Flow plant hiện tại khuyến nghị `PutDown`.",
+                    message = $"PlacementModule đang dùng animTrigger `{placement.animTrigger}`. Flow plant/tree hiện tại khuyến nghị `PutDown`.",
                     actionLabel = "Set animTrigger = PutDown",
                     fix = entity => MutateEntity(entity, "Set plant anim trigger", () =>
                     {
@@ -1239,17 +1248,62 @@ public class EntityDataWorkbenchWindow : EditorWindow
 
         if (template == TemplateKind.TreeGrowthFlow)
         {
-            var harvest = GetModule<HarvestModule>(data);
-            if (harvest != null && harvest.harvestTool == ToolType.None)
-                harvest.harvestTool = ToolType.Axe;
+            var placement = GetModule<PlacementModule>(data);
+            if (placement != null)
+            {
+                placement.objectTypeToSpawn = placement.objectTypeToSpawn == ObjectType.EntityDrop ? ObjectType.Plant01 : placement.objectTypeToSpawn;
+                placement.centerTile = true;
+                if (string.IsNullOrWhiteSpace(placement.animTrigger) || string.Equals(placement.animTrigger, "Sow", StringComparison.OrdinalIgnoreCase))
+                    placement.animTrigger = "PutDown";
+            }
 
-            var growth = GetModule<ResourceGrowthModule>(data);
-            if (growth != null && (growth.stages == null || growth.stages.Length == 0))
-                growth.stages = new[] { new GrowthStage { daysToGrow = 1, canHarvest = true } };
+            var stage = GetModule<StageModule>(data);
+            if (stage != null)
+            {
+                if (stage.stages == null || stage.stages.Length == 0)
+                    stage.stages = CreateDefaultTreeStages();
+
+                stage.requiresWater = false;
+                stage.regrowStageIndex = stage.regrowStageIndex < 0 ? 8 : stage.regrowStageIndex;
+                stage.harvestGoToStageIndex = stage.harvestGoToStageIndex < 0 ? 8 : stage.harvestGoToStageIndex;
+                stage.lastStageLoopToIndex = stage.lastStageLoopToIndex < 0 ? 5 : stage.lastStageLoopToIndex;
+                stage.daysToReturnAfterHarvest = stage.daysToReturnAfterHarvest <= 0 ? 3 : stage.daysToReturnAfterHarvest;
+                stage.wiltOnSeasonChange = false;
+            }
+
+            var harvest = GetModule<HarvestModule>(data);
+            if (harvest != null)
+            {
+                harvest.harvestTool = ToolType.None;
+                harvest.allowHandHarvest = true;
+                harvest.dropMode = HarvestDropMode.World;
+                harvest.harvestCausesDamage = false;
+                harvest.destroyOnHarvest = true;
+                harvest.oneHitDestroy = false;
+
+                if (!HasAdditionalHarvestTool(harvest, ToolType.Axe))
+                {
+                    harvest.additionalHarvestTools = AppendAdditionalHarvestTool(
+                        harvest.additionalHarvestTools,
+                        new HarvestToolOption
+                        {
+                            toolType = ToolType.Axe,
+                            harvestCausesDamage = true,
+                            destroyOnHarvest = true,
+                            oneHitDestroy = false
+                        });
+                }
+            }
 
             var drop = GetModule<DropModule>(data);
-            if (drop != null && drop.harvestDrops == null)
-                drop.harvestDrops = Array.Empty<DropEntry>();
+            if (drop != null)
+            {
+                if (drop.harvestDrops == null)
+                    drop.harvestDrops = Array.Empty<DropEntry>();
+                if (drop.deathDrops == null)
+                    drop.deathDrops = Array.Empty<DropEntry>();
+                drop.includeHarvestDropsOnDestroyWhenHarvestable = true;
+            }
         }
 
         if (template == TemplateKind.ResourceNode)
@@ -1461,5 +1515,62 @@ public class EntityDataWorkbenchWindow : EditorWindow
         mutation();
         EditorUtility.SetDirty(data);
         AssetDatabase.SaveAssets();
+    }
+
+    private static bool IsTreeGrowthAsset(EntityData data, string path)
+    {
+        if (path.IndexOf("_tree", StringComparison.OrdinalIgnoreCase) >= 0)
+            return true;
+
+        var stage = GetModule<StageModule>(data);
+        if (stage == null)
+            return false;
+
+        if (!stage.requiresWater && !stage.wiltOnSeasonChange)
+            return true;
+
+        var harvest = GetModule<HarvestModule>(data);
+        return harvest != null && HasAdditionalHarvestTool(harvest, ToolType.Axe);
+    }
+
+    private static bool HasAdditionalHarvestTool(HarvestModule harvest, ToolType toolType)
+    {
+        if (harvest?.additionalHarvestTools == null)
+            return false;
+
+        for (int i = 0; i < harvest.additionalHarvestTools.Length; i++)
+        {
+            var option = harvest.additionalHarvestTools[i];
+            if (option != null && option.toolType == toolType)
+                return true;
+        }
+
+        return false;
+    }
+
+    private static HarvestToolOption[] AppendAdditionalHarvestTool(HarvestToolOption[] source, HarvestToolOption option)
+    {
+        if (option == null)
+            return source ?? Array.Empty<HarvestToolOption>();
+
+        var items = source?.Where(entry => entry != null).ToList() ?? new List<HarvestToolOption>();
+        items.Add(option);
+        return items.ToArray();
+    }
+
+    private static GrowthStage[] CreateDefaultTreeStages()
+    {
+        return new[]
+        {
+            new GrowthStage { daysToGrow = 1, canHarvest = false },
+            new GrowthStage { daysToGrow = 1, canHarvest = false },
+            new GrowthStage { daysToGrow = 1, canHarvest = false },
+            new GrowthStage { daysToGrow = 1, canHarvest = false },
+            new GrowthStage { daysToGrow = 1, canHarvest = false },
+            new GrowthStage { daysToGrow = 1, canHarvest = false },
+            new GrowthStage { daysToGrow = 1, canHarvest = false },
+            new GrowthStage { daysToGrow = 19999, canHarvest = true },
+            new GrowthStage { daysToGrow = 1, canHarvest = false }
+        };
     }
 }

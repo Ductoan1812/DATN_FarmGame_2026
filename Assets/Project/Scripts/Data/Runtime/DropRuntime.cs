@@ -9,11 +9,15 @@ using UnityEngine;
 public class DropRuntime : IModuleRuntime, IHandleEvent<DieEvent>, IHandleEvent<SpawnedEvent>
 {
     public DropEntry[] harvestDrops;
+    public DropEntry[] deathDrops;
+    public bool includeHarvestDropsOnDestroyWhenHarvestable;
     private EntityRuntime sourceEntity;
 
     public DropRuntime(DropModule data)
     {
         harvestDrops = data.harvestDrops;
+        deathDrops = data.deathDrops;
+        includeHarvestDropsOnDestroyWhenHarvestable = data.includeHarvestDropsOnDestroyWhenHarvestable;
     }
 
     public void Handle(SpawnedEvent e)
@@ -33,7 +37,6 @@ public class DropRuntime : IModuleRuntime, IHandleEvent<DieEvent>, IHandleEvent<
     public void Handle(DieEvent e)
     {
         if (e.suppressWorldDrops) return;
-        if (harvestDrops == null || harvestDrops.Length == 0) return;
 
         var owner = e.entity?.Owner;
         if (owner == null) return;
@@ -46,20 +49,11 @@ public class DropRuntime : IModuleRuntime, IHandleEvent<DieEvent>, IHandleEvent<
         var gm = GameManager.Instance;
         var entityService = gm?.EntityService;
         int quality = GetDropQuality(e.entity);
+        bool isHarvestableOnDestroy = e.entity?.GetModule<StageRuntime>()?.CanHarvest ?? false;
 
-        foreach (var entry in harvestDrops)
-        {
-            if (entry == null || entry.item == null) continue;
-
-            // Random drop chance
-            if (Random.value > entry.dropChance) continue;
-
-            // Random amount
-            int totalAmount = Random.Range(entry.minAmount, entry.maxAmount + 1);
-            if (totalAmount <= 0) continue;
-
-            SpawnWorldDrops(dropPos, entry.item, totalAmount, quality, gm, entityService);
-        }
+        SpawnEntriesToWorld(deathDrops, dropPos, quality, gm, entityService);
+        if (includeHarvestDropsOnDestroyWhenHarvestable && isHarvestableOnDestroy)
+            SpawnEntriesToWorld(harvestDrops, dropPos, quality, gm, entityService);
     }
 
     public int GrantDropsTo(EntityRuntime receiver, Vector2 fallbackWorldPos)
@@ -123,15 +117,29 @@ public class DropRuntime : IModuleRuntime, IHandleEvent<DieEvent>, IHandleEvent<
 
     public int SpawnDropsToWorld(Vector2 worldPos)
     {
-        if (harvestDrops == null || harvestDrops.Length == 0)
-            return 0;
-
         var gm = GameManager.Instance;
         var entityService = gm?.EntityService;
         int quality = GetDropQuality(sourceEntity);
-        int totalSpawned = 0;
+        return SpawnEntriesToWorld(harvestDrops, worldPos, quality, gm, entityService);
+    }
 
-        foreach (var entry in harvestDrops)
+    private static int GetDropQuality(EntityRuntime source)
+    {
+        return source?.GetModule<QualityRuntime>()?.GetHarvestQuality() ?? 1;
+    }
+
+    private static int SpawnEntriesToWorld(
+        DropEntry[] entries,
+        Vector2 worldPos,
+        int quality,
+        GameManager gm,
+        EntityService entityService)
+    {
+        if (entries == null || entries.Length == 0)
+            return 0;
+
+        int totalSpawned = 0;
+        foreach (var entry in entries)
         {
             if (entry == null || entry.item == null) continue;
             if (Random.value > entry.dropChance) continue;
@@ -144,11 +152,6 @@ public class DropRuntime : IModuleRuntime, IHandleEvent<DieEvent>, IHandleEvent<
         }
 
         return totalSpawned;
-    }
-
-    private static int GetDropQuality(EntityRuntime source)
-    {
-        return source?.GetModule<QualityRuntime>()?.GetHarvestQuality() ?? 1;
     }
 
     private static void SpawnWorldDrops(

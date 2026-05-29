@@ -35,30 +35,34 @@ public class StageRuntime : IModuleRuntime, IHandleEvent<NextDayEvent>, IHandleE
     {
         if (!IsRegrowable) return;
 
-        currentStageIndex = data.regrowStageIndex;
-        daysInCurrentStage = 0;
-        daysWithoutWater = 0;
-        isWilting = false;
-        TotaldaysInCurrentStage = data.stages[currentStageIndex].daysToGrow;
+        MoveToStage(data.regrowStageIndex, resetHp: true, clearWilt: true, logReason: "reset về regrow stage");
+    }
 
-        if (spriteRenderer != null && data.stages != null && currentStageIndex < data.stages.Length)
-            spriteRenderer.sprite = data.stages[currentStageIndex].sprite;
-
-        if (_entity?.stats != null)
+    /// <summary>Harvest xong chuyển theo loop stage nếu có, fallback về regrowStageIndex kiểu cũ.</summary>
+    public bool TryAdvanceAfterHarvest()
+    {
+        int nextHarvestStage = GetHarvestReturnStageIndex();
+        if (nextHarvestStage >= 0 && nextHarvestStage != currentStageIndex)
         {
-            float maxHp = _entity.stats.Get(StatType.MaxHp);
-            if (maxHp > 0f)
-                _entity.stats.Set(StatType.Hp, maxHp);
+            MoveToStage(nextHarvestStage, resetHp: true, clearWilt: true, logReason: "chuyển sang harvest loop stage");
+            return true;
         }
 
-        Debug.Log($"[StageRuntime] '{Owner?.GameObject?.name}' reset về regrow stage {currentStageIndex}.");
+        if (!IsRegrowable)
+            return false;
+
+        ResetToRegrowStage();
+        return true;
     }
 
     public StageRuntime(StageModule data)
     {
         this.data = data;
-        if (data.stages.Length > 0) currentStageIndex = 0;
-        TotaldaysInCurrentStage = data.stages[currentStageIndex].daysToGrow;
+        if (data?.stages != null && data.stages.Length > 0)
+        {
+            currentStageIndex = 0;
+            TotaldaysInCurrentStage = Mathf.Max(1, data.stages[currentStageIndex].daysToGrow);
+        }
     }
 
     public ModuleSaveData ToSaveData()
@@ -106,7 +110,11 @@ public class StageRuntime : IModuleRuntime, IHandleEvent<NextDayEvent>, IHandleE
         // Check watered
         bool watered = false;
         var tracker = GameManager.Instance?.WateredTileTracker;
-        if (tracker != null && Owner.GameObject != null)
+        if (!data.requiresWater)
+        {
+            watered = true;
+        }
+        else if (tracker != null && Owner.GameObject != null)
         {
             // Dùng GridSystem.WorldToCell để đảm bảo khớp với tilemap coordinate
             // Cây spawn tại center của cell (e.g. 16.5, -11.5) → WorldToCell → (16, -11)
@@ -129,22 +137,16 @@ public class StageRuntime : IModuleRuntime, IHandleEvent<NextDayEvent>, IHandleE
             daysWithoutWater = 0;
 
             // Grow logic
-            TotaldaysInCurrentStage = data.stages[currentStageIndex].daysToGrow;
+            TotaldaysInCurrentStage = GetDaysToGrowForCurrentStage();
             daysInCurrentStage++;
             Debug.Log($"[StageRuntime] '{Owner.GameObject.name}' stage {currentStageIndex}: {daysInCurrentStage}/{TotaldaysInCurrentStage} ngày.");
 
             if (daysInCurrentStage >= TotaldaysInCurrentStage)
             {
-                if (currentStageIndex < data.stages.Length - 1)
+                int nextStageIndex = GetNextStageIndex();
+                if (nextStageIndex >= 0 && nextStageIndex != currentStageIndex)
                 {
-                    currentStageIndex++;
-                    daysInCurrentStage = 0;
-                    if (spriteRenderer == null)
-                        spriteRenderer = Owner.GameObject.GetComponentInChildren<SpriteRenderer>();
-                    if (spriteRenderer != null)
-                        spriteRenderer.sprite = data.stages[currentStageIndex].sprite;
-
-                    Debug.Log($"[StageRuntime] '{Owner.GameObject.name}' lên stage {currentStageIndex}!");
+                    MoveToStage(nextStageIndex, resetHp: false, clearWilt: false, logReason: "lên stage");
                 }
                 else
                 {
@@ -175,7 +177,7 @@ public class StageRuntime : IModuleRuntime, IHandleEvent<NextDayEvent>, IHandleE
             return;
         }
 
-        spriteRenderer.sprite = data.stages[currentStageIndex].sprite;
+        ApplyStageVisual();
         Debug.Log($"[StageRuntime] Đã set sprite stage {currentStageIndex} cho '{Owner.GameObject.name}' (CanHarvest={CanHarvest})");
     }
 
@@ -202,5 +204,98 @@ public class StageRuntime : IModuleRuntime, IHandleEvent<NextDayEvent>, IHandleE
             spriteRenderer.sprite = data.wiltSprite;
 
         Debug.LogWarning($"[StageRuntime] '{Owner.GameObject.name}' đã héo vì sang mùa {e.season} năm {e.year}.");
+    }
+
+    private int GetNextStageIndex()
+    {
+        if (data?.stages == null || currentStageIndex < 0 || currentStageIndex >= data.stages.Length)
+            return -1;
+
+        if (IsHarvestRecoveryStage())
+            return data.lastStageLoopToIndex;
+
+        if (currentStageIndex >= data.stages.Length - 1)
+        {
+            int loopStage = data.lastStageLoopToIndex;
+            if (loopStage >= 0 && loopStage < data.stages.Length)
+                return loopStage;
+
+            return currentStageIndex;
+        }
+
+        return currentStageIndex + 1;
+    }
+
+    private int GetHarvestReturnStageIndex()
+    {
+        if (data?.stages == null || currentStageIndex < 0 || currentStageIndex >= data.stages.Length || !CanHarvest)
+            return -1;
+
+        int configured = data.harvestGoToStageIndex;
+        if (configured >= 0 && configured < data.stages.Length)
+            return configured;
+
+        return -1;
+    }
+
+    private void MoveToStage(int stageIndex, bool resetHp, bool clearWilt, string logReason)
+    {
+        if (data?.stages == null) return;
+        if (stageIndex < 0 || stageIndex >= data.stages.Length) return;
+
+        currentStageIndex = stageIndex;
+        daysInCurrentStage = 0;
+        daysWithoutWater = 0;
+        if (clearWilt)
+            isWilting = false;
+
+        TotaldaysInCurrentStage = GetDaysToGrowForCurrentStage();
+        ApplyStageVisual();
+
+        if (resetHp && _entity?.stats != null)
+        {
+            float maxHp = _entity.stats.Get(StatType.MaxHp);
+            if (maxHp > 0f)
+                _entity.stats.Set(StatType.Hp, maxHp);
+        }
+
+        if (Owner?.GameObject != null)
+            Debug.Log($"[StageRuntime] '{Owner.GameObject.name}' {logReason} {currentStageIndex}.");
+    }
+
+    private int GetDaysToGrowForCurrentStage()
+    {
+        if (data?.stages == null || currentStageIndex < 0 || currentStageIndex >= data.stages.Length)
+            return 1;
+
+        if (IsHarvestRecoveryStage() && data.daysToReturnAfterHarvest > 0)
+            return data.daysToReturnAfterHarvest;
+
+        return Mathf.Max(1, data.stages[currentStageIndex].daysToGrow);
+    }
+
+    private bool IsHarvestRecoveryStage()
+    {
+        if (data == null)
+            return false;
+
+        if (data.harvestGoToStageIndex < 0 || data.lastStageLoopToIndex < 0)
+            return false;
+
+        return currentStageIndex == data.harvestGoToStageIndex;
+    }
+
+    private void ApplyStageVisual()
+    {
+        if (spriteRenderer == null && Owner?.GameObject != null)
+        {
+            spriteRenderer = Owner.GameObject.GetComponentInChildren<SpriteRenderer>()
+                          ?? Owner.GameObject.GetComponent<SpriteRenderer>();
+        }
+
+        if (spriteRenderer == null || data?.stages == null || currentStageIndex < 0 || currentStageIndex >= data.stages.Length)
+            return;
+
+        spriteRenderer.sprite = data.stages[currentStageIndex].sprite;
     }
 }

@@ -26,7 +26,7 @@ public class HarvestRuntime : IModuleRuntime, IHandleEvent<SecondaryActionEvent>
         if (!IsHarvestable())
             return;
 
-        TryHarvest(e.initiator);
+        TryHarvest(e.initiator, data.destroyOnHarvest);
     }
 
     public bool CanReceiveDamage(TakeDamageEvent e, out string reason)
@@ -40,7 +40,7 @@ public class HarvestRuntime : IModuleRuntime, IHandleEvent<SecondaryActionEvent>
             return false;
         }
 
-        if (!data.AllowsTool(e.toolType))
+        if (!data.TryGetToolBehavior(e.toolType, out _, out _, out _))
         {
             reason = $"Wrong tool: got {e.toolType}.";
             return false;
@@ -61,20 +61,29 @@ public class HarvestRuntime : IModuleRuntime, IHandleEvent<SecondaryActionEvent>
     /// </summary>
     public bool TryHarvest(EntityRuntime interactor)
     {
+        return TryHarvest(interactor, data.destroyOnHarvest);
+    }
+
+    public bool TryHarvest(EntityRuntime interactor, bool destroyOnHarvest)
+    {
         var stage = _entity.GetModule<StageRuntime>();
         var resourceGrowth = _entity.GetModule<ResourceGrowthRuntime>();
         bool hasGrowthGate = stage != null || resourceGrowth != null;
         if (hasGrowthGate && !IsHarvestable()) return false;
 
         if (stage != null && stage.IsRegrowable)
+            Debug.Log($"[HarvestRuntime] '{_entity.entityData?.keyName}' dùng fallback regrowStageIndex cũ.");
+
+        bool dropsAlreadyHandled = GrantHarvestDrops(interactor);
+        if (stage != null && stage.TryAdvanceAfterHarvest())
         {
-            GrantHarvestDrops(interactor);
-            stage.ResetToRegrowStage();
-            Debug.Log($"[HarvestRuntime] Regrowable crop reset to stage {stage.currentStageIndex}.");
+            Debug.Log($"[HarvestRuntime] '{_entity.entityData?.keyName}' harvest xong chuyển sang stage {stage.currentStageIndex}.");
             return true;
         }
 
-        bool dropsAlreadyHandled = GrantHarvestDrops(interactor);
+        if (!destroyOnHarvest)
+            return true;
+
         _entity.TriggerEvent(new DieEvent(_entity, interactor, suppressWorldDrops: dropsAlreadyHandled));
         return true;
     }
@@ -82,12 +91,13 @@ public class HarvestRuntime : IModuleRuntime, IHandleEvent<SecondaryActionEvent>
     public bool TryRegrowableHarvest(EntityRuntime interactor)
     {
         var stage = _entity.GetModule<StageRuntime>();
-        if (stage == null || !stage.IsRegrowable) return false;
+        if (stage == null) return false;
 
         GrantHarvestDrops(interactor);
-        stage.ResetToRegrowStage();
-        Debug.Log($"[HarvestRuntime] Regrowable crop reset to stage {stage.currentStageIndex}.");
-        return true;
+        bool transitioned = stage.TryAdvanceAfterHarvest();
+        if (transitioned)
+            Debug.Log($"[HarvestRuntime] '{_entity.entityData?.keyName}' harvest xong chuyển sang stage {stage.currentStageIndex}.");
+        return transitioned;
     }
 
     private bool GrantHarvestDrops(EntityRuntime interactor)
@@ -125,6 +135,30 @@ public class HarvestRuntime : IModuleRuntime, IHandleEvent<SecondaryActionEvent>
         return true;
     }
 
+    public bool TryHandleDamageHarvest(TakeDamageEvent e)
+    {
+        if (_entity == null)
+            return false;
+
+        if (!data.HasAnyToolHarvest ||
+            !data.TryGetToolBehavior(e.toolType, out bool causesDamage, out bool destroyOnHarvestForTool, out bool oneHitDestroyForTool))
+            return false;
+
+        if (!IsHarvestable())
+            return false;
+
+        if (causesDamage)
+        {
+            if (!oneHitDestroyForTool)
+                return false;
+
+            _entity.TriggerEvent(new DieEvent(_entity, e.attacker));
+            return true;
+        }
+
+        return TryHarvest(e.attacker, destroyOnHarvestForTool);
+    }
+
     // ── Save / Load ───────────────────────────────────────────────────────────
 
     public ModuleSaveData ToSaveData() => null;
@@ -137,10 +171,13 @@ public class HarvestRuntime : IModuleRuntime, IHandleEvent<SecondaryActionEvent>
         return data.harvestTool == o.data.harvestTool
                && data.allowHandHarvest == o.data.allowHandHarvest
                && data.dropMode == o.data.dropMode
+               && data.harvestCausesDamage == o.data.harvestCausesDamage
+               && data.destroyOnHarvest == o.data.destroyOnHarvest
+               && data.oneHitDestroy == o.data.oneHitDestroy
                && HaveSameAdditionalTools(data.additionalHarvestTools, o.data.additionalHarvestTools);
     }
 
-    private static bool HaveSameAdditionalTools(ToolType[] left, ToolType[] right)
+    private static bool HaveSameAdditionalTools(HarvestToolOption[] left, HarvestToolOption[] right)
     {
         if (ReferenceEquals(left, right))
             return true;
@@ -153,7 +190,19 @@ public class HarvestRuntime : IModuleRuntime, IHandleEvent<SecondaryActionEvent>
 
         for (int i = 0; i < left.Length; i++)
         {
-            if (left[i] != right[i])
+            HarvestToolOption leftOption = left[i];
+            HarvestToolOption rightOption = right[i];
+            if (leftOption == null || rightOption == null)
+            {
+                if (leftOption != rightOption)
+                    return false;
+                continue;
+            }
+
+            if (leftOption.toolType != rightOption.toolType ||
+                leftOption.harvestCausesDamage != rightOption.harvestCausesDamage ||
+                leftOption.destroyOnHarvest != rightOption.destroyOnHarvest ||
+                leftOption.oneHitDestroy != rightOption.oneHitDestroy)
                 return false;
         }
 

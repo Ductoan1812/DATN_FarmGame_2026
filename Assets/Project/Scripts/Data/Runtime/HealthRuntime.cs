@@ -54,12 +54,7 @@ public class HealthRuntime : IModuleRuntime, IHandleEvent<SpawnedEvent>, IHandle
         if (_entity == null) return;
         if (_isDead) return;
         var harvest = _entity.GetModule<HarvestRuntime>();
-        if (harvest != null && !harvest.CanReceiveDamage(e, out string blockedReason))
-        {
-            return;
-        }
-
-        if (harvest != null && harvest.TryHarvest(e.attacker))
+        if (harvest != null && harvest.TryHandleDamageHarvest(e))
             return;
 
         if (!CanTakeDamage)
@@ -80,12 +75,7 @@ public class HealthRuntime : IModuleRuntime, IHandleEvent<SpawnedEvent>, IHandle
                   $"HP: {newHp:F1}/{_entity.stats.Get(StatType.MaxHp):F1}");
 
         if (newHp <= 0f)
-        {
-            if (harvest != null && harvest.TryRegrowableHarvest(e.attacker))
-                return;
-
             Die();
-        }
     }
 
     // ── Chết ─────────────────────────────────────────────────────────────────

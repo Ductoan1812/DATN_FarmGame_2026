@@ -23,30 +23,39 @@ MonoBehaviour:
   baseStats:
     baseStats:
     - statType: 0
-      value: 1
+      value: 20
     - statType: 1
-      value: 1
+      value: 20
   placementRule:
-    occupyLayer: 1
-    requireTags: 8
-    provideTags: 8
+    occupyLayer: 2
+    requireTags: 0
+    provideTags: 0
     blockLayers: 
   modules:
   - rid: 8196223203590799362
   - rid: 8196223203590799363
   - rid: 8196223203590799364
-  - rid: 8196223203590799365
   - rid: 8196223212952223754
   - rid: 8196223212952223755
   - rid: 8196223212952223756
-  - rid: 8196223212952223757
+  - rid: 8196223221319335941
   references:
     version: 2
     RefIds:
     - rid: 8196223203590799362
       type: {class: DropModule, ns: , asm: Assembly-CSharp}
       data:
-        harvestDrops: []
+        harvestDrops:
+        - item: {fileID: 11400000}
+          minAmount: 6
+          maxAmount: 10
+          dropChance: 1
+        deathDrops:
+        - item: {fileID: 11400000, guid: a7c3e5ee4a8c90647861587b5779bbb3, type: 2}
+          minAmount: 2
+          maxAmount: 5
+          dropChance: 1
+        includeHarvestDropsOnDestroyWhenHarvestable: 1
     - rid: 8196223203590799363
       type: {class: StageModule, ns: , asm: Assembly-CSharp}
       data:
@@ -73,23 +82,33 @@ MonoBehaviour:
           daysToGrow: 1
           canHarvest: 0
         - sprite: {fileID: -1346078414, guid: eb3b66e1fe879524081fd009c50fcee8, type: 3}
-          daysToGrow: 1
-          canHarvest: 0
+          daysToGrow: 19999
+          canHarvest: 1
         - sprite: {fileID: -297922540, guid: eb3b66e1fe879524081fd009c50fcee8, type: 3}
           daysToGrow: 1
           canHarvest: 0
+        requiresWater: 0
         wiltSprite: {fileID: -1403301404, guid: eb3b66e1fe879524081fd009c50fcee8, type: 3}
-        regrowStageIndex: 9
+        regrowStageIndex: 8
+        harvestGoToStageIndex: 8
+        lastStageLoopToIndex: 5
+        daysToReturnAfterHarvest: 3
+        wiltOnSeasonChange: 0
     - rid: 8196223203590799364
       type: {class: HarvestModule, ns: , asm: Assembly-CSharp}
       data:
-        harvestTool: 3
-        wrongToolPenalty: 0.3
-    - rid: 8196223203590799365
-      type: {class: HarvestModule, ns: , asm: Assembly-CSharp}
-      data:
-        harvestTool: 4
-        wrongToolPenalty: 0.3
+        harvestTool: 0
+        allowHandHarvest: 1
+        additionalHarvestTools:
+        - toolType: 4
+          harvestCausesDamage: 1
+          destroyOnHarvest: 1
+          oneHitDestroy: 0
+        dropMode: 0
+        harvestCausesDamage: 0
+        destroyOnHarvest: 1
+        oneHitDestroy: 0
+        wrongToolPenalty: 0.1
     - rid: 8196223212952223754
       type: {class: HealthModule, ns: , asm: Assembly-CSharp}
       data:
@@ -97,16 +116,16 @@ MonoBehaviour:
     - rid: 8196223212952223755
       type: {class: ExpRewardModule, ns: , asm: Assembly-CSharp}
       data:
-        rewardExp: 0
-        sourceType: 6
+        rewardExp: 10
+        sourceType: 1
         requireKiller: 1
     - rid: 8196223212952223756
       type: {class: MortalModule, ns: , asm: Assembly-CSharp}
       data: 
-    - rid: 8196223212952223757
-      type: {class: ResourceGrowthModule, ns: , asm: Assembly-CSharp}
+    - rid: 8196223221319335941
+      type: {class: PlacementModule, ns: , asm: Assembly-CSharp}
       data:
-        stages:
-        - sprite: {fileID: 0}
-          daysToGrow: 1
-          canHarvest: 1
+        objectTypeToSpawn: 2
+        placedEntityData: {fileID: 0}
+        centerTile: 1
+        animTrigger: PutDown
