@@ -1,6 +1,13 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+public enum MarkerStageSpawnMode
+{
+    Default,
+    FixedStage,
+    RandomRange
+}
+
 [CreateAssetMenu(menuName = "Data/Scene Spawn Tile", fileName = "SceneSpawnTile")]
 public class SceneSpawnTile : TileBase
 {
@@ -13,6 +20,13 @@ public class SceneSpawnTile : TileBase
     [Min(0)] public int respawnMinutes;
     [Min(1)] public int initialAmount = 1;
     public bool bypassPlacementValidation;
+
+    [Header("Initial Stage")]
+    [Tooltip("Cách chọn stage khởi tạo cho entity có StageModule khi seed từ marker.")]
+    public MarkerStageSpawnMode stageSpawnMode = MarkerStageSpawnMode.Default;
+    [Min(0)] public int fixedStartStageIndex;
+    [Min(0)] public int randomStartStageMin;
+    [Min(0)] public int randomStartStageMax;
 
     [Header("Editor Preview")]
     public Sprite editorSprite;

@@ -39,6 +39,7 @@ public class WorldSaveContainer
 {
     public EntityPositionSave[] entities;
     public EntityPositionSave[] inactiveEntities;
+    public string[]             removedPersistentIds;
     public TileChangeSave[]     tileChanges; // dirty tiles only
 }
 
@@ -72,6 +73,7 @@ public class WorldEntityService
     private readonly TileData              _tileData;
     private readonly Tilemap               _tilemap; // reference tilemap cho WorldToCell
     private readonly Dictionary<string, EntityPosition> _inactiveRegenerating = new();
+    private readonly HashSet<string> _removedPersistentIds = new(StringComparer.Ordinal);
 
     public WorldEntityService(
         SpatialEntityRegistry spatial,
@@ -115,6 +117,7 @@ public class WorldEntityService
             ep.occupiedCells = new[] { WorldToCell(ep.pos) };
 
         ep.layer = rule.occupyLayer;
+        ForgetPersistentRemoval(ep.persistentId);
 
         // Validate từng cell
         foreach (var cell in ep.occupiedCells)
@@ -146,6 +149,7 @@ public class WorldEntityService
         if (ep.occupiedCells == null || ep.occupiedCells.Length == 0)
             ep.occupiedCells = new[] { WorldToCell(ep.pos) };
 
+        ForgetPersistentRemoval(ep.persistentId);
         _spatial.RegisterEntity(ep);
         _spatial.AddToSpatial(ep, ep.layer);
     }
@@ -227,6 +231,8 @@ public class WorldEntityService
     public bool HasPersistentId(string persistentId)
     {
         if (string.IsNullOrWhiteSpace(persistentId)) return false;
+        if (_removedPersistentIds.Contains(persistentId))
+            return true;
         foreach (var ep in _spatial.GetAllEntities())
         {
             if (ep == null) continue;
@@ -288,6 +294,22 @@ public class WorldEntityService
         var inactive = ClonePosition(ep);
         inactive.availableAtGameMinute = Mathf.Max(0, availableAtGameMinute);
         _inactiveRegenerating[inactive.persistentId] = inactive;
+        return true;
+    }
+
+    public bool MarkPersistentRemoved(string idRuntime)
+    {
+        if (string.IsNullOrWhiteSpace(idRuntime))
+            return false;
+
+        var ep = _spatial.GetEntity(idRuntime);
+        if (ep == null || string.IsNullOrWhiteSpace(ep.persistentId))
+            return false;
+
+        if (ep.savePolicy != SceneEntitySavePolicy.Persistent)
+            return false;
+
+        _removedPersistentIds.Add(ep.persistentId);
         return true;
     }
 
@@ -361,11 +383,12 @@ public class WorldEntityService
         {
             entities         = entitySaves.ToArray(),
             inactiveEntities = BuildInactiveSaveList().ToArray(),
+            removedPersistentIds = BuildRemovedPersistentIdList().ToArray(),
             tileChanges      = tileChanges.ToArray()
         };
 
         File.WriteAllText(SavePath(filename), JsonUtility.ToJson(container, true));
-        Debug.Log($"[WorldEntityService] Saved {entitySaves.Count} entities, {_inactiveRegenerating.Count} inactive respawn marker(s), {tileChanges.Count} tile changes (dirty only).");
+        Debug.Log($"[WorldEntityService] Saved {entitySaves.Count} entities, {_inactiveRegenerating.Count} inactive respawn marker(s), {_removedPersistentIds.Count} removed persistent marker(s), {tileChanges.Count} tile changes (dirty only).");
     }
 
     // ── Load ──────────────────────────────────────────────────────────────────
@@ -415,6 +438,16 @@ public class WorldEntityService
             }
         }
 
+        _removedPersistentIds.Clear();
+        if (container.removedPersistentIds != null)
+        {
+            foreach (var persistentId in container.removedPersistentIds)
+            {
+                if (!string.IsNullOrWhiteSpace(persistentId))
+                    _removedPersistentIds.Add(persistentId);
+            }
+        }
+
         // 2. Apply tile dirty changes lên TileRegistry
         // (TileRegistry đã ScanBaseline trước đó, giờ chỉ áp dirty)
         if (container.tileChanges != null)
@@ -430,7 +463,7 @@ public class WorldEntityService
             foreach (var ep in positions.Values)
                 onEntityLoaded(ep);
 
-        Debug.Log($"[WorldEntityService] Loaded {positions.Count} entities, {_inactiveRegenerating.Count} inactive respawn marker(s), {container.tileChanges?.Length ?? 0} tile changes.");
+        Debug.Log($"[WorldEntityService] Loaded {positions.Count} entities, {_inactiveRegenerating.Count} inactive respawn marker(s), {_removedPersistentIds.Count} removed persistent marker(s), {container.tileChanges?.Length ?? 0} tile changes.");
     }
 
     // ── Private ───────────────────────────────────────────────────────────────
@@ -489,6 +522,11 @@ public class WorldEntityService
         foreach (var ep in _inactiveRegenerating.Values)
             saves.Add(ToSave(ep));
         return saves;
+    }
+
+    private List<string> BuildRemovedPersistentIdList()
+    {
+        return new List<string>(_removedPersistentIds);
     }
 
     private static EntityPositionSave ToSave(EntityPosition ep)
@@ -554,5 +592,13 @@ public class WorldEntityService
             initialAmount = Mathf.Max(1, s.initialAmount),
             availableAtGameMinute = s.availableAtGameMinute
         };
+    }
+
+    private void ForgetPersistentRemoval(string persistentId)
+    {
+        if (string.IsNullOrWhiteSpace(persistentId))
+            return;
+
+        _removedPersistentIds.Remove(persistentId);
     }
 }

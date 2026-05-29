@@ -63,6 +63,8 @@ public class SpawnSystem : MonoBehaviour
             return;
         }
 
+        ApplyInitialStage(req, spawnRuntime);
+
         // Lấy PlacementRule từ EntityData
         var rule = spawnRuntime.entityData.placementRule;
 
@@ -151,6 +153,7 @@ public class SpawnSystem : MonoBehaviour
 
     private void OnDestroyEntityRequest(DestroyEntityRequestPublish req)
     {
+        _worldService?.MarkPersistentRemoved(req.idRuntime);
         DespawnGameObject(req.idRuntime);
 
         var entity = _entityService.Get(req.idRuntime);
@@ -235,6 +238,21 @@ public class SpawnSystem : MonoBehaviour
 
         if (req.idPrefab == ObjectType.EntityDrop || req.idPrefab == ObjectType.Player01)
             ep.savePolicy = SceneEntitySavePolicy.Temporary;
+    }
+
+    private static void ApplyInitialStage(SpawnRequestPublish req, EntityRuntime runtime)
+    {
+        if (runtime == null) return;
+        if (req.payload is not SceneSpawnPayload scenePayload) return;
+        if (scenePayload.startStageIndex < 0) return;
+
+        var stageRuntime = runtime.GetModule<StageRuntime>();
+        if (stageRuntime == null) return;
+
+        if (!stageRuntime.ConfigureInitialStage(scenePayload.startStageIndex))
+        {
+            Debug.LogWarning($"[SpawnSystem] Invalid marker start stage {scenePayload.startStageIndex} for '{runtime.entityData?.id}'.");
+        }
     }
 
     private static Vector2Int WorldToCell(Vector2 worldPos) =>

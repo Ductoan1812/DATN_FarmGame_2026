@@ -351,7 +351,8 @@ public class SaveLoadManager
 
     public void EnsurePlayerSpawnedAt(string spawnPointId = null)
     {
-        if (UnityEngine.Object.FindAnyObjectByType<PlayerControler>() != null)
+        var existingPlayer = FindBestPlayerController();
+        if (existingPlayer != null && existingPlayer.gameObject.scene == SceneManager.GetActiveScene())
             return;
 
         var playerEntity = FindPlayerEntity();
@@ -380,6 +381,23 @@ public class SaveLoadManager
             payload: new SceneSpawnPayload { savePolicy = SceneEntitySavePolicy.Temporary }));
 
         Debug.Log($"[SaveLoadManager] Player spawned at '{resolvedSpawnPointId}' position {spawnPosition}.");
+    }
+
+    private static PlayerControler FindBestPlayerController()
+    {
+        var players = UnityEngine.Object.FindObjectsByType<PlayerControler>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+        if (players == null || players.Length == 0)
+            return null;
+
+        var activeScene = SceneManager.GetActiveScene();
+        for (int i = 0; i < players.Length; i++)
+        {
+            var player = players[i];
+            if (player != null && player.gameObject.scene == activeScene)
+                return player;
+        }
+
+        return players[0];
     }
 
     private EntityRuntime FindPlayerEntity()

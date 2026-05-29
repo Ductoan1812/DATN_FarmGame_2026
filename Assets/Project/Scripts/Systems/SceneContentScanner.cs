@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
@@ -106,7 +107,8 @@ public class SceneContentScanner : MonoBehaviour
                 savePolicy = tile.savePolicy,
                 respawnMinutes = Mathf.Max(0, tile.respawnMinutes),
                 initialAmount = Mathf.Max(1, tile.initialAmount),
-                availableAtGameMinute = 0
+                availableAtGameMinute = 0,
+                startStageIndex = ResolveStartStageIndex(tile)
             };
 
             Vector3 world = markerMap.GetCellCenterWorld(cell);
@@ -123,5 +125,32 @@ public class SceneContentScanner : MonoBehaviour
 
         if (seededCount > 0)
             Debug.Log($"[SceneContentScanner] Seeded {seededCount} marker entity/entities for scene '{sceneName}'.");
+    }
+
+    private static int ResolveStartStageIndex(SceneSpawnTile tile)
+    {
+        if (tile == null || tile.entityData == null)
+            return -1;
+
+        var stageModule = tile.entityData.modules?.OfType<StageModule>().FirstOrDefault();
+        int stageCount = stageModule?.stages?.Length ?? 0;
+        if (stageCount <= 0)
+            return -1;
+
+        switch (tile.stageSpawnMode)
+        {
+            case MarkerStageSpawnMode.FixedStage:
+                return Mathf.Clamp(tile.fixedStartStageIndex, 0, stageCount - 1);
+
+            case MarkerStageSpawnMode.RandomRange:
+                int min = Mathf.Clamp(tile.randomStartStageMin, 0, stageCount - 1);
+                int max = Mathf.Clamp(tile.randomStartStageMax, 0, stageCount - 1);
+                if (max < min)
+                    (min, max) = (max, min);
+                return Random.Range(min, max + 1);
+
+            default:
+                return -1;
+        }
     }
 }

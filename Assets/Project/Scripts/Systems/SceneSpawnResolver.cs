@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.SceneManagement;
 
 public static class SceneSpawnResolver
 {
@@ -14,6 +15,9 @@ public static class SceneSpawnResolver
 
         if (TryFindSpawnPointComponent(spawnPointId, out var point))
             return point.transform.position;
+
+        if (!string.IsNullOrWhiteSpace(spawnPointId))
+            Debug.LogWarning($"[SceneSpawnResolver] Spawn point '{spawnPointId}' was not found in active scene '{SceneManager.GetActiveScene().name}'. Falling back to {fallback}.");
 
         return fallback;
     }
@@ -33,18 +37,19 @@ public static class SceneSpawnResolver
         return false;
     }
 
-    public static bool TryFindSpawnPointComponent(string spawnPointId, out SceneSpawnPoint chosen)
+    public static bool TryFindSpawnPointComponent(string spawnPointId, out ScenePortalTrigger2D chosen)
     {
         chosen = null;
-        var points = UnityEngine.Object.FindObjectsByType<SceneSpawnPoint>(FindObjectsSortMode.None);
+        var points = UnityEngine.Object.FindObjectsByType<ScenePortalTrigger2D>(FindObjectsSortMode.None);
         if (points == null || points.Length == 0) return false;
 
         string targetId = Normalize(spawnPointId);
+        var activeScene = SceneManager.GetActiveScene();
         foreach (var point in points)
         {
-            if (point == null) continue;
+            if (point == null || !point.IsEntryPoint || point.gameObject.scene != activeScene) continue;
             if (!string.IsNullOrEmpty(targetId) &&
-                string.Equals(Normalize(point.spawnPointId), targetId, StringComparison.OrdinalIgnoreCase))
+                string.Equals(Normalize(point.SpawnPointId), targetId, StringComparison.OrdinalIgnoreCase))
             {
                 chosen = point;
                 return true;
@@ -54,8 +59,16 @@ public static class SceneSpawnResolver
         if (!string.IsNullOrEmpty(targetId))
             return false;
 
-        chosen = points[0];
-        return chosen != null;
+        for (int i = 0; i < points.Length; i++)
+        {
+            if (points[i] == null || !points[i].IsEntryPoint || points[i].gameObject.scene != activeScene)
+                continue;
+
+            chosen = points[i];
+            return true;
+        }
+
+        return false;
     }
 
     private static bool TryFindSpawnPointTile(string spawnPointId, Tilemap markerMap, out Vector2 position)

@@ -13,6 +13,7 @@ public class SceneSpawnPayload
     public int respawnMinutes;
     public int initialAmount = 1;
     public int availableAtGameMinute;
+    public int startStageIndex = -1;
 
     public static string BuildPersistentId(
         string sceneName,

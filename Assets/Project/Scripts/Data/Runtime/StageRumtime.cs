@@ -65,6 +65,22 @@ public class StageRuntime : IModuleRuntime, IHandleEvent<NextDayEvent>, IHandleE
         }
     }
 
+    public bool ConfigureInitialStage(int stageIndex)
+    {
+        if (data?.stages == null || data.stages.Length == 0)
+            return false;
+
+        if (stageIndex < 0 || stageIndex >= data.stages.Length)
+            return false;
+
+        currentStageIndex = stageIndex;
+        daysInCurrentStage = 0;
+        daysWithoutWater = 0;
+        isWilting = false;
+        TotaldaysInCurrentStage = GetDaysToGrowForCurrentStage();
+        return true;
+    }
+
     public ModuleSaveData ToSaveData()
     {
         var s = new StageModuleSave
