@@ -5,11 +5,15 @@ using UnityEngine.UI;
 
 public class LoadingScreenUI : MonoBehaviour
 {
-    private const float FadeDuration = 0.18f;
+    private const float FadeDuration = 0.22f;
+    private const int OverlaySortingOrder = 5000;
 
     private CanvasGroup canvasGroup;
     private GameObject panel;
+    private Transform uiRoot;
+    private Transform canvasOverlayRoot;
     private TMP_Text titleText;
+    private TMP_Text sceneText;
     private TMP_Text progressText;
     private Image progressFill;
     private EventBus subscribedBus;
@@ -62,8 +66,9 @@ public class LoadingScreenUI : MonoBehaviour
     {
         BuildIfNeeded();
         panel.transform.SetAsLastSibling();
-        string sceneName = string.IsNullOrWhiteSpace(e.targetSceneName) ? "Scene" : e.targetSceneName;
-        SetPlainText(titleText, $"Dang toi {sceneName}...");
+        string sceneName = string.IsNullOrWhiteSpace(e.targetSceneName) ? "Scene" : e.targetSceneName.Trim();
+        SetPlainText(titleText, "LOADING");
+        SetPlainText(sceneText, sceneName);
         SetProgress(0f);
         SetVisible(true, immediate: false);
     }
@@ -84,70 +89,17 @@ public class LoadingScreenUI : MonoBehaviour
         if (panel != null)
             return;
 
-        var parent = OverlayUIHelper.GetOrCreateOverlayRoot(gameObject, 2000);
-        var canvas = parent.GetComponent<Canvas>();
-        if (canvas != null && canvas.sortingOrder < 2000)
-            canvas.sortingOrder = 2000;
+        canvasOverlayRoot = GetOrCreateCanvasOverlayRoot();
+        panel = FindExistingPanel(canvasOverlayRoot);
+        if (panel == null)
+            panel = CreatePanel(canvasOverlayRoot);
 
-        panel = new GameObject("LoadingScreenOverlay", typeof(RectTransform));
-        panel.transform.SetParent(parent, false);
         panel.transform.SetAsLastSibling();
-
-        var rect = panel.GetComponent<RectTransform>();
-        Stretch(rect);
-
-        var panelCanvas = panel.AddComponent<Canvas>();
-        panelCanvas.overrideSorting = true;
-        panelCanvas.sortingOrder = 5000;
-        panel.AddComponent<GraphicRaycaster>();
-
-        canvasGroup = panel.AddComponent<CanvasGroup>();
-        canvasGroup.blocksRaycasts = true;
-        canvasGroup.interactable = true;
-
-        var backgroundObject = new GameObject("Background", typeof(RectTransform));
-        backgroundObject.transform.SetParent(panel.transform, false);
-        Stretch(backgroundObject.GetComponent<RectTransform>());
-        var image = backgroundObject.AddComponent<Image>();
-        image.color = new Color(0.03f, 0.025f, 0.02f, 0.96f);
-        image.raycastTarget = true;
-
-        titleText = CreateText("TitleText", panel.transform, "Dang tai...", 36, FontStyles.Bold, TextAlignmentOptions.Center);
-        var titleRect = titleText.rectTransform;
-        titleRect.anchorMin = new Vector2(0.25f, 0.50f);
-        titleRect.anchorMax = new Vector2(0.75f, 0.50f);
-        titleRect.pivot = new Vector2(0.5f, 0.5f);
-        titleRect.anchoredPosition = new Vector2(0f, 44f);
-        titleRect.sizeDelta = new Vector2(0f, 58f);
-
-        var barBack = new GameObject("ProgressBar", typeof(RectTransform));
-        barBack.transform.SetParent(panel.transform, false);
-        var barRect = barBack.GetComponent<RectTransform>();
-        barRect.anchorMin = new Vector2(0.35f, 0.50f);
-        barRect.anchorMax = new Vector2(0.65f, 0.50f);
-        barRect.pivot = new Vector2(0.5f, 0.5f);
-        barRect.anchoredPosition = new Vector2(0f, -20f);
-        barRect.sizeDelta = new Vector2(0f, 18f);
-        var barImage = barBack.AddComponent<Image>();
-        barImage.color = new Color(0.18f, 0.10f, 0.04f, 0.95f);
-
-        var fillObject = new GameObject("Fill", typeof(RectTransform));
-        fillObject.transform.SetParent(barBack.transform, false);
-        var fillRect = fillObject.GetComponent<RectTransform>();
-        Stretch(fillRect);
-        progressFill = fillObject.AddComponent<Image>();
-        progressFill.color = new Color(0.95f, 0.64f, 0.22f, 1f);
-        progressFill.type = Image.Type.Filled;
-        progressFill.fillMethod = Image.FillMethod.Horizontal;
-        progressFill.fillOrigin = 0;
-
-        progressText = CreateText("ProgressText", panel.transform, "0%", 22, FontStyles.Normal, TextAlignmentOptions.Center);
-        var progressRect = progressText.rectTransform;
-        progressRect.anchorMin = new Vector2(0.35f, 0.50f);
-        progressRect.anchorMax = new Vector2(0.65f, 0.50f);
-        progressRect.pivot = new Vector2(0.5f, 0.5f);
-        progressRect.anchoredPosition = new Vector2(0f, -58f);
-        progressRect.sizeDelta = new Vector2(0f, 36f);
+        canvasGroup = panel.GetComponent<CanvasGroup>();
+        titleText = panel.transform.Find("CenterBlock/TitleText")?.GetComponent<TMP_Text>();
+        sceneText = panel.transform.Find("CenterBlock/SceneText")?.GetComponent<TMP_Text>();
+        progressText = panel.transform.Find("BottomDock/ProgressHeader/ProgressText")?.GetComponent<TMP_Text>();
+        progressFill = panel.transform.Find("BottomDock/ProgressTrack/Fill")?.GetComponent<Image>();
     }
 
     private void SetVisible(bool visible, bool immediate)
@@ -193,6 +145,174 @@ public class LoadingScreenUI : MonoBehaviour
         if (progressFill != null)
             progressFill.fillAmount = progress;
         SetPlainText(progressText, $"{Mathf.RoundToInt(progress * 100f)}%");
+    }
+
+    private Transform GetOrCreateCanvasOverlayRoot()
+    {
+        var rootObject = GameObject.Find("UIRoot");
+        if (rootObject == null)
+        {
+            rootObject = new GameObject("UIRoot");
+            uiRoot = rootObject.transform;
+        }
+        else
+        {
+            uiRoot = rootObject.transform;
+        }
+
+        var overlay = uiRoot.Find("CanvasOverlay");
+        if (overlay == null)
+        {
+            var overlayObject = new GameObject("CanvasOverlay", typeof(RectTransform));
+            overlayObject.transform.SetParent(uiRoot, false);
+            overlay = overlayObject.transform;
+        }
+
+        var overlayRect = overlay as RectTransform;
+        if (overlayRect != null)
+            Stretch(overlayRect);
+
+        var canvas = overlay.GetComponent<Canvas>();
+        if (canvas == null)
+            canvas = overlay.gameObject.AddComponent<Canvas>();
+        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        canvas.overrideSorting = true;
+        canvas.sortingOrder = OverlaySortingOrder - 10;
+
+        var scaler = overlay.GetComponent<CanvasScaler>();
+        if (scaler == null)
+            scaler = overlay.gameObject.AddComponent<CanvasScaler>();
+        scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+        scaler.referenceResolution = new Vector2(1920f, 1080f);
+        scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
+        scaler.matchWidthOrHeight = 0.5f;
+
+        if (overlay.GetComponent<GraphicRaycaster>() == null)
+            overlay.gameObject.AddComponent<GraphicRaycaster>();
+
+        return overlay;
+    }
+
+    private static GameObject FindExistingPanel(Transform parent)
+    {
+        if (parent == null)
+            return null;
+
+        var existing = parent.Find("LoadingScreenUIRoot");
+        return existing != null ? existing.gameObject : null;
+    }
+
+    private GameObject CreatePanel(Transform parent)
+    {
+        var root = new GameObject("LoadingScreenUIRoot", typeof(RectTransform));
+        root.transform.SetParent(parent, false);
+        root.transform.SetAsLastSibling();
+
+        var rootRect = root.GetComponent<RectTransform>();
+        Stretch(rootRect);
+
+        var rootCanvas = root.AddComponent<Canvas>();
+        rootCanvas.overrideSorting = true;
+        rootCanvas.sortingOrder = OverlaySortingOrder;
+        root.AddComponent<GraphicRaycaster>();
+
+        var rootCanvasGroup = root.AddComponent<CanvasGroup>();
+        rootCanvasGroup.blocksRaycasts = true;
+        rootCanvasGroup.interactable = true;
+
+        var backgroundObject = new GameObject("Background", typeof(RectTransform));
+        backgroundObject.transform.SetParent(root.transform, false);
+        Stretch(backgroundObject.GetComponent<RectTransform>());
+        var backgroundImage = backgroundObject.AddComponent<Image>();
+        backgroundImage.color = new Color(0f, 0f, 0f, 1f);
+        backgroundImage.raycastTarget = true;
+
+        var centerBlock = new GameObject("CenterBlock", typeof(RectTransform));
+        centerBlock.transform.SetParent(root.transform, false);
+        var centerRect = centerBlock.GetComponent<RectTransform>();
+        centerRect.anchorMin = new Vector2(0.5f, 0.5f);
+        centerRect.anchorMax = new Vector2(0.5f, 0.5f);
+        centerRect.pivot = new Vector2(0.5f, 0.5f);
+        centerRect.anchoredPosition = new Vector2(0f, -10f);
+        centerRect.sizeDelta = new Vector2(760f, 160f);
+
+        titleText = CreateText("TitleText", centerBlock.transform, "LOADING", 28f, FontStyles.Bold, TextAlignmentOptions.Center);
+        var titleRect = titleText.rectTransform;
+        titleRect.anchorMin = new Vector2(0.5f, 0.5f);
+        titleRect.anchorMax = new Vector2(0.5f, 0.5f);
+        titleRect.pivot = new Vector2(0.5f, 0.5f);
+        titleRect.anchoredPosition = new Vector2(0f, 22f);
+        titleRect.sizeDelta = new Vector2(500f, 44f);
+        titleText.color = new Color(0.92f, 0.92f, 0.92f, 1f);
+        titleText.characterSpacing = 14f;
+
+        sceneText = CreateText("SceneText", centerBlock.transform, "Scene", 40f, FontStyles.Normal, TextAlignmentOptions.Center);
+        var sceneRect = sceneText.rectTransform;
+        sceneRect.anchorMin = new Vector2(0.5f, 0.5f);
+        sceneRect.anchorMax = new Vector2(0.5f, 0.5f);
+        sceneRect.pivot = new Vector2(0.5f, 0.5f);
+        sceneRect.anchoredPosition = new Vector2(0f, -26f);
+        sceneRect.sizeDelta = new Vector2(760f, 60f);
+        sceneText.color = new Color(1f, 1f, 1f, 1f);
+
+        var bottomDock = new GameObject("BottomDock", typeof(RectTransform));
+        bottomDock.transform.SetParent(root.transform, false);
+        var dockRect = bottomDock.GetComponent<RectTransform>();
+        dockRect.anchorMin = new Vector2(0f, 0f);
+        dockRect.anchorMax = new Vector2(1f, 0f);
+        dockRect.pivot = new Vector2(0.5f, 0f);
+        dockRect.anchoredPosition = new Vector2(0f, 0f);
+        dockRect.sizeDelta = new Vector2(0f, 170f);
+
+        var header = new GameObject("ProgressHeader", typeof(RectTransform));
+        header.transform.SetParent(bottomDock.transform, false);
+        var headerRect = header.GetComponent<RectTransform>();
+        headerRect.anchorMin = new Vector2(0.08f, 0f);
+        headerRect.anchorMax = new Vector2(0.92f, 0f);
+        headerRect.pivot = new Vector2(0.5f, 0f);
+        headerRect.anchoredPosition = new Vector2(0f, 104f);
+        headerRect.sizeDelta = new Vector2(0f, 28f);
+
+        var statusText = CreateText("StatusText", header.transform, "Transitioning world state", 20f, FontStyles.Normal, TextAlignmentOptions.Left);
+        var statusRect = statusText.rectTransform;
+        statusRect.anchorMin = new Vector2(0f, 0.5f);
+        statusRect.anchorMax = new Vector2(0.75f, 0.5f);
+        statusRect.pivot = new Vector2(0f, 0.5f);
+        statusRect.anchoredPosition = Vector2.zero;
+        statusRect.sizeDelta = new Vector2(0f, 28f);
+        statusText.color = new Color(0.70f, 0.70f, 0.70f, 1f);
+
+        progressText = CreateText("ProgressText", header.transform, "0%", 20f, FontStyles.Bold, TextAlignmentOptions.Right);
+        var progressTextRect = progressText.rectTransform;
+        progressTextRect.anchorMin = new Vector2(0.75f, 0.5f);
+        progressTextRect.anchorMax = new Vector2(1f, 0.5f);
+        progressTextRect.pivot = new Vector2(1f, 0.5f);
+        progressTextRect.anchoredPosition = Vector2.zero;
+        progressTextRect.sizeDelta = new Vector2(0f, 28f);
+        progressText.color = new Color(0.92f, 0.92f, 0.92f, 1f);
+
+        var track = new GameObject("ProgressTrack", typeof(RectTransform));
+        track.transform.SetParent(bottomDock.transform, false);
+        var trackRect = track.GetComponent<RectTransform>();
+        trackRect.anchorMin = new Vector2(0.08f, 0f);
+        trackRect.anchorMax = new Vector2(0.92f, 0f);
+        trackRect.pivot = new Vector2(0.5f, 0f);
+        trackRect.anchoredPosition = new Vector2(0f, 62f);
+        trackRect.sizeDelta = new Vector2(0f, 8f);
+        var trackImage = track.AddComponent<Image>();
+        trackImage.color = new Color(1f, 1f, 1f, 0.16f);
+
+        var fillObject = new GameObject("Fill", typeof(RectTransform));
+        fillObject.transform.SetParent(track.transform, false);
+        Stretch(fillObject.GetComponent<RectTransform>());
+        progressFill = fillObject.AddComponent<Image>();
+        progressFill.color = new Color(1f, 1f, 1f, 0.96f);
+        progressFill.type = Image.Type.Filled;
+        progressFill.fillMethod = Image.FillMethod.Horizontal;
+        progressFill.fillOrigin = 0;
+        progressFill.fillAmount = 0f;
+
+        return root;
     }
 
     private static TMP_Text CreateText(string name, Transform parent, string text, float size, FontStyles style, TextAlignmentOptions alignment)
