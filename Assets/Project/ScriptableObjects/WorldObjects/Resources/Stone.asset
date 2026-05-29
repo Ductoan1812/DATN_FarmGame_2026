@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8393fbdfdb650e5418aad1c82ae5b8b5, type: 3}
   m_Name: Stone
   m_EditorClassIdentifier: 
-  id: rock_node_01
-  keyName: m3.rock.name
+  id: stone
+  keyName: stone.name
   descKey: m3.rock.desc
   icon: {fileID: 2006745186, guid: eae7e9e77fa127d4cac1eb556d16b561, type: 3}
   category: 9
-  maxStack: 1
+  maxStack: 999
   buyPrice: -1
   sellPrice: 0
   baseStats:
@@ -39,7 +39,8 @@ MonoBehaviour:
   - rid: 8196223032269996391
   - rid: 8196223032269996392
   - rid: 8196223032269996393
-  - rid: 8196223032269996394
+  - rid: 8196223221319335942
+  - rid: 8196223221319335943
   references:
     version: 2
     RefIds:
@@ -51,11 +52,19 @@ MonoBehaviour:
       type: {class: HarvestModule, ns: , asm: Assembly-CSharp}
       data:
         harvestTool: 5
+        allowHandHarvest: 0
+        additionalHarvestTools: []
+        dropMode: 0
+        harvestCausesDamage: 0
+        destroyOnHarvest: 1
+        oneHitDestroy: 0
         wrongToolPenalty: 0
     - rid: 8196223032269996391
       type: {class: DropModule, ns: , asm: Assembly-CSharp}
       data:
         harvestDrops: []
+        deathDrops: []
+        includeHarvestDropsOnDestroyWhenHarvestable: 0
     - rid: 8196223032269996392
       type: {class: ExpRewardModule, ns: , asm: Assembly-CSharp}
       data:
@@ -65,10 +74,24 @@ MonoBehaviour:
     - rid: 8196223032269996393
       type: {class: MortalModule, ns: , asm: Assembly-CSharp}
       data: 
-    - rid: 8196223032269996394
-      type: {class: ResourceGrowthModule, ns: , asm: Assembly-CSharp}
+    - rid: 8196223221319335942
+      type: {class: StageModule, ns: , asm: Assembly-CSharp}
       data:
         stages:
         - sprite: {fileID: 480555165, guid: eb3b66e1fe879524081fd009c50fcee8, type: 3}
-          daysToGrow: 10000
+          daysToGrow: 1999
           canHarvest: 1
+        requiresWater: 1
+        wiltSprite: {fileID: 0}
+        regrowStageIndex: -1
+        harvestGoToStageIndex: -1
+        lastStageLoopToIndex: -1
+        daysToReturnAfterHarvest: -1
+        wiltOnSeasonChange: 0
+    - rid: 8196223221319335943
+      type: {class: PlacementModule, ns: , asm: Assembly-CSharp}
+      data:
+        objectTypeToSpawn: 8
+        placedEntityData: {fileID: 0}
+        centerTile: 1
+        animTrigger: PutDown

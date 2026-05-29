@@ -212,6 +212,24 @@ public struct InventoryChangedPublish
 /// </summary>
 public struct InventoryVisualRefreshRequestPublish { }
 
+public readonly struct SlotResourceMeterData
+{
+    public static SlotResourceMeterData None => new(false, 0, 0, Color.clear);
+
+    public readonly bool hasMeter;
+    public readonly int current;
+    public readonly int max;
+    public readonly Color fillColor;
+
+    public SlotResourceMeterData(bool hasMeter, int current, int max, Color fillColor)
+    {
+        this.hasMeter = hasMeter;
+        this.current = current;
+        this.max = max;
+        this.fillColor = fillColor;
+    }
+}
+
 /// <summary>
 /// Nội dung 1 slot hotbar thay đổi (icon, amount).
 /// PlayerBridge publish chỉ cho slot thực sự thay đổi.
@@ -221,8 +239,14 @@ public struct HotbarSlotChangedPublish
     public readonly int    index;
     public readonly Sprite icon;
     public readonly int    amount;
-    public HotbarSlotChangedPublish(int index, Sprite icon, int amount)
-    { this.index = index; this.icon = icon; this.amount = amount; }
+    public readonly SlotResourceMeterData meter;
+    public HotbarSlotChangedPublish(int index, Sprite icon, int amount, SlotResourceMeterData meter = default)
+    {
+        this.index = index;
+        this.icon = icon;
+        this.amount = amount;
+        this.meter = meter;
+    }
 }
 
 /// <summary>
@@ -244,8 +268,14 @@ public struct BackpackSlotChangedPublish
     public readonly int    index;
     public readonly Sprite icon;
     public readonly int    amount;
-    public BackpackSlotChangedPublish(int index, Sprite icon, int amount)
-    { this.index = index; this.icon = icon; this.amount = amount; }
+    public readonly SlotResourceMeterData meter;
+    public BackpackSlotChangedPublish(int index, Sprite icon, int amount, SlotResourceMeterData meter = default)
+    {
+        this.index = index;
+        this.icon = icon;
+        this.amount = amount;
+        this.meter = meter;
+    }
 }
 
 /// <summary>

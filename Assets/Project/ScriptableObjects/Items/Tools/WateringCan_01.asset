@@ -40,6 +40,7 @@ MonoBehaviour:
       data:
         toolType: 2
         animTrigger: Hoe
+        refillAnimTrigger: PutDown
     - rid: 2376239868009775104
       type: {class: AppearanceModule, ns: , asm: Assembly-CSharp}
       data:

@@ -27,7 +27,8 @@ public class SprinklerRuntime : IModuleRuntime, IHandleEvent<SpawnedEvent>
         if (_owner?.GameObject == null) return;
 
         var tracker = GameManager.Instance?.WateredTileTracker;
-        if (tracker == null) return;
+        var worldService = GameManager.Instance?.WorldService;
+        if (tracker == null || worldService == null) return;
 
         var worldPos = _owner.GameObject.transform.position;
         Vector3Int centerCell = GridSystem.WorldToCell(worldPos);
@@ -40,6 +41,9 @@ public class SprinklerRuntime : IModuleRuntime, IHandleEvent<SpawnedEvent>
                 if (Mathf.Abs(dx) + Mathf.Abs(dy) <= _data.waterRadius)
                 {
                     var cell = new Vector2Int(centerCell.x + dx, centerCell.y + dy);
+                    if (!worldService.IsPlowed(cell))
+                        continue;
+
                     tracker.SetWatered(cell);
                     count++;
                 }

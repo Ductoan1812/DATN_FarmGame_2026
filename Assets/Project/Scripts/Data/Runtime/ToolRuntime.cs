@@ -35,8 +35,8 @@ public abstract class ToolRuntime : IModuleRuntime, IHandleEvent<PrimaryActionEv
         if (!Validate(actorGO, e))
             return;
 
-        // Lấy trigger name (default = ToolType.ToString())
-        var trigger = _data.GetAnimTrigger();
+        // Lấy trigger name phù hợp với action đã validate
+        var trigger = GetAnimationTrigger(e);
 
         // Tìm bridge trên actor → play animation
         var bridge = actorGO.GetComponent<ToolActionBridge>();
@@ -62,6 +62,7 @@ public abstract class ToolRuntime : IModuleRuntime, IHandleEvent<PrimaryActionEv
 
     protected abstract bool Validate(GameObject actorGO, PrimaryActionEvent e);
     protected abstract void Execute(GameObject actorGO, EntityRuntime actor, EntityRuntime item);
+    protected virtual string GetAnimationTrigger(PrimaryActionEvent e) => _data.GetAnimTrigger();
 
     // ── Save / Load ───────────────────────────────────────────────────────────
 

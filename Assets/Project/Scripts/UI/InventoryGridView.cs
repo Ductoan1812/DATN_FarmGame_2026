@@ -207,6 +207,9 @@ public class InventoryGridView : MonoBehaviour
 
         private readonly Image icon;
         private readonly TMP_Text amountText;
+        private readonly GameObject meterRoot;
+        private readonly Image meterFillImage;
+        private readonly RectTransform meterFillRect;
         private readonly GameObject selectedObject;
         private readonly Toggle toggle;
         private readonly Button button;
@@ -231,6 +234,8 @@ public class InventoryGridView : MonoBehaviour
 
             var amountT = root.Find("Amount") ?? root.Find("Quantity") ?? root.Find("AmountText");
             if (amountT != null) amountText = amountT.GetComponent<TMP_Text>();
+
+            EnsureMeterVisual(root, out meterRoot, out meterFillImage, out meterFillRect);
 
             var selectedT = root.Find("Select") ?? root.Find("Selected") ?? root.Find("Highlight");
             if (selectedT != null) selectedObject = selectedT.gameObject;
@@ -274,6 +279,7 @@ public class InventoryGridView : MonoBehaviour
         {
             SetIcon(item.Icon);
             SetAmount(item.Amount);
+            SetMeter(item.ResourceMeter);
             SetSelected(selected);
 
             if (button != null)
@@ -316,6 +322,71 @@ public class InventoryGridView : MonoBehaviour
                 ? MaxDisplayAmount.ToString()
                 : amount.ToString();
         }
+
+        private void SetMeter(SlotResourceMeterData meter)
+        {
+            if (meterRoot == null || meterFillImage == null || meterFillRect == null)
+                return;
+
+            bool visible = meter.hasMeter && meter.max > 0;
+            if (meterRoot.activeSelf != visible)
+                meterRoot.SetActive(visible);
+
+            if (!visible)
+                return;
+
+            float normalized = Mathf.Clamp01((float)meter.current / meter.max);
+            meterFillRect.anchorMax = new Vector2(1f, normalized);
+            meterFillRect.offsetMin = Vector2.zero;
+            meterFillRect.offsetMax = Vector2.zero;
+            meterFillImage.color = meter.fillColor.a <= 0f
+                ? new Color(0.24f, 0.74f, 0.98f, 1f)
+                : meter.fillColor;
+        }
+
+        private static void EnsureMeterVisual(
+            Transform root,
+            out GameObject meterRoot,
+            out Image fillImage,
+            out RectTransform fillRect)
+        {
+            var meter = root.Find("ResourceMeter");
+            if (meter == null)
+            {
+                var meterObject = new GameObject("ResourceMeter", typeof(RectTransform), typeof(Image));
+                meter = meterObject.transform;
+                meter.SetParent(root, false);
+
+                var meterRect = (RectTransform)meter;
+                meterRect.anchorMin = new Vector2(1f, 0f);
+                meterRect.anchorMax = new Vector2(1f, 1f);
+                meterRect.pivot = new Vector2(1f, 0.5f);
+                meterRect.sizeDelta = new Vector2(8f, -14f);
+                meterRect.anchoredPosition = new Vector2(-6f, 0f);
+
+                var background = meter.GetComponent<Image>();
+                background.color = new Color(0.08f, 0.12f, 0.16f, 0.82f);
+                background.raycastTarget = false;
+
+                var fillObject = new GameObject("Fill", typeof(RectTransform), typeof(Image));
+                fillObject.transform.SetParent(meter, false);
+                var createdFillRect = (RectTransform)fillObject.transform;
+                createdFillRect.anchorMin = new Vector2(0f, 0f);
+                createdFillRect.anchorMax = new Vector2(1f, 1f);
+                createdFillRect.offsetMin = Vector2.zero;
+                createdFillRect.offsetMax = Vector2.zero;
+
+                var createdFillImage = fillObject.GetComponent<Image>();
+                createdFillImage.color = new Color(0.24f, 0.74f, 0.98f, 1f);
+                createdFillImage.raycastTarget = false;
+            }
+
+            meterRoot = meter.gameObject;
+            fillRect = meter.Find("Fill") as RectTransform;
+            fillImage = fillRect != null ? fillRect.GetComponent<Image>() : null;
+            if (meterRoot.activeSelf)
+                meterRoot.SetActive(false);
+        }
     }
 }
 
@@ -351,18 +422,25 @@ public sealed class InventorySlotHoverRelay : MonoBehaviour, IPointerEnterHandle
 
 public readonly struct InventoryGridItemData
 {
-    public static InventoryGridItemData Empty => new(null, 0, null, false);
+    public static InventoryGridItemData Empty => new(null, 0, null, false, SlotResourceMeterData.None);
 
     public Sprite Icon { get; }
     public int Amount { get; }
     public object Payload { get; }
     public bool Interactable { get; }
+    public SlotResourceMeterData ResourceMeter { get; }
 
-    public InventoryGridItemData(Sprite icon, int amount, object payload = null, bool interactable = true)
+    public InventoryGridItemData(
+        Sprite icon,
+        int amount,
+        object payload = null,
+        bool interactable = true,
+        SlotResourceMeterData resourceMeter = default)
     {
         Icon = icon;
         Amount = amount;
         Payload = payload;
         Interactable = interactable;
+        ResourceMeter = resourceMeter;
     }
 }

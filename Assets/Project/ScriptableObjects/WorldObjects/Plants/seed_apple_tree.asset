@@ -97,16 +97,16 @@ MonoBehaviour:
     - rid: 8196223203590799364
       type: {class: HarvestModule, ns: , asm: Assembly-CSharp}
       data:
-        harvestTool: 0
+        harvestTool: 4
         allowHandHarvest: 1
         additionalHarvestTools:
-        - toolType: 4
-          harvestCausesDamage: 1
-          destroyOnHarvest: 1
+        - toolType: 0
+          harvestCausesDamage: 0
+          destroyOnHarvest: 0
           oneHitDestroy: 0
         dropMode: 0
-        harvestCausesDamage: 0
-        destroyOnHarvest: 1
+        harvestCausesDamage: 1
+        destroyOnHarvest: 0
         oneHitDestroy: 0
         wrongToolPenalty: 0.1
     - rid: 8196223212952223754

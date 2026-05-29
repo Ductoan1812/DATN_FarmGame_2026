@@ -8,6 +8,13 @@ using UnityEngine;
 /// </summary>
 public class WateringCanRuntime : ToolRuntime
 {
+    private enum PendingWateringAction
+    {
+        None,
+        WaterSoil,
+        RefillFromSource
+    }
+
     /// <summary>Số lần tưới còn lại. Mặc định = maxCharges.</summary>
     public int CurrentCharges { get; private set; }
 
@@ -15,28 +22,38 @@ public class WateringCanRuntime : ToolRuntime
     public int MaxCharges { get; private set; }
 
     private EntityRuntime _itemEntity;
+    private PendingWateringAction _pendingAction;
+    private bool _hasExplicitChargeState;
 
     public WateringCanRuntime(ToolModule data) : base(data) { }
 
     /// <summary>Gọi khi item entity được init (từ PrimaryActionEvent lần đầu).</summary>
-    private void EnsureInit(EntityRuntime item)
+    public void EnsureInitialized(EntityRuntime item)
     {
-        if (_itemEntity == item) return;
+        if (item == null) return;
+
+        if (_itemEntity == item && MaxCharges > 0)
+            return;
+
         _itemEntity = item;
 
         // MaxCharges lấy từ item stat "Range" (reuse stat, hoặc có thể dùng stat riêng)
         // Default = 20 nếu không config
         float configCharges = item?.stats?.Get(StatType.Range) ?? 0f;
-        MaxCharges = configCharges > 0 ? Mathf.RoundToInt(configCharges) : 20;
+        int configuredMax = configCharges > 0 ? Mathf.RoundToInt(configCharges) : 20;
+        MaxCharges = Mathf.Max(1, configuredMax);
 
-        // Nếu chưa có CurrentCharges (lần đầu) → full
-        if (CurrentCharges <= 0)
+        // Chỉ fill full khi chưa từng load/save state.
+        if (!_hasExplicitChargeState)
             CurrentCharges = MaxCharges;
+        else
+            CurrentCharges = Mathf.Clamp(CurrentCharges, 0, MaxCharges);
     }
 
     protected override bool Validate(GameObject actorGO, PrimaryActionEvent e)
     {
-        EnsureInit(e.item);
+        EnsureInitialized(e.item);
+        _pendingAction = PendingWateringAction.None;
 
         var targetCell = GridSystem.GetCellInFrontOf(actorGO);
         var cell2d = new Vector2Int(targetCell.x, targetCell.y);
@@ -59,6 +76,21 @@ public class WateringCanRuntime : ToolRuntime
             return false;
         }
 
+        var ws = gm.WorldService;
+        if (ws == null) return false;
+
+        if (ws.IsWaterSource(cell2d))
+        {
+            if (CurrentCharges >= MaxCharges)
+            {
+                Debug.Log("[WateringCanRuntime] Bình tưới đã đầy nước.");
+                return false;
+            }
+
+            _pendingAction = PendingWateringAction.RefillFromSource;
+            return true;
+        }
+
         // Check còn nước không
         if (CurrentCharges <= 0)
         {
@@ -73,23 +105,10 @@ public class WateringCanRuntime : ToolRuntime
             return false;
         }
 
-        // Check ô phải là plowed HOẶC có plant entity
-        var ws = gm.WorldService;
-        if (ws == null) return false;
-
-        var tileData = gm.TileData;
-        if (tileData?.plowedTile == null) return false;
-
-        bool isPlowed = false;
-        var groundTile = ws.GetGround(cell2d);
-        if (groundTile == tileData.plowedTile)
-            isPlowed = true;
-
-        bool hasPlant = ws.HasBlockerAt(cell2d, EntityLayer.Plant);
-
-        if (!isPlowed && !hasPlant)
+        // Chỉ cho phép tưới trên ô đã cuốc.
+        if (!ws.IsPlowed(cell2d))
         {
-            Debug.Log("[WateringCanRuntime] Ô không phải đất cày và không có cây.");
+            Debug.Log("[WateringCanRuntime] Ô này chưa được cuốc.");
             return false;
         }
 
@@ -108,13 +127,32 @@ public class WateringCanRuntime : ToolRuntime
             }
         }
 
+        _pendingAction = PendingWateringAction.WaterSoil;
         return true;
+    }
+
+    protected override string GetAnimationTrigger(PrimaryActionEvent e)
+    {
+        return _pendingAction == PendingWateringAction.RefillFromSource
+            ? _data.GetRefillAnimTrigger()
+            : base.GetAnimationTrigger(e);
     }
 
     protected override void Execute(GameObject actorGO, EntityRuntime actor, EntityRuntime item)
     {
         var targetCell = GridSystem.GetCellInFrontOf(actorGO);
         var cell2d = new Vector2Int(targetCell.x, targetCell.y);
+
+        if (_pendingAction == PendingWateringAction.RefillFromSource)
+        {
+            Refill();
+            _pendingAction = PendingWateringAction.None;
+            GameManager.Instance?.EventBus?.Publish(new InventoryVisualRefreshRequestPublish());
+            return;
+        }
+
+        if (_pendingAction != PendingWateringAction.WaterSoil)
+            return;
 
         var tracker = GameManager.Instance?.WateredTileTracker;
         if (tracker == null) return;
@@ -133,6 +171,8 @@ public class WateringCanRuntime : ToolRuntime
         }
 
         Debug.Log($"[WateringCanRuntime] Tưới tại {cell2d}. Nước còn: {CurrentCharges}/{MaxCharges}");
+        _pendingAction = PendingWateringAction.None;
+        GameManager.Instance?.EventBus?.Publish(new InventoryVisualRefreshRequestPublish());
     }
 
     /// <summary>Lấy nước đầy (gọi khi interact giếng/sông).</summary>
@@ -156,6 +196,8 @@ public class WateringCanRuntime : ToolRuntime
         var s = JsonUtility.FromJson<WateringCanSave>(save.dataJson);
         CurrentCharges = s.charges;
         MaxCharges = s.maxCharges > 0 ? s.maxCharges : 20;
+        _hasExplicitChargeState = true;
+        CurrentCharges = Mathf.Clamp(CurrentCharges, 0, MaxCharges);
     }
 
     [System.Serializable]

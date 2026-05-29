@@ -195,9 +195,26 @@ public class GameManager : MonoBehaviour
         if (tmCollision    != null) TileRegistry.RegisterTilemap("Tm_Collision",     tmCollision);
         if (tmDecoration   != null) TileRegistry.RegisterTilemap("Tm_Decoration",    tmDecoration);
         if (tmOverlay      != null) TileRegistry.RegisterTilemap("Tm_Overlay",       tmOverlay);
+        RegisterExtraNamedTilemaps();
 
         // Quét baseline (snapshot gốc từ Editor)
         TileRegistry.ScanBaseline();
+    }
+
+    private void RegisterExtraNamedTilemaps()
+    {
+        var grid = FindAnyObjectByType<Grid>();
+        if (grid == null) return;
+
+        foreach (var tm in grid.GetComponentsInChildren<Tilemap>())
+        {
+            switch (tm.gameObject.name)
+            {
+                case "Tm_Ground2":
+                    TileRegistry.RegisterTilemap("Tm_Ground2", tm);
+                    break;
+            }
+        }
     }
 
     private void AutoFindTilemaps()

@@ -221,7 +221,7 @@ public class BackpackUI : MonoBehaviour
     private void OnBackpackSlotChanged(BackpackSlotChangedPublish e)
     {
         EnsureCache(e.index + 1);
-        cache[e.index] = new InventoryGridItemData(e.icon, e.amount);
+        cache[e.index] = new InventoryGridItemData(e.icon, e.amount, resourceMeter: e.meter);
         dirty = true;
 
         if (IsContainerActive())

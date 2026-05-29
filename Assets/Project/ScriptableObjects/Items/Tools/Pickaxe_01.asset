@@ -43,7 +43,7 @@ MonoBehaviour:
       type: {class: ToolModule, ns: , asm: Assembly-CSharp}
       data:
         toolType: 5
-        animTrigger: Pickaxe
+        animTrigger: Hoe
     - rid: 8196223032269996280
       type: {class: AppearanceModule, ns: , asm: Assembly-CSharp}
       data:

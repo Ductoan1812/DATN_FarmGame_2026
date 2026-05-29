@@ -57,6 +57,15 @@ public enum SpawnResult { Success, CellBlocked, ConditionFailed, PrefabNotFound 
 /// </summary>
 public class WorldEntityService
 {
+    private static readonly string[] WaterSourceTilemapNames =
+    {
+        "Tm_Ground",
+        "Tm_Ground2",
+        "Tm_GroundDetail",
+        "Tm_Decoration",
+        "Tm_Overlay"
+    };
+
     private readonly SpatialEntityRegistry _spatial;
     private readonly TileRegistry          _tileRegistry;
     private readonly PlacementValidator    _validator;
@@ -185,6 +194,31 @@ public class WorldEntityService
         if (tile == null) return false;
         if (_tileData.landTile == null) return false;
         return tile == _tileData.landTile;
+    }
+
+    /// <summary>Kiểm tra tile tại ô có phải ô đã cuốc (plowed) không.</summary>
+    public bool IsPlowed(Vector2Int cell)
+    {
+        if (_tileData == null || _tileRegistry == null) return false;
+        var tile = _tileRegistry.GetTile("Tm_Ground", cell);
+        if (tile == null) return false;
+        if (_tileData.plowedTile == null) return false;
+        return tile == _tileData.plowedTile;
+    }
+
+    /// <summary>Kiểm tra tile tại ô có phải nguồn nước để refill bình tưới không.</summary>
+    public bool IsWaterSource(Vector2Int cell)
+    {
+        if (_tileData == null || _tileRegistry == null) return false;
+
+        for (int i = 0; i < WaterSourceTilemapNames.Length; i++)
+        {
+            var tile = _tileRegistry.GetTile(WaterSourceTilemapNames[i], cell);
+            if (_tileData.IsWaterSource(tile))
+                return true;
+        }
+
+        return false;
     }
 
     public IEnumerable<string> GetEntitiesAt(Vector2Int cell) => _spatial.GetEntitiesAt(cell);

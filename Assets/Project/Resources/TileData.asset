@@ -16,6 +16,9 @@ MonoBehaviour:
   plowedTile: {fileID: 11400000, guid: bb377dfa1cf060947a23c7237610f311, type: 2}
   wateredTile: {fileID: 11400000, guid: 19f7d8a73dc54a244882e29a84a52ba0, type: 2}
   grassTile: {fileID: 11400000, guid: 3f9b11bc7ad8c5f41a07a5e4d2cf7915, type: 2}
+  waterSourceTiles:
+  - {fileID: 11400000, guid: 0d5bbbfb539815140aaa3b7991de7342, type: 2}
+  - {fileID: 11400000, guid: 23383a8425d54c540be9ee9f4793a987, type: 2}
   tileTagEntries:
   - tile: {fileID: 11400000, guid: bb377dfa1cf060947a23c7237610f311, type: 2}
     tags: 1
