@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CameraFollow : MonoBehaviour
 {
@@ -99,7 +100,15 @@ public class CameraFollow : MonoBehaviour
 
     private void TryBindTargetFromTag(bool logWarning)
     {
-        target = GameObject.FindGameObjectWithTag(targetTag)?.transform;
+        var player = FindBestPlayerTarget();
+        if (player != null)
+        {
+            target = player.transform;
+        }
+        else
+        {
+            target = GameObject.FindGameObjectWithTag(targetTag)?.transform;
+        }
 
         if (target == null)
         {
@@ -127,5 +136,22 @@ public class CameraFollow : MonoBehaviour
 
         transform.position = target.position + offset;
         introFinished = true;
+    }
+
+    private static PlayerControler FindBestPlayerTarget()
+    {
+        var players = FindObjectsByType<PlayerControler>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+        if (players == null || players.Length == 0)
+            return null;
+
+        var activeScene = SceneManager.GetActiveScene();
+        for (int i = 0; i < players.Length; i++)
+        {
+            var player = players[i];
+            if (player != null && player.gameObject.scene == activeScene)
+                return player;
+        }
+
+        return players[0];
     }
 }

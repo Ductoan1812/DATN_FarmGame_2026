@@ -1,5 +1,6 @@
 using Cinemachine;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [DisallowMultipleComponent]
 public class CinemachinePlayerBinder : MonoBehaviour
@@ -10,11 +11,28 @@ public class CinemachinePlayerBinder : MonoBehaviour
     private float nextRetryTime;
     private CinemachineVirtualCamera virtualCamera;
     private Transform boundTarget;
+    private EventBus eventBus;
 
     private void Awake()
     {
         virtualCamera = GetComponent<CinemachineVirtualCamera>();
         EnsureBody();
+        TryBind();
+    }
+
+    private void OnEnable()
+    {
+        SubscribePlayerReady();
+        TryBind();
+    }
+
+    private void OnDisable()
+    {
+        if (eventBus != null)
+        {
+            eventBus.Unsubscribe<PlayerReadyPublish>(OnPlayerReady);
+            eventBus = null;
+        }
     }
 
     private void Update()
@@ -34,7 +52,7 @@ public class CinemachinePlayerBinder : MonoBehaviour
         if (virtualCamera == null)
             return;
 
-        var player = FindAnyObjectByType<PlayerControler>();
+        var player = FindBestPlayerTarget();
         if (player == null || player.transform == boundTarget)
             return;
 
@@ -54,5 +72,37 @@ public class CinemachinePlayerBinder : MonoBehaviour
 
         transposer.m_BindingMode = CinemachineTransposer.BindingMode.WorldSpace;
         transposer.m_FollowOffset = followOffset;
+    }
+
+    private void SubscribePlayerReady()
+    {
+        if (eventBus != null)
+            return;
+
+        eventBus = GameManager.Instance?.EventBus;
+        if (eventBus != null)
+            eventBus.Subscribe<PlayerReadyPublish>(OnPlayerReady);
+    }
+
+    private void OnPlayerReady(PlayerReadyPublish _)
+    {
+        TryBind();
+    }
+
+    private static PlayerControler FindBestPlayerTarget()
+    {
+        var players = FindObjectsByType<PlayerControler>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+        if (players == null || players.Length == 0)
+            return null;
+
+        var activeScene = SceneManager.GetActiveScene();
+        for (int i = 0; i < players.Length; i++)
+        {
+            var player = players[i];
+            if (player != null && player.gameObject.scene == activeScene)
+                return player;
+        }
+
+        return players[0];
     }
 }

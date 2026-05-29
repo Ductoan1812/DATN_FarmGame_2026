@@ -515,6 +515,9 @@ public class GameManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        if (SceneTransitionService.ShouldDeferAutoRestore(scene.name))
+            return;
+
         BeginRestoreActiveSceneAfterLoad(scene.name);
     }
 
@@ -532,16 +535,23 @@ public class GameManager : MonoBehaviour
         // Wait one frame so SceneContext/SceneContentScanner in the new scene can run Awake/Start.
         yield return null;
 
+        EventBus?.Publish(new LoadingScreenProgressPublish(0.88f));
         EnsurePersistentUIRoot();
         RebindSceneScopedServices();
+        EventBus?.Publish(new LoadingScreenProgressPublish(0.92f));
         SaveLoadManager.LoadCurrentSceneWorld();
+        EventBus?.Publish(new LoadingScreenProgressPublish(0.96f));
 
         SceneTransitionService.TryPeekPendingSpawnPointForCurrentScene(out var spawnPointId);
         SaveLoadManager.EnsurePlayerSpawnedAt(spawnPointId);
+        SceneTransitionService.SuppressPortalTriggersAfterArrival();
+        EventBus?.Publish(new LoadingScreenProgressPublish(0.99f));
 
         EventBus.Publish(new WorldObjectsSpawnedPublish());
         EventBus.Publish(new InventoryDataRestoredPublish());
+        EventBus?.Publish(new LoadingScreenProgressPublish(1f));
         EventBus.Publish(new LoadingScreenHidePublish());
+        SceneTransitionService.NotifyRestoreCompleted(sceneName);
 
         isReloadingScene = false;
         isRestoringScene = false;
@@ -566,11 +576,11 @@ public class GameManager : MonoBehaviour
 
     private void DestroyDuplicateRuntimeRoot()
     {
-        var root = transform.root.gameObject;
-        if (root != null && root != gameObject)
-            Destroy(root);
-        else
-            Destroy(gameObject);
+        // Only destroy the duplicate GameManager object itself.
+        // Scene-local cameras and other siblings may live under the same scene root,
+        // so destroying transform.root here can wipe out the destination scene camera
+        // during additive transitions.
+        Destroy(gameObject);
     }
 
     private void EnsurePersistentUIRoot()
@@ -625,6 +635,11 @@ public static class SceneTransitionService
 {
     private static string pendingSpawnPointId;
     private static string pendingSceneName;
+    private static float portalTriggerSuppressedUntilRealtime;
+    private const float ArrivalPortalSuppressSeconds = 0.75f;
+    private static bool deferAutoRestoreForPendingScene;
+    private static Camera transitionCamera;
+    private static GameObject transitionCameraObject;
 
     public static bool RequestTransition(
         EntityRuntime interactor,
@@ -637,6 +652,8 @@ public static class SceneTransitionService
             Debug.LogWarning("[SceneTransitionService] targetSceneName is empty.");
             return false;
         }
+
+        EnsureTransitionCameraActive();
 
         var eventBus = GameManager.Instance?.EventBus;
         if (saveBeforeTransition && eventBus != null)
@@ -671,25 +688,76 @@ public static class SceneTransitionService
         }
     }
 
+    public static bool ArePortalTriggersSuppressed()
+    {
+        return Time.realtimeSinceStartup < portalTriggerSuppressedUntilRealtime;
+    }
+
+    public static void SuppressPortalTriggersAfterArrival(float seconds = ArrivalPortalSuppressSeconds)
+    {
+        portalTriggerSuppressedUntilRealtime = Time.realtimeSinceStartup + Mathf.Max(0.05f, seconds);
+    }
+
+    public static bool ShouldDeferAutoRestore(string sceneName)
+    {
+        return deferAutoRestoreForPendingScene
+               && !string.IsNullOrWhiteSpace(pendingSceneName)
+               && string.Equals(sceneName, pendingSceneName, StringComparison.Ordinal);
+    }
+
+    public static void NotifyRestoreCompleted(string sceneName)
+    {
+        if (!string.IsNullOrWhiteSpace(pendingSceneName)
+            && string.Equals(sceneName, pendingSceneName, StringComparison.Ordinal))
+        {
+            deferAutoRestoreForPendingScene = false;
+        }
+
+        DisableTransitionCamera();
+    }
+
     private static IEnumerator LoadSceneAsyncRoutine(string sceneName, EventBus eventBus)
     {
         yield return null;
 
-        var operation = SceneManager.LoadSceneAsync(sceneName);
+        var sourceScene = SceneManager.GetActiveScene();
+        deferAutoRestoreForPendingScene = true;
+
+        var operation = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
         if (operation == null)
         {
+            deferAutoRestoreForPendingScene = false;
             SceneManager.LoadScene(sceneName);
             yield break;
         }
 
         while (!operation.isDone)
         {
-            float progress = Mathf.Clamp01(operation.progress / 0.9f);
+            float progress = Mathf.Lerp(0.05f, 0.6f, Mathf.Clamp01(operation.progress / 0.9f));
             eventBus?.Publish(new LoadingScreenProgressPublish(progress));
             yield return null;
         }
 
-        eventBus?.Publish(new LoadingScreenProgressPublish(1f));
+        var targetScene = SceneManager.GetSceneByName(sceneName);
+        if (targetScene.IsValid())
+            SceneManager.SetActiveScene(targetScene);
+
+        eventBus?.Publish(new LoadingScreenProgressPublish(0.68f));
+
+        if (sourceScene.IsValid() && sourceScene.isLoaded && !string.Equals(sourceScene.name, sceneName, StringComparison.Ordinal))
+        {
+            var unloadOperation = SceneManager.UnloadSceneAsync(sourceScene);
+            if (unloadOperation != null)
+            {
+                while (!unloadOperation.isDone)
+                {
+                    eventBus?.Publish(new LoadingScreenProgressPublish(0.68f));
+                    yield return null;
+                }
+            }
+        }
+
+        eventBus?.Publish(new LoadingScreenProgressPublish(0.82f));
         GameManager.Instance?.BeginRestoreActiveSceneAfterLoad(sceneName);
     }
 
@@ -724,15 +792,34 @@ public static class SceneTransitionService
         spawnPointId = pendingSpawnPointId;
         return true;
     }
-}
 
-/// <summary>
-/// Spawn point marker trong scene đích.
-/// Dùng cùng SceneTransitionService để đặt vị trí player sau khi load scene.
-/// </summary>
-public class SceneSpawnPoint : MonoBehaviour
-{
-    public string spawnPointId;
+    private static void EnsureTransitionCameraActive()
+    {
+        if (transitionCameraObject == null)
+        {
+            transitionCameraObject = new GameObject("__TransitionCamera");
+            UnityEngine.Object.DontDestroyOnLoad(transitionCameraObject);
+            transitionCamera = transitionCameraObject.AddComponent<Camera>();
+            transitionCamera.clearFlags = CameraClearFlags.SolidColor;
+            transitionCamera.backgroundColor = Color.black;
+            transitionCamera.cullingMask = 0;
+            transitionCamera.orthographic = true;
+            transitionCamera.depth = -1000f;
+            transitionCamera.nearClipPlane = 0.01f;
+            transitionCamera.farClipPlane = 1f;
+        }
+
+        if (transitionCamera != null)
+            transitionCamera.enabled = true;
+    }
+
+    private static void DisableTransitionCamera()
+    {
+        if (transitionCamera == null)
+            return;
+
+        transitionCamera.enabled = false;
+    }
 }
 
 /// <summary>
@@ -778,11 +865,28 @@ public class SceneTransitionBridge : MonoBehaviour
         if (!SceneTransitionService.TryConsumePendingSpawnPointForCurrentScene(out var spawnPointId))
             return;
 
-        var player = FindAnyObjectByType<PlayerControler>();
+        var player = FindBestPlayerForActiveScene();
         if (player == null) return;
 
         Vector2 fallback = player.transform.position;
         player.transform.position = SceneSpawnResolver.Resolve(spawnPointId, fallback);
+    }
+
+    private static PlayerControler FindBestPlayerForActiveScene()
+    {
+        var players = FindObjectsByType<PlayerControler>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+        if (players == null || players.Length == 0)
+            return null;
+
+        var activeScene = SceneManager.GetActiveScene();
+        for (int i = 0; i < players.Length; i++)
+        {
+            var player = players[i];
+            if (player != null && player.gameObject.scene == activeScene)
+                return player;
+        }
+
+        return players[0];
     }
 }
 

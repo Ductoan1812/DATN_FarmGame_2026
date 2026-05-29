@@ -41,7 +41,7 @@ public class SceneContext : MonoBehaviour
         }
     }
 
-    public SceneSpawnPoint FindSpawnPoint(string spawnPointId)
+    public ScenePortalTrigger2D FindSpawnPoint(string spawnPointId)
     {
         if (SceneSpawnResolver.TryFindSpawnPointComponent(spawnPointId, out var point))
             return point;

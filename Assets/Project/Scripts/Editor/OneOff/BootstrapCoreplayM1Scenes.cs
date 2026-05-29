@@ -107,10 +107,10 @@ public static class BootstrapCoreplayM1Scenes
 
     private static void EnsureRoutePortalData()
     {
-        EnsurePortalData("Portal_Farm_To_Town.asset", "portal_farm_to_town", "m1.portal.farm_to_town.name", "TownScene", "town_entry");
-        EnsurePortalData("Portal_Town_To_Farm.asset", "portal_town_to_farm", "m1.portal.town_to_farm.name", "FarmScene", SceneSpawnResolver.DefaultPlayerSpawnPointId);
-        EnsurePortalData("Portal_Town_To_Mine.asset", "portal_town_to_mine", "m1.portal.town_to_mine.name", "MineScene", "mine_entry");
-        EnsurePortalData("Portal_Mine_To_Town.asset", "portal_mine_to_town", "m1.portal.mine_to_town.name", "TownScene", "town_mine_entry");
+        EnsurePortalData("Portal_Farm_To_Town.asset", "portal_farm_to_town", "m1.portal.farm_to_town.name", "TownScene", "town_from_farm");
+        EnsurePortalData("Portal_Town_To_Farm.asset", "portal_town_to_farm", "m1.portal.town_to_farm.name", "FarmScene", "farm_from_town");
+        EnsurePortalData("Portal_Town_To_Mine.asset", "portal_town_to_mine", "m1.portal.town_to_mine.name", "MineScene", "mine_from_town");
+        EnsurePortalData("Portal_Mine_To_Town.asset", "portal_mine_to_town", "m1.portal.mine_to_town.name", "TownScene", "town_from_mine");
     }
 
     private static EntityData EnsurePortalData(string fileName, string id, string keyName, string targetScene, string targetSpawnId)

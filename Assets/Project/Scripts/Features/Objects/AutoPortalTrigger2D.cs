@@ -9,6 +9,7 @@ public class AutoPortalTrigger2D : MonoBehaviour
 
     private EntityRoot portalRoot;
     private float nextAllowedTriggerTime;
+    private bool requirePlayerExitBeforeNextTrigger;
 
     private void Awake()
     {
@@ -38,6 +39,12 @@ public class AutoPortalTrigger2D : MonoBehaviour
         TryTrigger(other);
     }
 
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.GetComponentInParent<PlayerControler>() != null)
+            requirePlayerExitBeforeNextTrigger = false;
+    }
+
     private void TryTrigger(Collider2D other)
     {
         if (Time.time < nextAllowedTriggerTime)
@@ -47,12 +54,22 @@ public class AutoPortalTrigger2D : MonoBehaviour
         if (player == null)
             return;
 
+        if (requirePlayerExitBeforeNextTrigger)
+            return;
+
         var portal = ResolvePortalModule();
         if (portal == null || string.IsNullOrWhiteSpace(portal.targetSceneName))
             return;
 
+        if (SceneTransitionService.ArePortalTriggersSuppressed())
+        {
+            requirePlayerExitBeforeNextTrigger = true;
+            return;
+        }
+
         var interactor = player.GetComponentInParent<EntityRoot>()?.GetEntity();
         nextAllowedTriggerTime = Time.time + cooldownSeconds;
+        requirePlayerExitBeforeNextTrigger = true;
 
         bool requested = SceneTransitionService.RequestTransition(
             interactor,
