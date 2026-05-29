@@ -28,9 +28,9 @@ MonoBehaviour:
       value: 1
   placementRule:
     occupyLayer: 2
-    requireTags: 0
-    provideTags: 0
-    blockLayers: 
+    requireTags: 1
+    provideTags: 8
+    blockLayers: 02000000
   modules:
   - rid: 8196223212952223753
   - rid: 8196223203590799363
@@ -60,10 +60,12 @@ MonoBehaviour:
         - sprite: {fileID: 15538356, guid: eb3b66e1fe879524081fd009c50fcee8, type: 3}
           daysToGrow: 1999
           canHarvest: 1
+        requiresWater: 1
         wiltSprite: {fileID: -1403301404, guid: eb3b66e1fe879524081fd009c50fcee8, type: 3}
         regrowStageIndex: -1
         harvestGoToStageIndex: -1
         lastStageLoopToIndex: -1
+        daysToReturnAfterHarvest: -1
         wiltOnSeasonChange: 1
     - rid: 8196223212952223753
       type: {class: PlacementModule, ns: , asm: Assembly-CSharp}
@@ -94,6 +96,9 @@ MonoBehaviour:
       data:
         harvestTool: 3
         allowHandHarvest: 1
-        additionalHarvestTools: 00000000
+        additionalHarvestTools: []
         dropMode: 0
+        harvestCausesDamage: 0
+        destroyOnHarvest: 1
+        oneHitDestroy: 0
         wrongToolPenalty: 0

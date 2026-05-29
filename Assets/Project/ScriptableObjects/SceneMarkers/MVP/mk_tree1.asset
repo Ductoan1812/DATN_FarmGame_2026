@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d88d43265a2517a40b86c58484bc1f8e, type: 3}
+  m_Name: mk_tree1
+  m_EditorClassIdentifier: 
+  markerKind: 6
+  objectType: 10
+  entityData: {fileID: 11400000, guid: 52e51aeb021d80d4a81d600e870fba52, type: 2}
+  savePolicy: 0
+  spawnGroupId: 
+  spawnPointId: 
+  respawnMinutes: 0
+  initialAmount: 1
+  bypassPlacementValidation: 0
+  stageSpawnMode: 2
+  fixedStartStageIndex: 0
+  randomStartStageMin: 0
+  randomStartStageMax: 5
+  editorSprite: {fileID: -1686164316, guid: fc83e1915a4414942bb3a1d2d776a1f8, type: 3}
+  editorColor: {r: 1, g: 1, b: 1, a: 1}
