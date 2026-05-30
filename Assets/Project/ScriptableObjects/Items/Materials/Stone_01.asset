@@ -18,7 +18,7 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 724b555d5539e7f499753e5c5c9da728, type: 3}
   category: 5
   maxStack: 1
-  buyPrice: 20
+  buyPrice: -1
   sellPrice: 10
   baseStats:
     baseStats: []

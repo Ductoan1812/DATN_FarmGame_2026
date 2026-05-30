@@ -28,11 +28,11 @@ MonoBehaviour:
     provideTags: 0
     blockLayers: 
   modules:
-  - rid: 8196223032269996401
+  - rid: 8196223221319336148
   references:
     version: 2
     RefIds:
-    - rid: 8196223032269996401
+    - rid: 8196223221319336148
       type: {class: DialogueModule, ns: , asm: Assembly-CSharp}
       data:
         graph: {fileID: 0}

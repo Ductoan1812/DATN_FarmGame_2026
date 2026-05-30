@@ -15,7 +15,7 @@ MonoBehaviour:
   id: vs_crop_t1_tomato
   keyName: vs.crop.tomato.name
   descKey: vs.crop.tomato.desc
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: c37785785e88007488003b5bb8f626ba, type: 3}
   category: 3
   maxStack: 999
   buyPrice: -1

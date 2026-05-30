@@ -15,7 +15,7 @@ MonoBehaviour:
   id: vs_crop_t5_golden_mushroom
   keyName: vs.crop.golden_mushroom.name
   descKey: vs.crop.golden_mushroom.desc
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 6330ee02f416c5347865b9b8a162cffd, type: 3}
   category: 3
   maxStack: 999
   buyPrice: -1

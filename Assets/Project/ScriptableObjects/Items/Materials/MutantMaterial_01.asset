@@ -15,7 +15,7 @@ MonoBehaviour:
   id: mutant_material_01
   keyName: s4.mat.mutant.name
   descKey: s4.mat.mutant.desc
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: e99c7ea3b1206134e8cd0afb0158ddda, type: 3}
   category: 5
   maxStack: 99
   buyPrice: -1

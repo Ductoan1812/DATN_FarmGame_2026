@@ -15,7 +15,7 @@ MonoBehaviour:
   id: vs_crop_t1_potato
   keyName: vs.crop.potato.name
   descKey: vs.crop.potato.desc
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 7ff93e365d191c8408f4bdd04997596a, type: 3}
   category: 3
   maxStack: 999
   buyPrice: -1

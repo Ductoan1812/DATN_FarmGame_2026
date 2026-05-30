@@ -15,7 +15,7 @@ MonoBehaviour:
   id: vs_crop_t5_forbidden_fruit
   keyName: vs.crop.forbidden_fruit.name
   descKey: vs.crop.forbidden_fruit.desc
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 356c5ff4b6279c2489fe677da81aa27f, type: 3}
   category: 3
   maxStack: 999
   buyPrice: -1

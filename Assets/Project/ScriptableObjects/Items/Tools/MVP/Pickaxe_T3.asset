@@ -34,17 +34,18 @@ MonoBehaviour:
     provideTags: 0
     blockLayers: 
   modules:
-  - rid: 8196223032269996255
-  - rid: 8196223032269996256
+  - rid: 8196223221319335982
+  - rid: 8196223221319335983
   references:
     version: 2
     RefIds:
-    - rid: 8196223032269996255
+    - rid: 8196223221319335982
       type: {class: ToolModule, ns: , asm: Assembly-CSharp}
       data:
         toolType: 5
         animTrigger: Pickaxe
-    - rid: 8196223032269996256
+        refillAnimTrigger: 
+    - rid: 8196223221319335983
       type: {class: AppearanceModule, ns: , asm: Assembly-CSharp}
       data:
         spriteId: Tools.Pickaxe01

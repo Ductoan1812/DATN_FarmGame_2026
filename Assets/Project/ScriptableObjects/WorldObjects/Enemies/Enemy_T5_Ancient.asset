@@ -38,19 +38,19 @@ MonoBehaviour:
     provideTags: 0
     blockLayers: 
   modules:
-  - rid: 8196223032269996250
-  - rid: 8196223032269996251
-  - rid: 8196223032269996252
-  - rid: 8196223032269996253
-  - rid: 8196223032269996385
+  - rid: 8196223221319335972
+  - rid: 8196223221319335973
+  - rid: 8196223221319335974
+  - rid: 8196223221319335975
+  - rid: 8196223221319336101
   references:
     version: 2
     RefIds:
-    - rid: 8196223032269996250
+    - rid: 8196223221319335972
       type: {class: HealthModule, ns: , asm: Assembly-CSharp}
       data:
         canTakeDamage: 1
-    - rid: 8196223032269996251
+    - rid: 8196223221319335973
       type: {class: DropModule, ns: , asm: Assembly-CSharp}
       data:
         harvestDrops:
@@ -58,24 +58,22 @@ MonoBehaviour:
           minAmount: 1
           maxAmount: 2
           dropChance: 0.65
-        - item: {fileID: 11400000, guid: 34da15235452e1f46ac3d2747dee9d07, type: 2}
-          minAmount: 1
-          maxAmount: 2
-          dropChance: 0.4
-    - rid: 8196223032269996252
+        deathDrops: []
+        includeHarvestDropsOnDestroyWhenHarvestable: 0
+    - rid: 8196223221319335974
       type: {class: ExpRewardModule, ns: , asm: Assembly-CSharp}
       data:
         rewardExp: 750
         sourceType: 3
         requireKiller: 1
-    - rid: 8196223032269996253
+    - rid: 8196223221319335975
       type: {class: RespawnModule, ns: , asm: Assembly-CSharp}
       data:
         defaultRespawnPosition: {x: 0, y: 0}
         respawnDelay: 120
         restoreFullHp: 1
         respawnPrefabId: 9
-    - rid: 8196223032269996385
+    - rid: 8196223221319336101
       type: {class: AttackModule, ns: , asm: Assembly-CSharp}
       data:
         attackRange: 1.5

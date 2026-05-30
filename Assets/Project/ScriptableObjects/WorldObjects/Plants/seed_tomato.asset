@@ -32,41 +32,14 @@ MonoBehaviour:
     provideTags: 0
     blockLayers: 
   modules:
-  - rid: 8196223203590799362
-  - rid: 8196223203590799363
-  - rid: 8196223203590799366
+  - rid: 8196223221319336138
   references:
     version: 2
     RefIds:
-    - rid: 8196223203590799362
-      type: {class: DropModule, ns: , asm: Assembly-CSharp}
-      data:
-        harvestDrops: []
-    - rid: 8196223203590799363
-      type: {class: StageModule, ns: , asm: Assembly-CSharp}
-      data:
-        stages:
-        - sprite: {fileID: 603439498, guid: eb3b66e1fe879524081fd009c50fcee8, type: 3}
-          daysToGrow: 1
-          canHarvest: 0
-        - sprite: {fileID: 891475373, guid: eb3b66e1fe879524081fd009c50fcee8, type: 3}
-          daysToGrow: 1
-          canHarvest: 0
-        - sprite: {fileID: -1283404404, guid: eb3b66e1fe879524081fd009c50fcee8, type: 3}
-          daysToGrow: 1
-          canHarvest: 0
-        - sprite: {fileID: 631495493, guid: eb3b66e1fe879524081fd009c50fcee8, type: 3}
-          daysToGrow: 1
-          canHarvest: 0
-        - sprite: {fileID: -1138934698, guid: eb3b66e1fe879524081fd009c50fcee8, type: 3}
-          daysToGrow: 1999
-          canHarvest: 1
-        wiltSprite: {fileID: -1403301404, guid: eb3b66e1fe879524081fd009c50fcee8, type: 3}
-        regrowStageIndex: -1
-    - rid: 8196223203590799366
+    - rid: 8196223221319336138
       type: {class: PlacementModule, ns: , asm: Assembly-CSharp}
       data:
         objectTypeToSpawn: 2
-        placedEntityData: {fileID: 0}
+        placedEntityData: {fileID: 11400000, guid: cc23973a6eda32f42a23d17079ed1c7e, type: 2}
         centerTile: 1
         animTrigger: PutDown

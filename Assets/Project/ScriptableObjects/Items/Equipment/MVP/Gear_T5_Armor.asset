@@ -32,11 +32,11 @@ MonoBehaviour:
     provideTags: 0
     blockLayers: 
   modules:
-  - rid: 8196223032269996307
+  - rid: 8196223221319336045
   references:
     version: 2
     RefIds:
-    - rid: 8196223032269996307
+    - rid: 8196223221319336045
       type: {class: AppearanceModule, ns: , asm: Assembly-CSharp}
       data:
         spriteId: Art.Armor.Armor.Sample1

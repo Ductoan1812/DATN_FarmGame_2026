@@ -34,17 +34,18 @@ MonoBehaviour:
     provideTags: 0
     blockLayers: 
   modules:
-  - rid: 8196223032269996288
-  - rid: 8196223032269996289
+  - rid: 8196223221319336024
+  - rid: 8196223221319336025
   references:
     version: 2
     RefIds:
-    - rid: 8196223032269996288
+    - rid: 8196223221319336024
       type: {class: ToolModule, ns: , asm: Assembly-CSharp}
       data:
         toolType: 7
         animTrigger: Use
-    - rid: 8196223032269996289
+        refillAnimTrigger: 
+    - rid: 8196223221319336025
       type: {class: AppearanceModule, ns: , asm: Assembly-CSharp}
       data:
         spriteId: Art.Equipment.MeleeWeapon1H.Axe01

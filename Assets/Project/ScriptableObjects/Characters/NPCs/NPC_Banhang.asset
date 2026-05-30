@@ -48,7 +48,7 @@ MonoBehaviour:
       type: {class: InventoryModule, ns: , asm: Assembly-CSharp}
       data:
         inventoryType: 0
-        size: 80
+        size: 60
     - rid: 5598704321880018946
       type: {class: ShopModule, ns: , asm: Assembly-CSharp}
       data:
@@ -56,7 +56,7 @@ MonoBehaviour:
         priority: 30
         sellsToPlayer: 1
         buysFromPlayer: 1
-        buysAllItems: 0
+        buysAllItems: 1
         infiniteStock: 1
         stockInventoryType: 0
         buyWhitelist:
@@ -65,27 +65,112 @@ MonoBehaviour:
         - {fileID: 11400000, guid: 7e2ed628aa8e4fb47a4c430f563160fa, type: 2}
         - {fileID: 11400000, guid: 0063ac07e4bb06b46b7c3b6a2ce0eed8, type: 2}
         - {fileID: 11400000, guid: effbb7ff1a3215d4abe2cc569a0d9755, type: 2}
-        - {fileID: 11400000, guid: 124792b956909094db2783901f3f4ffd, type: 2}
-        - {fileID: 11400000, guid: ee625868acb5dd9458cf499f10d46e74, type: 2}
-        - {fileID: 11400000, guid: e2dd62fb110f4204babbcdc5f6009a52, type: 2}
-        - {fileID: 11400000, guid: 51e6aef52b8128144a91b2682167dc14, type: 2}
-        - {fileID: 11400000, guid: 640f0ed28aba961458ba6bd9633d4fc8, type: 2}
-        - {fileID: 11400000, guid: 4bec48f832b3596468f4db375267c327, type: 2}
-        - {fileID: 11400000, guid: 60bd3e8b8821b5c45bd8eb9ab6b7050b, type: 2}
-        - {fileID: 11400000, guid: 5582b3eb521dd1b4e8077dcd36ea5e28, type: 2}
-        - {fileID: 11400000, guid: 98d1556af98f5d24c9f23c19078d3779, type: 2}
-        - {fileID: 11400000, guid: 2a7f0c58aef6f3242baf45402d9d3fe4, type: 2}
-        - {fileID: 11400000, guid: ba4c35f61c0a2514990b5eb38f53b3a8, type: 2}
-        - {fileID: 11400000, guid: fdc240d49f68e184490ad38a94e8e83a, type: 2}
-        - {fileID: 11400000, guid: 3efeb400b0add5146aac9fc4fa56aace, type: 2}
-        - {fileID: 11400000, guid: d927b426b810390409ff363b3c171a3e, type: 2}
-        - {fileID: 11400000, guid: 688e0f315163b44488a2f677591e4636, type: 2}
-        - {fileID: 11400000, guid: 84a4900b2fd346144aeca68df520401b, type: 2}
-        - {fileID: 11400000, guid: af2fe32f5eaec7947b859947dcaaed8b, type: 2}
-        - {fileID: 11400000, guid: b450ff7373160824da09d2618aa7e129, type: 2}
+        - {fileID: 11400000, guid: c636288d5f03b66488f97ffa0e455b0b, type: 2}
+        - {fileID: 11400000, guid: 99fde81c500e25443b43334f4f586b39, type: 2}
+        - {fileID: 11400000, guid: 98241e51c1da7944ea348653d285804c, type: 2}
+        - {fileID: 11400000, guid: 6c6049a7732d5d44ba4b435d0692e7ba, type: 2}
+        - {fileID: 11400000, guid: 2e4bc46ffa338b341919ec74ea591249, type: 2}
+        - {fileID: 11400000, guid: 0339a363d43b92846b98db95a915561e, type: 2}
+        - {fileID: 11400000, guid: 0039f158a0dba0f409b3eeada4e425e8, type: 2}
+        - {fileID: 11400000, guid: 37f2202859608054bbb91cfd5bea8c7f, type: 2}
+        - {fileID: 11400000, guid: ca2c6dc64ebcd4e42a25328c13e28ec5, type: 2}
+        - {fileID: 11400000, guid: 6fc4345449314b240b16c42cad430623, type: 2}
+        - {fileID: 11400000, guid: e64704ae0a7095641b2e8f8f858735a6, type: 2}
+        - {fileID: 11400000, guid: e6188e1aae822ad4c9332987e4568c7e, type: 2}
+        - {fileID: 11400000, guid: 63b9c59c28a694140a9a6b3185dc44bc, type: 2}
         initialStock:
+        - itemData: {fileID: 11400000, guid: 65dbedad885678b4d8f4ea93eaeb0744, type: 2}
+          amount: 10
+          requiredLevel: 1
+          unlockRequirement:
+            requiredLevel: 1
+            requiredQuestIds: []
+        - itemData: {fileID: 11400000, guid: bf92ebc65ad9ea34eb8faf6cdfa4c411, type: 2}
+          amount: 10
+          requiredLevel: 10
+          unlockRequirement:
+            requiredLevel: 1
+            requiredQuestIds: []
+        - itemData: {fileID: 11400000, guid: 75781f0c6c5552944b1c84ec353adf85, type: 2}
+          amount: 10
+          requiredLevel: 20
+          unlockRequirement:
+            requiredLevel: 1
+            requiredQuestIds: []
+        - itemData: {fileID: 11400000, guid: 3f67ebbce4e4aa246b721199f2f039db, type: 2}
+          amount: 10
+          requiredLevel: 30
+          unlockRequirement:
+            requiredLevel: 1
+            requiredQuestIds: []
+        - itemData: {fileID: 11400000, guid: e52e2ff24b9edaa449e98e4391dc9f0b, type: 2}
+          amount: 10
+          requiredLevel: 40
+          unlockRequirement:
+            requiredLevel: 1
+            requiredQuestIds: []
         - itemData: {fileID: 11400000, guid: e64704ae0a7095641b2e8f8f858735a6, type: 2}
           amount: 10
+          requiredLevel: 5
+          unlockRequirement:
+            requiredLevel: 1
+            requiredQuestIds: []
+        - itemData: {fileID: 11400000, guid: e6188e1aae822ad4c9332987e4568c7e, type: 2}
+          amount: 5
+          requiredLevel: 10
+          unlockRequirement:
+            requiredLevel: 1
+            requiredQuestIds: []
+        - itemData: {fileID: 11400000, guid: 63b9c59c28a694140a9a6b3185dc44bc, type: 2}
+          amount: 3
+          requiredLevel: 20
+          unlockRequirement:
+            requiredLevel: 1
+            requiredQuestIds: []
+        - itemData: {fileID: 11400000, guid: c037268b411d57e42b0c61bc33048304, type: 2}
+          amount: 1
+          requiredLevel: 1
+          unlockRequirement:
+            requiredLevel: 1
+            requiredQuestIds: []
+        - itemData: {fileID: 11400000, guid: cb901c282659d5e4babb60e30e228468, type: 2}
+          amount: 1
+          requiredLevel: 1
+          unlockRequirement:
+            requiredLevel: 1
+            requiredQuestIds: []
+        - itemData: {fileID: 11400000, guid: 09c3f3172e41c6d409a9eb40712e4b70, type: 2}
+          amount: 1
+          requiredLevel: 1
+          unlockRequirement:
+            requiredLevel: 1
+            requiredQuestIds: []
+        - itemData: {fileID: 11400000, guid: 53512c14c130fee4c9c6c06a153c9e7f, type: 2}
+          amount: 1
+          requiredLevel: 1
+          unlockRequirement:
+            requiredLevel: 1
+            requiredQuestIds: []
+        - itemData: {fileID: 11400000, guid: c4d654c498286eb47823350410940811, type: 2}
+          amount: 1
+          requiredLevel: 1
+          unlockRequirement:
+            requiredLevel: 1
+            requiredQuestIds: []
+        - itemData: {fileID: 11400000, guid: 2d9d29c85d083b349a90a27a666f0d4b, type: 2}
+          amount: 1
+          requiredLevel: 1
+          unlockRequirement:
+            requiredLevel: 1
+            requiredQuestIds: []
+        - itemData: {fileID: 11400000, guid: 7adb1e719f568424691387e39ed6999f, type: 2}
+          amount: 1
+          requiredLevel: 1
+          unlockRequirement:
+            requiredLevel: 1
+            requiredQuestIds: []
+        - itemData: {fileID: 11400000, guid: 83558bfc54a2153478041e4a394ea1b0, type: 2}
+          amount: 1
           requiredLevel: 1
           unlockRequirement:
             requiredLevel: 1

@@ -15,7 +15,7 @@ MonoBehaviour:
   id: crop_t5_starfruit
   keyName: mvp.crop.t5.starfruit.name
   descKey: mvp.crop.t5.starfruit.desc
-  icon: {fileID: 1493262304, guid: c12a6ea23e1f6d7499a148d2a6789928, type: 3}
+  icon: {fileID: 21300000, guid: 8159435a696257b49a8a22c33b7fdd07, type: 3}
   category: 3
   maxStack: 999
   buyPrice: -1

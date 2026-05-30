@@ -15,7 +15,7 @@ MonoBehaviour:
   id: vs_crop_t3_grape
   keyName: vs.crop.grape.name
   descKey: vs.crop.grape.desc
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 1bb14f17e94edc449b2716578a0d0ebf, type: 3}
   category: 3
   maxStack: 999
   buyPrice: -1

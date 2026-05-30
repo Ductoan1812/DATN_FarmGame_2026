@@ -15,7 +15,7 @@ MonoBehaviour:
   id: wool
   keyName: s4.item.wool.name
   descKey: s4.item.wool.desc
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: df6989f52185fb042bef6d8da98f9e31, type: 3}
   category: 10
   maxStack: 99
   buyPrice: -1

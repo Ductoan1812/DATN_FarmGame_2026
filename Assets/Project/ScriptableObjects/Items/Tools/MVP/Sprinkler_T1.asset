@@ -28,19 +28,19 @@ MonoBehaviour:
     provideTags: 0
     blockLayers: 
   modules:
-  - rid: 8196223032269996238
-  - rid: 8196223032269996239
+  - rid: 8196223221319335967
+  - rid: 8196223221319335968
   references:
     version: 2
     RefIds:
-    - rid: 8196223032269996238
+    - rid: 8196223221319335967
       type: {class: PlacementModule, ns: , asm: Assembly-CSharp}
       data:
         objectTypeToSpawn: 16
         placedEntityData: {fileID: 11400000, guid: 6b3d22d663795f84391caa7f8271c93a, type: 2}
         centerTile: 1
         animTrigger: PutDown
-    - rid: 8196223032269996239
+    - rid: 8196223221319335968
       type: {class: AppearanceModule, ns: , asm: Assembly-CSharp}
       data:
         spriteId: Art.Equipment.MeleeWeapon1H.Axe01

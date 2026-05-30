@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8393fbdfdb650e5418aad1c82ae5b8b5, type: 3}
+  m_Name: Seed_T1_Turnip
+  m_EditorClassIdentifier: 
+  id: seed_t1_turnip
+  keyName: mvp.seed.t1.turnip.name
+  descKey: mvp.seed.t1.turnip.desc
+  icon: {fileID: 21300000, guid: 0ea8c765caf199545ba241e8b7e2406f, type: 3}
+  category: 2
+  maxStack: 999
+  buyPrice: 20
+  sellPrice: -1
+  baseStats:
+    baseStats:
+    - statType: 0
+      value: 7
+    - statType: 1
+      value: 7
+  placementRule:
+    occupyLayer: 2
+    requireTags: 1
+    provideTags: 0
+    blockLayers: 
+  modules:
+  - rid: 8196223221319336111
+  references:
+    version: 2
+    RefIds:
+    - rid: 8196223221319336111
+      type: {class: PlacementModule, ns: , asm: Assembly-CSharp}
+      data:
+        objectTypeToSpawn: 2
+        placedEntityData: {fileID: 11400000, guid: ba5003b9c9aabb240b80ddbb90b3ea1a, type: 2}
+        centerTile: 1
+        animTrigger: PutDown

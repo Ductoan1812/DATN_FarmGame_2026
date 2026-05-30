@@ -15,7 +15,7 @@ MonoBehaviour:
   id: item_cow_barn
   keyName: s4.building.barn.name
   descKey: s4.building.barn.desc
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 2a1e5f18659a13e44aef9370f512ea50, type: 3}
   category: 9
   maxStack: 1
   buyPrice: -1

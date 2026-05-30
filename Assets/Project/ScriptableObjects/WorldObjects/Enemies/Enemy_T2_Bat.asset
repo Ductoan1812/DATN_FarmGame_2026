@@ -23,13 +23,13 @@ MonoBehaviour:
   baseStats:
     baseStats:
     - statType: 0
-      value: 55
+      value: 15
     - statType: 1
-      value: 55
+      value: 15
     - statType: 2
       value: 8
     - statType: 3
-      value: 2
+      value: 1
     - statType: 4
       value: 1.76
   placementRule:
@@ -38,44 +38,42 @@ MonoBehaviour:
     provideTags: 0
     blockLayers: 
   modules:
-  - rid: 8196223032269996266
-  - rid: 8196223032269996267
-  - rid: 8196223032269996268
-  - rid: 8196223032269996269
-  - rid: 8196223032269996400
+  - rid: 8196223221319335995
+  - rid: 8196223221319335996
+  - rid: 8196223221319335997
+  - rid: 8196223221319335998
+  - rid: 8196223221319336110
   references:
     version: 2
     RefIds:
-    - rid: 8196223032269996266
+    - rid: 8196223221319335995
       type: {class: HealthModule, ns: , asm: Assembly-CSharp}
       data:
         canTakeDamage: 1
-    - rid: 8196223032269996267
+    - rid: 8196223221319335996
       type: {class: DropModule, ns: , asm: Assembly-CSharp}
       data:
         harvestDrops:
         - item: {fileID: 11400000, guid: 0039f158a0dba0f409b3eeada4e425e8, type: 2}
           minAmount: 1
-          maxAmount: 2
-          dropChance: 0.65
-        - item: {fileID: 11400000, guid: 34da15235452e1f46ac3d2747dee9d07, type: 2}
-          minAmount: 1
-          maxAmount: 2
-          dropChance: 0.4
-    - rid: 8196223032269996268
+          maxAmount: 1
+          dropChance: 0.3
+        deathDrops: []
+        includeHarvestDropsOnDestroyWhenHarvestable: 0
+    - rid: 8196223221319335997
       type: {class: ExpRewardModule, ns: , asm: Assembly-CSharp}
       data:
         rewardExp: 80
         sourceType: 3
         requireKiller: 1
-    - rid: 8196223032269996269
+    - rid: 8196223221319335998
       type: {class: RespawnModule, ns: , asm: Assembly-CSharp}
       data:
         defaultRespawnPosition: {x: 0, y: 0}
         respawnDelay: 45
         restoreFullHp: 1
         respawnPrefabId: 9
-    - rid: 8196223032269996400
+    - rid: 8196223221319336110
       type: {class: AttackModule, ns: , asm: Assembly-CSharp}
       data:
         attackRange: 1.5

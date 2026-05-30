@@ -15,7 +15,7 @@ MonoBehaviour:
   id: vs_crop_t2_watermelon
   keyName: vs.crop.watermelon.name
   descKey: vs.crop.watermelon.desc
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 8ef4e5d9ef983ec4591f14335755efe2, type: 3}
   category: 3
   maxStack: 999
   buyPrice: -1

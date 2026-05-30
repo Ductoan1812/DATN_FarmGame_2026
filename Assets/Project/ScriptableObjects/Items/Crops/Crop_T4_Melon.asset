@@ -15,7 +15,7 @@ MonoBehaviour:
   id: crop_t4_melon
   keyName: mvp.crop.t4.melon.name
   descKey: mvp.crop.t4.melon.desc
-  icon: {fileID: 1493262304, guid: c12a6ea23e1f6d7499a148d2a6789928, type: 3}
+  icon: {fileID: 21300000, guid: b7cd3822a84a19b4eb8af92cb7fb4a9c, type: 3}
   category: 3
   maxStack: 999
   buyPrice: -1

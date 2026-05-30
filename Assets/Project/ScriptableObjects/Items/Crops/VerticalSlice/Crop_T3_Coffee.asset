@@ -15,7 +15,7 @@ MonoBehaviour:
   id: vs_crop_t3_coffee
   keyName: vs.crop.coffee.name
   descKey: vs.crop.coffee.desc
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: bac6b42bd3067744290362909da712b7, type: 3}
   category: 3
   maxStack: 999
   buyPrice: -1

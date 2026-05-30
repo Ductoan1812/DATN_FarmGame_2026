@@ -15,13 +15,15 @@ MonoBehaviour:
   id: vs_crop_t2_corn
   keyName: vs.crop.corn.name
   descKey: vs.crop.corn.desc
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 1c57139e6eed6974c961d9ae09c8f381, type: 3}
   category: 3
   maxStack: 999
   buyPrice: -1
-  sellPrice: 80
+  sellPrice: 250
   baseStats:
-    baseStats: []
+    baseStats:
+    - statType: 5
+      value: 25
   placementRule:
     occupyLayer: 0
     requireTags: 0

@@ -28,11 +28,11 @@ MonoBehaviour:
     provideTags: 0
     blockLayers: 
   modules:
-  - rid: 8196223032269996316
+  - rid: 8196223221319336054
   references:
     version: 2
     RefIds:
-    - rid: 8196223032269996316
+    - rid: 8196223221319336054
       type: {class: SprinklerModule, ns: , asm: Assembly-CSharp}
       data:
         waterRadius: 1

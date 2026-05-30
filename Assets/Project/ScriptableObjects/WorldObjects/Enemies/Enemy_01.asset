@@ -56,6 +56,8 @@ MonoBehaviour:
           minAmount: 1
           maxAmount: 2
           dropChance: 0.5
+        deathDrops: []
+        includeHarvestDropsOnDestroyWhenHarvestable: 0
     - rid: 8196222910859575302
       type: {class: RespawnModule, ns: , asm: Assembly-CSharp}
       data:

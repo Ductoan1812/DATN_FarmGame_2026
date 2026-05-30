@@ -15,7 +15,7 @@ MonoBehaviour:
   id: vs_crop_t4_orchid
   keyName: vs.crop.orchid.name
   descKey: vs.crop.orchid.desc
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: d0548ec3f77ec3d4d80f0456cde301f4, type: 3}
   category: 3
   maxStack: 999
   buyPrice: -1

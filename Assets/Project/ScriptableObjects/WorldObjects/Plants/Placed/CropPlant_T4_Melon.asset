@@ -1,0 +1,97 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8393fbdfdb650e5418aad1c82ae5b8b5, type: 3}
+  m_Name: CropPlant_T4_Melon
+  m_EditorClassIdentifier: 
+  id: crop_plant_t4_melon
+  keyName: mvp.seed.t4.melon.name
+  descKey: mvp.seed.t4.melon.desc
+  icon: {fileID: 21300000, guid: 481045471013b8044b14a7a48167e8d5, type: 3}
+  category: 9
+  maxStack: 1
+  buyPrice: -1
+  sellPrice: 0
+  baseStats:
+    baseStats:
+    - statType: 0
+      value: 19
+    - statType: 1
+      value: 19
+  placementRule:
+    occupyLayer: 2
+    requireTags: 1
+    provideTags: 0
+    blockLayers: 
+  modules:
+  - rid: 8196223221319336121
+  - rid: 8196223221319336122
+  - rid: 8196223221319336123
+  - rid: 8196223221319336124
+  - rid: 8196223221319336125
+  - rid: 8196223221319336126
+  references:
+    version: 2
+    RefIds:
+    - rid: 8196223221319336121
+      type: {class: StageModule, ns: , asm: Assembly-CSharp}
+      data:
+        stages:
+        - sprite: {fileID: 0}
+          daysToGrow: 1
+          canHarvest: 0
+        - sprite: {fileID: 0}
+          daysToGrow: 4
+          canHarvest: 0
+        - sprite: {fileID: 0}
+          daysToGrow: 999
+          canHarvest: 1
+        requiresWater: 1
+        wiltSprite: {fileID: 0}
+        regrowStageIndex: 2
+        harvestGoToStageIndex: -1
+        lastStageLoopToIndex: -1
+        daysToReturnAfterHarvest: -1
+        wiltOnSeasonChange: 1
+    - rid: 8196223221319336122
+      type: {class: HarvestModule, ns: , asm: Assembly-CSharp}
+      data:
+        harvestTool: 3
+        allowHandHarvest: 0
+        additionalHarvestTools: []
+        dropMode: 0
+        harvestCausesDamage: 0
+        destroyOnHarvest: 1
+        oneHitDestroy: 0
+        wrongToolPenalty: 0.3
+    - rid: 8196223221319336123
+      type: {class: HealthModule, ns: , asm: Assembly-CSharp}
+      data:
+        canTakeDamage: 1
+    - rid: 8196223221319336124
+      type: {class: DropModule, ns: , asm: Assembly-CSharp}
+      data:
+        harvestDrops:
+        - item: {fileID: 11400000, guid: 0063ac07e4bb06b46b7c3b6a2ce0eed8, type: 2}
+          minAmount: 1
+          maxAmount: 1
+          dropChance: 1
+        deathDrops: []
+        includeHarvestDropsOnDestroyWhenHarvestable: 0
+    - rid: 8196223221319336125
+      type: {class: ExpRewardModule, ns: , asm: Assembly-CSharp}
+      data:
+        rewardExp: 60
+        sourceType: 1
+        requireKiller: 1
+    - rid: 8196223221319336126
+      type: {class: MortalModule, ns: , asm: Assembly-CSharp}
+      data: 

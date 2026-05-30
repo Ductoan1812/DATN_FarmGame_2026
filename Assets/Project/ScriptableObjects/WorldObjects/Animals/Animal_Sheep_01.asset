@@ -15,7 +15,7 @@ MonoBehaviour:
   id: animal_sheep_01
   keyName: s4.animal.sheep.name
   descKey: s4.animal.sheep.desc
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: c93314064aed0a249b4eaa5c217d56f6, type: 3}
   category: 9
   maxStack: 1
   buyPrice: 1

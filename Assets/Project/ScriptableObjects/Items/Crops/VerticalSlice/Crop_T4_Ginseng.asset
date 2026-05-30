@@ -15,7 +15,7 @@ MonoBehaviour:
   id: vs_crop_t4_ginseng
   keyName: vs.crop.ginseng.name
   descKey: vs.crop.ginseng.desc
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 67b3f1c624c595941aa9ed2b93931417, type: 3}
   category: 3
   maxStack: 999
   buyPrice: -1

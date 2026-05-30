@@ -15,13 +15,15 @@ MonoBehaviour:
   id: crop_t1_turnip
   keyName: mvp.crop.t1.turnip.name
   descKey: mvp.crop.t1.turnip.desc
-  icon: {fileID: 1493262304, guid: c12a6ea23e1f6d7499a148d2a6789928, type: 3}
+  icon: {fileID: 21300000, guid: 890da1abf8337824882a10e95c2c62e5, type: 3}
   category: 3
   maxStack: 999
   buyPrice: -1
-  sellPrice: 45
+  sellPrice: 60
   baseStats:
-    baseStats: []
+    baseStats:
+    - statType: 5
+      value: 10
   placementRule:
     occupyLayer: 0
     requireTags: 0

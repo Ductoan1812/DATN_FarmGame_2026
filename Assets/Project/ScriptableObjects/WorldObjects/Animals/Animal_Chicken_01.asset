@@ -18,7 +18,7 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 3ccda3f2218d31e47a86a3a45c3c82b7, type: 3}
   category: 9
   maxStack: 1
-  buyPrice: 1
+  buyPrice: -1
   sellPrice: 0
   baseStats:
     baseStats: []
@@ -28,11 +28,11 @@ MonoBehaviour:
     provideTags: 0
     blockLayers: 
   modules:
-  - rid: 8196223032269996375
+  - rid: 8196223221319336098
   references:
     version: 2
     RefIds:
-    - rid: 8196223032269996375
+    - rid: 8196223221319336098
       type: {class: AnimalModule, ns: , asm: Assembly-CSharp}
       data:
         speciesKey: m3.animal.chicken.name

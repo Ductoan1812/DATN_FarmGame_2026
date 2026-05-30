@@ -15,7 +15,7 @@ MonoBehaviour:
   id: vs_crop_t1_cucumber
   keyName: vs.crop.cucumber.name
   descKey: vs.crop.cucumber.desc
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: f6574a98dee42cb4585385b3a192fc3c, type: 3}
   category: 3
   maxStack: 999
   buyPrice: -1

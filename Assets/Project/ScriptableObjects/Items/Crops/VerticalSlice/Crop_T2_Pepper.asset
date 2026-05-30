@@ -15,7 +15,7 @@ MonoBehaviour:
   id: vs_crop_t2_pepper
   keyName: vs.crop.pepper.name
   descKey: vs.crop.pepper.desc
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 7465d90c18f408e49a70cf2a9c9d4f0a, type: 3}
   category: 3
   maxStack: 999
   buyPrice: -1

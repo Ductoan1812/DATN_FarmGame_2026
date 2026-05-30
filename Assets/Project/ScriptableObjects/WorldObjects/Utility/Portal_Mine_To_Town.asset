@@ -28,15 +28,15 @@ MonoBehaviour:
     provideTags: 0
     blockLayers: 
   modules:
-  - rid: 8196222991998910728
+  - rid: 8196223221319336162
   references:
     version: 2
     RefIds:
-    - rid: 8196222991998910728
+    - rid: 8196223221319336162
       type: {class: ScenePortalModule, ns: , asm: Assembly-CSharp}
       data:
         optionTextKey: ui.scene.enter
         priority: 40
         targetSceneName: TownScene
-        targetSpawnPointId: town_mine_entry
+        targetSpawnPointId: mine_to_town
         saveBeforeTransition: 1

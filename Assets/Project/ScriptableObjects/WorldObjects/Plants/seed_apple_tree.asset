@@ -18,7 +18,7 @@ MonoBehaviour:
   icon: {fileID: -600571475, guid: eb3b66e1fe879524081fd009c50fcee8, type: 3}
   category: 9
   maxStack: 999
-  buyPrice: 0
+  buyPrice: 1000
   sellPrice: 0
   baseStats:
     baseStats:
@@ -47,7 +47,7 @@ MonoBehaviour:
       type: {class: DropModule, ns: , asm: Assembly-CSharp}
       data:
         harvestDrops:
-        - item: {fileID: 11400000}
+        - item: {fileID: 11400000, guid: b722c338d23b4a2ea4e0cddb4881da63, type: 2}
           minAmount: 6
           maxAmount: 10
           dropChance: 1
@@ -62,31 +62,31 @@ MonoBehaviour:
       data:
         stages:
         - sprite: {fileID: 112823782, guid: eb3b66e1fe879524081fd009c50fcee8, type: 3}
-          daysToGrow: 1
+          daysToGrow: 4
           canHarvest: 0
         - sprite: {fileID: 492426631, guid: eb3b66e1fe879524081fd009c50fcee8, type: 3}
-          daysToGrow: 1
+          daysToGrow: 4
           canHarvest: 0
         - sprite: {fileID: 2137316230, guid: eb3b66e1fe879524081fd009c50fcee8, type: 3}
-          daysToGrow: 1
+          daysToGrow: 4
           canHarvest: 0
         - sprite: {fileID: -760841750, guid: eb3b66e1fe879524081fd009c50fcee8, type: 3}
-          daysToGrow: 1
+          daysToGrow: 4
           canHarvest: 0
         - sprite: {fileID: -1561591547, guid: eb3b66e1fe879524081fd009c50fcee8, type: 3}
-          daysToGrow: 1
+          daysToGrow: 4
           canHarvest: 0
         - sprite: {fileID: 381191913, guid: eb3b66e1fe879524081fd009c50fcee8, type: 3}
-          daysToGrow: 1
+          daysToGrow: 4
           canHarvest: 0
         - sprite: {fileID: -1799374448, guid: eb3b66e1fe879524081fd009c50fcee8, type: 3}
-          daysToGrow: 1
+          daysToGrow: 4
           canHarvest: 0
         - sprite: {fileID: -1346078414, guid: eb3b66e1fe879524081fd009c50fcee8, type: 3}
           daysToGrow: 19999
           canHarvest: 1
         - sprite: {fileID: -297922540, guid: eb3b66e1fe879524081fd009c50fcee8, type: 3}
-          daysToGrow: 1
+          daysToGrow: 4
           canHarvest: 0
         requiresWater: 0
         wiltSprite: {fileID: -1403301404, guid: eb3b66e1fe879524081fd009c50fcee8, type: 3}

@@ -15,7 +15,7 @@ MonoBehaviour:
   id: item_chicken_coop
   keyName: s4.building.coop.name
   descKey: s4.building.coop.desc
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 8db4c5d20b2a5b64abe0440dbb5f2d51, type: 3}
   category: 9
   maxStack: 1
   buyPrice: -1

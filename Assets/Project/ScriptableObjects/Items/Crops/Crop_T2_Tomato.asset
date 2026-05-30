@@ -15,13 +15,15 @@ MonoBehaviour:
   id: crop_t2_tomato
   keyName: mvp.crop.t2.tomato.name
   descKey: mvp.crop.t2.tomato.desc
-  icon: {fileID: 1493262304, guid: c12a6ea23e1f6d7499a148d2a6789928, type: 3}
+  icon: {fileID: 21300000, guid: 53319b7f178107c4da0bd4ed88d36f3a, type: 3}
   category: 3
   maxStack: 999
   buyPrice: -1
   sellPrice: 80
   baseStats:
-    baseStats: []
+    baseStats:
+    - statType: 5
+      value: 15
   placementRule:
     occupyLayer: 0
     requireTags: 0
