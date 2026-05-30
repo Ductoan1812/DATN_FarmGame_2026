@@ -141,9 +141,10 @@ public static class BootstrapCoreplayM1Scenes
     private static void EnsureM1Markers()
     {
         CreatePlayerSpawnMarker("Marker_Player_Start", SceneSpawnResolver.DefaultPlayerSpawnPointId, new Color(0.2f, 0.8f, 1f, 0.75f));
-        CreatePlayerSpawnMarker("Marker_Player_TownEntry", "town_entry", new Color(0.3f, 0.9f, 0.95f, 0.75f));
-        CreatePlayerSpawnMarker("Marker_Player_TownMineEntry", "town_mine_entry", new Color(0.3f, 0.7f, 1f, 0.75f));
-        CreatePlayerSpawnMarker("Marker_Player_MineEntry", "mine_entry", new Color(0.5f, 0.55f, 1f, 0.75f));
+        CreatePlayerSpawnMarker("Marker_Player_FarmEntryFromTown", "farm_from_town", new Color(0.2f, 0.9f, 0.6f, 0.75f));
+        CreatePlayerSpawnMarker("Marker_Player_TownEntry", "town_from_farm", new Color(0.3f, 0.9f, 0.95f, 0.75f));
+        CreatePlayerSpawnMarker("Marker_Player_TownMineEntry", "town_from_mine", new Color(0.3f, 0.7f, 1f, 0.75f));
+        CreatePlayerSpawnMarker("Marker_Player_MineEntry", "mine_from_town", new Color(0.5f, 0.55f, 1f, 0.75f));
 
         CreatePortalMarker("Marker_Portal_Farm_To_Town", "Portal_Farm_To_Town.asset", "farm_to_town", new Color(0.45f, 0.85f, 1f, 0.8f));
         CreatePortalMarker("Marker_Portal_Town_To_Farm", "Portal_Town_To_Farm.asset", "town_to_farm", new Color(0.5f, 0.95f, 0.65f, 0.8f));
@@ -164,6 +165,7 @@ public static class BootstrapCoreplayM1Scenes
         ClearMarkers(markerMap);
 
         SetTile(markerMap, new Vector3Int(0, 0, 0), "Marker_Player_Start");
+        SetTile(markerMap, new Vector3Int(7, 0, 0), "Marker_Player_FarmEntryFromTown");
         SetTile(markerMap, new Vector3Int(8, 0, 0), "Marker_Portal_Farm_To_Town");
         SetTile(markerMap, new Vector3Int(-3, 2, 0), "Marker_Bed_01");
         SetTiles(markerMap, "Marker_Chicken_01",
