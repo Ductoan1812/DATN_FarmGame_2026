@@ -123,6 +123,7 @@ public class LoadingScreenUI : MonoBehaviour
 
     private IEnumerator FadeTo(bool visible)
     {
+        if (canvasGroup == null) yield break;
         float start = canvasGroup.alpha;
         float end = visible ? 1f : 0f;
         float elapsed = 0f;
@@ -130,12 +131,19 @@ public class LoadingScreenUI : MonoBehaviour
         while (elapsed < FadeDuration)
         {
             elapsed += Time.unscaledDeltaTime;
+            if (canvasGroup == null) yield break;
             canvasGroup.alpha = Mathf.Lerp(start, end, Mathf.Clamp01(elapsed / FadeDuration));
             yield return null;
         }
 
-        canvasGroup.alpha = end;
-        panel.SetActive(visible);
+        if (canvasGroup != null)
+        {
+            canvasGroup.alpha = end;
+        }
+        if (panel != null)
+        {
+            panel.SetActive(visible);
+        }
         fadeRoutine = null;
     }
 

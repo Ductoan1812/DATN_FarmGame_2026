@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: ForageNode01
   m_EditorClassIdentifier: 
   idObject: 12
-  prefab: {fileID: 5509933931381334664, guid: 84d5f81d69ba84f44928a2e38ba6a391, type: 3}
+  prefab: {fileID: 5509933931381334664, guid: dfc8f308494035e48ba03f917c52670b, type: 3}

@@ -75,7 +75,7 @@ public class ActionRuntime : IModuleRuntime, IHandleEvent<PrimaryActionEvent>, I
 
             eventBus.Publish(new InteractionOptionsReadyPublish(actor, target, context.GetOptions()));
         }
-        else
+        else if (!context.IsHandledDirectly)
         {
             Debug.LogWarning(
                 $"[ActionRuntime] Target '{target.entityData?.keyName}' tương tác được nhưng không có option nào. " +
@@ -94,7 +94,7 @@ public class ActionRuntime : IModuleRuntime, IHandleEvent<PrimaryActionEvent>, I
 
 /// <summary>
 /// Runtime cho ScenePortalModule.
-/// Đưa ra option chuyển scene khi player tương tác target.
+/// Bấm E → chuyển scene NGAY, không mở dialog.
 /// </summary>
 public class ScenePortalRuntime : IModuleRuntime, IHandleEvent<SecondaryActionEvent>
 {
@@ -109,25 +109,26 @@ public class ScenePortalRuntime : IModuleRuntime, IHandleEvent<SecondaryActionEv
     public void Handle(SecondaryActionEvent e)
     {
         owner ??= e.target;
-        if (e.context == null || owner == null) return;
+        if (owner == null) return;
         if (string.IsNullOrWhiteSpace(data.targetSceneName)) return;
 
-        string optionId = $"scene.portal.{owner.id}";
-        string textKey = string.IsNullOrWhiteSpace(data.optionTextKey) ? "ui.scene.enter" : data.optionTextKey;
-        int priority = Mathf.Max(0, data.priority);
+        // Đánh dấu đã xử lý trực tiếp — ActionRuntime sẽ không log warning "không có option"
+        if (e.context != null)
+            e.context.IsHandledDirectly = true;
 
-        e.context.AddOption(
-            optionId,
-            textKey,
-            priority,
-            () => SceneTransitionService.RequestTransition(
-                e.initiator,
-                data.targetSceneName,
-                data.targetSpawnPointId,
-                data.saveBeforeTransition));
+        // Chuyển scene trực tiếp — không mở dialog, tránh bug dialog còn lại sau transition
+        bool ok = SceneTransitionService.RequestTransition(
+            e.initiator,
+            data.targetSceneName,
+            data.targetSpawnPointId,
+            data.saveBeforeTransition);
+
+        if (!ok)
+            Debug.LogWarning($"[ScenePortalRuntime] RequestTransition to '{data.targetSceneName}' was rejected (cooldown/already transitioning).");
     }
 
     public ModuleSaveData ToSaveData() => null;
     public void ApplySaveData(ModuleSaveData save) { }
     public bool Equals(IModuleRuntime other) => other is ScenePortalRuntime;
 }
+

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Portal01
   m_EditorClassIdentifier: 
   idObject: 13
-  prefab: {fileID: 1125545272651927824, guid: 78ac15ecd9fbfe348b2b5c87885a04ca, type: 3}
+  prefab: {fileID: 1125545272651927824, guid: 5ee90db9a48642e4c9c8f9bf3707f6a7, type: 3}

@@ -201,6 +201,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entityRoot: {fileID: 8999343799904457157}
   nameText: {fileID: 0}
+  fontAsset: {fileID: 0}
   localOffset: {x: 0, y: 1.55, z: 0}
   localScale: 0.08
   fontSize: 32

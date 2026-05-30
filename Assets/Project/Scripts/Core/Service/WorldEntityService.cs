@@ -228,6 +228,29 @@ public class WorldEntityService
     public IEnumerable<string> GetEntitiesAt(Vector2Int cell) => _spatial.GetEntitiesAt(cell);
     public EntityPosition GetEntityPosition(string idRuntime)  => _spatial.GetEntity(idRuntime);
 
+    public IEnumerable<EntityPosition> GetAllPositions() => _spatial.GetAllEntities();
+
+    public void CleanUpStalePersistentIds(string scenePrefix, HashSet<string> validIds)
+    {
+        if (string.IsNullOrEmpty(scenePrefix) || validIds == null) return;
+
+        var staleInactive = new List<string>();
+        foreach (var kvp in _inactiveRegenerating)
+        {
+            if (kvp.Key.StartsWith(scenePrefix) && !validIds.Contains(kvp.Key))
+                staleInactive.Add(kvp.Key);
+        }
+        foreach (var id in staleInactive) _inactiveRegenerating.Remove(id);
+
+        var staleRemoved = new List<string>();
+        foreach (var id in _removedPersistentIds)
+        {
+            if (id.StartsWith(scenePrefix) && !validIds.Contains(id))
+                staleRemoved.Add(id);
+        }
+        foreach (var id in staleRemoved) _removedPersistentIds.Remove(id);
+    }
+
     public bool HasPersistentId(string persistentId)
     {
         if (string.IsNullOrWhiteSpace(persistentId)) return false;

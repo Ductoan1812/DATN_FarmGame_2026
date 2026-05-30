@@ -1,3 +1,5 @@
+using UnityEngine;
+
 /// <summary>
 /// Save data cho các system-level state (không phải entity).
 /// Mở rộng thêm field khi cần (weather, quest progress, NPC friendship...).
@@ -12,6 +14,12 @@ public class SystemSaveData
     public WeatherType currentWeather = WeatherType.Sunny;
     public System.Collections.Generic.List<string> triggeredStoryEventIds = new System.Collections.Generic.List<string>();
     public System.Collections.Generic.List<string> unlockedResearch = new System.Collections.Generic.List<string>();
+
+    [Header("Saved Player Position")]
+    public string lastActiveSceneName;
+    public float playerPosX;
+    public float playerPosY;
+    public bool hasSavedPlayerPosition;
 }
 
 [System.Serializable]
