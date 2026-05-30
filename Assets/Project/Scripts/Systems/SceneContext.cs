@@ -30,6 +30,14 @@ public class SceneContext : MonoBehaviour
     {
         if (runtimeMarkers != null) return;
 
+        // 1. Ưu tiên dùng SceneTilemapRegistry — không cần scan toàn scene
+        if (SceneTilemapRegistry.Current != null)
+        {
+            runtimeMarkers = SceneTilemapRegistry.Current.RuntimeMarkers;
+            if (runtimeMarkers != null) return;
+        }
+
+        // 2. Fallback: scan toàn scene (chỉ khi scene chưa có SceneTilemapRegistry)
         var tilemaps = FindObjectsByType<Tilemap>(FindObjectsSortMode.None);
         foreach (var tilemap in tilemaps)
         {

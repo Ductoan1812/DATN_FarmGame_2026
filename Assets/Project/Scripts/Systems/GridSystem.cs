@@ -21,14 +21,14 @@ public class GridSystem : MonoBehaviour
 
         Instance = this;
 
+        // Dùng AutoRebind thay vì FindAnyObjectByType<Tilemap>() để đảm bảo đúng Ground tilemap
+        // (FindAnyObjectByType có thể pick Tm_background thay vì Tm_Ground1)
         if (tilemap == null)
-        {
-            tilemap = FindAnyObjectByType<Tilemap>();
-        }
+            AutoRebind();
 
         if (tilemap == null)
         {
-            Debug.LogWarning("[GridSystem] No Tilemap found in scene!");
+            Debug.LogWarning("[GridSystem] No Ground Tilemap found in scene!");
         }
     }
 
@@ -119,4 +119,36 @@ public class GridSystem : MonoBehaviour
 
         return Instance.tilemap;
     }
+
+    /// <summary>
+    /// Auto rebind tilemap after scene transitions.
+    /// Ưu tiên: SceneTilemapRegistry → GameManager.TmGround → FindAnyObjectByType
+    /// </summary>
+    public void AutoRebind()
+    {
+        // 1. SceneTilemapRegistry — bind chính xác, không scan scene
+        var reg = SceneTilemapRegistry.Current;
+        if (reg != null && reg.Ground != null)
+        {
+            tilemap = reg.Ground;
+            Debug.Log($"[GridSystem] AutoRebind from SceneTilemapRegistry: '{tilemap.name}'.");
+            return;
+        }
+
+        // 2. GameManager serialized ref
+        if (GameManager.Instance != null && GameManager.Instance.TmGround != null)
+        {
+            tilemap = GameManager.Instance.TmGround;
+            Debug.Log($"[GridSystem] AutoRebind from GameManager.TmGround: '{tilemap.name}'.");
+            return;
+        }
+
+        // 3. Fallback: FindAnyObjectByType (chỉ khi scene chưa có registry)
+        tilemap = FindAnyObjectByType<Tilemap>();
+        if (tilemap != null)
+            Debug.Log($"[GridSystem] AutoRebind fallback FindAnyObjectByType: '{tilemap.name}'.");
+        else
+            Debug.LogWarning("[GridSystem] AutoRebind failed: No Tilemap found in active scene!");
+    }
 }
+

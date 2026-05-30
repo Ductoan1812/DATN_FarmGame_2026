@@ -1,9 +1,17 @@
-using System.Collections;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 
+/// <summary>
+/// Scan Tm_RuntimeMarkers và seed world objects từ tile markers.
+///
+/// QUAN TRỌNG — Execution order:
+///   SceneTilemapRegistry [−200] → SceneContentScanner [−100] → GameManager [0] → SaveLoadManager.Boot()
+///
+/// Subscribe trong Awake (không dùng coroutine) để tránh race condition với
+/// InventoryDataRestoredPublish được publish đồng bộ trong GameManager.Start().
+/// </summary>
 [DefaultExecutionOrder(-100)]
 public class SceneContentScanner : MonoBehaviour
 {
@@ -13,28 +21,80 @@ public class SceneContentScanner : MonoBehaviour
     private EventBus subscribedBus;
     private bool hasScanned;
 
-    private IEnumerator Start()
+    // ── Lifecycle ──────────────────────────────────────────────────────────
+
+    private void Awake()
     {
-        if (!scanOnStart) yield break;
+        Debug.Log($"[SceneContentScanner] Awake — GameManager.Instance={(GameManager.Instance != null ? "ok" : "null")}, EventBus={(GameManager.Instance?.EventBus != null ? "ok" : "null")}");
+        TrySubscribe();
+    }
 
-        while (GameManager.Instance == null || GameManager.Instance.EventBus == null || GameManager.Instance.WorldService == null)
-            yield return null;
+    private void Start()
+    {
+        // Fallback: thử subscribe lần nữa nếu Awake chưa thành công
+        TrySubscribe();
+    }
 
-        subscribedBus = GameManager.Instance.EventBus;
-        subscribedBus.Subscribe<InventoryDataRestoredPublish>(OnInventoryDataRestored);
+    private void OnEnable()
+    {
+        TrySubscribe();
     }
 
     private void OnDisable()
     {
-        if (subscribedBus != null)
-        {
-            subscribedBus.Unsubscribe<InventoryDataRestoredPublish>(OnInventoryDataRestored);
-            subscribedBus = null;
-        }
+        if (subscribedBus == null) return;
+        subscribedBus.Unsubscribe<WorldObjectsSpawnedPublish>(OnWorldObjectsSpawned);
+        subscribedBus.Unsubscribe<InventoryDataRestoredPublish>(OnInventoryDataRestored);
+        subscribedBus = null;
     }
 
-    private void OnInventoryDataRestored(InventoryDataRestoredPublish _)
+    // ── Event handlers ─────────────────────────────────────────────────────
+
+    /// <summary>
+    /// WorldObjectsSpawnedPublish fire trước InventoryDataRestored —
+    /// dùng làm trigger chính để seed ngay sau khi world load.
+    /// </summary>
+    private void OnWorldObjectsSpawned(WorldObjectsSpawnedPublish _) => TryRunScan();
+
+    /// <summary>
+    /// Fallback: InventoryDataRestoredPublish (fire sau World) cũng trigger scan
+    /// phòng trường hợp WorldObjectsSpawnedPublish bị miss.
+    /// </summary>
+    private void OnInventoryDataRestored(InventoryDataRestoredPublish _) => TryRunScan();
+
+    // ── Core ──────────────────────────────────────────────────────────────
+
+    private void TrySubscribe()
     {
+        if (subscribedBus != null) return;
+        if (!scanOnStart) return;
+
+        var bus = GameManager.Instance?.EventBus;
+        if (bus == null)
+        {
+            Debug.LogWarning($"[SceneContentScanner] TrySubscribe FAILED — GameManager={(GameManager.Instance != null ? "ok" : "null")}, EventBus=null");
+            return;
+        }
+
+        bus.Subscribe<WorldObjectsSpawnedPublish>(OnWorldObjectsSpawned);
+        bus.Subscribe<InventoryDataRestoredPublish>(OnInventoryDataRestored);
+        subscribedBus = bus;
+        Debug.Log("[SceneContentScanner] Subscribed to WorldObjectsSpawned + InventoryDataRestored.");
+    }
+
+    private void TryRunScan()
+    {
+        // Chỉ chạy nếu scene này đang là active scene
+        // (tránh FarmScene scanner chạy khi active scene là MineScene v.v.)
+        string myScene = gameObject.scene.name;
+        string activeScene = SceneManager.GetActiveScene().name;
+        if (!string.Equals(myScene, activeScene, System.StringComparison.Ordinal))
+        {
+            Debug.Log($"[SceneContentScanner] TryRunScan skipped — belongs to '{myScene}', active is '{activeScene}'");
+            return;
+        }
+
+        Debug.Log($"[SceneContentScanner] TryRunScan — hasScanned={hasScanned}");
         if (hasScanned) return;
         hasScanned = true;
         ScanAndSeed();
@@ -47,7 +107,11 @@ public class SceneContentScanner : MonoBehaviour
 
         sceneContext.AutoBind();
         Tilemap markerMap = sceneContext.RuntimeMarkers;
-        if (markerMap == null) return;
+        if (markerMap == null)
+        {
+            Debug.LogWarning("[SceneContentScanner] RuntimeMarkers tilemap not found. Cannot seed world objects.");
+            return;
+        }
 
         var gameManager = GameManager.Instance;
         var worldService = gameManager?.WorldService;
@@ -59,6 +123,42 @@ public class SceneContentScanner : MonoBehaviour
         var bounds = markerMap.cellBounds;
         int seededCount = 0;
 
+        // --- PRE-PASS: CLEAN UP STALE PERSISTENT ENTITIES ---
+        // Gather all valid persistent IDs from tm_markers
+        var validPersistentIds = new System.Collections.Generic.HashSet<string>();
+        foreach (var cell in bounds.allPositionsWithin)
+        {
+            var tile = markerMap.GetTile<SceneSpawnTile>(cell);
+            if (tile == null || tile.markerKind == SceneMarkerKind.PlayerSpawn) continue;
+
+            string pid = SceneSpawnPayload.BuildPersistentId(
+                sceneName, tile.markerKind, tile.objectType, cell, tile.spawnGroupId);
+            validPersistentIds.Add(pid);
+        }
+
+        // Identify and destroy stale entities from save data
+        string scenePrefix = sceneName + ":";
+        var staleRuntimeIds = new System.Collections.Generic.List<string>();
+        foreach (var ep in worldService.GetAllPositions())
+        {
+            if (!string.IsNullOrEmpty(ep.persistentId) &&
+                ep.persistentId.StartsWith(scenePrefix) &&
+                !validPersistentIds.Contains(ep.persistentId))
+            {
+                staleRuntimeIds.Add(ep.idRuntime);
+            }
+        }
+
+        foreach (var id in staleRuntimeIds)
+        {
+            Debug.Log($"[SceneContentScanner] Cleaning up stale persistent entity (marker deleted): {id}");
+            eventBus.Publish(new DestroyEntityRequestPublish(id));
+        }
+
+        // Clean up internal stale references in WorldEntityService
+        worldService.CleanUpStalePersistentIds(scenePrefix, validPersistentIds);
+
+        // --- PASS: SEED NEW MARKERS ---
         foreach (var cell in bounds.allPositionsWithin)
         {
             var tile = markerMap.GetTile<SceneSpawnTile>(cell);
@@ -90,7 +190,11 @@ public class SceneContentScanner : MonoBehaviour
                 continue;
             }
 
-            if (tile.entityData == null)
+            // Portal và một số static object KHÔNG cần EntityData —
+            // chỉ cần prefab instantiate, không có stats/inventory.
+            // Với object có EntityData null mà không phải Portal → warning và skip.
+            bool needsEntityData = tile.markerKind != SceneMarkerKind.Portal;
+            if (needsEntityData && tile.entityData == null)
             {
                 Debug.LogWarning($"[SceneContentScanner] Marker '{persistentId}' missing EntityData.");
                 continue;
@@ -125,6 +229,8 @@ public class SceneContentScanner : MonoBehaviour
 
         if (seededCount > 0)
             Debug.Log($"[SceneContentScanner] Seeded {seededCount} marker entity/entities for scene '{sceneName}'.");
+        else
+            Debug.Log($"[SceneContentScanner] No new markers to seed in scene '{sceneName}' (all already seeded or no tiles).");
     }
 
     private static int ResolveStartStageIndex(SceneSpawnTile tile)

@@ -55,24 +55,58 @@ public class SpawnSystem : MonoBehaviour
             return;
         }
 
-        // Resolve EntityRuntime
+        // Resolve EntityRuntime (có thể null nếu là static object như portal)
         EntityRuntime spawnRuntime = ResolveRuntime(req);
+
+        // ── Static / Prefab-Only path (portal, decoration...) ─────────────
+        // Khi không có EntityData và không có runtime sẵn → spawn trực tiếp,
+        // không cần EntityRuntime, SpatialEntityRegistry, hay ClearZoneTracker.
         if (spawnRuntime == null)
         {
-            Debug.LogWarning($"[SpawnSystem] Cannot resolve EntityRuntime for '{req.idPrefab}'");
+            var obj = Instantiate(prefab, new Vector3(req.worldPos.x, req.worldPos.y, 0), Quaternion.identity);
+
+            // Đặt tên có thể đọc được (không có runtime id)
+            obj.name = $"{req.idPrefab}_static";
+
+            // Prefab được lưu ở trạng thái inactive (để EntityRoot.Add() mới activate).
+            // Với static object không có EntityRuntime, cần active thủ công.
+            if (!obj.activeSelf)
+                obj.SetActive(true);
+
+            // Đăng ký minimal vào world service (để save system biết đã spawn, không seed lại)
+            if (req.payload is SceneSpawnPayload scenePayload && !string.IsNullOrEmpty(scenePayload.persistentId))
+            {
+                var origin = WorldToCell(req.worldPos);
+                var ep = new EntityPosition
+                {
+                    idRuntime     = scenePayload.persistentId,   // dùng persistentId thay id runtime
+                    idPrefab      = req.idPrefab,
+                    pos           = req.worldPos,
+                    occupiedCells = new Vector2Int[] { origin },
+                    layer         = EntityLayer.Ground,
+                    persistentId  = scenePayload.persistentId,
+                    savePolicy    = scenePayload.savePolicy,
+                    spawnGroupId  = scenePayload.spawnGroupId,
+                };
+                _worldService.ForceRegisterSpawn(ep);
+            }
+
+            Debug.Log($"[SpawnSystem] Spawned static '{req.idPrefab}' (no EntityRuntime) at {req.worldPos}");
             return;
         }
 
+
+        // ── Entity path (NPC, cây, quặng, kẻ thù...) ─────────────────────
         ApplyInitialStage(req, spawnRuntime);
 
         // Lấy PlacementRule từ EntityData
         var rule = spawnRuntime.entityData.placementRule;
 
         // Tính occupied cells
-        var origin = WorldToCell(req.worldPos);
-        var cells  = WorldEntityService.BuildOccupiedCells(origin, spawnRuntime);
+        var originCell = WorldToCell(req.worldPos);
+        var cells      = WorldEntityService.BuildOccupiedCells(originCell, spawnRuntime);
 
-        var ep = new EntityPosition
+        var entityPos = new EntityPosition
         {
             idRuntime     = spawnRuntime.id,
             idPrefab      = req.idPrefab,
@@ -80,16 +114,16 @@ public class SpawnSystem : MonoBehaviour
             occupiedCells = cells,
             layer         = rule.occupyLayer
         };
-        ApplyScenePayload(ep, req);
+        ApplyScenePayload(entityPos, req);
 
         // Đăng ký vào SpatialEntityRegistry
         if (req.bypassValidation)
         {
-            _worldService.ForceRegisterSpawn(ep);
+            _worldService.ForceRegisterSpawn(entityPos);
         }
         else
         {
-            var result = _worldService.TryRegisterSpawn(ep, rule);
+            var result = _worldService.TryRegisterSpawn(entityPos, rule);
             if (result != SpawnResult.Success)
             {
                 Debug.LogWarning($"[SpawnSystem] Spawn failed ({result}): '{req.idPrefab}' at {req.worldPos}");
@@ -104,7 +138,7 @@ public class SpawnSystem : MonoBehaviour
             spawnEntity = _entityService.Split(spawnRuntime, 1);
             if (spawnEntity == null)
             {
-                _worldService.TryUnregister(ep.idRuntime);
+                _worldService.TryUnregister(entityPos.idRuntime);
                 Debug.LogWarning($"[SpawnSystem] Split failed (amount = 0?): '{req.idPrefab}'");
                 return;
             }
@@ -122,17 +156,17 @@ public class SpawnSystem : MonoBehaviour
 
         GameManager.Instance?.ClearZoneTracker?.RegisterSpawn(
             spawnEntity.id,
-            ep.spawnGroupId,
-            ep.occupiedCells,
-            ep.savePolicy);
+            entityPos.spawnGroupId,
+            entityPos.occupiedCells,
+            entityPos.savePolicy);
 
         // Instantiate GameObject
-        var obj = Instantiate(prefab, new Vector3(req.worldPos.x, req.worldPos.y, 0), Quaternion.identity);
-        obj.name = $"{req.idPrefab}_{spawnEntity.id[..8]}";
-        EnsureRuntimeBridges(obj, spawnEntity);
+        var go = Instantiate(prefab, new Vector3(req.worldPos.x, req.worldPos.y, 0), Quaternion.identity);
+        go.name = $"{req.idPrefab}_{spawnEntity.id[..8]}";
+        EnsureRuntimeBridges(go, spawnEntity);
 
         // Gắn EntityRuntime vào EntityRoot
-        var root = obj.GetComponent<EntityRoot>();
+        var root = go.GetComponent<EntityRoot>();
         if (root != null)
         {
             root.entityService = _entityService;

@@ -30,6 +30,8 @@ public class SaveLoadManager
     private readonly EventBus _eventBus;
     private TimeManager _timeManager;
 
+    public bool IsBootingFromSave { get; private set; }
+
     // Config
     private readonly ObjectType _playerPrefabId;
     private readonly string _playerEntityDataId;
@@ -76,6 +78,19 @@ public class SaveLoadManager
 
         if (hasSave)
         {
+            var systemData = ReadSystemSave();
+            if (systemData != null && !string.IsNullOrEmpty(systemData.lastActiveSceneName))
+            {
+                string currentScene = SceneManager.GetActiveScene().name;
+                if (!string.Equals(currentScene, systemData.lastActiveSceneName, StringComparison.Ordinal))
+                {
+                    Debug.Log($"[SaveLoadManager] Saved scene is '{systemData.lastActiveSceneName}', current is '{currentScene}'. Loading saved scene and setting IsBootingFromSave...");
+                    IsBootingFromSave = true;
+                    SceneManager.LoadScene(systemData.lastActiveSceneName);
+                    return; // Let the next scene boot
+                }
+            }
+
             Debug.Log("[SaveLoadManager] Save detected → Loading...");
             LoadAll();
         }
@@ -159,7 +174,16 @@ public class SaveLoadManager
             _spawnSystem.ReinstantiateFromSave(ep, runtime);
         });
 
-        EnsurePlayerSpawnedAt();
+        var systemData = ReadSystemSave();
+        if (systemData != null && systemData.hasSavedPlayerPosition)
+        {
+            Vector2 savedPos = new Vector2(systemData.playerPosX, systemData.playerPosY);
+            SpawnPlayerAtPosition(savedPos);
+        }
+        else
+        {
+            EnsurePlayerSpawnedAt();
+        }
     }
 
     // ══════════════════════════════════════
@@ -230,10 +254,20 @@ public class SaveLoadManager
         if (research != null)
             data.unlockedResearch = research.ExportUnlocked();
 
+        // Save active scene and player position
+        var player = FindBestPlayerController();
+        if (player != null)
+        {
+            data.lastActiveSceneName = SceneManager.GetActiveScene().name;
+            data.playerPosX = player.transform.position.x;
+            data.playerPosY = player.transform.position.y;
+            data.hasSavedPlayerPosition = true;
+        }
+
         var json = JsonUtility.ToJson(data, true);
         var path = System.IO.Path.Combine(Application.persistentDataPath, SystemSaveFile);
         System.IO.File.WriteAllText(path, json);
-        Debug.Log($"[SaveLoadManager] System data saved: {data.time}, watered={data.wateredCells?.Count ?? 0}, soil={data.soilCells?.Count ?? 0}, clearZones={data.clearZones?.Count ?? 0}, narrative={data.triggeredStoryEventIds?.Count ?? 0}, research={data.unlockedResearch?.Count ?? 0}");
+        Debug.Log($"[SaveLoadManager] System data saved: {data.time}, scene={data.lastActiveSceneName}, playerPos=({data.playerPosX},{data.playerPosY}), watered={data.wateredCells?.Count ?? 0}, soil={data.soilCells?.Count ?? 0}, clearZones={data.clearZones?.Count ?? 0}, narrative={data.triggeredStoryEventIds?.Count ?? 0}, research={data.unlockedResearch?.Count ?? 0}");
     }
 
     private void LoadSystemData()
@@ -410,5 +444,76 @@ public class SaveLoadManager
         }
 
         return null;
+    }
+
+    private SystemSaveData ReadSystemSave()
+    {
+        var path = System.IO.Path.Combine(Application.persistentDataPath, SystemSaveFile);
+        if (!System.IO.File.Exists(path)) return null;
+        try
+        {
+            var json = System.IO.File.ReadAllText(path);
+            return JsonUtility.FromJson<SystemSaveData>(json);
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"[SaveLoadManager] Failed to read system save: {ex.Message}");
+            return null;
+        }
+    }
+
+    private void SpawnPlayerAtPosition(Vector2 spawnPosition)
+    {
+        var existingPlayer = FindBestPlayerController();
+        if (existingPlayer != null && existingPlayer.gameObject.scene == SceneManager.GetActiveScene())
+        {
+            existingPlayer.transform.position = spawnPosition;
+            return;
+        }
+
+        var playerEntity = FindPlayerEntity();
+        if (playerEntity == null)
+        {
+            var playerData = _entityDataRegistry.Find(_playerEntityDataId);
+            if (playerData == null)
+            {
+                Debug.LogError($"[SaveLoadManager] Cannot spawn player: EntityData '{_playerEntityDataId}' not found.");
+                return;
+            }
+
+            playerEntity = _entityService.Create(playerData);
+        }
+
+        GameManager.Instance?.ProgressionService?.EnsureInitialized(playerEntity);
+
+        _eventBus.Publish(new SpawnRequestPublish(
+            spawnPosition,
+            _playerPrefabId,
+            playerEntity,
+            payload: new SceneSpawnPayload { savePolicy = SceneEntitySavePolicy.Temporary }));
+
+        Debug.Log($"[SaveLoadManager] Player spawned at saved position {spawnPosition}.");
+    }
+
+    public void CompleteBootFromSavedScene()
+    {
+        IsBootingFromSave = false;
+        Debug.Log("[SaveLoadManager] Completing boot sequence from saved scene...");
+
+        // Load tất cả entities và spawn player tại vị trí đã lưu
+        LoadAll();
+
+        // Phase 1: Entity data loaded
+        _eventBus.Publish(new DataReadyPublish());
+
+        // Phase 2: World objects spawned (đã spawn trong LoadAll)
+        _eventBus.Publish(new WorldObjectsSpawnedPublish());
+
+        // Phase 3: Restore inventories + system data (time, watered cells, weather, v.v.)
+        _entityService.RestoreAllInventories();
+        LoadSystemData();
+
+        _eventBus.Publish(new InventoryDataRestoredPublish());
+        Debug.Log("[SaveLoadManager] Boot sequence from saved scene complete.");
     }
 }

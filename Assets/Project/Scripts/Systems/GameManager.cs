@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private WeatherConfig weatherConfig;
     [SerializeField] private TileData tileData;
     public TileData TileData => tileData;
+    public Tilemap TmGround => tmGround;
 
     [Header("Tilemap References")]
     [SerializeField] private Tilemap tmGround;
@@ -203,6 +204,16 @@ public class GameManager : MonoBehaviour
 
     private void RegisterExtraNamedTilemaps()
     {
+        // Nếu có SceneTilemapRegistry — dùng luôn, không cần scan Grid
+        var reg = SceneTilemapRegistry.Current;
+        if (reg != null)
+        {
+            if (reg.TryGet("Tm_Ground2", out var tm2))
+                TileRegistry.RegisterTilemap("Tm_Ground2", tm2);
+            return;
+        }
+
+        // Fallback: scan Grid children
         var grid = FindAnyObjectByType<Grid>();
         if (grid == null) return;
 
@@ -219,6 +230,25 @@ public class GameManager : MonoBehaviour
 
     private void AutoFindTilemaps()
     {
+        // 1. Ưu tiên SceneTilemapRegistry — O(1), không scan scene
+        var reg = SceneTilemapRegistry.Current;
+        if (reg != null)
+        {
+            if (tmGround       == null) tmGround       = reg.Ground;
+            if (tmGroundDetail == null) tmGroundDetail = reg.GroundDetail;
+            if (tmWatered      == null) tmWatered      = reg.Watered;
+            if (tmCollision    == null) tmCollision    = reg.Collision;
+            if (tmDecoration   == null) tmDecoration   = reg.Decoration;
+            if (tmOverlay      == null) tmOverlay      = reg.Overlay;
+
+            if (tmGround != null)
+            {
+                Debug.Log("[GameManager] AutoFindTilemaps: bound from SceneTilemapRegistry.");
+                return;
+            }
+        }
+
+        // 2. Fallback: scan Grid children (chỉ khi scene chưa có SceneTilemapRegistry)
         var grid = FindAnyObjectByType<Grid>();
         if (grid == null) return;
 
@@ -229,6 +259,7 @@ public class GameManager : MonoBehaviour
                 case "Tm_Ground":
                 case "Tm_Ground1":      if (tmGround       == null) tmGround       = tm; break;
                 case "Tm_GroundDetail": if (tmGroundDetail == null) tmGroundDetail = tm; break;
+                case "Tm_Watered":      if (tmWatered      == null) tmWatered      = tm; break;
                 case "Tm_Collision":    if (tmCollision    == null) tmCollision    = tm; break;
                 case "Tm_Decoration":   if (tmDecoration   == null) tmDecoration   = tm; break;
                 case "Tm_Overlay":      if (tmOverlay      == null) tmOverlay      = tm; break;
@@ -539,16 +570,31 @@ public class GameManager : MonoBehaviour
         EnsurePersistentUIRoot();
         RebindSceneScopedServices();
         EventBus?.Publish(new LoadingScreenProgressPublish(0.92f));
-        SaveLoadManager.LoadCurrentSceneWorld();
-        EventBus?.Publish(new LoadingScreenProgressPublish(0.96f));
 
-        SceneTransitionService.TryPeekPendingSpawnPointForCurrentScene(out var spawnPointId);
-        SaveLoadManager.EnsurePlayerSpawnedAt(spawnPointId);
-        SceneTransitionService.SuppressPortalTriggersAfterArrival();
-        EventBus?.Publish(new LoadingScreenProgressPublish(0.99f));
+        EnsureMainCameraExists();
 
-        EventBus.Publish(new WorldObjectsSpawnedPublish());
-        EventBus.Publish(new InventoryDataRestoredPublish());
+        if (SaveLoadManager != null && SaveLoadManager.IsBootingFromSave)
+        {
+            Debug.Log("[GameManager] Scene loaded is target saved scene. Performing full saved-state restore...");
+            SaveLoadManager.CompleteBootFromSavedScene();
+        }
+        else
+        {
+            SaveLoadManager.LoadCurrentSceneWorld();
+            EventBus?.Publish(new LoadingScreenProgressPublish(0.96f));
+
+            SceneTransitionService.TryPeekPendingSpawnPointForCurrentScene(out var spawnPointId);
+            SaveLoadManager.EnsurePlayerSpawnedAt(spawnPointId);
+            SceneTransitionService.SuppressPortalTriggersAfterArrival();
+            EventBus?.Publish(new LoadingScreenProgressPublish(0.99f));
+
+            EventBus.Publish(new WorldObjectsSpawnedPublish());
+            EventBus.Publish(new InventoryDataRestoredPublish());
+        }
+
+        // Camera rebind sau khi player đã spawn trong scene mới
+        RebindCamera();
+
         EventBus?.Publish(new LoadingScreenProgressPublish(1f));
         EventBus.Publish(new LoadingScreenHidePublish());
         SceneTransitionService.NotifyRestoreCompleted(sceneName);
@@ -560,14 +606,31 @@ public class GameManager : MonoBehaviour
 
     private void RebindSceneScopedServices()
     {
-        tmGround = null;
+        // Reset tất cả tilemap ref — SceneTilemapRegistry.Current sẽ được set
+        // bởi Awake() của SceneTilemapRegistry trong scene mới trước khi chạy đến đây
+        tmGround      = null;
         tmGroundDetail = null;
-        tmCollision = null;
-        tmDecoration = null;
-        tmOverlay = null;
+        tmWatered     = null;
+        tmCollision   = null;
+        tmDecoration  = null;
+        tmOverlay     = null;
+
+        // Rebind GridSystem ngay nếu có registry
+        if (SceneTilemapRegistry.Current != null)
+        {
+            var gs = GridSystem.Instance;
+            if (gs != null) gs.AutoRebind();
+        }
 
         InitTileRegistry();
         InitWorldEntitySystem();
+
+        // WateredTileTracker dùng readonly fields — tạo mới với tilemap từ scene mới.
+        // Các lambda event trong EventBus đọc WateredTileTracker qua field (không phải capture),
+        // nên chỉ cần reassign field là đủ.
+        if (tmWatered != null || tmGround != null)
+            WateredTileTracker = new WateredTileTracker(tmWatered, tmGround, tileData);
+
         ClearZoneTracker?.RebindWorldService(WorldService, tileData);
         SprinklerRegistry?.Clear();
         SpawnSystem?.RebindWorldService(WorldService);
@@ -586,6 +649,7 @@ public class GameManager : MonoBehaviour
     private void EnsurePersistentUIRoot()
     {
         var roots = FindNamedGameObjects("UIRoot");
+
         if (persistentUIRoot == null)
         {
             foreach (var root in roots)
@@ -597,6 +661,26 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        // Fallback: nếu không tìm thấy UIRoot trong scene, thử instantiate từ BootstrapConfig
+        // (trường hợp game start từ scene không phải FarmScene mà BootstrapLoader chưa chạy)
+        if (persistentUIRoot == null)
+        {
+            var config = Resources.Load<BootstrapConfig>(BootstrapConfig.ResourcePath);
+            if (config != null && config.uiRootPrefab != null)
+            {
+                persistentUIRoot = Instantiate(config.uiRootPrefab);
+                persistentUIRoot.name = "UIRoot";
+                DontDestroyOnLoad(persistentUIRoot);
+                Debug.Log("[GameManager] UIRoot instantiated from BootstrapConfig as fallback.");
+            }
+            else
+            {
+                Debug.LogError("[GameManager] UIRoot not found and BootstrapConfig fallback unavailable! " +
+                               "UI sẽ không hoạt động.");
+            }
+        }
+
+        // Destroy các UIRoot duplicate (chỉ giữ lại persistentUIRoot)
         foreach (var root in roots)
         {
             if (root == null || root == persistentUIRoot)
@@ -605,6 +689,7 @@ public class GameManager : MonoBehaviour
             Destroy(root);
         }
     }
+
 
     private static GameObject[] FindNamedGameObjects(string objectName)
     {
@@ -625,6 +710,52 @@ public class GameManager : MonoBehaviour
         }
 
         return results;
+    }
+
+    private void EnsureMainCameraExists()
+    {
+        var mainCam = Camera.main;
+
+        if (mainCam == null)
+        {
+            // Tìm hoặc tạo Cameras container
+            var cameras = GameObject.Find("Cameras");
+            if (cameras == null)
+                cameras = new GameObject("Cameras");
+
+            var camObj = new GameObject("Main Camera");
+            camObj.tag = "MainCamera";
+            camObj.transform.SetParent(cameras.transform);
+            camObj.transform.position = new Vector3(0f, 0f, -10f);
+
+            mainCam = camObj.AddComponent<Camera>();
+            mainCam.orthographic = true;
+            mainCam.orthographicSize = 6f;
+
+            // SceneCameraFollower thay thế Cinemachine — đơn giản, không bị lỗi sau scene transition
+            camObj.AddComponent<SceneCameraFollower>();
+
+            Debug.Log("[GameManager] Created Main Camera with SceneCameraFollower.");
+        }
+        else
+        {
+            // Camera đã tồn tại — đảm bảo có SceneCameraFollower
+            if (mainCam.GetComponent<SceneCameraFollower>() == null)
+            {
+                mainCam.gameObject.AddComponent<SceneCameraFollower>();
+                Debug.Log("[GameManager] Added SceneCameraFollower to existing Main Camera.");
+            }
+        }
+    }
+
+    /// <summary>Gọi sau khi scene mới load xong để camera rebind player mới.</summary>
+    private static void RebindCamera()
+    {
+        var cam = Camera.main;
+        if (cam == null) return;
+
+        var follower = cam.GetComponent<SceneCameraFollower>();
+        follower?.ForceRebind();
     }
 }
 
