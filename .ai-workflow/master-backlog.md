@@ -9,66 +9,75 @@ Use this file as the prioritized source of truth for unattended work slices.
 - `P2`: important polish or clarity improvement
 - `P3`: nice-to-have follow-up
 
-## Todo
-
-- [ ] Marker seeding reliability pass
-  - Priority: `P0`
-  - Area: world seeding, respawn, save/load
-  - Goal: verify marker-seeded plants/trees/NPCs persist and respawn correctly without duplicate or incorrect initialization
-  - Files likely touched: `SceneContentScanner`, `SpawnSystem`, `SceneSpawnTile`, `SceneSpawnPayload`, related marker assets
-  - Acceptance: marker-seeded entities initialize once, random start stage works only on fresh seed/respawn, normal save/load preserves true state
-
-- [ ] Plant taxonomy and validation pass
-  - Priority: `P1`
-  - Area: prefab and marker correctness
-  - Goal: formalize and enforce correct use of `Plant01`, `Plant02`, and `TreeNode`
-  - Files likely touched: editor validation/tooling, marker assets, world object definitions, `.md` documentation
-  - Acceptance: wrong prefab/type combinations are easier to detect; marker setup rules are documented and actionable
-
-- [ ] Fruit tree and regrow crop data completion pass
-  - Priority: `P1`
-  - Area: content data, stage loop, harvest/drop consistency
-  - Goal: audit and complete data for multi-harvest crops and fruit trees so they behave consistently
-  - Files likely touched: `seed_*_tree.asset`, regrow crop assets, workbench/editor helpers
-  - Acceptance: loop stages, drops, destroy rules, and harvest methods are internally consistent across affected plants
-
-- [ ] Interaction and feedback readability pass
-  - Priority: `P1`
-  - Area: player feedback, prompts, micro-response
-  - Goal: improve clarity of interactions that already exist so the game communicates state better
-  - Files likely touched: prompt scripts, reaction scripts, small gameplay feedback components, UI hooks
-  - Acceptance: important interactions are easier to read without changing the core rules
-
-- [ ] Save/load regression checklist for farming world state
-  - Priority: `P1`
-  - Area: technical robustness
-  - Goal: codify and verify the critical saved states for farming objects and tools
-  - Files likely touched: `.ai-workflow` docs, save/load helpers, targeted runtime fixes if failures are found
-  - Acceptance: a repeatable checklist exists and the main risky states are covered
-
-- [ ] User-owned asset follow-up list
-  - Priority: `P1`
-  - Area: art, animation, scene dressing
-  - Goal: keep a visible list of tasks that Codex cannot finish alone and that require user art or scene work
-  - Files likely touched: `.ai-workflow/agent-handoff.md`, dedicated art todo notes if needed
-  - Acceptance: every system-complete-but-art-incomplete area leaves behind a clear user action item
-
 ## In Progress
 
-- [ ] Marker seeding reliability pass
+- [ ] GED canonical content expansion pass
   - Priority: `P0`
-  - Current slice:
-    - random start stage is applied only through marker payload on fresh seed / respawn
-    - fixed persistence gap for destroyed `Persistent` marker entities by saving removed `persistentId` tombstones in `WorldEntityService`
-  - Remaining checks:
-    - verify `Persistent` marker destroyed once does not reseed on reload
-    - verify `Regenerating` marker still randomizes only on respawn and not on normal load
-    - audit marker assets that should use `Persistent` vs `Regenerating`
+  - Area: content data pipeline, localization, gameplay-ready assets
+  - Goal: expand the new canonical generator from a core playable slice into a broad GED-backed catalog that covers remaining crops, fruit trees, materials, foods, animals, enemies, and placeable utility content
+  - Acceptance:
+    - generator runs inside the open Unity Editor
+    - canonical assets continue to land in `Assets/Project/Resources/Data/Entities`
+    - each added archetype has coherent `id`, `keyName`, `descKey`, core modules, and VI/EN entries
+
+## Todo
+
+- [ ] Expand crop and fruit tree roster from GED
+  - Priority: `P1`
+  - Area: farming content
+  - Goal: move beyond the representative crop slice and cover the broader seasonal farming catalog defined in `GED.md`
+  - Files likely touched: `GEDCanonicalGenerator`, localization output, generated crop/tree assets
+  - Acceptance: major seasonal crop families and fruit tree families exist as seed item + harvest item + world entity trios
+
+- [ ] Add machine, storage, and placeable coverage where the repo supports it
+  - Priority: `P1`
+  - Area: utility/building data
+  - Goal: extend canonical data for supported placeables such as sprinklers and beds, then add chest/processor archetypes once matching object types or prefabs exist
+  - Files likely touched: generator, runtime modules, world object definitions, future prefab/object type mappings
+  - Acceptance: supported placeables are fully usable; unsupported archetypes are explicitly tracked instead of half-generated
+
+- [ ] Finish gameplay-facing storage and processor UI flow
+  - Priority: `P1`
+  - Area: interaction UX
+  - Goal: convert the new storage/processor runtime hooks into player-facing windows and actions
+  - Files likely touched: UI event subscribers, panel scripts, runtime interaction flow
+  - Acceptance: storage and processor entities can be opened and used through actual UI, not only event stubs
+
+- [ ] Add canonical validator and audit tooling for generated GED assets
+  - Priority: `P1`
+  - Area: editor tooling and production readiness
+  - Goal: detect missing modules, missing localization, duplicate ids, empty desc keys, missing world object mappings, and unsupported archetypes early
+  - Files likely touched: editor generator/validator scripts
+  - Acceptance: one validation run reports actionable warnings before content is shipped
+
+- [ ] Complete recipe and progression chains from generated materials
+  - Priority: `P1`
+  - Area: economy and crafting loop
+  - Goal: expand from sample recipes into coherent downstream uses for crops, wood, ore, animal products, and enemy drops
+  - Files likely touched: generator, recipe assets, pricing/balance values
+  - Acceptance: representative materials clearly flow into craft/process/use outcomes
+
+- [ ] Wire canonical content into shops, starter loadouts, and scene content where safe
+  - Priority: `P2`
+  - Area: integration
+  - Goal: start replacing or supplementing legacy references with canonical generated assets in carefully scoped places
+  - Files likely touched: NPC shop data, bootstrap/loadout scripts, marker assets
+  - Acceptance: selected gameplay loops use canonical data end-to-end without breaking existing scenes
+
+- [ ] User-owned art and scene hookup list for generated GED assets
+  - Priority: `P1`
+  - Area: art and scene ownership
+  - Goal: keep a clear list of sprite/icon/prefab/tilemap tasks that still require user action after logic/data are complete
+  - Files likely touched: handoff notes, dedicated art todo docs if needed
+  - Acceptance: generated content leaves behind explicit follow-up items for visuals and scene dressing
 
 ## Done
 
-- [x] Automation workflow bootstrap
-  - Result: `.codex/AGENTS.md` updated, `.ai-workflow` files created, and heartbeat follow-up scheduled
+- [x] GED runtime foundations
+  - Result: added `SeasonRule`, `Consumable`, `ToolRequirement`, `Storage`, and `Processor` modules/runtimes plus supporting event/tool-tier hooks
 
-- [x] Farming core loop implementation and stabilization baseline
-  - Result: planting, watering, harvest flow, refill flow, water meter UI, and stage/harvest refactors are in place and now need completion-oriented follow-up
+- [x] Inventory use-item flow baseline
+  - Result: backpack use requests now route through `PlayerBridge`, and consumables/placeables can be identified as usable in the backpack UI
+
+- [x] Canonical generator core playable slice
+  - Result: Unity editor can now generate a representative catalog of tools, crops, fruit trees, materials, foods, nodes, animals, enemies, sample recipes, utility placeables, and shop content into the canonical `Resources` tree with VI/EN localization
