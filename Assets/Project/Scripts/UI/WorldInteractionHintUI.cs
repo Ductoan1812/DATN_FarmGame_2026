@@ -87,8 +87,8 @@ public class WorldInteractionHintUI : MonoBehaviour
         string targetName = ResolveText(currentPreview.targetNameKey, currentPreview.targetNameFallback);
         string actionText = ResolveText(currentPreview.actionTextKey, "Tương tác");
 
-        string line = ResolveText("ui.interaction.prompt_format", "E - {0}: {1}");
-        line = string.Format(line, actionText, targetName);
+        string keyText = GameplayInputSettings.FormatKey(GameplayInputSettings.GetInteractKey());
+        string line = $"{keyText} - {actionText}: {targetName}";
 
         if (currentPreview.isBlocked && !string.IsNullOrWhiteSpace(currentPreview.blockedReasonKey))
             line = ResolveBlockedLine(currentPreview.blockedReasonKey);

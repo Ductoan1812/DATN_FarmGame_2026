@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HudStatusMapUI : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class HudStatusMapUI : MonoBehaviour
 
     private void OnEnable()
     {
+        EnsureBasicLayout();
         TrySubscribe();
         ResolveRefs();
         RefreshAll();
@@ -21,6 +23,7 @@ public class HudStatusMapUI : MonoBehaviour
 
     private void Start()
     {
+        EnsureBasicLayout();
         TrySubscribe();
         ResolveRefs();
         RefreshAll();
@@ -113,6 +116,8 @@ public class HudStatusMapUI : MonoBehaviour
 
     private void ResolveRefs()
     {
+        AutoFindRefs();
+
         if (timeManager == null)
             timeManager = GameManager.Instance != null
                 ? GameManager.Instance.TimeManager
@@ -127,6 +132,48 @@ public class HudStatusMapUI : MonoBehaviour
             : FindAnyObjectByType<PlayerInventory>()?.GetComponent<EntityRoot>();
 
         playerEntity = root != null ? root.GetEntity() : null;
+    }
+
+    private void AutoFindRefs()
+    {
+        dateText ??= FindText(transform, "DateText")
+                  ?? FindText(transform, "DayText");
+        timeText ??= FindText(transform, "TimeText");
+        moneyText ??= FindText(transform, "MoneyText")
+                   ?? FindText(transform, "CoinText");
+    }
+
+    private void EnsureBasicLayout()
+    {
+        AutoFindRefs();
+        if (dateText != null && timeText != null && moneyText != null)
+            return;
+
+        var existing = FindDeepChild(transform, "HudStatusFallback");
+        if (existing != null)
+        {
+            AutoFindRefs();
+            return;
+        }
+
+        var root = CreateUiObject("HudStatusFallback", transform);
+        Stretch(root, Vector2.zero, Vector2.zero);
+
+        var statusPanel = CreatePanel("StatusPanel", root, new Vector2(0f, 0f), new Vector2(0.62f, 1f), new Vector2(0f, 0.5f), Vector2.zero, new Vector2(-8f, 0f), new Color(0.86f, 0.56f, 0.22f, 0.90f));
+        ConfigureVertical(statusPanel, 3f, new RectOffset(12, 12, 6, 6));
+        dateText = CreateStatusRow(statusPanel, "DateText", "D", "Ngày 1 - Xuân");
+        timeText = CreateStatusRow(statusPanel, "TimeText", "T", "06:00 AM");
+        moneyText = CreateStatusRow(statusPanel, "MoneyText", "$", "0");
+
+        var mapPanel = CreatePanel("MiniMapPanel", root, new Vector2(0.64f, 0f), new Vector2(1f, 1f), new Vector2(1f, 0.5f), Vector2.zero, Vector2.zero, new Color(0.18f, 0.38f, 0.20f, 0.92f));
+        var mapTitle = CreateText("MapTitle", mapPanel, "Bản đồ", 14f, TextAlignmentOptions.Center, new Color(0.95f, 0.90f, 0.58f));
+        SetRect(mapTitle.rectTransform, new Vector2(0f, 1f), Vector2.one, new Vector2(0.5f, 1f), new Vector2(0f, -8f), new Vector2(-12f, 22f));
+
+        CreateMapBlock("Water", mapPanel, new Color(0.12f, 0.45f, 0.62f, 1f), new Vector2(0.08f, 0.12f), new Vector2(0.34f, 0.66f));
+        CreateMapBlock("Farm", mapPanel, new Color(0.26f, 0.55f, 0.20f, 1f), new Vector2(0.34f, 0.12f), new Vector2(0.92f, 0.88f));
+        CreateMapBlock("Path", mapPanel, new Color(0.72f, 0.55f, 0.26f, 1f), new Vector2(0.35f, 0.46f), new Vector2(0.92f, 0.66f));
+        CreateMapBlock("House", mapPanel, new Color(0.38f, 0.18f, 0.08f, 1f), new Vector2(0.58f, 0.20f), new Vector2(0.84f, 0.42f));
+        CreateMapBlock("PlayerMarker", mapPanel, new Color(0.78f, 0.92f, 1f, 1f), new Vector2(0.42f, 0.54f), new Vector2(0.50f, 0.64f));
     }
 
     private void RefreshAll()
@@ -188,5 +235,127 @@ public class HudStatusMapUI : MonoBehaviour
             Season.Winter => "Đông",
             _ => season.ToString()
         };
+    }
+
+    private static TMP_Text CreateStatusRow(Transform parent, string valueName, string prefix, string value)
+    {
+        var row = CreateUiObject(valueName + "Row", parent);
+        var layout = row.gameObject.AddComponent<HorizontalLayoutGroup>();
+        layout.spacing = 8f;
+        layout.childAlignment = TextAnchor.MiddleLeft;
+        layout.childControlWidth = true;
+        layout.childControlHeight = true;
+        layout.childForceExpandWidth = false;
+        layout.childForceExpandHeight = false;
+        SetLayoutSize(row.gameObject, 0f, 30f);
+
+        var label = CreateText("Label", row, prefix, 18f, TextAlignmentOptions.Center, new Color(0.18f, 0.11f, 0.06f));
+        SetLayoutSize(label.gameObject, 30f, 28f);
+
+        var text = CreateText(valueName, row, value, 18f, TextAlignmentOptions.MidlineLeft, new Color(0.18f, 0.11f, 0.06f));
+        text.gameObject.AddComponent<LayoutElement>().flexibleWidth = 1f;
+        return text;
+    }
+
+    private static RectTransform CreatePanel(string name, Transform parent, Vector2 anchorMin, Vector2 anchorMax, Vector2 pivot, Vector2 anchoredPosition, Vector2 sizeDelta, Color color)
+    {
+        var rect = CreateUiObject(name, parent);
+        SetRect(rect, anchorMin, anchorMax, pivot, anchoredPosition, sizeDelta);
+        var image = rect.gameObject.AddComponent<Image>();
+        image.color = color;
+        var outline = rect.gameObject.AddComponent<Outline>();
+        outline.effectColor = new Color(0.30f, 0.17f, 0.06f, 0.95f);
+        outline.effectDistance = new Vector2(2f, -2f);
+        return rect;
+    }
+
+    private static void CreateMapBlock(string name, Transform parent, Color color, Vector2 anchorMin, Vector2 anchorMax)
+    {
+        var rect = CreateUiObject(name, parent);
+        SetRect(rect, anchorMin, anchorMax, new Vector2(0.5f, 0.5f), Vector2.zero, Vector2.zero);
+        rect.offsetMin = Vector2.zero;
+        rect.offsetMax = Vector2.zero;
+        var image = rect.gameObject.AddComponent<Image>();
+        image.color = color;
+    }
+
+    private static void ConfigureVertical(Transform target, float spacing, RectOffset padding)
+    {
+        var layout = target.gameObject.AddComponent<VerticalLayoutGroup>();
+        layout.padding = padding;
+        layout.spacing = spacing;
+        layout.childAlignment = TextAnchor.MiddleLeft;
+        layout.childControlWidth = true;
+        layout.childControlHeight = true;
+        layout.childForceExpandWidth = true;
+        layout.childForceExpandHeight = false;
+    }
+
+    private static RectTransform CreateUiObject(string name, Transform parent)
+    {
+        var go = new GameObject(name, typeof(RectTransform));
+        go.transform.SetParent(parent, false);
+        return go.GetComponent<RectTransform>();
+    }
+
+    private static TextMeshProUGUI CreateText(string name, Transform parent, string value, float size, TextAlignmentOptions alignment, Color color)
+    {
+        var go = new GameObject(name, typeof(RectTransform), typeof(CanvasRenderer), typeof(TextMeshProUGUI));
+        go.transform.SetParent(parent, false);
+        var text = go.GetComponent<TextMeshProUGUI>();
+        text.text = value;
+        text.fontSize = size;
+        text.fontStyle = FontStyles.Bold;
+        text.alignment = alignment;
+        text.color = color;
+        text.enableWordWrapping = false;
+        return text;
+    }
+
+    private static TMP_Text FindText(Transform root, string name)
+    {
+        var child = FindDeepChild(root, name);
+        return child != null ? child.GetComponent<TMP_Text>() : null;
+    }
+
+    private static Transform FindDeepChild(Transform root, string name)
+    {
+        if (root == null || string.IsNullOrEmpty(name)) return null;
+        if (root.name == name) return root;
+
+        for (int i = 0; i < root.childCount; i++)
+        {
+            var found = FindDeepChild(root.GetChild(i), name);
+            if (found != null) return found;
+        }
+
+        return null;
+    }
+
+    private static void Stretch(RectTransform rect, Vector2 offsetMin, Vector2 offsetMax)
+    {
+        rect.anchorMin = Vector2.zero;
+        rect.anchorMax = Vector2.one;
+        rect.pivot = new Vector2(0.5f, 0.5f);
+        rect.offsetMin = offsetMin;
+        rect.offsetMax = offsetMax;
+    }
+
+    private static void SetRect(RectTransform rect, Vector2 anchorMin, Vector2 anchorMax, Vector2 pivot, Vector2 anchoredPosition, Vector2 sizeDelta)
+    {
+        rect.anchorMin = anchorMin;
+        rect.anchorMax = anchorMax;
+        rect.pivot = pivot;
+        rect.anchoredPosition = anchoredPosition;
+        rect.sizeDelta = sizeDelta;
+    }
+
+    private static void SetLayoutSize(GameObject go, float width, float height)
+    {
+        var layout = go.GetComponent<LayoutElement>() ?? go.AddComponent<LayoutElement>();
+        layout.minWidth = width;
+        layout.preferredWidth = width;
+        layout.minHeight = height;
+        layout.preferredHeight = height;
     }
 }

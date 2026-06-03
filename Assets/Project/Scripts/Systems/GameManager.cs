@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     private static GameObject persistentUIRoot;
+    private static bool shuttingDownForMainMenu;
 
     // ── Registries ────────────────────────────────────────
     public EntityRegistry          EntityRegistry     { get; private set; }
@@ -65,6 +66,8 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        shuttingDownForMainMenu = false;
+
         if (Instance != null && Instance != this)
         {
             DestroyDuplicateRuntimeRoot();
@@ -119,7 +122,9 @@ public class GameManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (Instance == this)
+        bool wasInstance = Instance == this;
+
+        if (wasInstance)
             SceneManager.sceneLoaded -= OnSceneLoaded;
 
         if (EventBus != null)
@@ -134,8 +139,11 @@ public class GameManager : MonoBehaviour
         ResearchService?.Shutdown();
         DailyTracker?.Shutdown();
 
-        if (Instance == this)
+        if (wasInstance)
             Instance = null;
+
+        if (wasInstance)
+            persistentUIRoot = null;
     }
 
     // ── Init methods ──────────────────────────────────────
@@ -546,6 +554,9 @@ public class GameManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        if (shuttingDownForMainMenu)
+            return;
+
         if (SceneTransitionService.ShouldDeferAutoRestore(scene.name))
             return;
 
@@ -644,6 +655,33 @@ public class GameManager : MonoBehaviour
         // so destroying transform.root here can wipe out the destination scene camera
         // during additive transitions.
         Destroy(gameObject);
+    }
+
+    public static void PrepareReturnToMainMenu()
+    {
+        shuttingDownForMainMenu = true;
+        SceneTransitionService.ClearPendingTransitionState();
+
+        var manager = Instance;
+        if (manager != null)
+        {
+            SceneManager.sceneLoaded -= manager.OnSceneLoaded;
+            manager.EventBus?.Publish(new LoadingScreenHidePublish());
+
+            var managerRoot = manager.transform.root != null
+                ? manager.transform.root.gameObject
+                : manager.gameObject;
+
+            Destroy(managerRoot);
+        }
+
+        foreach (var root in FindNamedGameObjects("UIRoot"))
+        {
+            if (root != null)
+                Destroy(root);
+        }
+
+        persistentUIRoot = null;
     }
 
     private void EnsurePersistentUIRoot()
@@ -771,6 +809,21 @@ public static class SceneTransitionService
     private static bool deferAutoRestoreForPendingScene;
     private static Camera transitionCamera;
     private static GameObject transitionCameraObject;
+
+    public static void ClearPendingTransitionState()
+    {
+        pendingSpawnPointId = null;
+        pendingSceneName = null;
+        deferAutoRestoreForPendingScene = false;
+        portalTriggerSuppressedUntilRealtime = 0f;
+        DisableTransitionCamera();
+        if (transitionCameraObject != null)
+        {
+            UnityEngine.Object.Destroy(transitionCameraObject);
+            transitionCameraObject = null;
+            transitionCamera = null;
+        }
+    }
 
     public static bool RequestTransition(
         EntityRuntime interactor,

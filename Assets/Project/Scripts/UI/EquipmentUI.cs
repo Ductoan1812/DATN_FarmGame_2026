@@ -19,6 +19,7 @@ public class EquipmentUI : MonoBehaviour
     private EventBus eventBus;
     private bool subscribedToBus;
     private bool clearedInitialStatsContent;
+    private bool receivedPlayerInfo;
     private readonly List<GameObject> spawnedStatRows = new();
 
     private void Reset()
@@ -45,6 +46,7 @@ public class EquipmentUI : MonoBehaviour
     private void OnEnable()
     {
         TrySubscribe();
+        ShowWaitingPlayerInfoIfNeeded();
     }
 
     private void Update()
@@ -106,6 +108,7 @@ public class EquipmentUI : MonoBehaviour
 
     private void OnPlayerInfoChanged(PlayerInfoChangedPublish e)
     {
+        receivedPlayerInfo = true;
         SetPlayerName(e.keyName);
         ApplyPlayerStats(e.stats);
     }
@@ -174,6 +177,39 @@ public class EquipmentUI : MonoBehaviour
         }
 
         playerNameText.text = keyName;
+    }
+
+    private void ShowWaitingPlayerInfoIfNeeded()
+    {
+        if (receivedPlayerInfo)
+            return;
+
+        AutoFindRefs();
+
+        if (playerNameText != null)
+            playerNameText.text = "Người chơi";
+
+        if (playerNameInfo != null)
+            playerNameInfo.SetActive(true);
+
+        if (statsContent == null || spawnedStatRows.Count > 0)
+            return;
+
+        ClearPlayerStats();
+        AddPlaceholderStatRow("Cấp độ", "-");
+        AddPlaceholderStatRow("HP", "-");
+        AddPlaceholderStatRow("Thể lực", "-");
+        AddPlaceholderStatRow("Tiền", "-");
+    }
+
+    private void AddPlaceholderStatRow(string label, string value)
+    {
+        var row = CreateStatRow();
+        if (row == null)
+            return;
+
+        row.SetupRawText(label, value);
+        spawnedStatRows.Add(row.gameObject);
     }
 
     private void ApplyPlayerStats(StatDisplay[] stats)

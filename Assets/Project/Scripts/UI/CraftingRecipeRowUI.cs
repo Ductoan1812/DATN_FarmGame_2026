@@ -30,6 +30,7 @@ public class CraftingRecipeRowUI : MonoBehaviour
 
     public void Init(CraftingRecipeViewData viewData, Action<CraftingRecipeViewData> onClickCallback, bool selected)
     {
+        AutoFindRefs();
         currentView = viewData;
         onClick = onClickCallback;
 
@@ -66,6 +67,17 @@ public class CraftingRecipeRowUI : MonoBehaviour
     {
         if (currentView != null)
             onClick?.Invoke(currentView);
+    }
+
+    private void AutoFindRefs()
+    {
+        icon ??= FindImage(transform, "Icon");
+        nameText ??= FindText(transform, "NameText");
+        ingredientText ??= FindText(transform, "IngredientText");
+        levelText ??= FindText(transform, "LevelText");
+        rowButton ??= GetComponent<Button>();
+        craftButton ??= FindButton(transform, "CraftButton");
+        background ??= GetComponent<Image>();
     }
 
     private void SetIcon(EntityData itemData)
@@ -152,5 +164,37 @@ public class CraftingRecipeRowUI : MonoBehaviour
     {
         if (text == null) return;
         text.text = value ?? string.Empty;
+    }
+
+    private static Image FindImage(Transform root, string name)
+    {
+        var child = FindDeepChild(root, name);
+        return child != null ? child.GetComponent<Image>() : null;
+    }
+
+    private static TMP_Text FindText(Transform root, string name)
+    {
+        var child = FindDeepChild(root, name);
+        return child != null ? child.GetComponent<TMP_Text>() : null;
+    }
+
+    private static Button FindButton(Transform root, string name)
+    {
+        var child = FindDeepChild(root, name);
+        return child != null ? child.GetComponent<Button>() : null;
+    }
+
+    private static Transform FindDeepChild(Transform root, string name)
+    {
+        if (root == null || string.IsNullOrEmpty(name)) return null;
+        if (root.name == name) return root;
+
+        for (int i = 0; i < root.childCount; i++)
+        {
+            var found = FindDeepChild(root.GetChild(i), name);
+            if (found != null) return found;
+        }
+
+        return null;
     }
 }

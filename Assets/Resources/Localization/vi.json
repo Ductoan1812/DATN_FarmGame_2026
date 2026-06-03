@@ -1,0 +1,872 @@
+{
+    "entries": [
+        {
+            "key": "enemy.boar.desc",
+            "value": "Kẻ địch ngoài thiên nhiên với 60 HP, phù hợp cho vòng chiến đấu đầu game."
+        },
+        {
+            "key": "enemy.boar.name",
+            "value": "Lợn Rừng"
+        },
+        {
+            "key": "enemy.rat.desc",
+            "value": "Kẻ địch ngoài thiên nhiên với 15 HP, phù hợp cho vòng chiến đấu đầu game."
+        },
+        {
+            "key": "enemy.rat.name",
+            "value": "Chuột Đồng"
+        },
+        {
+            "key": "enemy.snake.desc",
+            "value": "Kẻ địch ngoài thiên nhiên với 25 HP, phù hợp cho vòng chiến đấu đầu game."
+        },
+        {
+            "key": "enemy.snake.name",
+            "value": "Rắn Đồng"
+        },
+        {
+            "key": "item.crop.fall.pumpkin.desc",
+            "value": "Bí Ngô tươi. Cây lợi nhuận cao cuối mùa, thích hợp chuẩn bị vốn nâng cấp."
+        },
+        {
+            "key": "item.crop.fall.pumpkin.name",
+            "value": "Bí Ngô"
+        },
+        {
+            "key": "item.crop.spring.asparagus.desc",
+            "value": "Măng Tây tươi. Cây tái thu hoạch, phù hợp tối ưu lợi nhuận đầu mùa."
+        },
+        {
+            "key": "item.crop.spring.asparagus.name",
+            "value": "Măng Tây"
+        },
+        {
+            "key": "item.crop.spring.lettuce.desc",
+            "value": "Xà Lách tươi. Bán tươi hoặc nấu salad."
+        },
+        {
+            "key": "item.crop.spring.lettuce.name",
+            "value": "Xà Lách"
+        },
+        {
+            "key": "item.crop.spring.potato.desc",
+            "value": "Khoai Tây tươi. Nguyên liệu tốt cho món chiên và bán sớm."
+        },
+        {
+            "key": "item.crop.spring.potato.name",
+            "value": "Khoai Tây"
+        },
+        {
+            "key": "item.crop.spring.strawberry.desc",
+            "value": "Dâu Tây tươi. Cây lợi nhuận cao nếu trồng sớm trong mùa Xuân."
+        },
+        {
+            "key": "item.crop.spring.strawberry.name",
+            "value": "Dâu Tây"
+        },
+        {
+            "key": "item.crop.summer.corn.desc",
+            "value": "Ngô tươi. Có thể ăn, bán, hoặc xay thành dầu và thức ăn."
+        },
+        {
+            "key": "item.crop.summer.corn.name",
+            "value": "Ngô"
+        },
+        {
+            "key": "item.crop.summer.tomato.desc",
+            "value": "Cà Chua tươi. Nguyên liệu bếp quan trọng, tái thu hoạch đều."
+        },
+        {
+            "key": "item.crop.summer.tomato.name",
+            "value": "Cà Chua"
+        },
+        {
+            "key": "item.crop.tree.apple.desc",
+            "value": "Quả ngọt từ cây táo. Bán tốt và dùng cho bánh hoặc đồ uống."
+        },
+        {
+            "key": "item.crop.tree.apple.name",
+            "value": "Táo"
+        },
+        {
+            "key": "item.crop.winter.spinach.desc",
+            "value": "Rau Chân Vịt tươi. Rau mùa Đông ổn định, trưởng thành nhanh."
+        },
+        {
+            "key": "item.crop.winter.spinach.name",
+            "value": "Rau Chân Vịt"
+        },
+        {
+            "key": "item.drop.boar_meat.desc",
+            "value": "Thịt tươi từ lợn rừng, dùng cho món ăn hoặc bán."
+        },
+        {
+            "key": "item.drop.boar_meat.name",
+            "value": "Thịt Heo Rừng"
+        },
+        {
+            "key": "item.drop.boar_tusk.desc",
+            "value": "Chiến lợi phẩm từ lợn rừng, dùng cho đồ nghề cứng."
+        },
+        {
+            "key": "item.drop.boar_tusk.name",
+            "value": "Nanh Heo Rừng"
+        },
+        {
+            "key": "item.drop.rat_tail.desc",
+            "value": "Nguyên liệu quái vật cấp thấp."
+        },
+        {
+            "key": "item.drop.rat_tail.name",
+            "value": "Đuôi Chuột"
+        },
+        {
+            "key": "item.drop.snake_skin.desc",
+            "value": "Da rắn có thể dùng cho craft da hoặc bán."
+        },
+        {
+            "key": "item.drop.snake_skin.name",
+            "value": "Da Rắn"
+        },
+        {
+            "key": "item.drop.snake_venom.desc",
+            "value": "Độc dược hiếm từ rắn đồng."
+        },
+        {
+            "key": "item.drop.snake_venom.name",
+            "value": "Nọc Rắn"
+        },
+        {
+            "key": "item.feed.hay.desc",
+            "value": "Thức ăn cơ bản cho vật nuôi trong chuồng."
+        },
+        {
+            "key": "item.feed.hay.name",
+            "value": "Cỏ Khô"
+        },
+        {
+            "key": "item.food.apple_pie.desc",
+            "value": "Bánh trái cây nướng thơm, hồi thể lực tốt."
+        },
+        {
+            "key": "item.food.apple_pie.name",
+            "value": "Bánh Táo"
+        },
+        {
+            "key": "item.food.pizza.desc",
+            "value": "Món ăn đậm năng lượng, rất hợp trước khi đào mỏ hoặc chiến đấu."
+        },
+        {
+            "key": "item.food.pizza.name",
+            "value": "Pizza"
+        },
+        {
+            "key": "item.food.roasted_corn.desc",
+            "value": "Món ăn đơn giản giúp hồi lại chút thể lực."
+        },
+        {
+            "key": "item.food.roasted_corn.name",
+            "value": "Ngô Nướng"
+        },
+        {
+            "key": "item.food.veggie_soup.desc",
+            "value": "Món hầm no bụng, hợp cho ngày làm việc dài."
+        },
+        {
+            "key": "item.food.veggie_soup.name",
+            "value": "Soup Rau Củ"
+        },
+        {
+            "key": "item.food.wine.desc",
+            "value": "Thành phẩm lên men từ nho, dùng để bán hoặc nhâm nhi."
+        },
+        {
+            "key": "item.food.wine.name",
+            "value": "Rượu Nho"
+        },
+        {
+            "key": "item.mat.coal.desc",
+            "value": "Nhiên liệu cho lò nung và máy chế biến."
+        },
+        {
+            "key": "item.mat.coal.name",
+            "value": "Than"
+        },
+        {
+            "key": "item.mat.copper_bar.desc",
+            "value": "Vật liệu nâng cấp công cụ cấp đầu."
+        },
+        {
+            "key": "item.mat.copper_bar.name",
+            "value": "Thỏi Đồng"
+        },
+        {
+            "key": "item.mat.copper_ore.desc",
+            "value": "Quặng thô dùng để luyện thỏi đồng."
+        },
+        {
+            "key": "item.mat.copper_ore.name",
+            "value": "Quặng Đồng"
+        },
+        {
+            "key": "item.mat.corn_oil.desc",
+            "value": "Chế biến từ ngô để nấu ăn hoặc làm thức ăn chăn nuôi."
+        },
+        {
+            "key": "item.mat.corn_oil.name",
+            "value": "Dầu Ngô"
+        },
+        {
+            "key": "item.mat.fiber.desc",
+            "value": "Thu được từ bụi cây và cỏ rậm."
+        },
+        {
+            "key": "item.mat.fiber.name",
+            "value": "Sợi Thực Vật"
+        },
+        {
+            "key": "item.mat.flour.desc",
+            "value": "Được xay từ lúa mì. Dùng cho bánh và pizza."
+        },
+        {
+            "key": "item.mat.flour.name",
+            "value": "Bột Mì"
+        },
+        {
+            "key": "item.mat.gold_bar.desc",
+            "value": "Vật liệu nâng cấp cuối cho tool và công trình cao cấp."
+        },
+        {
+            "key": "item.mat.gold_bar.name",
+            "value": "Thỏi Vàng"
+        },
+        {
+            "key": "item.mat.gold_ore.desc",
+            "value": "Quặng quý dùng để luyện thỏi vàng."
+        },
+        {
+            "key": "item.mat.gold_ore.name",
+            "value": "Quặng Vàng"
+        },
+        {
+            "key": "item.mat.hardwood.desc",
+            "value": "Gỗ chất lượng cao từ cây lớn. Dùng cho công trình bền và nâng cấp."
+        },
+        {
+            "key": "item.mat.hardwood.name",
+            "value": "Gỗ Cứng"
+        },
+        {
+            "key": "item.mat.iron_bar.desc",
+            "value": "Vật liệu nâng cấp trung cấp cho công cụ và máy."
+        },
+        {
+            "key": "item.mat.iron_bar.name",
+            "value": "Thỏi Sắt"
+        },
+        {
+            "key": "item.mat.iron_ore.desc",
+            "value": "Quặng cứng dùng để luyện thỏi sắt."
+        },
+        {
+            "key": "item.mat.iron_ore.name",
+            "value": "Quặng Sắt"
+        },
+        {
+            "key": "item.mat.softwood.desc",
+            "value": "Gỗ nhẹ từ cây non và bạch dương."
+        },
+        {
+            "key": "item.mat.softwood.name",
+            "value": "Gỗ Mềm"
+        },
+        {
+            "key": "item.mat.stone.desc",
+            "value": "Vật liệu khai thác cơ bản cho lò nung và hàng rào đá."
+        },
+        {
+            "key": "item.mat.stone.name",
+            "value": "Đá"
+        },
+        {
+            "key": "item.mat.twig.desc",
+            "value": "Cành nhỏ dùng cho công thức cơ bản."
+        },
+        {
+            "key": "item.mat.twig.name",
+            "value": "Cành Khô"
+        },
+        {
+            "key": "item.mat.wood.desc",
+            "value": "Vật liệu cơ bản lấy từ cây. Dùng để đóng rương, hàng rào và bàn chế tạo."
+        },
+        {
+            "key": "item.mat.wood.name",
+            "value": "Gỗ"
+        },
+        {
+            "key": "item.place.bed.basic.desc",
+            "value": "Một chiếc giường đặt trong nhà để kết thúc ngày và bắt đầu buổi sáng tiếp theo trong trạng thái hồi phục."
+        },
+        {
+            "key": "item.place.bed.basic.name",
+            "value": "Giường Gỗ"
+        },
+        {
+            "key": "item.place.sprinkler.t1.desc",
+            "value": "Đặt xuống để tự động tưới đất đã cuốc trong bán kính nhỏ vào đầu ngày."
+        },
+        {
+            "key": "item.place.sprinkler.t1.name",
+            "value": "Bản vẽ Vòi tưới T1"
+        },
+        {
+            "key": "item.place.sprinkler.t2.desc",
+            "value": "Đặt xuống để tự động tưới khu vực lớn hơn, phù hợp cho ruộng giữa game."
+        },
+        {
+            "key": "item.place.sprinkler.t2.name",
+            "value": "Bản vẽ Vòi tưới T2"
+        },
+        {
+            "key": "item.prod.cheese.desc",
+            "value": "Chế biến từ sữa. Bán tốt và dùng trong món ăn cao cấp."
+        },
+        {
+            "key": "item.prod.cheese.name",
+            "value": "Phô Mai"
+        },
+        {
+            "key": "item.prod.egg.desc",
+            "value": "Sản phẩm hằng ngày của gà. Có thể ăn hoặc làm mayonnaise."
+        },
+        {
+            "key": "item.prod.egg.name",
+            "value": "Trứng"
+        },
+        {
+            "key": "item.prod.mayonnaise.desc",
+            "value": "Chế biến từ trứng. Giá trị cao hơn bán trứng thô."
+        },
+        {
+            "key": "item.prod.mayonnaise.name",
+            "value": "Mayonnaise"
+        },
+        {
+            "key": "item.prod.milk.desc",
+            "value": "Sản phẩm hằng ngày của bò. Dùng làm phô mai."
+        },
+        {
+            "key": "item.prod.milk.name",
+            "value": "Sữa"
+        },
+        {
+            "key": "item.seed.fall.pumpkin.desc",
+            "value": "Hạt giống mùa Thu. Mất 13 ngày để trưởng thành. Thu hoạch một lần rồi cây biến mất. Nếu qua mùa mới cây sẽ héo."
+        },
+        {
+            "key": "item.seed.fall.pumpkin.name",
+            "value": "Hạt Bí Ngô"
+        },
+        {
+            "key": "item.seed.spring.asparagus.desc",
+            "value": "Hạt giống mùa Xuân. Mất 10 ngày để trưởng thành. Sau vụ đầu, cây cho thu hoạch lại mỗi 3 ngày. Nếu qua mùa mới cây sẽ héo."
+        },
+        {
+            "key": "item.seed.spring.asparagus.name",
+            "value": "Hạt Măng Tây"
+        },
+        {
+            "key": "item.seed.spring.lettuce.desc",
+            "value": "Hạt giống mùa Xuân. Mất 3 ngày để trưởng thành. Thu hoạch một lần rồi cây biến mất. Nếu qua mùa mới cây sẽ héo."
+        },
+        {
+            "key": "item.seed.spring.lettuce.name",
+            "value": "Hạt Xà Lách"
+        },
+        {
+            "key": "item.seed.spring.potato.desc",
+            "value": "Hạt giống mùa Xuân. Mất 6 ngày để trưởng thành. Thu hoạch một lần rồi cây biến mất. Nếu qua mùa mới cây sẽ héo."
+        },
+        {
+            "key": "item.seed.spring.potato.name",
+            "value": "Hạt Khoai Tây"
+        },
+        {
+            "key": "item.seed.spring.strawberry.desc",
+            "value": "Hạt giống mùa Xuân. Mất 8 ngày để trưởng thành. Sau vụ đầu, cây cho thu hoạch lại mỗi 4 ngày. Nếu qua mùa mới cây sẽ héo."
+        },
+        {
+            "key": "item.seed.spring.strawberry.name",
+            "value": "Hạt Dâu Tây"
+        },
+        {
+            "key": "item.seed.summer.corn.desc",
+            "value": "Hạt giống mùa Hạ. Mất 10 ngày để trưởng thành. Sau vụ đầu, cây cho thu hoạch lại mỗi 4 ngày. Nếu qua mùa mới cây sẽ héo."
+        },
+        {
+            "key": "item.seed.summer.corn.name",
+            "value": "Hạt Ngô"
+        },
+        {
+            "key": "item.seed.summer.tomato.desc",
+            "value": "Hạt giống mùa Hạ. Mất 11 ngày để trưởng thành. Sau vụ đầu, cây cho thu hoạch lại mỗi 4 ngày. Nếu qua mùa mới cây sẽ héo."
+        },
+        {
+            "key": "item.seed.summer.tomato.name",
+            "value": "Hạt Cà Chua"
+        },
+        {
+            "key": "item.seed.tree.apple.desc",
+            "value": "Cây ăn quả lâu năm. Mất 28 ngày để trưởng thành và cho táo vào mùa Thu. Cây không héo khi sang mùa mới."
+        },
+        {
+            "key": "item.seed.tree.apple.name",
+            "value": "Cây Non Táo"
+        },
+        {
+            "key": "item.seed.winter.spinach.desc",
+            "value": "Hạt giống mùa Đông. Mất 7 ngày để trưởng thành. Thu hoạch một lần rồi cây biến mất. Nếu qua mùa mới cây sẽ héo."
+        },
+        {
+            "key": "item.seed.winter.spinach.name",
+            "value": "Hạt Rau Chân Vịt"
+        },
+        {
+            "key": "item.tool.axe.t1.desc",
+            "value": "Rìu Đá cấp 1. Gây 1 sát thương cơ bản với chi phí 3 thể lực mỗi lần dùng."
+        },
+        {
+            "key": "item.tool.axe.t1.name",
+            "value": "Rìu Đá"
+        },
+        {
+            "key": "item.tool.axe.t2.desc",
+            "value": "Rìu Đồng cấp 2. Gây 2 sát thương cơ bản với chi phí 3 thể lực mỗi lần dùng."
+        },
+        {
+            "key": "item.tool.axe.t2.name",
+            "value": "Rìu Đồng"
+        },
+        {
+            "key": "item.tool.axe.t3.desc",
+            "value": "Rìu Sắt cấp 3. Gây 4 sát thương cơ bản với chi phí 2 thể lực mỗi lần dùng."
+        },
+        {
+            "key": "item.tool.axe.t3.name",
+            "value": "Rìu Sắt"
+        },
+        {
+            "key": "item.tool.axe.t4.desc",
+            "value": "Rìu Vàng cấp 4. Gây 6 sát thương cơ bản với chi phí 2 thể lực mỗi lần dùng."
+        },
+        {
+            "key": "item.tool.axe.t4.name",
+            "value": "Rìu Vàng"
+        },
+        {
+            "key": "item.tool.hoe.t1.desc",
+            "value": "Cuốc cấp 1. Cuốc vùng 1x1 với chi phí 2 thể lực mỗi lần."
+        },
+        {
+            "key": "item.tool.hoe.t1.name",
+            "value": "Cuốc"
+        },
+        {
+            "key": "item.tool.hoe.t2.desc",
+            "value": "Cuốc Đồng cấp 2. Cuốc vùng 2x1 với chi phí 2 thể lực mỗi lần."
+        },
+        {
+            "key": "item.tool.hoe.t2.name",
+            "value": "Cuốc Đồng"
+        },
+        {
+            "key": "item.tool.hoe.t3.desc",
+            "value": "Cuốc Sắt cấp 3. Cuốc vùng 3x1 với chi phí 2 thể lực mỗi lần."
+        },
+        {
+            "key": "item.tool.hoe.t3.name",
+            "value": "Cuốc Sắt"
+        },
+        {
+            "key": "item.tool.hoe.t4.desc",
+            "value": "Cuốc Vàng cấp 4. Cuốc vùng 5x1 với chi phí 1 thể lực mỗi lần."
+        },
+        {
+            "key": "item.tool.hoe.t4.name",
+            "value": "Cuốc Vàng"
+        },
+        {
+            "key": "item.tool.pickaxe.t1.desc",
+            "value": "Cuốc Chim Đá cấp 1. Gây 1 sát thương cơ bản với chi phí 3 thể lực mỗi lần dùng."
+        },
+        {
+            "key": "item.tool.pickaxe.t1.name",
+            "value": "Cuốc Chim Đá"
+        },
+        {
+            "key": "item.tool.pickaxe.t2.desc",
+            "value": "Cuốc Chim Đồng cấp 2. Gây 2 sát thương cơ bản với chi phí 3 thể lực mỗi lần dùng."
+        },
+        {
+            "key": "item.tool.pickaxe.t2.name",
+            "value": "Cuốc Chim Đồng"
+        },
+        {
+            "key": "item.tool.pickaxe.t3.desc",
+            "value": "Cuốc Chim Sắt cấp 3. Gây 4 sát thương cơ bản với chi phí 2 thể lực mỗi lần dùng."
+        },
+        {
+            "key": "item.tool.pickaxe.t3.name",
+            "value": "Cuốc Chim Sắt"
+        },
+        {
+            "key": "item.tool.pickaxe.t4.desc",
+            "value": "Cuốc Chim Vàng cấp 4. Gây 8 sát thương cơ bản với chi phí 2 thể lực mỗi lần dùng."
+        },
+        {
+            "key": "item.tool.pickaxe.t4.name",
+            "value": "Cuốc Chim Vàng"
+        },
+        {
+            "key": "item.tool.scythe.t1.desc",
+            "value": "Liềm Đá cấp 1. Gây 3 sát thương cơ bản với chi phí 2 thể lực mỗi lần dùng."
+        },
+        {
+            "key": "item.tool.scythe.t1.name",
+            "value": "Liềm Đá"
+        },
+        {
+            "key": "item.tool.scythe.t2.desc",
+            "value": "Liềm Đồng cấp 2. Gây 5 sát thương cơ bản với chi phí 2 thể lực mỗi lần dùng."
+        },
+        {
+            "key": "item.tool.scythe.t2.name",
+            "value": "Liềm Đồng"
+        },
+        {
+            "key": "item.tool.scythe.t3.desc",
+            "value": "Liềm Sắt cấp 3. Gây 8 sát thương cơ bản với chi phí 2 thể lực mỗi lần dùng."
+        },
+        {
+            "key": "item.tool.scythe.t3.name",
+            "value": "Liềm Sắt"
+        },
+        {
+            "key": "item.tool.scythe.t4.desc",
+            "value": "Liềm Vàng cấp 4. Gây 12 sát thương cơ bản với chi phí 1 thể lực mỗi lần dùng."
+        },
+        {
+            "key": "item.tool.scythe.t4.name",
+            "value": "Liềm Vàng"
+        },
+        {
+            "key": "item.tool.watering_can.t1.desc",
+            "value": "Bình Tưới cấp 1. Tưới vùng 1x1 và chứa khoảng 40 lần dùng trước khi phải lấy nước lại."
+        },
+        {
+            "key": "item.tool.watering_can.t1.name",
+            "value": "Bình Tưới"
+        },
+        {
+            "key": "item.tool.watering_can.t2.desc",
+            "value": "Bình Tưới Đồng cấp 2. Tưới vùng 1x3 và chứa khoảng 55 lần dùng trước khi phải lấy nước lại."
+        },
+        {
+            "key": "item.tool.watering_can.t2.name",
+            "value": "Bình Tưới Đồng"
+        },
+        {
+            "key": "item.tool.watering_can.t3.desc",
+            "value": "Bình Tưới Sắt cấp 3. Tưới vùng 3x3 và chứa khoảng 70 lần dùng trước khi phải lấy nước lại."
+        },
+        {
+            "key": "item.tool.watering_can.t3.name",
+            "value": "Bình Tưới Sắt"
+        },
+        {
+            "key": "item.tool.watering_can.t4.desc",
+            "value": "Bình Tưới Vàng cấp 4. Tưới vùng 3x3 và chứa khoảng 100 lần dùng trước khi phải lấy nước lại."
+        },
+        {
+            "key": "item.tool.watering_can.t4.name",
+            "value": "Bình Tưới Vàng"
+        },
+        {
+            "key": "npc.shop.bac_ba.desc",
+            "value": "Chủ tiệm nông cụ và hạt giống theo mùa."
+        },
+        {
+            "key": "npc.shop.bac_ba.name",
+            "value": "Bác Ba"
+        },
+        {
+            "key": "recipe.furnace.copper_bar.desc",
+            "value": "Công thức chế tạo chuẩn hóa từ GED."
+        },
+        {
+            "key": "recipe.furnace.copper_bar.name",
+            "value": "Luyện Thỏi Đồng"
+        },
+        {
+            "key": "recipe.furnace.gold_bar.desc",
+            "value": "Công thức chế tạo chuẩn hóa từ GED."
+        },
+        {
+            "key": "recipe.furnace.gold_bar.name",
+            "value": "Luyện Thỏi Vàng"
+        },
+        {
+            "key": "recipe.furnace.iron_bar.desc",
+            "value": "Công thức chế tạo chuẩn hóa từ GED."
+        },
+        {
+            "key": "recipe.furnace.iron_bar.name",
+            "value": "Luyện Thỏi Sắt"
+        },
+        {
+            "key": "recipe.machine.cheese.desc",
+            "value": "Công thức chế tạo chuẩn hóa từ GED."
+        },
+        {
+            "key": "recipe.machine.cheese.name",
+            "value": "Ép Phô Mai"
+        },
+        {
+            "key": "recipe.machine.mayo.desc",
+            "value": "Công thức chế tạo chuẩn hóa từ GED."
+        },
+        {
+            "key": "recipe.machine.mayo.name",
+            "value": "Làm Mayonnaise"
+        },
+        {
+            "key": "recipe.mill.corn_oil.desc",
+            "value": "Công thức chế tạo chuẩn hóa từ GED."
+        },
+        {
+            "key": "recipe.mill.corn_oil.name",
+            "value": "Xay Dầu Ngô"
+        },
+        {
+            "key": "ui.animal.collect",
+            "value": "Thu sản phẩm"
+        },
+        {
+            "key": "ui.animal.feed",
+            "value": "Cho ăn"
+        },
+        {
+            "key": "ui.animal.status.dead",
+            "value": "Đã chết"
+        },
+        {
+            "key": "ui.animal.status.fed",
+            "value": "Đã ăn"
+        },
+        {
+            "key": "ui.animal.status.hungry",
+            "value": "Đói"
+        },
+        {
+            "key": "ui.animal.status.product_ready",
+            "value": "Sẵn sàng thu"
+        },
+        {
+            "key": "ui.bed.sleep",
+            "value": "Đi ngủ"
+        },
+        {
+            "key": "ui.crafting.open",
+            "value": "Chế tạo"
+        },
+        {
+            "key": "ui.processor.open",
+            "value": "Vận hành"
+        },
+        {
+            "key": "ui.processor.title",
+            "value": "Máy chế biến"
+        },
+        {
+            "key": "ui.processor.use",
+            "value": "Sử dụng máy"
+        },
+        {
+            "key": "ui.storage.open",
+            "value": "Mở kho"
+        },
+        {
+            "key": "ui.storage.title",
+            "value": "Kho đồ"
+        },
+        {
+            "key": "world.animal.chicken.desc",
+            "value": "Vật nuôi cần cho ăn mỗi ngày để cho sản phẩm đều đặn."
+        },
+        {
+            "key": "world.animal.chicken.name",
+            "value": "Gà"
+        },
+        {
+            "key": "world.animal.cow.desc",
+            "value": "Vật nuôi cần cho ăn mỗi ngày để cho sản phẩm đều đặn."
+        },
+        {
+            "key": "world.animal.cow.name",
+            "value": "Bò"
+        },
+        {
+            "key": "world.crop.fall.pumpkin.desc",
+            "value": "Cây Bí Ngô ngoài ruộng. Cần tưới nước hằng ngày để phát triển trong mùa Thu."
+        },
+        {
+            "key": "world.crop.fall.pumpkin.name",
+            "value": "Bí Ngô"
+        },
+        {
+            "key": "world.crop.spring.asparagus.desc",
+            "value": "Cây Măng Tây ngoài ruộng. Cần tưới nước hằng ngày để phát triển trong mùa Xuân."
+        },
+        {
+            "key": "world.crop.spring.asparagus.name",
+            "value": "Măng Tây"
+        },
+        {
+            "key": "world.crop.spring.lettuce.desc",
+            "value": "Cây Xà Lách ngoài ruộng. Cần tưới nước hằng ngày để phát triển trong mùa Xuân."
+        },
+        {
+            "key": "world.crop.spring.lettuce.name",
+            "value": "Xà Lách"
+        },
+        {
+            "key": "world.crop.spring.potato.desc",
+            "value": "Cây Khoai Tây ngoài ruộng. Cần tưới nước hằng ngày để phát triển trong mùa Xuân."
+        },
+        {
+            "key": "world.crop.spring.potato.name",
+            "value": "Khoai Tây"
+        },
+        {
+            "key": "world.crop.spring.strawberry.desc",
+            "value": "Cây Dâu Tây ngoài ruộng. Cần tưới nước hằng ngày để phát triển trong mùa Xuân."
+        },
+        {
+            "key": "world.crop.spring.strawberry.name",
+            "value": "Dâu Tây"
+        },
+        {
+            "key": "world.crop.summer.corn.desc",
+            "value": "Cây Ngô ngoài ruộng. Cần tưới nước hằng ngày để phát triển trong mùa Hạ."
+        },
+        {
+            "key": "world.crop.summer.corn.name",
+            "value": "Ngô"
+        },
+        {
+            "key": "world.crop.summer.tomato.desc",
+            "value": "Cây Cà Chua ngoài ruộng. Cần tưới nước hằng ngày để phát triển trong mùa Hạ."
+        },
+        {
+            "key": "world.crop.summer.tomato.name",
+            "value": "Cà Chua"
+        },
+        {
+            "key": "world.crop.winter.spinach.desc",
+            "value": "Cây Rau Chân Vịt ngoài ruộng. Cần tưới nước hằng ngày để phát triển trong mùa Đông."
+        },
+        {
+            "key": "world.crop.winter.spinach.name",
+            "value": "Rau Chân Vịt"
+        },
+        {
+            "key": "world.node.copper.desc",
+            "value": "Node tài nguyên yêu cầu cuốc chim cấp 1 và hồi lại sau khoảng 5 ngày."
+        },
+        {
+            "key": "world.node.copper.name",
+            "value": "Quặng Đồng"
+        },
+        {
+            "key": "world.node.gold.desc",
+            "value": "Node tài nguyên yêu cầu cuốc chim cấp 3 và hồi lại sau khoảng 10 ngày."
+        },
+        {
+            "key": "world.node.gold.name",
+            "value": "Quặng Vàng"
+        },
+        {
+            "key": "world.node.iron.desc",
+            "value": "Node tài nguyên yêu cầu cuốc chim cấp 2 và hồi lại sau khoảng 7 ngày."
+        },
+        {
+            "key": "world.node.iron.name",
+            "value": "Quặng Sắt"
+        },
+        {
+            "key": "world.node.rock.desc",
+            "value": "Node tài nguyên yêu cầu cuốc chim cấp 1 và hồi lại sau khoảng 3 ngày."
+        },
+        {
+            "key": "world.node.rock.name",
+            "value": "Đá Thường"
+        },
+        {
+            "key": "world.tree.apple.desc",
+            "value": "Cây lâu năm cho quả vào mùa Thu và có thể chặt lấy gỗ."
+        },
+        {
+            "key": "world.tree.apple.name",
+            "value": "Cây Táo"
+        },
+        {
+            "key": "world.tree.maple.desc",
+            "value": "Cây lấy gỗ có thể chặt bằng rìu cấp 1 trở lên."
+        },
+        {
+            "key": "world.tree.maple.name",
+            "value": "Phong"
+        },
+        {
+            "key": "world.tree.oak.desc",
+            "value": "Cây lấy gỗ có thể chặt bằng rìu cấp 2 trở lên."
+        },
+        {
+            "key": "world.tree.oak.name",
+            "value": "Sồi"
+        },
+        {
+            "key": "world.tree.pine.desc",
+            "value": "Cây lấy gỗ có thể chặt bằng rìu cấp 1 trở lên."
+        },
+        {
+            "key": "world.tree.pine.name",
+            "value": "Thông"
+        },
+        {
+            "key": "world.utility.bed.basic.desc",
+            "value": "Ngủ để kết thúc ngày, hồi đầy thể lực và máu trước khi sang ngày mới."
+        },
+        {
+            "key": "world.utility.bed.basic.name",
+            "value": "Giường Gỗ"
+        },
+        {
+            "key": "world.utility.sprinkler.t1.desc",
+            "value": "Vòi tưới cơ bản, tự động tưới khu vực nhỏ vào đầu ngày mới."
+        },
+        {
+            "key": "world.utility.sprinkler.t1.name",
+            "value": "Vòi tưới T1"
+        },
+        {
+            "key": "world.utility.sprinkler.t2.desc",
+            "value": "Vòi tưới nâng cấp, bao phủ khu vực rộng hơn vào đầu ngày mới."
+        },
+        {
+            "key": "world.utility.sprinkler.t2.name",
+            "value": "Vòi tưới T2"
+        }
+    ]
+}

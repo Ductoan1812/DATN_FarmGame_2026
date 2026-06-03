@@ -10,8 +10,10 @@ public class EntityDataWorkbenchWindow : EditorWindow
     private enum TemplateKind
     {
         Custom,
-        PlantSeedFlow,
-        TreeGrowthFlow,
+        SeedItem,
+        CropPlant,
+        WoodTreePlant,
+        FruitTreePlant,
         ResourceNode,
         Enemy,
         Npc,
@@ -73,7 +75,7 @@ public class EntityDataWorkbenchWindow : EditorWindow
     private string searchText = string.Empty;
     private EntityData selectedEntity;
     private TemplateKind selectedTemplate = TemplateKind.Custom;
-    private TemplateKind createTemplate = TemplateKind.PlantSeedFlow;
+    private TemplateKind createTemplate = TemplateKind.SeedItem;
     private string createName = string.Empty;
     private string createFolderOverride = string.Empty;
 
@@ -500,33 +502,51 @@ public class EntityDataWorkbenchWindow : EditorWindow
                 }
             },
             {
-                TemplateKind.PlantSeedFlow,
+                TemplateKind.SeedItem,
                 new TemplateConfig
                 {
-                    kind = TemplateKind.PlantSeedFlow,
-                    label = "Plant Seed Flow",
-                    description = "Flow seed = plant: một EntityData duy nhất có Placement, Stage, Harvest, Health, Drop, Mortal; đặt xuống rồi phát triển, nhận damage và thu hoạch.",
-                    defaultFolder = "Assets/Project/ScriptableObjects/WorldObjects/Plants",
-                    defaultPrefix = "seed_",
+                    kind = TemplateKind.SeedItem,
+                    label = "Seed Item",
+                    description = "Vật phẩm Hạt giống nằm trong túi đồ. Cần PlacementModule để gieo trồng ra các loại cây (Crop/Tree) trên bản đồ.",
+                    defaultFolder = "Assets/Project/ScriptableObjects/Items/Crops/Seeds",
+                    defaultPrefix = "Seed_",
                     category = ItemCategory.Seed,
-                    maxStack = 999,
+                    maxStack = 99,
+                    occupyLayer = EntityLayer.Ground, // Item doesn't occupy world layer before placing
+                    requiredModules = new[] { typeof(PlacementModule) },
+                    preferredModuleOrder = new[] { typeof(PlacementModule) },
+                    requiredStats = Array.Empty<KeyValuePair<StatType, float>>()
+                }
+            },
+            {
+                TemplateKind.CropPlant,
+                new TemplateConfig
+                {
+                    kind = TemplateKind.CropPlant,
+                    label = "Crop Plant",
+                    description = "Thực thể cây nông nghiệp mọc trên đất (World Object). Không nằm trong túi đồ.",
+                    defaultFolder = "Assets/Project/ScriptableObjects/WorldObjects/Plants",
+                    defaultPrefix = "CropPlant_",
+                    category = ItemCategory.Placeable,
+                    maxStack = 1,
                     occupyLayer = EntityLayer.Plant,
                     requiredModules = new[]
                     {
-                        typeof(PlacementModule),
                         typeof(StageModule),
                         typeof(HarvestModule),
                         typeof(HealthModule),
                         typeof(DropModule),
-                        typeof(MortalModule)
+                        typeof(MortalModule),
+                        typeof(ExpRewardModule),
+                        typeof(ResourceHitReactionModule)
                     },
                     preferredModuleOrder = new[]
                     {
-                        typeof(PlacementModule),
                         typeof(StageModule),
                         typeof(HarvestModule),
-                        typeof(HealthModule),
                         typeof(DropModule),
+                        typeof(HealthModule),
+                        typeof(ResourceHitReactionModule),
                         typeof(ExpRewardModule),
                         typeof(MortalModule),
                         typeof(QualityModule)
@@ -539,40 +559,74 @@ public class EntityDataWorkbenchWindow : EditorWindow
                 }
             },
             {
-                TemplateKind.TreeGrowthFlow,
+                TemplateKind.WoodTreePlant,
                 new TemplateConfig
                 {
-                    kind = TemplateKind.TreeGrowthFlow,
-                    label = "Tree Growth Flow",
-                    description = "Flow cây theo mẫu seed_apple_tree: một EntityData duy nhất có Placement, Stage loop sau harvest, hand harvest cho quả và Axe để chặt thân.",
-                    defaultFolder = "Assets/Project/ScriptableObjects/WorldObjects/Plants",
-                    defaultPrefix = "seed_",
-                    category = ItemCategory.Seed,
-                    maxStack = 999,
+                    kind = TemplateKind.WoodTreePlant,
+                    label = "Wood Tree Plant",
+                    description = "Thực thể cây lấy gỗ mọc trên đất. Không cần tưới nước, dùng ResourceGrowth, chặt bằng Rìu.",
+                    defaultFolder = "Assets/Project/ScriptableObjects/WorldObjects/WoodTrees",
+                    defaultPrefix = "TreeNode_",
+                    category = ItemCategory.Placeable,
+                    maxStack = 1,
                     occupyLayer = EntityLayer.Plant,
                     requiredModules = new[]
                     {
-                        typeof(PlacementModule),
-                        typeof(StageModule),
+                        typeof(ResourceGrowthModule),
                         typeof(HarvestModule),
+                        typeof(HealthModule),
+                        typeof(DropModule),
+                        typeof(MortalModule),
+                        typeof(ResourceHitReactionModule)
+                    },
+                    preferredModuleOrder = new[]
+                    {
+                        typeof(ResourceGrowthModule),
+                        typeof(HarvestModule),
+                        typeof(ResourceHitReactionModule),
                         typeof(HealthModule),
                         typeof(DropModule),
                         typeof(MortalModule)
                     },
-                    preferredModuleOrder = new[]
+                    requiredStats = new[]
                     {
-                        typeof(DropModule),
+                        new KeyValuePair<StatType, float>(StatType.MaxHp, 12f),
+                        new KeyValuePair<StatType, float>(StatType.Hp, 12f)
+                    }
+                }
+            },
+            {
+                TemplateKind.FruitTreePlant,
+                new TemplateConfig
+                {
+                    kind = TemplateKind.FruitTreePlant,
+                    label = "Fruit Tree Plant",
+                    description = "Thực thể cây ăn quả mọc trên đất. Không cần tưới nước, có giới hạn mùa vụ, thu hoạch quả bằng tay nhiều lần.",
+                    defaultFolder = "Assets/Project/ScriptableObjects/WorldObjects/FruitTrees",
+                    defaultPrefix = "FruitTree_",
+                    category = ItemCategory.Placeable,
+                    maxStack = 1,
+                    occupyLayer = EntityLayer.Plant,
+                    requiredModules = new[]
+                    {
                         typeof(StageModule),
+                        typeof(SeasonRuleModule),
                         typeof(HarvestModule),
                         typeof(HealthModule),
-                        typeof(ExpRewardModule),
-                        typeof(MortalModule),
-                        typeof(PlacementModule)
+                        typeof(DropModule)
+                    },
+                    preferredModuleOrder = new[]
+                    {
+                        typeof(StageModule),
+                        typeof(SeasonRuleModule),
+                        typeof(HarvestModule),
+                        typeof(HealthModule),
+                        typeof(DropModule)
                     },
                     requiredStats = new[]
                     {
-                        new KeyValuePair<StatType, float>(StatType.MaxHp, 25f),
-                        new KeyValuePair<StatType, float>(StatType.Hp, 25f)
+                        new KeyValuePair<StatType, float>(StatType.MaxHp, 15f),
+                        new KeyValuePair<StatType, float>(StatType.Hp, 15f)
                     }
                 }
             },
@@ -741,10 +795,15 @@ public class EntityDataWorkbenchWindow : EditorWindow
         if (data == null)
             return TemplateKind.Custom;
 
-        if (HasModule<StageModule>(data) && HasModule<PlacementModule>(data))
-            return IsTreeGrowthAsset(data, path) ? TemplateKind.TreeGrowthFlow : TemplateKind.PlantSeedFlow;
+        if (HasModule<StageModule>(data) && HasModule<SeasonRuleModule>(data))
+            return TemplateKind.FruitTreePlant;
         if (HasModule<ResourceGrowthModule>(data))
-            return TemplateKind.TreeGrowthFlow;
+            return TemplateKind.WoodTreePlant;
+        if (HasModule<StageModule>(data))
+            return TemplateKind.CropPlant;
+        if (HasModule<PlacementModule>(data) && data.category == ItemCategory.Seed)
+            return TemplateKind.SeedItem;
+
         if (HasModule<AnimalModule>(data))
             return TemplateKind.Animal;
         if (HasModule<WeaponModule>(data))
@@ -988,7 +1047,7 @@ public class EntityDataWorkbenchWindow : EditorWindow
                     })
                 });
             }
-            else if (template == TemplateKind.PlantSeedFlow && drop.harvestDrops.Length == 0)
+            else if (template == TemplateKind.CropPlant && drop.harvestDrops.Length == 0)
             {
                 issues.Add(new ValidationIssue
                 {
@@ -1009,8 +1068,8 @@ public class EntityDataWorkbenchWindow : EditorWindow
                 {
                     severity = IssueSeverity.Warning,
                     message = "PlacementModule vẫn để mặc định `EntityDrop` và chưa gán `placedEntityData`.",
-                    actionLabel = template == TemplateKind.PlantSeedFlow || template == TemplateKind.TreeGrowthFlow ? "Set objectTypeToSpawn = Plant01" : null,
-                    fix = template == TemplateKind.PlantSeedFlow || template == TemplateKind.TreeGrowthFlow
+                    actionLabel = template == TemplateKind.SeedItem ? "Set objectTypeToSpawn = Plant01" : null,
+                    fix = template == TemplateKind.SeedItem
                         ? entity => MutateEntity(entity, "Set placement object type", () =>
                         {
                             var module = GetModule<PlacementModule>(entity);
@@ -1026,7 +1085,7 @@ public class EntityDataWorkbenchWindow : EditorWindow
                 });
             }
 
-            if ((template == TemplateKind.PlantSeedFlow || template == TemplateKind.TreeGrowthFlow) &&
+            if (template == TemplateKind.SeedItem &&
                 !string.Equals(placement.animTrigger, "PutDown", StringComparison.OrdinalIgnoreCase))
             {
                 issues.Add(new ValidationIssue
@@ -1063,12 +1122,12 @@ public class EntityDataWorkbenchWindow : EditorWindow
             {
                 string actionLabel = null;
                 ToolType harvestTool = ToolType.None;
-                if (template == TemplateKind.PlantSeedFlow)
+                if (template == TemplateKind.CropPlant)
                 {
                     actionLabel = "Set harvestTool = Scythe";
                     harvestTool = ToolType.Scythe;
                 }
-                else if (template == TemplateKind.TreeGrowthFlow || template == TemplateKind.ResourceNode)
+                else if (template == TemplateKind.WoodTreePlant || template == TemplateKind.ResourceNode)
                 {
                     actionLabel = template == TemplateKind.ResourceNode ? "Set harvestTool = Pickaxe" : "Set harvestTool = Axe";
                     harvestTool = template == TemplateKind.ResourceNode ? ToolType.Pickaxe : ToolType.Axe;
@@ -1164,7 +1223,7 @@ public class EntityDataWorkbenchWindow : EditorWindow
             });
         }
 
-        if (path.IndexOf("seed_", StringComparison.OrdinalIgnoreCase) >= 0 && !HasModule<PlacementModule>(data) && template != TemplateKind.TreeGrowthFlow)
+        if (path.IndexOf("seed_", StringComparison.OrdinalIgnoreCase) >= 0 && !HasModule<PlacementModule>(data))
         {
             issues.Add(new ValidationIssue
             {
@@ -1222,7 +1281,7 @@ public class EntityDataWorkbenchWindow : EditorWindow
 
     private static void ApplyModuleDefaults(EntityData data, TemplateKind template)
     {
-        if (template == TemplateKind.PlantSeedFlow)
+        if (template == TemplateKind.SeedItem)
         {
             var placement = GetModule<PlacementModule>(data);
             if (placement != null)
@@ -1230,9 +1289,11 @@ public class EntityDataWorkbenchWindow : EditorWindow
                 placement.objectTypeToSpawn = placement.objectTypeToSpawn == ObjectType.EntityDrop ? ObjectType.Plant01 : placement.objectTypeToSpawn;
                 placement.centerTile = true;
                 if (string.IsNullOrWhiteSpace(placement.animTrigger) || string.Equals(placement.animTrigger, "Sow", StringComparison.OrdinalIgnoreCase))
-                    placement.animTrigger = "PutDown";
+                    placement.animTrigger = "Sow";
             }
-
+        }
+        else if (template == TemplateKind.CropPlant)
+        {
             var stage = GetModule<StageModule>(data);
             if (stage != null && (stage.stages == null || stage.stages.Length == 0))
                 stage.stages = new[] { new GrowthStage { daysToGrow = 1, canHarvest = true } };
@@ -1244,31 +1305,54 @@ public class EntityDataWorkbenchWindow : EditorWindow
             var drop = GetModule<DropModule>(data);
             if (drop != null && drop.harvestDrops == null)
                 drop.harvestDrops = Array.Empty<DropEntry>();
-        }
 
-        if (template == TemplateKind.TreeGrowthFlow)
-        {
-            var placement = GetModule<PlacementModule>(data);
-            if (placement != null)
+            var exp = GetModule<ExpRewardModule>(data);
+            if (exp != null && exp.rewardExp == 0)
             {
-                placement.objectTypeToSpawn = placement.objectTypeToSpawn == ObjectType.EntityDrop ? ObjectType.Plant01 : placement.objectTypeToSpawn;
-                placement.centerTile = true;
-                if (string.IsNullOrWhiteSpace(placement.animTrigger) || string.Equals(placement.animTrigger, "Sow", StringComparison.OrdinalIgnoreCase))
-                    placement.animTrigger = "PutDown";
+                exp.rewardExp = 10;
+                exp.sourceType = ExpSourceType.Harvest;
+            }
+        }
+        else if (template == TemplateKind.WoodTreePlant)
+        {
+            var growth = GetModule<ResourceGrowthModule>(data);
+            if (growth != null && (growth.stages == null || growth.stages.Length == 0))
+            {
+                growth.stages = new[] {
+                    new GrowthStage { daysToGrow = 4, canHarvest = false },
+                    new GrowthStage { daysToGrow = 4, canHarvest = false },
+                    new GrowthStage { daysToGrow = 4, canHarvest = false },
+                    new GrowthStage { daysToGrow = 0, canHarvest = true }
+                };
             }
 
+            var harvest = GetModule<HarvestModule>(data);
+            if (harvest != null)
+            {
+                if (harvest.harvestTool == ToolType.None) harvest.harvestTool = ToolType.Axe;
+                harvest.harvestCausesDamage = true;
+                harvest.destroyOnHarvest = false;
+            }
+        }
+        else if (template == TemplateKind.FruitTreePlant)
+        {
             var stage = GetModule<StageModule>(data);
             if (stage != null)
             {
                 if (stage.stages == null || stage.stages.Length == 0)
-                    stage.stages = CreateDefaultTreeStages();
-
+                {
+                    stage.stages = new[] {
+                        new GrowthStage { daysToGrow = 7, canHarvest = false },
+                        new GrowthStage { daysToGrow = 7, canHarvest = false },
+                        new GrowthStage { daysToGrow = 7, canHarvest = false },
+                        new GrowthStage { daysToGrow = 7, canHarvest = false },
+                        new GrowthStage { daysToGrow = 0, canHarvest = true }
+                    };
+                }
                 stage.requiresWater = false;
-                stage.regrowStageIndex = stage.regrowStageIndex < 0 ? 8 : stage.regrowStageIndex;
-                stage.harvestGoToStageIndex = stage.harvestGoToStageIndex < 0 ? 8 : stage.harvestGoToStageIndex;
-                stage.lastStageLoopToIndex = stage.lastStageLoopToIndex < 0 ? 5 : stage.lastStageLoopToIndex;
-                stage.daysToReturnAfterHarvest = stage.daysToReturnAfterHarvest <= 0 ? 3 : stage.daysToReturnAfterHarvest;
-                stage.wiltOnSeasonChange = false;
+                stage.harvestGoToStageIndex = stage.harvestGoToStageIndex < 0 ? 3 : stage.harvestGoToStageIndex;
+                stage.lastStageLoopToIndex = stage.lastStageLoopToIndex < 0 ? 4 : stage.lastStageLoopToIndex;
+                stage.daysToReturnAfterHarvest = stage.daysToReturnAfterHarvest <= 0 ? 1 : stage.daysToReturnAfterHarvest;
             }
 
             var harvest = GetModule<HarvestModule>(data);
@@ -1278,8 +1362,7 @@ public class EntityDataWorkbenchWindow : EditorWindow
                 harvest.allowHandHarvest = true;
                 harvest.dropMode = HarvestDropMode.World;
                 harvest.harvestCausesDamage = false;
-                harvest.destroyOnHarvest = true;
-                harvest.oneHitDestroy = false;
+                harvest.destroyOnHarvest = false;
 
                 if (!HasAdditionalHarvestTool(harvest, ToolType.Axe))
                 {
@@ -1289,31 +1372,19 @@ public class EntityDataWorkbenchWindow : EditorWindow
                         {
                             toolType = ToolType.Axe,
                             harvestCausesDamage = true,
-                            destroyOnHarvest = true,
+                            destroyOnHarvest = false,
                             oneHitDestroy = false
                         });
                 }
             }
-
-            var drop = GetModule<DropModule>(data);
-            if (drop != null)
-            {
-                if (drop.harvestDrops == null)
-                    drop.harvestDrops = Array.Empty<DropEntry>();
-                if (drop.deathDrops == null)
-                    drop.deathDrops = Array.Empty<DropEntry>();
-                drop.includeHarvestDropsOnDestroyWhenHarvestable = true;
-            }
         }
-
-        if (template == TemplateKind.ResourceNode)
+        else if (template == TemplateKind.ResourceNode)
         {
             var harvest = GetModule<HarvestModule>(data);
             if (harvest != null && harvest.harvestTool == ToolType.None)
                 harvest.harvestTool = ToolType.Pickaxe;
         }
-
-        if (template == TemplateKind.Npc)
+        else if (template == TemplateKind.Npc)
         {
             var inventory = GetModule<InventoryModule>(data);
             if (inventory != null && inventory.size <= 0)

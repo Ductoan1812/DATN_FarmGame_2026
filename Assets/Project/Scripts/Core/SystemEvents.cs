@@ -330,6 +330,18 @@ public struct BackpackSplitRequestPublish
     { this.slotIndex = slotIndex; this.splitAmount = splitAmount; }
 }
 
+public struct InventoryUseRequestPublish
+{
+    public readonly InventoryType inventoryType;
+    public readonly int slotIndex;
+
+    public InventoryUseRequestPublish(InventoryType inventoryType, int slotIndex)
+    {
+        this.inventoryType = inventoryType;
+        this.slotIndex = slotIndex;
+    }
+}
+
 /// <summary>
 /// UI request drop item tại slot ra world.
 /// BackpackUI publish (khi nhấn Btn_Drop) hoặc DraggableSlot publish (khi kéo ra ngoài).
@@ -368,6 +380,7 @@ public struct BackpackItemInfoChangedPublish
     public readonly string descKey;
     public readonly string categoryKey;
     public readonly int sellPrice;
+    public readonly bool canUse;
     public readonly StatDisplay[] stats;
 
     public BackpackItemInfoChangedPublish(
@@ -380,6 +393,7 @@ public struct BackpackItemInfoChangedPublish
         string descKey,
         string categoryKey,
         int sellPrice,
+        bool canUse,
         StatDisplay[] stats)
     {
         this.slotIndex = slotIndex;
@@ -391,6 +405,7 @@ public struct BackpackItemInfoChangedPublish
         this.descKey = descKey;
         this.categoryKey = categoryKey;
         this.sellPrice = sellPrice;
+        this.canUse = canUse;
         this.stats = stats;
     }
 }
@@ -584,6 +599,63 @@ public struct ShopViewPublish
     public readonly ShopViewData viewData;
 
     public ShopViewPublish(ShopViewData viewData)
+    {
+        this.viewData = viewData;
+    }
+}
+
+public sealed class StorageViewData
+{
+    public EntityRuntime Interactor { get; }
+    public EntityRuntime StorageOwner { get; }
+    public InventoryType InventoryType { get; }
+
+    public StorageViewData(EntityRuntime interactor, EntityRuntime storageOwner, InventoryType inventoryType)
+    {
+        Interactor = interactor;
+        StorageOwner = storageOwner;
+        InventoryType = inventoryType;
+    }
+}
+
+public readonly struct StorageViewPublish
+{
+    public readonly StorageViewData viewData;
+
+    public StorageViewPublish(StorageViewData viewData)
+    {
+        this.viewData = viewData;
+    }
+}
+
+public sealed class ProcessorViewData
+{
+    public EntityRuntime Interactor { get; }
+    public EntityRuntime Station { get; }
+    public InventoryType InputInventoryType { get; }
+    public InventoryType OutputInventoryType { get; }
+    public IReadOnlyList<ProcessorRecipeEntry> Recipes { get; }
+
+    public ProcessorViewData(
+        EntityRuntime interactor,
+        EntityRuntime station,
+        InventoryType inputInventoryType,
+        InventoryType outputInventoryType,
+        IReadOnlyList<ProcessorRecipeEntry> recipes)
+    {
+        Interactor = interactor;
+        Station = station;
+        InputInventoryType = inputInventoryType;
+        OutputInventoryType = outputInventoryType;
+        Recipes = recipes;
+    }
+}
+
+public readonly struct ProcessorViewPublish
+{
+    public readonly ProcessorViewData viewData;
+
+    public ProcessorViewPublish(ProcessorViewData viewData)
     {
         this.viewData = viewData;
     }

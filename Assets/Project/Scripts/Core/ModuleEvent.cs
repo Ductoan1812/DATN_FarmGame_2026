@@ -30,12 +30,21 @@ public class TakeDamageEvent : IGameEvent
     public readonly EntityRuntime attacker;
     public readonly float damage;
     public readonly ToolType toolType;
+    public readonly int toolTier;
+    public readonly EntityRuntime sourceItem;
 
-    public TakeDamageEvent(EntityRuntime attacker, float damage, ToolType toolType = ToolType.None)
+    public TakeDamageEvent(
+        EntityRuntime attacker,
+        float damage,
+        ToolType toolType = ToolType.None,
+        int toolTier = 1,
+        EntityRuntime sourceItem = null)
     {
         this.attacker = attacker;
         this.damage   = damage;
         this.toolType = toolType;
+        this.toolTier = toolTier;
+        this.sourceItem = sourceItem;
     }
 }
 

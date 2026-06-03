@@ -90,6 +90,7 @@ public class BackpackUI : MonoBehaviour
     private InventoryGridView gridView;
     private RectTransform itemInfoPanelRoot;
     private RectTransform itemInfoBodyRoot;
+    private RectTransform itemInfoGuideRoot;
     private RectTransform hoveredSlotRoot;
     private LocalizedText itemNameLocalized;
     private LocalizedText descLocalized;
@@ -203,6 +204,7 @@ public class BackpackUI : MonoBehaviour
         if (btnNext != null) btnNext.onClick.AddListener(IncreaseSplitAmount);
         if (btnSplit != null) btnSplit.onClick.AddListener(PublishSplitRequest);
         if (btnDrop != null) btnDrop.onClick.AddListener(PublishDropRequest);
+        if (btnUse != null) btnUse.onClick.AddListener(PublishUseRequest);
     }
 
     private void UnregisterButtonEvents()
@@ -212,6 +214,7 @@ public class BackpackUI : MonoBehaviour
         if (btnNext != null) btnNext.onClick.RemoveListener(IncreaseSplitAmount);
         if (btnSplit != null) btnSplit.onClick.RemoveListener(PublishSplitRequest);
         if (btnDrop != null) btnDrop.onClick.RemoveListener(PublishDropRequest);
+        if (btnUse != null) btnUse.onClick.RemoveListener(PublishUseRequest);
     }
 
     // ══════════════════════════════════════════════════════════
@@ -259,7 +262,7 @@ public class BackpackUI : MonoBehaviour
         SetOptionalText(rareText, string.Empty, rareObject != null ? rareObject : rareText?.gameObject);
 
         if (btnUse != null)
-            btnUse.interactable = true;
+            btnUse.interactable = e.canUse;
 
         ApplyStats(e.stats);
 
@@ -309,6 +312,14 @@ public class BackpackUI : MonoBehaviour
 
         GameManager.Instance?.EventBus?.Publish(
             new InventoryDropRequestPublish(InventoryType.Backpack, selectedIndex));
+    }
+
+    private void PublishUseRequest()
+    {
+        if (selectedIndex < 0) return;
+
+        GameManager.Instance?.EventBus?.Publish(
+            new InventoryUseRequestPublish(InventoryType.Backpack, selectedIndex));
     }
 
     private void PublishVisualRefreshRequest()
@@ -713,7 +724,53 @@ public class BackpackUI : MonoBehaviour
         itemInfoPanelRoot.sizeDelta = new Vector2(420f, 560f);
         itemInfoPanelRoot.SetAsLastSibling();
 
+        EnsureInfoGuidePanel();
         SetInfoTooltipVisible(false);
+    }
+
+    private void EnsureInfoGuidePanel()
+    {
+        if (itemInfoGuideRoot != null || itemInfoBodyRoot == null)
+            return;
+
+        var existing = FindDeepChild(itemInfoBodyRoot, "BackpackGuidePanel") as RectTransform;
+        if (existing != null)
+        {
+            itemInfoGuideRoot = existing;
+            return;
+        }
+
+        var panel = new GameObject("BackpackGuidePanel", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image), typeof(Outline));
+        panel.transform.SetParent(itemInfoBodyRoot, false);
+        itemInfoGuideRoot = panel.GetComponent<RectTransform>();
+        itemInfoGuideRoot.anchorMin = new Vector2(0.72f, 0f);
+        itemInfoGuideRoot.anchorMax = new Vector2(1f, 1f);
+        itemInfoGuideRoot.pivot = new Vector2(1f, 0.5f);
+        itemInfoGuideRoot.offsetMin = new Vector2(10f, 12f);
+        itemInfoGuideRoot.offsetMax = new Vector2(-14f, -12f);
+
+        var image = panel.GetComponent<Image>();
+        image.color = new Color(0.18f, 0.10f, 0.04f, 0.72f);
+        image.raycastTarget = false;
+
+        var outline = panel.GetComponent<Outline>();
+        outline.effectColor = new Color(0.72f, 0.47f, 0.18f, 0.95f);
+        outline.effectDistance = new Vector2(2f, -2f);
+
+        var title = CreateGuideText("GuideTitle", panel.transform, "Thông tin vật phẩm", 24f, TextAlignmentOptions.Center, new Color(1f, 0.86f, 0.50f));
+        SetRect(title.rectTransform, Vector2.up, Vector2.one, new Vector2(0.5f, 1f), new Vector2(0f, -24f), new Vector2(-28f, 42f));
+
+        var body = CreateGuideText(
+            "GuideBody",
+            panel.transform,
+            "Di chuột vào một ô vật phẩm để xem tên, mô tả, giá bán và chỉ số liên quan.\n\nChọn vật phẩm để sử dụng, tách hoặc thả khỏi túi đồ.",
+            18f,
+            TextAlignmentOptions.TopLeft,
+            new Color(0.96f, 0.86f, 0.66f));
+        body.enableWordWrapping = true;
+        SetRect(body.rectTransform, Vector2.zero, Vector2.one, new Vector2(0.5f, 0.5f), new Vector2(0f, -54f), new Vector2(-42f, -120f));
+
+        itemInfoGuideRoot.SetAsLastSibling();
     }
 
     private void PositionInfoTooltip(RectTransform slotRect)
@@ -747,6 +804,9 @@ public class BackpackUI : MonoBehaviour
     {
         if (itemInfoPanelRoot != null && itemInfoPanelRoot.gameObject.activeSelf != visible)
             itemInfoPanelRoot.gameObject.SetActive(visible);
+
+        if (itemInfoGuideRoot != null && itemInfoGuideRoot.gameObject.activeSelf == visible)
+            itemInfoGuideRoot.gameObject.SetActive(!visible);
     }
 
     public void OnInfoTooltipPointerEnter()
@@ -1080,6 +1140,29 @@ public class BackpackUI : MonoBehaviour
         }
 
         return null;
+    }
+
+    private static TextMeshProUGUI CreateGuideText(string name, Transform parent, string value, float size, TextAlignmentOptions alignment, Color color)
+    {
+        var go = new GameObject(name, typeof(RectTransform), typeof(CanvasRenderer), typeof(TextMeshProUGUI));
+        go.transform.SetParent(parent, false);
+        var text = go.GetComponent<TextMeshProUGUI>();
+        text.text = value;
+        text.fontSize = size;
+        text.fontStyle = FontStyles.Bold;
+        text.alignment = alignment;
+        text.color = color;
+        text.raycastTarget = false;
+        return text;
+    }
+
+    private static void SetRect(RectTransform rect, Vector2 anchorMin, Vector2 anchorMax, Vector2 pivot, Vector2 anchoredPosition, Vector2 sizeDelta)
+    {
+        rect.anchorMin = anchorMin;
+        rect.anchorMax = anchorMax;
+        rect.pivot = pivot;
+        rect.anchoredPosition = anchoredPosition;
+        rect.sizeDelta = sizeDelta;
     }
 }
 

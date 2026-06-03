@@ -46,6 +46,7 @@ public class DialoguePanelUI : MonoBehaviour
 
     private void Awake()
     {
+        EnsureBasicLayout();
         CacheLayoutReferences();
         ConfigureDynamicLayout();
         ResolveUIController();
@@ -53,6 +54,7 @@ public class DialoguePanelUI : MonoBehaviour
 
     private void OnEnable()
     {
+        EnsureBasicLayout();
         CacheLayoutReferences();
         ConfigureDynamicLayout();
         ResolveUIController();
@@ -218,8 +220,63 @@ public class DialoguePanelUI : MonoBehaviour
 
     private void CacheLayoutReferences()
     {
+        AutoFindRefs();
         panelRect = panel != null ? panel.GetComponent<RectTransform>() : GetComponent<RectTransform>();
         optionsRootRect = optionsRoot as RectTransform;
+    }
+
+    private void AutoFindRefs()
+    {
+        panel ??= gameObject;
+        speakerNameText ??= FindText(transform, "SpeakerNameText");
+        lineText ??= FindText(transform, "LineText");
+        portraitImage ??= FindImage(transform, "PortraitImage");
+        optionsRoot ??= FindDeepChild(transform, "OptionsRoot")
+                     ?? FindDeepChild(transform, "ChoicesRoot");
+        optionButtonPrefab ??= FindButton(transform, "OptionButtonTemplate")
+                            ?? FindButton(transform, "ChoiceButtonTemplate");
+        closeButton ??= FindButton(transform, "CloseButton");
+    }
+
+    private void EnsureBasicLayout()
+    {
+        AutoFindRefs();
+        if (speakerNameText != null && lineText != null && optionsRoot != null && optionButtonPrefab != null)
+            return;
+
+        for (int i = transform.childCount - 1; i >= 0; i--)
+            Destroy(transform.GetChild(i).gameObject);
+
+        panel = gameObject;
+        var bg = GetComponent<Image>() ?? gameObject.AddComponent<Image>();
+        bg.color = new Color(0.28f, 0.15f, 0.06f, 0.92f);
+
+        var outline = GetComponent<Outline>() ?? gameObject.AddComponent<Outline>();
+        outline.effectColor = new Color(0.78f, 0.54f, 0.20f, 1f);
+        outline.effectDistance = new Vector2(3f, -3f);
+
+        portraitImage = CreateImage("PortraitImage", transform, new Color(0.14f, 0.08f, 0.04f, 0.88f));
+        SetRect(portraitImage.rectTransform, new Vector2(0f, 1f), new Vector2(0f, 1f), new Vector2(0f, 1f), new Vector2(28f, -24f), new Vector2(128f, 128f));
+
+        speakerNameText = CreateText("SpeakerNameText", transform, "NPC", 24f, TextAlignmentOptions.MidlineLeft, new Color(1f, 0.86f, 0.50f));
+        SetRect(speakerNameText.rectTransform, new Vector2(0f, 1f), Vector2.one, new Vector2(0f, 1f), new Vector2(184f, -22f), new Vector2(-250f, 36f));
+
+        lineText = CreateText("LineText", transform, "Hãy chọn một hành động để tiếp tục tương tác.", 20f, TextAlignmentOptions.TopLeft, new Color(0.96f, 0.86f, 0.66f));
+        lineText.enableWordWrapping = true;
+        SetRect(lineText.rectTransform, new Vector2(0f, 1f), Vector2.one, new Vector2(0f, 1f), new Vector2(184f, -66f), new Vector2(-250f, 74f));
+
+        closeButton = CreateDialogueButton("CloseButton", transform, "X");
+        SetRect(closeButton.GetComponent<RectTransform>(), new Vector2(1f, 1f), Vector2.one, new Vector2(1f, 1f), new Vector2(-28f, -24f), new Vector2(46f, 40f));
+
+        var options = new GameObject("OptionsRoot", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+        options.transform.SetParent(transform, false);
+        optionsRoot = options.transform;
+        var optionsRect = (RectTransform)optionsRoot;
+        SetRect(optionsRect, new Vector2(0f, 0f), Vector2.one, new Vector2(0.5f, 0f), new Vector2(0f, 18f), new Vector2(-56f, 122f));
+        options.GetComponent<Image>().color = new Color(0.18f, 0.10f, 0.04f, 0.35f);
+
+        optionButtonPrefab = CreateDialogueButton("OptionButtonTemplate", optionsRoot, "Lựa chọn");
+        optionButtonPrefab.gameObject.SetActive(false);
     }
 
     private void ConfigureDynamicLayout()
@@ -572,5 +629,82 @@ public class DialoguePanelUI : MonoBehaviour
         if (uiController != null) return;
 
         uiController = FindAnyObjectByType<UIController>(FindObjectsInactive.Include);
+    }
+
+    private static TextMeshProUGUI CreateText(string name, Transform parent, string value, float size, TextAlignmentOptions alignment, Color color)
+    {
+        var go = new GameObject(name, typeof(RectTransform), typeof(CanvasRenderer), typeof(TextMeshProUGUI));
+        go.transform.SetParent(parent, false);
+        var text = go.GetComponent<TextMeshProUGUI>();
+        text.text = value;
+        text.fontSize = size;
+        text.fontStyle = FontStyles.Bold;
+        text.alignment = alignment;
+        text.color = color;
+        return text;
+    }
+
+    private static Image CreateImage(string name, Transform parent, Color color)
+    {
+        var go = new GameObject(name, typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+        go.transform.SetParent(parent, false);
+        var image = go.GetComponent<Image>();
+        image.color = color;
+        image.preserveAspect = true;
+        return image;
+    }
+
+    private static Button CreateDialogueButton(string name, Transform parent, string label)
+    {
+        var go = new GameObject(name, typeof(RectTransform), typeof(CanvasRenderer), typeof(Image), typeof(Button));
+        go.transform.SetParent(parent, false);
+        var image = go.GetComponent<Image>();
+        image.color = new Color(0.34f, 0.20f, 0.08f, 1f);
+        var button = go.GetComponent<Button>();
+        button.targetGraphic = image;
+        var text = CreateText("Label", go.transform, label, 18f, TextAlignmentOptions.Center, new Color(1f, 0.90f, 0.66f));
+        SetStretch(text.rectTransform);
+        return button;
+    }
+
+    private static TMP_Text FindText(Transform root, string name)
+    {
+        var child = FindDeepChild(root, name);
+        return child != null ? child.GetComponent<TMP_Text>() : null;
+    }
+
+    private static Image FindImage(Transform root, string name)
+    {
+        var child = FindDeepChild(root, name);
+        return child != null ? child.GetComponent<Image>() : null;
+    }
+
+    private static Button FindButton(Transform root, string name)
+    {
+        var child = FindDeepChild(root, name);
+        return child != null ? child.GetComponent<Button>() : null;
+    }
+
+    private static Transform FindDeepChild(Transform root, string name)
+    {
+        if (root == null || string.IsNullOrEmpty(name)) return null;
+        if (root.name == name) return root;
+
+        for (int i = 0; i < root.childCount; i++)
+        {
+            var found = FindDeepChild(root.GetChild(i), name);
+            if (found != null) return found;
+        }
+
+        return null;
+    }
+
+    private static void SetRect(RectTransform rect, Vector2 anchorMin, Vector2 anchorMax, Vector2 pivot, Vector2 anchoredPosition, Vector2 sizeDelta)
+    {
+        rect.anchorMin = anchorMin;
+        rect.anchorMax = anchorMax;
+        rect.pivot = pivot;
+        rect.anchoredPosition = anchoredPosition;
+        rect.sizeDelta = sizeDelta;
     }
 }

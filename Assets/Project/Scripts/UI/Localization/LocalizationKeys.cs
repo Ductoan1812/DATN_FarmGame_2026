@@ -50,4 +50,8 @@ public static class LocalizationKeys
     public const string UiCategoryMaterial = "ui.category.material";
     public const string UiCategoryFood = "ui.category.food";
     public const string UiCategoryPotion = "ui.category.potion";
+
+    public const string UiBedSleep = "ui.bed.sleep";
+    public const string UiProcessorOpen = "ui.processor.open";
+    public const string UiStorageOpen = "ui.storage.open";
 }

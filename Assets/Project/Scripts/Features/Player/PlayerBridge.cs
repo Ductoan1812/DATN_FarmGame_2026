@@ -304,6 +304,7 @@ public class PlayerBridge : MonoBehaviour
         _eventBus.Subscribe<BackpackSortRequestPublish>(OnBackpackSortRequest);
         _eventBus.Subscribe<BackpackSplitRequestPublish>(OnBackpackSplitRequest);
         _eventBus.Subscribe<InventoryDropRequestPublish>(OnInventoryDropRequest);
+        _eventBus.Subscribe<InventoryUseRequestPublish>(OnInventoryUseRequest);
 
         PublishAllBackpackSlots();
         PublishBackpackSelection(-1);
@@ -317,6 +318,7 @@ public class PlayerBridge : MonoBehaviour
         _eventBus?.Unsubscribe<BackpackSortRequestPublish>(OnBackpackSortRequest);
         _eventBus?.Unsubscribe<BackpackSplitRequestPublish>(OnBackpackSplitRequest);
         _eventBus?.Unsubscribe<InventoryDropRequestPublish>(OnInventoryDropRequest);
+        _eventBus?.Unsubscribe<InventoryUseRequestPublish>(OnInventoryUseRequest);
         _backpack = null;
         _backpackSnapshot = null;
         _selectedBackpackIndex = -1;
@@ -416,6 +418,24 @@ public class PlayerBridge : MonoBehaviour
             ObjectType.EntityDrop,
             entity,
             bypassValidation: true));
+    }
+
+    private void OnInventoryUseRequest(InventoryUseRequestPublish e)
+    {
+        if (_entity == null)
+            return;
+
+        var inventory = GameManager.Instance?.InventoryService?.GetInventory(_entity, e.inventoryType);
+        if (inventory == null || e.slotIndex < 0 || e.slotIndex >= inventory.MaxSlots)
+            return;
+
+        var slot = inventory.GetSlot(e.slotIndex);
+        if (slot == null || slot.IsEmpty || slot.entity == null || !CanUseInventoryItem(slot.entity))
+            return;
+
+        slot.entity.TriggerEvent(new PrimaryActionEvent(_entity, slot.entity));
+        PublishBackpackSelection(e.slotIndex);
+        _eventBus?.Publish(new InventoryVisualRefreshRequestPublish());
     }
 
     // ══════════════════════════════════════════════════════════
@@ -526,6 +546,7 @@ public class PlayerBridge : MonoBehaviour
                 string.Empty,
                 string.Empty,
                 0,
+                false,
                 System.Array.Empty<StatDisplay>()));
             return;
         }
@@ -544,6 +565,7 @@ public class PlayerBridge : MonoBehaviour
                 string.Empty,
                 string.Empty,
                 0,
+                false,
                 System.Array.Empty<StatDisplay>()));
             return;
         }
@@ -561,6 +583,7 @@ public class PlayerBridge : MonoBehaviour
             data.descKey,
             GetCategoryKey(data.category),
             data.sellPrice,
+            CanUseInventoryItem(entity),
             BuildStatDisplays(entity)));
     }
 
@@ -613,6 +636,15 @@ public class PlayerBridge : MonoBehaviour
 
         inventoryService.Sort(_entity, InventoryType.Backpack);
         PublishAllBackpackSlots();
+    }
+
+    private static bool CanUseInventoryItem(EntityRuntime entity)
+    {
+        if (entity == null)
+            return false;
+
+        return entity.GetModule<ConsumableRuntime>() != null
+               || entity.GetModule<PlacementRuntime>() != null;
     }
 
     // ══════════════════════════════════════════════════════════

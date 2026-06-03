@@ -27,12 +27,14 @@ public class QuestLogWindowUI : MonoBehaviour
 
     private void OnEnable()
     {
+        EnsureBasicLayout();
         TrySubscribe();
         if (playerReady) Rebuild();
     }
 
     private void Start()
     {
+        EnsureBasicLayout();
         TrySubscribe();
     }
 
@@ -78,6 +80,57 @@ public class QuestLogWindowUI : MonoBehaviour
         bus.Subscribe<GameReadyPublish>(OnGameReady);
         bus.Subscribe<QuestStateChangedPublish>(OnQuestStateChanged);
         subscribedBus = bus;
+    }
+
+    private void EnsureBasicLayout()
+    {
+        if (questListRoot != null && emptyLabel != null)
+            return;
+
+        questListRoot ??= FindDeepChild(transform, "QuestListContent")
+                       ?? FindDeepChild(transform, "Content");
+        emptyLabel ??= FindDeepChild(transform, "EmptyLabel")?.gameObject;
+
+        if (questListRoot != null && emptyLabel != null)
+            return;
+
+        for (int i = transform.childCount - 1; i >= 0; i--)
+            Destroy(transform.GetChild(i).gameObject);
+
+        var bg = GetComponent<Image>() ?? gameObject.AddComponent<Image>();
+        bg.color = new Color(0.96f, 0.82f, 0.52f, 0.96f);
+
+        var header = CreateUiObject("Header", transform);
+        SetRect(header, new Vector2(0f, 1f), Vector2.one, new Vector2(0.5f, 1f), Vector2.zero, new Vector2(0f, 72f));
+        var headerImage = header.gameObject.AddComponent<Image>();
+        headerImage.color = new Color(0.30f, 0.17f, 0.07f, 0.95f);
+
+        var title = CreateText("TitleText", header, "Nhật ký nhiệm vụ", 28f, TextAlignmentOptions.Center, new Color(0.98f, 0.88f, 0.55f));
+        Stretch(title.rectTransform, new Vector2(24f, 0f), new Vector2(-24f, 0f));
+
+        var body = CreateUiObject("Body", transform);
+        SetRect(body, Vector2.zero, Vector2.one, new Vector2(0.5f, 0.5f), new Vector2(0f, -42f), new Vector2(-64f, -112f));
+
+        var list = CreateUiObject("QuestListContent", body);
+        Stretch(list, Vector2.zero, Vector2.zero);
+        var layout = list.gameObject.AddComponent<VerticalLayoutGroup>();
+        layout.padding = new RectOffset(14, 14, 14, 14);
+        layout.spacing = 10f;
+        layout.childControlWidth = true;
+        layout.childControlHeight = true;
+        layout.childForceExpandWidth = true;
+        layout.childForceExpandHeight = false;
+        questListRoot = list;
+
+        var empty = CreateText(
+            "EmptyLabel",
+            body,
+            "Chưa có nhiệm vụ đang theo dõi.\nHãy tương tác với NPC giao nhiệm vụ để nhận nhiệm vụ mới.",
+            22f,
+            TextAlignmentOptions.Center,
+            new Color(0.32f, 0.22f, 0.10f));
+        Stretch(empty.rectTransform, new Vector2(32f, 32f), new Vector2(-32f, -32f));
+        emptyLabel = empty.gameObject;
     }
 
     private void ResolvePlayer()
@@ -325,5 +378,44 @@ public class QuestLogWindowUI : MonoBehaviour
             if (found != null) return found;
         }
         return null;
+    }
+
+    private static RectTransform CreateUiObject(string name, Transform parent)
+    {
+        var go = new GameObject(name, typeof(RectTransform));
+        go.transform.SetParent(parent, false);
+        return go.GetComponent<RectTransform>();
+    }
+
+    private static TextMeshProUGUI CreateText(string name, Transform parent, string value, float size, TextAlignmentOptions alignment, Color color)
+    {
+        var go = new GameObject(name, typeof(RectTransform), typeof(CanvasRenderer), typeof(TextMeshProUGUI));
+        go.transform.SetParent(parent, false);
+        var text = go.GetComponent<TextMeshProUGUI>();
+        text.text = value;
+        text.fontSize = size;
+        text.fontStyle = FontStyles.Bold;
+        text.alignment = alignment;
+        text.color = color;
+        text.enableWordWrapping = true;
+        return text;
+    }
+
+    private static void Stretch(RectTransform rect, Vector2 offsetMin, Vector2 offsetMax)
+    {
+        rect.anchorMin = Vector2.zero;
+        rect.anchorMax = Vector2.one;
+        rect.pivot = new Vector2(0.5f, 0.5f);
+        rect.offsetMin = offsetMin;
+        rect.offsetMax = offsetMax;
+    }
+
+    private static void SetRect(RectTransform rect, Vector2 anchorMin, Vector2 anchorMax, Vector2 pivot, Vector2 anchoredPosition, Vector2 sizeDelta)
+    {
+        rect.anchorMin = anchorMin;
+        rect.anchorMax = anchorMax;
+        rect.pivot = pivot;
+        rect.anchoredPosition = anchoredPosition;
+        rect.sizeDelta = sizeDelta;
     }
 }

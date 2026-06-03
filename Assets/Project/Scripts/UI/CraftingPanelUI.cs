@@ -40,6 +40,8 @@ public class CraftingPanelUI : MonoBehaviour
 
     private void OnEnable()
     {
+        EnsureBasicLayout();
+        AutoFindRefs();
         TrySubscribe();
         RegisterListeners();
         Hide();
@@ -67,6 +69,7 @@ public class CraftingPanelUI : MonoBehaviour
     {
         if (e.viewData == null) return;
 
+        AutoFindRefs();
         currentView = e.viewData;
         Show();
         SetLocalizedText(titleText, "ui.crafting.title");
@@ -280,6 +283,122 @@ public class CraftingPanelUI : MonoBehaviour
         subscribedBus.Subscribe<CraftingResultPublish>(OnCraftingResult);
     }
 
+    private void AutoFindRefs()
+    {
+        panel ??= gameObject;
+        titleText ??= FindText(transform, "TitleText");
+        resultText ??= FindText(transform, "ResultText");
+        closeButton ??= FindButton(transform, "CloseButton");
+        categoryListRoot ??= FindDeepChild(transform, "CategoryListRoot")
+                          ?? FindDeepChild(transform, "CategoryContent");
+        categoryButtonTemplate ??= FindButton(transform, "CategoryButtonTemplate");
+        recipeListRoot ??= FindDeepChild(transform, "RecipeListRoot")
+                        ?? FindDeepChild(transform, "RecipeContent");
+        recipeRowTemplate ??= FindDeepChild(transform, "RecipeRowTemplate")?.GetComponent<CraftingRecipeRowUI>();
+        selectedRecipeIcon ??= FindImage(transform, "SelectedRecipeIcon");
+        selectedRecipeNameText ??= FindText(transform, "SelectedRecipeNameText");
+        selectedRecipeDescText ??= FindText(transform, "SelectedRecipeDescText");
+        selectedRecipeLevelText ??= FindText(transform, "SelectedRecipeLevelText");
+        selectedRecipeOutputText ??= FindText(transform, "SelectedRecipeOutputText");
+        ingredientListRoot ??= FindDeepChild(transform, "IngredientListRoot")
+                           ?? FindDeepChild(transform, "IngredientContent");
+        ingredientSlotTemplate ??= FindDeepChild(transform, "IngredientSlotTemplate")?.gameObject;
+        quantityMinusButton ??= FindButton(transform, "QuantityMinusButton");
+        quantityPlusButton ??= FindButton(transform, "QuantityPlusButton");
+        quantityMaxButton ??= FindButton(transform, "QuantityMaxButton");
+        quantityText ??= FindText(transform, "QuantityText");
+        craftButton ??= FindButton(transform, "CraftButton");
+    }
+
+    private void EnsureBasicLayout()
+    {
+        AutoFindRefs();
+        if (titleText != null &&
+            recipeListRoot != null &&
+            recipeRowTemplate != null &&
+            selectedRecipeNameText != null &&
+            ingredientListRoot != null &&
+            ingredientSlotTemplate != null &&
+            craftButton != null)
+        {
+            return;
+        }
+
+        for (int i = transform.childCount - 1; i >= 0; i--)
+            Destroy(transform.GetChild(i).gameObject);
+
+        var background = GetComponent<Image>() ?? gameObject.AddComponent<Image>();
+        background.color = new Color(0.95f, 0.78f, 0.48f, 0.96f);
+
+        var outline = GetComponent<Outline>() ?? gameObject.AddComponent<Outline>();
+        outline.effectColor = new Color(0.78f, 0.54f, 0.20f, 1f);
+        outline.effectDistance = new Vector2(3f, -3f);
+
+        var header = CreateUiObject("Header", transform);
+        SetRect(header, new Vector2(0f, 1f), Vector2.one, new Vector2(0.5f, 1f), Vector2.zero, new Vector2(0f, 72f));
+        CreateImage("HeaderBackground", header, new Color(0.30f, 0.17f, 0.07f, 0.95f), stretch: true);
+
+        titleText = CreateText("TitleText", header, "Chế tạo vật phẩm", 28f, TextAlignmentOptions.Center, new Color(0.98f, 0.88f, 0.55f));
+        Stretch(titleText.rectTransform, new Vector2(90f, 0f), new Vector2(-90f, 0f));
+        closeButton = CreateBasicButton("CloseButton", header, "X", new Vector2(1f, 0.5f), new Vector2(1f, 0.5f), new Vector2(-42f, 0f), new Vector2(48f, 42f));
+
+        var body = CreateUiObject("Body", transform);
+        Stretch(body, new Vector2(28f, 28f), new Vector2(-28f, -92f));
+
+        var categoryPanel = CreatePanel("CategoryPanel", body, new Vector2(0f, 0f), new Vector2(0.18f, 1f), new Vector2(0f, 0.5f), new Vector2(0f, 0f), new Vector2(-12f, 0f));
+        categoryListRoot = CreateUiObject("CategoryListRoot", categoryPanel);
+        Stretch((RectTransform)categoryListRoot, new Vector2(10f, 10f), new Vector2(-10f, -10f));
+        ConfigureVerticalList(categoryListRoot, 8f, new RectOffset(6, 6, 6, 6));
+        categoryButtonTemplate = CreateBasicButton("CategoryButtonTemplate", categoryListRoot, "Tất cả", Vector2.zero, Vector2.zero, Vector2.zero, new Vector2(0f, 46f));
+        categoryButtonTemplate.gameObject.SetActive(false);
+
+        var recipePanel = CreatePanel("RecipePanel", body, new Vector2(0.19f, 0f), new Vector2(0.54f, 1f), new Vector2(0f, 0.5f), Vector2.zero, new Vector2(-8f, 0f));
+        recipeListRoot = CreateUiObject("RecipeListRoot", recipePanel);
+        Stretch((RectTransform)recipeListRoot, new Vector2(12f, 12f), new Vector2(-12f, -12f));
+        ConfigureVerticalList(recipeListRoot, 10f, new RectOffset(4, 4, 4, 4));
+        recipeRowTemplate = CreateRecipeRowTemplate(recipeListRoot);
+        recipeRowTemplate.gameObject.SetActive(false);
+
+        var detailPanel = CreatePanel("DetailPanel", body, new Vector2(0.55f, 0f), Vector2.one, new Vector2(1f, 0.5f), Vector2.zero, Vector2.zero);
+
+        selectedRecipeIcon = CreateImage("SelectedRecipeIcon", detailPanel, new Color(0.22f, 0.12f, 0.04f, 0.86f), stretch: false);
+        SetRect(selectedRecipeIcon.rectTransform, new Vector2(0f, 1f), new Vector2(0f, 1f), new Vector2(0f, 1f), new Vector2(24f, -24f), new Vector2(86f, 86f));
+
+        selectedRecipeNameText = CreateText("SelectedRecipeNameText", detailPanel, "Chọn công thức", 26f, TextAlignmentOptions.MidlineLeft, new Color(0.28f, 0.16f, 0.06f));
+        SetRect(selectedRecipeNameText.rectTransform, new Vector2(0f, 1f), Vector2.one, new Vector2(0f, 1f), new Vector2(126f, -24f), new Vector2(-150f, 48f));
+
+        selectedRecipeDescText = CreateText("SelectedRecipeDescText", detailPanel, "Chọn một công thức ở danh sách bên trái để xem nguyên liệu cần thiết.", 18f, TextAlignmentOptions.TopLeft, new Color(0.34f, 0.22f, 0.10f));
+        SetRect(selectedRecipeDescText.rectTransform, new Vector2(0f, 1f), Vector2.one, new Vector2(0f, 1f), new Vector2(24f, -118f), new Vector2(-48f, 82f));
+
+        selectedRecipeLevelText = CreateText("SelectedRecipeLevelText", detailPanel, string.Empty, 18f, TextAlignmentOptions.MidlineLeft, new Color(0.42f, 0.24f, 0.08f));
+        SetRect(selectedRecipeLevelText.rectTransform, new Vector2(0f, 1f), Vector2.one, new Vector2(0f, 1f), new Vector2(24f, -208f), new Vector2(-48f, 32f));
+
+        selectedRecipeOutputText = CreateText("SelectedRecipeOutputText", detailPanel, string.Empty, 18f, TextAlignmentOptions.MidlineLeft, new Color(0.42f, 0.24f, 0.08f));
+        SetRect(selectedRecipeOutputText.rectTransform, new Vector2(0f, 1f), Vector2.one, new Vector2(0f, 1f), new Vector2(24f, -246f), new Vector2(-48f, 32f));
+
+        var ingredientTitle = CreateText("IngredientTitle", detailPanel, "Nguyên liệu", 20f, TextAlignmentOptions.MidlineLeft, new Color(0.28f, 0.16f, 0.06f));
+        SetRect(ingredientTitle.rectTransform, new Vector2(0f, 1f), Vector2.one, new Vector2(0f, 1f), new Vector2(24f, -302f), new Vector2(-48f, 34f));
+
+        ingredientListRoot = CreateUiObject("IngredientListRoot", detailPanel);
+        SetRect(ingredientListRoot as RectTransform, new Vector2(0f, 1f), Vector2.one, new Vector2(0f, 1f), new Vector2(24f, -344f), new Vector2(-48f, 150f));
+        ConfigureVerticalList(ingredientListRoot, 6f, new RectOffset(0, 0, 0, 0));
+        ingredientSlotTemplate = CreateIngredientSlotTemplate(ingredientListRoot);
+        ingredientSlotTemplate.SetActive(false);
+
+        var quantityPanel = CreateUiObject("QuantityPanel", detailPanel);
+        SetRect(quantityPanel, new Vector2(0f, 0f), new Vector2(1f, 0f), new Vector2(0.5f, 0f), new Vector2(0f, 78f), new Vector2(-48f, 46f));
+        quantityMinusButton = CreateBasicButton("QuantityMinusButton", quantityPanel, "-", new Vector2(0f, 0.5f), new Vector2(0f, 0.5f), new Vector2(28f, 0f), new Vector2(44f, 40f));
+        quantityText = CreateText("QuantityText", quantityPanel, "1", 22f, TextAlignmentOptions.Center, new Color(0.28f, 0.16f, 0.06f));
+        SetRect(quantityText.rectTransform, new Vector2(0f, 0f), Vector2.one, new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(-220f, 0f));
+        quantityPlusButton = CreateBasicButton("QuantityPlusButton", quantityPanel, "+", new Vector2(1f, 0.5f), new Vector2(1f, 0.5f), new Vector2(-88f, 0f), new Vector2(44f, 40f));
+        quantityMaxButton = CreateBasicButton("QuantityMaxButton", quantityPanel, "Max", new Vector2(1f, 0.5f), new Vector2(1f, 0.5f), new Vector2(-28f, 0f), new Vector2(60f, 40f));
+
+        resultText = CreateText("ResultText", detailPanel, string.Empty, 18f, TextAlignmentOptions.Center, new Color(0.42f, 0.24f, 0.08f));
+        SetRect(resultText.rectTransform, new Vector2(0f, 0f), Vector2.right, new Vector2(0.5f, 0f), new Vector2(0f, 28f), new Vector2(-230f, 30f));
+
+        craftButton = CreateBasicButton("CraftButton", detailPanel, "Chế tạo", new Vector2(1f, 0f), new Vector2(1f, 0f), new Vector2(-92f, 30f), new Vector2(160f, 50f));
+    }
+
     private static List<RecipeData> ExtractRecipes(CraftingViewData viewData)
     {
         var recipes = new List<RecipeData>();
@@ -472,6 +591,12 @@ public class CraftingPanelUI : MonoBehaviour
         return child != null ? child.GetComponent<Image>() : null;
     }
 
+    private static Button FindButton(Transform root, string name)
+    {
+        var child = FindDeepChild(root, name);
+        return child != null ? child.GetComponent<Button>() : null;
+    }
+
     private static Transform FindDeepChild(Transform root, string name)
     {
         if (root == null) return null;
@@ -512,5 +637,173 @@ public class CraftingPanelUI : MonoBehaviour
     {
         if (string.IsNullOrWhiteSpace(key)) return string.Empty;
         return LocalizationManager.Instance != null ? LocalizationManager.Instance.GetText(key) : key;
+    }
+
+    private static RectTransform CreateUiObject(string name, Transform parent)
+    {
+        var go = new GameObject(name, typeof(RectTransform));
+        go.transform.SetParent(parent, false);
+        return go.GetComponent<RectTransform>();
+    }
+
+    private static RectTransform CreatePanel(string name, Transform parent, Vector2 anchorMin, Vector2 anchorMax, Vector2 pivot, Vector2 anchoredPosition, Vector2 sizeDelta)
+    {
+        var panel = CreateUiObject(name, parent);
+        SetRect(panel, anchorMin, anchorMax, pivot, anchoredPosition, sizeDelta);
+        var image = panel.gameObject.AddComponent<Image>();
+        image.color = new Color(0.93f, 0.68f, 0.36f, 0.42f);
+        var outline = panel.gameObject.AddComponent<Outline>();
+        outline.effectColor = new Color(0.54f, 0.32f, 0.12f, 0.65f);
+        outline.effectDistance = new Vector2(1.5f, -1.5f);
+        return panel;
+    }
+
+    private static Image CreateImage(string name, Transform parent, Color color, bool stretch)
+    {
+        var go = new GameObject(name, typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+        go.transform.SetParent(parent, false);
+        var image = go.GetComponent<Image>();
+        image.color = color;
+        image.preserveAspect = true;
+        if (stretch)
+            Stretch(image.rectTransform, Vector2.zero, Vector2.zero);
+        return image;
+    }
+
+    private static TextMeshProUGUI CreateText(string name, Transform parent, string value, float size, TextAlignmentOptions alignment, Color color)
+    {
+        var go = new GameObject(name, typeof(RectTransform), typeof(CanvasRenderer), typeof(TextMeshProUGUI));
+        go.transform.SetParent(parent, false);
+        var text = go.GetComponent<TextMeshProUGUI>();
+        text.text = value;
+        text.fontSize = size;
+        text.fontStyle = FontStyles.Bold;
+        text.alignment = alignment;
+        text.color = color;
+        text.enableWordWrapping = true;
+        return text;
+    }
+
+    private static Button CreateBasicButton(string name, Transform parent, string label, Vector2 anchorMin, Vector2 anchorMax, Vector2 anchoredPosition, Vector2 sizeDelta)
+    {
+        var go = new GameObject(name, typeof(RectTransform), typeof(CanvasRenderer), typeof(Image), typeof(Button));
+        go.transform.SetParent(parent, false);
+        var rect = go.GetComponent<RectTransform>();
+        SetRect(rect, anchorMin, anchorMax, new Vector2(0.5f, 0.5f), anchoredPosition, sizeDelta);
+
+        var image = go.GetComponent<Image>();
+        image.color = new Color(0.34f, 0.20f, 0.08f, 1f);
+
+        var button = go.GetComponent<Button>();
+        button.targetGraphic = image;
+
+        var text = CreateText("Label", go.transform, label, 18f, TextAlignmentOptions.Center, new Color(1f, 0.90f, 0.66f));
+        Stretch(text.rectTransform, Vector2.zero, Vector2.zero);
+        return button;
+    }
+
+    private static CraftingRecipeRowUI CreateRecipeRowTemplate(Transform parent)
+    {
+        var row = new GameObject("RecipeRowTemplate", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image), typeof(Button), typeof(CraftingRecipeRowUI));
+        row.transform.SetParent(parent, false);
+        var layout = row.AddComponent<HorizontalLayoutGroup>();
+        layout.padding = new RectOffset(10, 10, 8, 8);
+        layout.spacing = 10f;
+        layout.childAlignment = TextAnchor.MiddleLeft;
+        layout.childControlWidth = true;
+        layout.childControlHeight = true;
+        layout.childForceExpandWidth = false;
+        layout.childForceExpandHeight = false;
+        SetLayoutSize(row, 0f, 78f);
+
+        var iconFrame = CreateUiObject("IconFrame", row.transform);
+        SetLayoutSize(iconFrame.gameObject, 56f, 56f);
+        var iconBg = iconFrame.gameObject.AddComponent<Image>();
+        iconBg.color = new Color(0.20f, 0.11f, 0.04f, 0.80f);
+        var icon = CreateImage("Icon", iconFrame, Color.white, stretch: true);
+        icon.rectTransform.offsetMin = new Vector2(6f, 6f);
+        icon.rectTransform.offsetMax = new Vector2(-6f, -6f);
+
+        var textStack = CreateUiObject("TextStack", row.transform);
+        var textLayout = textStack.gameObject.AddComponent<VerticalLayoutGroup>();
+        textLayout.spacing = 2f;
+        textLayout.childAlignment = TextAnchor.MiddleLeft;
+        textLayout.childControlWidth = true;
+        textLayout.childControlHeight = true;
+        textLayout.childForceExpandWidth = true;
+        textLayout.childForceExpandHeight = false;
+        var textSize = textStack.gameObject.AddComponent<LayoutElement>();
+        textSize.flexibleWidth = 1f;
+        CreateText("NameText", textStack, string.Empty, 18f, TextAlignmentOptions.MidlineLeft, new Color(0.96f, 0.86f, 0.62f));
+        CreateText("IngredientText", textStack, string.Empty, 14f, TextAlignmentOptions.MidlineLeft, new Color(0.78f, 0.92f, 0.42f));
+
+        var levelText = CreateText("LevelText", row.transform, string.Empty, 16f, TextAlignmentOptions.Center, new Color(1f, 0.78f, 0.25f));
+        SetLayoutSize(levelText.gameObject, 56f, 38f);
+        var chooseButton = CreateBasicButton("CraftButton", row.transform, "Chọn", Vector2.zero, Vector2.zero, Vector2.zero, new Vector2(66f, 38f));
+        SetLayoutSize(chooseButton.gameObject, 66f, 38f);
+        return row.GetComponent<CraftingRecipeRowUI>();
+    }
+
+    private static GameObject CreateIngredientSlotTemplate(Transform parent)
+    {
+        var row = new GameObject("IngredientSlotTemplate", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+        row.transform.SetParent(parent, false);
+        row.GetComponent<Image>().color = new Color(0.34f, 0.20f, 0.08f, 0.72f);
+        SetLayoutSize(row, 0f, 48f);
+        var layout = row.AddComponent<HorizontalLayoutGroup>();
+        layout.padding = new RectOffset(8, 8, 6, 6);
+        layout.spacing = 8f;
+        layout.childAlignment = TextAnchor.MiddleLeft;
+        layout.childControlWidth = true;
+        layout.childControlHeight = true;
+        layout.childForceExpandWidth = false;
+        layout.childForceExpandHeight = false;
+
+        var icon = CreateImage("Icon", row.transform, Color.white, stretch: false);
+        SetLayoutSize(icon.gameObject, 36f, 36f);
+        var name = CreateText("NameText", row.transform, string.Empty, 16f, TextAlignmentOptions.MidlineLeft, new Color(0.96f, 0.86f, 0.62f));
+        name.gameObject.AddComponent<LayoutElement>().flexibleWidth = 1f;
+        var amount = CreateText("AmountText", row.transform, string.Empty, 16f, TextAlignmentOptions.MidlineRight, Color.white);
+        SetLayoutSize(amount.gameObject, 82f, 32f);
+        return row;
+    }
+
+    private static void ConfigureVerticalList(Transform root, float spacing, RectOffset padding)
+    {
+        var layout = root.GetComponent<VerticalLayoutGroup>() ?? root.gameObject.AddComponent<VerticalLayoutGroup>();
+        layout.padding = padding;
+        layout.spacing = spacing;
+        layout.childAlignment = TextAnchor.UpperCenter;
+        layout.childControlWidth = true;
+        layout.childControlHeight = true;
+        layout.childForceExpandWidth = true;
+        layout.childForceExpandHeight = false;
+    }
+
+    private static void SetLayoutSize(GameObject go, float width, float height)
+    {
+        var layout = go.GetComponent<LayoutElement>() ?? go.AddComponent<LayoutElement>();
+        layout.minWidth = width;
+        layout.preferredWidth = width;
+        layout.minHeight = height;
+        layout.preferredHeight = height;
+    }
+
+    private static void Stretch(RectTransform rect, Vector2 offsetMin, Vector2 offsetMax)
+    {
+        rect.anchorMin = Vector2.zero;
+        rect.anchorMax = Vector2.one;
+        rect.pivot = new Vector2(0.5f, 0.5f);
+        rect.offsetMin = offsetMin;
+        rect.offsetMax = offsetMax;
+    }
+
+    private static void SetRect(RectTransform rect, Vector2 anchorMin, Vector2 anchorMax, Vector2 pivot, Vector2 anchoredPosition, Vector2 sizeDelta)
+    {
+        rect.anchorMin = anchorMin;
+        rect.anchorMax = anchorMax;
+        rect.pivot = pivot;
+        rect.anchoredPosition = anchoredPosition;
+        rect.sizeDelta = sizeDelta;
     }
 }

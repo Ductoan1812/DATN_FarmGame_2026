@@ -104,7 +104,7 @@ public class PlayerControler : MonoBehaviour
         }
 
         // ── E: SecondaryAction / Interact ─────────────────────────────────────
-        if (Input.GetKeyDown(interactKey) || (allowRightMouseInteract && Input.GetMouseButtonDown(1)))
+        if (Input.GetKeyDown(GameplayInputSettings.GetInteractKey(interactKey)) || (allowRightMouseInteract && Input.GetMouseButtonDown(1)))
         {
             playerEntity.TriggerEvent(new SecondaryActionEvent(playerEntity));
         }

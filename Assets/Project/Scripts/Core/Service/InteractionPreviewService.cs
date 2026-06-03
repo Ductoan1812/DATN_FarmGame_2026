@@ -46,8 +46,17 @@ public static class InteractionPreviewService
                     case CraftingModule crafting:
                         TryChooseOption(crafting.optionTextKey, crafting.priority, ref actionTextKey, ref bestPriority);
                         break;
+                    case StorageModule storage:
+                        TryChooseOption(string.IsNullOrWhiteSpace(storage.optionTextKey) ? LocalizationKeys.UiStorageOpen : storage.optionTextKey, storage.priority, ref actionTextKey, ref bestPriority);
+                        break;
+                    case ProcessorModule processor:
+                        TryChooseOption(string.IsNullOrWhiteSpace(processor.optionTextKey) ? LocalizationKeys.UiProcessorOpen : processor.optionTextKey, processor.priority, ref actionTextKey, ref bestPriority);
+                        break;
                     case ScenePortalModule portal:
                         TryChooseOption(portal.optionTextKey, portal.priority, ref actionTextKey, ref bestPriority);
+                        break;
+                    case BedModule:
+                        TryChooseOption(LocalizationKeys.UiBedSleep, 30, ref actionTextKey, ref bestPriority);
                         break;
                     case AnimalModule animal:
                         var runtime = target.GetModule<AnimalRuntime>();
