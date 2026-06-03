@@ -16,7 +16,7 @@ MonoBehaviour:
   objectType: 13
   entityData: {fileID: 11400000, guid: a71be3bbb8691c0428cf5cde3995cb21, type: 2}
   savePolicy: 0
-  spawnGroupId: portal
+  spawnGroupId: portal_town_to_farm
   spawnPointId: town_to_farm
   respawnMinutes: 0
   initialAmount: 1
@@ -26,4 +26,4 @@ MonoBehaviour:
   randomStartStageMin: 0
   randomStartStageMax: 0
   editorSprite: {fileID: 183014745, guid: 8d7a0787528b31d4f9ff53bc498d9f1e, type: 3}
-  editorColor: {r: 0, g: 1, b: 1, a: 1}
+  editorColor: {r: 1, g: 1, b: 1, a: 1}

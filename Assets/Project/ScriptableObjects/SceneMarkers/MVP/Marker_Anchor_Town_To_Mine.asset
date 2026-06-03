@@ -16,7 +16,7 @@ MonoBehaviour:
   objectType: 1
   entityData: {fileID: 0}
   savePolicy: 3
-  spawnGroupId: player
+  spawnGroupId: player_spawn
   spawnPointId: town_to_mine
   respawnMinutes: 0
   initialAmount: 1
@@ -26,4 +26,4 @@ MonoBehaviour:
   randomStartStageMin: 0
   randomStartStageMax: 0
   editorSprite: {fileID: 930321961, guid: 8d7a0787528b31d4f9ff53bc498d9f1e, type: 3}
-  editorColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  editorColor: {r: 1, g: 0.9, b: 0.25, a: 0.85}

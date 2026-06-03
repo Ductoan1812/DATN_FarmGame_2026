@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   markerKind: 0
   objectType: 4
-  entityData: {fileID: 11400000, guid: 3eec4a18eaeb2c94da78c54726ce17f3, type: 2}
+  entityData: {fileID: 11400000, guid: 0f635eda9a5fdf34e9675c8b6ccb2966, type: 2}
   savePolicy: 0
   spawnGroupId: town_shop
   spawnPointId: 
@@ -25,5 +25,5 @@ MonoBehaviour:
   fixedStartStageIndex: 0
   randomStartStageMin: 0
   randomStartStageMax: 0
-  editorSprite: {fileID: 21300000, guid: 425254c3528c93c41b7c29fe411292ce, type: 3}
-  editorColor: {r: 0, g: 1, b: 0, a: 1}
+  editorSprite: {fileID: -2079465726, guid: dabad056ea2d2134f9252c7065ad235a, type: 3}
+  editorColor: {r: 1, g: 1, b: 1, a: 1}

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   markerKind: 0
   objectType: 6
-  entityData: {fileID: 11400000, guid: b5864a0f1c860194d97879a85020901d, type: 2}
+  entityData: {fileID: 11400000, guid: 1499dcf9a4a36a64db7a131ad5cadec4, type: 2}
   savePolicy: 0
   spawnGroupId: town_quest
   spawnPointId: 
@@ -25,5 +25,5 @@ MonoBehaviour:
   fixedStartStageIndex: 0
   randomStartStageMin: 0
   randomStartStageMax: 0
-  editorSprite: {fileID: 21300000, guid: e38e39a5d22a66f45b6fa2f35f09ca99, type: 3}
-  editorColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  editorSprite: {fileID: 672549560, guid: 3c7fa3e414b5a24438ec5d996f28e9d8, type: 3}
+  editorColor: {r: 1, g: 1, b: 1, a: 1}

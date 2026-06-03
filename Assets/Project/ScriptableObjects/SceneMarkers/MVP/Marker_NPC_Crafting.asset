@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   markerKind: 5
   objectType: 5
-  entityData: {fileID: 11400000, guid: 73cf24353f8d3d041b5f1cf1abdeb119, type: 2}
+  entityData: {fileID: 11400000, guid: de05d2f01fd1b1e4da417cf06220e527, type: 2}
   savePolicy: 0
   spawnGroupId: town_crafting
   spawnPointId: 
@@ -25,5 +25,5 @@ MonoBehaviour:
   fixedStartStageIndex: 0
   randomStartStageMin: 0
   randomStartStageMax: 0
-  editorSprite: {fileID: 21300000, guid: 15670fa15a7412b4fb541f749d773c96, type: 3}
-  editorColor: {r: 0, g: 1, b: 1, a: 1}
+  editorSprite: {fileID: -2875615, guid: ad37af12148b1ad42b9e9f92355871a5, type: 3}
+  editorColor: {r: 1, g: 1, b: 1, a: 1}

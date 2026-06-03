@@ -15,7 +15,7 @@ MonoBehaviour:
   id: portal_mine_to_town
   keyName: m1.portal.mine_to_town.name
   descKey: m3.portal.desc
-  icon: {fileID: 21300000, guid: b0ebc5db84335224d89e051d0727c4e2, type: 3}
+  icon: {fileID: 183014745, guid: 8d7a0787528b31d4f9ff53bc498d9f1e, type: 3}
   category: 9
   maxStack: 1
   buyPrice: -1
@@ -23,10 +23,10 @@ MonoBehaviour:
   baseStats:
     baseStats: []
   placementRule:
-    occupyLayer: 0
-    requireTags: 0
+    occupyLayer: 1
+    requireTags: 2
     provideTags: 0
-    blockLayers: 
+    blockLayers: 0100000003000000
   modules:
   - rid: 8196223221319336162
   references:
