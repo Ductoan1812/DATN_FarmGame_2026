@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8393fbdfdb650e5418aad1c82ae5b8b5, type: 3}
+  m_Name: npc_crafting_tho_ren
+  m_EditorClassIdentifier: 
+  id: npc_crafting_tho_ren
+  keyName: npc.crafting.tho_ren.name
+  descKey: npc.crafting.tho_ren.desc
+  icon: {fileID: -2875615, guid: ad37af12148b1ad42b9e9f92355871a5, type: 3}
+  category: 14
+  maxStack: 1
+  buyPrice: 0
+  sellPrice: 0
+  baseStats:
+    baseStats: []
+  placementRule:
+    occupyLayer: 1
+    requireTags: 2
+    provideTags: 0
+    blockLayers: 0100000003000000
+  modules:
+  - rid: 5278705929685041153
+  - rid: 5278705929685041154
+  references:
+    version: 2
+    RefIds:
+    - rid: 5278705929685041153
+      type: {class: InventoryModule, ns: , asm: Assembly-CSharp}
+      data:
+        inventoryType: 0
+        size: 24
+    - rid: 5278705929685041154
+      type: {class: CraftingModule, ns: , asm: Assembly-CSharp}
+      data:
+        optionTextKey: ui.crafting.open
+        priority: 35
+        recipes:
+        - {fileID: 11400000, guid: c93d70979f44c934a99255ba7e39bd6f, type: 2}
+        - {fileID: 11400000, guid: ced7cb5ec3210cc4d90e1a01127eef24, type: 2}
+        - {fileID: 11400000, guid: df82cd69dd8c6174a8f0e1d8eb612394, type: 2}
+        - {fileID: 11400000, guid: 5e0139ae1eb26634590b00c1905c8d16, type: 2}
+        - {fileID: 11400000, guid: 2d979a4b7b007734788ee52367e424be, type: 2}
+        - {fileID: 11400000, guid: efcfa88ed639cea479b1ad059fb7ceca, type: 2}
+        - {fileID: 11400000, guid: 9276bdaad4569664cb5cbfcca77416ec, type: 2}
+        - {fileID: 11400000, guid: 9206fc6d0a64c884e8e6f0d282bf4051, type: 2}
+        - {fileID: 11400000, guid: 6738fbee101b5ce4bb6ecd17cd3b7421, type: 2}
+        - {fileID: 11400000, guid: f9e9005b69ace164da65084d116d2efb, type: 2}
+        - {fileID: 11400000, guid: 2d7e3fd04d9be2a42b8f1267545e0cc0, type: 2}
+        - {fileID: 11400000, guid: c3ff9a82f65828249b5deacf10089188, type: 2}
+        - {fileID: 11400000, guid: 00dc6e9297212d24a9634ed4c0bb1807, type: 2}
+        - {fileID: 11400000, guid: daad23d7453d7f7438cc6fbf0dd0106c, type: 2}
+        - {fileID: 11400000, guid: 73547bf5f49b3f04bae7aa4dbe920d91, type: 2}
+        - {fileID: 11400000, guid: 27b79b3843ee4f84fb5725cd3c6f946d, type: 2}
+        - {fileID: 11400000, guid: 73153e1c639386f4397187f661ad8f84, type: 2}
+        - {fileID: 11400000, guid: 9292e6c2cb0381c4f8436cf2ef2d7b75, type: 2}
+        - {fileID: 11400000, guid: 0493c0fc9bcf2f14cb87c91ec9ecff7c, type: 2}
+        - {fileID: 11400000, guid: a2585d2d949b8534f9756ea26e1b6868, type: 2}
+        - {fileID: 11400000, guid: 32eab568db03d1a41ab203023f5f8426, type: 2}
+        - {fileID: 11400000, guid: 7ec13dcbd4674f84aa3ba9f5e565ca46, type: 2}

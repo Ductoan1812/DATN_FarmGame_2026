@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8393fbdfdb650e5418aad1c82ae5b8b5, type: 3}
+  m_Name: item_food_veggie_soup
+  m_EditorClassIdentifier: 
+  id: item_food_veggie_soup
+  keyName: item.food.veggie_soup.name
+  descKey: item.food.veggie_soup.desc
+  icon: {fileID: 0}
+  category: 4
+  maxStack: 99
+  buyPrice: 0
+  sellPrice: 100
+  baseStats:
+    baseStats:
+    - statType: 5
+      value: 55
+  placementRule:
+    occupyLayer: 0
+    requireTags: 0
+    provideTags: 0
+    blockLayers: 
+  modules:
+  - rid: 5278705929685041239
+  references:
+    version: 2
+    RefIds:
+    - rid: 5278705929685041239
+      type: {class: ConsumableModule, ns: , asm: Assembly-CSharp}
+      data:
+        restoreHp: 0
+        restoreStamina: 55
+        restoreMp: 0
+        consumeAmount: 1
+        destroyOnUse: 1

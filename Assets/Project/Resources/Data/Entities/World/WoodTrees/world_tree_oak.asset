@@ -1,0 +1,91 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8393fbdfdb650e5418aad1c82ae5b8b5, type: 3}
+  m_Name: world_tree_oak
+  m_EditorClassIdentifier: 
+  id: world_tree_oak
+  keyName: world.tree.oak.name
+  descKey: world.tree.oak.desc
+  icon: {fileID: 0}
+  category: 14
+  maxStack: 1
+  buyPrice: 0
+  sellPrice: 0
+  baseStats:
+    baseStats:
+    - statType: 0
+      value: 12
+  placementRule:
+    occupyLayer: 2
+    requireTags: 5
+    provideTags: 0
+    blockLayers: 0200000001000000
+  modules:
+  - rid: 5278705929685041304
+  - rid: 5278705929685041305
+  - rid: 5278705929685041306
+  - rid: 5278705929685041307
+  - rid: 5278705929685041308
+  - rid: 5278705929685041309
+  references:
+    version: 2
+    RefIds:
+    - rid: 5278705929685041304
+      type: {class: HealthModule, ns: , asm: Assembly-CSharp}
+      data:
+        canTakeDamage: 1
+    - rid: 5278705929685041305
+      type: {class: HarvestModule, ns: , asm: Assembly-CSharp}
+      data:
+        harvestTool: 4
+        allowHandHarvest: 0
+        additionalHarvestTools: []
+        dropMode: 0
+        harvestCausesDamage: 1
+        destroyOnHarvest: 0
+        oneHitDestroy: 0
+        wrongToolPenalty: 0.3
+    - rid: 5278705929685041306
+      type: {class: ToolRequirementModule, ns: , asm: Assembly-CSharp}
+      data:
+        requiredToolType: 4
+        minimumToolTier: 2
+        wrongToolPenalty: 0
+        blockDamageIfWrongTool: 1
+        blockDamageIfBelowTier: 1
+    - rid: 5278705929685041307
+      type: {class: DropModule, ns: , asm: Assembly-CSharp}
+      data:
+        harvestDrops: []
+        deathDrops:
+        - item: {fileID: 11400000, guid: 123481573e6aaa341827a16ae4e139a5, type: 2}
+          minAmount: 5
+          maxAmount: 8
+          dropChance: 1
+        - item: {fileID: 11400000, guid: 1d9bfe7eded5421498c95d8d2b015fee, type: 2}
+          minAmount: 2
+          maxAmount: 4
+          dropChance: 1
+        includeHarvestDropsOnDestroyWhenHarvestable: 0
+    - rid: 5278705929685041308
+      type: {class: ResourceHitReactionModule, ns: , asm: Assembly-CSharp}
+      data:
+        reactOnlyToHarvestTool: 1
+        useProceduralMotion: 1
+        flashColor: {r: 1, g: 0.9, b: 0.65, a: 1}
+        flashDuration: 0.12
+        scalePunch: 0.12
+        rotationPunch: 4
+        animatorHitTrigger: Hit
+    - rid: 5278705929685041309
+      type: {class: MortalModule, ns: , asm: Assembly-CSharp}
+      data: 

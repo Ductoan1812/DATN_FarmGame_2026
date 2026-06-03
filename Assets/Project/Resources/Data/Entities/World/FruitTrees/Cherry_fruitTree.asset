@@ -1,0 +1,130 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8393fbdfdb650e5418aad1c82ae5b8b5, type: 3}
+  m_Name: Cherry_fruitTree
+  m_EditorClassIdentifier: 
+  id: cherry_fruitTree
+  keyName: 
+  descKey: 
+  icon: {fileID: 0}
+  category: 9
+  maxStack: 1
+  buyPrice: 0
+  sellPrice: 0
+  baseStats:
+    baseStats:
+    - statType: 0
+      value: 12
+    - statType: 1
+      value: 12
+  placementRule:
+    occupyLayer: 2
+    requireTags: 5
+    provideTags: 0
+    blockLayers: 0200000001000000
+  modules:
+  - rid: 8196223262934696174
+  - rid: 8196223262934696175
+  - rid: 8196223262934696176
+  - rid: 8196223262934696178
+  - rid: 8196223262934696177
+  - rid: 8196223262934696179
+  - rid: 8196223262934696180
+  references:
+    version: 2
+    RefIds:
+    - rid: 8196223262934696174
+      type: {class: StageModule, ns: , asm: Assembly-CSharp}
+      data:
+        stages:
+        - sprite: {fileID: -744963546, guid: 247cdd78657a55546aadfc05332f068c, type: 3}
+          daysToGrow: 7
+          canHarvest: 0
+        - sprite: {fileID: -1205373766, guid: 247cdd78657a55546aadfc05332f068c, type: 3}
+          daysToGrow: 7
+          canHarvest: 0
+        - sprite: {fileID: -124302870, guid: 247cdd78657a55546aadfc05332f068c, type: 3}
+          daysToGrow: 7
+          canHarvest: 0
+        - sprite: {fileID: -2091397004, guid: 247cdd78657a55546aadfc05332f068c, type: 3}
+          daysToGrow: 7
+          canHarvest: 0
+        - sprite: {fileID: -1797068356, guid: 247cdd78657a55546aadfc05332f068c, type: 3}
+          daysToGrow: 7
+          canHarvest: 0
+        - sprite: {fileID: 1171330117, guid: 247cdd78657a55546aadfc05332f068c, type: 3}
+          daysToGrow: 7
+          canHarvest: 0
+        - sprite: {fileID: 1579103770, guid: 247cdd78657a55546aadfc05332f068c, type: 3}
+          daysToGrow: 7
+          canHarvest: 0
+        - sprite: {fileID: 1497593031, guid: 247cdd78657a55546aadfc05332f068c, type: 3}
+          daysToGrow: 19999
+          canHarvest: 1
+        - sprite: {fileID: 971146214, guid: 247cdd78657a55546aadfc05332f068c, type: 3}
+          daysToGrow: 0
+          canHarvest: 1
+        requiresWater: 0
+        wiltSprite: {fileID: 0}
+        regrowStageIndex: -1
+        harvestGoToStageIndex: 8
+        lastStageLoopToIndex: 5
+        daysToReturnAfterHarvest: 10
+        wiltOnSeasonChange: 0
+    - rid: 8196223262934696175
+      type: {class: SeasonRuleModule, ns: , asm: Assembly-CSharp}
+      data:
+        allowAllSeasons: 1
+        allowedSeasons: 02000000
+        blockPlacementOutOfSeason: 0
+        outOfSeasonBehavior: 2
+        dormantStageIndex: 3
+    - rid: 8196223262934696176
+      type: {class: HarvestModule, ns: , asm: Assembly-CSharp}
+      data:
+        harvestTool: 0
+        allowHandHarvest: 1
+        additionalHarvestTools:
+        - toolType: 4
+          harvestCausesDamage: 1
+          destroyOnHarvest: 0
+          oneHitDestroy: 0
+        dropMode: 0
+        harvestCausesDamage: 0
+        destroyOnHarvest: 0
+        oneHitDestroy: 0
+        wrongToolPenalty: 0.3
+    - rid: 8196223262934696177
+      type: {class: DropModule, ns: , asm: Assembly-CSharp}
+      data:
+        harvestDrops:
+        - item: {fileID: 11400000, guid: c8c2557183378574985a713f7f41fe19, type: 2}
+          minAmount: 1
+          maxAmount: 1
+          dropChance: 1
+        deathDrops: []
+        includeHarvestDropsOnDestroyWhenHarvestable: 1
+    - rid: 8196223262934696178
+      type: {class: HealthModule, ns: , asm: Assembly-CSharp}
+      data:
+        canTakeDamage: 1
+    - rid: 8196223262934696179
+      type: {class: ToolRequirementModule, ns: , asm: Assembly-CSharp}
+      data:
+        requiredToolType: 4
+        minimumToolTier: 2
+        wrongToolPenalty: 0.25
+        blockDamageIfWrongTool: 1
+        blockDamageIfBelowTier: 0
+    - rid: 8196223262934696180
+      type: {class: MortalModule, ns: , asm: Assembly-CSharp}
+      data: 

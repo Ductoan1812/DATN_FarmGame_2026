@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: BootstrapConfig
   m_EditorClassIdentifier: 
   gameManagerPrefab: {fileID: 111477305079367859, guid: 935c1b6a64fc8c44e8082bbf7926ac1d, type: 3}
-  uiRootPrefab: {fileID: 8070897141509684167, guid: 9085d5dff2e0dbb45a82da42d0432317, type: 3}
+  uiRootPrefab: {fileID: 4379341379828546367, guid: 9085d5dff2e0dbb45a82da42d0432317, type: 3}
   throwOnMissingPrefab: 0

@@ -1,0 +1,109 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8393fbdfdb650e5418aad1c82ae5b8b5, type: 3}
+  m_Name: PlayerEntityData
+  m_EditorClassIdentifier: 
+  id: player
+  keyName: player.name
+  descKey: player.desc
+  icon: {fileID: 0}
+  category: 14
+  maxStack: 1
+  buyPrice: 0
+  sellPrice: 0
+  baseStats:
+    baseStats:
+    - statType: 0
+      value: 100
+    - statType: 1
+      value: 100
+    - statType: 2
+      value: 1
+    - statType: 3
+      value: 0
+    - statType: 4
+      value: 5
+    - statType: 6
+      value: 80
+    - statType: 5
+      value: 80
+    - statType: 7
+      value: 0.05
+    - statType: 8
+      value: 2
+    - statType: 13
+      value: 500
+    - statType: 16
+      value: 0
+    - statType: 17
+      value: 100
+    - statType: 18
+      value: 1
+  placementRule:
+    occupyLayer: 10
+    requireTags: 0
+    provideTags: 0
+    blockLayers: 
+  modules:
+  - rid: 5278705929685041333
+  - rid: 5278705929685041334
+  - rid: 5278705929685041335
+  - rid: 5278705929685041336
+  - rid: 5278705929685041337
+  - rid: 5278705929685041338
+  - rid: 5278705929685041339
+  - rid: 5278705929685041340
+  - rid: 5278705929685041341
+  references:
+    version: 2
+    RefIds:
+    - rid: 5278705929685041333
+      type: {class: ActionModule, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 5278705929685041334
+      type: {class: InventoryModule, ns: , asm: Assembly-CSharp}
+      data:
+        inventoryType: 1
+        size: 10
+    - rid: 5278705929685041335
+      type: {class: InventoryModule, ns: , asm: Assembly-CSharp}
+      data:
+        inventoryType: 0
+        size: 30
+    - rid: 5278705929685041336
+      type: {class: EquipmentModule, ns: , asm: Assembly-CSharp}
+      data:
+        supportedParts: 000000000100000005000000060000000b0000000700000013000000020000000400000003000000
+    - rid: 5278705929685041337
+      type: {class: AppearanceModule, ns: , asm: Assembly-CSharp}
+      data:
+        spriteId: 
+        equipmentPart: 0
+    - rid: 5278705929685041338
+      type: {class: QuestLogModule, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 5278705929685041339
+      type: {class: HealthModule, ns: , asm: Assembly-CSharp}
+      data:
+        canTakeDamage: 1
+    - rid: 5278705929685041340
+      type: {class: RespawnModule, ns: , asm: Assembly-CSharp}
+      data:
+        defaultRespawnPosition: {x: 0, y: 0}
+        respawnDelay: 3
+        restoreFullHp: 1
+        respawnPrefabId: 1
+    - rid: 5278705929685041341
+      type: {class: AttackModule, ns: , asm: Assembly-CSharp}
+      data:
+        attackRange: 1.5
+        attackCooldown: 0.5

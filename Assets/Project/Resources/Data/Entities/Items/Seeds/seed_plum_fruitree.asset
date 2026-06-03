@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8393fbdfdb650e5418aad1c82ae5b8b5, type: 3}
+  m_Name: seed_plum_fruitree
+  m_EditorClassIdentifier: 
+  id: seed_plum_fruitree
+  keyName: 
+  descKey: 
+  icon: {fileID: 1381839147, guid: 247cdd78657a55546aadfc05332f068c, type: 3}
+  category: 2
+  maxStack: 999
+  buyPrice: 0
+  sellPrice: 0
+  baseStats:
+    baseStats: []
+  placementRule:
+    occupyLayer: 0
+    requireTags: 0
+    provideTags: 0
+    blockLayers: 
+  modules:
+  - rid: 8196223262934696153
+  - rid: 8196223262934696154
+  references:
+    version: 2
+    RefIds:
+    - rid: 8196223262934696153
+      type: {class: PlacementModule, ns: , asm: Assembly-CSharp}
+      data:
+        objectTypeToSpawn: 10
+        placedEntityData: {fileID: 11400000, guid: 6974aad00b39006489855f9607080000, type: 2}
+        centerTile: 1
+        animTrigger: PutDown
+    - rid: 8196223262934696154
+      type: {class: SeasonRuleModule, ns: , asm: Assembly-CSharp}
+      data:
+        allowAllSeasons: 1
+        allowedSeasons: 03000000
+        blockPlacementOutOfSeason: 1
+        outOfSeasonBehavior: 0
+        dormantStageIndex: -1

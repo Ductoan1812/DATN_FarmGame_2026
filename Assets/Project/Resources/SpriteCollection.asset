@@ -3411,7 +3411,7 @@ MonoBehaviour:
     Id: Art.Armor.Armor.AdvancedWizardRobe [ShowEars] [FullHair]
     Edition: Art
     Collection: Armor
-    Path: Assets/Project/Art/Items/Equipment/Armor/AdvancedWizardRobe [ShowEars]
+    Path: Assets/Project/Art/Farming/Equipment/Armor/AdvancedWizardRobe [ShowEars]
       [FullHair].png
     Sprite: {fileID: -999830042, guid: 2db253d2c1107fb4eb32d54f15e958e2, type: 3}
     Sprites:
@@ -3453,7 +3453,7 @@ MonoBehaviour:
     Id: Art.Armor.Armor.Sample1
     Edition: Art
     Collection: Armor
-    Path: Assets/Project/Art/Items/Equipment/Armor/Sample1.png
+    Path: Assets/Project/Art/Farming/Equipment/Armor/Sample1.png
     Sprite: {fileID: -1207319706, guid: b4871efeaaa227843974c61bbfac5488, type: 3}
     Sprites:
     - {fileID: -1207319706, guid: b4871efeaaa227843974c61bbfac5488, type: 3}
@@ -3486,15 +3486,14 @@ MonoBehaviour:
     - {fileID: 949454127, guid: b4871efeaaa227843974c61bbfac5488, type: 3}
     - {fileID: 1796048374, guid: b4871efeaaa227843974c61bbfac5488, type: 3}
     - {fileID: -1037895168, guid: b4871efeaaa227843974c61bbfac5488, type: 3}
-    Tags:
-    - FullHair
+    Tags: []
     Meta: 
   MeleeWeapon1H:
   - Name: AdvancedShortSword
     Id: Art.Equipment.MeleeWeapon1H.AdvancedShortSword
     Edition: Art
     Collection: Equipment
-    Path: Assets/Project/Art/Items/Equipment/MeleeWeapon1H/AdvancedShortSword.png
+    Path: Assets/Project/Art/Farming/Equipment/MeleeWeapon1H/AdvancedShortSword.png
     Sprite: {fileID: 21300000, guid: 62ea53872a31d5a4693da469e613b675, type: 3}
     Sprites:
     - {fileID: 21300000, guid: 62ea53872a31d5a4693da469e613b675, type: 3}
@@ -3504,17 +3503,27 @@ MonoBehaviour:
     Id: Art.Equipment.MeleeWeapon1H.Axe01
     Edition: Art
     Collection: Equipment
-    Path: Assets/Project/Art/Items/Equipment/MeleeWeapon1H/Axe01.png
+    Path: Assets/Project/Art/Farming/Equipment/MeleeWeapon1H/Axe01.png
     Sprite: {fileID: 21300000, guid: cc830b8453725bb4baa4868c4859f763, type: 3}
     Sprites:
     - {fileID: 21300000, guid: cc830b8453725bb4baa4868c4859f763, type: 3}
+    Tags: []
+    Meta: 
+  - Name: Hoe
+    Id: Art.Equipment.MeleeWeapon1H.Hoe
+    Edition: Art
+    Collection: Equipment
+    Path: Assets/Project/Art/Farming/Equipment/MeleeWeapon1H/Hoe.png
+    Sprite: {fileID: 21300000, guid: f62b2bffc57cbc24d8810e889e60c8f1, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: f62b2bffc57cbc24d8810e889e60c8f1, type: 3}
     Tags: []
     Meta: 
   - Name: Scythe01
     Id: Art.Equipment.MeleeWeapon1H.Scythe01
     Edition: Art
     Collection: Equipment
-    Path: Assets/Project/Art/Items/Equipment/MeleeWeapon1H/Scythe01.png
+    Path: Assets/Project/Art/Farming/Equipment/MeleeWeapon1H/Scythe01.png
     Sprite: {fileID: 21300000, guid: 3c9ef298d10d04242bcaa65f7f787d8c, type: 3}
     Sprites:
     - {fileID: 21300000, guid: 3c9ef298d10d04242bcaa65f7f787d8c, type: 3}
@@ -3524,7 +3533,7 @@ MonoBehaviour:
     Id: Art.Equipment.MeleeWeapon1H.Scythe02
     Edition: Art
     Collection: Equipment
-    Path: Assets/Project/Art/Items/Equipment/MeleeWeapon1H/Scythe02.png
+    Path: Assets/Project/Art/Farming/Equipment/MeleeWeapon1H/Scythe02.png
     Sprite: {fileID: 21300000, guid: 621c021f74a3e1240aad8a56b324af61, type: 3}
     Sprites:
     - {fileID: 21300000, guid: 621c021f74a3e1240aad8a56b324af61, type: 3}
