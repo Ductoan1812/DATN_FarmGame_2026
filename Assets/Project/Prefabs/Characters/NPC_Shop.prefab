@@ -36,7 +36,7 @@ Transform:
   m_GameObject: {fileID: 1125545272651927824}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.4463307, y: 0.23202765, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -98,18 +98,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.007184699, y: 0.014964268}
+  m_Offset: {x: 0, y: 0.18}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.8125, y: 3.125}
+    pivot: {x: 0.5, y: 0.2}
+    oldSize: {x: 1, y: 1.5}
     newSize: {x: 1.8125, y: 3.125}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.18391916, y: 0.13023832}
+  m_Size: {x: 0.55, y: 0.36}
   m_EdgeRadius: 0
 --- !u!50 &6665677410701190088
 Rigidbody2D:
@@ -155,7 +155,7 @@ MonoBehaviour:
   warnIfColliderIsNotTrigger: 1
   playerTag: Player
   promptText: "[RMB] T\u01B0\u01A1ng t\xE1c"
-  offset: {x: 0, y: 1}
+  offset: {x: 0, y: 1.25}
   fontSize: 9
   textColor: {r: 1, g: 1, b: 1, a: 1}
   bgColor: {r: 0, g: 0, b: 0, a: 0.6}
@@ -192,9 +192,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.6287749}
+  m_Offset: {x: 0, y: 0.65}
   serializedVersion: 2
-  m_Radius: 2.526614
+  m_Radius: 1.45
 --- !u!212 &1791237718592334842
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -235,9 +235,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1948816981
   m_SortingLayer: 4
-  m_SortingOrder: 0
-  m_Sprite: {fileID: -1981265805, guid: e38a3fb1a06bfc744950fa179f9040a1, type: 3}
-  m_Color: {r: 0.5, g: 1, b: 0.55, a: 1}
+  m_SortingOrder: 20
+  m_Sprite: {fileID: -2079465726, guid: dabad056ea2d2134f9252c7065ad235a, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -289,7 +289,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1125545272651927824}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 64d928d622d09f7439457777f30940bc, type: 3}
   m_Name: 
@@ -307,7 +307,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1125545272651927824}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a9eda31836e40294d8959939b4f663a3, type: 3}
   m_Name: 

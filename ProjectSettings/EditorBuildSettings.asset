@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Project/Scenes/Main/MainMenuScene.unity
+    guid: ea9e5bad551d0094ab8503cc9130c11d
+  - enabled: 1
     path: Assets/Project/Scenes/Coreplay/FarmScene.unity
     guid: c952600d18eeda14b8f92810a86ea1e8
   - enabled: 1

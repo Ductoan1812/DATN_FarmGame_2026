@@ -7,6 +7,7 @@ TagManager:
   - Plant
   - NPC
   - Enemy
+  - MainCamera
   layers:
   - Default
   - TransparentFX
