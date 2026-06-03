@@ -8,6 +8,8 @@ using UnityEngine;
 public class ToolModule : IModuleData
 {
     public ToolType toolType;
+    [Min(1)]
+    public int toolTier = 1;
 
     [Tooltip("Tên trigger trong Animator. Để trống = dùng tên ToolType làm default (Hoe, Scythe...).")]
     public string animTrigger;

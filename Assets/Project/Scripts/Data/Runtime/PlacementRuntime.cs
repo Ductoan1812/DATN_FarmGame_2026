@@ -46,6 +46,12 @@ public class PlacementRuntime : IModuleRuntime, IHandleEvent<PrimaryActionEvent>
             return;
         }
 
+        if (!CanPlaceInCurrentSeason(e.item, placedData, out var seasonReason))
+        {
+            Debug.Log($"[PlacementRuntime] Không thể đặt tại mùa hiện tại: {seasonReason}");
+            return;
+        }
+
         if (!ws.CanPlaceAt(placedData.placementRule, cell2d, out var reason))
         {
             Debug.Log($"[PlacementRuntime] Không thể đặt tại {cell2d}: {reason}");
@@ -101,4 +107,42 @@ public class PlacementRuntime : IModuleRuntime, IHandleEvent<PrimaryActionEvent>
     public ModuleSaveData ToSaveData() => null;
     public void ApplySaveData(ModuleSaveData save) { }
     public bool Equals(IModuleRuntime other) => other is PlacementRuntime;
+
+    private static bool CanPlaceInCurrentSeason(EntityRuntime itemRuntime, EntityData placedData, out string reason)
+    {
+        reason = string.Empty;
+        var timeManager = GameManager.Instance?.TimeManager;
+        if (timeManager == null)
+            return true;
+
+        var runtimeRule = itemRuntime?.GetModule<SeasonRuleRuntime>();
+        if (runtimeRule != null && runtimeRule.BlocksPlacementOutOfSeason && !runtimeRule.AllowsSeason(timeManager.Season))
+        {
+            reason = $"item '{itemRuntime.entityData?.id}' không hợp mùa {timeManager.Season}.";
+            return false;
+        }
+
+        var dataRule = FindSeasonRuleData(placedData);
+        if (dataRule != null && dataRule.blockPlacementOutOfSeason && !dataRule.AllowsSeason(timeManager.Season))
+        {
+            reason = $"entity '{placedData?.id}' không hợp mùa {timeManager.Season}.";
+            return false;
+        }
+
+        return true;
+    }
+
+    private static SeasonRuleModule FindSeasonRuleData(EntityData data)
+    {
+        if (data?.modules == null)
+            return null;
+
+        for (int i = 0; i < data.modules.Count; i++)
+        {
+            if (data.modules[i] is SeasonRuleModule seasonRule)
+                return seasonRule;
+        }
+
+        return null;
+    }
 }

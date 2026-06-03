@@ -194,6 +194,7 @@ public class StageRuntime : IModuleRuntime, IHandleEvent<NextDayEvent>, IHandleE
         }
 
         ApplyStageVisual();
+        ApplyCurrentSeasonState();
         Debug.Log($"[StageRuntime] Đã set sprite stage {currentStageIndex} cho '{Owner.GameObject.name}' (CanHarvest={CanHarvest})");
     }
 
@@ -206,20 +207,11 @@ public class StageRuntime : IModuleRuntime, IHandleEvent<NextDayEvent>, IHandleE
     public void Handle(SeasonChangedEvent e)
     {
         if (Owner?.GameObject == null) return;
-        if (data == null || !data.wiltOnSeasonChange) return;
-        if (isWilting) return;
+        if (TryApplySeasonRule(e.season, e.year))
+            return;
 
-        isWilting = true;
-        daysWithoutWater = 0;
-
-        if (spriteRenderer == null)
-            spriteRenderer = Owner.GameObject.GetComponentInChildren<SpriteRenderer>()
-                          ?? Owner.GameObject.GetComponent<SpriteRenderer>();
-
-        if (data.wiltSprite != null && spriteRenderer != null)
-            spriteRenderer.sprite = data.wiltSprite;
-
-        Debug.LogWarning($"[StageRuntime] '{Owner.GameObject.name}' đã héo vì sang mùa {e.season} năm {e.year}.");
+        if (data == null || !data.wiltOnSeasonChange || isWilting) return;
+        SetWilting(e.season, e.year);
     }
 
     private int GetNextStageIndex()
@@ -313,5 +305,56 @@ public class StageRuntime : IModuleRuntime, IHandleEvent<NextDayEvent>, IHandleE
             return;
 
         spriteRenderer.sprite = data.stages[currentStageIndex].sprite;
+    }
+
+    private void ApplyCurrentSeasonState()
+    {
+        var timeManager = GameManager.Instance?.TimeManager;
+        if (timeManager == null)
+            return;
+
+        TryApplySeasonRule(timeManager.Season, timeManager.Year);
+    }
+
+    private bool TryApplySeasonRule(Season season, int year)
+    {
+        var seasonRule = _entity?.GetModule<SeasonRuleRuntime>();
+        if (seasonRule == null || seasonRule.AllowsSeason(season))
+            return false;
+
+        switch (seasonRule.OutOfSeasonBehavior)
+        {
+            case OutOfSeasonBehavior.Dormant:
+                int dormantStageIndex = seasonRule.DormantStageIndex;
+                if (dormantStageIndex >= 0 && dormantStageIndex < (data?.stages?.Length ?? 0))
+                {
+                    MoveToStage(dormantStageIndex, resetHp: false, clearWilt: true, logReason: "chuyển sang stage ngủ đông");
+                    return true;
+                }
+                return false;
+
+            case OutOfSeasonBehavior.Wilt:
+                if (!isWilting)
+                    SetWilting(season, year);
+                return true;
+
+            default:
+                return false;
+        }
+    }
+
+    private void SetWilting(Season season, int year)
+    {
+        isWilting = true;
+        daysWithoutWater = 0;
+
+        if (spriteRenderer == null)
+            spriteRenderer = Owner.GameObject.GetComponentInChildren<SpriteRenderer>()
+                          ?? Owner.GameObject.GetComponent<SpriteRenderer>();
+
+        if (data.wiltSprite != null && spriteRenderer != null)
+            spriteRenderer.sprite = data.wiltSprite;
+
+        Debug.LogWarning($"[StageRuntime] '{Owner.GameObject.name}' đã héo vì sang mùa {season} năm {year}.");
     }
 }

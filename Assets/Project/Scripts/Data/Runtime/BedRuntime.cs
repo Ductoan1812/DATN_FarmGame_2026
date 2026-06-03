@@ -18,7 +18,7 @@ public class BedRuntime : IModuleRuntime, IHandleEvent<SecondaryActionEvent>
 
         e.context.AddOption(
             "bed.sleep",
-            "Đi ngủ",
+            LocalizationKeys.UiBedSleep,
             100, // high priority
             () => DoSleep(e.initiator)
         );
