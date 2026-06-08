@@ -15,7 +15,7 @@ MonoBehaviour:
   id: item_tool_hoe_t1
   keyName: item.tool.hoe.t1.name
   descKey: item.tool.hoe.t1.desc
-  icon: {fileID: 0}
+  icon: {fileID: 325664127, guid: 163ba03f3b439ab48b5f238ac2b407f0, type: 3}
   category: 1
   maxStack: 1
   buyPrice: 0
@@ -23,7 +23,7 @@ MonoBehaviour:
   baseStats:
     baseStats:
     - statType: 5
-      value: 2
+      value: -10
     - statType: 9
       value: 1
     - statType: 10
@@ -41,6 +41,8 @@ MonoBehaviour:
     blockLayers: 
   modules:
   - rid: 5278705929685041271
+  - rid: 5278705929685041342
+  - rid: 5278705929685041343
   references:
     version: 2
     RefIds:
@@ -49,5 +51,18 @@ MonoBehaviour:
       data:
         toolType: 1
         toolTier: 1
-        animTrigger: 
+        animTrigger: Hoe
         refillAnimTrigger: 
+    - rid: 5278705929685041342
+      type: {class: ToolRequirementModule, ns: , asm: Assembly-CSharp}
+      data:
+        requiredToolType: 1
+        minimumToolTier: 1
+        wrongToolPenalty: 0
+        blockDamageIfWrongTool: 1
+        blockDamageIfBelowTier: 1
+    - rid: 5278705929685041343
+      type: {class: AppearanceModule, ns: , asm: Assembly-CSharp}
+      data:
+        spriteId: Art.Equipment.MeleeWeapon1H.Hoe
+        equipmentPart: 5

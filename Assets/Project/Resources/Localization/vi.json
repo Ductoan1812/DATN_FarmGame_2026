@@ -528,6 +528,19 @@
     { "key": "item.place.lightning_rod.name", "value": "C\u1ed9t thu l\u00f4i" },
     { "key": "item.place.lightning_rod.desc", "value": "Ch\u1ed1ng s\u00e9t l\u00e0m h\u1ecfng c\u00e2y tr\u1ed3ng trong m\u00f9a m\u01b0a b\u00e3o." },
     { "key": "item.place.torch.name", "value": "\u0110u\u1ed1c" },
-    { "key": "item.place.torch.desc", "value": "Chi\u1ebfu s\u00e1ng trong hang m\u1ecf ban \u0111\u00eam." }
+    { "key": "item.place.torch.desc", "value": "Chi\u1ebfu s\u00e1ng trong hang m\u1ecf ban \u0111\u00eam." },
+    { "key": "m1.portal.farm_to_town.name", "value": "Cổng đến Thị trấn" },
+    { "key": "ui.loading.title", "value": "ĐANG TẢI..." },
+    { "key": "ui.loading.scene", "value": "Đang tải cảnh {0}" },
+    { "key": "ui.loading.percent", "value": "{0}%" },
+    { "key": "ui.loading.scene_name.scene", "value": "Cảnh" },
+    { "key": "ui.loading.scene_name.FarmScene", "value": "Nông trại" },
+    { "key": "ui.loading.scene_name.TownScene", "value": "Thị trấn" },
+    { "key": "ui.loading.scene_name.MainMenuScene", "value": "Màn hình chính" },
+    { "key": "ui.loading.tip.1", "value": "Mẹo: Thu thập tài nguyên và nâng cấp công cụ để sinh tồn dễ dàng hơn!" },
+    { "key": "ui.loading.tip.2", "value": "Mẹo: Tưới cây mỗi ngày để cây trồng phát triển ổn định." },
+    { "key": "ui.loading.tip.3", "value": "Mẹo: Mang đúng công cụ khi khai thác đá, cây và cỏ dại." },
+    { "key": "ui.loading.tip.4", "value": "Mẹo: Kiểm tra túi đồ trước khi ra khỏi nông trại để tránh thiếu vật phẩm." },
+    { "key": "ui.loading.tip.5", "value": "Mẹo: Lưu game thường xuyên để bảo vệ tiến độ của bạn." }
   ]
 }

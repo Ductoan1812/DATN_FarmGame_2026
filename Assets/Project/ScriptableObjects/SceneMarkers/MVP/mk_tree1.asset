@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   markerKind: 6
   objectType: 10
-  entityData: {fileID: 11400000, guid: 52e51aeb021d80d4a81d600e870fba52, type: 2}
-  savePolicy: 0
-  spawnGroupId: 
+  entityData: {fileID: 11400000, guid: 1037c82365e22074daa7628ec017d3c4, type: 2}
+  savePolicy: 1
+  spawnGroupId: farm_tree
   spawnPointId: 
-  respawnMinutes: 0
+  respawnMinutes: 720
   initialAmount: 1
-  bypassPlacementValidation: 0
+  bypassPlacementValidation: 1
   stageSpawnMode: 2
   fixedStartStageIndex: 0
   randomStartStageMin: 0

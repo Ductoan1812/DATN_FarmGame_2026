@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -22,6 +23,23 @@ public class SaveLoadManager
     public const string EntitiesSaveFile = "entities_save.json";
     public const string WorldSaveFile    = "world_save.json";
     public const string SystemSaveFile   = "system_save.json";
+    public const string SaveRootFolder   = "Saves";
+    public const int DefaultSlotCount    = 8;
+
+    private const string ActiveSlotPref = "save_active_slot";
+    private static int activeSlotIndex;
+
+    [Serializable]
+    public class SaveSlotSummary
+    {
+        public int slotIndex;
+        public bool hasSave;
+        public string displayName;
+        public string detailText;
+        public string lastActiveSceneName;
+        public TimeState time;
+        public DateTime lastWriteTime;
+    }
 
     private readonly EntityService _entityService;
     private readonly EntityDataRegistry _entityDataRegistry;
@@ -161,14 +179,14 @@ public class SaveLoadManager
         // Phase 1: Load tất cả EntityRuntime vào EntityRegistry (chưa RestoreSlots)
         _entityService.LoadData(
             id => _entityDataRegistry.FindById(id),
-            EntitiesSaveFile,
+            GetSaveFilePath(EntitiesSaveFile),
             true
         );
         EnsureLoadedPlayerProgression();
 
         // Phase 2: Load SpatialEntityRegistry + TileRegistry dirty + Spawn GameObjects
         // → EntityRoot.Add → inv.Container được set
-        _worldService.Load(GetCurrentWorldSaveFile(), ep =>
+        _worldService.Load(GetSaveFilePath(GetCurrentWorldSaveFile(), createDirectory: false), ep =>
         {
             var runtime = _entityService.Get(ep.idRuntime);
             _spawnSystem.ReinstantiateFromSave(ep, runtime);
@@ -192,24 +210,24 @@ public class SaveLoadManager
 
     public void SaveAll()
     {
-        _entityService.SaveData(EntitiesSaveFile, true);
-        _worldService.Save(GetCurrentWorldSaveFile());
+        _entityService.SaveData(GetSaveFilePath(EntitiesSaveFile), true);
+        _worldService.Save(GetSaveFilePath(GetCurrentWorldSaveFile()));
         SaveSystemData();
-        Debug.Log("[SaveLoadManager] All data saved.");
+        Debug.Log($"[SaveLoadManager] All data saved to slot {ActiveSlotIndex}.");
     }
 
     public void LoadCurrentSceneWorld()
     {
         if (_worldService == null || _spawnSystem == null) return;
         string worldFile = GetCurrentWorldSaveFile();
-        string path = System.IO.Path.Combine(Application.persistentDataPath, worldFile);
-        if (!System.IO.File.Exists(path))
+        string path = GetSaveFilePath(worldFile, createDirectory: false);
+        if (!File.Exists(path))
         {
             Debug.Log($"[SaveLoadManager] No scene world save for '{SceneManager.GetActiveScene().name}'. Marker scanner can seed defaults.");
             return;
         }
 
-        _worldService.Load(worldFile, ep =>
+        _worldService.Load(path, ep =>
         {
             var runtime = _entityService.Get(ep.idRuntime);
             _spawnSystem.ReinstantiateFromSave(ep, runtime);
@@ -265,17 +283,17 @@ public class SaveLoadManager
         }
 
         var json = JsonUtility.ToJson(data, true);
-        var path = System.IO.Path.Combine(Application.persistentDataPath, SystemSaveFile);
-        System.IO.File.WriteAllText(path, json);
-        Debug.Log($"[SaveLoadManager] System data saved: {data.time}, scene={data.lastActiveSceneName}, playerPos=({data.playerPosX},{data.playerPosY}), watered={data.wateredCells?.Count ?? 0}, soil={data.soilCells?.Count ?? 0}, clearZones={data.clearZones?.Count ?? 0}, narrative={data.triggeredStoryEventIds?.Count ?? 0}, research={data.unlockedResearch?.Count ?? 0}");
+        var path = GetSaveFilePath(SystemSaveFile);
+        File.WriteAllText(path, json);
+        Debug.Log($"[SaveLoadManager] System data saved to slot {ActiveSlotIndex}: {data.time}, scene={data.lastActiveSceneName}, playerPos=({data.playerPosX},{data.playerPosY}), watered={data.wateredCells?.Count ?? 0}, soil={data.soilCells?.Count ?? 0}, clearZones={data.clearZones?.Count ?? 0}, narrative={data.triggeredStoryEventIds?.Count ?? 0}, research={data.unlockedResearch?.Count ?? 0}");
     }
 
     private void LoadSystemData()
     {
-        var path = System.IO.Path.Combine(Application.persistentDataPath, SystemSaveFile);
-        if (!System.IO.File.Exists(path)) return;
+        var path = GetSaveFilePath(SystemSaveFile, createDirectory: false);
+        if (!File.Exists(path)) return;
 
-        var json = System.IO.File.ReadAllText(path);
+        var json = File.ReadAllText(path);
         var data = JsonUtility.FromJson<SystemSaveData>(json);
         if (data == null) return;
 
@@ -315,47 +333,132 @@ public class SaveLoadManager
 
     private bool HasSaveFile()
     {
-        var path = System.IO.Path.Combine(Application.persistentDataPath, EntitiesSaveFile);
-        return System.IO.File.Exists(path);
+        return HasAnySaveData(ActiveSlotIndex);
+    }
+
+    public static int ActiveSlotIndex
+    {
+        get
+        {
+            if (activeSlotIndex <= 0)
+                activeSlotIndex = Mathf.Max(1, PlayerPrefs.GetInt(ActiveSlotPref, 1));
+
+            return activeSlotIndex;
+        }
+    }
+
+    public static void SelectSlot(int slotIndex)
+    {
+        activeSlotIndex = Mathf.Max(1, slotIndex);
+        PlayerPrefs.SetInt(ActiveSlotPref, activeSlotIndex);
+        PlayerPrefs.Save();
+        Debug.Log($"[SaveLoadManager] Active save slot set to save{activeSlotIndex}.");
     }
 
     /// <summary>Public API: check if any save data exists.</summary>
     public static bool HasAnySaveData()
     {
-        var path = System.IO.Path.Combine(Application.persistentDataPath, EntitiesSaveFile);
-        return System.IO.File.Exists(path);
+        return HasAnySaveData(ActiveSlotIndex);
     }
 
-    /// <summary>Public API: delete all save files. Logs warnings for missing files, does not throw.</summary>
+    public static bool HasAnySaveData(int slotIndex)
+    {
+        var path = GetSaveFilePath(EntitiesSaveFile, slotIndex, createDirectory: false);
+        return File.Exists(path);
+    }
+
+    /// <summary>Public API: delete all save files in the active slot. Logs warnings and does not throw.</summary>
     public static void DeleteAllSaveData()
     {
-        string[] files = { EntitiesSaveFile, SystemSaveFile, WorldSaveFile };
-        foreach (var file in files)
-        {
-            var path = System.IO.Path.Combine(Application.persistentDataPath, file);
-            if (System.IO.File.Exists(path))
-            {
-                try { System.IO.File.Delete(path); }
-                catch (Exception ex) { Debug.LogWarning($"[SaveLoadManager] Failed to delete {file}: {ex.Message}"); }
-            }
-        }
+        DeleteAllSaveData(ActiveSlotIndex);
+    }
 
-        // Delete world_*.json files
+    public static void DeleteAllSaveData(int slotIndex)
+    {
+        var dir = GetSlotDirectory(slotIndex);
+        if (!Directory.Exists(dir))
+            return;
+
         try
         {
-            var dir = Application.persistentDataPath;
-            if (System.IO.Directory.Exists(dir))
-            {
-                foreach (var worldFile in System.IO.Directory.GetFiles(dir, "world_*.json"))
-                {
-                    try { System.IO.File.Delete(worldFile); }
-                    catch (Exception ex) { Debug.LogWarning($"[SaveLoadManager] Failed to delete {worldFile}: {ex.Message}"); }
-                }
-            }
+            Directory.Delete(dir, recursive: true);
+            Debug.Log($"[SaveLoadManager] Save data deleted for slot {slotIndex}: {dir}");
         }
-        catch (Exception ex) { Debug.LogWarning($"[SaveLoadManager] Failed to scan world files: {ex.Message}"); }
+        catch (Exception ex)
+        {
+            Debug.LogWarning($"[SaveLoadManager] Failed to delete slot {slotIndex}: {ex.Message}");
+        }
+    }
 
-        Debug.Log("[SaveLoadManager] All save data deleted.");
+    public static SaveSlotSummary[] GetSaveSlots(int count = DefaultSlotCount)
+    {
+        count = Mathf.Max(1, count);
+        var result = new SaveSlotSummary[count];
+        for (int i = 0; i < count; i++)
+            result[i] = BuildSlotSummary(i + 1);
+
+        return result;
+    }
+
+    public static SaveSlotSummary BuildSlotSummary(int slotIndex)
+    {
+        slotIndex = Mathf.Max(1, slotIndex);
+        var summary = new SaveSlotSummary
+        {
+            slotIndex = slotIndex,
+            displayName = $"Bản Save {slotIndex}",
+            detailText = "Chưa có dữ liệu lưu.",
+            hasSave = HasAnySaveData(slotIndex),
+            lastActiveSceneName = "FarmScene"
+        };
+
+        var systemData = ReadSystemSave(slotIndex);
+        if (systemData != null)
+        {
+            summary.time = systemData.time;
+            summary.lastActiveSceneName = string.IsNullOrWhiteSpace(systemData.lastActiveSceneName)
+                ? "FarmScene"
+                : systemData.lastActiveSceneName;
+            summary.detailText = BuildSlotDetailText(systemData);
+        }
+        else if (summary.hasSave)
+        {
+            summary.detailText = "Đã có dữ liệu lưu.";
+        }
+
+        var entitiesPath = GetSaveFilePath(EntitiesSaveFile, slotIndex, createDirectory: false);
+        var systemPath = GetSaveFilePath(SystemSaveFile, slotIndex, createDirectory: false);
+        if (File.Exists(systemPath))
+            summary.lastWriteTime = File.GetLastWriteTime(systemPath);
+        else if (File.Exists(entitiesPath))
+            summary.lastWriteTime = File.GetLastWriteTime(entitiesPath);
+
+        return summary;
+    }
+
+    public static string GetSaveFilePath(string fileName, bool createDirectory = true)
+    {
+        return GetSaveFilePath(fileName, ActiveSlotIndex, createDirectory);
+    }
+
+    public static string GetSaveFilePath(string fileName, int slotIndex, bool createDirectory = true)
+    {
+        var dir = GetSlotDirectory(slotIndex);
+        if (createDirectory)
+            Directory.CreateDirectory(dir);
+
+        return Path.Combine(dir, fileName);
+    }
+
+    public static string GetSlotDirectory(int slotIndex)
+    {
+        slotIndex = Mathf.Max(1, slotIndex);
+        return Path.Combine(Application.persistentDataPath, SaveRootFolder, $"save{slotIndex}");
+    }
+
+    public static string GetSaveRootDirectory()
+    {
+        return Path.Combine(Application.persistentDataPath, SaveRootFolder);
     }
 
     private static string GetCurrentWorldSaveFile()
@@ -368,6 +471,30 @@ public class SaveLoadManager
             sceneName = sceneName.Replace(invalid, '_');
 
         return $"world_{sceneName}.json";
+    }
+
+    private static string BuildSlotDetailText(SystemSaveData data)
+    {
+        if (data == null)
+            return "Đã có dữ liệu lưu.";
+
+        string season = data.time.season switch
+        {
+            Season.Spring => "Xuân",
+            Season.Summer => "Hạ",
+            Season.Fall => "Thu",
+            Season.Winter => "Đông",
+            _ => data.time.season.ToString()
+        };
+
+        int day = Mathf.Max(1, data.time.day);
+        int hour = Mathf.Clamp(data.time.hour, 0, 23);
+        int minute = Mathf.Clamp(data.time.minute, 0, 59);
+        string scene = string.IsNullOrWhiteSpace(data.lastActiveSceneName)
+            ? "FarmScene"
+            : data.lastActiveSceneName;
+
+        return $"Ngày {day} - {season} - {hour:D2}:{minute:D2} - {scene}";
     }
 
     private void EnsureLoadedPlayerProgression()
@@ -448,11 +575,16 @@ public class SaveLoadManager
 
     private SystemSaveData ReadSystemSave()
     {
-        var path = System.IO.Path.Combine(Application.persistentDataPath, SystemSaveFile);
-        if (!System.IO.File.Exists(path)) return null;
+        return ReadSystemSave(ActiveSlotIndex);
+    }
+
+    private static SystemSaveData ReadSystemSave(int slotIndex)
+    {
+        var path = GetSaveFilePath(SystemSaveFile, slotIndex, createDirectory: false);
+        if (!File.Exists(path)) return null;
         try
         {
-            var json = System.IO.File.ReadAllText(path);
+            var json = File.ReadAllText(path);
             return JsonUtility.FromJson<SystemSaveData>(json);
         }
         catch (Exception ex)

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   markerKind: 6
   objectType: 10
-  entityData: {fileID: 11400000, guid: e212c146b71152d4f9983465440412b5, type: 2}
+  entityData: {fileID: 11400000, guid: 1037c82365e22074daa7628ec017d3c4, type: 2}
   savePolicy: 1
   spawnGroupId: farm_tree
   spawnPointId: 

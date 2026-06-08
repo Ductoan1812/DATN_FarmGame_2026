@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: seed_apple_fruitree
   m_EditorClassIdentifier: 
   id: seed_apple_fruitree
-  keyName: 
-  descKey: 
+  keyName: seed_apple_fruitree_name
+  descKey: seed_apple_fruitree_desc
   icon: {fileID: -600571475, guid: 247cdd78657a55546aadfc05332f068c, type: 3}
   category: 2
   maxStack: 999

@@ -58,7 +58,6 @@ MonoBehaviour:
   - rid: 5278705929685041334
   - rid: 5278705929685041335
   - rid: 5278705929685041336
-  - rid: 5278705929685041337
   - rid: 5278705929685041338
   - rid: 5278705929685041339
   - rid: 5278705929685041340
@@ -78,16 +77,11 @@ MonoBehaviour:
       type: {class: InventoryModule, ns: , asm: Assembly-CSharp}
       data:
         inventoryType: 0
-        size: 30
+        size: 45
     - rid: 5278705929685041336
       type: {class: EquipmentModule, ns: , asm: Assembly-CSharp}
       data:
-        supportedParts: 000000000100000005000000060000000b0000000700000013000000020000000400000003000000
-    - rid: 5278705929685041337
-      type: {class: AppearanceModule, ns: , asm: Assembly-CSharp}
-      data:
-        spriteId: 
-        equipmentPart: 0
+        supportedParts: 0000000001000000050000000b0000000700000013000000020000000400000003000000
     - rid: 5278705929685041338
       type: {class: QuestLogModule, ns: , asm: Assembly-CSharp}
       data: 

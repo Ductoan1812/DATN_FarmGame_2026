@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8393fbdfdb650e5418aad1c82ae5b8b5, type: 3}
   m_Name: seed_brech_woodtree
   m_EditorClassIdentifier: 
-  id: seed_oak_woodtree
-  keyName: 
-  descKey: 
+  id: seed_brech_woodtree
+  keyName: item.seed.brech_woodtree.name
+  descKey: item.seed.brech_woodtree.desc
   icon: {fileID: -1531161408, guid: 247cdd78657a55546aadfc05332f068c, type: 3}
   category: 2
   maxStack: 999

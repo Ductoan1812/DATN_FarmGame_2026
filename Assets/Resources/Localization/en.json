@@ -1263,6 +1263,74 @@
         {
             "key": "world.utility.sprinkler.t2.name",
             "value": "Sprinkler T2"
+        },
+        {
+            "key": "item.seed.oak_woodtree.name",
+            "value": "Oak Tree Seed"
+        },
+        {
+            "key": "item.seed.oak_woodtree.desc",
+            "value": "A seed for growing an oak wood tree."
+        },
+        {
+            "key": "item.seed.brech_woodtree.name",
+            "value": "Birch Tree Seed"
+        },
+        {
+            "key": "item.seed.brech_woodtree.desc",
+            "value": "A seed for growing a birch wood tree."
+        },
+        {
+            "key": "m1.portal.farm_to_town.name",
+            "value": "Portal to Town"
+        },
+        {
+            "key": "ui.loading.title",
+            "value": "LOADING..."
+        },
+        {
+            "key": "ui.loading.scene",
+            "value": "Loading scene {0}"
+        },
+        {
+            "key": "ui.loading.percent",
+            "value": "{0}%"
+        },
+        {
+            "key": "ui.loading.scene_name.scene",
+            "value": "Scene"
+        },
+        {
+            "key": "ui.loading.scene_name.FarmScene",
+            "value": "Farm"
+        },
+        {
+            "key": "ui.loading.scene_name.TownScene",
+            "value": "Town"
+        },
+        {
+            "key": "ui.loading.scene_name.MainMenuScene",
+            "value": "Main Menu"
+        },
+        {
+            "key": "ui.loading.tip.1",
+            "value": "Tip: Gather resources and upgrade tools to survive more easily!"
+        },
+        {
+            "key": "ui.loading.tip.2",
+            "value": "Tip: Water crops every day so they keep growing steadily."
+        },
+        {
+            "key": "ui.loading.tip.3",
+            "value": "Tip: Bring the right tool when mining rocks, chopping trees, or cutting weeds."
+        },
+        {
+            "key": "ui.loading.tip.4",
+            "value": "Tip: Check your backpack before leaving the farm so you do not miss key items."
+        },
+        {
+            "key": "ui.loading.tip.5",
+            "value": "Tip: Save often to protect your progress."
         }
     ]
 }

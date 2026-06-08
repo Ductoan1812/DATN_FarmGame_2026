@@ -84,14 +84,9 @@ public class BackpackUI : MonoBehaviour
 
     private const int MaxDisplayAmount = 99999;
     private const int DefaultSplitAmount = 1;
-    private const float InfoTooltipHideDelay = 0.08f;
 
     private InventoryGridItemData[] cache;
     private InventoryGridView gridView;
-    private RectTransform itemInfoPanelRoot;
-    private RectTransform itemInfoBodyRoot;
-    private RectTransform itemInfoGuideRoot;
-    private RectTransform hoveredSlotRoot;
     private LocalizedText itemNameLocalized;
     private LocalizedText descLocalized;
     private LocalizedText categoryLocalized;
@@ -101,11 +96,8 @@ public class BackpackUI : MonoBehaviour
     private bool dirty;
     private bool subscribed;
     private bool refreshRequestedAfterSubscribe;
-    private bool infoTooltipPointerInside;
     private int selectedIndex = -1;
-    private int hoveredIndex = -1;
     private int selectedAmount;
-    private Coroutine hideInfoTooltipRoutine;
 
     // ══════════════════════════════════════════════════════════
     //  Unity Lifecycle
@@ -130,11 +122,6 @@ public class BackpackUI : MonoBehaviour
 
     private void OnDisable()
     {
-        CancelInfoTooltipHide();
-        hoveredIndex = -1;
-        hoveredSlotRoot = null;
-        infoTooltipPointerInside = false;
-        SetInfoTooltipVisible(false);
         UnsubscribeEvents();
         UnregisterButtonEvents();
     }
@@ -236,18 +223,17 @@ public class BackpackUI : MonoBehaviour
 
     private void OnBackpackItemInfoChanged(BackpackItemInfoChangedPublish e)
     {
-        if (!e.isPreview)
-        {
-            selectedIndex = e.slotIndex;
-            selectedAmount = e.amount;
-            UpdateSelectionVisual();
-            UpdateSplitControls();
-        }
+        // Chỉ xử lý khi người chơi click chọn slot (không phải preview hover)
+        if (e.isPreview) return;
+
+        selectedIndex = e.slotIndex;
+        selectedAmount = e.amount;
+        UpdateSelectionVisual();
+        UpdateSplitControls();
 
         if (e.isEmpty)
         {
             ClearInfoPanel();
-            SetInfoTooltipVisible(false);
             return;
         }
 
@@ -258,19 +244,12 @@ public class BackpackUI : MonoBehaviour
         SetOptionalLocalizedOrText(categoryLocalized, categoryText, e.categoryKey, GetFieldRoot(categoryText, "Category"));
 
         SetOptionalText(priceText, e.sellPrice > 0 ? e.sellPrice.ToString() : string.Empty, GetFieldRoot(priceText, "Price"));
-
         SetOptionalText(rareText, string.Empty, rareObject != null ? rareObject : rareText?.gameObject);
 
         if (btnUse != null)
             btnUse.interactable = e.canUse;
 
         ApplyStats(e.stats);
-
-        if (e.isPreview)
-        {
-            PositionInfoTooltip(hoveredSlotRoot);
-            SetInfoTooltipVisible(true);
-        }
     }
 
     private void OnStatsChanged(StatsChangedPublish e)
@@ -357,9 +336,7 @@ public class BackpackUI : MonoBehaviour
             dragDropEnabled: true,
             dragType: InventoryType.Backpack);
         gridView.SetClickHandler((index, _) => PublishSlotSelectedRequest(index));
-        gridView.SetHoverHandlers(
-            (index, _, slotRect) => PublishSlotPreviewRequest(index, slotRect),
-            OnSlotPreviewExited);
+        // Không dùng hover preview trong static layout
 
         viewsReady = true;
     }
@@ -387,24 +364,6 @@ public class BackpackUI : MonoBehaviour
         UpdateSplitControls();
     }
 
-    private void PublishSlotPreviewRequest(int index, RectTransform slotRect)
-    {
-        CancelInfoTooltipHide();
-        hoveredIndex = index;
-        hoveredSlotRoot = slotRect;
-        GameManager.Instance?.EventBus?.Publish(new BackpackSlotPreviewRequestPublish(index));
-    }
-
-    private void OnSlotPreviewExited(int index)
-    {
-        if (hoveredIndex == index)
-        {
-            hoveredIndex = -1;
-            hoveredSlotRoot = null;
-        }
-
-        ScheduleInfoTooltipHide();
-    }
 
     private void ApplyStats(StatDisplay[] stats)
     {
@@ -603,7 +562,6 @@ public class BackpackUI : MonoBehaviour
         AutoAssignSlotsContainer();
         AutoAssignMainPanelRefs();
         AutoAssignInfoItemRefs();
-        AutoAssignInfoTooltipRefs();
         AutoAssignStatsRefs();
 
         if (itemNameText != null) itemNameLocalized = itemNameText.GetComponent<LocalizedText>();
@@ -682,169 +640,7 @@ public class BackpackUI : MonoBehaviour
         AutoAssignStatsRefs();
     }
 
-    private void AutoAssignInfoTooltipRefs()
-    {
-        if (itemInfoPanelRoot != null && itemInfoBodyRoot != null)
-            return;
-
-        var window = ResolveBackpackWindow();
-        var body = FindDeepChild(window, "Body");
-        var panel = FindDeepChild(body, "ItemInfoPanel");
-        if (body is not RectTransform bodyRect || panel is not RectTransform panelRect)
-            return;
-
-        itemInfoBodyRoot = bodyRect;
-        itemInfoPanelRoot = panelRect;
-        var hoverRelay = itemInfoPanelRoot.GetComponent<BackpackInfoTooltipHoverRelay>();
-        if (hoverRelay == null)
-            hoverRelay = itemInfoPanelRoot.gameObject.AddComponent<BackpackInfoTooltipHoverRelay>();
-
-        hoverRelay.Initialize(this);
-        ConfigureInfoTooltipLayout();
-    }
-
-    private void ConfigureInfoTooltipLayout()
-    {
-        if (itemInfoPanelRoot == null || itemInfoBodyRoot == null)
-            return;
-
-        var gridPanel = FindDeepChild(itemInfoBodyRoot, "GridPanel") as RectTransform;
-        if (gridPanel != null)
-        {
-            gridPanel.anchorMin = Vector2.zero;
-            gridPanel.anchorMax = Vector2.one;
-            gridPanel.pivot = new Vector2(0f, 0f);
-            gridPanel.offsetMin = Vector2.zero;
-            gridPanel.offsetMax = Vector2.zero;
-        }
-
-        itemInfoPanelRoot.anchorMin = new Vector2(0f, 1f);
-        itemInfoPanelRoot.anchorMax = new Vector2(0f, 1f);
-        itemInfoPanelRoot.pivot = new Vector2(0f, 1f);
-        itemInfoPanelRoot.sizeDelta = new Vector2(420f, 560f);
-        itemInfoPanelRoot.SetAsLastSibling();
-
-        EnsureInfoGuidePanel();
-        SetInfoTooltipVisible(false);
-    }
-
-    private void EnsureInfoGuidePanel()
-    {
-        if (itemInfoGuideRoot != null || itemInfoBodyRoot == null)
-            return;
-
-        var existing = FindDeepChild(itemInfoBodyRoot, "BackpackGuidePanel") as RectTransform;
-        if (existing != null)
-        {
-            itemInfoGuideRoot = existing;
-            return;
-        }
-
-        var panel = new GameObject("BackpackGuidePanel", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image), typeof(Outline));
-        panel.transform.SetParent(itemInfoBodyRoot, false);
-        itemInfoGuideRoot = panel.GetComponent<RectTransform>();
-        itemInfoGuideRoot.anchorMin = new Vector2(0.72f, 0f);
-        itemInfoGuideRoot.anchorMax = new Vector2(1f, 1f);
-        itemInfoGuideRoot.pivot = new Vector2(1f, 0.5f);
-        itemInfoGuideRoot.offsetMin = new Vector2(10f, 12f);
-        itemInfoGuideRoot.offsetMax = new Vector2(-14f, -12f);
-
-        var image = panel.GetComponent<Image>();
-        image.color = new Color(0.18f, 0.10f, 0.04f, 0.72f);
-        image.raycastTarget = false;
-
-        var outline = panel.GetComponent<Outline>();
-        outline.effectColor = new Color(0.72f, 0.47f, 0.18f, 0.95f);
-        outline.effectDistance = new Vector2(2f, -2f);
-
-        var title = CreateGuideText("GuideTitle", panel.transform, "Thông tin vật phẩm", 24f, TextAlignmentOptions.Center, new Color(1f, 0.86f, 0.50f));
-        SetRect(title.rectTransform, Vector2.up, Vector2.one, new Vector2(0.5f, 1f), new Vector2(0f, -24f), new Vector2(-28f, 42f));
-
-        var body = CreateGuideText(
-            "GuideBody",
-            panel.transform,
-            "Di chuột vào một ô vật phẩm để xem tên, mô tả, giá bán và chỉ số liên quan.\n\nChọn vật phẩm để sử dụng, tách hoặc thả khỏi túi đồ.",
-            18f,
-            TextAlignmentOptions.TopLeft,
-            new Color(0.96f, 0.86f, 0.66f));
-        body.enableWordWrapping = true;
-        SetRect(body.rectTransform, Vector2.zero, Vector2.one, new Vector2(0.5f, 0.5f), new Vector2(0f, -54f), new Vector2(-42f, -120f));
-
-        itemInfoGuideRoot.SetAsLastSibling();
-    }
-
-    private void PositionInfoTooltip(RectTransform slotRect)
-    {
-        if (itemInfoPanelRoot == null || itemInfoBodyRoot == null || slotRect == null)
-            return;
-
-        var slotBounds = RectTransformUtility.CalculateRelativeRectTransformBounds(itemInfoBodyRoot, slotRect);
-        var bodyRect = itemInfoBodyRoot.rect;
-        var panelSize = itemInfoPanelRoot.rect.size;
-        if (panelSize.x <= 0f || panelSize.y <= 0f)
-            panelSize = itemInfoPanelRoot.sizeDelta;
-
-        var x = slotBounds.max.x + 16f;
-        if (x + panelSize.x > bodyRect.xMax - 10f)
-            x = slotBounds.min.x - panelSize.x - 16f;
-
-        x = Mathf.Clamp(x, bodyRect.xMin + 10f, bodyRect.xMax - panelSize.x - 10f);
-
-        var y = Mathf.Clamp(
-            slotBounds.max.y,
-            bodyRect.yMin + panelSize.y + 10f,
-            bodyRect.yMax - 10f);
-
-        itemInfoPanelRoot.anchoredPosition = new Vector2(
-            x - bodyRect.xMin,
-            y - bodyRect.yMax);
-    }
-
-    private void SetInfoTooltipVisible(bool visible)
-    {
-        if (itemInfoPanelRoot != null && itemInfoPanelRoot.gameObject.activeSelf != visible)
-            itemInfoPanelRoot.gameObject.SetActive(visible);
-
-        if (itemInfoGuideRoot != null && itemInfoGuideRoot.gameObject.activeSelf == visible)
-            itemInfoGuideRoot.gameObject.SetActive(!visible);
-    }
-
-    public void OnInfoTooltipPointerEnter()
-    {
-        infoTooltipPointerInside = true;
-        CancelInfoTooltipHide();
-    }
-
-    public void OnInfoTooltipPointerExit()
-    {
-        infoTooltipPointerInside = false;
-        if (hoveredIndex < 0)
-            ScheduleInfoTooltipHide();
-    }
-
-    private void ScheduleInfoTooltipHide()
-    {
-        CancelInfoTooltipHide();
-        hideInfoTooltipRoutine = StartCoroutine(HideInfoTooltipAfterDelay());
-    }
-
-    private IEnumerator HideInfoTooltipAfterDelay()
-    {
-        yield return new WaitForSecondsRealtime(InfoTooltipHideDelay);
-        hideInfoTooltipRoutine = null;
-
-        if (hoveredIndex < 0 && !infoTooltipPointerInside)
-            SetInfoTooltipVisible(false);
-    }
-
-    private void CancelInfoTooltipHide()
-    {
-        if (hideInfoTooltipRoutine == null)
-            return;
-
-        StopCoroutine(hideInfoTooltipRoutine);
-        hideInfoTooltipRoutine = null;
-    }
+    // Không còn dùng tooltip động - ItemInfoPanel hiển thị tĩnh theo layout Prefab
 
     private void AutoAssignStatsRefs()
     {
@@ -1142,20 +938,6 @@ public class BackpackUI : MonoBehaviour
         return null;
     }
 
-    private static TextMeshProUGUI CreateGuideText(string name, Transform parent, string value, float size, TextAlignmentOptions alignment, Color color)
-    {
-        var go = new GameObject(name, typeof(RectTransform), typeof(CanvasRenderer), typeof(TextMeshProUGUI));
-        go.transform.SetParent(parent, false);
-        var text = go.GetComponent<TextMeshProUGUI>();
-        text.text = value;
-        text.fontSize = size;
-        text.fontStyle = FontStyles.Bold;
-        text.alignment = alignment;
-        text.color = color;
-        text.raycastTarget = false;
-        return text;
-    }
-
     private static void SetRect(RectTransform rect, Vector2 anchorMin, Vector2 anchorMax, Vector2 pivot, Vector2 anchoredPosition, Vector2 sizeDelta)
     {
         rect.anchorMin = anchorMin;
@@ -1163,25 +945,5 @@ public class BackpackUI : MonoBehaviour
         rect.pivot = pivot;
         rect.anchoredPosition = anchoredPosition;
         rect.sizeDelta = sizeDelta;
-    }
-}
-
-public sealed class BackpackInfoTooltipHoverRelay : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
-{
-    private BackpackUI owner;
-
-    public void Initialize(BackpackUI target)
-    {
-        owner = target;
-    }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        owner?.OnInfoTooltipPointerEnter();
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        owner?.OnInfoTooltipPointerExit();
     }
 }

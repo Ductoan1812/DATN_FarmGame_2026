@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Assets.HeroEditor4D.Common.Scripts.Collections;
+using Assets.HeroEditor4D.Common.Scripts.Data;
+using Assets.HeroEditor4D.Common.Scripts.Enums;
 using UnityEditor;
 using UnityEngine;
 
@@ -72,12 +75,19 @@ public class EntityDataWorkbenchWindow : EditorWindow
     private Vector2 summaryScroll;
     private Vector2 listScroll;
     private Vector2 issueScroll;
+    private Vector2 inspectorScroll;
+    private Vector2 rightPaneScroll;
+    private Editor entityEditor;
     private string searchText = string.Empty;
+    private bool useCategoryFilter = false;
+    private ItemCategory filterCategory;
     private EntityData selectedEntity;
     private TemplateKind selectedTemplate = TemplateKind.Custom;
     private TemplateKind createTemplate = TemplateKind.SeedItem;
     private string createName = string.Empty;
     private string createFolderOverride = string.Empty;
+    private SpriteCollection appearanceSpriteCollection;
+    private string appearanceSpriteFilter = string.Empty;
 
     [MenuItem("Tools/DATN/Workbench/Entity Data Workbench")]
     public static void OpenWindow()
@@ -89,6 +99,7 @@ public class EntityDataWorkbenchWindow : EditorWindow
 
     private void OnEnable()
     {
+        EnsureAppearanceSpriteCollection();
         RefreshRecords();
     }
 
@@ -115,6 +126,13 @@ public class EntityDataWorkbenchWindow : EditorWindow
             GUILayout.Space(8f);
             searchText = GUILayout.TextField(searchText, EditorStyles.toolbarSearchField, GUILayout.MinWidth(220f));
 
+            GUILayout.Space(8f);
+            useCategoryFilter = GUILayout.Toggle(useCategoryFilter, "Filter Category", EditorStyles.toolbarButton, GUILayout.Width(100f));
+            if (useCategoryFilter)
+            {
+                filterCategory = (ItemCategory)EditorGUILayout.EnumPopup(filterCategory, GUILayout.Width(120f));
+            }
+
             GUILayout.FlexibleSpace();
             GUILayout.Label($"Total EntityData: {records.Count}", EditorStyles.miniBoldLabel);
         }
@@ -134,9 +152,17 @@ public class EntityDataWorkbenchWindow : EditorWindow
     {
         using (new EditorGUILayout.VerticalScope())
         {
-            DrawInspectorSection();
-            GUILayout.Space(8f);
-            DrawCreateSection();
+            rightPaneScroll = EditorGUILayout.BeginScrollView(rightPaneScroll);
+            try
+            {
+                DrawInspectorSection();
+                GUILayout.Space(8f);
+                DrawCreateSection();
+            }
+            finally
+            {
+                EditorGUILayout.EndScrollView();
+            }
         }
     }
 
@@ -270,6 +296,31 @@ public class EntityDataWorkbenchWindow : EditorWindow
             GUILayout.Space(8f);
             DrawSelectedEntitySnapshot();
             GUILayout.Space(8f);
+            
+            if (selectedEntity != null)
+            {
+                EditorGUILayout.LabelField("Live Editor (Inspector)", EditorStyles.boldLabel);
+                
+                if (entityEditor == null || entityEditor.target != selectedEntity)
+                {
+                    Editor.CreateCachedEditor(selectedEntity, null, ref entityEditor);
+                }
+
+                if (entityEditor != null)
+                {
+                    inspectorScroll = EditorGUILayout.BeginScrollView(inspectorScroll, GUILayout.Height(350f));
+                    using (new EditorGUILayout.VerticalScope(EditorStyles.helpBox))
+                    {
+                        entityEditor.OnInspectorGUI();
+                    }
+                    EditorGUILayout.EndScrollView();
+                }
+
+                GUILayout.Space(8f);
+                DrawAppearanceSpritePicker();
+            }
+
+            GUILayout.Space(8f);
             DrawIssueList();
         }
     }
@@ -284,19 +335,114 @@ public class EntityDataWorkbenchWindow : EditorWindow
 
         using (new EditorGUILayout.VerticalScope(EditorStyles.helpBox))
         {
-            EditorGUILayout.LabelField("Snapshot", EditorStyles.boldLabel);
-            EditorGUILayout.LabelField($"Path: {GetAssetPathSafe(selectedEntity).Replace('\\', '/')}", EditorStyles.wordWrappedMiniLabel);
-            EditorGUILayout.LabelField($"Category: {selectedEntity.category} | MaxStack: {selectedEntity.maxStack}", EditorStyles.miniLabel);
+            EditorGUILayout.LabelField("View / Snapshot", EditorStyles.boldLabel);
+            using (new EditorGUILayout.HorizontalScope())
+            {
+                DrawSpritePreviewBox("Icon", selectedEntity.icon, selectedEntity.icon != null ? selectedEntity.icon.name : "(empty)");
 
-            var statSummary = selectedEntity.baseStats?.baseStats == null
-                ? "(none)"
-                : string.Join(", ", selectedEntity.baseStats.baseStats.Select(s => $"{s.statType}={s.value}"));
-            EditorGUILayout.LabelField($"Stats: {statSummary}", EditorStyles.wordWrappedMiniLabel);
+                var appearance = GetModule<AppearanceModule>(selectedEntity);
+                Sprite appearanceSprite = ResolveAppearanceSprite(appearance);
+                string appearanceLabel = appearance != null && !string.IsNullOrWhiteSpace(appearance.spriteId)
+                    ? appearance.spriteId
+                    : "(empty)";
+                DrawSpritePreviewBox("Appearance", appearanceSprite, appearanceLabel);
 
-            var moduleSummary = selectedEntity.modules == null || selectedEntity.modules.Count == 0
-                ? "(none)"
-                : string.Join(", ", selectedEntity.modules.Where(m => m != null).Select(m => m.GetType().Name));
-            EditorGUILayout.LabelField($"Modules: {moduleSummary}", EditorStyles.wordWrappedMiniLabel);
+                using (new EditorGUILayout.VerticalScope())
+                {
+                    EditorGUILayout.LabelField($"Path: {GetAssetPathSafe(selectedEntity).Replace('\\', '/')}", EditorStyles.wordWrappedMiniLabel);
+                    EditorGUILayout.LabelField($"Category: {selectedEntity.category} | MaxStack: {selectedEntity.maxStack}", EditorStyles.miniLabel);
+
+                    var statSummary = selectedEntity.baseStats?.baseStats == null
+                        ? "(none)"
+                        : string.Join(", ", selectedEntity.baseStats.baseStats.Select(s => $"{s.statType}={s.value}"));
+                    EditorGUILayout.LabelField($"Stats: {statSummary}", EditorStyles.wordWrappedMiniLabel);
+
+                    var moduleSummary = selectedEntity.modules == null || selectedEntity.modules.Count == 0
+                        ? "(none)"
+                        : string.Join(", ", selectedEntity.modules.Where(m => m != null).Select(m => m.GetType().Name));
+                    EditorGUILayout.LabelField($"Modules: {moduleSummary}", EditorStyles.wordWrappedMiniLabel);
+                }
+            }
+        }
+    }
+
+    private void DrawAppearanceSpritePicker()
+    {
+        var appearance = GetModule<AppearanceModule>(selectedEntity);
+        if (appearance == null)
+            return;
+
+        EnsureAppearanceSpriteCollection();
+        using (new EditorGUILayout.VerticalScope(EditorStyles.helpBox))
+        {
+            EditorGUILayout.LabelField("Appearance Sprite Picker", EditorStyles.boldLabel);
+            appearanceSpriteCollection = (SpriteCollection)EditorGUILayout.ObjectField("Sprite Collection", appearanceSpriteCollection, typeof(SpriteCollection), false);
+
+            EditorGUI.BeginChangeCheck();
+            var selectedPart = (EquipmentPart)EditorGUILayout.EnumPopup("Equipment Part", appearance.equipmentPart);
+            if (EditorGUI.EndChangeCheck())
+            {
+                MutateEntity(selectedEntity, "Set equipment part", () =>
+                {
+                    var module = GetModule<AppearanceModule>(selectedEntity);
+                    if (module != null)
+                        module.equipmentPart = selectedPart;
+                });
+                RebuildIssues();
+                appearance = GetModule<AppearanceModule>(selectedEntity);
+            }
+
+            using (new EditorGUI.DisabledScope(appearanceSpriteCollection == null))
+            {
+                appearanceSpriteFilter = EditorGUILayout.TextField("Filter", appearanceSpriteFilter);
+
+                var activeItems = GetAppearanceSpritesForPart(appearanceSpriteCollection, appearance.equipmentPart);
+                if (!string.IsNullOrWhiteSpace(appearanceSpriteFilter))
+                {
+                    activeItems = activeItems
+                        .Where(item => MatchesSpriteFilter(item, appearanceSpriteFilter))
+                        .ToList();
+                }
+
+                var options = new List<string> { "<none>" };
+                options.AddRange(activeItems.Select(FormatSpriteOption));
+
+                int currentIndex = 0;
+                int itemIndex = activeItems.FindIndex(item => string.Equals(item.Id, appearance.spriteId, StringComparison.Ordinal));
+                if (itemIndex >= 0)
+                    currentIndex = itemIndex + 1;
+
+                EditorGUI.BeginChangeCheck();
+                int selectedIndex = EditorGUILayout.Popup("Sprite Id", currentIndex, options.ToArray());
+                if (EditorGUI.EndChangeCheck())
+                {
+                    string selectedSpriteId = selectedIndex <= 0 ? string.Empty : activeItems[selectedIndex - 1].Id;
+                    MutateEntity(selectedEntity, "Set appearance sprite id", () =>
+                    {
+                        var module = GetModule<AppearanceModule>(selectedEntity);
+                        if (module != null)
+                            module.spriteId = selectedSpriteId;
+                    });
+                    RebuildIssues();
+                    appearance = GetModule<AppearanceModule>(selectedEntity);
+                }
+            }
+
+            EditorGUI.BeginChangeCheck();
+            string manualSpriteId = EditorGUILayout.TextField("Manual Sprite Id", appearance.spriteId);
+            if (EditorGUI.EndChangeCheck())
+            {
+                MutateEntity(selectedEntity, "Set manual sprite id", () =>
+                {
+                    var module = GetModule<AppearanceModule>(selectedEntity);
+                    if (module != null)
+                        module.spriteId = manualSpriteId;
+                });
+                RebuildIssues();
+            }
+
+            Sprite previewSprite = ResolveAppearanceSprite(GetModule<AppearanceModule>(selectedEntity));
+            DrawSpritePreviewBox("Selected Appearance", previewSprite, previewSprite != null ? previewSprite.name : "(not resolved)");
         }
     }
 
@@ -406,14 +552,23 @@ public class EntityDataWorkbenchWindow : EditorWindow
 
     private IEnumerable<EntityAssetRecord> GetFilteredRecords()
     {
-        if (string.IsNullOrWhiteSpace(searchText))
-            return records;
+        IEnumerable<EntityAssetRecord> result = records;
 
-        return records.Where(r =>
-            r.path.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0 ||
-            (r.data != null && r.data.name.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0) ||
-            (!string.IsNullOrWhiteSpace(r.data?.id) && r.data.id.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0) ||
-            (!string.IsNullOrWhiteSpace(r.data?.keyName) && r.data.keyName.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0));
+        if (useCategoryFilter)
+        {
+            result = result.Where(r => r.data != null && r.data.category == filterCategory);
+        }
+
+        if (!string.IsNullOrWhiteSpace(searchText))
+        {
+            result = result.Where(r =>
+                r.path.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                (r.data != null && r.data.name.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0) ||
+                (!string.IsNullOrWhiteSpace(r.data?.id) && r.data.id.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0) ||
+                (!string.IsNullOrWhiteSpace(r.data?.keyName) && r.data.keyName.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0));
+        }
+
+        return result;
     }
 
     private void RebuildIssues()
@@ -728,17 +883,20 @@ public class EntityDataWorkbenchWindow : EditorWindow
                 {
                     kind = TemplateKind.ToolItem,
                     label = "Tool Item",
-                    description = "Farm tool item dùng ToolModule, lấy stat từ baseStats.",
+                    description = "Farm tool item dùng ToolModule + ToolRequirementModule + AppearanceModule. Hoe/WateringCan không cần Attack; Axe/Pickaxe/Scythe là damage tool nên cần Attack.",
                     defaultFolder = "Assets/Project/ScriptableObjects/Items/Tools",
                     defaultPrefix = string.Empty,
                     category = ItemCategory.Tool,
                     maxStack = 1,
                     occupyLayer = EntityLayer.Ground,
-                    requiredModules = new[] { typeof(ToolModule) },
-                    preferredModuleOrder = new[] { typeof(ToolModule) },
+                    requiredModules = new[] { typeof(ToolModule), typeof(ToolRequirementModule), typeof(AppearanceModule) },
+                    preferredModuleOrder = new[] { typeof(ToolModule), typeof(ToolRequirementModule), typeof(AppearanceModule) },
                     requiredStats = new[]
                     {
-                        new KeyValuePair<StatType, float>(StatType.Range, 1f),
+                        new KeyValuePair<StatType, float>(StatType.Stamina, 2f),
+                        new KeyValuePair<StatType, float>(StatType.AreaX, 1f),
+                        new KeyValuePair<StatType, float>(StatType.AreaY, 1f),
+                        new KeyValuePair<StatType, float>(StatType.Range, 1.5f),
                         new KeyValuePair<StatType, float>(StatType.CoolDown, 0.5f)
                     }
                 }
@@ -1163,6 +1321,8 @@ public class EntityDataWorkbenchWindow : EditorWindow
                     fix = null
                 });
             }
+
+            ValidateToolItem(data, tool, issues);
         }
 
         if (HasModule<DialogueModule>(data) && GetModule<DialogueModule>(data).graph == null)
@@ -1232,6 +1392,86 @@ public class EntityDataWorkbenchWindow : EditorWindow
                 actionLabel = null,
                 fix = null
             });
+        }
+    }
+
+    private void ValidateToolItem(EntityData data, ToolModule tool, List<ValidationIssue> issues)
+    {
+        if (data == null || tool == null || issues == null)
+            return;
+
+        bool hasConcreteToolType = tool.toolType != ToolType.None;
+        if (hasConcreteToolType && string.IsNullOrWhiteSpace(tool.animTrigger))
+        {
+            issues.Add(new ValidationIssue
+            {
+                severity = IssueSeverity.Warning,
+                message = $"ToolModule `{tool.toolType}` chưa gán `animTrigger`. Runtime sẽ fallback về `{tool.toolType}`.",
+                actionLabel = $"Set animTrigger = {tool.toolType}",
+                fix = entity => MutateEntity(entity, "Set tool anim trigger", () =>
+                {
+                    var module = GetModule<ToolModule>(entity);
+                    if (module != null)
+                        module.animTrigger = module.toolType.ToString();
+                })
+            });
+        }
+
+        if (hasConcreteToolType && IsDamageTool(tool.toolType) && !HasStat(data, StatType.Attack))
+        {
+            issues.Add(new ValidationIssue
+            {
+                severity = IssueSeverity.Error,
+                message = $"Tool `{tool.toolType}` gây sát thương lên node nên cần stat `Attack`.",
+                actionLabel = "Add Attack",
+                fix = entity => MutateEntity(entity, "Add tool Attack", () =>
+                {
+                    var module = GetModule<ToolModule>(entity);
+                    EnsureStat(entity, StatType.Attack, DefaultAttackForTool(module));
+                })
+            });
+        }
+
+        var requirement = GetModule<ToolRequirementModule>(data);
+        if (hasConcreteToolType && requirement != null &&
+            (requirement.requiredToolType != tool.toolType || requirement.minimumToolTier != Mathf.Max(1, tool.toolTier)))
+        {
+            issues.Add(new ValidationIssue
+            {
+                severity = IssueSeverity.Warning,
+                message = $"ToolRequirementModule đang lệch ToolModule. Hiện yêu cầu `{requirement.requiredToolType}` tier {requirement.minimumToolTier}, tool là `{tool.toolType}` tier {tool.toolTier}.",
+                actionLabel = "Sync ToolRequirementModule",
+                fix = entity => MutateEntity(entity, "Sync tool requirement", () => SyncToolRequirement(entity))
+            });
+        }
+
+        var appearance = GetModule<AppearanceModule>(data);
+        if (appearance == null)
+            return;
+
+        if (string.IsNullOrWhiteSpace(appearance.spriteId))
+        {
+            issues.Add(new ValidationIssue
+            {
+                severity = IssueSeverity.Warning,
+                message = "AppearanceModule có `spriteId` rỗng. Dùng Appearance Sprite Picker để chọn từ SpriteCollection.",
+                actionLabel = null,
+                fix = null
+            });
+        }
+        else
+        {
+            EnsureAppearanceSpriteCollection();
+            if (appearanceSpriteCollection != null && ResolveAppearanceSprite(appearance) == null)
+            {
+                issues.Add(new ValidationIssue
+                {
+                    severity = IssueSeverity.Warning,
+                    message = $"Không tìm thấy spriteId `{appearance.spriteId}` trong SpriteCollection theo EquipmentPart `{appearance.equipmentPart}`.",
+                    actionLabel = null,
+                    fix = null
+                });
+            }
         }
     }
 
@@ -1384,6 +1624,25 @@ public class EntityDataWorkbenchWindow : EditorWindow
             if (harvest != null && harvest.harvestTool == ToolType.None)
                 harvest.harvestTool = ToolType.Pickaxe;
         }
+        else if (template == TemplateKind.ToolItem)
+        {
+            var tool = GetModule<ToolModule>(data);
+            if (tool != null)
+            {
+                tool.toolTier = Mathf.Max(1, tool.toolTier);
+                if (tool.toolType != ToolType.None && string.IsNullOrWhiteSpace(tool.animTrigger))
+                    tool.animTrigger = tool.toolType.ToString();
+
+                if (IsDamageTool(tool.toolType))
+                    EnsureStat(data, StatType.Attack, DefaultAttackForTool(tool));
+            }
+
+            SyncToolRequirement(data);
+
+            var appearance = GetModule<AppearanceModule>(data);
+            if (appearance != null && appearance.equipmentPart == EquipmentPart.Armor)
+                appearance.equipmentPart = EquipmentPart.MeleeWeapon1H;
+        }
         else if (template == TemplateKind.Npc)
         {
             var inventory = GetModule<InventoryModule>(data);
@@ -1489,6 +1748,174 @@ public class EntityDataWorkbenchWindow : EditorWindow
     private static string FormatModuleOrder(IEnumerable<Type> moduleOrder)
     {
         return string.Join(" -> ", moduleOrder.Select(type => type.Name));
+    }
+
+    private void EnsureAppearanceSpriteCollection()
+    {
+        if (appearanceSpriteCollection != null)
+            return;
+
+        string[] guids = AssetDatabase.FindAssets("t:SpriteCollection");
+        string preferredPath = guids
+            .Select(AssetDatabase.GUIDToAssetPath)
+            .FirstOrDefault(path => path.Replace('\\', '/').Equals("Assets/Project/Resources/SpriteCollection.asset", StringComparison.OrdinalIgnoreCase));
+
+        string selectedPath = !string.IsNullOrWhiteSpace(preferredPath)
+            ? preferredPath
+            : guids.Select(AssetDatabase.GUIDToAssetPath).FirstOrDefault();
+
+        if (!string.IsNullOrWhiteSpace(selectedPath))
+            appearanceSpriteCollection = AssetDatabase.LoadAssetAtPath<SpriteCollection>(selectedPath);
+    }
+
+    private Sprite ResolveAppearanceSprite(AppearanceModule appearance)
+    {
+        if (appearance == null)
+            return null;
+
+        EnsureAppearanceSpriteCollection();
+        if (appearanceSpriteCollection == null || string.IsNullOrWhiteSpace(appearance.spriteId))
+            return null;
+
+        ItemSprite item = GetAppearanceSpritesForPart(appearanceSpriteCollection, appearance.equipmentPart)
+            .FirstOrDefault(sprite => string.Equals(sprite.Id, appearance.spriteId, StringComparison.Ordinal));
+
+        item ??= appearanceSpriteCollection.GetAllSprites()
+            .FirstOrDefault(sprite => string.Equals(sprite.Id, appearance.spriteId, StringComparison.Ordinal));
+
+        return GetPreviewSprite(item);
+    }
+
+    private static List<ItemSprite> GetAppearanceSpritesForPart(SpriteCollection collection, EquipmentPart part)
+    {
+        if (collection == null)
+            return new List<ItemSprite>();
+
+        List<ItemSprite> source = part switch
+        {
+            EquipmentPart.Armor => collection.Armor,
+            EquipmentPart.Helmet => collection.Armor,
+            EquipmentPart.Vest => collection.Armor,
+            EquipmentPart.Bracers => collection.Armor,
+            EquipmentPart.Leggings => collection.Armor,
+            EquipmentPart.MeleeWeapon1H => collection.MeleeWeapon1H,
+            EquipmentPart.SecondaryMelee1H => collection.MeleeWeapon1H,
+            EquipmentPart.MeleeWeapon2H => collection.MeleeWeapon2H,
+            EquipmentPart.Bow => collection.Bow,
+            EquipmentPart.Crossbow => collection.Crossbow,
+            EquipmentPart.Firearm1H => collection.Firearm1H,
+            EquipmentPart.SecondaryFirearm1H => collection.Firearm1H,
+            EquipmentPart.Firearm2H => collection.Firearm2H,
+            EquipmentPart.Shield => collection.Shield,
+            EquipmentPart.Back => collection.Back,
+            EquipmentPart.Cape => collection.Back,
+            EquipmentPart.Quiver => collection.Back,
+            EquipmentPart.Mask => collection.Mask,
+            EquipmentPart.Earrings => collection.Earrings,
+            EquipmentPart.Wings => collection.Wings,
+            _ => collection.GetAllSprites()
+        };
+
+        return source?.Where(item => item != null && !string.IsNullOrWhiteSpace(item.Id)).OrderBy(item => item.Id).ToList()
+            ?? new List<ItemSprite>();
+    }
+
+    private static bool MatchesSpriteFilter(ItemSprite item, string filter)
+    {
+        if (item == null || string.IsNullOrWhiteSpace(filter))
+            return true;
+
+        return ContainsIgnoreCase(item.Id, filter) ||
+               ContainsIgnoreCase(item.Name, filter) ||
+               ContainsIgnoreCase(item.Collection, filter) ||
+               (item.Tags != null && item.Tags.Any(tag => ContainsIgnoreCase(tag, filter)));
+    }
+
+    private static bool ContainsIgnoreCase(string value, string search)
+    {
+        return !string.IsNullOrWhiteSpace(value) &&
+               value.IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0;
+    }
+
+    private static string FormatSpriteOption(ItemSprite item)
+    {
+        if (item == null)
+            return "(missing)";
+
+        return string.IsNullOrWhiteSpace(item.Name)
+            ? item.Id
+            : $"{item.Name} - {item.Id}";
+    }
+
+    private static Sprite GetPreviewSprite(ItemSprite item)
+    {
+        if (item == null)
+            return null;
+
+        if (item.Sprite != null)
+            return item.Sprite;
+
+        return item.Sprites?.FirstOrDefault(sprite => sprite != null);
+    }
+
+    private static void DrawSpritePreviewBox(string title, Sprite sprite, string detail)
+    {
+        using (new EditorGUILayout.VerticalScope(EditorStyles.helpBox, GUILayout.Width(110f)))
+        {
+            EditorGUILayout.LabelField(title, EditorStyles.boldLabel, GUILayout.Width(100f));
+            Rect rect = GUILayoutUtility.GetRect(72f, 72f, GUILayout.Width(72f), GUILayout.Height(72f));
+            DrawSprite(rect, sprite);
+            EditorGUILayout.LabelField(detail, EditorStyles.wordWrappedMiniLabel, GUILayout.Width(100f));
+        }
+    }
+
+    private static void DrawSprite(Rect rect, Sprite sprite)
+    {
+        GUI.Box(rect, GUIContent.none);
+        if (sprite == null || sprite.texture == null)
+        {
+            GUI.Label(rect, "No Sprite", EditorStyles.centeredGreyMiniLabel);
+            return;
+        }
+
+        Texture2D texture = sprite.texture;
+        Rect textureRect = sprite.textureRect;
+        var textureCoords = new Rect(
+            textureRect.x / texture.width,
+            textureRect.y / texture.height,
+            textureRect.width / texture.width,
+            textureRect.height / texture.height);
+
+        GUI.DrawTextureWithTexCoords(rect, texture, textureCoords, true);
+    }
+
+    private static bool IsDamageTool(ToolType toolType)
+    {
+        return toolType == ToolType.Axe ||
+               toolType == ToolType.Pickaxe ||
+               toolType == ToolType.Scythe;
+    }
+
+    private static float DefaultAttackForTool(ToolModule tool)
+    {
+        if (tool == null)
+            return 1f;
+
+        return Mathf.Max(1f, tool.toolTier);
+    }
+
+    private static void SyncToolRequirement(EntityData data)
+    {
+        var tool = GetModule<ToolModule>(data);
+        var requirement = GetModule<ToolRequirementModule>(data);
+        if (tool == null || requirement == null)
+            return;
+
+        requirement.requiredToolType = tool.toolType;
+        requirement.minimumToolTier = Mathf.Max(1, tool.toolTier);
+        requirement.wrongToolPenalty = 0f;
+        requirement.blockDamageIfWrongTool = true;
+        requirement.blockDamageIfBelowTier = true;
     }
 
     private static bool HasModule<T>(EntityData data) where T : IModuleData

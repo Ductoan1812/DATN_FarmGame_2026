@@ -61,6 +61,12 @@ public class EquipmentRuntime : IModuleRuntime
         }
 
         var owner = FindOwnerEntity();
+        if (!TryResolveOwnerGameObject(owner, out _))
+        {
+            Debug.LogWarning("[EquipmentRuntime] Owner EntityRoot đã bị hủy hoặc chưa sẵn sàng. Bỏ qua equip để tránh MissingReferenceException.");
+            return false;
+        }
+
         var inventoryService = GameManager.Instance?.InventoryService;
 
         // ── Bước 1: Remove entity khỏi Inventory (chỉ clear ref) ──
@@ -268,8 +274,43 @@ public class EquipmentRuntime : IModuleRuntime
     {
         // Tìm qua Owner → GameObject → GetComponentInChildren
         var ownerEntity = FindOwnerEntity();
-        if (ownerEntity?.Owner?.GameObject == null) return null;
-        return ownerEntity.Owner.GameObject.GetComponentInChildren<Character4D>();
+        if (!TryResolveOwnerGameObject(ownerEntity, out var ownerGameObject))
+            return null;
+
+        return ownerGameObject != null ? ownerGameObject.GetComponentInChildren<Character4D>() : null;
+    }
+
+    private static bool TryResolveOwnerGameObject(EntityRuntime ownerEntity, out GameObject ownerGameObject)
+    {
+        ownerGameObject = null;
+        var owner = ownerEntity?.Owner;
+        if (owner == null)
+            return false;
+
+        if (owner is UnityEngine.Object unityOwner && unityOwner == null)
+        {
+            ownerEntity.Owner = null;
+            return false;
+        }
+
+        try
+        {
+            ownerGameObject = owner.GameObject;
+        }
+        catch (MissingReferenceException)
+        {
+            ownerEntity.Owner = null;
+            ownerGameObject = null;
+            return false;
+        }
+
+        if (ownerGameObject == null)
+        {
+            ownerEntity.Owner = null;
+            return false;
+        }
+
+        return true;
     }
 
     /// <summary>

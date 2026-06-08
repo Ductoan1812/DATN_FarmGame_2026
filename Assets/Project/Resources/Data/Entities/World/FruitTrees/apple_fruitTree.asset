@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: apple_fruitTree
   m_EditorClassIdentifier: 
   id: apple_fruitTree
-  keyName: 
-  descKey: 
+  keyName: apple_fruittree_name
+  descKey: apple_fruittree_desc
   icon: {fileID: 0}
   category: 9
   maxStack: 1
@@ -107,7 +107,7 @@ MonoBehaviour:
       type: {class: DropModule, ns: , asm: Assembly-CSharp}
       data:
         harvestDrops:
-        - item: {fileID: 11400000, guid: c8c2557183378574985a713f7f41fe19, type: 2}
+        - item: {fileID: 0}
           minAmount: 1
           maxAmount: 1
           dropChance: 1

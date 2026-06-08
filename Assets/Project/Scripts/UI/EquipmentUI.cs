@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class EquipmentUI : MonoBehaviour
 {
+    private static readonly Color ReadableStatTextColor = new(0.08f, 0.05f, 0.02f, 1f);
+
     [Header("Player Info")]
     [SerializeField] private GameObject playerNameInfo;
     [SerializeField] private TMP_Text playerNameText;
@@ -140,6 +142,7 @@ public class EquipmentUI : MonoBehaviour
         }
 
         EnsureDefaultStatDisplayRules();
+        ApplyReadableTextStyle();
 
 #if UNITY_EDITOR
         if (statRowPrefab == null)
@@ -169,6 +172,8 @@ public class EquipmentUI : MonoBehaviour
             return;
         }
 
+        UiTextStyleUtility.ApplyRobotoAndColor(playerNameText, ReadableStatTextColor);
+
         var localized = playerNameText.GetComponent<LocalizedText>();
         if (localized != null)
         {
@@ -187,7 +192,10 @@ public class EquipmentUI : MonoBehaviour
         AutoFindRefs();
 
         if (playerNameText != null)
+        {
+            UiTextStyleUtility.ApplyRobotoAndColor(playerNameText, ReadableStatTextColor);
             playerNameText.text = "Người chơi";
+        }
 
         if (playerNameInfo != null)
             playerNameInfo.SetActive(true);
@@ -364,13 +372,23 @@ public class EquipmentUI : MonoBehaviour
 
         var nameObject = new GameObject("Name", typeof(RectTransform), typeof(TextMeshProUGUI));
         nameObject.transform.SetParent(rowObject.transform, false);
-        nameObject.GetComponent<TextMeshProUGUI>().fontSize = 18f;
+        var nameText = nameObject.GetComponent<TextMeshProUGUI>();
+        nameText.fontSize = 18f;
+        UiTextStyleUtility.ApplyRobotoAndColor(nameText, ReadableStatTextColor);
 
         var valueObject = new GameObject("Value", typeof(RectTransform), typeof(TextMeshProUGUI));
         valueObject.transform.SetParent(rowObject.transform, false);
-        valueObject.GetComponent<TextMeshProUGUI>().fontSize = 18f;
+        var valueText = valueObject.GetComponent<TextMeshProUGUI>();
+        valueText.fontSize = 18f;
+        UiTextStyleUtility.ApplyRobotoAndColor(valueText, ReadableStatTextColor);
 
         return rowObject.GetComponent<StatRowUI>();
+    }
+
+    private void ApplyReadableTextStyle()
+    {
+        UiTextStyleUtility.ApplyRobotoAndColor(playerNameText, ReadableStatTextColor);
+        UiTextStyleUtility.ApplyRobotoAndColorToChildren(statsContent, ReadableStatTextColor);
     }
 
     private TMP_Text FindText(string objectName)

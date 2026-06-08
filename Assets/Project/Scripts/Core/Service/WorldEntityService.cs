@@ -410,7 +410,11 @@ public class WorldEntityService
             tileChanges      = tileChanges.ToArray()
         };
 
-        File.WriteAllText(SavePath(filename), JsonUtility.ToJson(container, true));
+        var path = SavePath(filename);
+        var directory = Path.GetDirectoryName(path);
+        if (!string.IsNullOrEmpty(directory))
+            Directory.CreateDirectory(directory);
+        File.WriteAllText(path, JsonUtility.ToJson(container, true));
         Debug.Log($"[WorldEntityService] Saved {entitySaves.Count} entities, {_inactiveRegenerating.Count} inactive respawn marker(s), {_removedPersistentIds.Count} removed persistent marker(s), {tileChanges.Count} tile changes (dirty only).");
     }
 

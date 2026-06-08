@@ -549,7 +549,7 @@ public class UIController : MonoBehaviour
             for (int i = 0; i < tabToggles.Length; i++)
             {
                 var t = tabToggles[i].GetComponent<Toggle>();
-                if (t != null) result.Add(t);
+                if (t != null && t.gameObject.activeSelf) result.Add(t);
             }
 
             result.Sort((a, b) => a.transform.GetSiblingIndex().CompareTo(b.transform.GetSiblingIndex()));
@@ -560,7 +560,10 @@ public class UIController : MonoBehaviour
         if (plainToggles == null) return result;
 
         for (int i = 0; i < plainToggles.Length; i++)
-            result.Add(plainToggles[i]);
+        {
+            if (plainToggles[i] != null && plainToggles[i].gameObject.activeSelf)
+                result.Add(plainToggles[i]);
+        }
 
         result.Sort((a, b) => a.transform.GetSiblingIndex().CompareTo(b.transform.GetSiblingIndex()));
         return result;

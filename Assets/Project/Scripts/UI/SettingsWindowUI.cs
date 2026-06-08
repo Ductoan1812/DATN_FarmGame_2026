@@ -6,18 +6,17 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 /// <summary>
-/// Quản lý SettingsWindow:
-/// - 3 slider âm lượng: Master / Music / SFX (lưu PlayerPrefs)
-/// - Dropdown ngôn ngữ (gọi LocalizationManager)
-/// - Đổi phím tương tác gameplay
-/// - Nút Save đóng window
+/// Quản lý SettingsWindow: âm lượng, ngôn ngữ, phím tương tác, hiển thị và điều hướng.
 /// </summary>
 public class SettingsWindowUI : MonoBehaviour
 {
     private const string KeyMaster = "vol_master";
-    private const string KeyMusic  = "vol_music";
-    private const string KeySfx    = "vol_sfx";
-    private const string KeyLang   = "settings_language";
+    private const string KeyMusic = "vol_music";
+    private const string KeySfx = "vol_sfx";
+    private const string KeyLang = "settings_language";
+    private const string KeyFullscreen = "settings_fullscreen";
+    private const string KeyVsync = "settings_vsync";
+    private const string KeyTargetFps = "settings_target_fps";
 
     [Header("Volume Sliders")]
     [SerializeField] private Slider sliderMaster;
@@ -31,10 +30,19 @@ public class SettingsWindowUI : MonoBehaviour
 
     [Header("Language")]
     [SerializeField] private TMP_Dropdown languageDropdown;
+    [SerializeField] private Button languageButton;
+    [SerializeField] private TMP_Text languageValueLabel;
 
     [Header("Input")]
     [SerializeField] private Button interactKeyButton;
     [SerializeField] private TMP_Text interactKeyValueLabel;
+
+    [Header("Display")]
+    [SerializeField] private Toggle fullscreenToggle;
+    [SerializeField] private Toggle vsyncToggle;
+    [SerializeField] private Button targetFpsButton;
+    [SerializeField] private TMP_Text targetFpsValueLabel;
+    [SerializeField] private Button resetDefaultsButton;
 
     [Header("Buttons")]
     [SerializeField] private Button saveButton;
@@ -44,22 +52,22 @@ public class SettingsWindowUI : MonoBehaviour
 
     [Header("Navigation")]
     [SerializeField] private string mainMenuSceneName = "MainMenuScene";
+    [SerializeField] private bool compactMainMenuMode;
 
-    [Header("Optional AudioMixer (để trống nếu chưa có)")]
+    [Header("Optional AudioMixer")]
     [SerializeField] private AudioMixer audioMixer;
     [SerializeField] private string mixerParamMaster = "VolMaster";
-    [SerializeField] private string mixerParamMusic  = "VolMusic";
-    [SerializeField] private string mixerParamSfx    = "VolSfx";
+    [SerializeField] private string mixerParamMusic = "VolMusic";
+    [SerializeField] private string mixerParamSfx = "VolSfx";
 
     private bool listenersRegistered;
     private bool waitingForInteractKey;
-
-    // ── Lifecycle ────────────────────────────────────────────────
 
     private void OnEnable()
     {
         EnsureBasicLayout();
         AutoFindRefs();
+        ApplyContextualButtonVisibility();
         LoadSettings();
         RegisterListeners();
     }
@@ -72,7 +80,8 @@ public class SettingsWindowUI : MonoBehaviour
 
     private void Update()
     {
-        if (!waitingForInteractKey) return;
+        if (!waitingForInteractKey)
+            return;
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -81,43 +90,62 @@ public class SettingsWindowUI : MonoBehaviour
             return;
         }
 
-        if (!Input.anyKeyDown) return;
-        if (!TryReadPressedKeyboardKey(out var key)) return;
+        if (!Input.anyKeyDown || !TryReadPressedKeyboardKey(out var key))
+            return;
 
         GameplayInputSettings.SetInteractKey(key);
+        PlayerPrefs.Save();
         waitingForInteractKey = false;
         RefreshInteractKeyLabel();
     }
 
-    // ── Setup ────────────────────────────────────────────────────
-
     private void AutoFindRefs()
     {
-        sliderMaster     ??= FindDeepChild(transform, "SliderMaster")?.GetComponent<Slider>();
-        sliderMusic      ??= FindDeepChild(transform, "SliderMusic")?.GetComponent<Slider>();
-        sliderSfx        ??= FindDeepChild(transform, "SliderSfx")?.GetComponent<Slider>();
+        sliderMaster ??= FindDeepChild(transform, "SliderMaster")?.GetComponent<Slider>();
+        sliderMusic ??= FindDeepChild(transform, "SliderMusic")?.GetComponent<Slider>();
+        sliderSfx ??= FindDeepChild(transform, "SliderSfx")?.GetComponent<Slider>();
         labelMasterValue ??= FindDeepChild(transform, "LabelMasterValue")?.GetComponent<TMP_Text>();
-        labelMusicValue  ??= FindDeepChild(transform, "LabelMusicValue")?.GetComponent<TMP_Text>();
-        labelSfxValue    ??= FindDeepChild(transform, "LabelSfxValue")?.GetComponent<TMP_Text>();
+        labelMusicValue ??= FindDeepChild(transform, "LabelMusicValue")?.GetComponent<TMP_Text>();
+        labelSfxValue ??= FindDeepChild(transform, "LabelSfxValue")?.GetComponent<TMP_Text>();
         languageDropdown ??= FindDeepChild(transform, "LanguageDropdown")?.GetComponent<TMP_Dropdown>();
+        languageButton ??= FindDeepChild(transform, "LanguageButton")?.GetComponent<Button>();
+        languageValueLabel ??= FindDeepChild(transform, "LanguageValue")?.GetComponent<TMP_Text>();
         interactKeyButton ??= FindDeepChild(transform, "InteractKeyButton")?.GetComponent<Button>();
         interactKeyValueLabel ??= FindDeepChild(transform, "InteractKeyValue")?.GetComponent<TMP_Text>();
-        saveButton       ??= FindDeepChild(transform, "SaveButton")?.GetComponent<Button>();
-        closeButton      ??= FindDeepChild(transform, "CloseButton")?.GetComponent<Button>();
+        fullscreenToggle ??= FindDeepChild(transform, "FullscreenToggle")?.GetComponent<Toggle>();
+        vsyncToggle ??= FindDeepChild(transform, "VsyncToggle")?.GetComponent<Toggle>();
+        targetFpsButton ??= FindDeepChild(transform, "TargetFpsButton")?.GetComponent<Button>();
+        targetFpsValueLabel ??= FindDeepChild(transform, "TargetFpsValue")?.GetComponent<TMP_Text>();
+        resetDefaultsButton ??= FindDeepChild(transform, "ResetDefaultsButton")?.GetComponent<Button>();
+        saveButton ??= FindDeepChild(transform, "SaveButton")?.GetComponent<Button>();
+        closeButton ??= FindDeepChild(transform, "CloseButton")?.GetComponent<Button>();
         backToMenuButton ??= FindDeepChild(transform, "BackToMenuButton")?.GetComponent<Button>();
-        quitButton       ??= FindDeepChild(transform, "QuitButton")?.GetComponent<Button>();
+        quitButton ??= FindDeepChild(transform, "QuitButton")?.GetComponent<Button>();
+        UiTextStyleUtility.ApplyRobotoToChildren(transform);
     }
 
     private void EnsureBasicLayout()
     {
-        if (FindDeepChild(transform, "SliderMaster") != null
+        bool hasRequiredLayout = FindDeepChild(transform, "SliderMaster") != null
             && FindDeepChild(transform, "InteractKeyButton") != null
+            && FindDeepChild(transform, "FullscreenToggle") != null
+            && FindDeepChild(transform, "VsyncToggle") != null
+            && FindDeepChild(transform, "TargetFpsButton") != null
+            && FindDeepChild(transform, "ResetDefaultsButton") != null
             && FindDeepChild(transform, "BackToMenuButton") != null
-            && FindDeepChild(transform, "QuitButton") != null)
+            && FindDeepChild(transform, "QuitButton") != null;
+
+        if (hasRequiredLayout)
+        {
+            AutoFindRefs();
+            ApplyContextualButtonVisibility();
             return;
+        }
+
+        ClearGeneratedRefs();
 
         for (int i = transform.childCount - 1; i >= 0; i--)
-            Destroy(transform.GetChild(i).gameObject);
+            DestroyChild(transform.GetChild(i).gameObject);
 
         var bg = GetComponent<Image>() ?? gameObject.AddComponent<Image>();
         bg.color = new Color(0.96f, 0.82f, 0.52f, 0.96f);
@@ -137,47 +165,90 @@ public class SettingsWindowUI : MonoBehaviour
         var body = CreateUiObject("Body", transform);
         SetRect(body, Vector2.zero, Vector2.one, new Vector2(0.5f, 0.5f), new Vector2(0f, -42f), new Vector2(-96f, -128f));
 
-        CreateSliderRow(body, "Master", "Âm lượng tổng", -38f);
-        CreateSliderRow(body, "Music", "Nhạc nền", -118f);
-        CreateSliderRow(body, "Sfx", "Hiệu ứng", -198f);
-        CreateValueRow(body, "LanguageRow", "Ngôn ngữ", "Tiếng Việt", -278f);
-        CreateInteractKeyRow(body, -338f);
+        CreateSliderRow(body, "Master", "Âm lượng tổng", -34f);
+        CreateSliderRow(body, "Music", "Nhạc nền", -104f);
+        CreateSliderRow(body, "Sfx", "Hiệu ứng", -174f);
+        CreateLanguageRow(body, -244f);
+        CreateInteractKeyRow(body, -304f);
+        CreateToggleRow(body, "Fullscreen", "Toàn màn hình", -364f, true);
+        CreateToggleRow(body, "Vsync", "Đồng bộ khung hình", -424f, false);
+        CreateButtonValueRow(body, "TargetFps", "FPS mục tiêu", "60 FPS", -484f);
+        CreateResetRow(body, -544f);
 
         CreateBasicButton("SaveButton", transform, "Lưu", new Vector2(-300f, 34f));
         CreateBasicButton("CloseButton", transform, "Đóng", new Vector2(-100f, 34f));
         CreateBasicButton("BackToMenuButton", transform, "Về menu", new Vector2(100f, 34f));
         CreateBasicButton("QuitButton", transform, "Thoát game", new Vector2(300f, 34f));
+        AutoFindRefs();
+        ApplyContextualButtonVisibility();
+    }
+
+    private void ClearGeneratedRefs()
+    {
+        sliderMaster = null;
+        sliderMusic = null;
+        sliderSfx = null;
+        labelMasterValue = null;
+        labelMusicValue = null;
+        labelSfxValue = null;
+        languageDropdown = null;
+        languageButton = null;
+        languageValueLabel = null;
+        interactKeyButton = null;
+        interactKeyValueLabel = null;
+        fullscreenToggle = null;
+        vsyncToggle = null;
+        targetFpsButton = null;
+        targetFpsValueLabel = null;
+        resetDefaultsButton = null;
+        saveButton = null;
+        closeButton = null;
+        backToMenuButton = null;
+        quitButton = null;
     }
 
     private void LoadSettings()
     {
         float master = PlayerPrefs.GetFloat(KeyMaster, 1f);
-        float music  = PlayerPrefs.GetFloat(KeyMusic,  1f);
-        float sfx    = PlayerPrefs.GetFloat(KeySfx,    1f);
+        float music = PlayerPrefs.GetFloat(KeyMusic, 1f);
+        float sfx = PlayerPrefs.GetFloat(KeySfx, 1f);
 
         SetSlider(sliderMaster, master);
-        SetSlider(sliderMusic,  music);
-        SetSlider(sliderSfx,    sfx);
+        SetSlider(sliderMusic, music);
+        SetSlider(sliderSfx, sfx);
 
         UpdateVolumeLabel(labelMasterValue, master);
-        UpdateVolumeLabel(labelMusicValue,  music);
-        UpdateVolumeLabel(labelSfxValue,    sfx);
+        UpdateVolumeLabel(labelMusicValue, music);
+        UpdateVolumeLabel(labelSfxValue, sfx);
 
         ApplyVolume(mixerParamMaster, master);
-        ApplyVolume(mixerParamMusic,  music);
-        ApplyVolume(mixerParamSfx,    sfx);
+        ApplyVolume(mixerParamMusic, music);
+        ApplyVolume(mixerParamSfx, sfx);
 
-        // Language dropdown
+        int savedLang = PlayerPrefs.GetInt(KeyLang, 0);
         if (languageDropdown != null)
         {
             languageDropdown.ClearOptions();
             languageDropdown.AddOptions(new List<string> { "Tiếng Việt", "English" });
-
-            int savedLang = PlayerPrefs.GetInt(KeyLang, 0);
-            languageDropdown.value = Mathf.Clamp(savedLang, 0, languageDropdown.options.Count - 1);
+            languageDropdown.SetValueWithoutNotify(Mathf.Clamp(savedLang, 0, languageDropdown.options.Count - 1));
             languageDropdown.RefreshShownValue();
         }
 
+        RefreshLanguageLabel();
+
+        bool fullscreen = PlayerPrefs.GetInt(KeyFullscreen, Screen.fullScreen ? 1 : 0) == 1;
+        bool vsync = PlayerPrefs.GetInt(KeyVsync, QualitySettings.vSyncCount > 0 ? 1 : 0) == 1;
+        int fps = PlayerPrefs.GetInt(KeyTargetFps, 60);
+
+        if (fullscreenToggle != null)
+            fullscreenToggle.SetIsOnWithoutNotify(fullscreen);
+        if (vsyncToggle != null)
+            vsyncToggle.SetIsOnWithoutNotify(vsync);
+
+        Screen.fullScreen = fullscreen;
+        QualitySettings.vSyncCount = vsync ? 1 : 0;
+        ApplyTargetFrameRate(fps, vsync);
+        RefreshTargetFpsLabel();
         RefreshInteractKeyLabel();
     }
 
@@ -186,11 +257,17 @@ public class SettingsWindowUI : MonoBehaviour
         if (listenersRegistered) return;
 
         if (sliderMaster != null) sliderMaster.onValueChanged.AddListener(OnMasterChanged);
-        if (sliderMusic  != null) sliderMusic.onValueChanged.AddListener(OnMusicChanged);
-        if (sliderSfx    != null) sliderSfx.onValueChanged.AddListener(OnSfxChanged);
+        if (sliderMusic != null) sliderMusic.onValueChanged.AddListener(OnMusicChanged);
+        if (sliderSfx != null) sliderSfx.onValueChanged.AddListener(OnSfxChanged);
+        if (languageDropdown != null) languageDropdown.onValueChanged.AddListener(OnLanguageChanged);
+        if (languageButton != null) languageButton.onClick.AddListener(CycleLanguage);
         if (interactKeyButton != null) interactKeyButton.onClick.AddListener(StartInteractKeyRebind);
-        if (saveButton   != null) saveButton.onClick.AddListener(Save);
-        if (closeButton  != null) closeButton.onClick.AddListener(Close);
+        if (fullscreenToggle != null) fullscreenToggle.onValueChanged.AddListener(OnFullscreenChanged);
+        if (vsyncToggle != null) vsyncToggle.onValueChanged.AddListener(OnVsyncChanged);
+        if (targetFpsButton != null) targetFpsButton.onClick.AddListener(CycleTargetFps);
+        if (resetDefaultsButton != null) resetDefaultsButton.onClick.AddListener(ResetDefaults);
+        if (saveButton != null) saveButton.onClick.AddListener(Save);
+        if (closeButton != null) closeButton.onClick.AddListener(Close);
         if (backToMenuButton != null) backToMenuButton.onClick.AddListener(BackToMenu);
         if (quitButton != null) quitButton.onClick.AddListener(QuitGame);
 
@@ -202,61 +279,124 @@ public class SettingsWindowUI : MonoBehaviour
         if (!listenersRegistered) return;
 
         if (sliderMaster != null) sliderMaster.onValueChanged.RemoveListener(OnMasterChanged);
-        if (sliderMusic  != null) sliderMusic.onValueChanged.RemoveListener(OnMusicChanged);
-        if (sliderSfx    != null) sliderSfx.onValueChanged.RemoveListener(OnSfxChanged);
+        if (sliderMusic != null) sliderMusic.onValueChanged.RemoveListener(OnMusicChanged);
+        if (sliderSfx != null) sliderSfx.onValueChanged.RemoveListener(OnSfxChanged);
+        if (languageDropdown != null) languageDropdown.onValueChanged.RemoveListener(OnLanguageChanged);
+        if (languageButton != null) languageButton.onClick.RemoveListener(CycleLanguage);
         if (interactKeyButton != null) interactKeyButton.onClick.RemoveListener(StartInteractKeyRebind);
-        if (saveButton   != null) saveButton.onClick.RemoveListener(Save);
-        if (closeButton  != null) closeButton.onClick.RemoveListener(Close);
+        if (fullscreenToggle != null) fullscreenToggle.onValueChanged.RemoveListener(OnFullscreenChanged);
+        if (vsyncToggle != null) vsyncToggle.onValueChanged.RemoveListener(OnVsyncChanged);
+        if (targetFpsButton != null) targetFpsButton.onClick.RemoveListener(CycleTargetFps);
+        if (resetDefaultsButton != null) resetDefaultsButton.onClick.RemoveListener(ResetDefaults);
+        if (saveButton != null) saveButton.onClick.RemoveListener(Save);
+        if (closeButton != null) closeButton.onClick.RemoveListener(Close);
         if (backToMenuButton != null) backToMenuButton.onClick.RemoveListener(BackToMenu);
         if (quitButton != null) quitButton.onClick.RemoveListener(QuitGame);
 
         listenersRegistered = false;
     }
 
-    // ── Slider Callbacks ─────────────────────────────────────────
-
     private void OnMasterChanged(float value)
     {
         UpdateVolumeLabel(labelMasterValue, value);
         ApplyVolume(mixerParamMaster, value);
+        PlayerPrefs.SetFloat(KeyMaster, value);
+        PlayerPrefs.Save();
     }
 
     private void OnMusicChanged(float value)
     {
         UpdateVolumeLabel(labelMusicValue, value);
         ApplyVolume(mixerParamMusic, value);
+        PlayerPrefs.SetFloat(KeyMusic, value);
+        PlayerPrefs.Save();
     }
 
     private void OnSfxChanged(float value)
     {
         UpdateVolumeLabel(labelSfxValue, value);
         ApplyVolume(mixerParamSfx, value);
+        PlayerPrefs.SetFloat(KeySfx, value);
+        PlayerPrefs.Save();
     }
 
-    // ── Save / Close ─────────────────────────────────────────────
+    private void OnLanguageChanged(int langIndex)
+    {
+        PlayerPrefs.SetInt(KeyLang, langIndex);
+        var lang = langIndex == 1 ? Language.En : Language.Vi;
+        LocalizationManager.Instance?.SetLanguage(lang);
+        RefreshLanguageLabel();
+        PlayerPrefs.Save();
+    }
+
+    private void CycleLanguage()
+    {
+        int current = PlayerPrefs.GetInt(KeyLang, 0);
+        OnLanguageChanged(current == 0 ? 1 : 0);
+        if (languageDropdown != null)
+            languageDropdown.SetValueWithoutNotify(PlayerPrefs.GetInt(KeyLang, 0));
+    }
+
+    private void OnFullscreenChanged(bool value)
+    {
+        Screen.fullScreen = value;
+        PlayerPrefs.SetInt(KeyFullscreen, value ? 1 : 0);
+        PlayerPrefs.Save();
+    }
+
+    private void OnVsyncChanged(bool value)
+    {
+        QualitySettings.vSyncCount = value ? 1 : 0;
+        PlayerPrefs.SetInt(KeyVsync, value ? 1 : 0);
+        ApplyTargetFrameRate(PlayerPrefs.GetInt(KeyTargetFps, 60), value);
+        PlayerPrefs.Save();
+    }
+
+    private void CycleTargetFps()
+    {
+        int current = PlayerPrefs.GetInt(KeyTargetFps, 60);
+        int next = current switch
+        {
+            30 => 60,
+            60 => 120,
+            120 => -1,
+            _ => 30
+        };
+
+        PlayerPrefs.SetInt(KeyTargetFps, next);
+        ApplyTargetFrameRate(next, vsyncToggle != null && vsyncToggle.isOn);
+        RefreshTargetFpsLabel();
+        PlayerPrefs.Save();
+    }
+
+    private void ResetDefaults()
+    {
+        PlayerPrefs.SetFloat(KeyMaster, 1f);
+        PlayerPrefs.SetFloat(KeyMusic, 1f);
+        PlayerPrefs.SetFloat(KeySfx, 1f);
+        PlayerPrefs.SetInt(KeyLang, 0);
+        PlayerPrefs.SetInt(KeyFullscreen, Screen.fullScreen ? 1 : 0);
+        PlayerPrefs.SetInt(KeyVsync, 0);
+        PlayerPrefs.SetInt(KeyTargetFps, 60);
+        GameplayInputSettings.SetInteractKey(KeyCode.E);
+        PlayerPrefs.Save();
+        LoadSettings();
+    }
 
     private void Save()
     {
-        float master = sliderMaster != null ? sliderMaster.value : 1f;
-        float music  = sliderMusic  != null ? sliderMusic.value  : 1f;
-        float sfx    = sliderSfx    != null ? sliderSfx.value    : 1f;
-
-        PlayerPrefs.SetFloat(KeyMaster, master);
-        PlayerPrefs.SetFloat(KeyMusic,  music);
-        PlayerPrefs.SetFloat(KeySfx,    sfx);
-
         if (languageDropdown != null)
-        {
-            int langIndex = languageDropdown.value;
-            PlayerPrefs.SetInt(KeyLang, langIndex);
+            OnLanguageChanged(languageDropdown.value);
 
-            Language lang = langIndex == 1 ? Language.En : Language.Vi;
-            LocalizationManager.Instance?.SetLanguage(lang);
-        }
-
-        GameplayInputSettings.SetInteractKey(GameplayInputSettings.GetInteractKey());
         PlayerPrefs.Save();
         Close();
+    }
+
+    public void SetCompactMainMenuMode(bool value)
+    {
+        compactMainMenuMode = value;
+        AutoFindRefs();
+        ApplyContextualButtonVisibility();
     }
 
     private void Close()
@@ -274,6 +414,12 @@ public class SettingsWindowUI : MonoBehaviour
     private void BackToMenu()
     {
         Time.timeScale = 1f;
+        if (string.Equals(SceneManager.GetActiveScene().name, mainMenuSceneName, System.StringComparison.Ordinal))
+        {
+            Close();
+            return;
+        }
+
         GameManager.PrepareReturnToMainMenu();
         SceneManager.LoadScene(mainMenuSceneName);
     }
@@ -287,16 +433,11 @@ public class SettingsWindowUI : MonoBehaviour
 #endif
     }
 
-    // ── Helpers ───────────────────────────────────────────────────
-
     private void ApplyVolume(string mixerParam, float linearValue)
     {
         if (audioMixer == null || string.IsNullOrWhiteSpace(mixerParam)) return;
 
-        // Chuyển linear (0–1) sang dB
-        float db = linearValue > 0.0001f
-            ? Mathf.Log10(linearValue) * 20f
-            : -80f;
+        float db = linearValue > 0.0001f ? Mathf.Log10(linearValue) * 20f : -80f;
         audioMixer.SetFloat(mixerParam, db);
     }
 
@@ -305,7 +446,18 @@ public class SettingsWindowUI : MonoBehaviour
         if (slider == null) return;
         slider.minValue = 0f;
         slider.maxValue = 1f;
-        slider.value    = Mathf.Clamp01(value);
+        slider.value = Mathf.Clamp01(value);
+    }
+
+    private static void DestroyChild(GameObject child)
+    {
+        if (child == null)
+            return;
+
+        if (Application.isPlaying)
+            Destroy(child);
+        else
+            DestroyImmediate(child);
     }
 
     private static void UpdateVolumeLabel(TMP_Text label, float value)
@@ -314,11 +466,55 @@ public class SettingsWindowUI : MonoBehaviour
         label.text = Mathf.RoundToInt(value * 100f) + "%";
     }
 
+    private static void ApplyTargetFrameRate(int fps, bool vsyncEnabled)
+    {
+        Application.targetFrameRate = vsyncEnabled ? -1 : fps;
+    }
+
+    private void RefreshTargetFpsLabel()
+    {
+        if (targetFpsValueLabel == null) return;
+        int fps = PlayerPrefs.GetInt(KeyTargetFps, 60);
+        targetFpsValueLabel.text = fps < 0 ? "Không giới hạn" : $"{fps} FPS";
+    }
+
+    private void RefreshLanguageLabel()
+    {
+        if (languageValueLabel == null) return;
+        languageValueLabel.text = PlayerPrefs.GetInt(KeyLang, 0) == 1 ? "English" : "Tiếng Việt";
+    }
+
     private void RefreshInteractKeyLabel()
     {
         if (interactKeyValueLabel == null) return;
         var key = GameplayInputSettings.GetInteractKey();
         interactKeyValueLabel.text = GameplayInputSettings.FormatKey(key);
+    }
+
+    private void ApplyContextualButtonVisibility()
+    {
+        bool mainMenuContext = compactMainMenuMode
+            || string.Equals(SceneManager.GetActiveScene().name, mainMenuSceneName, System.StringComparison.Ordinal);
+
+        if (!mainMenuContext)
+        {
+            if (saveButton != null) saveButton.gameObject.SetActive(true);
+            if (backToMenuButton != null) backToMenuButton.gameObject.SetActive(true);
+            if (quitButton != null) quitButton.gameObject.SetActive(true);
+            return;
+        }
+
+        if (saveButton != null) saveButton.gameObject.SetActive(false);
+        if (backToMenuButton != null) backToMenuButton.gameObject.SetActive(false);
+        if (quitButton != null) quitButton.gameObject.SetActive(false);
+
+        if (closeButton != null)
+        {
+            closeButton.gameObject.SetActive(true);
+            var rect = closeButton.GetComponent<RectTransform>();
+            if (rect != null)
+                rect.anchoredPosition = new Vector2(0f, 34f);
+        }
     }
 
     private static bool TryReadPressedKeyboardKey(out KeyCode key)
@@ -360,16 +556,16 @@ public class SettingsWindowUI : MonoBehaviour
     private static void CreateSliderRow(Transform parent, string key, string label, float y)
     {
         var row = CreateUiObject($"{key}Row", parent);
-        SetRect(row, new Vector2(0f, 1f), Vector2.one, new Vector2(0.5f, 1f), new Vector2(0f, y), new Vector2(0f, 56f));
+        SetRect(row, new Vector2(0f, 1f), Vector2.one, new Vector2(0.5f, 1f), new Vector2(0f, y), new Vector2(0f, 52f));
 
-        var labelText = CreateText($"Label{key}", row, label, 20f, TextAlignmentOptions.MidlineLeft, new Color(0.28f, 0.18f, 0.08f));
-        SetRect(labelText.rectTransform, new Vector2(0f, 0f), new Vector2(0f, 1f), new Vector2(0f, 0.5f), new Vector2(0f, 0f), new Vector2(180f, 0f));
+        var labelText = CreateText($"Label{key}", row, label, 19f, TextAlignmentOptions.MidlineLeft, new Color(0.14f, 0.08f, 0.03f));
+        SetRect(labelText.rectTransform, new Vector2(0f, 0f), new Vector2(0f, 1f), new Vector2(0f, 0.5f), Vector2.zero, new Vector2(190f, 0f));
 
         var sliderRoot = CreateUiObject($"Slider{key}", row);
-        SetRect(sliderRoot, new Vector2(0f, 0.5f), new Vector2(1f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(86f, 0f), new Vector2(-260f, 24f));
+        SetRect(sliderRoot, new Vector2(0f, 0.5f), new Vector2(1f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(102f, 0f), new Vector2(-286f, 22f));
         var slider = sliderRoot.gameObject.AddComponent<Slider>();
 
-        var background = CreateImage("Background", sliderRoot, new Color(0.24f, 0.14f, 0.06f, 0.92f));
+        var background = CreateImage("Background", sliderRoot, new Color(0.24f, 0.14f, 0.06f, 0.72f));
         Stretch(background.rectTransform, Vector2.zero, Vector2.zero);
 
         var fillArea = CreateUiObject("Fill Area", sliderRoot);
@@ -392,37 +588,69 @@ public class SettingsWindowUI : MonoBehaviour
         slider.maxValue = 1f;
         slider.value = 1f;
 
-        var valueText = CreateText($"Label{key}Value", row, "100%", 18f, TextAlignmentOptions.MidlineRight, new Color(0.28f, 0.18f, 0.08f));
+        var valueText = CreateText($"Label{key}Value", row, "100%", 18f, TextAlignmentOptions.MidlineRight, new Color(0.14f, 0.08f, 0.03f));
         SetRect(valueText.rectTransform, new Vector2(1f, 0f), Vector2.one, new Vector2(1f, 0.5f), Vector2.zero, new Vector2(80f, 0f));
     }
 
-    private static void CreateValueRow(Transform parent, string name, string label, string value, float y)
+    private static void CreateLanguageRow(Transform parent, float y)
     {
-        var row = CreateUiObject(name, parent);
-        SetRect(row, new Vector2(0f, 1f), Vector2.one, new Vector2(0.5f, 1f), new Vector2(0f, y), new Vector2(0f, 52f));
-
-        var labelText = CreateText("Label", row, label, 20f, TextAlignmentOptions.MidlineLeft, new Color(0.28f, 0.18f, 0.08f));
-        SetRect(labelText.rectTransform, new Vector2(0f, 0f), new Vector2(0.5f, 1f), new Vector2(0f, 0.5f), Vector2.zero, Vector2.zero);
-
-        var valueText = CreateText("Value", row, value, 20f, TextAlignmentOptions.MidlineRight, new Color(0.28f, 0.18f, 0.08f));
-        SetRect(valueText.rectTransform, new Vector2(0.5f, 0f), Vector2.one, new Vector2(1f, 0.5f), Vector2.zero, Vector2.zero);
+        CreateButtonValueRow(parent, "Language", "Ngôn ngữ", "Tiếng Việt", y, "LanguageButton", "LanguageValue");
     }
 
     private static void CreateInteractKeyRow(Transform parent, float y)
     {
-        var row = CreateUiObject("InteractKeyRow", parent);
-        SetRect(row, new Vector2(0f, 1f), Vector2.one, new Vector2(0.5f, 1f), new Vector2(0f, y), new Vector2(0f, 52f));
+        CreateButtonValueRow(parent, "InteractKey", "Phím tương tác", "E", y, "InteractKeyButton", "InteractKeyValue");
+    }
 
-        var labelText = CreateText("Label", row, "Phím tương tác", 20f, TextAlignmentOptions.MidlineLeft, new Color(0.28f, 0.18f, 0.08f));
+    private static void CreateButtonValueRow(Transform parent, string key, string label, string value, float y, string buttonName = null, string valueName = null)
+    {
+        var row = CreateUiObject($"{key}Row", parent);
+        SetRect(row, new Vector2(0f, 1f), Vector2.one, new Vector2(0.5f, 1f), new Vector2(0f, y), new Vector2(0f, 48f));
+
+        var labelText = CreateText($"Label{key}", row, label, 19f, TextAlignmentOptions.MidlineLeft, new Color(0.14f, 0.08f, 0.03f));
         SetRect(labelText.rectTransform, new Vector2(0f, 0f), new Vector2(0.5f, 1f), new Vector2(0f, 0.5f), Vector2.zero, Vector2.zero);
 
-        var buttonImage = CreateImage("InteractKeyButton", row, new Color(0.34f, 0.20f, 0.08f, 1f));
-        SetRect(buttonImage.rectTransform, new Vector2(1f, 0.5f), new Vector2(1f, 0.5f), new Vector2(1f, 0.5f), Vector2.zero, new Vector2(160f, 42f));
+        var buttonImage = CreateImage(buttonName ?? $"{key}Button", row, new Color(0.34f, 0.20f, 0.08f, 1f));
+        SetRect(buttonImage.rectTransform, new Vector2(1f, 0.5f), new Vector2(1f, 0.5f), new Vector2(1f, 0.5f), Vector2.zero, new Vector2(190f, 40f));
         var button = buttonImage.gameObject.AddComponent<Button>();
         button.targetGraphic = buttonImage;
 
-        var valueText = CreateText("InteractKeyValue", buttonImage.transform, "E", 20f, TextAlignmentOptions.Center, new Color(1f, 0.90f, 0.66f));
+        var valueText = CreateText(valueName ?? $"{key}Value", buttonImage.transform, value, 18f, TextAlignmentOptions.Center, new Color(1f, 0.90f, 0.66f));
         Stretch(valueText.rectTransform, Vector2.zero, Vector2.zero);
+    }
+
+    private static void CreateToggleRow(Transform parent, string key, string label, float y, bool defaultValue)
+    {
+        var row = CreateUiObject($"{key}Row", parent);
+        SetRect(row, new Vector2(0f, 1f), Vector2.one, new Vector2(0.5f, 1f), new Vector2(0f, y), new Vector2(0f, 48f));
+
+        var labelText = CreateText($"Label{key}", row, label, 19f, TextAlignmentOptions.MidlineLeft, new Color(0.14f, 0.08f, 0.03f));
+        SetRect(labelText.rectTransform, new Vector2(0f, 0f), new Vector2(0.5f, 1f), new Vector2(0f, 0.5f), Vector2.zero, Vector2.zero);
+
+        var toggleRoot = CreateUiObject($"{key}Toggle", row);
+        SetRect(toggleRoot, new Vector2(1f, 0.5f), new Vector2(1f, 0.5f), new Vector2(1f, 0.5f), Vector2.zero, new Vector2(70f, 38f));
+        var toggle = toggleRoot.gameObject.AddComponent<Toggle>();
+
+        var background = CreateImage("Background", toggleRoot, new Color(0.34f, 0.20f, 0.08f, 1f));
+        Stretch(background.rectTransform, Vector2.zero, Vector2.zero);
+
+        var checkmark = CreateImage("Checkmark", background.transform, new Color(1f, 0.86f, 0.45f, 1f));
+        SetRect(checkmark.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(36f, 22f));
+
+        toggle.targetGraphic = background;
+        toggle.graphic = checkmark;
+        toggle.isOn = defaultValue;
+    }
+
+    private static void CreateResetRow(Transform parent, float y)
+    {
+        var buttonImage = CreateImage("ResetDefaultsButton", parent, new Color(0.45f, 0.19f, 0.09f, 1f));
+        SetRect(buttonImage.rectTransform, new Vector2(1f, 1f), new Vector2(1f, 1f), new Vector2(1f, 1f), new Vector2(0f, y), new Vector2(190f, 42f));
+        var button = buttonImage.gameObject.AddComponent<Button>();
+        button.targetGraphic = buttonImage;
+
+        var text = CreateText("Label", buttonImage.transform, "Mặc định", 18f, TextAlignmentOptions.Center, new Color(1f, 0.90f, 0.66f));
+        Stretch(text.rectTransform, Vector2.zero, Vector2.zero);
     }
 
     private static Button CreateBasicButton(string name, Transform parent, string label, Vector2 position)
@@ -464,6 +692,7 @@ public class SettingsWindowUI : MonoBehaviour
         text.alignment = alignment;
         text.color = color;
         text.enableWordWrapping = true;
+        UiTextStyleUtility.ApplyRoboto(text);
         return text;
     }
 

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: node_gold3
   keyName: node_gold3
-  descKey: 
+  descKey: node_gold3_desc
   icon: {fileID: 0}
   category: 9
   maxStack: 1
@@ -33,15 +33,22 @@ MonoBehaviour:
     blockLayers: 
   modules:
   - rid: 8196223262934696528
-  - rid: 8196223262934696529
-  - rid: 8196223262934696530
-  - rid: 8196223262934696531
   - rid: 8196223262934696532
-  - rid: 8196223262934696533
   - rid: 8196223262934696534
+  - rid: 8196223262934696529
+  - rid: 8196223262934696531
+  - rid: 5278705929685041344
+  - rid: 8196223262934696530
+  - rid: 8196223262934696533
   references:
     version: 2
     RefIds:
+    - rid: 5278705929685041344
+      type: {class: ExpRewardModule, ns: , asm: Assembly-CSharp}
+      data:
+        rewardExp: 0
+        sourceType: 6
+        requireKiller: 1
     - rid: 8196223262934696528
       type: {class: StageModule, ns: , asm: Assembly-CSharp}
       data:

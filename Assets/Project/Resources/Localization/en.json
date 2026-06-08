@@ -528,6 +528,19 @@
     { "key": "item.place.lightning_rod.name", "value": "Lightning Rod" },
     { "key": "item.place.lightning_rod.desc", "value": "Prevents lightning from damaging crops during storms." },
     { "key": "item.place.torch.name", "value": "Torch" },
-    { "key": "item.place.torch.desc", "value": "Illuminates the mine at night." }
+    { "key": "item.place.torch.desc", "value": "Illuminates the mine at night." },
+    { "key": "m1.portal.farm_to_town.name", "value": "Portal to Town" },
+    { "key": "ui.loading.title", "value": "LOADING..." },
+    { "key": "ui.loading.scene", "value": "Loading scene {0}" },
+    { "key": "ui.loading.percent", "value": "{0}%" },
+    { "key": "ui.loading.scene_name.scene", "value": "Scene" },
+    { "key": "ui.loading.scene_name.FarmScene", "value": "Farm" },
+    { "key": "ui.loading.scene_name.TownScene", "value": "Town" },
+    { "key": "ui.loading.scene_name.MainMenuScene", "value": "Main Menu" },
+    { "key": "ui.loading.tip.1", "value": "Tip: Gather resources and upgrade tools to survive more easily!" },
+    { "key": "ui.loading.tip.2", "value": "Tip: Water crops every day so they keep growing steadily." },
+    { "key": "ui.loading.tip.3", "value": "Tip: Bring the right tool when mining rocks, chopping trees, or cutting weeds." },
+    { "key": "ui.loading.tip.4", "value": "Tip: Check your backpack before leaving the farm so you do not miss key items." },
+    { "key": "ui.loading.tip.5", "value": "Tip: Save often to protect your progress." }
   ]
 }

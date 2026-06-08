@@ -28,6 +28,7 @@ public class QuestLogWindowUI : MonoBehaviour
     private void OnEnable()
     {
         EnsureBasicLayout();
+        UiTextStyleUtility.ApplyRobotoToChildren(transform);
         TrySubscribe();
         if (playerReady) Rebuild();
     }
@@ -200,6 +201,7 @@ public class QuestLogWindowUI : MonoBehaviour
         var titleText = FindDeepChild(row.transform, "TitleText")?.GetComponent<TMP_Text>();
         if (titleText != null)
         {
+            UiTextStyleUtility.ApplyRoboto(titleText);
             string title = LocalizationManager.Instance != null
                 ? LocalizationManager.Instance.GetText(graph.titleKey)
                 : graph.titleKey;
@@ -210,6 +212,7 @@ public class QuestLogWindowUI : MonoBehaviour
         var stateText = FindDeepChild(row.transform, "StateText")?.GetComponent<TMP_Text>();
         if (stateText != null)
         {
+            UiTextStyleUtility.ApplyRoboto(stateText);
             stateText.text  = GetStateLabel(state);
             stateText.color = state == QuestState.Completed
                 ? new Color(0.40f, 0.85f, 0.40f)
@@ -335,6 +338,7 @@ public class QuestLogWindowUI : MonoBehaviour
         var titleGo = new GameObject("TitleText", typeof(RectTransform));
         titleGo.transform.SetParent(root.transform, false);
         var titleText = titleGo.AddComponent<TextMeshProUGUI>();
+        UiTextStyleUtility.ApplyRoboto(titleText);
         titleText.text      = string.Empty;
         titleText.fontSize  = 20f;
         titleText.color     = new Color(0.96f, 0.88f, 0.65f);
@@ -347,6 +351,7 @@ public class QuestLogWindowUI : MonoBehaviour
         var stateGo = new GameObject("StateText", typeof(RectTransform));
         stateGo.transform.SetParent(root.transform, false);
         var stateText = stateGo.AddComponent<TextMeshProUGUI>();
+        UiTextStyleUtility.ApplyRoboto(stateText);
         stateText.text      = string.Empty;
         stateText.fontSize  = 16f;
         stateText.color     = new Color(1f, 0.8f, 0.2f);
@@ -398,6 +403,7 @@ public class QuestLogWindowUI : MonoBehaviour
         text.alignment = alignment;
         text.color = color;
         text.enableWordWrapping = true;
+        UiTextStyleUtility.ApplyRoboto(text);
         return text;
     }
 

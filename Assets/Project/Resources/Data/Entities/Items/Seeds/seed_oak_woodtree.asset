@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: seed_oak_woodtree
   m_EditorClassIdentifier: 
   id: seed_oak_woodtree
-  keyName: 
-  descKey: 
+  keyName: item.seed.oak_woodtree.name
+  descKey: item.seed.oak_woodtree.desc
   icon: {fileID: 335829954, guid: 247cdd78657a55546aadfc05332f068c, type: 3}
   category: 2
   maxStack: 999

@@ -38,9 +38,16 @@ public class PlayerControler : MonoBehaviour
         _inventory   = GetComponent<PlayerInventory>();
         _entityRoot  = GetComponent<EntityRoot>();
         _toolBridge  = GetComponent<ToolActionBridge>();
-        _anim = character4D.AnimationManager;
-        character4D.SetDirection(Vector2.down);
-        character4D.AnimationManager.SetState(CharacterState.Idle);
+
+        if (character4D == null)
+            character4D = GetComponentInChildren<Character4D>();
+
+        if (character4D != null)
+        {
+            _anim = character4D.AnimationManager;
+            character4D.SetDirection(Vector2.down);
+            character4D.AnimationManager.SetState(CharacterState.Idle);
+        }
     }
 
     private bool IsActionBusy => _toolBridge != null && _toolBridge.IsBusy;
@@ -94,7 +101,7 @@ public class PlayerControler : MonoBehaviour
 
     private void HandleActions()
     {
-        var playerEntity = _entityRoot?.GetEntity();
+        var playerEntity = GetPlayerEntity();
         if (playerEntity == null) return;
 
         // ── Chuột trái: PrimaryAction ─────────────────────────────────────────
@@ -139,7 +146,7 @@ public class PlayerControler : MonoBehaviour
     {
         if (!Input.GetKeyDown(dodgeKey)) return false;
 
-        var playerEntity = _entityRoot?.GetEntity();
+        var playerEntity = GetPlayerEntity();
         if (playerEntity == null) return false;
 
         if (!TrySpendStamina(playerEntity, dodgeStaminaCost))
@@ -181,6 +188,17 @@ public class PlayerControler : MonoBehaviour
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
         return new Vector3(horizontal, vertical, 0f).normalized;
+    }
+
+    private EntityRuntime GetPlayerEntity()
+    {
+        if (_entityRoot == null)
+            _entityRoot = GetComponent<EntityRoot>();
+
+        if (_entityRoot == null)
+            return null;
+
+        return _entityRoot.GetEntity();
     }
 
     private static bool TrySpendStamina(EntityRuntime entity, float cost)

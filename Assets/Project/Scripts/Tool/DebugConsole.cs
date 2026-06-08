@@ -466,6 +466,32 @@ public class DebugConsole : MonoBehaviour
             ws.SetWeather(wt);
             LogSuccess($"Thời tiết đã đặt: {wt}");
         });
+
+        // ── waterall — Tưới toàn bộ ô đất đã cày ──
+        AddCommand("waterall", "waterall — Tưới toàn bộ ô đất đã cày (plowed) trong scene hiện tại", _ =>
+        {
+            var gm = GM(); if (gm == null) return;
+
+            var tracker = gm.WateredTileTracker;
+            if (tracker == null) { LogError("WateredTileTracker null!"); return; }
+
+            int before = tracker.GetWateredCount();
+            tracker.WaterAllPlowedCells();
+            int after = tracker.GetWateredCount();
+
+            LogSuccess($"Đã tưới toàn bộ ô đất đã cày! ({before} → {after} ô được tưới)");
+        });
+
+        // ── watercount — Đếm số ô đang được tưới ──
+        AddCommand("watercount", "watercount — Hiển thị số ô đang được tưới hôm nay", _ =>
+        {
+            var gm = GM(); if (gm == null) return;
+
+            var tracker = gm.WateredTileTracker;
+            if (tracker == null) { LogError("WateredTileTracker null!"); return; }
+
+            Log($"Số ô đang được tưới: {tracker.GetWateredCount()}");
+        });
     }
 
     #endregion

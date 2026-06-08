@@ -174,6 +174,9 @@ public class EntityService
         if (saveToFile)
         {
             var path = Path.Combine(Application.persistentDataPath, filename);
+            var directory = Path.GetDirectoryName(path);
+            if (!string.IsNullOrEmpty(directory))
+                Directory.CreateDirectory(directory);
             File.WriteAllText(path, json);
             Debug.Log($"Saved {list.Count} entities to {path}");
         }
