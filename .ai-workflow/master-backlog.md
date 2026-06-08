@@ -11,6 +11,15 @@ Use this file as the prioritized source of truth for unattended work slices.
 
 ## In Progress
 
+- [ ] Menu shell standardization pass
+  - Priority: `P1`
+  - Area: UI architecture and layout consistency
+  - Goal: separate shared menu chrome from tab-specific content so `Inventory`, `Equipment`, `Quest`, and `Settings` stop behaving like one giant accidental form
+  - Acceptance:
+    - `MenuWindowShellUI` exists as the shared shell helper
+    - `QuestLogWindowUI` and `SettingsWindowUI` use the shared helper and compile cleanly
+    - follow-up refactors for `BackpackUI` and `EquipmentUI` can reuse the same shell without duplicating helper code
+
 - [ ] GED canonical content expansion pass
   - Priority: `P0`
   - Area: content data pipeline, localization, gameplay-ready assets
@@ -43,6 +52,20 @@ Use this file as the prioritized source of truth for unattended work slices.
   - Files likely touched: UI event subscribers, panel scripts, runtime interaction flow
   - Acceptance: storage and processor entities can be opened and used through actual UI, not only event stubs
 
+- [ ] Refactor `BackpackUI` onto the shared menu shell
+  - Priority: `P1`
+  - Area: UI architecture and inventory UX
+  - Goal: keep the current backpack behavior but align its outer shell and section framing with the shared menu window pattern
+  - Files likely touched: `BackpackUI`, shared UI helper(s), maybe `InventoryWindowUI` if section ownership needs clarification
+  - Acceptance: the backpack tab keeps its item-grid behavior while dropping duplicated shell/chrome logic
+
+- [ ] Refactor `EquipmentUI` onto the shared menu shell
+  - Priority: `P1`
+  - Area: UI architecture and equipment UX
+  - Goal: align the paper-doll/stat screen with the same shell system without collapsing its slot/stat/preview structure into the backpack form
+  - Files likely touched: `EquipmentUI`, shared UI helper(s)
+  - Acceptance: equipment keeps its slot-specific structure and preview/stat breakdown while sharing shell styling with other tabs
+
 - [ ] Add canonical validator and audit tooling for generated GED assets
   - Priority: `P1`
   - Area: editor tooling and production readiness
@@ -72,6 +95,9 @@ Use this file as the prioritized source of truth for unattended work slices.
   - Acceptance: generated content leaves behind explicit follow-up items for visuals and scene dressing
 
 ## Done
+
+- [x] Shared shell helper baseline for menu windows
+  - Result: added `MenuWindowShellUI` and applied it to `QuestLogWindowUI` and `SettingsWindowUI`, including compile-safe runtime project wiring
 
 - [x] GED runtime foundations
   - Result: added `SeasonRule`, `Consumable`, `ToolRequirement`, `Storage`, and `Processor` modules/runtimes plus supporting event/tool-tier hooks
