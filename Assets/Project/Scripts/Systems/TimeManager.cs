@@ -62,6 +62,19 @@ public class TimeManager : MonoBehaviour
             return completedDays * MinutesPerDay + TotalMinutes;
         }
     }
+    public float CurrentTotalElapsedSeconds
+    {
+        get
+        {
+            int seasonsPerYear = (int)Season.Winter + 1;
+            int completedYears = Mathf.Max(0, _year - 1);
+            int completedSeasons = Mathf.Clamp((int)_season, 0, seasonsPerYear - 1);
+            int completedDays = completedYears * seasonsPerYear * DaysPerSeason
+                              + completedSeasons * DaysPerSeason
+                              + Mathf.Max(0, _day - 1);
+            return completedDays * DayDurationRealSeconds + _timeOfDaySeconds;
+        }
+    }
 
     /// <summary>0..1 trong ngày (0 = 00:00, 0.5 = 12:00, 1 = 24:00).</summary>
     public float NormalizedTime => config == null || config.dayDurationRealSeconds <= 0f
@@ -79,7 +92,9 @@ public class TimeManager : MonoBehaviour
         season = _season,
         day = _day,
         hour = Hour,
-        minute = Minute
+        minute = Minute,
+        hasPreciseTimeOfDay = true,
+        timeOfDaySeconds = _timeOfDaySeconds
     };
 
     private int TotalMinutes
@@ -203,7 +218,9 @@ public class TimeManager : MonoBehaviour
         _year = Mathf.Max(1, state.year);
         _season = state.season;
         _day = Mathf.Clamp(state.day, 1, DaysPerSeason);
-        _timeOfDaySeconds = HourMinuteToDaySeconds(state.hour, state.minute);
+        _timeOfDaySeconds = state.hasPreciseTimeOfDay
+            ? Mathf.Clamp(state.timeOfDaySeconds, 0f, DayDurationRealSeconds)
+            : HourMinuteToDaySeconds(state.hour, state.minute);
         _lastPublishedMinute = -1;
         _lastPublishedHour = -1;
         PublishCurrentTime(true);

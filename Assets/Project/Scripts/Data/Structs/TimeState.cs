@@ -10,6 +10,8 @@ public struct TimeState
     public int day;       // 1-based (1..daysPerSeason)
     public int hour;      // 0-23
     public int minute;    // 0-59 (bước theo minutesPerTick)
+    public bool hasPreciseTimeOfDay;
+    public float timeOfDaySeconds;
 
     /// <summary>Tổng số ngày tuyệt đối kể từ đầu game (Year1 Spring Day1 = 1).</summary>
     public int TotalDays(int daysPerSeason)

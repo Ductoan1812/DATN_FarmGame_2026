@@ -40,6 +40,7 @@ public class WorldSaveContainer
     public EntityPositionSave[] entities;
     public EntityPositionSave[] inactiveEntities;
     public string[]             removedPersistentIds;
+    public SceneSpawnRuleEntryState[] regionRuleStates;
     public TileChangeSave[]     tileChanges; // dirty tiles only
 }
 
@@ -74,6 +75,7 @@ public class WorldEntityService
     private readonly Tilemap               _tilemap; // reference tilemap cho WorldToCell
     private readonly Dictionary<string, EntityPosition> _inactiveRegenerating = new();
     private readonly HashSet<string> _removedPersistentIds = new(StringComparer.Ordinal);
+    private readonly Dictionary<string, SceneSpawnRuleEntryState> _regionRuleStates = new(StringComparer.Ordinal);
 
     public WorldEntityService(
         SpatialEntityRegistry spatial,
@@ -237,6 +239,8 @@ public class WorldEntityService
         var staleInactive = new List<string>();
         foreach (var kvp in _inactiveRegenerating)
         {
+            if (SceneSpawnPayload.IsRuleRegionPersistentId(kvp.Key))
+                continue;
             if (kvp.Key.StartsWith(scenePrefix) && !validIds.Contains(kvp.Key))
                 staleInactive.Add(kvp.Key);
         }
@@ -245,10 +249,59 @@ public class WorldEntityService
         var staleRemoved = new List<string>();
         foreach (var id in _removedPersistentIds)
         {
+            if (SceneSpawnPayload.IsRuleRegionPersistentId(id))
+                continue;
             if (id.StartsWith(scenePrefix) && !validIds.Contains(id))
                 staleRemoved.Add(id);
         }
         foreach (var id in staleRemoved) _removedPersistentIds.Remove(id);
+    }
+
+    public void CleanUpStaleRuleRegionRecords(string sceneName, HashSet<string> validPrefixes, HashSet<string> validStateIds)
+    {
+        if (string.IsNullOrWhiteSpace(sceneName))
+            return;
+
+        var staleInactive = new List<string>();
+        foreach (var kvp in _inactiveRegenerating)
+        {
+            if (!SceneSpawnPayload.TryParseRuleRegionPersistentId(kvp.Key, out var idScene, out _, out _, out _))
+                continue;
+            if (!string.Equals(idScene, sceneName, StringComparison.Ordinal))
+                continue;
+            if (HasMatchingPrefix(kvp.Key, validPrefixes))
+                continue;
+            staleInactive.Add(kvp.Key);
+        }
+        foreach (var id in staleInactive)
+            _inactiveRegenerating.Remove(id);
+
+        var staleRemoved = new List<string>();
+        foreach (var id in _removedPersistentIds)
+        {
+            if (!SceneSpawnPayload.TryParseRuleRegionPersistentId(id, out var idScene, out _, out _, out _))
+                continue;
+            if (!string.Equals(idScene, sceneName, StringComparison.Ordinal))
+                continue;
+            if (HasMatchingPrefix(id, validPrefixes))
+                continue;
+            staleRemoved.Add(id);
+        }
+        foreach (var id in staleRemoved)
+            _removedPersistentIds.Remove(id);
+
+        var staleStates = new List<string>();
+        foreach (var kvp in _regionRuleStates)
+        {
+            var stateId = kvp.Key;
+            if (!stateId.StartsWith(sceneName + ":RuleRegion:", StringComparison.Ordinal))
+                continue;
+            if (validStateIds != null && validStateIds.Contains(stateId))
+                continue;
+            staleStates.Add(stateId);
+        }
+        foreach (var stateId in staleStates)
+            _regionRuleStates.Remove(stateId);
     }
 
     public bool HasPersistentId(string persistentId)
@@ -263,6 +316,50 @@ public class WorldEntityService
                 return true;
         }
         return _inactiveRegenerating.ContainsKey(persistentId);
+    }
+
+    public bool HasAnyPersistentRecordWithPrefix(string prefix)
+    {
+        if (string.IsNullOrWhiteSpace(prefix))
+            return false;
+
+        foreach (var ep in _spatial.GetAllEntities())
+        {
+            if (ep == null || string.IsNullOrWhiteSpace(ep.persistentId))
+                continue;
+            if (ep.persistentId.StartsWith(prefix, StringComparison.Ordinal))
+                return true;
+        }
+
+        foreach (var kvp in _inactiveRegenerating)
+        {
+            if (kvp.Key.StartsWith(prefix, StringComparison.Ordinal))
+                return true;
+        }
+
+        foreach (var id in _removedPersistentIds)
+        {
+            if (id.StartsWith(prefix, StringComparison.Ordinal))
+                return true;
+        }
+
+        return false;
+    }
+
+    public int CountEntitiesByPersistentPrefix(string prefix)
+    {
+        if (string.IsNullOrWhiteSpace(prefix))
+            return 0;
+
+        int count = 0;
+        foreach (var ep in _spatial.GetAllEntities())
+        {
+            if (ep == null || string.IsNullOrWhiteSpace(ep.persistentId))
+                continue;
+            if (ep.persistentId.StartsWith(prefix, StringComparison.Ordinal))
+                count++;
+        }
+        return count;
     }
 
     public EntityPosition FindByPersistentId(string persistentId)
@@ -336,6 +433,53 @@ public class WorldEntityService
         return true;
     }
 
+    public bool TryGetRegionRuleState(string stateId, out SceneSpawnRuleEntryState state)
+    {
+        if (_regionRuleStates.TryGetValue(stateId, out var existing))
+        {
+            state = CloneRegionRuleState(existing);
+            return true;
+        }
+
+        state = null;
+        return false;
+    }
+
+    public SceneSpawnRuleEntryState GetOrCreateRegionRuleState(string stateId)
+    {
+        if (string.IsNullOrWhiteSpace(stateId))
+            return null;
+
+        if (_regionRuleStates.TryGetValue(stateId, out var existing))
+            return CloneRegionRuleState(existing);
+
+        var created = new SceneSpawnRuleEntryState
+        {
+            stateId = stateId,
+            hasInitialized = false,
+            targetCount = 0,
+            nextRespawnAtElapsedSeconds = 0f
+        };
+        _regionRuleStates[stateId] = CloneRegionRuleState(created);
+        return created;
+    }
+
+    public void SetRegionRuleState(SceneSpawnRuleEntryState state)
+    {
+        if (state == null || string.IsNullOrWhiteSpace(state.stateId))
+            return;
+
+        _regionRuleStates[state.stateId] = CloneRegionRuleState(state);
+    }
+
+    public void RemoveRegionRuleState(string stateId)
+    {
+        if (string.IsNullOrWhiteSpace(stateId))
+            return;
+
+        _regionRuleStates.Remove(stateId);
+    }
+
     /// <summary>Truy cập TileRegistry (cho các hệ thống cần đọc tile trực tiếp).</summary>
     public TileRegistry TileRegistry => _tileRegistry;
 
@@ -407,6 +551,7 @@ public class WorldEntityService
             entities         = entitySaves.ToArray(),
             inactiveEntities = BuildInactiveSaveList().ToArray(),
             removedPersistentIds = BuildRemovedPersistentIdList().ToArray(),
+            regionRuleStates = BuildRegionRuleStateList().ToArray(),
             tileChanges      = tileChanges.ToArray()
         };
 
@@ -415,7 +560,7 @@ public class WorldEntityService
         if (!string.IsNullOrEmpty(directory))
             Directory.CreateDirectory(directory);
         File.WriteAllText(path, JsonUtility.ToJson(container, true));
-        Debug.Log($"[WorldEntityService] Saved {entitySaves.Count} entities, {_inactiveRegenerating.Count} inactive respawn marker(s), {_removedPersistentIds.Count} removed persistent marker(s), {tileChanges.Count} tile changes (dirty only).");
+        Debug.Log($"[WorldEntityService] Saved {entitySaves.Count} entities, {_inactiveRegenerating.Count} inactive respawn marker(s), {_removedPersistentIds.Count} removed persistent marker(s), {_regionRuleStates.Count} region rule state(s), {tileChanges.Count} tile changes (dirty only).");
     }
 
     // ── Load ──────────────────────────────────────────────────────────────────
@@ -475,6 +620,17 @@ public class WorldEntityService
             }
         }
 
+        _regionRuleStates.Clear();
+        if (container.regionRuleStates != null)
+        {
+            foreach (var state in container.regionRuleStates)
+            {
+                if (state == null || string.IsNullOrWhiteSpace(state.stateId))
+                    continue;
+                _regionRuleStates[state.stateId] = CloneRegionRuleState(state);
+            }
+        }
+
         // 2. Apply tile dirty changes lên TileRegistry
         // (TileRegistry đã ScanBaseline trước đó, giờ chỉ áp dirty)
         if (container.tileChanges != null)
@@ -490,7 +646,7 @@ public class WorldEntityService
             foreach (var ep in positions.Values)
                 onEntityLoaded(ep);
 
-        Debug.Log($"[WorldEntityService] Loaded {positions.Count} entities, {_inactiveRegenerating.Count} inactive respawn marker(s), {_removedPersistentIds.Count} removed persistent marker(s), {container.tileChanges?.Length ?? 0} tile changes.");
+        Debug.Log($"[WorldEntityService] Loaded {positions.Count} entities, {_inactiveRegenerating.Count} inactive respawn marker(s), {_removedPersistentIds.Count} removed persistent marker(s), {_regionRuleStates.Count} region rule state(s), {container.tileChanges?.Length ?? 0} tile changes.");
     }
 
     // ── Private ───────────────────────────────────────────────────────────────
@@ -554,6 +710,14 @@ public class WorldEntityService
     private List<string> BuildRemovedPersistentIdList()
     {
         return new List<string>(_removedPersistentIds);
+    }
+
+    private List<SceneSpawnRuleEntryState> BuildRegionRuleStateList()
+    {
+        var saves = new List<SceneSpawnRuleEntryState>();
+        foreach (var state in _regionRuleStates.Values)
+            saves.Add(CloneRegionRuleState(state));
+        return saves;
     }
 
     private static EntityPositionSave ToSave(EntityPosition ep)
@@ -627,5 +791,32 @@ public class WorldEntityService
             return;
 
         _removedPersistentIds.Remove(persistentId);
+    }
+
+    private static SceneSpawnRuleEntryState CloneRegionRuleState(SceneSpawnRuleEntryState state)
+    {
+        if (state == null) return null;
+
+        return new SceneSpawnRuleEntryState
+        {
+            stateId = state.stateId,
+            hasInitialized = state.hasInitialized,
+            targetCount = state.targetCount,
+            nextRespawnAtElapsedSeconds = state.nextRespawnAtElapsedSeconds
+        };
+    }
+
+    private static bool HasMatchingPrefix(string value, HashSet<string> prefixes)
+    {
+        if (string.IsNullOrWhiteSpace(value) || prefixes == null || prefixes.Count == 0)
+            return false;
+
+        foreach (var prefix in prefixes)
+        {
+            if (!string.IsNullOrWhiteSpace(prefix) && value.StartsWith(prefix, StringComparison.Ordinal))
+                return true;
+        }
+
+        return false;
     }
 }
