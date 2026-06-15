@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8393fbdfdb650e5418aad1c82ae5b8b5, type: 3}
-  m_Name: item_mat_iron_ore
+  m_Name: item_crop_corn
   m_EditorClassIdentifier: 
-  id: item_mat_iron_ore
-  keyName: item.mat.iron_ore.name
-  descKey: item.mat.iron_ore.desc
-  icon: {fileID: 373278978, guid: a4a24f3765a4d004cac302e32f2bb058, type: 3}
-  category: 5
+  id: item_crop_corn
+  keyName: item.crop.corn.name
+  descKey: item.crop.corn.desc
+  icon: {fileID: 2373349242592443278, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
+  category: 3
   maxStack: 99
   buyPrice: 0
-  sellPrice: 10
+  sellPrice: 62
   baseStats:
     baseStats: []
   placementRule:

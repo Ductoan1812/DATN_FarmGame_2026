@@ -23,60 +23,51 @@ MonoBehaviour:
   baseStats:
     baseStats:
     - statType: 0
-      value: 4
+      value: 10
+    - statType: 1
+      value: 10
+    - statType: 9
+      value: 1
+    - statType: 10
+      value: 1
   placementRule:
-    occupyLayer: 3
+    occupyLayer: 0
     requireTags: 0
     provideTags: 0
-    blockLayers: 0300000001000000
+    blockLayers: 
   modules:
-  - rid: 5278705929685041246
-  - rid: 5278705929685041247
-  - rid: 5278705929685041248
-  - rid: 5278705929685041249
-  - rid: 5278705929685041250
-  - rid: 5278705929685041251
+  - rid: 8196223262934696654
+  - rid: 8196223262934696655
+  - rid: 8196223262934696656
+  - rid: 8196223262934696657
+  - rid: 8196223262934696658
+  - rid: 8196223262934696659
+  - rid: 8196223262934696660
   references:
     version: 2
     RefIds:
-    - rid: 5278705929685041246
+    - rid: 8196223262934696654
+      type: {class: StageModule, ns: , asm: Assembly-CSharp}
+      data:
+        stages:
+        - sprite: {fileID: 1802896287, guid: a4a24f3765a4d004cac302e32f2bb058, type: 3}
+          daysToGrow: 1
+          canHarvest: 1
+        requiresWater: 0
+        wiltSprite: {fileID: 0}
+        regrowStageIndex: -1
+        harvestGoToStageIndex: -1
+        lastStageLoopToIndex: -1
+        daysToReturnAfterHarvest: -1
+        wiltOnSeasonChange: 0
+    - rid: 8196223262934696655
       type: {class: HealthModule, ns: , asm: Assembly-CSharp}
       data:
         canTakeDamage: 1
-    - rid: 5278705929685041247
-      type: {class: HarvestModule, ns: , asm: Assembly-CSharp}
-      data:
-        harvestTool: 5
-        allowHandHarvest: 0
-        additionalHarvestTools: []
-        dropMode: 0
-        harvestCausesDamage: 1
-        destroyOnHarvest: 0
-        oneHitDestroy: 0
-        wrongToolPenalty: 0.3
-    - rid: 5278705929685041248
-      type: {class: ToolRequirementModule, ns: , asm: Assembly-CSharp}
-      data:
-        requiredToolType: 5
-        minimumToolTier: 1
-        wrongToolPenalty: 0
-        blockDamageIfWrongTool: 1
-        blockDamageIfBelowTier: 1
-    - rid: 5278705929685041249
-      type: {class: DropModule, ns: , asm: Assembly-CSharp}
-      data:
-        harvestDrops: []
-        deathDrops:
-        - item: {fileID: 11400000, guid: 9ea41ad138ea50744ae35cf62119ec7f, type: 2}
-          minAmount: 3
-          maxAmount: 5
-          dropChance: 1
-        - item: {fileID: 11400000, guid: 7cdb6947f081d9847b35cffe5dbc5fd7, type: 2}
-          minAmount: 1
-          maxAmount: 1
-          dropChance: 0.05
-        includeHarvestDropsOnDestroyWhenHarvestable: 0
-    - rid: 5278705929685041250
+    - rid: 8196223262934696656
+      type: {class: MortalModule, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 8196223262934696657
       type: {class: ResourceHitReactionModule, ns: , asm: Assembly-CSharp}
       data:
         reactOnlyToHarvestTool: 1
@@ -86,10 +77,36 @@ MonoBehaviour:
         scalePunch: 0.12
         rotationPunch: 4
         animatorHitTrigger: Hit
-    - rid: 5278705929685041251
-      type: {class: RespawnModule, ns: , asm: Assembly-CSharp}
+    - rid: 8196223262934696658
+      type: {class: HarvestModule, ns: , asm: Assembly-CSharp}
       data:
-        defaultRespawnPosition: {x: 0, y: 0}
-        respawnDelay: 3
-        restoreFullHp: 1
-        respawnPrefabId: 11
+        harvestTool: 5
+        allowHandHarvest: 0
+        additionalHarvestTools: []
+        dropMode: 0
+        harvestCausesDamage: 1
+        destroyOnHarvest: 1
+        oneHitDestroy: 0
+        wrongToolPenalty: 0.3
+    - rid: 8196223262934696659
+      type: {class: ToolRequirementModule, ns: , asm: Assembly-CSharp}
+      data:
+        requiredToolType: 5
+        minimumToolTier: 1
+        wrongToolPenalty: 0
+        blockDamageIfWrongTool: 1
+        blockDamageIfBelowTier: 1
+    - rid: 8196223262934696660
+      type: {class: DropModule, ns: , asm: Assembly-CSharp}
+      data:
+        harvestDrops:
+        - item: {fileID: 11400000, guid: 2304ceb092dee4242b2caf0a817319ed, type: 2}
+          minAmount: 2
+          maxAmount: 4
+          dropChance: 1
+        deathDrops:
+        - item: {fileID: 11400000, guid: 2304ceb092dee4242b2caf0a817319ed, type: 2}
+          minAmount: 2
+          maxAmount: 4
+          dropChance: 1
+        includeHarvestDropsOnDestroyWhenHarvestable: 0

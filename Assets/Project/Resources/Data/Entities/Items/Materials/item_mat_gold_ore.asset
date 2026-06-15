@@ -15,7 +15,7 @@ MonoBehaviour:
   id: item_mat_gold_ore
   keyName: item.mat.gold_ore.name
   descKey: item.mat.gold_ore.desc
-  icon: {fileID: 0}
+  icon: {fileID: 306277263, guid: a4a24f3765a4d004cac302e32f2bb058, type: 3}
   category: 5
   maxStack: 99
   buyPrice: 0

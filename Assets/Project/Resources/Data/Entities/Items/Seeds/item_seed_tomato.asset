@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8393fbdfdb650e5418aad1c82ae5b8b5, type: 3}
+  m_Name: item_seed_tomato
+  m_EditorClassIdentifier: 
+  id: item_seed_tomato
+  keyName: item.seed.tomato.name
+  descKey: item.seed.tomato.desc
+  icon: {fileID: -3751727464445683568, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
+  category: 2
+  maxStack: 99
+  buyPrice: 60
+  sellPrice: 0
+  baseStats:
+    baseStats: []
+  placementRule:
+    occupyLayer: 0
+    requireTags: 0
+    provideTags: 0
+    blockLayers: 
+  modules:
+  - rid: 8196223262934696432
+  - rid: 5278706057718792223
+  references:
+    version: 2
+    RefIds:
+    - rid: 5278706057718792223
+      type: {class: SeasonRuleModule, ns: , asm: Assembly-CSharp}
+      data:
+        allowAllSeasons: 1
+        allowedSeasons: 
+        blockPlacementOutOfSeason: 0
+        outOfSeasonBehavior: 0
+        dormantStageIndex: -1
+    - rid: 8196223262934696432
+      type: {class: PlacementModule, ns: , asm: Assembly-CSharp}
+      data:
+        objectTypeToSpawn: 2
+        placedEntityData: {fileID: 11400000, guid: 248a7f0cd9afb384da58bce615bf7094, type: 2}
+        centerTile: 1
+        animTrigger: PutDown

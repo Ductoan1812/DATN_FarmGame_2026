@@ -15,11 +15,11 @@ MonoBehaviour:
   id: item_tool_watering_can_t1
   keyName: item.tool.watering_can.t1.name
   descKey: item.tool.watering_can.t1.desc
-  icon: {fileID: 0}
+  icon: {fileID: -1168573721, guid: 163ba03f3b439ab48b5f238ac2b407f0, type: 3}
   category: 1
   maxStack: 1
-  buyPrice: 0
-  sellPrice: 0
+  buyPrice: 220
+  sellPrice: 90
   baseStats:
     baseStats:
     - statType: 5
@@ -31,23 +31,41 @@ MonoBehaviour:
     - statType: 11
       value: 0.4
     - statType: 12
-      value: 40
-    - statType: 2
-      value: 0
+      value: 20
   placementRule:
     occupyLayer: 0
     requireTags: 0
     provideTags: 0
     blockLayers: 
   modules:
-  - rid: 5278705929685041224
+  - rid: 5278706062832435244
+  - rid: 5278706062832435245
+  - rid: 5278706062832435246
+  - rid: 5278706062832435247
   references:
     version: 2
     RefIds:
-    - rid: 5278705929685041224
+    - rid: 5278706062832435244
       type: {class: ToolModule, ns: , asm: Assembly-CSharp}
       data:
         toolType: 2
         toolTier: 1
-        animTrigger: 
-        refillAnimTrigger: Refill
+        animTrigger: Cast
+        refillAnimTrigger: 
+    - rid: 5278706062832435245
+      type: {class: StaminaCostModule, ns: , asm: Assembly-CSharp}
+      data:
+        cost: 2
+    - rid: 5278706062832435246
+      type: {class: ToolRequirementModule, ns: , asm: Assembly-CSharp}
+      data:
+        requiredToolType: 2
+        minimumToolTier: 1
+        wrongToolPenalty: 0
+        blockDamageIfWrongTool: 1
+        blockDamageIfBelowTier: 1
+    - rid: 5278706062832435247
+      type: {class: AppearanceModule, ns: , asm: Assembly-CSharp}
+      data:
+        spriteId: Art.Equipment.MeleeWeapon1H.watering
+        equipmentPart: 5

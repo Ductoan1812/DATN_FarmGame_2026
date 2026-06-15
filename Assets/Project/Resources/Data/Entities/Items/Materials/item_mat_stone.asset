@@ -15,7 +15,7 @@ MonoBehaviour:
   id: item_mat_stone
   keyName: item.mat.stone.name
   descKey: item.mat.stone.desc
-  icon: {fileID: 0}
+  icon: {fileID: 1820874697, guid: a4a24f3765a4d004cac302e32f2bb058, type: 3}
   category: 5
   maxStack: 99
   buyPrice: 0

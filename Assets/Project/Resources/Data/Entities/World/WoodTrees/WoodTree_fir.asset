@@ -38,9 +38,17 @@ MonoBehaviour:
   - rid: 8196223262934696263
   - rid: 8196223262934696261
   - rid: 8196223262934696267
+  - rid: 5278706126244020226
   references:
     version: 2
     RefIds:
+    - rid: 5278706126244020226
+      type: {class: PlacementModule, ns: , asm: Assembly-CSharp}
+      data:
+        objectTypeToSpawn: 2
+        placedEntityData: {fileID: 0}
+        centerTile: 1
+        animTrigger: 
     - rid: 8196223262934696259
       type: {class: ResourceGrowthModule, ns: , asm: Assembly-CSharp}
       data:

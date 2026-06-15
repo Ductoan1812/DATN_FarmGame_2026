@@ -15,39 +15,59 @@ MonoBehaviour:
   id: item_tool_scythe_t1
   keyName: item.tool.scythe.t1.name
   descKey: item.tool.scythe.t1.desc
-  icon: {fileID: 0}
+  icon: {fileID: 775567757, guid: 163ba03f3b439ab48b5f238ac2b407f0, type: 3}
   category: 1
   maxStack: 1
-  buyPrice: 0
-  sellPrice: 0
+  buyPrice: 260
+  sellPrice: 100
   baseStats:
     baseStats:
     - statType: 5
-      value: 2
+      value: 4
     - statType: 9
       value: 1
     - statType: 10
       value: 1
     - statType: 11
-      value: 0.5
+      value: 0.7
     - statType: 12
-      value: 1.5
+      value: 1.3
     - statType: 2
-      value: 3
+      value: 5
   placementRule:
     occupyLayer: 0
     requireTags: 0
     provideTags: 0
     blockLayers: 
   modules:
-  - rid: 5278705929685041303
+  - rid: 5278706062832435232
+  - rid: 5278706062832435233
+  - rid: 5278706062832435234
+  - rid: 5278706062832435235
   references:
     version: 2
     RefIds:
-    - rid: 5278705929685041303
+    - rid: 5278706062832435232
       type: {class: ToolModule, ns: , asm: Assembly-CSharp}
       data:
         toolType: 3
         toolTier: 1
-        animTrigger: 
+        animTrigger: Scythe
         refillAnimTrigger: 
+    - rid: 5278706062832435233
+      type: {class: StaminaCostModule, ns: , asm: Assembly-CSharp}
+      data:
+        cost: 4
+    - rid: 5278706062832435234
+      type: {class: ToolRequirementModule, ns: , asm: Assembly-CSharp}
+      data:
+        requiredToolType: 3
+        minimumToolTier: 1
+        wrongToolPenalty: 0
+        blockDamageIfWrongTool: 1
+        blockDamageIfBelowTier: 1
+    - rid: 5278706062832435235
+      type: {class: AppearanceModule, ns: , asm: Assembly-CSharp}
+      data:
+        spriteId: Art.Equipment.MeleeWeapon1H.Scyther
+        equipmentPart: 5
