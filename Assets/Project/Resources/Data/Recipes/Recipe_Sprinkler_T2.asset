@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 358260a5fc2e0e646a27c9d953729876, type: 3}
+  m_Name: Recipe_Sprinkler_T2
+  m_EditorClassIdentifier: 
+  id: recipe.sprinkler.t2
+  titleKey: mvp.recipe.sprinkler.t2.name
+  requiredLevel: 16
+  unlockRequirement:
+    requiredLevel: 16
+    requiredQuestIds: []
+  ingredients:
+  - item: {fileID: 11400000, guid: 98241e51c1da7944ea348653d285804c, type: 2}
+    amount: 4
+  - item: {fileID: 11400000, guid: 6c6049a7732d5d44ba4b435d0692e7ba, type: 2}
+    amount: 2
+  - item: {fileID: 11400000, guid: 7e2ed628aa8e4fb47a4c430f563160fa, type: 2}
+    amount: 2
+  outputs:
+  - item: {fileID: 11400000, guid: 63b9c59c28a694140a9a6b3185dc44bc, type: 2}
+    amount: 1
+  craftExp: 80
