@@ -281,11 +281,21 @@ public class SpawnSystem : MonoBehaviour
         if (scenePayload.startStageIndex < 0) return;
 
         var stageRuntime = runtime.GetModule<StageRuntime>();
-        if (stageRuntime == null) return;
-
-        if (!stageRuntime.ConfigureInitialStage(scenePayload.startStageIndex))
+        if (stageRuntime != null)
         {
-            Debug.LogWarning($"[SpawnSystem] Invalid marker start stage {scenePayload.startStageIndex} for '{runtime.entityData?.id}'.");
+            if (!stageRuntime.ConfigureInitialStage(scenePayload.startStageIndex))
+            {
+                Debug.LogWarning($"[SpawnSystem] Invalid marker start stage {scenePayload.startStageIndex} for '{runtime.entityData?.id}'.");
+            }
+            return;
+        }
+
+        var resourceGrowthRuntime = runtime.GetModule<ResourceGrowthRuntime>();
+        if (resourceGrowthRuntime == null) return;
+
+        if (!resourceGrowthRuntime.ConfigureInitialStage(scenePayload.startStageIndex))
+        {
+            Debug.LogWarning($"[SpawnSystem] Invalid marker resource-growth start stage {scenePayload.startStageIndex} for '{runtime.entityData?.id}'.");
         }
     }
 

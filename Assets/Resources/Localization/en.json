@@ -85,12 +85,36 @@
             "value": "Field Beast"
         },
         {
+            "key": "item.crop.corn.desc",
+            "value": "Fresh corn used for selling, cooking, or deliveries."
+        },
+        {
+            "key": "item.crop.corn.name",
+            "value": "Corn"
+        },
+        {
             "key": "item.crop.fall.pumpkin.desc",
             "value": "Fresh Pumpkin. Useful for cooking, processing, or sale."
         },
         {
             "key": "item.crop.fall.pumpkin.name",
             "value": "Pumpkin"
+        },
+        {
+            "key": "item.crop.fall.wheat.desc",
+            "value": "Fresh wheat used for selling, cooking, or deliveries."
+        },
+        {
+            "key": "item.crop.fall.wheat.name",
+            "value": "Wheat"
+        },
+        {
+            "key": "item.crop.potato.desc",
+            "value": "Fresh potato used for selling, cooking, or deliveries."
+        },
+        {
+            "key": "item.crop.potato.name",
+            "value": "Potato"
         },
         {
             "key": "item.crop.spring.asparagus.desc",
@@ -110,7 +134,7 @@
         },
         {
             "key": "item.crop.spring.potato.desc",
-            "value": "Fresh Potato. Useful for cooking, processing, or sale."
+            "value": "Fresh potato used for selling, cooking, or deliveries."
         },
         {
             "key": "item.crop.spring.potato.name",
@@ -118,15 +142,31 @@
         },
         {
             "key": "item.crop.spring.strawberry.desc",
-            "value": "Fresh Strawberry. Useful for cooking, processing, or sale."
+            "value": "Fresh strawberry used for selling, cooking, or deliveries."
         },
         {
             "key": "item.crop.spring.strawberry.name",
             "value": "Strawberry"
         },
         {
+            "key": "item.crop.spring.turnip.desc",
+            "value": "Fresh turnip used for selling, cooking, or deliveries."
+        },
+        {
+            "key": "item.crop.spring.turnip.name",
+            "value": "Turnip"
+        },
+        {
+            "key": "item.crop.strawberry.desc",
+            "value": "Fresh strawberry used for selling, cooking, or deliveries."
+        },
+        {
+            "key": "item.crop.strawberry.name",
+            "value": "Strawberry"
+        },
+        {
             "key": "item.crop.summer.corn.desc",
-            "value": "Fresh Corn. Useful for cooking, processing, or sale."
+            "value": "Fresh corn used for selling, cooking, or deliveries."
         },
         {
             "key": "item.crop.summer.corn.name",
@@ -134,10 +174,18 @@
         },
         {
             "key": "item.crop.summer.tomato.desc",
-            "value": "Fresh Tomato. Useful for cooking, processing, or sale."
+            "value": "Fresh tomato used for selling, cooking, or deliveries."
         },
         {
             "key": "item.crop.summer.tomato.name",
+            "value": "Tomato"
+        },
+        {
+            "key": "item.crop.tomato.desc",
+            "value": "Fresh tomato used for selling, cooking, or deliveries."
+        },
+        {
+            "key": "item.crop.tomato.name",
             "value": "Tomato"
         },
         {
@@ -147,6 +195,22 @@
         {
             "key": "item.crop.tree.apple.name",
             "value": "Apple"
+        },
+        {
+            "key": "item.crop.turnip.desc",
+            "value": "Fresh turnip used for selling, cooking, or deliveries."
+        },
+        {
+            "key": "item.crop.turnip.name",
+            "value": "Turnip"
+        },
+        {
+            "key": "item.crop.wheat.desc",
+            "value": "Fresh wheat used for selling, cooking, or deliveries."
+        },
+        {
+            "key": "item.crop.wheat.name",
+            "value": "Wheat"
         },
         {
             "key": "item.crop.winter.spinach.desc",
@@ -302,7 +366,7 @@
         },
         {
             "key": "item.mat.gold_ore.desc",
-            "value": "Precious ore used to smelt gold bars."
+            "value": "A resource mined from gold node. It can be sold or used for crafting."
         },
         {
             "key": "item.mat.gold_ore.name",
@@ -326,7 +390,7 @@
         },
         {
             "key": "item.mat.iron_ore.desc",
-            "value": "Dense ore used to smelt iron bars."
+            "value": "A resource mined from iron node. It can be sold or used for crafting."
         },
         {
             "key": "item.mat.iron_ore.name",
@@ -342,7 +406,7 @@
         },
         {
             "key": "item.mat.stone.desc",
-            "value": "Basic mined material for furnaces and stonework."
+            "value": "A resource mined from rock. It can be sold or used for crafting."
         },
         {
             "key": "item.mat.stone.name",
@@ -421,12 +485,52 @@
             "value": "Milk"
         },
         {
+            "key": "item.seed.brech_woodtree.desc",
+            "value": "A seed for growing a birch wood tree."
+        },
+        {
+            "key": "item.seed.brech_woodtree.name",
+            "value": "Birch Tree Seed"
+        },
+        {
+            "key": "item.seed.corn.desc",
+            "value": "Unlocked at Lv.11. The crop matures after about 9 watered days. After the first harvest, it produces again every 4 days."
+        },
+        {
+            "key": "item.seed.corn.name",
+            "value": "Corn Seeds"
+        },
+        {
             "key": "item.seed.fall.pumpkin.desc",
             "value": "Fall seed. Takes 13 days to mature. Single harvest crop. It withers when the season changes."
         },
         {
             "key": "item.seed.fall.pumpkin.name",
             "value": "Pumpkin Seeds"
+        },
+        {
+            "key": "item.seed.fall.wheat.desc",
+            "value": "Plant in Fall. The crop matures after about 5 watered days."
+        },
+        {
+            "key": "item.seed.fall.wheat.name",
+            "value": "Wheat Seeds"
+        },
+        {
+            "key": "item.seed.oak_woodtree.desc",
+            "value": "A seed for growing an oak wood tree."
+        },
+        {
+            "key": "item.seed.oak_woodtree.name",
+            "value": "Oak Tree Seed"
+        },
+        {
+            "key": "item.seed.potato.desc",
+            "value": "Unlocked at Lv.2. The crop matures after about 5 watered days."
+        },
+        {
+            "key": "item.seed.potato.name",
+            "value": "Potato Seeds"
         },
         {
             "key": "item.seed.spring.asparagus.desc",
@@ -446,7 +550,7 @@
         },
         {
             "key": "item.seed.spring.potato.desc",
-            "value": "Spring seed. Takes 6 days to mature. Single harvest crop. It withers when the season changes."
+            "value": "Plant in Spring. The crop matures after about 6 watered days."
         },
         {
             "key": "item.seed.spring.potato.name",
@@ -454,15 +558,31 @@
         },
         {
             "key": "item.seed.spring.strawberry.desc",
-            "value": "Spring seed. Takes 8 days to mature. After the first harvest, it produces again every 4 days. It withers when the season changes."
+            "value": "Plant in Spring. The crop matures after about 8 watered days. After the first harvest, it produces again every 3 days."
         },
         {
             "key": "item.seed.spring.strawberry.name",
             "value": "Strawberry Seeds"
         },
         {
+            "key": "item.seed.spring.turnip.desc",
+            "value": "Plant in Spring. The crop matures after about 4 watered days."
+        },
+        {
+            "key": "item.seed.spring.turnip.name",
+            "value": "Turnip Seeds"
+        },
+        {
+            "key": "item.seed.strawberry.desc",
+            "value": "Unlocked at Lv.15. The crop matures after about 8 watered days. After the first harvest, it produces again every 3 days."
+        },
+        {
+            "key": "item.seed.strawberry.name",
+            "value": "Strawberry Seeds"
+        },
+        {
             "key": "item.seed.summer.corn.desc",
-            "value": "Summer seed. Takes 10 days to mature. After the first harvest, it produces again every 4 days. It withers when the season changes."
+            "value": "Plant in Summer. The crop matures after about 10 watered days. After the first harvest, it produces again every 4 days."
         },
         {
             "key": "item.seed.summer.corn.name",
@@ -470,10 +590,18 @@
         },
         {
             "key": "item.seed.summer.tomato.desc",
-            "value": "Summer seed. Takes 11 days to mature. After the first harvest, it produces again every 4 days. It withers when the season changes."
+            "value": "Plant in Summer. The crop matures after about 8 watered days. After the first harvest, it produces again every 3 days."
         },
         {
             "key": "item.seed.summer.tomato.name",
+            "value": "Tomato Seeds"
+        },
+        {
+            "key": "item.seed.tomato.desc",
+            "value": "Unlocked at Lv.7. The crop matures after about 7 watered days. After the first harvest, it produces again every 3 days."
+        },
+        {
+            "key": "item.seed.tomato.name",
             "value": "Tomato Seeds"
         },
         {
@@ -485,6 +613,22 @@
             "value": "Apple Sapling"
         },
         {
+            "key": "item.seed.turnip.desc",
+            "value": "Unlocked at Lv.1. The crop matures after about 4 watered days."
+        },
+        {
+            "key": "item.seed.turnip.name",
+            "value": "Turnip Seeds"
+        },
+        {
+            "key": "item.seed.wheat.desc",
+            "value": "Unlocked at Lv.4. The crop matures after about 4 watered days."
+        },
+        {
+            "key": "item.seed.wheat.name",
+            "value": "Wheat Seeds"
+        },
+        {
             "key": "item.seed.winter.spinach.desc",
             "value": "Winter seed. Takes 7 days to mature. Single harvest crop. It withers when the season changes."
         },
@@ -494,7 +638,7 @@
         },
         {
             "key": "item.tool.axe.t1.desc",
-            "value": "Stone Axe tier 1. Deals 1 base damage at a stamina cost of 3 per use."
+            "value": "Stone Axe tier 1. Deals 0 base damage at a stamina cost of 3 per use."
         },
         {
             "key": "item.tool.axe.t1.name",
@@ -502,7 +646,7 @@
         },
         {
             "key": "item.tool.axe.t2.desc",
-            "value": "Copper Axe tier 2. Deals 2 base damage at a stamina cost of 3 per use."
+            "value": "Copper Axe tier 2. Deals 0 base damage at a stamina cost of 3 per use."
         },
         {
             "key": "item.tool.axe.t2.name",
@@ -510,7 +654,7 @@
         },
         {
             "key": "item.tool.axe.t3.desc",
-            "value": "Iron Axe tier 3. Deals 4 base damage at a stamina cost of 2 per use."
+            "value": "Iron Axe tier 3. Deals 0 base damage at a stamina cost of 2 per use."
         },
         {
             "key": "item.tool.axe.t3.name",
@@ -518,7 +662,7 @@
         },
         {
             "key": "item.tool.axe.t4.desc",
-            "value": "Golden Axe tier 4. Deals 6 base damage at a stamina cost of 2 per use."
+            "value": "Golden Axe tier 4. Deals 0 base damage at a stamina cost of 2 per use."
         },
         {
             "key": "item.tool.axe.t4.name",
@@ -526,7 +670,7 @@
         },
         {
             "key": "item.tool.hoe.t1.desc",
-            "value": "Hoe tier 1. Tills a 1x1 area at 2 stamina per swing."
+            "value": "Hoe tier 1. Tills one tile at 2 stamina per use."
         },
         {
             "key": "item.tool.hoe.t1.name",
@@ -534,7 +678,7 @@
         },
         {
             "key": "item.tool.hoe.t2.desc",
-            "value": "Copper Hoe tier 2. Tills a 2x1 area at 2 stamina per swing."
+            "value": "Copper Hoe tier 2. Tills one tile at 2 stamina per use."
         },
         {
             "key": "item.tool.hoe.t2.name",
@@ -542,7 +686,7 @@
         },
         {
             "key": "item.tool.hoe.t3.desc",
-            "value": "Iron Hoe tier 3. Tills a 3x1 area at 2 stamina per swing."
+            "value": "Iron Hoe tier 3. Tills one tile at 2 stamina per use."
         },
         {
             "key": "item.tool.hoe.t3.name",
@@ -550,7 +694,7 @@
         },
         {
             "key": "item.tool.hoe.t4.desc",
-            "value": "Golden Hoe tier 4. Tills a 5x1 area at 1 stamina per swing."
+            "value": "Golden Hoe tier 4. Tills one tile at 1 stamina per use."
         },
         {
             "key": "item.tool.hoe.t4.name",
@@ -558,7 +702,7 @@
         },
         {
             "key": "item.tool.pickaxe.t1.desc",
-            "value": "Stone Pickaxe tier 1. Deals 1 base damage at a stamina cost of 3 per use."
+            "value": "Stone Pickaxe tier 1. Deals 2 base damage at a stamina cost of 3 per use."
         },
         {
             "key": "item.tool.pickaxe.t1.name",
@@ -566,7 +710,7 @@
         },
         {
             "key": "item.tool.pickaxe.t2.desc",
-            "value": "Copper Pickaxe tier 2. Deals 2 base damage at a stamina cost of 3 per use."
+            "value": "Copper Pickaxe tier 2. Deals 5 base damage at a stamina cost of 3 per use."
         },
         {
             "key": "item.tool.pickaxe.t2.name",
@@ -574,7 +718,7 @@
         },
         {
             "key": "item.tool.pickaxe.t3.desc",
-            "value": "Iron Pickaxe tier 3. Deals 4 base damage at a stamina cost of 2 per use."
+            "value": "Iron Pickaxe tier 3. Deals 10 base damage at a stamina cost of 2 per use."
         },
         {
             "key": "item.tool.pickaxe.t3.name",
@@ -582,15 +726,23 @@
         },
         {
             "key": "item.tool.pickaxe.t4.desc",
-            "value": "Golden Pickaxe tier 4. Deals 8 base damage at a stamina cost of 2 per use."
+            "value": "Golden Pickaxe tier 4. Deals 18 base damage at a stamina cost of 2 per use."
         },
         {
             "key": "item.tool.pickaxe.t4.name",
             "value": "Golden Pickaxe"
         },
         {
+            "key": "item.tool.pickaxe.t5.desc",
+            "value": "Ancient Pickaxe tier 5. Deals 30 base damage at a stamina cost of 1 per use."
+        },
+        {
+            "key": "item.tool.pickaxe.t5.name",
+            "value": "Ancient Pickaxe"
+        },
+        {
             "key": "item.tool.scythe.t1.desc",
-            "value": "Stone Scythe tier 1. Deals 3 base damage at a stamina cost of 2 per use."
+            "value": "Stone Scythe tier 1. Deals 5 base damage at a stamina cost of 4 per use."
         },
         {
             "key": "item.tool.scythe.t1.name",
@@ -598,7 +750,7 @@
         },
         {
             "key": "item.tool.scythe.t2.desc",
-            "value": "Copper Scythe tier 2. Deals 5 base damage at a stamina cost of 2 per use."
+            "value": "Copper Scythe tier 2. Deals 8 base damage at a stamina cost of 3 per use."
         },
         {
             "key": "item.tool.scythe.t2.name",
@@ -606,7 +758,7 @@
         },
         {
             "key": "item.tool.scythe.t3.desc",
-            "value": "Iron Scythe tier 3. Deals 8 base damage at a stamina cost of 2 per use."
+            "value": "Iron Scythe tier 3. Deals 14 base damage at a stamina cost of 2 per use."
         },
         {
             "key": "item.tool.scythe.t3.name",
@@ -614,15 +766,23 @@
         },
         {
             "key": "item.tool.scythe.t4.desc",
-            "value": "Golden Scythe tier 4. Deals 12 base damage at a stamina cost of 1 per use."
+            "value": "Golden Scythe tier 4. Deals 24 base damage at a stamina cost of 2 per use."
         },
         {
             "key": "item.tool.scythe.t4.name",
             "value": "Golden Scythe"
         },
         {
+            "key": "item.tool.scythe.t5.desc",
+            "value": "Ancient Scythe tier 5. Deals 38 base damage at a stamina cost of 1 per use."
+        },
+        {
+            "key": "item.tool.scythe.t5.name",
+            "value": "Ancient Scythe"
+        },
+        {
             "key": "item.tool.watering_can.t1.desc",
-            "value": "Watering Can tier 1. Waters a 1x1 area and holds about 40 charges before refilling."
+            "value": "Watering Can tier 1. Waters one tile per use and holds about 20 charges before refilling."
         },
         {
             "key": "item.tool.watering_can.t1.name",
@@ -630,7 +790,7 @@
         },
         {
             "key": "item.tool.watering_can.t2.desc",
-            "value": "Copper Watering Can tier 2. Waters a 1x3 area and holds about 55 charges before refilling."
+            "value": "Copper Watering Can tier 2. Waters one tile per use and holds about 35 charges before refilling."
         },
         {
             "key": "item.tool.watering_can.t2.name",
@@ -638,7 +798,7 @@
         },
         {
             "key": "item.tool.watering_can.t3.desc",
-            "value": "Iron Watering Can tier 3. Waters a 3x3 area and holds about 70 charges before refilling."
+            "value": "Iron Watering Can tier 3. Waters one tile per use and holds about 50 charges before refilling."
         },
         {
             "key": "item.tool.watering_can.t3.name",
@@ -646,11 +806,15 @@
         },
         {
             "key": "item.tool.watering_can.t4.desc",
-            "value": "Golden Watering Can tier 4. Waters a 3x3 area and holds about 100 charges before refilling."
+            "value": "Golden Watering Can tier 4. Waters one tile per use and holds about 70 charges before refilling."
         },
         {
             "key": "item.tool.watering_can.t4.name",
             "value": "Golden Watering Can"
+        },
+        {
+            "key": "m1.portal.farm_to_town.name",
+            "value": "Portal to Town"
         },
         {
             "key": "npc.farmer.name",
@@ -913,6 +1077,54 @@
             "value": "Sell Price"
         },
         {
+            "key": "ui.loading.percent",
+            "value": "{0}%"
+        },
+        {
+            "key": "ui.loading.scene",
+            "value": "Loading scene {0}"
+        },
+        {
+            "key": "ui.loading.scene_name.FarmScene",
+            "value": "Farm"
+        },
+        {
+            "key": "ui.loading.scene_name.MainMenuScene",
+            "value": "Main Menu"
+        },
+        {
+            "key": "ui.loading.scene_name.TownScene",
+            "value": "Town"
+        },
+        {
+            "key": "ui.loading.scene_name.scene",
+            "value": "Scene"
+        },
+        {
+            "key": "ui.loading.tip.1",
+            "value": "Tip: Gather resources and upgrade tools to survive more easily!"
+        },
+        {
+            "key": "ui.loading.tip.2",
+            "value": "Tip: Water crops every day so they keep growing steadily."
+        },
+        {
+            "key": "ui.loading.tip.3",
+            "value": "Tip: Bring the right tool when mining rocks, chopping trees, or cutting weeds."
+        },
+        {
+            "key": "ui.loading.tip.4",
+            "value": "Tip: Check your backpack before leaving the farm so you do not miss key items."
+        },
+        {
+            "key": "ui.loading.tip.5",
+            "value": "Tip: Save often to protect your progress."
+        },
+        {
+            "key": "ui.loading.title",
+            "value": "LOADING..."
+        },
+        {
             "key": "ui.menu.inventory",
             "value": "Inventory"
         },
@@ -1113,12 +1325,36 @@
             "value": "Cow"
         },
         {
+            "key": "world.crop.corn.desc",
+            "value": "A crop unlocked at Lv.11 that must be watered daily to grow."
+        },
+        {
+            "key": "world.crop.corn.name",
+            "value": "Corn Crop"
+        },
+        {
             "key": "world.crop.fall.pumpkin.desc",
             "value": "Pumpkin growing in the field. Needs daily watering and thrives during Fall."
         },
         {
             "key": "world.crop.fall.pumpkin.name",
             "value": "Pumpkin"
+        },
+        {
+            "key": "world.crop.fall.wheat.desc",
+            "value": "A fall crop that must be watered daily to grow."
+        },
+        {
+            "key": "world.crop.fall.wheat.name",
+            "value": "Wheat Crop"
+        },
+        {
+            "key": "world.crop.potato.desc",
+            "value": "A crop unlocked at Lv.2 that must be watered daily to grow."
+        },
+        {
+            "key": "world.crop.potato.name",
+            "value": "Potato Crop"
         },
         {
             "key": "world.crop.spring.asparagus.desc",
@@ -1138,35 +1374,75 @@
         },
         {
             "key": "world.crop.spring.potato.desc",
-            "value": "Potato growing in the field. Needs daily watering and thrives during Spring."
+            "value": "A spring crop that must be watered daily to grow."
         },
         {
             "key": "world.crop.spring.potato.name",
-            "value": "Potato"
+            "value": "Potato Crop"
         },
         {
             "key": "world.crop.spring.strawberry.desc",
-            "value": "Strawberry growing in the field. Needs daily watering and thrives during Spring."
+            "value": "A spring crop that must be watered daily to grow."
         },
         {
             "key": "world.crop.spring.strawberry.name",
-            "value": "Strawberry"
+            "value": "Strawberry Crop"
+        },
+        {
+            "key": "world.crop.spring.turnip.desc",
+            "value": "A spring crop that must be watered daily to grow."
+        },
+        {
+            "key": "world.crop.spring.turnip.name",
+            "value": "Turnip Crop"
+        },
+        {
+            "key": "world.crop.strawberry.desc",
+            "value": "A crop unlocked at Lv.15 that must be watered daily to grow."
+        },
+        {
+            "key": "world.crop.strawberry.name",
+            "value": "Strawberry Crop"
         },
         {
             "key": "world.crop.summer.corn.desc",
-            "value": "Corn growing in the field. Needs daily watering and thrives during Summer."
+            "value": "A summer crop that must be watered daily to grow."
         },
         {
             "key": "world.crop.summer.corn.name",
-            "value": "Corn"
+            "value": "Corn Crop"
         },
         {
             "key": "world.crop.summer.tomato.desc",
-            "value": "Tomato growing in the field. Needs daily watering and thrives during Summer."
+            "value": "A summer crop that must be watered daily to grow."
         },
         {
             "key": "world.crop.summer.tomato.name",
-            "value": "Tomato"
+            "value": "Tomato Crop"
+        },
+        {
+            "key": "world.crop.tomato.desc",
+            "value": "A crop unlocked at Lv.7 that must be watered daily to grow."
+        },
+        {
+            "key": "world.crop.tomato.name",
+            "value": "Tomato Crop"
+        },
+        {
+            "key": "world.crop.turnip.desc",
+            "value": "A crop unlocked at Lv.1 that must be watered daily to grow."
+        },
+        {
+            "key": "world.crop.turnip.name",
+            "value": "Turnip Crop"
+        },
+        {
+            "key": "world.crop.wheat.desc",
+            "value": "A crop unlocked at Lv.4 that must be watered daily to grow."
+        },
+        {
+            "key": "world.crop.wheat.name",
+            "value": "Wheat Crop"
         },
         {
             "key": "world.crop.winter.spinach.desc",
@@ -1186,7 +1462,7 @@
         },
         {
             "key": "world.node.gold.desc",
-            "value": "A resource node that requires Pickaxe tier 3 and returns after roughly 10 days."
+            "value": "A resource node requiring Pickaxe tier 3 or higher."
         },
         {
             "key": "world.node.gold.name",
@@ -1194,7 +1470,7 @@
         },
         {
             "key": "world.node.iron.desc",
-            "value": "A resource node that requires Pickaxe tier 2 and returns after roughly 7 days."
+            "value": "A resource node requiring Pickaxe tier 2 or higher."
         },
         {
             "key": "world.node.iron.name",
@@ -1202,11 +1478,11 @@
         },
         {
             "key": "world.node.rock.desc",
-            "value": "A resource node that requires Pickaxe tier 1 and returns after roughly 3 days."
+            "value": "A resource node requiring Pickaxe tier 1 or higher."
         },
         {
             "key": "world.node.rock.name",
-            "value": "Stone Rock"
+            "value": "Rock"
         },
         {
             "key": "world.tree.apple.desc",
@@ -1263,74 +1539,6 @@
         {
             "key": "world.utility.sprinkler.t2.name",
             "value": "Sprinkler T2"
-        },
-        {
-            "key": "item.seed.oak_woodtree.name",
-            "value": "Oak Tree Seed"
-        },
-        {
-            "key": "item.seed.oak_woodtree.desc",
-            "value": "A seed for growing an oak wood tree."
-        },
-        {
-            "key": "item.seed.brech_woodtree.name",
-            "value": "Birch Tree Seed"
-        },
-        {
-            "key": "item.seed.brech_woodtree.desc",
-            "value": "A seed for growing a birch wood tree."
-        },
-        {
-            "key": "m1.portal.farm_to_town.name",
-            "value": "Portal to Town"
-        },
-        {
-            "key": "ui.loading.title",
-            "value": "LOADING..."
-        },
-        {
-            "key": "ui.loading.scene",
-            "value": "Loading scene {0}"
-        },
-        {
-            "key": "ui.loading.percent",
-            "value": "{0}%"
-        },
-        {
-            "key": "ui.loading.scene_name.scene",
-            "value": "Scene"
-        },
-        {
-            "key": "ui.loading.scene_name.FarmScene",
-            "value": "Farm"
-        },
-        {
-            "key": "ui.loading.scene_name.TownScene",
-            "value": "Town"
-        },
-        {
-            "key": "ui.loading.scene_name.MainMenuScene",
-            "value": "Main Menu"
-        },
-        {
-            "key": "ui.loading.tip.1",
-            "value": "Tip: Gather resources and upgrade tools to survive more easily!"
-        },
-        {
-            "key": "ui.loading.tip.2",
-            "value": "Tip: Water crops every day so they keep growing steadily."
-        },
-        {
-            "key": "ui.loading.tip.3",
-            "value": "Tip: Bring the right tool when mining rocks, chopping trees, or cutting weeds."
-        },
-        {
-            "key": "ui.loading.tip.4",
-            "value": "Tip: Check your backpack before leaving the farm so you do not miss key items."
-        },
-        {
-            "key": "ui.loading.tip.5",
-            "value": "Tip: Save often to protect your progress."
         }
     ]
 }

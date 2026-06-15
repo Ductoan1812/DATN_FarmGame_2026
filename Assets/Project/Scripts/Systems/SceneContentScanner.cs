@@ -674,8 +674,7 @@ public class SceneContentScanner : MonoBehaviour
         if (tile == null || tile.entityData == null)
             return -1;
 
-        var stageModule = tile.entityData.modules?.OfType<StageModule>().FirstOrDefault();
-        int stageCount = stageModule?.stages?.Length ?? 0;
+        int stageCount = ResolveMarkerStageCount(tile.entityData);
         if (stageCount <= 0)
             return -1;
 
@@ -694,5 +693,18 @@ public class SceneContentScanner : MonoBehaviour
             default:
                 return -1;
         }
+    }
+
+    private static int ResolveMarkerStageCount(EntityData entityData)
+    {
+        if (entityData?.modules == null)
+            return 0;
+
+        var stageModule = entityData.modules.OfType<StageModule>().FirstOrDefault();
+        if (stageModule?.stages != null && stageModule.stages.Length > 0)
+            return stageModule.stages.Length;
+
+        var resourceGrowthModule = entityData.modules.OfType<ResourceGrowthModule>().FirstOrDefault();
+        return resourceGrowthModule?.stages?.Length ?? 0;
     }
 }

@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52f5ed4ba60c6d94a98474daadf71b3e, type: 3}
   m_Name: LoadingScreenPrefabConfig
   m_EditorClassIdentifier: 
-  prefab: {fileID: 989034730384036303, guid: e65d73aad26886a4d96cc5d058914ed5, type: 3}
+  prefab: {fileID: 2589190015124358310, guid: ca6d116fdec587c4d8faae35a4ee1c7f, type: 3}

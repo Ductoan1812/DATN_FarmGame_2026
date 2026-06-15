@@ -25,12 +25,36 @@
             "value": "Rắn Đồng"
         },
         {
+            "key": "item.crop.corn.desc",
+            "value": "Ngô tươi dùng để bán, nấu ăn hoặc giao nhiệm vụ."
+        },
+        {
+            "key": "item.crop.corn.name",
+            "value": "Ngô"
+        },
+        {
             "key": "item.crop.fall.pumpkin.desc",
             "value": "Bí Ngô tươi. Cây lợi nhuận cao cuối mùa, thích hợp chuẩn bị vốn nâng cấp."
         },
         {
             "key": "item.crop.fall.pumpkin.name",
             "value": "Bí Ngô"
+        },
+        {
+            "key": "item.crop.fall.wheat.desc",
+            "value": "Lúa Mì tươi dùng để bán, nấu ăn hoặc giao nhiệm vụ."
+        },
+        {
+            "key": "item.crop.fall.wheat.name",
+            "value": "Lúa Mì"
+        },
+        {
+            "key": "item.crop.potato.desc",
+            "value": "Khoai Tây tươi dùng để bán, nấu ăn hoặc giao nhiệm vụ."
+        },
+        {
+            "key": "item.crop.potato.name",
+            "value": "Khoai Tây"
         },
         {
             "key": "item.crop.spring.asparagus.desc",
@@ -50,7 +74,7 @@
         },
         {
             "key": "item.crop.spring.potato.desc",
-            "value": "Khoai Tây tươi. Nguyên liệu tốt cho món chiên và bán sớm."
+            "value": "Khoai Tây tươi dùng để bán, nấu ăn hoặc giao nhiệm vụ."
         },
         {
             "key": "item.crop.spring.potato.name",
@@ -58,15 +82,31 @@
         },
         {
             "key": "item.crop.spring.strawberry.desc",
-            "value": "Dâu Tây tươi. Cây lợi nhuận cao nếu trồng sớm trong mùa Xuân."
+            "value": "Dâu Tây tươi dùng để bán, nấu ăn hoặc giao nhiệm vụ."
         },
         {
             "key": "item.crop.spring.strawberry.name",
             "value": "Dâu Tây"
         },
         {
+            "key": "item.crop.spring.turnip.desc",
+            "value": "Củ Cải tươi dùng để bán, nấu ăn hoặc giao nhiệm vụ."
+        },
+        {
+            "key": "item.crop.spring.turnip.name",
+            "value": "Củ Cải"
+        },
+        {
+            "key": "item.crop.strawberry.desc",
+            "value": "Dâu Tây tươi dùng để bán, nấu ăn hoặc giao nhiệm vụ."
+        },
+        {
+            "key": "item.crop.strawberry.name",
+            "value": "Dâu Tây"
+        },
+        {
             "key": "item.crop.summer.corn.desc",
-            "value": "Ngô tươi. Có thể ăn, bán, hoặc xay thành dầu và thức ăn."
+            "value": "Ngô tươi dùng để bán, nấu ăn hoặc giao nhiệm vụ."
         },
         {
             "key": "item.crop.summer.corn.name",
@@ -74,10 +114,18 @@
         },
         {
             "key": "item.crop.summer.tomato.desc",
-            "value": "Cà Chua tươi. Nguyên liệu bếp quan trọng, tái thu hoạch đều."
+            "value": "Cà Chua tươi dùng để bán, nấu ăn hoặc giao nhiệm vụ."
         },
         {
             "key": "item.crop.summer.tomato.name",
+            "value": "Cà Chua"
+        },
+        {
+            "key": "item.crop.tomato.desc",
+            "value": "Cà Chua tươi dùng để bán, nấu ăn hoặc giao nhiệm vụ."
+        },
+        {
+            "key": "item.crop.tomato.name",
             "value": "Cà Chua"
         },
         {
@@ -87,6 +135,22 @@
         {
             "key": "item.crop.tree.apple.name",
             "value": "Táo"
+        },
+        {
+            "key": "item.crop.turnip.desc",
+            "value": "Củ Cải tươi dùng để bán, nấu ăn hoặc giao nhiệm vụ."
+        },
+        {
+            "key": "item.crop.turnip.name",
+            "value": "Củ Cải"
+        },
+        {
+            "key": "item.crop.wheat.desc",
+            "value": "Lúa Mì tươi dùng để bán, nấu ăn hoặc giao nhiệm vụ."
+        },
+        {
+            "key": "item.crop.wheat.name",
+            "value": "Lúa Mì"
         },
         {
             "key": "item.crop.winter.spinach.desc",
@@ -242,7 +306,7 @@
         },
         {
             "key": "item.mat.gold_ore.desc",
-            "value": "Quặng quý dùng để luyện thỏi vàng."
+            "value": "Tài nguyên thu được khi khai thác quặng vàng. Có thể bán hoặc dùng cho chế tạo."
         },
         {
             "key": "item.mat.gold_ore.name",
@@ -266,7 +330,7 @@
         },
         {
             "key": "item.mat.iron_ore.desc",
-            "value": "Quặng cứng dùng để luyện thỏi sắt."
+            "value": "Tài nguyên thu được khi khai thác quặng sắt. Có thể bán hoặc dùng cho chế tạo."
         },
         {
             "key": "item.mat.iron_ore.name",
@@ -282,7 +346,7 @@
         },
         {
             "key": "item.mat.stone.desc",
-            "value": "Vật liệu khai thác cơ bản cho lò nung và hàng rào đá."
+            "value": "Tài nguyên thu được khi khai thác đá thường. Có thể bán hoặc dùng cho chế tạo."
         },
         {
             "key": "item.mat.stone.name",
@@ -361,12 +425,52 @@
             "value": "Sữa"
         },
         {
+            "key": "item.seed.brech_woodtree.desc",
+            "value": "Hạt giống trồng cây bạch dương lấy gỗ."
+        },
+        {
+            "key": "item.seed.brech_woodtree.name",
+            "value": "Hạt giống bạch dương"
+        },
+        {
+            "key": "item.seed.corn.desc",
+            "value": "Mở bán từ Lv.11. Cây trưởng thành sau khoảng 9 ngày được tưới. Sau lần thu hoạch đầu, cây cho thu hoạch lại sau 4 ngày."
+        },
+        {
+            "key": "item.seed.corn.name",
+            "value": "Hạt Giống Ngô"
+        },
+        {
             "key": "item.seed.fall.pumpkin.desc",
             "value": "Hạt giống mùa Thu. Mất 13 ngày để trưởng thành. Thu hoạch một lần rồi cây biến mất. Nếu qua mùa mới cây sẽ héo."
         },
         {
             "key": "item.seed.fall.pumpkin.name",
             "value": "Hạt Bí Ngô"
+        },
+        {
+            "key": "item.seed.fall.wheat.desc",
+            "value": "Gieo vào mùa Thu. Cây trưởng thành sau khoảng 5 ngày được tưới."
+        },
+        {
+            "key": "item.seed.fall.wheat.name",
+            "value": "Hạt Giống Lúa Mì"
+        },
+        {
+            "key": "item.seed.oak_woodtree.desc",
+            "value": "Hạt giống trồng cây sồi lấy gỗ."
+        },
+        {
+            "key": "item.seed.oak_woodtree.name",
+            "value": "Hạt giống sồi"
+        },
+        {
+            "key": "item.seed.potato.desc",
+            "value": "Mở bán từ Lv.2. Cây trưởng thành sau khoảng 5 ngày được tưới."
+        },
+        {
+            "key": "item.seed.potato.name",
+            "value": "Hạt Giống Khoai Tây"
         },
         {
             "key": "item.seed.spring.asparagus.desc",
@@ -386,35 +490,59 @@
         },
         {
             "key": "item.seed.spring.potato.desc",
-            "value": "Hạt giống mùa Xuân. Mất 6 ngày để trưởng thành. Thu hoạch một lần rồi cây biến mất. Nếu qua mùa mới cây sẽ héo."
+            "value": "Gieo vào mùa Xuân. Cây trưởng thành sau khoảng 6 ngày được tưới."
         },
         {
             "key": "item.seed.spring.potato.name",
-            "value": "Hạt Khoai Tây"
+            "value": "Hạt Giống Khoai Tây"
         },
         {
             "key": "item.seed.spring.strawberry.desc",
-            "value": "Hạt giống mùa Xuân. Mất 8 ngày để trưởng thành. Sau vụ đầu, cây cho thu hoạch lại mỗi 4 ngày. Nếu qua mùa mới cây sẽ héo."
+            "value": "Gieo vào mùa Xuân. Cây trưởng thành sau khoảng 8 ngày được tưới. Sau lần thu hoạch đầu, cây cho thu hoạch lại sau 3 ngày."
         },
         {
             "key": "item.seed.spring.strawberry.name",
-            "value": "Hạt Dâu Tây"
+            "value": "Hạt Giống Dâu Tây"
+        },
+        {
+            "key": "item.seed.spring.turnip.desc",
+            "value": "Gieo vào mùa Xuân. Cây trưởng thành sau khoảng 4 ngày được tưới."
+        },
+        {
+            "key": "item.seed.spring.turnip.name",
+            "value": "Hạt Giống Củ Cải"
+        },
+        {
+            "key": "item.seed.strawberry.desc",
+            "value": "Mở bán từ Lv.15. Cây trưởng thành sau khoảng 8 ngày được tưới. Sau lần thu hoạch đầu, cây cho thu hoạch lại sau 3 ngày."
+        },
+        {
+            "key": "item.seed.strawberry.name",
+            "value": "Hạt Giống Dâu Tây"
         },
         {
             "key": "item.seed.summer.corn.desc",
-            "value": "Hạt giống mùa Hạ. Mất 10 ngày để trưởng thành. Sau vụ đầu, cây cho thu hoạch lại mỗi 4 ngày. Nếu qua mùa mới cây sẽ héo."
+            "value": "Gieo vào mùa Hạ. Cây trưởng thành sau khoảng 10 ngày được tưới. Sau lần thu hoạch đầu, cây cho thu hoạch lại sau 4 ngày."
         },
         {
             "key": "item.seed.summer.corn.name",
-            "value": "Hạt Ngô"
+            "value": "Hạt Giống Ngô"
         },
         {
             "key": "item.seed.summer.tomato.desc",
-            "value": "Hạt giống mùa Hạ. Mất 11 ngày để trưởng thành. Sau vụ đầu, cây cho thu hoạch lại mỗi 4 ngày. Nếu qua mùa mới cây sẽ héo."
+            "value": "Gieo vào mùa Hạ. Cây trưởng thành sau khoảng 8 ngày được tưới. Sau lần thu hoạch đầu, cây cho thu hoạch lại sau 3 ngày."
         },
         {
             "key": "item.seed.summer.tomato.name",
-            "value": "Hạt Cà Chua"
+            "value": "Hạt Giống Cà Chua"
+        },
+        {
+            "key": "item.seed.tomato.desc",
+            "value": "Mở bán từ Lv.7. Cây trưởng thành sau khoảng 7 ngày được tưới. Sau lần thu hoạch đầu, cây cho thu hoạch lại sau 3 ngày."
+        },
+        {
+            "key": "item.seed.tomato.name",
+            "value": "Hạt Giống Cà Chua"
         },
         {
             "key": "item.seed.tree.apple.desc",
@@ -423,6 +551,22 @@
         {
             "key": "item.seed.tree.apple.name",
             "value": "Cây Non Táo"
+        },
+        {
+            "key": "item.seed.turnip.desc",
+            "value": "Mở bán từ Lv.1. Cây trưởng thành sau khoảng 4 ngày được tưới."
+        },
+        {
+            "key": "item.seed.turnip.name",
+            "value": "Hạt Giống Củ Cải"
+        },
+        {
+            "key": "item.seed.wheat.desc",
+            "value": "Mở bán từ Lv.4. Cây trưởng thành sau khoảng 4 ngày được tưới."
+        },
+        {
+            "key": "item.seed.wheat.name",
+            "value": "Hạt Giống Lúa Mì"
         },
         {
             "key": "item.seed.winter.spinach.desc",
@@ -434,7 +578,7 @@
         },
         {
             "key": "item.tool.axe.t1.desc",
-            "value": "Rìu Đá cấp 1. Gây 1 sát thương cơ bản với chi phí 3 thể lực mỗi lần dùng."
+            "value": "Rìu Đá cấp 1. Gây 0 sát thương cơ bản với chi phí 3 thể lực mỗi lần dùng."
         },
         {
             "key": "item.tool.axe.t1.name",
@@ -442,7 +586,7 @@
         },
         {
             "key": "item.tool.axe.t2.desc",
-            "value": "Rìu Đồng cấp 2. Gây 2 sát thương cơ bản với chi phí 3 thể lực mỗi lần dùng."
+            "value": "Rìu Đồng cấp 2. Gây 0 sát thương cơ bản với chi phí 3 thể lực mỗi lần dùng."
         },
         {
             "key": "item.tool.axe.t2.name",
@@ -450,7 +594,7 @@
         },
         {
             "key": "item.tool.axe.t3.desc",
-            "value": "Rìu Sắt cấp 3. Gây 4 sát thương cơ bản với chi phí 2 thể lực mỗi lần dùng."
+            "value": "Rìu Sắt cấp 3. Gây 0 sát thương cơ bản với chi phí 2 thể lực mỗi lần dùng."
         },
         {
             "key": "item.tool.axe.t3.name",
@@ -458,7 +602,7 @@
         },
         {
             "key": "item.tool.axe.t4.desc",
-            "value": "Rìu Vàng cấp 4. Gây 6 sát thương cơ bản với chi phí 2 thể lực mỗi lần dùng."
+            "value": "Rìu Vàng cấp 4. Gây 0 sát thương cơ bản với chi phí 2 thể lực mỗi lần dùng."
         },
         {
             "key": "item.tool.axe.t4.name",
@@ -466,7 +610,7 @@
         },
         {
             "key": "item.tool.hoe.t1.desc",
-            "value": "Cuốc cấp 1. Cuốc vùng 1x1 với chi phí 2 thể lực mỗi lần."
+            "value": "Cuốc cấp 1. Cuốc 1 ô đất với chi phí 2 thể lực mỗi lần dùng."
         },
         {
             "key": "item.tool.hoe.t1.name",
@@ -474,7 +618,7 @@
         },
         {
             "key": "item.tool.hoe.t2.desc",
-            "value": "Cuốc Đồng cấp 2. Cuốc vùng 2x1 với chi phí 2 thể lực mỗi lần."
+            "value": "Cuốc Đồng cấp 2. Cuốc 1 ô đất với chi phí 2 thể lực mỗi lần dùng."
         },
         {
             "key": "item.tool.hoe.t2.name",
@@ -482,7 +626,7 @@
         },
         {
             "key": "item.tool.hoe.t3.desc",
-            "value": "Cuốc Sắt cấp 3. Cuốc vùng 3x1 với chi phí 2 thể lực mỗi lần."
+            "value": "Cuốc Sắt cấp 3. Cuốc 1 ô đất với chi phí 2 thể lực mỗi lần dùng."
         },
         {
             "key": "item.tool.hoe.t3.name",
@@ -490,7 +634,7 @@
         },
         {
             "key": "item.tool.hoe.t4.desc",
-            "value": "Cuốc Vàng cấp 4. Cuốc vùng 5x1 với chi phí 1 thể lực mỗi lần."
+            "value": "Cuốc Vàng cấp 4. Cuốc 1 ô đất với chi phí 1 thể lực mỗi lần dùng."
         },
         {
             "key": "item.tool.hoe.t4.name",
@@ -498,7 +642,7 @@
         },
         {
             "key": "item.tool.pickaxe.t1.desc",
-            "value": "Cuốc Chim Đá cấp 1. Gây 1 sát thương cơ bản với chi phí 3 thể lực mỗi lần dùng."
+            "value": "Cuốc Chim Đá cấp 1. Gây 2 sát thương cơ bản với chi phí 3 thể lực mỗi lần dùng."
         },
         {
             "key": "item.tool.pickaxe.t1.name",
@@ -506,7 +650,7 @@
         },
         {
             "key": "item.tool.pickaxe.t2.desc",
-            "value": "Cuốc Chim Đồng cấp 2. Gây 2 sát thương cơ bản với chi phí 3 thể lực mỗi lần dùng."
+            "value": "Cuốc Chim Đồng cấp 2. Gây 5 sát thương cơ bản với chi phí 3 thể lực mỗi lần dùng."
         },
         {
             "key": "item.tool.pickaxe.t2.name",
@@ -514,7 +658,7 @@
         },
         {
             "key": "item.tool.pickaxe.t3.desc",
-            "value": "Cuốc Chim Sắt cấp 3. Gây 4 sát thương cơ bản với chi phí 2 thể lực mỗi lần dùng."
+            "value": "Cuốc Chim Sắt cấp 3. Gây 10 sát thương cơ bản với chi phí 2 thể lực mỗi lần dùng."
         },
         {
             "key": "item.tool.pickaxe.t3.name",
@@ -522,15 +666,23 @@
         },
         {
             "key": "item.tool.pickaxe.t4.desc",
-            "value": "Cuốc Chim Vàng cấp 4. Gây 8 sát thương cơ bản với chi phí 2 thể lực mỗi lần dùng."
+            "value": "Cuốc Chim Vàng cấp 4. Gây 18 sát thương cơ bản với chi phí 2 thể lực mỗi lần dùng."
         },
         {
             "key": "item.tool.pickaxe.t4.name",
             "value": "Cuốc Chim Vàng"
         },
         {
+            "key": "item.tool.pickaxe.t5.desc",
+            "value": "Cuốc Chim Cổ cấp 5. Gây 30 sát thương cơ bản với chi phí 1 thể lực mỗi lần dùng."
+        },
+        {
+            "key": "item.tool.pickaxe.t5.name",
+            "value": "Cuốc Chim Cổ"
+        },
+        {
             "key": "item.tool.scythe.t1.desc",
-            "value": "Liềm Đá cấp 1. Gây 3 sát thương cơ bản với chi phí 2 thể lực mỗi lần dùng."
+            "value": "Liềm Đá cấp 1. Gây 5 sát thương cơ bản với chi phí 4 thể lực mỗi lần dùng."
         },
         {
             "key": "item.tool.scythe.t1.name",
@@ -538,7 +690,7 @@
         },
         {
             "key": "item.tool.scythe.t2.desc",
-            "value": "Liềm Đồng cấp 2. Gây 5 sát thương cơ bản với chi phí 2 thể lực mỗi lần dùng."
+            "value": "Liềm Đồng cấp 2. Gây 8 sát thương cơ bản với chi phí 3 thể lực mỗi lần dùng."
         },
         {
             "key": "item.tool.scythe.t2.name",
@@ -546,7 +698,7 @@
         },
         {
             "key": "item.tool.scythe.t3.desc",
-            "value": "Liềm Sắt cấp 3. Gây 8 sát thương cơ bản với chi phí 2 thể lực mỗi lần dùng."
+            "value": "Liềm Sắt cấp 3. Gây 14 sát thương cơ bản với chi phí 2 thể lực mỗi lần dùng."
         },
         {
             "key": "item.tool.scythe.t3.name",
@@ -554,15 +706,23 @@
         },
         {
             "key": "item.tool.scythe.t4.desc",
-            "value": "Liềm Vàng cấp 4. Gây 12 sát thương cơ bản với chi phí 1 thể lực mỗi lần dùng."
+            "value": "Liềm Vàng cấp 4. Gây 24 sát thương cơ bản với chi phí 2 thể lực mỗi lần dùng."
         },
         {
             "key": "item.tool.scythe.t4.name",
             "value": "Liềm Vàng"
         },
         {
+            "key": "item.tool.scythe.t5.desc",
+            "value": "Liềm Cổ cấp 5. Gây 38 sát thương cơ bản với chi phí 1 thể lực mỗi lần dùng."
+        },
+        {
+            "key": "item.tool.scythe.t5.name",
+            "value": "Liềm Cổ"
+        },
+        {
             "key": "item.tool.watering_can.t1.desc",
-            "value": "Bình Tưới cấp 1. Tưới vùng 1x1 và chứa khoảng 40 lần dùng trước khi phải lấy nước lại."
+            "value": "Bình Tưới cấp 1. Tưới 1 ô mỗi lần dùng và chứa khoảng 20 lượt tưới trước khi phải lấy nước lại."
         },
         {
             "key": "item.tool.watering_can.t1.name",
@@ -570,7 +730,7 @@
         },
         {
             "key": "item.tool.watering_can.t2.desc",
-            "value": "Bình Tưới Đồng cấp 2. Tưới vùng 1x3 và chứa khoảng 55 lần dùng trước khi phải lấy nước lại."
+            "value": "Bình Tưới Đồng cấp 2. Tưới 1 ô mỗi lần dùng và chứa khoảng 35 lượt tưới trước khi phải lấy nước lại."
         },
         {
             "key": "item.tool.watering_can.t2.name",
@@ -578,7 +738,7 @@
         },
         {
             "key": "item.tool.watering_can.t3.desc",
-            "value": "Bình Tưới Sắt cấp 3. Tưới vùng 3x3 và chứa khoảng 70 lần dùng trước khi phải lấy nước lại."
+            "value": "Bình Tưới Sắt cấp 3. Tưới 1 ô mỗi lần dùng và chứa khoảng 50 lượt tưới trước khi phải lấy nước lại."
         },
         {
             "key": "item.tool.watering_can.t3.name",
@@ -586,11 +746,15 @@
         },
         {
             "key": "item.tool.watering_can.t4.desc",
-            "value": "Bình Tưới Vàng cấp 4. Tưới vùng 3x3 và chứa khoảng 100 lần dùng trước khi phải lấy nước lại."
+            "value": "Bình Tưới Vàng cấp 4. Tưới 1 ô mỗi lần dùng và chứa khoảng 70 lượt tưới trước khi phải lấy nước lại."
         },
         {
             "key": "item.tool.watering_can.t4.name",
             "value": "Bình Tưới Vàng"
+        },
+        {
+            "key": "m1.portal.farm_to_town.name",
+            "value": "Cổng đến Thị trấn"
         },
         {
             "key": "npc.shop.bac_ba.desc",
@@ -681,6 +845,54 @@
             "value": "Chế tạo"
         },
         {
+            "key": "ui.loading.percent",
+            "value": "{0}%"
+        },
+        {
+            "key": "ui.loading.scene",
+            "value": "Đang tải cảnh {0}"
+        },
+        {
+            "key": "ui.loading.scene_name.FarmScene",
+            "value": "Nông trại"
+        },
+        {
+            "key": "ui.loading.scene_name.MainMenuScene",
+            "value": "Màn hình chính"
+        },
+        {
+            "key": "ui.loading.scene_name.TownScene",
+            "value": "Thị trấn"
+        },
+        {
+            "key": "ui.loading.scene_name.scene",
+            "value": "Cảnh"
+        },
+        {
+            "key": "ui.loading.tip.1",
+            "value": "Mẹo: Thu thập tài nguyên và nâng cấp công cụ để sinh tồn dễ dàng hơn!"
+        },
+        {
+            "key": "ui.loading.tip.2",
+            "value": "Mẹo: Tưới cây mỗi ngày để cây trồng phát triển ổn định."
+        },
+        {
+            "key": "ui.loading.tip.3",
+            "value": "Mẹo: Mang đúng công cụ khi khai thác đá, cây và cỏ dại."
+        },
+        {
+            "key": "ui.loading.tip.4",
+            "value": "Mẹo: Kiểm tra túi đồ trước khi ra khỏi nông trại để tránh thiếu vật phẩm."
+        },
+        {
+            "key": "ui.loading.tip.5",
+            "value": "Mẹo: Lưu game thường xuyên để bảo vệ tiến độ của bạn."
+        },
+        {
+            "key": "ui.loading.title",
+            "value": "ĐANG TẢI..."
+        },
+        {
             "key": "ui.processor.open",
             "value": "Vận hành"
         },
@@ -717,12 +929,36 @@
             "value": "Bò"
         },
         {
+            "key": "world.crop.corn.desc",
+            "value": "Cây trồng mở ở Lv.11, cần được tưới mỗi ngày để phát triển."
+        },
+        {
+            "key": "world.crop.corn.name",
+            "value": "Cây Ngô"
+        },
+        {
             "key": "world.crop.fall.pumpkin.desc",
             "value": "Cây Bí Ngô ngoài ruộng. Cần tưới nước hằng ngày để phát triển trong mùa Thu."
         },
         {
             "key": "world.crop.fall.pumpkin.name",
             "value": "Bí Ngô"
+        },
+        {
+            "key": "world.crop.fall.wheat.desc",
+            "value": "Cây trồng mùa Thu, cần được tưới mỗi ngày để phát triển."
+        },
+        {
+            "key": "world.crop.fall.wheat.name",
+            "value": "Cây Lúa Mì"
+        },
+        {
+            "key": "world.crop.potato.desc",
+            "value": "Cây trồng mở ở Lv.2, cần được tưới mỗi ngày để phát triển."
+        },
+        {
+            "key": "world.crop.potato.name",
+            "value": "Cây Khoai Tây"
         },
         {
             "key": "world.crop.spring.asparagus.desc",
@@ -742,35 +978,75 @@
         },
         {
             "key": "world.crop.spring.potato.desc",
-            "value": "Cây Khoai Tây ngoài ruộng. Cần tưới nước hằng ngày để phát triển trong mùa Xuân."
+            "value": "Cây trồng mùa Xuân, cần được tưới mỗi ngày để phát triển."
         },
         {
             "key": "world.crop.spring.potato.name",
-            "value": "Khoai Tây"
+            "value": "Cây Khoai Tây"
         },
         {
             "key": "world.crop.spring.strawberry.desc",
-            "value": "Cây Dâu Tây ngoài ruộng. Cần tưới nước hằng ngày để phát triển trong mùa Xuân."
+            "value": "Cây trồng mùa Xuân, cần được tưới mỗi ngày để phát triển."
         },
         {
             "key": "world.crop.spring.strawberry.name",
-            "value": "Dâu Tây"
+            "value": "Cây Dâu Tây"
+        },
+        {
+            "key": "world.crop.spring.turnip.desc",
+            "value": "Cây trồng mùa Xuân, cần được tưới mỗi ngày để phát triển."
+        },
+        {
+            "key": "world.crop.spring.turnip.name",
+            "value": "Cây Củ Cải"
+        },
+        {
+            "key": "world.crop.strawberry.desc",
+            "value": "Cây trồng mở ở Lv.15, cần được tưới mỗi ngày để phát triển."
+        },
+        {
+            "key": "world.crop.strawberry.name",
+            "value": "Cây Dâu Tây"
         },
         {
             "key": "world.crop.summer.corn.desc",
-            "value": "Cây Ngô ngoài ruộng. Cần tưới nước hằng ngày để phát triển trong mùa Hạ."
+            "value": "Cây trồng mùa Hạ, cần được tưới mỗi ngày để phát triển."
         },
         {
             "key": "world.crop.summer.corn.name",
-            "value": "Ngô"
+            "value": "Cây Ngô"
         },
         {
             "key": "world.crop.summer.tomato.desc",
-            "value": "Cây Cà Chua ngoài ruộng. Cần tưới nước hằng ngày để phát triển trong mùa Hạ."
+            "value": "Cây trồng mùa Hạ, cần được tưới mỗi ngày để phát triển."
         },
         {
             "key": "world.crop.summer.tomato.name",
-            "value": "Cà Chua"
+            "value": "Cây Cà Chua"
+        },
+        {
+            "key": "world.crop.tomato.desc",
+            "value": "Cây trồng mở ở Lv.7, cần được tưới mỗi ngày để phát triển."
+        },
+        {
+            "key": "world.crop.tomato.name",
+            "value": "Cây Cà Chua"
+        },
+        {
+            "key": "world.crop.turnip.desc",
+            "value": "Cây trồng mở ở Lv.1, cần được tưới mỗi ngày để phát triển."
+        },
+        {
+            "key": "world.crop.turnip.name",
+            "value": "Cây Củ Cải"
+        },
+        {
+            "key": "world.crop.wheat.desc",
+            "value": "Cây trồng mở ở Lv.4, cần được tưới mỗi ngày để phát triển."
+        },
+        {
+            "key": "world.crop.wheat.name",
+            "value": "Cây Lúa Mì"
         },
         {
             "key": "world.crop.winter.spinach.desc",
@@ -790,7 +1066,7 @@
         },
         {
             "key": "world.node.gold.desc",
-            "value": "Node tài nguyên yêu cầu cuốc chim cấp 3 và hồi lại sau khoảng 10 ngày."
+            "value": "Điểm tài nguyên cần cuốc chim cấp 3 trở lên để khai thác."
         },
         {
             "key": "world.node.gold.name",
@@ -798,7 +1074,7 @@
         },
         {
             "key": "world.node.iron.desc",
-            "value": "Node tài nguyên yêu cầu cuốc chim cấp 2 và hồi lại sau khoảng 7 ngày."
+            "value": "Điểm tài nguyên cần cuốc chim cấp 2 trở lên để khai thác."
         },
         {
             "key": "world.node.iron.name",
@@ -806,7 +1082,7 @@
         },
         {
             "key": "world.node.rock.desc",
-            "value": "Node tài nguyên yêu cầu cuốc chim cấp 1 và hồi lại sau khoảng 3 ngày."
+            "value": "Điểm tài nguyên cần cuốc chim cấp 1 trở lên để khai thác."
         },
         {
             "key": "world.node.rock.name",
@@ -867,74 +1143,6 @@
         {
             "key": "world.utility.sprinkler.t2.name",
             "value": "Vòi tưới T2"
-        },
-        {
-            "key": "item.seed.oak_woodtree.name",
-            "value": "Hạt giống sồi"
-        },
-        {
-            "key": "item.seed.oak_woodtree.desc",
-            "value": "Hạt giống trồng cây sồi lấy gỗ."
-        },
-        {
-            "key": "item.seed.brech_woodtree.name",
-            "value": "Hạt giống bạch dương"
-        },
-        {
-            "key": "item.seed.brech_woodtree.desc",
-            "value": "Hạt giống trồng cây bạch dương lấy gỗ."
-        },
-        {
-            "key": "m1.portal.farm_to_town.name",
-            "value": "Cổng đến Thị trấn"
-        },
-        {
-            "key": "ui.loading.title",
-            "value": "ĐANG TẢI..."
-        },
-        {
-            "key": "ui.loading.scene",
-            "value": "Đang tải cảnh {0}"
-        },
-        {
-            "key": "ui.loading.percent",
-            "value": "{0}%"
-        },
-        {
-            "key": "ui.loading.scene_name.scene",
-            "value": "Cảnh"
-        },
-        {
-            "key": "ui.loading.scene_name.FarmScene",
-            "value": "Nông trại"
-        },
-        {
-            "key": "ui.loading.scene_name.TownScene",
-            "value": "Thị trấn"
-        },
-        {
-            "key": "ui.loading.scene_name.MainMenuScene",
-            "value": "Màn hình chính"
-        },
-        {
-            "key": "ui.loading.tip.1",
-            "value": "Mẹo: Thu thập tài nguyên và nâng cấp công cụ để sinh tồn dễ dàng hơn!"
-        },
-        {
-            "key": "ui.loading.tip.2",
-            "value": "Mẹo: Tưới cây mỗi ngày để cây trồng phát triển ổn định."
-        },
-        {
-            "key": "ui.loading.tip.3",
-            "value": "Mẹo: Mang đúng công cụ khi khai thác đá, cây và cỏ dại."
-        },
-        {
-            "key": "ui.loading.tip.4",
-            "value": "Mẹo: Kiểm tra túi đồ trước khi ra khỏi nông trại để tránh thiếu vật phẩm."
-        },
-        {
-            "key": "ui.loading.tip.5",
-            "value": "Mẹo: Lưu game thường xuyên để bảo vệ tiến độ của bạn."
         }
     ]
 }

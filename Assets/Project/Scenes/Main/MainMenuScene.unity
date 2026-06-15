@@ -1639,6 +1639,7 @@ MonoBehaviour:
   logoMainY: 270
   logoPanelY: 420
   logoMoveDuration: 0.25
+  loadingScreenPrefab: {fileID: 0}
 --- !u!114 &1270460621
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1958,8 +1959,15 @@ MonoBehaviour:
   labelMusicValue: {fileID: 0}
   labelSfxValue: {fileID: 0}
   languageDropdown: {fileID: 0}
+  languageButton: {fileID: 0}
+  languageValueLabel: {fileID: 0}
   interactKeyButton: {fileID: 0}
   interactKeyValueLabel: {fileID: 0}
+  fullscreenToggle: {fileID: 0}
+  vsyncToggle: {fileID: 0}
+  targetFpsButton: {fileID: 0}
+  targetFpsValueLabel: {fileID: 0}
+  resetDefaultsButton: {fileID: 0}
   saveButton: {fileID: 0}
   closeButton: {fileID: 0}
   backToMenuButton: {fileID: 0}

@@ -3519,24 +3519,34 @@ MonoBehaviour:
     - {fileID: 21300000, guid: f62b2bffc57cbc24d8810e889e60c8f1, type: 3}
     Tags: []
     Meta: 
-  - Name: Scythe01
-    Id: Art.Equipment.MeleeWeapon1H.Scythe01
+  - Name: Pickaxe
+    Id: Art.Equipment.MeleeWeapon1H.Pickaxe
     Edition: Art
     Collection: Equipment
-    Path: Assets/Project/Art/Farming/Equipment/MeleeWeapon1H/Scythe01.png
-    Sprite: {fileID: 21300000, guid: 3c9ef298d10d04242bcaa65f7f787d8c, type: 3}
+    Path: Assets/Project/Art/Farming/Equipment/MeleeWeapon1H/Pickaxe.png
+    Sprite: {fileID: 21300000, guid: 6db02e636aa57544d92eba28d461c4fa, type: 3}
     Sprites:
-    - {fileID: 21300000, guid: 3c9ef298d10d04242bcaa65f7f787d8c, type: 3}
+    - {fileID: 21300000, guid: 6db02e636aa57544d92eba28d461c4fa, type: 3}
     Tags: []
     Meta: 
-  - Name: Scythe02
-    Id: Art.Equipment.MeleeWeapon1H.Scythe02
+  - Name: Scyther
+    Id: Art.Equipment.MeleeWeapon1H.Scyther
     Edition: Art
     Collection: Equipment
-    Path: Assets/Project/Art/Farming/Equipment/MeleeWeapon1H/Scythe02.png
-    Sprite: {fileID: 21300000, guid: 621c021f74a3e1240aad8a56b324af61, type: 3}
+    Path: Assets/Project/Art/Farming/Equipment/MeleeWeapon1H/Scyther.png
+    Sprite: {fileID: 21300000, guid: d0f53d257ba556c4f99203c48ead1b24, type: 3}
     Sprites:
-    - {fileID: 21300000, guid: 621c021f74a3e1240aad8a56b324af61, type: 3}
+    - {fileID: 21300000, guid: d0f53d257ba556c4f99203c48ead1b24, type: 3}
+    Tags: []
+    Meta: 
+  - Name: watering
+    Id: Art.Equipment.MeleeWeapon1H.watering
+    Edition: Art
+    Collection: Equipment
+    Path: Assets/Project/Art/Farming/Equipment/MeleeWeapon1H/watering.png
+    Sprite: {fileID: 21300000, guid: ee8fb189985e969438188bea2ef8c53e, type: 3}
+    Sprites:
+    - {fileID: 21300000, guid: ee8fb189985e969438188bea2ef8c53e, type: 3}
     Tags: []
     Meta: 
   MeleeWeapon2H: []
