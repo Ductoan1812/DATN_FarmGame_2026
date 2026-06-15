@@ -18,29 +18,25 @@ MonoBehaviour:
   entries:
   - inventoryType: 1
     slotIndex: 0
-    itemData: {fileID: 11400000, guid: c037268b411d57e42b0c61bc33048304, type: 2}
+    itemData: {fileID: 11400000, guid: 1a52b0577ef9c474c981cf3eadf42084, type: 2}
     amount: 1
   - inventoryType: 1
     slotIndex: 1
-    itemData: {fileID: 11400000, guid: 09c3f3172e41c6d409a9eb40712e4b70, type: 2}
+    itemData: {fileID: 11400000, guid: 217cfd6043b073f4cabdf308fa55489c, type: 2}
     amount: 1
   - inventoryType: 1
     slotIndex: 2
-    itemData: {fileID: 11400000, guid: 53512c14c130fee4c9c6c06a153c9e7f, type: 2}
+    itemData: {fileID: 11400000, guid: f0106c693220d1747b30bf59eeef24bf, type: 2}
     amount: 1
   - inventoryType: 1
     slotIndex: 3
-    itemData: {fileID: 11400000, guid: cb901c282659d5e4babb60e30e228468, type: 2}
+    itemData: {fileID: 11400000, guid: 92876eec3385dc04492d0bf26e0d7e2d, type: 2}
     amount: 1
   - inventoryType: 1
     slotIndex: 4
-    itemData: {fileID: 11400000, guid: 65dbedad885678b4d8f4ea93eaeb0744, type: 2}
-    amount: 10
+    itemData: {fileID: 11400000, guid: d0be43257eee36442a1f946bbce01d16, type: 2}
+    amount: 1
   - inventoryType: 1
     slotIndex: 5
-    itemData: {fileID: 11400000, guid: 8d55ac336e54d9146a76da8a03c88c45, type: 2}
-    amount: 1
-  - inventoryType: 0
-    slotIndex: 0
-    itemData: {fileID: 11400000, guid: 61ed8cad932a67148b1f062d12bc0912, type: 2}
-    amount: 1
+    itemData: {fileID: 11400000, guid: b5f227b5fd3354e47bb543eb297c9a84, type: 2}
+    amount: 10

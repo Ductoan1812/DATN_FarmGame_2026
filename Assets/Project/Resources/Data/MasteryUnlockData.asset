@@ -13,21 +13,21 @@ MonoBehaviour:
   m_Name: MasteryUnlockData
   m_EditorClassIdentifier: 
   unlocks:
-  - masteryLevel: 3
+  - masteryLevel: 4
     unlockId: recipe.fertilizer.t1
     description: Unlock fertilizer crafting
-  - masteryLevel: 5
+  - masteryLevel: 4
     unlockId: tool.fertilizer.t1
     description: Unlock fertilizer use
-  - masteryLevel: 10
+  - masteryLevel: 8
     unlockId: recipe.sprinkler.t1
     description: Unlock sprinkler T1 crafting
-  - masteryLevel: 10
+  - masteryLevel: 8
     unlockId: tool.sprinkler.t1
     description: Unlock sprinkler T1 use
-  - masteryLevel: 20
+  - masteryLevel: 16
     unlockId: recipe.sprinkler.t2
     description: Unlock sprinkler T2 crafting
-  - masteryLevel: 20
+  - masteryLevel: 16
     unlockId: tool.sprinkler.t2
     description: Unlock sprinkler T2 use

@@ -1,0 +1,162 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: RuleRegion_Mine_Level_19
+  m_EditorClassIdentifier: Assembly-CSharp::SceneSpawnRuleRegionTile
+  regionKey: mine_level_19
+  entries:
+  - entryId: mine_l19_Marker_Mine_node_bigiron1_1
+    markerTile: {fileID: 11400000, guid: 42dcf2656fed15d42912514b7d8bd847, type: 2}
+    initialCountMin: 0
+    initialCountMax: 1
+    spawnMode: 2
+    respawnDelaySeconds: 45
+    respawnCountMin: 1
+    respawnCountMax: 1
+    spawnGroupOverride: 
+  - entryId: mine_l19_Marker_Mine_world_node_gold_1
+    markerTile: {fileID: 11400000, guid: 9c676af9a5a9dd941aa75f6bea64fe68, type: 2}
+    initialCountMin: 0
+    initialCountMax: 1
+    spawnMode: 2
+    respawnDelaySeconds: 45
+    respawnCountMin: 1
+    respawnCountMax: 1
+    spawnGroupOverride: 
+  - entryId: mine_l19_Marker_Mine_node_biggold1_2
+    markerTile: {fileID: 11400000, guid: 00a24c109e717c142a65d8da29e06c51, type: 2}
+    initialCountMin: 0
+    initialCountMax: 1
+    spawnMode: 2
+    respawnDelaySeconds: 45
+    respawnCountMin: 1
+    respawnCountMax: 1
+    spawnGroupOverride: 
+  - entryId: mine_l19_Marker_Mine_node_Emerald3_1
+    markerTile: {fileID: 11400000, guid: f9c2e2c5754dea948bf658be0cccc128, type: 2}
+    initialCountMin: 1
+    initialCountMax: 2
+    spawnMode: 2
+    respawnDelaySeconds: 45
+    respawnCountMin: 1
+    respawnCountMax: 1
+    spawnGroupOverride: 
+  - entryId: mine_l19_Marker_Mine_node_Emerald4_2
+    markerTile: {fileID: 11400000, guid: 8f9cda0380d884f428b6c9fd9601d92f, type: 2}
+    initialCountMin: 1
+    initialCountMax: 2
+    spawnMode: 2
+    respawnDelaySeconds: 45
+    respawnCountMin: 1
+    respawnCountMax: 1
+    spawnGroupOverride: 
+  - entryId: mine_l19_Marker_Mine_node_ruby3_1
+    markerTile: {fileID: 11400000, guid: 4b43993d99358524c9ef1e78cf31d81d, type: 2}
+    initialCountMin: 1
+    initialCountMax: 2
+    spawnMode: 2
+    respawnDelaySeconds: 45
+    respawnCountMin: 1
+    respawnCountMax: 1
+    spawnGroupOverride: 
+  - entryId: mine_l19_Marker_Mine_node_ruby4_2
+    markerTile: {fileID: 11400000, guid: d9c81c1bf4124ad4cabe3e2fa94cddeb, type: 2}
+    initialCountMin: 1
+    initialCountMax: 2
+    spawnMode: 2
+    respawnDelaySeconds: 45
+    respawnCountMin: 1
+    respawnCountMax: 1
+    spawnGroupOverride: 
+  - entryId: mine_l19_Marker_Mine_node_sapphire3_1
+    markerTile: {fileID: 11400000, guid: 10cc00443f5fc0b45b312ec8a4f48882, type: 2}
+    initialCountMin: 1
+    initialCountMax: 2
+    spawnMode: 2
+    respawnDelaySeconds: 45
+    respawnCountMin: 1
+    respawnCountMax: 1
+    spawnGroupOverride: 
+  - entryId: mine_l19_Marker_Mine_node_sapphire4_2
+    markerTile: {fileID: 11400000, guid: d35cb83146fd32e4c83c228ed7bcd277, type: 2}
+    initialCountMin: 1
+    initialCountMax: 2
+    spawnMode: 2
+    respawnDelaySeconds: 45
+    respawnCountMin: 1
+    respawnCountMax: 1
+    spawnGroupOverride: 
+  - entryId: mine_l19_Marker_Mine_node_StoneEmerald_1
+    markerTile: {fileID: 11400000, guid: d094802c2ec667546818fa6a248e3b0d, type: 2}
+    initialCountMin: 1
+    initialCountMax: 2
+    spawnMode: 2
+    respawnDelaySeconds: 45
+    respawnCountMin: 1
+    respawnCountMax: 1
+    spawnGroupOverride: 
+  - entryId: mine_l19_Marker_Mine_node_StoneEmerald1_2
+    markerTile: {fileID: 11400000, guid: 661eb6197ba9d7f4f9c19dff4c5e3dff, type: 2}
+    initialCountMin: 1
+    initialCountMax: 2
+    spawnMode: 2
+    respawnDelaySeconds: 45
+    respawnCountMin: 1
+    respawnCountMax: 1
+    spawnGroupOverride: 
+  - entryId: mine_l19_Marker_Mine_node_stoneRuby1_1
+    markerTile: {fileID: 11400000, guid: c893a1068322e044cb1bfa2d113fd5b5, type: 2}
+    initialCountMin: 1
+    initialCountMax: 2
+    spawnMode: 2
+    respawnDelaySeconds: 45
+    respawnCountMin: 1
+    respawnCountMax: 1
+    spawnGroupOverride: 
+  - entryId: mine_l19_Marker_Mine_node_stoneRuby2_2
+    markerTile: {fileID: 11400000, guid: 48708beb1de716b48ba5d07c0de573ea, type: 2}
+    initialCountMin: 1
+    initialCountMax: 2
+    spawnMode: 2
+    respawnDelaySeconds: 45
+    respawnCountMin: 1
+    respawnCountMax: 1
+    spawnGroupOverride: 
+  - entryId: mine_l19_Marker_Mine_node_StoneSapphire1_1
+    markerTile: {fileID: 11400000, guid: b57566bab3948fa4ebac06bdb399748c, type: 2}
+    initialCountMin: 1
+    initialCountMax: 2
+    spawnMode: 2
+    respawnDelaySeconds: 45
+    respawnCountMin: 1
+    respawnCountMax: 1
+    spawnGroupOverride: 
+  - entryId: mine_l19_Marker_Mine_node_StoneSapphire2_2
+    markerTile: {fileID: 11400000, guid: 56a68ae160462ea4dbe5aa54cfa5cb44, type: 2}
+    initialCountMin: 1
+    initialCountMax: 2
+    spawnMode: 2
+    respawnDelaySeconds: 45
+    respawnCountMin: 1
+    respawnCountMax: 1
+    spawnGroupOverride: 
+  - entryId: mine_l19_Marker_Mine_node_BigStone1_1
+    markerTile: {fileID: 11400000, guid: c90a4030207e3fb428efc3115d692692, type: 2}
+    initialCountMin: 0
+    initialCountMax: 1
+    spawnMode: 2
+    respawnDelaySeconds: 45
+    respawnCountMin: 1
+    respawnCountMax: 1
+    spawnGroupOverride: 
+  editorSprite: {fileID: -1828517551, guid: a4a24f3765a4d004cac302e32f2bb058, type: 3}
+  editorColor: {r: 0.58946526, g: 0.21842104, b: 1, a: 1}

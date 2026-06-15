@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94fa61fa1e1865f4282049662b67b447, type: 3}
+  m_Name: Quest_SampleFarmerWork
+  m_EditorClassIdentifier: 
+  id: quest.sample_farmer_work
+  titleKey: quest.sample_farmer_work.title
+  descriptionKey: quest.sample_farmer_work.desc
+  offerOptionKey: ui.quest.accept
+  inProgressOptionKey: ui.quest.view
+  completeOptionKey: ui.quest.complete
+  completedOptionKey: ui.quest.completed
+  objectives:
+  - id: collect_onion
+    descriptionKey: quest.sample_farmer_work.objective.collect_onion
+    requiredEntityDataId: Onion
+    requiredAmount: 5

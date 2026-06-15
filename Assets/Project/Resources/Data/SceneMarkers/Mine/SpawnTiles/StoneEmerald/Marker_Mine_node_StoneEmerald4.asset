@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d88d43265a2517a40b86c58484bc1f8e, type: 3}
+  m_Name: Marker_Mine_node_StoneEmerald4
+  m_EditorClassIdentifier: 
+  markerKind: 2
+  objectType: 11
+  entityData: {fileID: 11400000, guid: b4fff43b3b451db41ada17ffcf50610f, type: 2}
+  savePolicy: 0
+  spawnGroupId: 
+  spawnPointId: 
+  respawnMinutes: 0
+  initialAmount: 1
+  bypassPlacementValidation: 0
+  stageSpawnMode: 0
+  fixedStartStageIndex: 0
+  randomStartStageMin: 0
+  randomStartStageMax: 0
+  editorSprite: {fileID: -965022737, guid: a4a24f3765a4d004cac302e32f2bb058, type: 3}
+  editorColor: {r: 0.48, g: 0.84, b: 0.5, a: 1}
