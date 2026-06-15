@@ -23,11 +23,14 @@ public class WeaponRuntime : IModuleRuntime, IHandleEvent<PrimaryActionEvent>, I
         var actorGo = e.actor.Owner?.GameObject;
         if (actorGo == null) return;
 
-        if (!TrySpendStamina(e.actor, data.staminaCost))
+        // ── Stamina check qua StaminaCostModule của item ─────────────────────────
+        var staminaRuntime = e.item?.GetModule<StaminaCostRuntime>();
+        if (staminaRuntime != null && !staminaRuntime.CanAfford(e.actor))
         {
             Debug.Log("[WeaponRuntime] Không đủ thể lực để tấn công.");
             return;
         }
+        staminaRuntime?.Spend(e.actor);
 
         var bridge = actorGo.GetComponent<ToolActionBridge>();
         if (bridge == null || bridge.IsBusy)
@@ -82,19 +85,6 @@ public class WeaponRuntime : IModuleRuntime, IHandleEvent<PrimaryActionEvent>, I
         return value > 0f ? value : Mathf.Max(0.05f, data.cooldown);
     }
 
-    private static bool TrySpendStamina(EntityRuntime actor, float cost)
-    {
-        if (actor?.stats == null || cost <= 0f) return true;
-
-        float maxStamina = actor.stats.Get(StatType.MaxStamina);
-        if (maxStamina <= 0f) return true;
-
-        float stamina = actor.stats.Get(StatType.Stamina);
-        if (stamina < cost) return false;
-
-        actor.stats.Set(StatType.Stamina, Mathf.Max(0f, stamina - cost));
-        return true;
-    }
 
     private static EntityRuntime FindNearestCombatTarget(Vector3 from, List<EntityRuntime> targets)
     {

@@ -30,12 +30,6 @@ public class FertilizerRuntime : ToolRuntime
             return false;
         }
 
-        if (e.actor?.stats != null && e.actor.stats.Get(StatType.Stamina) < 1f)
-        {
-            Debug.Log("[FertilizerRuntime] Không đủ thể lực để bón phân.");
-            return false;
-        }
-
         return true;
     }
 
@@ -50,12 +44,6 @@ public class FertilizerRuntime : ToolRuntime
         int quality = gm.SoilQualityTracker?.IncreaseQuality(cell2d, 1) ?? 0;
         if (gm.InventoryService != null && item != null && actor != null)
             gm.InventoryService.Consume(item, actor, 1);
-
-        if (actor?.stats != null)
-        {
-            float current = actor.stats.Get(StatType.Stamina);
-            actor.stats.Set(StatType.Stamina, Mathf.Max(0f, current - 1f));
-        }
 
         Debug.Log($"[FertilizerRuntime] Bón phân tại {cell2d}. SoilQuality={quality}");
     }

@@ -32,6 +32,14 @@ public abstract class ToolRuntime : IModuleRuntime, IHandleEvent<PrimaryActionEv
         var actorGO = e.actor.Owner?.GameObject;
         if (actorGO == null) return;
 
+        // ── Stamina check tập trung qua StaminaCostModule của item ────────────
+        var staminaRuntime = e.item?.GetModule<StaminaCostRuntime>();
+        if (staminaRuntime != null && !staminaRuntime.CanAfford(e.actor))
+        {
+            Debug.Log($"[ToolRuntime] Không đủ thể lực để dùng {_data.toolType}.");
+            return;
+        }
+
         if (!Validate(actorGO, e))
             return;
 
@@ -56,6 +64,9 @@ public abstract class ToolRuntime : IModuleRuntime, IHandleEvent<PrimaryActionEv
         if (actorGO == null) return;
 
         Execute(actorGO, e.actor, e.item);
+
+        // ── Trừ stamina sau khi thao tác thành công ───────────────────────────
+        e.item?.GetModule<StaminaCostRuntime>()?.Spend(e.actor);
     }
 
     // ── Abstract ──────────────────────────────────────────────────────────────

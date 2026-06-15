@@ -112,21 +112,6 @@ public class WateringCanRuntime : ToolRuntime
             return false;
         }
 
-        // Check stamina
-        if (e.actor?.stats != null)
-        {
-            float maxStamina = e.actor.stats.Get(StatType.MaxStamina);
-            if (maxStamina > 0f)
-            {
-                float stamina = e.actor.stats.Get(StatType.Stamina);
-                if (stamina < 2f)
-                {
-                    Debug.Log($"[WateringCanRuntime] Không đủ thể lực. Stamina={stamina}/{maxStamina}");
-                    return false;
-                }
-            }
-        }
-
         _pendingAction = PendingWateringAction.WaterSoil;
         return true;
     }
@@ -157,18 +142,12 @@ public class WateringCanRuntime : ToolRuntime
         var tracker = GameManager.Instance?.WateredTileTracker;
         if (tracker == null) return;
 
+
         // Tưới: đặt tile lên tmWatered
         tracker.SetWatered(cell2d);
 
         // Trừ 1 charge
         CurrentCharges--;
-
-        // Trừ stamina
-        if (actor?.stats != null)
-        {
-            float current = actor.stats.Get(StatType.Stamina);
-            actor.stats.Set(StatType.Stamina, Mathf.Max(0f, current - 2f));
-        }
 
         Debug.Log($"[WateringCanRuntime] Tưới tại {cell2d}. Nước còn: {CurrentCharges}/{MaxCharges}");
         _pendingAction = PendingWateringAction.None;

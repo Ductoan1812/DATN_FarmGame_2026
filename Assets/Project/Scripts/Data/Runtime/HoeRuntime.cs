@@ -17,17 +17,6 @@ public class HoeRuntime : ToolRuntime
         var ws = GameManager.Instance?.WorldService;
         if (ws == null) return false;
 
-        // Check stamina (cost = 4)
-        if (e.actor?.stats != null)
-        {
-            float maxStamina = e.actor.stats.Get(StatType.MaxStamina);
-            if (maxStamina > 0f && e.actor.stats.Get(StatType.Stamina) < 4f)
-            {
-                Debug.Log("[HoeRuntime] Không đủ thể lực để cuốc.");
-                return false;
-            }
-        }
-
         // Kiểm tra qua SpatialRegistry — chỉ block nếu có entity chiếm cell (cây, đá...)
         if (ws.HasBlockerAt(cell2d, EntityLayer.Ground)
             || ws.HasBlockerAt(cell2d, EntityLayer.Plant)
@@ -61,13 +50,6 @@ public class HoeRuntime : ToolRuntime
         var plowedTile = GameManager.Instance.TileData?.plowedTile;
 
         ws.SetGround(cell2d, plowedTile);
-
-        // Trừ stamina (4)
-        if (actor?.stats != null)
-        {
-            float current = actor.stats.Get(StatType.Stamina);
-            actor.stats.Set(StatType.Stamina, Mathf.Max(0f, current - 4f));
-        }
 
         Debug.Log($"[HoeRuntime] Cuốc đất tại {targetCell}");
     }
