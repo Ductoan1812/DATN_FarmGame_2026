@@ -25,10 +25,14 @@ MonoBehaviour:
   objectives:
   - id: obj.monster.t1
     descriptionKey: mvp.quest.obj.monster.t1
-    requiredEntityDataId: monster_t1_slime
+    objectiveType: 1
+    targetEntityDataId: enemy_slime1
+    requiredEntityDataId: enemy_slime1
     requiredAmount: 6
   - id: obj.mixed_ore.t1
     descriptionKey: mvp.quest.obj.mixed_ore.t1
+    objectiveType: 0
+    targetEntityDataId:
     requiredEntityDataId: ore_t1_copper
     requiredAmount: 10
   rewardMoney: 700

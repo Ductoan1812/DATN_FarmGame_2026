@@ -33,6 +33,7 @@ public class PlayerControler : MonoBehaviour
     private Vector2 _moveInput;
     private float _runtimeMoveSpeed;
     private bool isDodging;
+    public bool IsDodging => isDodging;
     private readonly RaycastHit2D[] _movementHits = new RaycastHit2D[8];
     private readonly WaitForFixedUpdate _waitForFixedUpdate = new();
     private ContactFilter2D _movementFilter;

@@ -22,10 +22,13 @@ public class NavAgent2D : MonoBehaviour
     private float nextRepathTime;
     private int pathIndex;
     private bool hasDestination;
+    private Vector2 moveDirection;
 
     public bool HasDestination => hasDestination;
     public Vector2 Destination => destination;
     public bool IsAtDestination => !hasDestination || Vector2.Distance(rb != null ? rb.position : (Vector2)transform.position, destination) <= stopDistance;
+    public bool IsMoving => moveDirection.sqrMagnitude > 0.0001f;
+    public Vector2 MoveDirection => moveDirection;
 
     private void Awake()
     {
@@ -37,7 +40,10 @@ public class NavAgent2D : MonoBehaviour
     private void FixedUpdate()
     {
         if (!hasDestination || rb == null)
+        {
+            moveDirection = Vector2.zero;
             return;
+        }
 
         if (Time.time >= nextRepathTime)
             RebuildPath();
@@ -46,21 +52,32 @@ public class NavAgent2D : MonoBehaviour
         {
             path.Clear();
             pathIndex = 0;
+            moveDirection = Vector2.zero;
             return;
         }
 
         if (pathIndex >= path.Count)
+        {
+            moveDirection = Vector2.zero;
             return;
+        }
 
         Vector2 target = path[pathIndex];
         if (Vector2.Distance(rb.position, target) <= 0.04f)
         {
             pathIndex++;
+            moveDirection = Vector2.zero;
             return;
         }
 
         Vector2 next = Vector2.MoveTowards(rb.position, target, moveSpeed * Time.fixedDeltaTime);
+        moveDirection = (next - rb.position).normalized;
         rb.MovePosition(next);
+    }
+
+    public void SetMoveSpeed(float value)
+    {
+        moveSpeed = Mathf.Max(0.1f, value);
     }
 
     public void SetDestination(Vector2 target, float stopDistanceOverride = -1f)
@@ -76,11 +93,46 @@ public class NavAgent2D : MonoBehaviour
         hasDestination = false;
         path.Clear();
         pathIndex = 0;
+        moveDirection = Vector2.zero;
     }
 
     public bool IsWalkable(Vector2 worldPosition)
     {
         return !IsCellBlocked(WorldToCell(worldPosition), WorldToCell(transform.position));
+    }
+
+    public bool HasLineOfSight(Vector2 worldTarget)
+    {
+        Vector2Int start = WorldToCell(rb != null ? rb.position : (Vector2)transform.position);
+        Vector2Int goal = WorldToCell(worldTarget);
+        int x = start.x;
+        int y = start.y;
+        int dx = Mathf.Abs(goal.x - start.x);
+        int dy = Mathf.Abs(goal.y - start.y);
+        int stepX = start.x < goal.x ? 1 : -1;
+        int stepY = start.y < goal.y ? 1 : -1;
+        int error = dx - dy;
+
+        while (x != goal.x || y != goal.y)
+        {
+            int doubled = error * 2;
+            if (doubled > -dy)
+            {
+                error -= dy;
+                x += stepX;
+            }
+            if (doubled < dx)
+            {
+                error += dx;
+                y += stepY;
+            }
+
+            var cell = new Vector2Int(x, y);
+            if (cell != goal && IsCellBlocked(cell, start))
+                return false;
+        }
+
+        return true;
     }
 
     private void RebuildPath()
@@ -216,6 +268,13 @@ public class NavAgent2D : MonoBehaviour
     {
         if (collisionTilemap != null)
             return;
+
+        var registry = SceneTilemapRegistry.Current;
+        if (registry != null && registry.Collision != null)
+        {
+            collisionTilemap = registry.Collision;
+            return;
+        }
 
         var tilemaps = FindObjectsByType<Tilemap>(FindObjectsSortMode.None);
         for (int i = 0; i < tilemaps.Length; i++)

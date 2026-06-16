@@ -98,6 +98,7 @@ public class SpawnSystem : MonoBehaviour
 
         // ── Entity path (NPC, cây, quặng, kẻ thù...) ─────────────────────
         ApplyInitialStage(req, spawnRuntime);
+        EnemyLevelScaler.ApplySpawnLevel(spawnRuntime, req.idPrefab, req.payload as SceneSpawnPayload);
 
         // Lấy PlacementRule từ EntityData
         var rule = spawnRuntime.entityData.placementRule;

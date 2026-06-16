@@ -32,19 +32,22 @@ public class TakeDamageEvent : IGameEvent
     public readonly ToolType toolType;
     public readonly int toolTier;
     public readonly EntityRuntime sourceItem;
+    public readonly bool isCrit;
 
     public TakeDamageEvent(
         EntityRuntime attacker,
         float damage,
         ToolType toolType = ToolType.None,
         int toolTier = 1,
-        EntityRuntime sourceItem = null)
+        EntityRuntime sourceItem = null,
+        bool isCrit = false)
     {
         this.attacker = attacker;
         this.damage   = damage;
         this.toolType = toolType;
         this.toolTier = toolTier;
         this.sourceItem = sourceItem;
+        this.isCrit = isCrit;
     }
 }
 

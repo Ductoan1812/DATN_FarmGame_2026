@@ -25,10 +25,14 @@ MonoBehaviour:
   objectives:
   - id: obj.monster.t2
     descriptionKey: mvp.quest.obj.monster.t2
-    requiredEntityDataId: monster_t2_bat
+    objectiveType: 1
+    targetEntityDataId: enemy_slime2
+    requiredEntityDataId: enemy_slime2
     requiredAmount: 8
   - id: obj.mixed_ore.t2
     descriptionKey: mvp.quest.obj.mixed_ore.t2
+    objectiveType: 0
+    targetEntityDataId:
     requiredEntityDataId: ore_t2_iron
     requiredAmount: 14
   rewardMoney: 1600

@@ -35,7 +35,6 @@ public class GameManager : MonoBehaviour
     public ClearZoneTracker     ClearZoneTracker   { get; private set; }
     public NarrativeService     NarrativeService   { get; private set; }
     public ResearchService      ResearchService    { get; private set; }
-    public AIAssistantService   AIAssistantService { get; private set; }
     public DailyTracker         DailyTracker       { get; private set; }
 
     // ── Shared ────────────────────────────────────────────
@@ -99,11 +98,12 @@ public class GameManager : MonoBehaviour
         InitSceneTransitionBridge();
         InitInteractionPreviewBridge();
         InitPlayerDeathHandler();
+        InitCombatProgressionPolish();
         InitLoadingScreenUI();
         InitNarrativeUI();
-        InitAIAssistant();
         InitDailyTracker();
         InitEndOfDaySummaryUI();
+        InitPickupNotificationUI();
         InitSaveLoadManager();
 
         // Subscribe save/load events
@@ -396,6 +396,22 @@ public class GameManager : MonoBehaviour
             gameObject.AddComponent<PlayerDeathHandler>();
     }
 
+    private void InitCombatProgressionPolish()
+    {
+        EnsureRuntimeComponent<FloatingTextPool>();
+        EnsureRuntimeComponent<FloatingCombatTextSpawner>();
+        EnsureRuntimeComponent<HitStopManager>();
+        EnsureRuntimeComponent<PlayerCombatPolishBinder>();
+        EnsureRuntimeComponent<LowHpVignetteUI>();
+        EnsureRuntimeComponent<ExpPopupSpawner>();
+        EnsureRuntimeComponent<LevelUpEffect>();
+        EnsureRuntimeComponent<ToastUI>();
+        EnsureRuntimeComponent<DeathScreenUI>();
+        EnsureRuntimeComponent<QuestProgressionSystem>();
+        EnsureRuntimeComponent<NightEnemySpawnManager>();
+        EnsureRuntimeComponent<AutoSaveOnDayChanged>();
+    }
+
     private void InitNarrativeUI()
     {
         EnsureNarrativeUIComponent<MessageNotificationUI>("NarrativeUI_MessageNotification");
@@ -427,12 +443,6 @@ public class GameManager : MonoBehaviour
 #endif
     }
 
-    private void InitAIAssistant()
-    {
-        AIAssistantService = new AIAssistantService(WateredTileTracker, WeatherSystem, TimeManager);
-        EnsureNarrativeUIComponent<AIAssistantUI>("AIAssistantUI");
-    }
-
     private void InitDailyTracker()
     {
         DailyTracker = new DailyTracker(EventBus, TimeManager);
@@ -443,12 +453,22 @@ public class GameManager : MonoBehaviour
         EnsureNarrativeUIComponent<EndOfDaySummaryUI>("EndOfDaySummaryUI");
     }
 
+    private void InitPickupNotificationUI()
+    {
+        EnsureNarrativeUIComponent<PickupNotificationUI>("PickupNotificationUI");
+    }
+
     private T EnsureNarrativeUIComponent<T>(string childName) where T : Component
     {
         var child = transform.Find(childName);
         var go = child != null ? child.gameObject : new GameObject(childName);
         go.transform.SetParent(transform, false);
         return go.GetComponent<T>() ?? go.AddComponent<T>();
+    }
+
+    private T EnsureRuntimeComponent<T>() where T : Component
+    {
+        return GetComponent<T>() ?? gameObject.AddComponent<T>();
     }
 
     private void InitSpawnSystem()
@@ -521,13 +541,17 @@ public class GameManager : MonoBehaviour
 
     private void SpawnNarrativeMutant()
     {
-        var enemyData = EntityDataRegistry?.GetById("enemy_t2_bat")
-                     ?? EntityDataRegistry?.GetById("enemy_t1_slime");
+        var enemyData = EntityDataRegistry?.GetById("enemy_orc1")
+                     ?? EntityDataRegistry?.GetById("enemy_slime3")
+                     ?? EntityDataRegistry?.GetById("enemy_slime2")
+                     ?? EntityDataRegistry?.GetById("enemy_slime1");
         if (enemyData == null)
         {
             Debug.LogWarning("[GameManager] Narrative mutant spawn skipped: no enemy data found.");
             return;
         }
+
+        var objectType = NightEnemySpawnManager.ResolveObjectType(enemyData.id);
 
         var spawnPos = defaultPlayerPos + new Vector2(3f, 0f);
         var player = FindAnyObjectByType<PlayerControler>();
@@ -540,15 +564,15 @@ public class GameManager : MonoBehaviour
         {
             sceneName = sceneName,
             markerKind = SceneMarkerKind.Enemy,
-            objectType = ObjectType.Enemy01,
+            objectType = objectType,
             cell = cell,
             spawnGroupId = "narrative_day10_mutant",
-            persistentId = SceneSpawnPayload.BuildPersistentId(sceneName, SceneMarkerKind.Enemy, ObjectType.Enemy01, cell, "narrative_day10_mutant"),
+            persistentId = SceneSpawnPayload.BuildPersistentId(sceneName, SceneMarkerKind.Enemy, objectType, cell, "narrative_day10_mutant"),
             savePolicy = SceneEntitySavePolicy.Persistent,
             initialAmount = 1
         };
 
-        EventBus.Publish(new SpawnRequestPublish(spawnPos, ObjectType.Enemy01, enemyData, 1, true, payload));
+        EventBus.Publish(new SpawnRequestPublish(spawnPos, objectType, enemyData, 1, true, payload));
         Debug.Log($"[GameManager] Narrative mutant spawn requested: {enemyData.id} at {spawnPos}");
     }
 
@@ -576,6 +600,7 @@ public class GameManager : MonoBehaviour
     {
         // Wait one frame so SceneContext/SceneContentScanner in the new scene can run Awake/Start.
         yield return null;
+        bool saveArrivalSceneState = false;
 
         EventBus?.Publish(new LoadingScreenProgressPublish(0.88f));
         EnsurePersistentUIRoot();
@@ -594,9 +619,11 @@ public class GameManager : MonoBehaviour
             SaveLoadManager.LoadCurrentSceneWorld();
             EventBus?.Publish(new LoadingScreenProgressPublish(0.96f));
 
-            SceneTransitionService.TryPeekPendingSpawnPointForCurrentScene(out var spawnPointId);
+            bool arrivedFromTransition = SceneTransitionService.TryPeekPendingSpawnPointForCurrentScene(out var spawnPointId);
             SaveLoadManager.EnsurePlayerSpawnedAt(spawnPointId);
-            SceneTransitionService.SuppressPortalTriggersAfterArrival();
+            if (arrivedFromTransition)
+                SceneTransitionService.SuppressPortalTriggersAfterArrival();
+            saveArrivalSceneState = arrivedFromTransition;
             EventBus?.Publish(new LoadingScreenProgressPublish(0.99f));
 
             EventBus.Publish(new WorldObjectsSpawnedPublish());
@@ -605,6 +632,12 @@ public class GameManager : MonoBehaviour
 
         // Camera rebind sau khi player đã spawn trong scene mới
         RebindCamera();
+
+        if (saveArrivalSceneState)
+        {
+            yield return null;
+            SaveLoadManager?.SaveSystemSnapshot();
+        }
 
         EventBus?.Publish(new LoadingScreenProgressPublish(1f));
         EventBus.Publish(new LoadingScreenHidePublish());

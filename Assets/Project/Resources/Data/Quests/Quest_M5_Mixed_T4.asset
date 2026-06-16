@@ -25,10 +25,14 @@ MonoBehaviour:
   objectives:
   - id: obj.monster.t4
     descriptionKey: mvp.quest.obj.monster.t4
-    requiredEntityDataId: monster_t4_wraith
+    objectiveType: 1
+    targetEntityDataId: enemy_orc1
+    requiredEntityDataId: enemy_orc1
     requiredAmount: 12
   - id: obj.mixed_ore.t4
     descriptionKey: mvp.quest.obj.mixed_ore.t4
+    objectiveType: 0
+    targetEntityDataId:
     requiredEntityDataId: ore_t4_gold
     requiredAmount: 22
   rewardMoney: 6500

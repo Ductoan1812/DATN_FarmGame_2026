@@ -63,7 +63,9 @@ public class WeaponRuntime : IModuleRuntime, IHandleEvent<PrimaryActionEvent>, I
             return;
         }
 
-        target.TriggerEvent(new TakeDamageEvent(e.actor, damage));
+        bool isCrit = RollCrit(e.item, out float critMultiplier);
+        float finalDamage = damage * critMultiplier;
+        target.TriggerEvent(new TakeDamageEvent(e.actor, finalDamage, sourceItem: e.item, isCrit: isCrit));
         ApplyKnockback(actorGo, target, data.knockback);
     }
 
@@ -83,6 +85,22 @@ public class WeaponRuntime : IModuleRuntime, IHandleEvent<PrimaryActionEvent>, I
     {
         float value = item?.stats.Get(StatType.CoolDown) ?? 0f;
         return value > 0f ? value : Mathf.Max(0.05f, data.cooldown);
+    }
+
+    private static bool RollCrit(EntityRuntime item, out float multiplier)
+    {
+        multiplier = 1f;
+        if (item?.stats == null)
+            return false;
+
+        float chance = Mathf.Clamp01(item.stats.Get(StatType.CritChance));
+        bool isCrit = Random.value < chance;
+        if (!isCrit)
+            return false;
+
+        float critDamage = Mathf.Max(0f, item.stats.Get(StatType.CritDamage));
+        multiplier = 1f + critDamage;
+        return true;
     }
 
 

@@ -20,10 +20,19 @@ public class SceneCameraFollower : MonoBehaviour
     [SerializeField] private bool autoSetOrthographic = true;
     [SerializeField] private float orthographicSize = 6f;
 
+    [Header("Hit Shake")]
+    [SerializeField] private float defaultHitShake = 0.08f;
+    [SerializeField] private float defaultCritShake = 0.14f;
+    [SerializeField] private float defaultShakeDuration = 0.1f;
+
     private Transform followTarget;
     private Vector3 velocity;
     private float nextRetryTime;
     private Camera cam;
+    private float shakeUntilRealtime;
+    private float shakeStartedRealtime;
+    private float shakeDuration;
+    private float shakeIntensity;
 
     // ── Lifecycle ──────────────────────────────────────────────────────────
 
@@ -66,9 +75,9 @@ public class SceneCameraFollower : MonoBehaviour
             return;
         }
 
-        // SmoothDamp follow
         Vector3 targetPos = followTarget.position + offset;
-        transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref velocity, smoothTime);
+        Vector3 smoothed = Vector3.SmoothDamp(transform.position, targetPos, ref velocity, smoothTime);
+        transform.position = smoothed + CalculateShakeOffset();
     }
 
     // ── Player detection ──────────────────────────────────────────────────
@@ -111,6 +120,7 @@ public class SceneCameraFollower : MonoBehaviour
 
         bus.Subscribe<PlayerReadyPublish>(OnPlayerReady);
         bus.Subscribe<GameReadyPublish>(OnGameReady);
+        bus.Subscribe<DamageAppliedPublish>(OnDamageApplied);
         subscribedBus = bus;
     }
 
@@ -119,11 +129,20 @@ public class SceneCameraFollower : MonoBehaviour
         if (subscribedBus == null) return;
         subscribedBus.Unsubscribe<PlayerReadyPublish>(OnPlayerReady);
         subscribedBus.Unsubscribe<GameReadyPublish>(OnGameReady);
+        subscribedBus.Unsubscribe<DamageAppliedPublish>(OnDamageApplied);
         subscribedBus = null;
     }
 
     private void OnPlayerReady(PlayerReadyPublish _) => TryFindPlayer();
     private void OnGameReady(GameReadyPublish _) => TryFindPlayer();
+
+    private void OnDamageApplied(DamageAppliedPublish evt)
+    {
+        if (!IsPlayerCombat(evt))
+            return;
+
+        Shake(evt.isCrit ? defaultCritShake : defaultHitShake, evt.isCrit ? defaultShakeDuration * 1.4f : defaultShakeDuration);
+    }
 
     // ── Camera settings ───────────────────────────────────────────────────
 
@@ -145,5 +164,32 @@ public class SceneCameraFollower : MonoBehaviour
         followTarget = null;
         nextRetryTime = 0f;
         TryFindPlayer();
+    }
+
+    public void Shake(float intensity, float duration)
+    {
+        shakeIntensity = Mathf.Max(shakeIntensity, Mathf.Max(0f, intensity));
+        shakeDuration = Mathf.Max(0.01f, duration);
+        shakeStartedRealtime = Time.realtimeSinceStartup;
+        shakeUntilRealtime = shakeStartedRealtime + shakeDuration;
+    }
+
+    private Vector3 CalculateShakeOffset()
+    {
+        if (Time.realtimeSinceStartup >= shakeUntilRealtime || shakeIntensity <= 0f)
+            return Vector3.zero;
+
+        float elapsed = Time.realtimeSinceStartup - shakeStartedRealtime;
+        float t = 1f - Mathf.Clamp01(elapsed / Mathf.Max(0.01f, shakeDuration));
+        Vector2 offset2D = Random.insideUnitCircle * (shakeIntensity * t);
+        return new Vector3(offset2D.x, offset2D.y, 0f);
+    }
+
+    private static bool IsPlayerCombat(DamageAppliedPublish evt)
+    {
+        var attackerGo = evt.attacker?.Owner?.GameObject;
+        var targetGo = evt.target?.Owner?.GameObject;
+        return (attackerGo != null && attackerGo.GetComponent<PlayerControler>() != null)
+               || (targetGo != null && targetGo.GetComponent<PlayerControler>() != null);
     }
 }

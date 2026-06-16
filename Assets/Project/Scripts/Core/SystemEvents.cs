@@ -197,6 +197,104 @@ public struct LevelUpPublish
     }
 }
 
+public struct DamageAppliedPublish
+{
+    public readonly EntityRuntime target;
+    public readonly EntityRuntime attacker;
+    public readonly EntityRuntime sourceItem;
+    public readonly Vector3 worldPosition;
+    public readonly float rawDamage;
+    public readonly float finalDamage;
+    public readonly float hpBefore;
+    public readonly float hpAfter;
+    public readonly bool isCrit;
+
+    public DamageAppliedPublish(
+        EntityRuntime target,
+        EntityRuntime attacker,
+        EntityRuntime sourceItem,
+        Vector3 worldPosition,
+        float rawDamage,
+        float finalDamage,
+        float hpBefore,
+        float hpAfter,
+        bool isCrit)
+    {
+        this.target = target;
+        this.attacker = attacker;
+        this.sourceItem = sourceItem;
+        this.worldPosition = worldPosition;
+        this.rawDamage = rawDamage;
+        this.finalDamage = finalDamage;
+        this.hpBefore = hpBefore;
+        this.hpAfter = hpAfter;
+        this.isCrit = isCrit;
+    }
+}
+
+public struct EntityDiedPublish
+{
+    public readonly EntityRuntime entity;
+    public readonly EntityRuntime killer;
+    public readonly Vector3 worldPosition;
+
+    public EntityDiedPublish(EntityRuntime entity, EntityRuntime killer, Vector3 worldPosition)
+    {
+        this.entity = entity;
+        this.killer = killer;
+        this.worldPosition = worldPosition;
+    }
+}
+
+public struct EnemyAttackStartedPublish
+{
+    public readonly EntityRuntime enemy;
+    public readonly Vector3 worldPosition;
+
+    public EnemyAttackStartedPublish(EntityRuntime enemy, Vector3 worldPosition)
+    {
+        this.enemy = enemy;
+        this.worldPosition = worldPosition;
+    }
+}
+
+public struct PlayerDeathPublish
+{
+    public readonly EntityRuntime player;
+
+    public PlayerDeathPublish(EntityRuntime player)
+    {
+        this.player = player;
+    }
+}
+
+public struct ToastPublish
+{
+    public readonly string message;
+    public readonly float duration;
+
+    public ToastPublish(string message, float duration = 2f)
+    {
+        this.message = message;
+        this.duration = duration;
+    }
+}
+
+/// <summary>Player nhặt được vật phẩm. InventoryService publish sau khi Pickup thành công.</summary>
+public struct ItemPickedUpPublish
+{
+    public readonly string itemKeyName;
+    public readonly Sprite icon;
+    public readonly int amount;
+
+    public ItemPickedUpPublish(string itemKeyName, Sprite icon, int amount)
+    {
+        this.itemKeyName = itemKeyName;
+        this.icon = icon;
+        this.amount = amount;
+    }
+}
+
 /// <summary>Inventory thay đổi (pickup, consume, swap...). InventoryService publish.</summary>
 public struct InventoryChangedPublish
 {

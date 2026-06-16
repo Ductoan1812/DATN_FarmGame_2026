@@ -216,6 +216,12 @@ public class SaveLoadManager
         Debug.Log($"[SaveLoadManager] All data saved to slot {ActiveSlotIndex}.");
     }
 
+    public void SaveSystemSnapshot()
+    {
+        SaveSystemData();
+        Debug.Log($"[SaveLoadManager] System snapshot saved to slot {ActiveSlotIndex}.");
+    }
+
     public void LoadCurrentSceneWorld()
     {
         if (_worldService == null || _spawnSystem == null) return;
@@ -245,6 +251,8 @@ public class SaveLoadManager
     private void SaveSystemData()
     {
         var data = new SystemSaveData();
+        data.lastActiveSceneName = SceneManager.GetActiveScene().name;
+
         if (_timeManager != null)
             data.time = _timeManager.GetSaveState();
 
@@ -276,7 +284,6 @@ public class SaveLoadManager
         var player = FindBestPlayerController();
         if (player != null)
         {
-            data.lastActiveSceneName = SceneManager.GetActiveScene().name;
             data.playerPosX = player.transform.position.x;
             data.playerPosY = player.transform.position.y;
             data.hasSavedPlayerPosition = true;

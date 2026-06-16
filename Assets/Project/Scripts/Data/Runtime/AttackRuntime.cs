@@ -33,7 +33,7 @@ public class AttackRuntime : IModuleRuntime, IHandleEvent<PrimaryActionEvent>
         float critChance = weapon.stats.Get(StatType.CritChance);
         float critDamage = weapon.stats.Get(StatType.CritDamage);
 
-        bool isCrit       = Random.value < critChance;
+        bool isCrit       = Random.value < Mathf.Clamp01(critChance);
         float finalDamage = isCrit ? attack * (1f + critDamage) : attack;
         List<EntityRuntime> targets = EntityScanSystem.GetAll(actorGO, range);
 
@@ -44,7 +44,12 @@ public class AttackRuntime : IModuleRuntime, IHandleEvent<PrimaryActionEvent>
             return;
         }
         foreach (var target in targets)
-            target.TriggerEvent(new TakeDamageEvent(e.actor, finalDamage));
+        {
+            if (target == null) continue;
+            if (target.GetModule<HealthRuntime>() == null) continue;
+            if (target.GetModule<HarvestRuntime>() != null) continue;
+            target.TriggerEvent(new TakeDamageEvent(e.actor, finalDamage, sourceItem: weapon, isCrit: isCrit));
+        }
 
         _lastAttackTime = Time.time;
     }

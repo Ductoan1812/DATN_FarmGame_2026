@@ -81,6 +81,18 @@ public class HealthRuntime : IModuleRuntime, IHandleEvent<SpawnedEvent>, IHandle
         float newHp     = Mathf.Max(0f, currentHp - finalDamage);
         _entity.stats.Set(StatType.Hp, newHp);
 
+        var ownerGo = _entity.Owner?.GameObject;
+        GameManager.Instance?.EventBus?.Publish(new DamageAppliedPublish(
+            _entity,
+            e.attacker,
+            e.sourceItem,
+            ownerGo != null ? ownerGo.transform.position : Vector3.zero,
+            e.damage,
+            finalDamage,
+            currentHp,
+            newHp,
+            e.isCrit));
+
         var attackerName = e.attacker?.entityData?.keyName ?? "Unknown";
         Debug.Log($"[HealthRuntime] {_entity.entityData?.keyName} nhận {finalDamage:F1} dame " +
                   $"(raw={e.damage:F1}, mul={damageMultiplier:F2}, def={defense:F1}) từ {attackerName}. " +
@@ -97,6 +109,11 @@ public class HealthRuntime : IModuleRuntime, IHandleEvent<SpawnedEvent>, IHandle
         if (_isDead) return;
         _isDead = true;
         Debug.Log($"[HealthRuntime] {_entity.id} đã chết.");
+        var ownerGo = _entity.Owner?.GameObject;
+        GameManager.Instance?.EventBus?.Publish(new EntityDiedPublish(
+            _entity,
+            _lastAttacker,
+            ownerGo != null ? ownerGo.transform.position : Vector3.zero));
         OnDied?.Invoke(_entity);
         _entity.TriggerEvent(new DieEvent(_entity, _lastAttacker));
         // Việc Despawn/Destroy/Respawn/Drop do các module khác xử lý.

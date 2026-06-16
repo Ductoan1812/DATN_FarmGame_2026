@@ -25,6 +25,7 @@ public class WorldEntityNameplate : MonoBehaviour
     private string currentNameKey;
     private string fallbackName;
     private bool isHighlighted;
+    private StatsRuntime stats;
 
     private void Reset()
     {
@@ -82,6 +83,7 @@ public class WorldEntityNameplate : MonoBehaviour
     {
         currentNameKey = entity?.entityData?.keyName;
         fallbackName = entity?.entityData?.id;
+        stats = entity?.stats;
         RefreshText();
     }
 
@@ -99,9 +101,20 @@ public class WorldEntityNameplate : MonoBehaviour
 
         nameText.gameObject.SetActive(true);
         nameText.color = isHighlighted ? highlightedTextColor : textColor;
-        nameText.text = !string.IsNullOrWhiteSpace(currentNameKey) && LocalizationManager.Instance != null
+
+        string baseName = !string.IsNullOrWhiteSpace(currentNameKey) && LocalizationManager.Instance != null
             ? LocalizationManager.Instance.GetText(currentNameKey)
             : (!string.IsNullOrWhiteSpace(currentNameKey) ? currentNameKey : fallbackName);
+
+        if (stats != null)
+        {
+            int level = Mathf.Max(1, Mathf.RoundToInt(stats.Get(StatType.Level)));
+            nameText.text = $"Lv.{level} {baseName}";
+        }
+        else
+        {
+            nameText.text = baseName;
+        }
     }
 
     public void SetHighlighted(bool highlighted)

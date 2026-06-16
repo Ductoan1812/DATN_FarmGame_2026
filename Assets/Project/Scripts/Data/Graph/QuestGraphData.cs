@@ -32,6 +32,8 @@ public class QuestObjectiveData
 {
     public string id;
     public string descriptionKey;
+    public QuestObjectiveType objectiveType = QuestObjectiveType.Inventory;
+    public string targetEntityDataId;
     public string requiredEntityDataId;
     public int requiredAmount = 1;
 }
@@ -48,4 +50,11 @@ public enum QuestState
     NotStarted,
     InProgress,
     Completed
+}
+
+public enum QuestObjectiveType
+{
+    Inventory,
+    KillEnemy,
+    SurviveNight
 }

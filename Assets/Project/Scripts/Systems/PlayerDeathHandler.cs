@@ -89,6 +89,7 @@ public class PlayerDeathHandler : MonoBehaviour
         if (respawn != null)
             respawn.CurrentRespawnPosition = homeRespawnPosition;
 
+        eventBus?.Publish(new PlayerDeathPublish(player));
         Debug.Log($"[PlayerDeathHandler] Player death penalty applied. Stamina={player.stats.Get(StatType.Stamina):F0}/{maxStamina:F0}, respawn={homeRespawnPosition}.");
     }
 }

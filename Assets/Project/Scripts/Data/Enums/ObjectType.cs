@@ -36,5 +36,17 @@ public enum ObjectType
     [InspectorName("Sprinkler 01")]
     Sprinkler01,
     [InspectorName("Sprinkler 02")]
-    Sprinkler02
+    Sprinkler02,
+    [InspectorName("Enemy Slime 1")]
+    EnemySlime1,
+    [InspectorName("Enemy Slime 2")]
+    EnemySlime2,
+    [InspectorName("Enemy Slime 3")]
+    EnemySlime3,
+    [InspectorName("Enemy Orc 1")]
+    EnemyOrc1,
+    [InspectorName("Enemy Orc 2")]
+    EnemyOrc2,
+    [InspectorName("Enemy Orc 3")]
+    EnemyOrc3
 }

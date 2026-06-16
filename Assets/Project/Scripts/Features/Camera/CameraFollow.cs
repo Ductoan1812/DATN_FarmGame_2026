@@ -13,9 +13,16 @@ public class CameraFollow : MonoBehaviour
     [SerializeField] private float introDuration = 2f;
     [SerializeField] private Vector3 introOffset = new Vector3(0f, 0f, -10f);
 
+    [Header("Hit Shake")]
+    [SerializeField] private float shakeIntensity = 0.08f;
+
     private float introTimer;
     private bool introFinished;
     private EventBus eventBus;
+    private float shakeUntilRealtime;
+    private float shakeStartedRealtime;
+    private float shakeDuration;
+    private float activeShakeIntensity;
 
     private void OnEnable()
     {
@@ -60,7 +67,7 @@ public class CameraFollow : MonoBehaviour
 
         Vector3 desiredPosition = target.position + offset;
         Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed * Time.deltaTime);
-        transform.position = smoothedPosition;
+        transform.position = smoothedPosition + CalculateShakeOffset();
     }
 
     private void PlayIntro()
@@ -153,5 +160,24 @@ public class CameraFollow : MonoBehaviour
         }
 
         return players[0];
+    }
+
+    public void Shake(float intensity, float duration)
+    {
+        activeShakeIntensity = Mathf.Max(activeShakeIntensity, intensity > 0f ? intensity : shakeIntensity);
+        shakeDuration = Mathf.Max(0.01f, duration);
+        shakeStartedRealtime = Time.realtimeSinceStartup;
+        shakeUntilRealtime = shakeStartedRealtime + shakeDuration;
+    }
+
+    private Vector3 CalculateShakeOffset()
+    {
+        if (Time.realtimeSinceStartup >= shakeUntilRealtime || activeShakeIntensity <= 0f)
+            return Vector3.zero;
+
+        float elapsed = Time.realtimeSinceStartup - shakeStartedRealtime;
+        float t = 1f - Mathf.Clamp01(elapsed / Mathf.Max(0.01f, shakeDuration));
+        Vector2 offset2D = Random.insideUnitCircle * (activeShakeIntensity * t);
+        return new Vector3(offset2D.x, offset2D.y, 0f);
     }
 }

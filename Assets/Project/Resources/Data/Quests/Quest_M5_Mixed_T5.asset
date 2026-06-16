@@ -25,10 +25,14 @@ MonoBehaviour:
   objectives:
   - id: obj.monster.t5
     descriptionKey: mvp.quest.obj.monster.t5
-    requiredEntityDataId: monster_t5_ancient
+    objectiveType: 1
+    targetEntityDataId: enemy_orc2
+    requiredEntityDataId: enemy_orc2
     requiredAmount: 14
   - id: obj.mixed_ore.t5
     descriptionKey: mvp.quest.obj.mixed_ore.t5
+    objectiveType: 0
+    targetEntityDataId:
     requiredEntityDataId: ore_t5_mythril
     requiredAmount: 26
   rewardMoney: 10000

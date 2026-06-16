@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 /// <summary>
@@ -31,7 +32,31 @@ public class MortalRuntime : IModuleRuntime, IHandleEvent<DieEvent>
         if (bus == null) return;
 
         TryScheduleSceneMarkerRespawn(e.entity);
+        float destroyDelay = ResolveDestroyDelay(e.entity);
+        if (destroyDelay > 0f)
+        {
+            bus.StartCoroutine(DestroyAfterDelay(bus, e.entity.id, destroyDelay));
+            return;
+        }
+
         bus.Publish(new DestroyEntityRequestPublish(e.entity.id));
+    }
+
+    private float ResolveDestroyDelay(EntityRuntime entity)
+    {
+        float delay = Mathf.Max(0f, _data != null ? _data.destroyDelay : 0f);
+        var go = entity?.Owner?.GameObject;
+        var deathEffect = go != null ? go.GetComponentInChildren<EnemyDeathEffect>(true) : null;
+        if (deathEffect != null)
+            delay = Mathf.Max(delay, deathEffect.RequiredLifetime + 0.05f);
+        return delay;
+    }
+
+    private static IEnumerator DestroyAfterDelay(EventBus bus, string entityId, float delay)
+    {
+        yield return new WaitForSeconds(Mathf.Max(0f, delay));
+        if (bus != null && !string.IsNullOrWhiteSpace(entityId))
+            bus.Publish(new DestroyEntityRequestPublish(entityId));
     }
 
     private static void TryScheduleSceneMarkerRespawn(EntityRuntime entity)

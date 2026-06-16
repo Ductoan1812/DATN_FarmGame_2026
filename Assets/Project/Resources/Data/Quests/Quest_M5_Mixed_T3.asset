@@ -25,10 +25,14 @@ MonoBehaviour:
   objectives:
   - id: obj.monster.t3
     descriptionKey: mvp.quest.obj.monster.t3
-    requiredEntityDataId: monster_t3_golem
+    objectiveType: 1
+    targetEntityDataId: enemy_slime3
+    requiredEntityDataId: enemy_slime3
     requiredAmount: 10
   - id: obj.mixed_ore.t3
     descriptionKey: mvp.quest.obj.mixed_ore.t3
+    objectiveType: 0
+    targetEntityDataId:
     requiredEntityDataId: ore_t3_silver
     requiredAmount: 18
   rewardMoney: 3200
