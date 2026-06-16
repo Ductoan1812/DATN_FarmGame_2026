@@ -11,15 +11,6 @@ Use this file as the prioritized source of truth for unattended work slices.
 
 ## In Progress
 
-- [ ] Menu shell standardization pass
-  - Priority: `P1`
-  - Area: UI architecture and layout consistency
-  - Goal: separate shared menu chrome from tab-specific content so `Inventory`, `Equipment`, `Quest`, and `Settings` stop behaving like one giant accidental form
-  - Acceptance:
-    - `MenuWindowShellUI` exists as the shared shell helper
-    - `QuestLogWindowUI` and `SettingsWindowUI` use the shared helper and compile cleanly
-    - follow-up refactors for `BackpackUI` and `EquipmentUI` can reuse the same shell without duplicating helper code
-
 - [ ] GED canonical content expansion pass
   - Priority: `P0`
   - Area: content data pipeline, localization, gameplay-ready assets
@@ -30,6 +21,30 @@ Use this file as the prioritized source of truth for unattended work slices.
     - each added archetype has coherent `id`, `keyName`, `descKey`, core modules, and VI/EN entries
 
 ## Todo
+
+- [ ] Place and tune the six enemy spawn markers in production scenes
+  - Priority: `P1`
+  - Area: encounter design and scene content
+  - Goal: use the generated `Marker_Slime1` through `Marker_Orc3` tiles to build readable difficulty zones
+  - Acceptance: markers are placed in intended scenes, paths are reachable, spawn density is controlled, and no marker overlaps portals or critical farming space
+
+- [ ] Add enemy material drops and reward sinks
+  - Priority: `P1`
+  - Area: combat progression
+  - Goal: connect the six enemies to useful material drops and downstream crafting/economy uses
+  - Acceptance: each tier has a coherent reward purpose, drop rates are documented, and drops feed at least one useful recipe/shop/progression sink
+
+- [ ] Playtest combat feedback, kill quests, and night spawns
+  - Priority: `P1`
+  - Area: combat QA
+  - Goal: verify the newly wired polish and progression systems in live scenes
+  - Acceptance: pooled damage text, pooled afterimages, HP bars, hit flash, hit stop, camera shake, player i-frame, death UI, kill quest progress, autosave toast, and night spawn cleanup all work without console errors
+
+- [ ] Run a progression balance pass for six-enemy combat
+  - Priority: `P2`
+  - Area: balance
+  - Goal: tune HP, defense, damage, cooldowns, EXP, and encounter counts against actual player weapons and healing access
+  - Acceptance: Slime1 is an accessible first enemy, Orc3 is difficult but achievable at its intended progression tier, and time-to-kill is documented
 
 - [ ] Expand crop and fruit tree roster from GED
   - Priority: `P1`
@@ -95,6 +110,18 @@ Use this file as the prioritized source of truth for unattended work slices.
   - Acceptance: generated content leaves behind explicit follow-up items for visuals and scene dressing
 
 ## Done
+
+- [x] Claude review bug/perf pass for combat polish
+  - Result: pooled floating combat/EXP text, pooled dodge afterimages, hardened enemy death fade timing, safer enemy HP bar and alert binding, smoothed low-HP vignette, safe trail material fallback, validated night spawn placement/cleanup, and set generated enemy EXP source to Combat
+
+- [x] Combat feedback and kill-objective progression baseline
+  - Result: added combat telemetry, visual hit feedback, player i-frame/dodge polish, EXP/level/combo/toast/death UI, persistent kill objective progress, converted mixed monster quests to generated enemy ids, temporary night enemy spawning, and autosave-on-day-change
+
+- [x] Add balanced enemies to all mine RuleRegions
+  - Result: updated the mine content generator and regenerated all 20 presets with progressive Slime1-3 and Orc1-3 populations, `RespawnTopUp`, tier-scaled delays, and a successful Level 01 Play Mode spawn
+
+- [x] Six-enemy animated combat vertical slice
+  - Result: generated directional animation content, controllers, EntityData, prefab variants, world definitions, localization, and spawn marker tiles for Slime1-3 and Orc1-3; added obstacle-aware AI, animation-event attacks, hurt/death handling, delayed despawn, and verified damage plus EXP rewards in Play Mode
 
 - [x] Shared shell helper baseline for menu windows
   - Result: added `MenuWindowShellUI` and applied it to `QuestLogWindowUI` and `SettingsWindowUI`, including compile-safe runtime project wiring
