@@ -21,11 +21,11 @@ MonoBehaviour:
   ingredients:
   - item: {fileID: 11400000, guid: 92876eec3385dc04492d0bf26e0d7e2d, type: 2}
     amount: 1
-  - item: {fileID: 11400000, guid: 99fde81c500e25443b43334f4f586b39, type: 2}
+  - item: {fileID: 11400000, guid: 2304ceb092dee4242b2caf0a817319ed, type: 2}
     amount: 18
-  - item: {fileID: 11400000, guid: 0039f158a0dba0f409b3eeada4e425e8, type: 2}
+  - item: {fileID: 11400000, guid: 7db4d99b9c6a94f418335f71ba3db895, type: 2}
     amount: 5
   outputs:
-  - item: {fileID: 11400000, guid: e62eea66b42237c4c988158c7edf0dea, type: 2}
+  - item: {fileID: 11400000, guid: 0ecf8ac6235280042ba6133f75017cc8, type: 2}
     amount: 1
   craftExp: 80

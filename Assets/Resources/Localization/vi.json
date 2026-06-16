@@ -360,14 +360,8 @@
             "key": "item.mat.twig.name",
             "value": "Cành Khô"
         },
-        {
-            "key": "item.mat.wood.desc",
-            "value": "Vật liệu cơ bản lấy từ cây. Dùng để đóng rương, hàng rào và bàn chế tạo."
-        },
-        {
-            "key": "item.mat.wood.name",
-            "value": "Gỗ"
-        },
+        { "key": "item.mat.wood.desc", "value": "Gỗ cơ bản thu từ cây. Dùng để làm hàng rào, rương và nâng cấp dụng cụ." },
+        { "key": "item.mat.wood.name", "value": "Gỗ" },
         {
             "key": "item.place.bed.basic.desc",
             "value": "Một chiếc giường đặt trong nhà để kết thúc ngày và bắt đầu buổi sáng tiếp theo trong trạng thái hồi phục."
@@ -376,22 +370,10 @@
             "key": "item.place.bed.basic.name",
             "value": "Giường Gỗ"
         },
-        {
-            "key": "item.place.sprinkler.t1.desc",
-            "value": "Đặt xuống để tự động tưới đất đã cuốc trong bán kính nhỏ vào đầu ngày."
-        },
-        {
-            "key": "item.place.sprinkler.t1.name",
-            "value": "Bản vẽ Vòi tưới T1"
-        },
-        {
-            "key": "item.place.sprinkler.t2.desc",
-            "value": "Đặt xuống để tự động tưới khu vực lớn hơn, phù hợp cho ruộng giữa game."
-        },
-        {
-            "key": "item.place.sprinkler.t2.name",
-            "value": "Bản vẽ Vòi tưới T2"
-        },
+        { "key": "item.place.sprinkler.t1.desc", "value": "Đặt xuống để tự động tưới một vùng nhỏ vào mỗi buổi sáng." },
+        { "key": "item.place.sprinkler.t1.name", "value": "Sprinkler T1" },
+        { "key": "item.place.sprinkler.t2.desc", "value": "Đặt xuống để tự động tưới một khu lớn hơn vào mỗi buổi sáng." },
+        { "key": "item.place.sprinkler.t2.name", "value": "Sprinkler T2" },
         {
             "key": "item.prod.cheese.desc",
             "value": "Chế biến từ sữa. Bán tốt và dùng trong món ăn cao cấp."
@@ -648,14 +630,8 @@
             "key": "item.tool.pickaxe.t1.name",
             "value": "Cuốc Chim Đá"
         },
-        {
-            "key": "item.tool.pickaxe.t2.desc",
-            "value": "Cuốc Chim Đồng cấp 2. Gây 5 sát thương cơ bản với chi phí 3 thể lực mỗi lần dùng."
-        },
-        {
-            "key": "item.tool.pickaxe.t2.name",
-            "value": "Cuốc Chim Đồng"
-        },
+        { "key": "item.tool.pickaxe.t2.desc", "value": "Cuốc chim mạnh hơn giúp đào nhanh hơn bản cơ bản." },
+        { "key": "item.tool.pickaxe.t2.name", "value": "Cuốc chim Đồng" },
         {
             "key": "item.tool.pickaxe.t3.desc",
             "value": "Cuốc Chim Sắt cấp 3. Gây 10 sát thương cơ bản với chi phí 2 thể lực mỗi lần dùng."
@@ -688,14 +664,8 @@
             "key": "item.tool.scythe.t1.name",
             "value": "Liềm Đá"
         },
-        {
-            "key": "item.tool.scythe.t2.desc",
-            "value": "Liềm Đồng cấp 2. Gây 8 sát thương cơ bản với chi phí 3 thể lực mỗi lần dùng."
-        },
-        {
-            "key": "item.tool.scythe.t2.name",
-            "value": "Liềm Đồng"
-        },
+        { "key": "item.tool.scythe.t2.desc", "value": "Liềm nâng cấp giúp thu hoạch rộng hơn trong mỗi lần quét." },
+        { "key": "item.tool.scythe.t2.name", "value": "Liềm Đồng" },
         {
             "key": "item.tool.scythe.t3.desc",
             "value": "Liềm Sắt cấp 3. Gây 14 sát thương cơ bản với chi phí 2 thể lực mỗi lần dùng."
@@ -1143,6 +1113,54 @@
         {
             "key": "world.utility.sprinkler.t2.name",
             "value": "Vòi tưới T2"
-        }
-    ]
+        },
+    { "key": "item.crop.asparagus.name", "value": "Măng tây" },
+    { "key": "item.crop.asparagus.desc", "value": "Măng tây thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ." },
+    { "key": "item.crop.bean.name", "value": "Đậu que" },
+    { "key": "item.crop.bean.desc", "value": "Đậu que thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ." },
+    { "key": "item.crop.blueberry.name", "value": "Việt quất" },
+    { "key": "item.crop.blueberry.desc", "value": "Việt quất thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ." },
+    { "key": "item.crop.cabbage.name", "value": "Bắp cải" },
+    { "key": "item.crop.cabbage.desc", "value": "Bắp cải thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ." },
+    { "key": "item.crop.carrot.name", "value": "Cà rốt" },
+    { "key": "item.crop.carrot.desc", "value": "Cà rốt thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ." },
+    { "key": "item.crop.cauliflower.name", "value": "Súp lơ trắng" },
+    { "key": "item.crop.cauliflower.desc", "value": "Súp lơ trắng thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ." },
+    { "key": "item.crop.cucumber.name", "value": "Dưa leo" },
+    { "key": "item.crop.cucumber.desc", "value": "Dưa leo thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ." },
+    { "key": "item.crop.garlic.name", "value": "Tỏi" },
+    { "key": "item.crop.garlic.desc", "value": "Tỏi thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ." },
+    { "key": "item.crop.grape.name", "value": "Nho" },
+    { "key": "item.crop.grape.desc", "value": "Nho thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ." },
+    { "key": "item.crop.melon.name", "value": "Dưa lưới" },
+    { "key": "item.crop.melon.desc", "value": "Dưa lưới thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ." },
+    { "key": "item.crop.pea.name", "value": "Đậu Hà Lan" },
+    { "key": "item.crop.pea.desc", "value": "Đậu Hà Lan thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ." },
+    { "key": "item.crop.pepper_green.name", "value": "Ớt xanh" },
+    { "key": "item.crop.pepper_green.desc", "value": "Ớt xanh thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ." },
+    { "key": "item.crop.pepper_red.name", "value": "Ớt đỏ" },
+    { "key": "item.crop.pepper_red.desc", "value": "Ớt đỏ thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ." },
+    { "key": "item.crop.pepper_yellow.name", "value": "Ớt vàng" },
+    { "key": "item.crop.pepper_yellow.desc", "value": "Ớt vàng thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ." },
+    { "key": "item.crop.radish.name", "value": "Củ cải đỏ" },
+    { "key": "item.crop.radish.desc", "value": "Củ cải đỏ thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ." },
+    { "key": "item.crop.yam.name", "value": "Khoai mỡ" },
+    { "key": "item.crop.yam.desc", "value": "Khoai mỡ thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ." },
+    { "key": "item.crop.apple.name", "value": "Táo" },
+    { "key": "item.crop.apple.desc", "value": "Táo hái từ cây ăn quả. Phù hợp để nấu ăn hoặc bán có lời." },
+    { "key": "item.crop.cherry.name", "value": "Anh đào" },
+    { "key": "item.crop.cherry.desc", "value": "Anh đào hái từ cây ăn quả. Phù hợp để nấu ăn hoặc bán có lời." },
+    { "key": "item.crop.pear.name", "value": "Lê" },
+    { "key": "item.crop.pear.desc", "value": "Lê hái từ cây ăn quả. Phù hợp để nấu ăn hoặc bán có lời." },
+    { "key": "item.crop.plum.name", "value": "Mận" },
+    { "key": "item.crop.plum.desc", "value": "Mận hái từ cây ăn quả. Phù hợp để nấu ăn hoặc bán có lời." },
+    { "key": "item.animal.egg.name", "value": "Trứng" },
+    { "key": "item.animal.egg.desc", "value": "Sản phẩm chăn nuôi dùng để nấu ăn hoặc làm mayonnaise." },
+    { "key": "item.animal.milk.name", "value": "Sữa" },
+    { "key": "item.animal.milk.desc", "value": "Sữa tươi dùng cho nấu ăn và ép phô mai." },
+    { "key": "item.food.cheese.name", "value": "Phô mai" },
+    { "key": "item.food.cheese.desc", "value": "Món sữa chế biến giúp hồi thể lực và bán lời hơn sữa tươi." },
+    { "key": "item.food.mayonnaise.name", "value": "Mayonnaise" },
+    { "key": "item.food.mayonnaise.desc", "value": "Món sốt làm từ trứng giúp hồi một ít thể lực." }
+  ]
 }

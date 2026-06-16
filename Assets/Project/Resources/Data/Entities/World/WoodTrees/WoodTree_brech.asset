@@ -32,15 +32,26 @@ MonoBehaviour:
     provideTags: 0
     blockLayers: 
   modules:
+  - rid: 8196223262934696267
+  - rid: 5278706222873444360
+  - rid: 8196223262934696260
+  - rid: 8196223262934696261
   - rid: 8196223262934696259
   - rid: 8196223262934696266
-  - rid: 8196223262934696260
   - rid: 8196223262934696263
-  - rid: 8196223262934696261
-  - rid: 8196223262934696267
   references:
     version: 2
     RefIds:
+    - rid: 5278706222873444360
+      type: {class: DropModule, ns: , asm: Assembly-CSharp}
+      data:
+        harvestDrops:
+        - item: {fileID: 11400000, guid: f0d281dba74dc0b43a3e6179c493a903, type: 2}
+          minAmount: 2
+          maxAmount: 3
+          dropChance: 1
+        deathDrops: []
+        includeHarvestDropsOnDestroyWhenHarvestable: 0
     - rid: 8196223262934696259
       type: {class: ResourceGrowthModule, ns: , asm: Assembly-CSharp}
       data:
@@ -69,7 +80,8 @@ MonoBehaviour:
         canTakeDamage: 1
     - rid: 8196223262934696261
       type: {class: MortalModule, ns: , asm: Assembly-CSharp}
-      data: 
+      data:
+        destroyDelay: 0
     - rid: 8196223262934696263
       type: {class: ResourceHitReactionModule, ns: , asm: Assembly-CSharp}
       data:

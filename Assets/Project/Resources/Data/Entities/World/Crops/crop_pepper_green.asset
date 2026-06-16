@@ -88,7 +88,11 @@ MonoBehaviour:
     - rid: 8196223262934696361
       type: {class: DropModule, ns: , asm: Assembly-CSharp}
       data:
-        harvestDrops: []
+        harvestDrops:
+        - item: {fileID: 11400000, guid: 574b251bf269dd6479306661cd0e694f, type: 2}
+          minAmount: 1
+          maxAmount: 2
+          dropChance: 1
         deathDrops: []
         includeHarvestDropsOnDestroyWhenHarvestable: 0
     - rid: 8196223262934696362
@@ -113,4 +117,5 @@ MonoBehaviour:
         requireKiller: 1
     - rid: 8196223262934696365
       type: {class: MortalModule, ns: , asm: Assembly-CSharp}
-      data: 
+      data:
+        destroyDelay: 0

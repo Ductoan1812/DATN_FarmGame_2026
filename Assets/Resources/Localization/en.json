@@ -420,14 +420,8 @@
             "key": "item.mat.twig.name",
             "value": "Twig"
         },
-        {
-            "key": "item.mat.wood.desc",
-            "value": "Basic lumber from trees. Used for chests, fences, and crafting stations."
-        },
-        {
-            "key": "item.mat.wood.name",
-            "value": "Wood"
-        },
+        { "key": "item.mat.wood.desc", "value": "Basic lumber from trees. Used for fences, chests, and tool upgrades." },
+        { "key": "item.mat.wood.name", "value": "Wood" },
         {
             "key": "item.place.bed.basic.desc",
             "value": "A house bed used to end the day and begin the next morning fully rested."
@@ -436,22 +430,10 @@
             "key": "item.place.bed.basic.name",
             "value": "Wooden Bed"
         },
-        {
-            "key": "item.place.sprinkler.t1.desc",
-            "value": "Place it to automatically water nearby tilled soil each morning."
-        },
-        {
-            "key": "item.place.sprinkler.t1.name",
-            "value": "Sprinkler T1"
-        },
-        {
-            "key": "item.place.sprinkler.t2.desc",
-            "value": "Place it to water a larger area automatically, ideal for mid-game fields."
-        },
-        {
-            "key": "item.place.sprinkler.t2.name",
-            "value": "Sprinkler T2"
-        },
+        { "key": "item.place.sprinkler.t1.desc", "value": "Place it to automatically water a small area every morning." },
+        { "key": "item.place.sprinkler.t1.name", "value": "Sprinkler T1" },
+        { "key": "item.place.sprinkler.t2.desc", "value": "Place it to automatically water a larger field every morning." },
+        { "key": "item.place.sprinkler.t2.name", "value": "Sprinkler T2" },
         {
             "key": "item.prod.cheese.desc",
             "value": "Processed from milk. Valuable and useful in premium meals."
@@ -708,14 +690,8 @@
             "key": "item.tool.pickaxe.t1.name",
             "value": "Stone Pickaxe"
         },
-        {
-            "key": "item.tool.pickaxe.t2.desc",
-            "value": "Copper Pickaxe tier 2. Deals 5 base damage at a stamina cost of 3 per use."
-        },
-        {
-            "key": "item.tool.pickaxe.t2.name",
-            "value": "Copper Pickaxe"
-        },
+        { "key": "item.tool.pickaxe.t2.desc", "value": "A stronger pickaxe that mines faster than the starter tool." },
+        { "key": "item.tool.pickaxe.t2.name", "value": "Copper Pickaxe" },
         {
             "key": "item.tool.pickaxe.t3.desc",
             "value": "Iron Pickaxe tier 3. Deals 10 base damage at a stamina cost of 2 per use."
@@ -748,14 +724,8 @@
             "key": "item.tool.scythe.t1.name",
             "value": "Stone Scythe"
         },
-        {
-            "key": "item.tool.scythe.t2.desc",
-            "value": "Copper Scythe tier 2. Deals 8 base damage at a stamina cost of 3 per use."
-        },
-        {
-            "key": "item.tool.scythe.t2.name",
-            "value": "Copper Scythe"
-        },
+        { "key": "item.tool.scythe.t2.desc", "value": "An upgraded scythe that harvests a wider area per swing." },
+        { "key": "item.tool.scythe.t2.name", "value": "Copper Scythe" },
         {
             "key": "item.tool.scythe.t3.desc",
             "value": "Iron Scythe tier 3. Deals 14 base damage at a stamina cost of 2 per use."
@@ -1539,6 +1509,54 @@
         {
             "key": "world.utility.sprinkler.t2.name",
             "value": "Sprinkler T2"
-        }
-    ]
+        },
+    { "key": "item.crop.asparagus.name", "value": "Asparagus" },
+    { "key": "item.crop.asparagus.desc", "value": "Asparagus harvested from the field. Useful for selling, cooking, or quest turn-ins." },
+    { "key": "item.crop.bean.name", "value": "Green Bean" },
+    { "key": "item.crop.bean.desc", "value": "Green Bean harvested from the field. Useful for selling, cooking, or quest turn-ins." },
+    { "key": "item.crop.blueberry.name", "value": "Blueberry" },
+    { "key": "item.crop.blueberry.desc", "value": "Blueberry harvested from the field. Useful for selling, cooking, or quest turn-ins." },
+    { "key": "item.crop.cabbage.name", "value": "Cabbage" },
+    { "key": "item.crop.cabbage.desc", "value": "Cabbage harvested from the field. Useful for selling, cooking, or quest turn-ins." },
+    { "key": "item.crop.carrot.name", "value": "Carrot" },
+    { "key": "item.crop.carrot.desc", "value": "Carrot harvested from the field. Useful for selling, cooking, or quest turn-ins." },
+    { "key": "item.crop.cauliflower.name", "value": "Cauliflower" },
+    { "key": "item.crop.cauliflower.desc", "value": "Cauliflower harvested from the field. Useful for selling, cooking, or quest turn-ins." },
+    { "key": "item.crop.cucumber.name", "value": "Cucumber" },
+    { "key": "item.crop.cucumber.desc", "value": "Cucumber harvested from the field. Useful for selling, cooking, or quest turn-ins." },
+    { "key": "item.crop.garlic.name", "value": "Garlic" },
+    { "key": "item.crop.garlic.desc", "value": "Garlic harvested from the field. Useful for selling, cooking, or quest turn-ins." },
+    { "key": "item.crop.grape.name", "value": "Grape" },
+    { "key": "item.crop.grape.desc", "value": "Grape harvested from the field. Useful for selling, cooking, or quest turn-ins." },
+    { "key": "item.crop.melon.name", "value": "Melon" },
+    { "key": "item.crop.melon.desc", "value": "Melon harvested from the field. Useful for selling, cooking, or quest turn-ins." },
+    { "key": "item.crop.pea.name", "value": "Pea Pod" },
+    { "key": "item.crop.pea.desc", "value": "Pea Pod harvested from the field. Useful for selling, cooking, or quest turn-ins." },
+    { "key": "item.crop.pepper_green.name", "value": "Green Pepper" },
+    { "key": "item.crop.pepper_green.desc", "value": "Green Pepper harvested from the field. Useful for selling, cooking, or quest turn-ins." },
+    { "key": "item.crop.pepper_red.name", "value": "Red Pepper" },
+    { "key": "item.crop.pepper_red.desc", "value": "Red Pepper harvested from the field. Useful for selling, cooking, or quest turn-ins." },
+    { "key": "item.crop.pepper_yellow.name", "value": "Yellow Pepper" },
+    { "key": "item.crop.pepper_yellow.desc", "value": "Yellow Pepper harvested from the field. Useful for selling, cooking, or quest turn-ins." },
+    { "key": "item.crop.radish.name", "value": "Radish" },
+    { "key": "item.crop.radish.desc", "value": "Radish harvested from the field. Useful for selling, cooking, or quest turn-ins." },
+    { "key": "item.crop.yam.name", "value": "Yam" },
+    { "key": "item.crop.yam.desc", "value": "Yam harvested from the field. Useful for selling, cooking, or quest turn-ins." },
+    { "key": "item.crop.apple.name", "value": "Apple" },
+    { "key": "item.crop.apple.desc", "value": "Apple picked from a fruit tree. Great for cooking or profitable sales." },
+    { "key": "item.crop.cherry.name", "value": "Cherry" },
+    { "key": "item.crop.cherry.desc", "value": "Cherry picked from a fruit tree. Great for cooking or profitable sales." },
+    { "key": "item.crop.pear.name", "value": "Pear" },
+    { "key": "item.crop.pear.desc", "value": "Pear picked from a fruit tree. Great for cooking or profitable sales." },
+    { "key": "item.crop.plum.name", "value": "Plum" },
+    { "key": "item.crop.plum.desc", "value": "Plum picked from a fruit tree. Great for cooking or profitable sales." },
+    { "key": "item.animal.egg.name", "value": "Egg" },
+    { "key": "item.animal.egg.desc", "value": "An animal product used in cooking or turned into mayonnaise." },
+    { "key": "item.animal.milk.name", "value": "Milk" },
+    { "key": "item.animal.milk.desc", "value": "Fresh milk used for recipes and cheese processing." },
+    { "key": "item.food.cheese.name", "value": "Cheese" },
+    { "key": "item.food.cheese.desc", "value": "A processed dairy food that restores stamina and sells better than raw milk." },
+    { "key": "item.food.mayonnaise.name", "value": "Mayonnaise" },
+    { "key": "item.food.mayonnaise.desc", "value": "A rich egg-based food that restores a bit of stamina." }
+  ]
 }
