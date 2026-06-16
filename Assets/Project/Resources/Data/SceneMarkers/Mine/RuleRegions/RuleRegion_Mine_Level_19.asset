@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 40604a245c9d4ffdaec520af1b65f343, type: 3}
   m_Name: RuleRegion_Mine_Level_19
-  m_EditorClassIdentifier: Assembly-CSharp::SceneSpawnRuleRegionTile
+  m_EditorClassIdentifier: 
   regionKey: mine_level_19
   entries:
   - entryId: mine_l19_Marker_Mine_node_bigiron1_1
@@ -158,5 +158,23 @@ MonoBehaviour:
     respawnCountMin: 1
     respawnCountMax: 1
     spawnGroupOverride: 
+  - entryId: mine_l19_Marker_Orc2
+    markerTile: {fileID: 11400000, guid: c03ff383b4a1649418f358d8f76fefb2, type: 2}
+    initialCountMin: 1
+    initialCountMax: 1
+    spawnMode: 1
+    respawnDelaySeconds: 180
+    respawnCountMin: 1
+    respawnCountMax: 1
+    spawnGroupOverride: mine_level_19_marker_orc2
+  - entryId: mine_l19_Marker_Orc3
+    markerTile: {fileID: 11400000, guid: a0a3bf4bb00bbb247a4ff2780f7478bd, type: 2}
+    initialCountMin: 1
+    initialCountMax: 2
+    spawnMode: 1
+    respawnDelaySeconds: 240
+    respawnCountMin: 1
+    respawnCountMax: 1
+    spawnGroupOverride: mine_level_19_marker_orc3
   editorSprite: {fileID: -1828517551, guid: a4a24f3765a4d004cac302e32f2bb058, type: 3}
   editorColor: {r: 0.58946526, g: 0.21842104, b: 1, a: 1}

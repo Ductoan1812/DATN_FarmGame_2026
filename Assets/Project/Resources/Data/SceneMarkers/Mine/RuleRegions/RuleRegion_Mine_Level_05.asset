@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 40604a245c9d4ffdaec520af1b65f343, type: 3}
   m_Name: RuleRegion_Mine_Level_05
-  m_EditorClassIdentifier: Assembly-CSharp::SceneSpawnRuleRegionTile
+  m_EditorClassIdentifier: 
   regionKey: mine_level_05
   entries:
   - entryId: mine_l05_Marker_Mine_node_stone11_1
@@ -95,5 +95,14 @@ MonoBehaviour:
     respawnCountMin: 1
     respawnCountMax: 1
     spawnGroupOverride: 
+  - entryId: mine_l05_Marker_Slime2
+    markerTile: {fileID: 11400000, guid: fc421c002617fe640b87f7f3979dd878, type: 2}
+    initialCountMin: 1
+    initialCountMax: 2
+    spawnMode: 1
+    respawnDelaySeconds: 105
+    respawnCountMin: 1
+    respawnCountMax: 1
+    spawnGroupOverride: mine_level_05_marker_slime2
   editorSprite: {fileID: 114625507, guid: a4a24f3765a4d004cac302e32f2bb058, type: 3}
   editorColor: {r: 0.6852383, g: 1, b: 0.4763158, a: 1}

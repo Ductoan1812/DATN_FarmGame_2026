@@ -10,6 +10,7 @@ public static class GenerateMineSpawnAssets
     private const string ResourceEntityRoot = "Assets/Project/Resources/Data/Entities/World/Resources";
     private const string MarkerRoot = "Assets/Project/Resources/Data/SceneMarkers/Mine/SpawnTiles";
     private const string RegionRoot = "Assets/Project/Resources/Data/SceneMarkers/Mine/RuleRegions";
+    private const string EnemyMarkerRoot = "Assets/Project/Resources/Data/SceneMarkers/Enemies/SpawnTiles";
 
     private enum MarkerCategory
     {
@@ -63,6 +64,22 @@ public static class GenerateMineSpawnAssets
         public PoolRequest[] Requests { get; }
     }
 
+    private readonly struct EnemyRequest
+    {
+        public EnemyRequest(string markerName, int minCount, int maxCount, float respawnDelaySeconds)
+        {
+            MarkerName = markerName;
+            MinCount = minCount;
+            MaxCount = maxCount;
+            RespawnDelaySeconds = respawnDelaySeconds;
+        }
+
+        public string MarkerName { get; }
+        public int MinCount { get; }
+        public int MaxCount { get; }
+        public float RespawnDelaySeconds { get; }
+    }
+
     [MenuItem("Tools/DATN/Content/Generate Mine Spawn Assets")]
     public static void GenerateAssets()
     {
@@ -74,7 +91,8 @@ public static class GenerateMineSpawnAssets
         }
 
         var markerByAssetName = GenerateSpawnTiles(nodes);
-        GenerateRuleRegions(markerByAssetName);
+        var enemyMarkers = LoadEnemyMarkers();
+        GenerateRuleRegions(markerByAssetName, enemyMarkers);
 
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
@@ -149,7 +167,9 @@ public static class GenerateMineSpawnAssets
         return markerByAssetName;
     }
 
-    private static void GenerateRuleRegions(IReadOnlyDictionary<string, SceneSpawnTile> markerByAssetName)
+    private static void GenerateRuleRegions(
+        IReadOnlyDictionary<string, SceneSpawnTile> markerByAssetName,
+        IReadOnlyDictionary<string, SceneSpawnTile> enemyMarkers)
     {
         EnsureFolder(RegionRoot);
 
@@ -161,7 +181,7 @@ public static class GenerateMineSpawnAssets
             string assetPath = $"{RegionRoot}/RuleRegion_Mine_Level_{level.LevelIndex:00}.asset";
             var region = LoadOrCreateAsset<SceneSpawnRuleRegionTile>(assetPath);
             region.regionKey = $"mine_level_{level.LevelIndex:00}";
-            region.entries = BuildEntriesForLevel(level, pools);
+            region.entries = BuildEntriesForLevel(level, pools, enemyMarkers);
             region.editorSprite = ResolveRegionPreviewSprite(region.entries);
             region.editorColor = ResolveLevelColor(level.LevelIndex);
             EditorUtility.SetDirty(region);
@@ -170,7 +190,8 @@ public static class GenerateMineSpawnAssets
 
     private static SceneSpawnRuleEntry[] BuildEntriesForLevel(
         LevelDefinition level,
-        IReadOnlyDictionary<string, List<SceneSpawnTile>> pools)
+        IReadOnlyDictionary<string, List<SceneSpawnTile>> pools,
+        IReadOnlyDictionary<string, SceneSpawnTile> enemyMarkers)
     {
         var entries = new List<SceneSpawnRuleEntry>();
 
@@ -200,7 +221,134 @@ public static class GenerateMineSpawnAssets
             }
         }
 
+        foreach (var request in BuildEnemyRequests(level.LevelIndex))
+        {
+            if (!enemyMarkers.TryGetValue(request.MarkerName, out var marker) || marker == null)
+            {
+                Debug.LogWarning(
+                    $"[GenerateMineSpawnAssets] Missing enemy marker '{request.MarkerName}' for mine level {level.LevelIndex:00}.");
+                continue;
+            }
+
+            entries.Add(new SceneSpawnRuleEntry
+            {
+                entryId = $"mine_l{level.LevelIndex:00}_{request.MarkerName}",
+                markerTile = marker,
+                initialCountMin = Mathf.Max(0, request.MinCount),
+                initialCountMax = Mathf.Max(request.MinCount, request.MaxCount),
+                spawnMode = SceneSpawnRuleMode.RespawnTopUp,
+                respawnDelaySeconds = Mathf.Max(30f, request.RespawnDelaySeconds),
+                respawnCountMin = 1,
+                respawnCountMax = 1,
+                spawnGroupOverride = $"mine_level_{level.LevelIndex:00}_{request.MarkerName.ToLowerInvariant()}"
+            });
+        }
+
         return entries.ToArray();
+    }
+
+    private static Dictionary<string, SceneSpawnTile> LoadEnemyMarkers()
+    {
+        var results = new Dictionary<string, SceneSpawnTile>(StringComparer.OrdinalIgnoreCase);
+        foreach (string markerName in new[]
+        {
+            "Marker_Slime1",
+            "Marker_Slime2",
+            "Marker_Slime3",
+            "Marker_Orc1",
+            "Marker_Orc2",
+            "Marker_Orc3"
+        })
+        {
+            string assetPath = $"{EnemyMarkerRoot}/{markerName}.asset";
+            var marker = AssetDatabase.LoadAssetAtPath<SceneSpawnTile>(assetPath);
+            if (marker == null)
+            {
+                Debug.LogWarning($"[GenerateMineSpawnAssets] Enemy marker not found: {assetPath}");
+                continue;
+            }
+
+            results[markerName] = marker;
+        }
+
+        return results;
+    }
+
+    private static EnemyRequest[] BuildEnemyRequests(int levelIndex)
+    {
+        switch (levelIndex)
+        {
+            case 1:
+                return EnemySet(new EnemyRequest("Marker_Slime1", 1, 1, 90f));
+            case 2:
+                return EnemySet(new EnemyRequest("Marker_Slime1", 1, 2, 90f));
+            case 3:
+                return EnemySet(
+                    new EnemyRequest("Marker_Slime1", 1, 2, 90f),
+                    new EnemyRequest("Marker_Slime2", 0, 1, 105f));
+            case 4:
+                return EnemySet(
+                    new EnemyRequest("Marker_Slime1", 1, 1, 90f),
+                    new EnemyRequest("Marker_Slime2", 1, 1, 105f));
+            case 5:
+                return EnemySet(new EnemyRequest("Marker_Slime2", 1, 2, 105f));
+            case 6:
+                return EnemySet(
+                    new EnemyRequest("Marker_Slime2", 1, 2, 105f),
+                    new EnemyRequest("Marker_Slime3", 0, 1, 120f));
+            case 7:
+                return EnemySet(
+                    new EnemyRequest("Marker_Slime2", 1, 1, 105f),
+                    new EnemyRequest("Marker_Slime3", 1, 1, 120f));
+            case 8:
+                return EnemySet(new EnemyRequest("Marker_Slime3", 1, 2, 120f));
+            case 9:
+                return EnemySet(
+                    new EnemyRequest("Marker_Slime3", 1, 2, 120f),
+                    new EnemyRequest("Marker_Orc1", 0, 1, 150f));
+            case 10:
+                return EnemySet(
+                    new EnemyRequest("Marker_Slime3", 1, 1, 120f),
+                    new EnemyRequest("Marker_Orc1", 1, 1, 150f));
+            case 11:
+                return EnemySet(new EnemyRequest("Marker_Orc1", 1, 2, 150f));
+            case 12:
+                return EnemySet(
+                    new EnemyRequest("Marker_Orc1", 1, 2, 150f),
+                    new EnemyRequest("Marker_Orc2", 0, 1, 180f));
+            case 13:
+                return EnemySet(
+                    new EnemyRequest("Marker_Orc1", 1, 1, 150f),
+                    new EnemyRequest("Marker_Orc2", 1, 1, 180f));
+            case 14:
+            case 15:
+                return EnemySet(new EnemyRequest("Marker_Orc2", 1, 2, 180f));
+            case 16:
+                return EnemySet(
+                    new EnemyRequest("Marker_Orc2", 1, 2, 180f),
+                    new EnemyRequest("Marker_Orc3", 0, 1, 240f));
+            case 17:
+                return EnemySet(
+                    new EnemyRequest("Marker_Orc2", 1, 1, 180f),
+                    new EnemyRequest("Marker_Orc3", 1, 1, 240f));
+            case 18:
+                return EnemySet(new EnemyRequest("Marker_Orc3", 1, 2, 240f));
+            case 19:
+                return EnemySet(
+                    new EnemyRequest("Marker_Orc2", 1, 1, 180f),
+                    new EnemyRequest("Marker_Orc3", 1, 2, 240f));
+            case 20:
+                return EnemySet(
+                    new EnemyRequest("Marker_Orc2", 1, 1, 180f),
+                    new EnemyRequest("Marker_Orc3", 2, 2, 240f));
+            default:
+                return Array.Empty<EnemyRequest>();
+        }
+    }
+
+    private static EnemyRequest[] EnemySet(params EnemyRequest[] requests)
+    {
+        return requests ?? Array.Empty<EnemyRequest>();
     }
 
     private static IReadOnlyDictionary<string, List<SceneSpawnTile>> BuildPools(
