@@ -124,3 +124,12 @@ InitTestScene*.unity*
 /Assets/Project/Scenes/Coreplay/FarmScene1.unity.meta
 /Assets/Resources/Localization/MissingKeys/
 /tools/
+
+# AI workflow and generated assets — không commit lên GitHub
+/.ai-workflow/
+/.codex-remote-attachments/
+/GeneratedTilesets/
+/SpriteSheets/
+/curves.json
+/curves_fix.json
+/curves_reset.json
