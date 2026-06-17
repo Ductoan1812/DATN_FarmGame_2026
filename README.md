@@ -95,8 +95,7 @@ Toàn bộ tài liệu nằm trong `Assets/Project/Docs/`.
 | File | Mô tả |
 |---|---|
 | [`Docs/GDD.md`](Assets/Project/Docs/GDD.md) | **Game Design Document** — Bản thiết kế game hoàn chỉnh. Bao gồm: ý tưởng, cốt truyện, vòng lặp gameplay, tất cả hệ thống (farming, combat, kinh tế, tiến triển, thời tiết...), phạm vi nội dung MVP, kế hoạch triển khai. |
-| [`Docs/DeCuongDoAnTotNghiep.md`](Assets/Project/Docs/DeCuongDoAnTotNghiep.md) | Đề cương chi tiết đồ án tốt nghiệp — nộp cho khoa. |
-| [`Docs/DataEntity.md`](Assets/Project/Docs/DataEntity.md) | **Kiến trúc dữ liệu EntityData** — Quy tắc thiết kế toàn bộ đối tượng trong game theo mô hình `EntityData → ModuleData → ModuleRuntime`. Bao gồm: danh mục Stats chính thức, blueprint theo archetype (Player, Tool, Crop, NPC, Enemy...), quy tắc tạo data mới. |
+ [`Docs/DataEntity.md`](Assets/Project/Docs/DataEntity.md) | **Kiến trúc dữ liệu EntityData** — Quy tắc thiết kế toàn bộ đối tượng trong game theo mô hình `EntityData → ModuleData → ModuleRuntime`. Bao gồm: danh mục Stats chính thức, blueprint theo archetype (Player, Tool, Crop, NPC, Enemy...), quy tắc tạo data mới. |
 | [`Docs/ItemDesign.md`](Assets/Project/Docs/ItemDesign.md) | **Thiết kế item** — Danh mục toàn bộ item trong game: ID, category, modules cần gắn, source (từ đâu có được), sink (dùng để làm gì). |
 
 ### Tài liệu thiết kế chi tiết (`Docs/Design/`)
