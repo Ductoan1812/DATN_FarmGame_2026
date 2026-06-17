@@ -18,7 +18,6 @@ public class HoeRuntime : ToolRuntime
         if (ws == null) return false;
 
         // Kiểm tra qua SpatialRegistry — chỉ block nếu có entity chiếm cell (cây, đá...)
-        // Player di chuyển tự do, không nằm trong spatial → không bị block
         if (ws.HasBlockerAt(cell2d, EntityLayer.Ground)
             || ws.HasBlockerAt(cell2d, EntityLayer.Plant)
             || ws.HasBlockerAt(cell2d, EntityLayer.Furniture))
@@ -51,6 +50,7 @@ public class HoeRuntime : ToolRuntime
         var plowedTile = GameManager.Instance.TileData?.plowedTile;
 
         ws.SetGround(cell2d, plowedTile);
+
         Debug.Log($"[HoeRuntime] Cuốc đất tại {targetCell}");
     }
 }

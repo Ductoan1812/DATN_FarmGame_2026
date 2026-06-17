@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8393fbdfdb650e5418aad1c82ae5b8b5, type: 3}
+  m_Name: item_tool_pickaxe_t1
+  m_EditorClassIdentifier: 
+  id: item_tool_pickaxe_t1
+  keyName: item.tool.pickaxe.t1.name
+  descKey: item.tool.pickaxe.t1.desc
+  icon: {fileID: 574327277, guid: 163ba03f3b439ab48b5f238ac2b407f0, type: 3}
+  category: 1
+  maxStack: 1
+  buyPrice: 320
+  sellPrice: 140
+  baseStats:
+    baseStats:
+    - statType: 5
+      value: 3
+    - statType: 9
+      value: 1
+    - statType: 10
+      value: 1
+    - statType: 11
+      value: 0.35
+    - statType: 12
+      value: 1.3
+    - statType: 2
+      value: 2
+  placementRule:
+    occupyLayer: 0
+    requireTags: 0
+    provideTags: 0
+    blockLayers: 
+  modules:
+  - rid: 5278706062832435284
+  - rid: 5278706062832435285
+  - rid: 5278706062832435286
+  - rid: 5278706062832435287
+  references:
+    version: 2
+    RefIds:
+    - rid: 5278706062832435284
+      type: {class: ToolModule, ns: , asm: Assembly-CSharp}
+      data:
+        toolType: 5
+        toolTier: 1
+        animTrigger: Pickaxe
+        refillAnimTrigger: 
+    - rid: 5278706062832435285
+      type: {class: StaminaCostModule, ns: , asm: Assembly-CSharp}
+      data:
+        cost: 3
+    - rid: 5278706062832435286
+      type: {class: ToolRequirementModule, ns: , asm: Assembly-CSharp}
+      data:
+        requiredToolType: 5
+        minimumToolTier: 1
+        wrongToolPenalty: 0
+        blockDamageIfWrongTool: 1
+        blockDamageIfBelowTier: 1
+    - rid: 5278706062832435287
+      type: {class: AppearanceModule, ns: , asm: Assembly-CSharp}
+      data:
+        spriteId: Art.Equipment.MeleeWeapon1H.Pickaxe
+        equipmentPart: 5

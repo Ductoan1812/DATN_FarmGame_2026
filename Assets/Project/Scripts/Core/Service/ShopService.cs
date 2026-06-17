@@ -152,6 +152,7 @@ public static class ShopService
         AddMoney(merchant, -totalPrice);
 
         var result = new ShopTransactionResult(true, ShopTransactionFailReason.None, transferred, totalPrice);
+        GameManager.Instance?.DailyTracker?.RecordIncome(totalPrice);
         PublishResult(seller, merchant, result);
         return result;
     }
@@ -180,18 +181,24 @@ public static class ShopService
         {
             if (shop.initialStock != null)
             {
+                int customerLevel = GetLevel(customer);
                 foreach (var entry in shop.initialStock)
                 {
                     if (entry?.itemData == null) continue;
+                    var requirement = UnlockService.MergeLevelFallback(entry.unlockRequirement, entry.requiredLevel);
+                    bool unlocked = UnlockService.IsUnlocked(customer, requirement);
+                    string lockedReasonKey = UnlockService.GetLockedReasonKey(customer, requirement);
                     stockItems.Add(new ShopItemViewData(
                         entry.itemData,
                         entry.itemData.keyName,
                         Mathf.Max(1, entry.amount),
                         entry.itemData.buyPrice,
                         entry.itemData.sellPrice,
-                        entry.itemData.buyPrice >= 0,
+                        entry.itemData.buyPrice >= 0 && unlocked,
                         CanMerchantBuy(shop, entry.itemData),
-                        true));
+                        true,
+                        unlocked,
+                        lockedReasonKey));
                 }
             }
         }
@@ -254,6 +261,13 @@ public static class ShopService
     {
         if (entity?.stats == null) return 0;
         return Mathf.FloorToInt(entity.stats.Get(StatType.Money));
+    }
+
+    private static int GetLevel(EntityRuntime entity)
+    {
+        if (entity?.stats == null) return 1;
+        GameManager.Instance?.ProgressionService?.EnsureInitialized(entity);
+        return Mathf.Max(1, Mathf.FloorToInt(entity.stats.Get(StatType.Level)));
     }
 
     private static void AddMoney(EntityRuntime entity, int delta)
@@ -319,6 +333,8 @@ public sealed class ShopItemViewData
     public bool Buyable { get; }
     public bool Sellable { get; }
     public bool InfiniteStock { get; }
+    public bool Unlocked { get; }
+    public string LockedReasonKey { get; }
 
     public ShopItemViewData(EntityRuntime item, string nameKey, int amount, int buyPrice, int sellPrice, bool buyable, bool sellable)
     {
@@ -331,9 +347,16 @@ public sealed class ShopItemViewData
         Buyable = buyable;
         Sellable = sellable;
         InfiniteStock = false;
+        Unlocked = true;
+        LockedReasonKey = string.Empty;
     }
 
     public ShopItemViewData(EntityData itemData, string nameKey, int amount, int buyPrice, int sellPrice, bool buyable, bool sellable, bool infiniteStock)
+        : this(itemData, nameKey, amount, buyPrice, sellPrice, buyable, sellable, infiniteStock, true, string.Empty)
+    {
+    }
+
+    public ShopItemViewData(EntityData itemData, string nameKey, int amount, int buyPrice, int sellPrice, bool buyable, bool sellable, bool infiniteStock, bool unlocked, string lockedReasonKey)
     {
         Item = null;
         ItemData = itemData;
@@ -344,6 +367,8 @@ public sealed class ShopItemViewData
         Buyable = buyable;
         Sellable = sellable;
         InfiniteStock = infiniteStock;
+        Unlocked = unlocked;
+        LockedReasonKey = lockedReasonKey ?? string.Empty;
     }
 }
 

@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8393fbdfdb650e5418aad1c82ae5b8b5, type: 3}
+  m_Name: enemy_rat
+  m_EditorClassIdentifier: 
+  id: enemy_rat
+  keyName: enemy.rat.name
+  descKey: enemy.rat.desc
+  icon: {fileID: 0}
+  category: 14
+  maxStack: 1
+  buyPrice: 0
+  sellPrice: 0
+  baseStats:
+    baseStats:
+    - statType: 0
+      value: 15
+    - statType: 3
+      value: 0
+    - statType: 2
+      value: 3
+    - statType: 4
+      value: 4.5
+  placementRule:
+    occupyLayer: 2
+    requireTags: 2
+    provideTags: 0
+    blockLayers: 0200000001000000
+  modules:
+  - rid: 5278705929685041168
+  - rid: 5278705929685041169
+  - rid: 5278705929685041170
+  - rid: 5278705929685041171
+  references:
+    version: 2
+    RefIds:
+    - rid: 5278705929685041168
+      type: {class: HealthModule, ns: , asm: Assembly-CSharp}
+      data:
+        canTakeDamage: 1
+    - rid: 5278705929685041169
+      type: {class: DropModule, ns: , asm: Assembly-CSharp}
+      data:
+        harvestDrops: []
+        deathDrops:
+        - item: {fileID: 11400000, guid: ab67f4b19b01eab45a023e2d30e524c9, type: 2}
+          minAmount: 1
+          maxAmount: 1
+          dropChance: 0.7
+        includeHarvestDropsOnDestroyWhenHarvestable: 0
+    - rid: 5278705929685041170
+      type: {class: ExpRewardModule, ns: , asm: Assembly-CSharp}
+      data:
+        rewardExp: 22
+        sourceType: 3
+        requireKiller: 1
+    - rid: 5278705929685041171
+      type: {class: MortalModule, ns: , asm: Assembly-CSharp}
+      data: 

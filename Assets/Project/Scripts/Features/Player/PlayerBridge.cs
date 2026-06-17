@@ -30,6 +30,9 @@ public class PlayerBridge : MonoBehaviour
     {
         public Sprite icon;
         public int amount;
+        public bool hasMeter;
+        public int meterCurrent;
+        public int meterMax;
     }
 
     private SlotSnapshot[] _hotbarSnapshot;
@@ -234,13 +237,21 @@ public class PlayerBridge : MonoBehaviour
 
             Sprite icon = empty ? null : slot.entity.entityData.icon;
             int amount = empty ? 0 : slot.entity.Amount;
+            SlotResourceMeterData meter = empty ? SlotResourceMeterData.None : BuildSlotResourceMeter(slot.entity);
 
-            if (_hotbarSnapshot[i].icon != icon || _hotbarSnapshot[i].amount != amount)
+            if (_hotbarSnapshot[i].icon != icon ||
+                _hotbarSnapshot[i].amount != amount ||
+                _hotbarSnapshot[i].hasMeter != meter.hasMeter ||
+                _hotbarSnapshot[i].meterCurrent != meter.current ||
+                _hotbarSnapshot[i].meterMax != meter.max)
             {
                 _hotbarSnapshot[i].icon = icon;
                 _hotbarSnapshot[i].amount = amount;
+                _hotbarSnapshot[i].hasMeter = meter.hasMeter;
+                _hotbarSnapshot[i].meterCurrent = meter.current;
+                _hotbarSnapshot[i].meterMax = meter.max;
 
-                _eventBus.Publish(new HotbarSlotChangedPublish(i, icon, amount));
+                _eventBus.Publish(new HotbarSlotChangedPublish(i, icon, amount, meter));
             }
         }
     }
@@ -261,11 +272,15 @@ public class PlayerBridge : MonoBehaviour
 
             Sprite icon = empty ? null : slot.entity.entityData.icon;
             int amount = empty ? 0 : slot.entity.Amount;
+            SlotResourceMeterData meter = empty ? SlotResourceMeterData.None : BuildSlotResourceMeter(slot.entity);
 
             _hotbarSnapshot[i].icon = icon;
             _hotbarSnapshot[i].amount = amount;
+            _hotbarSnapshot[i].hasMeter = meter.hasMeter;
+            _hotbarSnapshot[i].meterCurrent = meter.current;
+            _hotbarSnapshot[i].meterMax = meter.max;
 
-            _eventBus.Publish(new HotbarSlotChangedPublish(i, icon, amount));
+            _eventBus.Publish(new HotbarSlotChangedPublish(i, icon, amount, meter));
         }
 
         _eventBus.Publish(new HotbarSelectionChangedPublish(selected));
@@ -285,9 +300,11 @@ public class PlayerBridge : MonoBehaviour
 
         _eventBus.Subscribe<InventoryChangedPublish>(OnBackpackInventoryChanged);
         _eventBus.Subscribe<BackpackSlotSelectedRequestPublish>(OnBackpackSlotSelectedRequest);
+        _eventBus.Subscribe<BackpackSlotPreviewRequestPublish>(OnBackpackSlotPreviewRequest);
         _eventBus.Subscribe<BackpackSortRequestPublish>(OnBackpackSortRequest);
         _eventBus.Subscribe<BackpackSplitRequestPublish>(OnBackpackSplitRequest);
         _eventBus.Subscribe<InventoryDropRequestPublish>(OnInventoryDropRequest);
+        _eventBus.Subscribe<InventoryUseRequestPublish>(OnInventoryUseRequest);
 
         PublishAllBackpackSlots();
         PublishBackpackSelection(-1);
@@ -297,9 +314,11 @@ public class PlayerBridge : MonoBehaviour
     {
         _eventBus?.Unsubscribe<InventoryChangedPublish>(OnBackpackInventoryChanged);
         _eventBus?.Unsubscribe<BackpackSlotSelectedRequestPublish>(OnBackpackSlotSelectedRequest);
+        _eventBus?.Unsubscribe<BackpackSlotPreviewRequestPublish>(OnBackpackSlotPreviewRequest);
         _eventBus?.Unsubscribe<BackpackSortRequestPublish>(OnBackpackSortRequest);
         _eventBus?.Unsubscribe<BackpackSplitRequestPublish>(OnBackpackSplitRequest);
         _eventBus?.Unsubscribe<InventoryDropRequestPublish>(OnInventoryDropRequest);
+        _eventBus?.Unsubscribe<InventoryUseRequestPublish>(OnInventoryUseRequest);
         _backpack = null;
         _backpackSnapshot = null;
         _selectedBackpackIndex = -1;
@@ -321,6 +340,11 @@ public class PlayerBridge : MonoBehaviour
     private void OnBackpackSlotSelectedRequest(BackpackSlotSelectedRequestPublish e)
     {
         PublishBackpackSelection(e.slotIndex);
+    }
+
+    private void OnBackpackSlotPreviewRequest(BackpackSlotPreviewRequestPublish e)
+    {
+        PublishBackpackItemInfo(e.slotIndex, isPreview: true);
     }
 
     private void OnBackpackSortRequest(BackpackSortRequestPublish _)
@@ -396,6 +420,24 @@ public class PlayerBridge : MonoBehaviour
             bypassValidation: true));
     }
 
+    private void OnInventoryUseRequest(InventoryUseRequestPublish e)
+    {
+        if (_entity == null)
+            return;
+
+        var inventory = GameManager.Instance?.InventoryService?.GetInventory(_entity, e.inventoryType);
+        if (inventory == null || e.slotIndex < 0 || e.slotIndex >= inventory.MaxSlots)
+            return;
+
+        var slot = inventory.GetSlot(e.slotIndex);
+        if (slot == null || slot.IsEmpty || slot.entity == null || !CanUseInventoryItem(slot.entity))
+            return;
+
+        slot.entity.TriggerEvent(new PrimaryActionEvent(_entity, slot.entity));
+        PublishBackpackSelection(e.slotIndex);
+        _eventBus?.Publish(new InventoryVisualRefreshRequestPublish());
+    }
+
     // ══════════════════════════════════════════════════════════
     //  BACKPACK - Publish Events
     //  PlayerBridge -> UI
@@ -412,13 +454,21 @@ public class PlayerBridge : MonoBehaviour
 
             Sprite icon = empty ? null : slot.entity.entityData.icon;
             int amount = empty ? 0 : slot.entity.Amount;
+            SlotResourceMeterData meter = empty ? SlotResourceMeterData.None : BuildSlotResourceMeter(slot.entity);
 
-            if (_backpackSnapshot[i].icon != icon || _backpackSnapshot[i].amount != amount)
+            if (_backpackSnapshot[i].icon != icon ||
+                _backpackSnapshot[i].amount != amount ||
+                _backpackSnapshot[i].hasMeter != meter.hasMeter ||
+                _backpackSnapshot[i].meterCurrent != meter.current ||
+                _backpackSnapshot[i].meterMax != meter.max)
             {
                 _backpackSnapshot[i].icon = icon;
                 _backpackSnapshot[i].amount = amount;
+                _backpackSnapshot[i].hasMeter = meter.hasMeter;
+                _backpackSnapshot[i].meterCurrent = meter.current;
+                _backpackSnapshot[i].meterMax = meter.max;
 
-                _eventBus.Publish(new BackpackSlotChangedPublish(i, icon, amount));
+                _eventBus.Publish(new BackpackSlotChangedPublish(i, icon, amount, meter));
             }
         }
     }
@@ -437,12 +487,37 @@ public class PlayerBridge : MonoBehaviour
 
             Sprite icon = empty ? null : slot.entity.entityData.icon;
             int amount = empty ? 0 : slot.entity.Amount;
+            SlotResourceMeterData meter = empty ? SlotResourceMeterData.None : BuildSlotResourceMeter(slot.entity);
 
             _backpackSnapshot[i].icon = icon;
             _backpackSnapshot[i].amount = amount;
+            _backpackSnapshot[i].hasMeter = meter.hasMeter;
+            _backpackSnapshot[i].meterCurrent = meter.current;
+            _backpackSnapshot[i].meterMax = meter.max;
 
-            _eventBus.Publish(new BackpackSlotChangedPublish(i, icon, amount));
+            _eventBus.Publish(new BackpackSlotChangedPublish(i, icon, amount, meter));
         }
+    }
+
+    private static SlotResourceMeterData BuildSlotResourceMeter(EntityRuntime entity)
+    {
+        if (entity == null)
+            return SlotResourceMeterData.None;
+
+        var wateringCan = entity.GetModule<WateringCanRuntime>();
+        if (wateringCan == null)
+            return SlotResourceMeterData.None;
+
+        wateringCan.EnsureInitialized(entity);
+
+        if (wateringCan.MaxCharges <= 0)
+            return SlotResourceMeterData.None;
+
+        return new SlotResourceMeterData(
+            true,
+            wateringCan.CurrentCharges,
+            wateringCan.MaxCharges,
+            new Color(0.24f, 0.74f, 0.98f, 1f));
     }
 
     private void PublishBackpackSelection(int slotIndex)
@@ -451,11 +526,19 @@ public class PlayerBridge : MonoBehaviour
             return;
 
         _selectedBackpackIndex = slotIndex;
+        PublishBackpackItemInfo(slotIndex, isPreview: false);
+    }
+
+    private void PublishBackpackItemInfo(int slotIndex, bool isPreview)
+    {
+        if (_eventBus == null || _backpack == null)
+            return;
 
         if (slotIndex < 0 || slotIndex >= _backpack.MaxSlots)
         {
             _eventBus.Publish(new BackpackItemInfoChangedPublish(
                 slotIndex,
+                isPreview,
                 true,
                 null,
                 0,
@@ -463,6 +546,7 @@ public class PlayerBridge : MonoBehaviour
                 string.Empty,
                 string.Empty,
                 0,
+                false,
                 System.Array.Empty<StatDisplay>()));
             return;
         }
@@ -473,6 +557,7 @@ public class PlayerBridge : MonoBehaviour
         {
             _eventBus.Publish(new BackpackItemInfoChangedPublish(
                 slotIndex,
+                isPreview,
                 true,
                 null,
                 0,
@@ -480,6 +565,7 @@ public class PlayerBridge : MonoBehaviour
                 string.Empty,
                 string.Empty,
                 0,
+                false,
                 System.Array.Empty<StatDisplay>()));
             return;
         }
@@ -489,6 +575,7 @@ public class PlayerBridge : MonoBehaviour
 
         _eventBus.Publish(new BackpackItemInfoChangedPublish(
             slotIndex,
+            isPreview,
             false,
             data.icon,
             entity.Amount,
@@ -496,6 +583,7 @@ public class PlayerBridge : MonoBehaviour
             data.descKey,
             GetCategoryKey(data.category),
             data.sellPrice,
+            CanUseInventoryItem(entity),
             BuildStatDisplays(entity)));
     }
 
@@ -548,6 +636,15 @@ public class PlayerBridge : MonoBehaviour
 
         inventoryService.Sort(_entity, InventoryType.Backpack);
         PublishAllBackpackSlots();
+    }
+
+    private static bool CanUseInventoryItem(EntityRuntime entity)
+    {
+        if (entity == null)
+            return false;
+
+        return entity.GetModule<ConsumableRuntime>() != null
+               || entity.GetModule<PlacementRuntime>() != null;
     }
 
     // ══════════════════════════════════════════════════════════

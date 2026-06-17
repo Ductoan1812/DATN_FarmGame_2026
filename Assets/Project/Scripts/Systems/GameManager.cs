@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.SceneManagement;
 using System;
+using System.Collections;
 using System.Globalization;
 using System.Linq;
 using DialogueGraphTool;
@@ -9,6 +10,8 @@ using DialogueGraphTool;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+    private static GameObject persistentUIRoot;
+    private static bool shuttingDownForMainMenu;
 
     // ── Registries ────────────────────────────────────────
     public EntityRegistry          EntityRegistry     { get; private set; }
@@ -21,18 +24,31 @@ public class GameManager : MonoBehaviour
     public EntityService        EntityService      { get; private set; }
     public InventoryService     InventoryService   { get; private set; }
     public WorldEntityService   WorldService       { get; private set; }
+    public ProgressionService   ProgressionService { get; private set; }
+    public CraftingService      CraftingService    { get; private set; }
     public SpawnSystem          SpawnSystem        { get; private set; }
     public SaveLoadManager      SaveLoadManager    { get; private set; }
+    public WateredTileTracker   WateredTileTracker { get; private set; }
+    public WeatherSystem        WeatherSystem      { get; private set; }
+    public SprinklerRegistry    SprinklerRegistry  { get; private set; }
+    public SoilQualityTracker   SoilQualityTracker { get; private set; }
+    public ClearZoneTracker     ClearZoneTracker   { get; private set; }
+    public NarrativeService     NarrativeService   { get; private set; }
+    public ResearchService      ResearchService    { get; private set; }
+    public DailyTracker         DailyTracker       { get; private set; }
 
     // ── Shared ────────────────────────────────────────────
     public EventBus             EventBus           { get; private set; }
     public TimeManager          TimeManager        { get; private set; }
 
+    [SerializeField] private WeatherConfig weatherConfig;
     [SerializeField] private TileData tileData;
     public TileData TileData => tileData;
+    public Tilemap TmGround => tmGround;
 
     [Header("Tilemap References")]
     [SerializeField] private Tilemap tmGround;
+    [SerializeField] private Tilemap tmWatered;
     [SerializeField] private Tilemap tmGroundDetail;
     [SerializeField] private Tilemap tmCollision;
     [SerializeField] private Tilemap tmDecoration;
@@ -42,12 +58,25 @@ public class GameManager : MonoBehaviour
     [SerializeField] private ObjectType playerPrefabId = ObjectType.Player01;
     [SerializeField] private string playerEntityDataId = "player";
     [SerializeField] private Vector2 defaultPlayerPos = Vector2.zero;
+    [SerializeField] private StarterLoadoutData starterLoadout;
     private bool isReloadingScene;
+    private bool bootCompleted;
+    private bool isRestoringScene;
 
     private void Awake()
     {
-        if (Instance != null && Instance != this) { Destroy(gameObject); return; }
+        shuttingDownForMainMenu = false;
+
+        if (Instance != null && Instance != this)
+        {
+            DestroyDuplicateRuntimeRoot();
+            return;
+        }
+
         Instance = this;
+        DontDestroyOnLoad(transform.root.gameObject);
+        EnsurePersistentUIRoot();
+        SceneManager.sceneLoaded += OnSceneLoaded;
 
         // Phase 1: Init tất cả systems
         InitEventBus();
@@ -56,32 +85,65 @@ public class GameManager : MonoBehaviour
         InitWorldObjects();
         InitTileRegistry();
         InitWorldEntitySystem();
+        InitClearZoneTracker();
         InitSpawnSystem();
         InitTimeManager();
+        InitWateredTileTracker();
+        InitWeatherSystem();
+        InitSprinklerRegistry();
+        InitSoilQualityTracker();
+        InitNarrativeService();
+        InitResearchService();
         InitDialogueGameplayBridge();
         InitSceneTransitionBridge();
+        InitInteractionPreviewBridge();
+        InitPlayerDeathHandler();
+        InitCombatProgressionPolish();
+        InitLoadingScreenUI();
+        InitNarrativeUI();
+        InitDailyTracker();
+        InitSleepTransitionUI();
+        InitPickupNotificationUI();
         InitSaveLoadManager();
 
         // Subscribe save/load events
         EventBus.Subscribe<SaveGameRequestPublish>(OnSaveRequest);
         EventBus.Subscribe<LoadGameRequestPublish>(OnLoadRequest);
         EventBus.Subscribe<PlayerReadyPublish>(OnPlayerReady);
+        EventBus.Subscribe<StoryEventUnlockedPublish>(OnStoryEventUnlocked);
     }
 
     private void Start()
     {
         // Boot sequence: DataReady → WorldObjectsSpawned → InventoryDataRestored → PlayerReady → GameReady
         SaveLoadManager.Boot();
+        bootCompleted = true;
     }
 
     private void OnDestroy()
     {
+        bool wasInstance = Instance == this;
+
+        if (wasInstance)
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+
         if (EventBus != null)
         {
             EventBus.Unsubscribe<SaveGameRequestPublish>(OnSaveRequest);
             EventBus.Unsubscribe<LoadGameRequestPublish>(OnLoadRequest);
             EventBus.Unsubscribe<PlayerReadyPublish>(OnPlayerReady);
+            EventBus.Unsubscribe<StoryEventUnlockedPublish>(OnStoryEventUnlocked);
         }
+
+        NarrativeService?.Shutdown();
+        ResearchService?.Shutdown();
+        DailyTracker?.Shutdown();
+
+        if (wasInstance)
+            Instance = null;
+
+        if (wasInstance)
+            persistentUIRoot = null;
     }
 
     // ── Init methods ──────────────────────────────────────
@@ -118,6 +180,8 @@ public class GameManager : MonoBehaviour
         EntityRegistry   = new EntityRegistry();
         EntityService    = new EntityService(EntityRegistry);
         InventoryService = new InventoryService(EntityService);
+        ProgressionService = new ProgressionService(EventBus);
+        CraftingService = new CraftingService(EntityService, InventoryService, ProgressionService, EventBus);
     }
 
     private void InitWorldObjects()
@@ -140,13 +204,24 @@ public class GameManager : MonoBehaviour
         if (tmCollision    != null) TileRegistry.RegisterTilemap("Tm_Collision",     tmCollision);
         if (tmDecoration   != null) TileRegistry.RegisterTilemap("Tm_Decoration",    tmDecoration);
         if (tmOverlay      != null) TileRegistry.RegisterTilemap("Tm_Overlay",       tmOverlay);
+        RegisterExtraNamedTilemaps();
 
         // Quét baseline (snapshot gốc từ Editor)
         TileRegistry.ScanBaseline();
     }
 
-    private void AutoFindTilemaps()
+    private void RegisterExtraNamedTilemaps()
     {
+        // Nếu có SceneTilemapRegistry — dùng luôn, không cần scan Grid
+        var reg = SceneTilemapRegistry.Current;
+        if (reg != null)
+        {
+            if (reg.TryGet("Tm_Ground2", out var tm2))
+                TileRegistry.RegisterTilemap("Tm_Ground2", tm2);
+            return;
+        }
+
+        // Fallback: scan Grid children
         var grid = FindAnyObjectByType<Grid>();
         if (grid == null) return;
 
@@ -154,8 +229,45 @@ public class GameManager : MonoBehaviour
         {
             switch (tm.gameObject.name)
             {
-                case "Tm_Ground":       if (tmGround       == null) tmGround       = tm; break;
+                case "Tm_Ground2":
+                    TileRegistry.RegisterTilemap("Tm_Ground2", tm);
+                    break;
+            }
+        }
+    }
+
+    private void AutoFindTilemaps()
+    {
+        // 1. Ưu tiên SceneTilemapRegistry — O(1), không scan scene
+        var reg = SceneTilemapRegistry.Current;
+        if (reg != null)
+        {
+            if (tmGround       == null) tmGround       = reg.Ground;
+            if (tmGroundDetail == null) tmGroundDetail = reg.GroundDetail;
+            if (tmWatered      == null) tmWatered      = reg.Watered;
+            if (tmCollision    == null) tmCollision    = reg.Collision;
+            if (tmDecoration   == null) tmDecoration   = reg.Decoration;
+            if (tmOverlay      == null) tmOverlay      = reg.Overlay;
+
+            if (tmGround != null)
+            {
+                Debug.Log("[GameManager] AutoFindTilemaps: bound from SceneTilemapRegistry.");
+                return;
+            }
+        }
+
+        // 2. Fallback: scan Grid children (chỉ khi scene chưa có SceneTilemapRegistry)
+        var grid = FindAnyObjectByType<Grid>();
+        if (grid == null) return;
+
+        foreach (var tm in grid.GetComponentsInChildren<Tilemap>())
+        {
+            switch (tm.gameObject.name)
+            {
+                case "Tm_Ground":
+                case "Tm_Ground1":      if (tmGround       == null) tmGround       = tm; break;
                 case "Tm_GroundDetail": if (tmGroundDetail == null) tmGroundDetail = tm; break;
+                case "Tm_Watered":      if (tmWatered      == null) tmWatered      = tm; break;
                 case "Tm_Collision":    if (tmCollision    == null) tmCollision    = tm; break;
                 case "Tm_Decoration":   if (tmDecoration   == null) tmDecoration   = tm; break;
                 case "Tm_Overlay":      if (tmOverlay      == null) tmOverlay      = tm; break;
@@ -174,7 +286,7 @@ public class GameManager : MonoBehaviour
             if (grid != null)
             {
                 foreach (var tm in grid.GetComponentsInChildren<Tilemap>())
-                    if (tm.gameObject.name == "Tm_Ground") { tilemap = tm; break; }
+                    if (tm.gameObject.name == "Tm_Ground" || tm.gameObject.name == "Tm_Ground1") { tilemap = tm; break; }
             }
         }
 
@@ -194,6 +306,72 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning("[GameManager] TimeManager not found.");
     }
 
+    private void InitWateredTileTracker()
+    {
+        if (tmWatered == null)
+        {
+            Debug.LogWarning("[GameManager] tmWatered tilemap chưa gán; dùng watered tracker in-memory.");
+        }
+
+        WateredTileTracker = new WateredTileTracker(tmWatered, tmGround, tileData);
+
+        // Thứ tự đúng: NextDayEventPublish (sprinklers water → cây grow) → DayChangedPublish (roll weather → reset watered → rain waters plowed)
+        EventBus.Subscribe<NextDayEventPublish>(_ =>
+        {
+            SprinklerRegistry?.TickAll();
+        });
+
+        EventBus.Subscribe<DayChangedPublish>(_ =>
+        {
+            WeatherSystem?.RollNextDayWeather();
+            WateredTileTracker?.ResetAll();
+            WeatherSystem?.ApplyRainForNewDay(WateredTileTracker);
+        });
+    }
+
+    private void InitSprinklerRegistry()
+    {
+        SprinklerRegistry = new SprinklerRegistry();
+    }
+
+    private void InitSoilQualityTracker()
+    {
+        SoilQualityTracker = new SoilQualityTracker();
+    }
+
+    private void InitClearZoneTracker()
+    {
+        ClearZoneTracker = new ClearZoneTracker(WorldService, tileData);
+    }
+
+    private void InitNarrativeService()
+    {
+#if UNITY_EDITOR
+        var guids = UnityEditor.AssetDatabase.FindAssets("t:StoryEventData");
+        var events = new System.Collections.Generic.List<StoryEventData>();
+        foreach (var guid in guids)
+        {
+            var path = UnityEditor.AssetDatabase.GUIDToAssetPath(guid);
+            var data = UnityEditor.AssetDatabase.LoadAssetAtPath<StoryEventData>(path);
+            if (data != null) events.Add(data);
+        }
+        NarrativeService = new NarrativeService(EventBus, events);
+#else
+        var events = Resources.LoadAll<StoryEventData>("");
+        NarrativeService = new NarrativeService(EventBus, events);
+#endif
+    }
+
+    private void InitWeatherSystem()
+    {
+        if (weatherConfig == null)
+            weatherConfig = Resources.Load<WeatherConfig>("Data/WeatherConfig");
+
+        WeatherSystem = new WeatherSystem(EventBus, weatherConfig);
+        // Roll weather for day 1 on new game (sunny default is fine; save/load will restore)
+        Debug.Log($"[GameManager] WeatherSystem initialized. Weather={WeatherSystem.CurrentWeather}");
+    }
+
     private void InitDialogueGameplayBridge()
     {
         if (GetComponent<DialogueGameplayBridge>() == null)
@@ -204,6 +382,92 @@ public class GameManager : MonoBehaviour
     {
         if (GetComponent<SceneTransitionBridge>() == null)
             gameObject.AddComponent<SceneTransitionBridge>();
+    }
+
+    private void InitInteractionPreviewBridge()
+    {
+        if (GetComponent<InteractionPreviewSystem>() == null)
+            gameObject.AddComponent<InteractionPreviewSystem>();
+    }
+
+    private void InitPlayerDeathHandler()
+    {
+        if (GetComponent<PlayerDeathHandler>() == null)
+            gameObject.AddComponent<PlayerDeathHandler>();
+    }
+
+    private void InitCombatProgressionPolish()
+    {
+        EnsureRuntimeComponent<FloatingTextPool>();
+        EnsureRuntimeComponent<FloatingCombatTextSpawner>();
+        EnsureRuntimeComponent<HitStopManager>();
+        EnsureRuntimeComponent<PlayerCombatPolishBinder>();
+        EnsureRuntimeComponent<LowHpVignetteUI>();
+        EnsureRuntimeComponent<ExpPopupSpawner>();
+        EnsureRuntimeComponent<LevelUpEffect>();
+        EnsureRuntimeComponent<ToastUI>();
+        EnsureRuntimeComponent<DeathScreenUI>();
+        EnsureRuntimeComponent<QuestProgressionSystem>();
+        EnsureRuntimeComponent<NightEnemySpawnManager>();
+        EnsureRuntimeComponent<AutoSaveOnDayChanged>();
+    }
+
+    private void InitNarrativeUI()
+    {
+        EnsureNarrativeUIComponent<NewsBroadcastUI>("NarrativeUI_NewsBroadcast");
+        EnsureNarrativeUIComponent<DiaryUI>("NarrativeUI_Diary");
+        EnsureNarrativeUIComponent<CalendarUI>("CalendarUI");
+    }
+
+    private void InitLoadingScreenUI()
+    {
+        EnsureNarrativeUIComponent<LoadingScreenUI>("LoadingScreenUI");
+    }
+
+    private void InitResearchService()
+    {
+#if UNITY_EDITOR
+        var guids = UnityEditor.AssetDatabase.FindAssets("t:ResearchData");
+        var research = new System.Collections.Generic.List<ResearchData>();
+        foreach (var guid in guids)
+        {
+            var path = UnityEditor.AssetDatabase.GUIDToAssetPath(guid);
+            var data = UnityEditor.AssetDatabase.LoadAssetAtPath<ResearchData>(path);
+            if (data != null) research.Add(data);
+        }
+        ResearchService = new ResearchService(EventBus, TimeManager, research);
+#else
+        var research = Resources.LoadAll<ResearchData>("");
+        ResearchService = new ResearchService(EventBus, TimeManager, research);
+#endif
+    }
+
+    private void InitDailyTracker()
+    {
+        DailyTracker = new DailyTracker(EventBus, TimeManager);
+    }
+
+    private void InitSleepTransitionUI()
+    {
+        EnsureNarrativeUIComponent<SleepTransitionUI>("SleepTransitionUI");
+    }
+
+    private void InitPickupNotificationUI()
+    {
+        EnsureNarrativeUIComponent<PickupNotificationUI>("PickupNotificationUI");
+    }
+
+    private T EnsureNarrativeUIComponent<T>(string childName) where T : Component
+    {
+        var child = transform.Find(childName);
+        var go = child != null ? child.gameObject : new GameObject(childName);
+        go.transform.SetParent(transform, false);
+        return go.GetComponent<T>() ?? go.AddComponent<T>();
+    }
+
+    private T EnsureRuntimeComponent<T>() where T : Component
+    {
+        return GetComponent<T>() ?? gameObject.AddComponent<T>();
     }
 
     private void InitSpawnSystem()
@@ -222,9 +486,18 @@ public class GameManager : MonoBehaviour
             EventBus,
             playerPrefabId,
             playerEntityDataId,
-            defaultPlayerPos
+            defaultPlayerPos,
+            ResolveStarterLoadout()
         );
         SaveLoadManager.SetTimeManager(TimeManager);
+    }
+
+    private StarterLoadoutData ResolveStarterLoadout()
+    {
+        if (starterLoadout != null)
+            return starterLoadout;
+
+        return Resources.Load<StarterLoadoutData>("Data/StarterLoadouts/DefaultStarterLoadout");
     }
 
     // ── Event handlers ────────────────────────────────────
@@ -256,6 +529,304 @@ public class GameManager : MonoBehaviour
         EventBus.Publish(new GameReadyPublish());
         Debug.Log("[GameManager] GameReadyPublish published — boot sequence complete.");
     }
+
+    private void OnStoryEventUnlocked(StoryEventUnlockedPublish evt)
+    {
+        if (evt.data == null || evt.data.id != "story_day10_mutant_threat")
+            return;
+
+        SpawnNarrativeMutant();
+    }
+
+    private void SpawnNarrativeMutant()
+    {
+        var enemyData = EntityDataRegistry?.GetById("enemy_orc1")
+                     ?? EntityDataRegistry?.GetById("enemy_slime3")
+                     ?? EntityDataRegistry?.GetById("enemy_slime2")
+                     ?? EntityDataRegistry?.GetById("enemy_slime1");
+        if (enemyData == null)
+        {
+            Debug.LogWarning("[GameManager] Narrative mutant spawn skipped: no enemy data found.");
+            return;
+        }
+
+        var objectType = NightEnemySpawnManager.ResolveObjectType(enemyData.id);
+
+        var spawnPos = defaultPlayerPos + new Vector2(3f, 0f);
+        var player = FindAnyObjectByType<PlayerControler>();
+        if (player != null)
+            spawnPos = (Vector2)player.transform.position + new Vector2(3f, 0f);
+
+        var sceneName = SceneManager.GetActiveScene().name;
+        var cell = new Vector3Int(Mathf.FloorToInt(spawnPos.x), Mathf.FloorToInt(spawnPos.y), 0);
+        var payload = new SceneSpawnPayload
+        {
+            sceneName = sceneName,
+            markerKind = SceneMarkerKind.Enemy,
+            objectType = objectType,
+            cell = cell,
+            spawnGroupId = "narrative_day10_mutant",
+            persistentId = SceneSpawnPayload.BuildPersistentId(sceneName, SceneMarkerKind.Enemy, objectType, cell, "narrative_day10_mutant"),
+            savePolicy = SceneEntitySavePolicy.Persistent,
+            initialAmount = 1
+        };
+
+        EventBus.Publish(new SpawnRequestPublish(spawnPos, objectType, enemyData, 1, true, payload));
+        Debug.Log($"[GameManager] Narrative mutant spawn requested: {enemyData.id} at {spawnPos}");
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (shuttingDownForMainMenu)
+            return;
+
+        if (SceneTransitionService.ShouldDeferAutoRestore(scene.name))
+            return;
+
+        BeginRestoreActiveSceneAfterLoad(scene.name);
+    }
+
+    public void BeginRestoreActiveSceneAfterLoad(string sceneName)
+    {
+        if (!bootCompleted || Instance != this || isRestoringScene)
+            return;
+
+        isRestoringScene = true;
+        StartCoroutine(RestoreActiveSceneAfterLoad(sceneName));
+    }
+
+    private IEnumerator RestoreActiveSceneAfterLoad(string sceneName)
+    {
+        // Wait one frame so SceneContext/SceneContentScanner in the new scene can run Awake/Start.
+        yield return null;
+        bool saveArrivalSceneState = false;
+
+        EventBus?.Publish(new LoadingScreenProgressPublish(0.88f));
+        EnsurePersistentUIRoot();
+        RebindSceneScopedServices();
+        EventBus?.Publish(new LoadingScreenProgressPublish(0.92f));
+
+        EnsureMainCameraExists();
+
+        if (SaveLoadManager != null && SaveLoadManager.IsBootingFromSave)
+        {
+            Debug.Log("[GameManager] Scene loaded is target saved scene. Performing full saved-state restore...");
+            SaveLoadManager.CompleteBootFromSavedScene();
+        }
+        else
+        {
+            SaveLoadManager.LoadCurrentSceneWorld();
+            EventBus?.Publish(new LoadingScreenProgressPublish(0.96f));
+
+            bool arrivedFromTransition = SceneTransitionService.TryPeekPendingSpawnPointForCurrentScene(out var spawnPointId);
+            SaveLoadManager.EnsurePlayerSpawnedAt(spawnPointId);
+            if (arrivedFromTransition)
+                SceneTransitionService.SuppressPortalTriggersAfterArrival();
+            saveArrivalSceneState = arrivedFromTransition;
+            EventBus?.Publish(new LoadingScreenProgressPublish(0.99f));
+
+            EventBus.Publish(new WorldObjectsSpawnedPublish());
+            EventBus.Publish(new InventoryDataRestoredPublish());
+        }
+
+        // Camera rebind sau khi player đã spawn trong scene mới
+        RebindCamera();
+
+        if (saveArrivalSceneState)
+        {
+            yield return null;
+            SaveLoadManager?.SaveSystemSnapshot();
+        }
+
+        EventBus?.Publish(new LoadingScreenProgressPublish(1f));
+        EventBus.Publish(new LoadingScreenHidePublish());
+        SceneTransitionService.NotifyRestoreCompleted(sceneName);
+
+        isReloadingScene = false;
+        isRestoringScene = false;
+        Debug.Log($"[GameManager] Restored scene-scoped services and player for scene '{sceneName}'.");
+    }
+
+    private void RebindSceneScopedServices()
+    {
+        // Reset tất cả tilemap ref — SceneTilemapRegistry.Current sẽ được set
+        // bởi Awake() của SceneTilemapRegistry trong scene mới trước khi chạy đến đây
+        tmGround      = null;
+        tmGroundDetail = null;
+        tmWatered     = null;
+        tmCollision   = null;
+        tmDecoration  = null;
+        tmOverlay     = null;
+
+        // Rebind GridSystem ngay nếu có registry
+        if (SceneTilemapRegistry.Current != null)
+        {
+            var gs = GridSystem.Instance;
+            if (gs != null) gs.AutoRebind();
+        }
+
+        InitTileRegistry();
+        InitWorldEntitySystem();
+
+        // WateredTileTracker dùng readonly fields — tạo mới với tilemap từ scene mới.
+        // Các lambda event trong EventBus đọc WateredTileTracker qua field (không phải capture),
+        // nên chỉ cần reassign field là đủ.
+        if (tmWatered != null || tmGround != null)
+            WateredTileTracker = new WateredTileTracker(tmWatered, tmGround, tileData);
+
+        ClearZoneTracker?.RebindWorldService(WorldService, tileData);
+        SprinklerRegistry?.Clear();
+        SpawnSystem?.RebindWorldService(WorldService);
+        SaveLoadManager?.SetWorldService(WorldService);
+    }
+
+    private void DestroyDuplicateRuntimeRoot()
+    {
+        // Only destroy the duplicate GameManager object itself.
+        // Scene-local cameras and other siblings may live under the same scene root,
+        // so destroying transform.root here can wipe out the destination scene camera
+        // during additive transitions.
+        Destroy(gameObject);
+    }
+
+    public static void PrepareReturnToMainMenu()
+    {
+        shuttingDownForMainMenu = true;
+        SceneTransitionService.ClearPendingTransitionState();
+
+        var manager = Instance;
+        if (manager != null)
+        {
+            SceneManager.sceneLoaded -= manager.OnSceneLoaded;
+            manager.EventBus?.Publish(new LoadingScreenHidePublish());
+
+            var managerRoot = manager.transform.root != null
+                ? manager.transform.root.gameObject
+                : manager.gameObject;
+
+            Destroy(managerRoot);
+        }
+
+        foreach (var root in FindNamedGameObjects("UIRoot"))
+        {
+            if (root != null)
+                Destroy(root);
+        }
+
+        persistentUIRoot = null;
+    }
+
+    private void EnsurePersistentUIRoot()
+    {
+        var roots = FindNamedGameObjects("UIRoot");
+
+        if (persistentUIRoot == null)
+        {
+            foreach (var root in roots)
+            {
+                if (root == null) continue;
+                persistentUIRoot = root;
+                DontDestroyOnLoad(persistentUIRoot);
+                break;
+            }
+        }
+
+        // Fallback: nếu không tìm thấy UIRoot trong scene, thử instantiate từ BootstrapConfig
+        // (trường hợp game start từ scene không phải FarmScene mà BootstrapLoader chưa chạy)
+        if (persistentUIRoot == null)
+        {
+            var config = Resources.Load<BootstrapConfig>(BootstrapConfig.ResourcePath);
+            if (config != null && config.uiRootPrefab != null)
+            {
+                persistentUIRoot = Instantiate(config.uiRootPrefab);
+                persistentUIRoot.name = "UIRoot";
+                DontDestroyOnLoad(persistentUIRoot);
+                Debug.Log("[GameManager] UIRoot instantiated from BootstrapConfig as fallback.");
+            }
+            else
+            {
+                Debug.LogError("[GameManager] UIRoot not found and BootstrapConfig fallback unavailable! " +
+                               "UI sẽ không hoạt động.");
+            }
+        }
+
+        // Destroy các UIRoot duplicate (chỉ giữ lại persistentUIRoot)
+        foreach (var root in roots)
+        {
+            if (root == null || root == persistentUIRoot)
+                continue;
+
+            Destroy(root);
+        }
+    }
+
+
+    private static GameObject[] FindNamedGameObjects(string objectName)
+    {
+        var transforms = FindObjectsByType<Transform>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        int count = 0;
+        for (int i = 0; i < transforms.Length; i++)
+        {
+            if (transforms[i] != null && transforms[i].name == objectName)
+                count++;
+        }
+
+        var results = new GameObject[count];
+        int index = 0;
+        for (int i = 0; i < transforms.Length; i++)
+        {
+            if (transforms[i] != null && transforms[i].name == objectName)
+                results[index++] = transforms[i].gameObject;
+        }
+
+        return results;
+    }
+
+    private void EnsureMainCameraExists()
+    {
+        var mainCam = Camera.main;
+
+        if (mainCam == null)
+        {
+            // Tìm hoặc tạo Cameras container
+            var cameras = GameObject.Find("Cameras");
+            if (cameras == null)
+                cameras = new GameObject("Cameras");
+
+            var camObj = new GameObject("Main Camera");
+            camObj.tag = "MainCamera";
+            camObj.transform.SetParent(cameras.transform);
+            camObj.transform.position = new Vector3(0f, 0f, -10f);
+
+            mainCam = camObj.AddComponent<Camera>();
+            mainCam.orthographic = true;
+            mainCam.orthographicSize = 6f;
+
+            // SceneCameraFollower thay thế Cinemachine — đơn giản, không bị lỗi sau scene transition
+            camObj.AddComponent<SceneCameraFollower>();
+
+            Debug.Log("[GameManager] Created Main Camera with SceneCameraFollower.");
+        }
+        else
+        {
+            // Camera đã tồn tại — đảm bảo có SceneCameraFollower
+            if (mainCam.GetComponent<SceneCameraFollower>() == null)
+            {
+                mainCam.gameObject.AddComponent<SceneCameraFollower>();
+                Debug.Log("[GameManager] Added SceneCameraFollower to existing Main Camera.");
+            }
+        }
+    }
+
+    /// <summary>Gọi sau khi scene mới load xong để camera rebind player mới.</summary>
+    private static void RebindCamera()
+    {
+        var cam = Camera.main;
+        if (cam == null) return;
+
+        var follower = cam.GetComponent<SceneCameraFollower>();
+        follower?.ForceRebind();
+    }
 }
 
 /// <summary>
@@ -265,6 +836,26 @@ public static class SceneTransitionService
 {
     private static string pendingSpawnPointId;
     private static string pendingSceneName;
+    private static float portalTriggerSuppressedUntilRealtime;
+    private const float ArrivalPortalSuppressSeconds = 0.75f;
+    private static bool deferAutoRestoreForPendingScene;
+    private static Camera transitionCamera;
+    private static GameObject transitionCameraObject;
+
+    public static void ClearPendingTransitionState()
+    {
+        pendingSpawnPointId = null;
+        pendingSceneName = null;
+        deferAutoRestoreForPendingScene = false;
+        portalTriggerSuppressedUntilRealtime = 0f;
+        DisableTransitionCamera();
+        if (transitionCameraObject != null)
+        {
+            UnityEngine.Object.Destroy(transitionCameraObject);
+            transitionCameraObject = null;
+            transitionCamera = null;
+        }
+    }
 
     public static bool RequestTransition(
         EntityRuntime interactor,
@@ -278,6 +869,8 @@ public static class SceneTransitionService
             return false;
         }
 
+        EnsureTransitionCameraActive();
+
         var eventBus = GameManager.Instance?.EventBus;
         if (saveBeforeTransition && eventBus != null)
             eventBus.Publish(new SaveGameRequestPublish());
@@ -289,16 +882,99 @@ public static class SceneTransitionService
 
         try
         {
-            SceneManager.LoadScene(pendingSceneName);
+            if (eventBus != null)
+                eventBus.Publish(new LoadingScreenShowPublish(pendingSceneName));
+
+            var manager = GameManager.Instance;
+            if (manager != null)
+                manager.StartCoroutine(LoadSceneAsyncRoutine(pendingSceneName, eventBus));
+            else
+                SceneManager.LoadScene(pendingSceneName);
+
             return true;
         }
         catch (Exception ex)
         {
             Debug.LogError($"[SceneTransitionService] Failed to load scene '{pendingSceneName}': {ex.Message}");
+            if (eventBus != null)
+                eventBus.Publish(new LoadingScreenHidePublish());
             pendingSceneName = null;
             pendingSpawnPointId = null;
             return false;
         }
+    }
+
+    public static bool ArePortalTriggersSuppressed()
+    {
+        return Time.realtimeSinceStartup < portalTriggerSuppressedUntilRealtime;
+    }
+
+    public static void SuppressPortalTriggersAfterArrival(float seconds = ArrivalPortalSuppressSeconds)
+    {
+        portalTriggerSuppressedUntilRealtime = Time.realtimeSinceStartup + Mathf.Max(0.05f, seconds);
+    }
+
+    public static bool ShouldDeferAutoRestore(string sceneName)
+    {
+        return deferAutoRestoreForPendingScene
+               && !string.IsNullOrWhiteSpace(pendingSceneName)
+               && string.Equals(sceneName, pendingSceneName, StringComparison.Ordinal);
+    }
+
+    public static void NotifyRestoreCompleted(string sceneName)
+    {
+        if (!string.IsNullOrWhiteSpace(pendingSceneName)
+            && string.Equals(sceneName, pendingSceneName, StringComparison.Ordinal))
+        {
+            deferAutoRestoreForPendingScene = false;
+        }
+
+        DisableTransitionCamera();
+    }
+
+    private static IEnumerator LoadSceneAsyncRoutine(string sceneName, EventBus eventBus)
+    {
+        yield return null;
+
+        var sourceScene = SceneManager.GetActiveScene();
+        deferAutoRestoreForPendingScene = true;
+
+        var operation = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+        if (operation == null)
+        {
+            deferAutoRestoreForPendingScene = false;
+            SceneManager.LoadScene(sceneName);
+            yield break;
+        }
+
+        while (!operation.isDone)
+        {
+            float progress = Mathf.Lerp(0.05f, 0.6f, Mathf.Clamp01(operation.progress / 0.9f));
+            eventBus?.Publish(new LoadingScreenProgressPublish(progress));
+            yield return null;
+        }
+
+        var targetScene = SceneManager.GetSceneByName(sceneName);
+        if (targetScene.IsValid())
+            SceneManager.SetActiveScene(targetScene);
+
+        eventBus?.Publish(new LoadingScreenProgressPublish(0.68f));
+
+        if (sourceScene.IsValid() && sourceScene.isLoaded && !string.Equals(sourceScene.name, sceneName, StringComparison.Ordinal))
+        {
+            var unloadOperation = SceneManager.UnloadSceneAsync(sourceScene);
+            if (unloadOperation != null)
+            {
+                while (!unloadOperation.isDone)
+                {
+                    eventBus?.Publish(new LoadingScreenProgressPublish(0.68f));
+                    yield return null;
+                }
+            }
+        }
+
+        eventBus?.Publish(new LoadingScreenProgressPublish(0.82f));
+        GameManager.Instance?.BeginRestoreActiveSceneAfterLoad(sceneName);
     }
 
     public static bool TryConsumePendingSpawnPointForCurrentScene(out string spawnPointId)
@@ -317,15 +993,49 @@ public static class SceneTransitionService
         pendingSpawnPointId = null;
         return true;
     }
-}
 
-/// <summary>
-/// Spawn point marker trong scene đích.
-/// Dùng cùng SceneTransitionService để đặt vị trí player sau khi load scene.
-/// </summary>
-public class SceneSpawnPoint : MonoBehaviour
-{
-    public string spawnPointId;
+    public static bool TryPeekPendingSpawnPointForCurrentScene(out string spawnPointId)
+    {
+        spawnPointId = null;
+
+        if (string.IsNullOrWhiteSpace(pendingSceneName))
+            return false;
+
+        string currentScene = SceneManager.GetActiveScene().name;
+        if (!string.Equals(currentScene, pendingSceneName, StringComparison.Ordinal))
+            return false;
+
+        spawnPointId = pendingSpawnPointId;
+        return true;
+    }
+
+    private static void EnsureTransitionCameraActive()
+    {
+        if (transitionCameraObject == null)
+        {
+            transitionCameraObject = new GameObject("__TransitionCamera");
+            UnityEngine.Object.DontDestroyOnLoad(transitionCameraObject);
+            transitionCamera = transitionCameraObject.AddComponent<Camera>();
+            transitionCamera.clearFlags = CameraClearFlags.SolidColor;
+            transitionCamera.backgroundColor = Color.black;
+            transitionCamera.cullingMask = 0;
+            transitionCamera.orthographic = true;
+            transitionCamera.depth = -1000f;
+            transitionCamera.nearClipPlane = 0.01f;
+            transitionCamera.farClipPlane = 1f;
+        }
+
+        if (transitionCamera != null)
+            transitionCamera.enabled = true;
+    }
+
+    private static void DisableTransitionCamera()
+    {
+        if (transitionCamera == null)
+            return;
+
+        transitionCamera.enabled = false;
+    }
 }
 
 /// <summary>
@@ -371,28 +1081,28 @@ public class SceneTransitionBridge : MonoBehaviour
         if (!SceneTransitionService.TryConsumePendingSpawnPointForCurrentScene(out var spawnPointId))
             return;
 
-        var player = FindAnyObjectByType<PlayerControler>();
+        var player = FindBestPlayerForActiveScene();
         if (player == null) return;
 
-        SceneSpawnPoint[] points = FindObjectsByType<SceneSpawnPoint>(FindObjectsSortMode.None);
-        if (points == null || points.Length == 0) return;
+        Vector2 fallback = player.transform.position;
+        player.transform.position = SceneSpawnResolver.Resolve(spawnPointId, fallback);
+    }
 
-        SceneSpawnPoint chosen = null;
-        if (!string.IsNullOrWhiteSpace(spawnPointId))
+    private static PlayerControler FindBestPlayerForActiveScene()
+    {
+        var players = FindObjectsByType<PlayerControler>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+        if (players == null || players.Length == 0)
+            return null;
+
+        var activeScene = SceneManager.GetActiveScene();
+        for (int i = 0; i < players.Length; i++)
         {
-            foreach (var point in points)
-            {
-                if (point == null) continue;
-                if (string.Equals(point.spawnPointId, spawnPointId, StringComparison.OrdinalIgnoreCase))
-                {
-                    chosen = point;
-                    break;
-                }
-            }
+            var player = players[i];
+            if (player != null && player.gameObject.scene == activeScene)
+                return player;
         }
 
-        chosen ??= points[0];
-        player.transform.position = chosen.transform.position;
+        return players[0];
     }
 }
 

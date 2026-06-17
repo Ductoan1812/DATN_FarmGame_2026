@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: NPCCrafting01
   m_EditorClassIdentifier: 
   idObject: 5
-  prefab: {fileID: 1125545272651927824, guid: cea9927901a72764d8fbf320c91a3fdb, type: 3}
+  prefab: {fileID: 1125545272651927824, guid: 8d2d4a21bac8d694bbdd0636b1805ad1, type: 3}

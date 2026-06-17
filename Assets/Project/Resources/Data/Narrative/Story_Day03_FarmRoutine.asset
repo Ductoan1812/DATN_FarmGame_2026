@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b26b129a8bca184584d583805aba4ee, type: 3}
+  m_Name: Story_Day03_FarmRoutine
+  m_EditorClassIdentifier: 
+  id: story_day03_farm_routine
+  titleKey: s5.story.day03.title
+  bodyKey: s5.story.day03.body
+  triggerDay: 3
+  channel: 0
+  showNotification: 1

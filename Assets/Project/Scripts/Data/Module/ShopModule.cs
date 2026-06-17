@@ -30,4 +30,6 @@ public class ShopStockEntry
 {
     public EntityData itemData;
     [Min(1)] public int amount = 1;
+    [Min(1)] public int requiredLevel = 1;
+    public UnlockRequirementData unlockRequirement = new();
 }

@@ -9,6 +9,8 @@ public class PlacementModule : IModuleData
 {
     [Tooltip("Loại object sẽ được spawn xuống world")]
     public ObjectType objectTypeToSpawn;
+    [Tooltip("EntityData world object sau khi đặt xuống. Để trống sẽ dùng item đang cầm như behavior cũ.")]
+    public EntityData placedEntityData;
     [Tooltip("True = spawn giữa Tile")]
     public bool centerTile = true;
     [Tooltip("Tên trigger trong Animator. Để trống = mặc định 'Sow'.")]

@@ -1,0 +1,118 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8393fbdfdb650e5418aad1c82ae5b8b5, type: 3}
+  m_Name: npc_shop_bac_ba
+  m_EditorClassIdentifier: 
+  id: npc_shop_bac_ba
+  keyName: npc.shop.bac_ba.name
+  descKey: npc.shop.bac_ba.desc
+  icon: {fileID: 0}
+  category: 14
+  maxStack: 1
+  buyPrice: 0
+  sellPrice: 0
+  baseStats:
+    baseStats: []
+  placementRule:
+    occupyLayer: 1
+    requireTags: 2
+    provideTags: 0
+    blockLayers: 0100000002000000
+  modules:
+  - rid: 5278705929685041322
+  - rid: 5278705929685041323
+  references:
+    version: 2
+    RefIds:
+    - rid: 5278705929685041322
+      type: {class: InventoryModule, ns: , asm: Assembly-CSharp}
+      data:
+        inventoryType: 0
+        size: 24
+    - rid: 5278705929685041323
+      type: {class: ShopModule, ns: , asm: Assembly-CSharp}
+      data:
+        optionTextKey: ui.shop.open
+        priority: 30
+        sellsToPlayer: 1
+        buysFromPlayer: 1
+        buysAllItems: 1
+        infiniteStock: 1
+        stockInventoryType: 0
+        buyWhitelist: []
+        initialStock:
+        - itemData: {fileID: 11400000, guid: b5f227b5fd3354e47bb543eb297c9a84, type: 2}
+          amount: 99
+          requiredLevel: 1
+          unlockRequirement:
+            requiredLevel: 1
+            requiredQuestIds: []
+        - itemData: {fileID: 11400000, guid: a6efaa8ef531b10429850cfd6d0eb2a1, type: 2}
+          amount: 99
+          requiredLevel: 2
+          unlockRequirement:
+            requiredLevel: 2
+            requiredQuestIds: []
+        - itemData: {fileID: 11400000, guid: 3bc157e9c431e78438daf694466dfd79, type: 2}
+          amount: 99
+          requiredLevel: 4
+          unlockRequirement:
+            requiredLevel: 4
+            requiredQuestIds: []
+        - itemData: {fileID: 11400000, guid: 353ca897f7e611d4c81e183e8582eea8, type: 2}
+          amount: 99
+          requiredLevel: 7
+          unlockRequirement:
+            requiredLevel: 7
+            requiredQuestIds: []
+        - itemData: {fileID: 11400000, guid: 3c4eeef1193898640910867e658eadfc, type: 2}
+          amount: 99
+          requiredLevel: 11
+          unlockRequirement:
+            requiredLevel: 11
+            requiredQuestIds: []
+        - itemData: {fileID: 11400000, guid: ab6f953ed0b720e4c88dfe77b54aded9, type: 2}
+          amount: 99
+          requiredLevel: 15
+          unlockRequirement:
+            requiredLevel: 15
+            requiredQuestIds: []
+        - itemData: {fileID: 11400000, guid: 1a52b0577ef9c474c981cf3eadf42084, type: 2}
+          amount: 1
+          requiredLevel: 1
+          unlockRequirement:
+            requiredLevel: 1
+            requiredQuestIds: []
+        - itemData: {fileID: 11400000, guid: 217cfd6043b073f4cabdf308fa55489c, type: 2}
+          amount: 1
+          requiredLevel: 1
+          unlockRequirement:
+            requiredLevel: 1
+            requiredQuestIds: []
+        - itemData: {fileID: 11400000, guid: f0106c693220d1747b30bf59eeef24bf, type: 2}
+          amount: 1
+          requiredLevel: 1
+          unlockRequirement:
+            requiredLevel: 1
+            requiredQuestIds: []
+        - itemData: {fileID: 11400000, guid: 92876eec3385dc04492d0bf26e0d7e2d, type: 2}
+          amount: 1
+          requiredLevel: 1
+          unlockRequirement:
+            requiredLevel: 1
+            requiredQuestIds: []
+        - itemData: {fileID: 11400000, guid: d0be43257eee36442a1f946bbce01d16, type: 2}
+          amount: 1
+          requiredLevel: 1
+          unlockRequirement:
+            requiredLevel: 1
+            requiredQuestIds: []

@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public class StatRowUI : MonoBehaviour
 {
+    private static readonly Color ReadableStatTextColor = new(0.08f, 0.05f, 0.02f, 1f);
+
     [SerializeField] private Image iconImage;
     [SerializeField] private TMP_Text nameText;
     [SerializeField] private TMP_Text valueText;
@@ -32,6 +34,7 @@ public class StatRowUI : MonoBehaviour
     public void Setup(StatDefinition definition, float value)
     {
         AutoBindReferences();
+        ApplyReadableTextStyle();
 
         if (definition == null)
         {
@@ -48,6 +51,7 @@ public class StatRowUI : MonoBehaviour
     public void SetupText(StatDefinition definition, string value)
     {
         AutoBindReferences();
+        ApplyReadableTextStyle();
 
         if (definition == null)
         {
@@ -64,6 +68,7 @@ public class StatRowUI : MonoBehaviour
     public void SetupRaw(string name, float value, Sprite icon = null, string valueFormat = null)
     {
         AutoBindReferences();
+        ApplyReadableTextStyle();
 
         gameObject.SetActive(true);
         SetIcon(icon);
@@ -79,6 +84,7 @@ public class StatRowUI : MonoBehaviour
     public void SetupRawText(string name, string value, Sprite icon = null)
     {
         AutoBindReferences();
+        ApplyReadableTextStyle();
 
         gameObject.SetActive(true);
         SetIcon(icon);
@@ -117,6 +123,14 @@ public class StatRowUI : MonoBehaviour
             if (nameText == null && texts.Length > 0) nameText = texts[0];
             if (valueText == null && texts.Length > 1) valueText = texts[1];
         }
+
+        ApplyReadableTextStyle();
+    }
+
+    private void ApplyReadableTextStyle()
+    {
+        UiTextStyleUtility.ApplyRobotoAndColor(nameText, ReadableStatTextColor);
+        UiTextStyleUtility.ApplyRobotoAndColor(valueText, ReadableStatTextColor);
     }
 
     private void SetIcon(Sprite icon)

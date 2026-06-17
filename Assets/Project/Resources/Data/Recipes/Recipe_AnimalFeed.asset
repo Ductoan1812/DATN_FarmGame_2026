@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 358260a5fc2e0e646a27c9d953729876, type: 3}
+  m_Name: Recipe_AnimalFeed
+  m_EditorClassIdentifier: 
+  id: recipe_animal_feed
+  titleKey: m6.recipe.animal_feed.name
+  requiredLevel: 1
+  unlockRequirement:
+    requiredLevel: 1
+    requiredQuestIds: []
+  ingredients:
+  - item: {fileID: 11400000, guid: 85487c57c5499cf46a062918c8097f9e, type: 2}
+    amount: 2
+  - item: {fileID: 11400000, guid: 5ec8df13919ae8347b61b29e3059ed83, type: 2}
+    amount: 1
+  outputs:
+  - item: {fileID: 11400000, guid: 9bc401d64e3fc0d4d90a285583196bff, type: 2}
+    amount: 2
+  craftExp: 10

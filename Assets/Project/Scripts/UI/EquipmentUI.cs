@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class EquipmentUI : MonoBehaviour
 {
+    private static readonly Color ReadableStatTextColor = new(0.08f, 0.05f, 0.02f, 1f);
+
     [Header("Player Info")]
     [SerializeField] private GameObject playerNameInfo;
     [SerializeField] private TMP_Text playerNameText;
@@ -19,6 +21,7 @@ public class EquipmentUI : MonoBehaviour
     private EventBus eventBus;
     private bool subscribedToBus;
     private bool clearedInitialStatsContent;
+    private bool receivedPlayerInfo;
     private readonly List<GameObject> spawnedStatRows = new();
 
     private void Reset()
@@ -45,6 +48,7 @@ public class EquipmentUI : MonoBehaviour
     private void OnEnable()
     {
         TrySubscribe();
+        ShowWaitingPlayerInfoIfNeeded();
     }
 
     private void Update()
@@ -106,6 +110,7 @@ public class EquipmentUI : MonoBehaviour
 
     private void OnPlayerInfoChanged(PlayerInfoChangedPublish e)
     {
+        receivedPlayerInfo = true;
         SetPlayerName(e.keyName);
         ApplyPlayerStats(e.stats);
     }
@@ -137,6 +142,7 @@ public class EquipmentUI : MonoBehaviour
         }
 
         EnsureDefaultStatDisplayRules();
+        ApplyReadableTextStyle();
 
 #if UNITY_EDITOR
         if (statRowPrefab == null)
@@ -166,6 +172,8 @@ public class EquipmentUI : MonoBehaviour
             return;
         }
 
+        UiTextStyleUtility.ApplyRobotoAndColor(playerNameText, ReadableStatTextColor);
+
         var localized = playerNameText.GetComponent<LocalizedText>();
         if (localized != null)
         {
@@ -174,6 +182,42 @@ public class EquipmentUI : MonoBehaviour
         }
 
         playerNameText.text = keyName;
+    }
+
+    private void ShowWaitingPlayerInfoIfNeeded()
+    {
+        if (receivedPlayerInfo)
+            return;
+
+        AutoFindRefs();
+
+        if (playerNameText != null)
+        {
+            UiTextStyleUtility.ApplyRobotoAndColor(playerNameText, ReadableStatTextColor);
+            playerNameText.text = "Người chơi";
+        }
+
+        if (playerNameInfo != null)
+            playerNameInfo.SetActive(true);
+
+        if (statsContent == null || spawnedStatRows.Count > 0)
+            return;
+
+        ClearPlayerStats();
+        AddPlaceholderStatRow("Cấp độ", "-");
+        AddPlaceholderStatRow("HP", "-");
+        AddPlaceholderStatRow("Thể lực", "-");
+        AddPlaceholderStatRow("Tiền", "-");
+    }
+
+    private void AddPlaceholderStatRow(string label, string value)
+    {
+        var row = CreateStatRow();
+        if (row == null)
+            return;
+
+        row.SetupRawText(label, value);
+        spawnedStatRows.Add(row.gameObject);
     }
 
     private void ApplyPlayerStats(StatDisplay[] stats)
@@ -328,13 +372,23 @@ public class EquipmentUI : MonoBehaviour
 
         var nameObject = new GameObject("Name", typeof(RectTransform), typeof(TextMeshProUGUI));
         nameObject.transform.SetParent(rowObject.transform, false);
-        nameObject.GetComponent<TextMeshProUGUI>().fontSize = 18f;
+        var nameText = nameObject.GetComponent<TextMeshProUGUI>();
+        nameText.fontSize = 18f;
+        UiTextStyleUtility.ApplyRobotoAndColor(nameText, ReadableStatTextColor);
 
         var valueObject = new GameObject("Value", typeof(RectTransform), typeof(TextMeshProUGUI));
         valueObject.transform.SetParent(rowObject.transform, false);
-        valueObject.GetComponent<TextMeshProUGUI>().fontSize = 18f;
+        var valueText = valueObject.GetComponent<TextMeshProUGUI>();
+        valueText.fontSize = 18f;
+        UiTextStyleUtility.ApplyRobotoAndColor(valueText, ReadableStatTextColor);
 
         return rowObject.GetComponent<StatRowUI>();
+    }
+
+    private void ApplyReadableTextStyle()
+    {
+        UiTextStyleUtility.ApplyRobotoAndColor(playerNameText, ReadableStatTextColor);
+        UiTextStyleUtility.ApplyRobotoAndColorToChildren(statsContent, ReadableStatTextColor);
     }
 
     private TMP_Text FindText(string objectName)

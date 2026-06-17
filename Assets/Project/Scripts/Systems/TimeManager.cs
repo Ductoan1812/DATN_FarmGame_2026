@@ -49,6 +49,32 @@ public class TimeManager : MonoBehaviour
     public int Hour => TotalMinutes / 60;
     public int Minute => TotalMinutes % 60;
     public bool IsRunning => _isRunning;
+    public int CurrentTotalMinutes
+    {
+        get
+        {
+            int seasonsPerYear = (int)Season.Winter + 1;
+            int completedYears = Mathf.Max(0, _year - 1);
+            int completedSeasons = Mathf.Clamp((int)_season, 0, seasonsPerYear - 1);
+            int completedDays = completedYears * seasonsPerYear * DaysPerSeason
+                              + completedSeasons * DaysPerSeason
+                              + Mathf.Max(0, _day - 1);
+            return completedDays * MinutesPerDay + TotalMinutes;
+        }
+    }
+    public float CurrentTotalElapsedSeconds
+    {
+        get
+        {
+            int seasonsPerYear = (int)Season.Winter + 1;
+            int completedYears = Mathf.Max(0, _year - 1);
+            int completedSeasons = Mathf.Clamp((int)_season, 0, seasonsPerYear - 1);
+            int completedDays = completedYears * seasonsPerYear * DaysPerSeason
+                              + completedSeasons * DaysPerSeason
+                              + Mathf.Max(0, _day - 1);
+            return completedDays * DayDurationRealSeconds + _timeOfDaySeconds;
+        }
+    }
 
     /// <summary>0..1 trong ngày (0 = 00:00, 0.5 = 12:00, 1 = 24:00).</summary>
     public float NormalizedTime => config == null || config.dayDurationRealSeconds <= 0f
@@ -66,7 +92,9 @@ public class TimeManager : MonoBehaviour
         season = _season,
         day = _day,
         hour = Hour,
-        minute = Minute
+        minute = Minute,
+        hasPreciseTimeOfDay = true,
+        timeOfDaySeconds = _timeOfDaySeconds
     };
 
     private int TotalMinutes
@@ -149,6 +177,7 @@ public class TimeManager : MonoBehaviour
     /// <summary>Nhảy sang ngày tiếp theo, reset giờ về startHour.</summary>
     public void SkipToNextDay()
     {
+        _eventBus?.Publish(new SleepTransitionPublish());
         AdvanceDay();
         _timeOfDaySeconds = HourMinuteToDaySeconds(
             config != null ? config.startHour : 6,
@@ -190,7 +219,9 @@ public class TimeManager : MonoBehaviour
         _year = Mathf.Max(1, state.year);
         _season = state.season;
         _day = Mathf.Clamp(state.day, 1, DaysPerSeason);
-        _timeOfDaySeconds = HourMinuteToDaySeconds(state.hour, state.minute);
+        _timeOfDaySeconds = state.hasPreciseTimeOfDay
+            ? Mathf.Clamp(state.timeOfDaySeconds, 0f, DayDurationRealSeconds)
+            : HourMinuteToDaySeconds(state.hour, state.minute);
         _lastPublishedMinute = -1;
         _lastPublishedHour = -1;
         PublishCurrentTime(true);
@@ -213,9 +244,12 @@ public class TimeManager : MonoBehaviour
         }
 
         var bus = ResolveEventBus();
-        // Publish DayChangedPublish (mới) + NextDayEventPublish (backward compatible)
-        bus?.Publish(new DayChangedPublish(_year, _season, _day));
+        // Thứ tự publish quan trọng:
+        // 1. NextDayEventPublish TRƯỚC → StageObject/AnimalObject xử lý grow/produce
+        // 2. DayChangedPublish SAU → reset watered tiles, UI update, etc.
+        // Nếu đảo ngược: watered tiles bị reset trước khi cây check → cây không grow
         bus?.Publish(new NextDayEventPublish());
+        bus?.Publish(new DayChangedPublish(_year, _season, _day));
 
         Debug.Log($"[TimeManager] Ngày mới: {CurrentState}");
     }

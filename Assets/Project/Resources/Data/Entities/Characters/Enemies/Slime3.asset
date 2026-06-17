@@ -1,0 +1,89 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8393fbdfdb650e5418aad1c82ae5b8b5, type: 3}
+  m_Name: Slime3
+  m_EditorClassIdentifier: 
+  id: enemy_slime3
+  keyName: enemy.slime3.name
+  descKey: enemy.slime3.desc
+  icon: {fileID: -1591445168, guid: 1999ab197a90e914998570e8463a0f6b, type: 3}
+  category: 14
+  maxStack: 1
+  buyPrice: 0
+  sellPrice: 0
+  baseStats:
+    baseStats:
+    - statType: 0
+      value: 45
+    - statType: 1
+      value: 45
+    - statType: 2
+      value: 7
+    - statType: 3
+      value: 2
+    - statType: 4
+      value: 2.6
+    - statType: 12
+      value: 1.1
+    - statType: 11
+      value: 1.15
+  placementRule:
+    occupyLayer: 2
+    requireTags: 2
+    provideTags: 0
+    blockLayers: 0200000001000000
+  modules:
+  - rid: 5278706205786112020
+  - rid: 5278706205786112021
+  - rid: 5278706205786112022
+  - rid: 5278706205786112023
+  - rid: 5278706205786112024
+  references:
+    version: 2
+    RefIds:
+    - rid: 5278706205786112020
+      type: {class: HealthModule, ns: , asm: Assembly-CSharp}
+      data:
+        canTakeDamage: 1
+    - rid: 5278706205786112021
+      type: {class: AttackModule, ns: , asm: Assembly-CSharp}
+      data:
+        attackRange: 1.1
+        attackCooldown: 1.15
+    - rid: 5278706205786112022
+      type: {class: DropModule, ns: , asm: Assembly-CSharp}
+      data:
+        harvestDrops: []
+        deathDrops:
+        - item: {fileID: 11400000, guid: 466d07d66eb516b488bef2ad9e76e38c, type: 2}
+          minAmount: 1
+          maxAmount: 2
+          dropChance: 1
+        - item: {fileID: 11400000, guid: 2bcbc6fa4fcc213459e5ccbd90e9e50e, type: 2}
+          minAmount: 1
+          maxAmount: 2
+          dropChance: 0.55
+        - item: {fileID: 11400000, guid: fc32c8d6dc69c8a4b9595e2bacaa340b, type: 2}
+          minAmount: 1
+          maxAmount: 1
+          dropChance: 0.2
+        includeHarvestDropsOnDestroyWhenHarvestable: 0
+    - rid: 5278706205786112023
+      type: {class: ExpRewardModule, ns: , asm: Assembly-CSharp}
+      data:
+        rewardExp: 55
+        sourceType: 3
+        requireKiller: 1
+    - rid: 5278706205786112024
+      type: {class: MortalModule, ns: , asm: Assembly-CSharp}
+      data:
+        destroyDelay: 1

@@ -2,6 +2,7 @@ using UnityEngine;
 using Assets.HeroEditor4D.Common.Scripts.CharacterScripts;
 using Assets.HeroEditor4D.Common.Scripts.Enums;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class PlayerControler : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5f;
@@ -10,6 +11,7 @@ public class PlayerControler : MonoBehaviour
     [SerializeField] private AnimationManager _anim ;
     [SerializeField] private KeyCode interactKey = KeyCode.E;
     [SerializeField] private bool allowRightMouseInteract;
+    [SerializeField] private float collisionSkin = 0.02f;
 
     private Vector3 lastMoveDirection = Vector3.up;
     public Vector3 LastMoveDirection => lastMoveDirection;
@@ -19,72 +21,95 @@ public class PlayerControler : MonoBehaviour
     private PlayerInventory _inventory;
     private EntityRoot _entityRoot;
     private ToolActionBridge _toolBridge;
+    private Rigidbody2D _rigidbody2D;
+    private Collider2D _movementCollider;
+    private StatsRuntime _boundStats;
+    private Vector2 _moveInput;
+    private float _runtimeMoveSpeed;
+    public bool IsDodging => false;
+    private readonly RaycastHit2D[] _movementHits = new RaycastHit2D[8];
+    private ContactFilter2D _movementFilter;
 
     private void Awake()
     {
         if (eventBus == null)
             eventBus = FindAnyObjectByType<EventBus>();
+
+        _rigidbody2D = GetComponent<Rigidbody2D>();
+        _movementCollider = GetComponent<Collider2D>();
+        _entityRoot = GetComponent<EntityRoot>();
+        _inventory = GetComponent<PlayerInventory>();
+        _toolBridge = GetComponent<ToolActionBridge>();
+        _runtimeMoveSpeed = moveSpeed;
+        ConfigureMovementFilter();
     }
 
     private void Start()
     {
-        _inventory   = GetComponent<PlayerInventory>();
-        _entityRoot  = GetComponent<EntityRoot>();
-        _toolBridge  = GetComponent<ToolActionBridge>();
-        _anim = character4D.AnimationManager;
-        character4D.SetDirection(Vector2.down);
-        character4D.AnimationManager.SetState(CharacterState.Idle);
+        if (character4D == null)
+            character4D = GetComponentInChildren<Character4D>();
+
+        if (character4D != null)
+        {
+            _anim = character4D.AnimationManager;
+            character4D.SetDirection(Vector2.down);
+            character4D.AnimationManager.SetState(CharacterState.Idle);
+        }
+
+        BindEntityStats(_entityRoot != null ? _entityRoot.GetEntity() : null);
+    }
+
+    private void OnEnable()
+    {
+        if (_entityRoot == null)
+            _entityRoot = GetComponent<EntityRoot>();
+
+        if (_entityRoot != null)
+            _entityRoot.OnEntityReady += OnEntityReady;
+    }
+
+    private void OnDisable()
+    {
+        if (_entityRoot != null)
+            _entityRoot.OnEntityReady -= OnEntityReady;
+
+        UnbindEntityStats();
+        _moveInput = Vector2.zero;
     }
 
     private bool IsActionBusy => _toolBridge != null && _toolBridge.IsBusy;
 
     private void Update()
     {
-        if (!InputEnabled) return;
+        if (!InputEnabled)
+        {
+            StopMovement();
+            return;
+        }
 
         // Animation đang chạy → block movement + action
-        if (IsActionBusy) return;
+        if (IsActionBusy)
+        {
+            StopMovement();
+            return;
+        }
 
-        HandleMovement();
+        ReadMovementInput();
+        UpdateMovementVisuals();
         HandleActions();
     }
 
-    private void HandleMovement()
+    private void FixedUpdate()
     {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
-        Vector3 moveDirection = new Vector3(horizontal, vertical, 0f).normalized;
-        transform.Translate(moveDirection * moveSpeed * Time.deltaTime, Space.World);
+        if (!InputEnabled || IsActionBusy)
+            return;
 
-        if (moveDirection.sqrMagnitude > 0.0001f)
-        {
-            lastMoveDirection = moveDirection;
-
-            // Cập nhật hướng nhân vật
-            Vector2 dir;
-            if (Mathf.Abs(horizontal) >= Mathf.Abs(vertical))
-                dir = horizontal > 0 ? Vector2.right : Vector2.left;
-            else
-                dir = vertical > 0 ? Vector2.up : Vector2.down;
-
-            if (character4D != null)
-            {
-                character4D.SetDirection(dir);
-                character4D.AnimationManager.SetState(CharacterState.Run);
-            }
-        }
-        else
-        {
-            if (character4D != null)
-            {
-                character4D.AnimationManager.SetState(CharacterState.Idle);
-            }
-        }
+        MoveWithCollision(_moveInput, ResolveMoveSpeed() * Time.fixedDeltaTime);
     }
 
     private void HandleActions()
     {
-        var playerEntity = _entityRoot?.GetEntity();
+        var playerEntity = GetPlayerEntity();
         if (playerEntity == null) return;
 
         // ── Chuột trái: PrimaryAction ─────────────────────────────────────────
@@ -94,7 +119,7 @@ public class PlayerControler : MonoBehaviour
         }
 
         // ── E: SecondaryAction / Interact ─────────────────────────────────────
-        if (Input.GetKeyDown(interactKey) || (allowRightMouseInteract && Input.GetMouseButtonDown(1)))
+        if (Input.GetKeyDown(GameplayInputSettings.GetInteractKey(interactKey)) || (allowRightMouseInteract && Input.GetMouseButtonDown(1)))
         {
             playerEntity.TriggerEvent(new SecondaryActionEvent(playerEntity));
         }
@@ -123,5 +148,158 @@ public class PlayerControler : MonoBehaviour
             eventBus?.Publish(new SaveGameRequestPublish());
             Debug.Log("[Player] Save requested.");
         }
+    }
+
+    private Vector2 ReadInputDirection()
+    {
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        float vertical = Input.GetAxisRaw("Vertical");
+        return new Vector2(horizontal, vertical).normalized;
+    }
+
+    private EntityRuntime GetPlayerEntity()
+    {
+        if (_entityRoot == null)
+            _entityRoot = GetComponent<EntityRoot>();
+
+        if (_entityRoot == null)
+            return null;
+
+        return _entityRoot.GetEntity();
+    }
+
+    private void OnEntityReady(EntityRuntime entity)
+    {
+        BindEntityStats(entity);
+    }
+
+    private void BindEntityStats(EntityRuntime entity)
+    {
+        var stats = entity?.stats;
+        if (ReferenceEquals(_boundStats, stats))
+        {
+            RefreshRuntimeMoveSpeed();
+            return;
+        }
+
+        UnbindEntityStats();
+
+        _boundStats = stats;
+        if (_boundStats != null)
+            _boundStats.OnChanged += OnStatsChanged;
+
+        RefreshRuntimeMoveSpeed();
+    }
+
+    private void UnbindEntityStats()
+    {
+        if (_boundStats != null)
+            _boundStats.OnChanged -= OnStatsChanged;
+
+        _boundStats = null;
+        _runtimeMoveSpeed = moveSpeed;
+    }
+
+    private void OnStatsChanged(StatType statType, float newValue)
+    {
+        if (statType != StatType.Speed)
+            return;
+
+        _runtimeMoveSpeed = newValue > 0f ? newValue : moveSpeed;
+    }
+
+    private void RefreshRuntimeMoveSpeed()
+    {
+        _runtimeMoveSpeed = moveSpeed;
+
+        if (_boundStats != null && _boundStats.Has(StatType.Speed))
+        {
+            float runtimeSpeed = _boundStats.Get(StatType.Speed);
+            if (runtimeSpeed > 0f)
+                _runtimeMoveSpeed = runtimeSpeed;
+        }
+    }
+
+    private float ResolveMoveSpeed()
+    {
+        return _runtimeMoveSpeed > 0f ? _runtimeMoveSpeed : moveSpeed;
+    }
+
+    private void ReadMovementInput()
+    {
+        _moveInput = ReadInputDirection();
+        if (_moveInput.sqrMagnitude > 0.0001f)
+            lastMoveDirection = new Vector3(_moveInput.x, _moveInput.y, 0f);
+    }
+
+    private void UpdateMovementVisuals()
+    {
+        if (_moveInput.sqrMagnitude > 0.0001f)
+        {
+            float horizontal = _moveInput.x;
+            float vertical = _moveInput.y;
+
+            Vector2 dir;
+            if (Mathf.Abs(horizontal) >= Mathf.Abs(vertical))
+                dir = horizontal > 0 ? Vector2.right : Vector2.left;
+            else
+                dir = vertical > 0 ? Vector2.up : Vector2.down;
+
+            if (character4D != null)
+            {
+                character4D.SetDirection(dir);
+                character4D.AnimationManager.SetState(CharacterState.Run);
+            }
+        }
+        else if (character4D != null)
+        {
+            character4D.AnimationManager.SetState(CharacterState.Idle);
+        }
+    }
+
+    private void StopMovement(bool playIdle = true)
+    {
+        _moveInput = Vector2.zero;
+
+        if (playIdle && character4D != null)
+            character4D.AnimationManager.SetState(CharacterState.Idle);
+    }
+
+    private void ConfigureMovementFilter()
+    {
+        _movementFilter.useTriggers = false;
+        _movementFilter.useLayerMask = true;
+        _movementFilter.useNormalAngle = false;
+        _movementFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
+    }
+
+    private void MoveWithCollision(Vector2 direction, float distance)
+    {
+        if (_rigidbody2D == null || direction.sqrMagnitude <= 0.0001f || distance <= 0f)
+            return;
+
+        Vector2 normalized = direction.normalized;
+        float allowedDistance = distance;
+
+        if (_movementCollider != null)
+        {
+            int hitCount = _movementCollider.Cast(normalized, _movementFilter, _movementHits, distance + collisionSkin);
+            for (int i = 0; i < hitCount; i++)
+            {
+                var hit = _movementHits[i];
+                if (hit.collider == null)
+                    continue;
+
+                if (hit.collider.attachedRigidbody == _rigidbody2D)
+                    continue;
+
+                allowedDistance = Mathf.Min(allowedDistance, Mathf.Max(0f, hit.distance - collisionSkin));
+            }
+        }
+
+        if (allowedDistance <= 0f)
+            return;
+
+        _rigidbody2D.MovePosition(_rigidbody2D.position + normalized * allowedDistance);
     }
 }

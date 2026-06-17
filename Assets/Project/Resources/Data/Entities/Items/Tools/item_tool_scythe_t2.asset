@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8393fbdfdb650e5418aad1c82ae5b8b5, type: 3}
+  m_Name: item_tool_scythe_t2
+  m_EditorClassIdentifier: 
+  id: item_tool_scythe_t2
+  keyName: item.tool.scythe.t2.name
+  descKey: item.tool.scythe.t2.desc
+  icon: {fileID: 21300000, guid: 4829cfbec10d9654ab4e29010a3c266a, type: 3}
+  category: 1
+  maxStack: 1
+  buyPrice: 0
+  sellPrice: 210
+  baseStats:
+    baseStats:
+    - statType: 5
+      value: 3
+    - statType: 9
+      value: 3
+    - statType: 10
+      value: 1
+    - statType: 11
+      value: 0.55
+    - statType: 12
+      value: 1.4
+    - statType: 2
+      value: 7
+  placementRule:
+    occupyLayer: 0
+    requireTags: 0
+    provideTags: 0
+    blockLayers: 
+  modules:
+  - rid: 5278706222873444356
+  - rid: 5278706222873444357
+  - rid: 5278706222873444358
+  - rid: 5278706222873444359
+  references:
+    version: 2
+    RefIds:
+    - rid: 5278706222873444356
+      type: {class: ToolModule, ns: , asm: Assembly-CSharp}
+      data:
+        toolType: 3
+        toolTier: 2
+        animTrigger: Scythe
+        refillAnimTrigger: 
+    - rid: 5278706222873444357
+      type: {class: StaminaCostModule, ns: , asm: Assembly-CSharp}
+      data:
+        cost: 3
+    - rid: 5278706222873444358
+      type: {class: ToolRequirementModule, ns: , asm: Assembly-CSharp}
+      data:
+        requiredToolType: 3
+        minimumToolTier: 2
+        wrongToolPenalty: 0
+        blockDamageIfWrongTool: 1
+        blockDamageIfBelowTier: 1
+    - rid: 5278706222873444359
+      type: {class: AppearanceModule, ns: , asm: Assembly-CSharp}
+      data:
+        spriteId: Art.Equipment.MeleeWeapon1H.Scyther
+        equipmentPart: 5

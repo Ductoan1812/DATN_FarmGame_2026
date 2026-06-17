@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8393fbdfdb650e5418aad1c82ae5b8b5, type: 3}
+  m_Name: enemy_snake
+  m_EditorClassIdentifier: 
+  id: enemy_snake
+  keyName: enemy.snake.name
+  descKey: enemy.snake.desc
+  icon: {fileID: 0}
+  category: 14
+  maxStack: 1
+  buyPrice: 0
+  sellPrice: 0
+  baseStats:
+    baseStats:
+    - statType: 0
+      value: 25
+    - statType: 3
+      value: 2
+    - statType: 2
+      value: 6
+    - statType: 4
+      value: 3.5
+  placementRule:
+    occupyLayer: 2
+    requireTags: 2
+    provideTags: 0
+    blockLayers: 0200000001000000
+  modules:
+  - rid: 5278705929685041188
+  - rid: 5278705929685041189
+  - rid: 5278705929685041190
+  - rid: 5278705929685041191
+  references:
+    version: 2
+    RefIds:
+    - rid: 5278705929685041188
+      type: {class: HealthModule, ns: , asm: Assembly-CSharp}
+      data:
+        canTakeDamage: 1
+    - rid: 5278705929685041189
+      type: {class: DropModule, ns: , asm: Assembly-CSharp}
+      data:
+        harvestDrops: []
+        deathDrops:
+        - item: {fileID: 11400000, guid: 472467750192b46439d6aea47a5d7e15, type: 2}
+          minAmount: 1
+          maxAmount: 1
+          dropChance: 0.6
+        - item: {fileID: 11400000, guid: 34b63d442cc0d6b43a85bbba0918b28d, type: 2}
+          minAmount: 1
+          maxAmount: 1
+          dropChance: 0.2
+        includeHarvestDropsOnDestroyWhenHarvestable: 0
+    - rid: 5278705929685041190
+      type: {class: ExpRewardModule, ns: , asm: Assembly-CSharp}
+      data:
+        rewardExp: 37
+        sourceType: 3
+        requireKiller: 1
+    - rid: 5278705929685041191
+      type: {class: MortalModule, ns: , asm: Assembly-CSharp}
+      data: 

@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8393fbdfdb650e5418aad1c82ae5b8b5, type: 3}
+  m_Name: npc_quest_co_gai_lang
+  m_EditorClassIdentifier: 
+  id: npc_quest_co_gai_lang
+  keyName: npc.quest.co_gai_lang.name
+  descKey: npc.quest.co_gai_lang.desc
+  icon: {fileID: 672549560, guid: 3c7fa3e414b5a24438ec5d996f28e9d8, type: 3}
+  category: 14
+  maxStack: 1
+  buyPrice: 0
+  sellPrice: 0
+  baseStats:
+    baseStats: []
+  placementRule:
+    occupyLayer: 1
+    requireTags: 2
+    provideTags: 0
+    blockLayers: 0100000003000000
+  modules:
+  - rid: 5278705929685041155
+  - rid: 5278705929685041156
+  references:
+    version: 2
+    RefIds:
+    - rid: 5278705929685041155
+      type: {class: InventoryModule, ns: , asm: Assembly-CSharp}
+      data:
+        inventoryType: 0
+        size: 24
+    - rid: 5278705929685041156
+      type: {class: QuestModule, ns: , asm: Assembly-CSharp}
+      data:
+        quests:
+        - {fileID: 11400000, guid: da4c5202fe432804a90f676d5a1fb92c, type: 2}
+        - {fileID: 11400000, guid: abbd6529942809440a3da44de8af766d, type: 2}
+        - {fileID: 11400000, guid: c99d9330663a9df47a9c4873fc0fdb73, type: 2}
+        - {fileID: 11400000, guid: f6caff800db7892468899b3e68995d68, type: 2}
+        - {fileID: 11400000, guid: f651708621ef049448bafedc6c434044, type: 2}
+        - {fileID: 11400000, guid: 67acf7fe615b3324797a25ca9479aff6, type: 2}
+        - {fileID: 11400000, guid: 7bd294ec69554404a843f40b28761500, type: 2}
+        - {fileID: 11400000, guid: 4cb207037ca9b644fa601cd8f48bf8da, type: 2}
+        - {fileID: 11400000, guid: b848cc5ec7334334aa23e33616230bad, type: 2}
+        - {fileID: 11400000, guid: 5956a4089a44e234986fe24359cef7e7, type: 2}
+        - {fileID: 11400000, guid: 49199696644eba64b98324b66151b68d, type: 2}
+        - {fileID: 11400000, guid: 5256b8a205d6e3444bfd408f7e5c7bd6, type: 2}
+        - {fileID: 11400000, guid: b5f763839c7779d44abeee4d72216437, type: 2}
+        - {fileID: 11400000, guid: 6ff59be61416a0b45a71906c83aa6dc3, type: 2}
+        - {fileID: 11400000, guid: 9f267fd257828a848ab38a4c5c88b713, type: 2}
+        - {fileID: 11400000, guid: a9f33b7f9d8e4af9a2e0b8bf29f4c0a1, type: 2}
+        priority: 20

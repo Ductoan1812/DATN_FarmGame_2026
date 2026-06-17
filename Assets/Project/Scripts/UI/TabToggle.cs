@@ -105,9 +105,7 @@ public class TabToggle : MonoBehaviour
         }
         else
         {
-            toggle.onValueChanged.RemoveListener(OnToggleValueChanged);
-            toggle.isOn = isOn;
-            toggle.onValueChanged.AddListener(OnToggleValueChanged);
+            toggle.SetIsOnWithoutNotify(isOn);
             currentState = isOn;
             UpdateVisualState(isOn);
         }

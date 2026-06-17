@@ -1,0 +1,378 @@
+fileFormatVersion: 2
+guid: e2f8b854e5ca3564d977445ca7a30495
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Male Cow Brown_0
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 64
+        width: 22
+        height: 21
+      alignment: 9
+      pivot: {x: 0.48911667, y: 0.095246814}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 82f6604680b973b4781325449b661d81
+      internalID: -48193822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Male Cow Brown_1
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 64
+        width: 22
+        height: 20
+      alignment: 9
+      pivot: {x: 0.49455816, y: 0.11092377}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 72bd2d846f935334983abb42e62fb726
+      internalID: -789524786
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Male Cow Brown_2
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 64
+        width: 22
+        height: 21
+      alignment: 9
+      pivot: {x: 0.510883, y: 0.0895462}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0cc48e54e4a2ad3418d0ea375d2381b6
+      internalID: -1005512930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Male Cow Brown_3
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 64
+        width: 22
+        height: 20
+      alignment: 9
+      pivot: {x: 0.48911667, y: 0.09895249}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0bd2f298d2f4c724da7f983a7da91605
+      internalID: 1987730643
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Male Cow Brown_4
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 32
+        width: 13
+        height: 21
+      alignment: 9
+      pivot: {x: 0.49999985, y: 0.118050165}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c7616be62329e4748ad867aeec7315fc
+      internalID: -1210179912
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Male Cow Brown_5
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 32
+        width: 13
+        height: 20
+      alignment: 9
+      pivot: {x: 0.48158234, y: 0.09895267}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7b2a83cfc68895d4b97e37d04e846968
+      internalID: 594544644
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Male Cow Brown_6
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 32
+        width: 13
+        height: 21
+      alignment: 9
+      pivot: {x: 0.48158205, y: 0.1066484}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 00230b3b855453e45a15e385d56804bf
+      internalID: 155119332
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Male Cow Brown_7
+      rect:
+        serializedVersion: 2
+        x: 105
+        y: 32
+        width: 13
+        height: 20
+      alignment: 9
+      pivot: {x: 0.46316352, y: 0.09895229}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 59e6e435fd2e5bc48ba2d079ce80b6e8
+      internalID: -996876390
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Male Cow Brown_8
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 0
+        width: 13
+        height: 23
+      alignment: 9
+      pivot: {x: 0.49079072, y: 0.08880319}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8ec218b2fc49864885d0dffa53f3a3e
+      internalID: -1072287801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Male Cow Brown_9
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 0
+        width: 13
+        height: 22
+      alignment: 9
+      pivot: {x: 0.48158205, y: 0.075553566}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 22c31a6ff5ddafd4e9fb51ee8042eba1
+      internalID: -299267269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Male Cow Brown_10
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 0
+        width: 13
+        height: 23
+      alignment: 9
+      pivot: {x: 0.4999994, y: 0.08359785}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed8d6832f1981654badb27c2e1b76dd3
+      internalID: -1241158456
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Male Cow Brown_11
+      rect:
+        serializedVersion: 2
+        x: 105
+        y: 0
+        width: 13
+        height: 22
+      alignment: 9
+      pivot: {x: 0.48158148, y: 0.102762096}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b00a8834f750e464aae605c46d0b7e18
+      internalID: -687117436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      Male Cow Brown_0: -48193822
+      Male Cow Brown_1: -789524786
+      Male Cow Brown_10: -1241158456
+      Male Cow Brown_11: -687117436
+      Male Cow Brown_2: -1005512930
+      Male Cow Brown_3: 1987730643
+      Male Cow Brown_4: -1210179912
+      Male Cow Brown_5: 594544644
+      Male Cow Brown_6: 155119332
+      Male Cow Brown_7: -996876390
+      Male Cow Brown_8: -1072287801
+      Male Cow Brown_9: -299267269
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

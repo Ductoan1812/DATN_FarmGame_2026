@@ -50,4 +50,33 @@ public static class LocalizationKeys
     public const string UiCategoryMaterial = "ui.category.material";
     public const string UiCategoryFood = "ui.category.food";
     public const string UiCategoryPotion = "ui.category.potion";
+
+    public const string UiBedSleep = "ui.bed.sleep";
+    public const string UiProcessorOpen = "ui.processor.open";
+    public const string UiStorageOpen = "ui.storage.open";
+
+    public const string UiMainMenuNewGame = "ui.mainmenu.new_game";
+    public const string UiMainMenuContinue = "ui.mainmenu.continue";
+    public const string UiMainMenuSettings = "ui.mainmenu.settings";
+    public const string UiMainMenuExit = "ui.mainmenu.exit";
+    public const string UiMainMenuSavesTitle = "ui.mainmenu.saves.title";
+    public const string UiMainMenuSavesEmpty = "ui.mainmenu.saves.empty";
+    public const string UiMainMenuSavesBack = "ui.mainmenu.saves.back";
+
+    public const string UiSettingsTitle = "ui.settings.title";
+    public const string UiSettingsAudioMaster = "ui.settings.audio.master";
+    public const string UiSettingsAudioMusic = "ui.settings.audio.music";
+    public const string UiSettingsAudioSfx = "ui.settings.audio.sfx";
+    public const string UiSettingsLanguage = "ui.settings.language";
+    public const string UiSettingsInteractKey = "ui.settings.interact_key";
+    public const string UiSettingsFullscreen = "ui.settings.fullscreen";
+    public const string UiSettingsVsync = "ui.settings.vsync";
+    public const string UiSettingsFps = "ui.settings.fps";
+    public const string UiSettingsSave = "ui.settings.save";
+    public const string UiSettingsClose = "ui.settings.close";
+    public const string UiSettingsMainMenu = "ui.settings.main_menu";
+    public const string UiSettingsQuit = "ui.settings.quit";
+    public const string UiSettingsDefault = "ui.settings.default";
+    public const string UiSettingsRebindPrompt = "ui.settings.rebind.prompt";
+    public const string UiSettingsFpsUnlimited = "ui.settings.fps.unlimited";
 }

@@ -20,6 +20,9 @@ public class EntityRuntime
     public bool IsEmpty => Amount <= 0;
     public bool IsFull => Amount >= MaxStack;
 
+    public int Quality { get; private set; } = 1;
+    public void SetQuality(int value) => Quality = Mathf.Max(1, value);
+
     public EntityRuntime(EntityData data, int amount = 1)
     {
         id = Guid.NewGuid().ToString("N").Substring(0, 8);
@@ -36,6 +39,7 @@ public class EntityRuntime
         save.id = id;
         save.entityDataId = entityData?.id;
         save.amount = Amount;
+        save.quality = Quality;
         save.stats = stats?.ToSaveData();
 
         // Module nào trả null từ ToSaveData() = không cần save → skip.
@@ -61,6 +65,7 @@ public class EntityRuntime
 
         var runtime = new EntityRuntime(entityData, save.amount);
         runtime.id = save.id ?? Guid.NewGuid().ToString("N").Substring(0, 8);
+        runtime.SetQuality(save.quality);
 
         if (save.stats != null)
             runtime.stats = StatsRuntime.FromSaveData(save.stats);
@@ -96,7 +101,11 @@ public class EntityRuntime
         if (entityData?.modules != null)
         {
             foreach (var m in entityData.modules)
-                if (m != null) modules.Add(m.CreateRuntime());
+            {
+                if (m == null) continue;
+                var rt = m.CreateRuntime();
+                if (rt != null) modules.Add(rt);
+            }
         }
     }
 
@@ -124,8 +133,12 @@ public class EntityRuntime
 
     public void TriggerEvent<T>(T e) where T : IGameEvent
     {
-        foreach (var m in modules)
+        if (modules == null) return;
+        for (int i = 0; i < modules.Count; i++)
+        {
+            var m = modules[i];
             if (m is IHandleEvent<T> handler)
                 handler.Handle(e);
+        }
     }
 }

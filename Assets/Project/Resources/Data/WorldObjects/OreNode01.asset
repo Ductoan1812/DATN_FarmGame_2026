@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: OreNode01
   m_EditorClassIdentifier: 
   idObject: 8
-  prefab: {fileID: 5509933931381334664, guid: 17e6e7b7ffa40be4fb92fc6707062efa, type: 3}
+  prefab: {fileID: 5509933931381334664, guid: 3ec3ebce3ced0464d9e974a745912601, type: 3}

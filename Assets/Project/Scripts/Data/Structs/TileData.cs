@@ -12,6 +12,8 @@ public class TileData : ScriptableObject
     public TileBase wateredTile;
     [Tooltip("Tile cỏ, không thể trồng trọt.")]
     public TileBase grassTile;
+    [Tooltip("Các tile được xem là nguồn nước để bình tưới có thể refill khi dùng tool vào đó.")]
+    public TileBase[] waterSourceTiles;
 
     [Header("══════ Tile Tags ══════")]
     public TilePlacementEntry[] tileTagEntries;
@@ -23,6 +25,18 @@ public class TileData : ScriptableObject
         foreach (var entry in tileTagEntries)
             if (entry.tile == tile) return entry.tags;
         return PlacementTag.None;
+    }
+
+    public bool IsWaterSource(TileBase tile)
+    {
+        if (tile == null || waterSourceTiles == null) return false;
+        foreach (var sourceTile in waterSourceTiles)
+        {
+            if (sourceTile == tile)
+                return true;
+        }
+
+        return false;
     }
 }
 

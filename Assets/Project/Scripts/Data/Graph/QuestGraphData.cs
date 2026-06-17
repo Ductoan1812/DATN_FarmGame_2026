@@ -15,11 +15,15 @@ public class QuestGraphData : ScriptableObject
     public string completeOptionKey = "ui.quest.complete";
     public string completedOptionKey = "ui.quest.completed";
 
+    [Header("Unlock")]
+    public UnlockRequirementData visibilityRequirement = new();
+
     [Header("Objectives")]
     public List<QuestObjectiveData> objectives = new();
 
     [Header("Rewards")]
     public int rewardMoney;
+    public int rewardExp;
     public List<QuestRewardItemData> rewardItems = new();
 }
 
@@ -28,6 +32,8 @@ public class QuestObjectiveData
 {
     public string id;
     public string descriptionKey;
+    public QuestObjectiveType objectiveType = QuestObjectiveType.Inventory;
+    public string targetEntityDataId;
     public string requiredEntityDataId;
     public int requiredAmount = 1;
 }
@@ -44,4 +50,11 @@ public enum QuestState
     NotStarted,
     InProgress,
     Completed
+}
+
+public enum QuestObjectiveType
+{
+    Inventory,
+    KillEnemy,
+    SurviveNight
 }

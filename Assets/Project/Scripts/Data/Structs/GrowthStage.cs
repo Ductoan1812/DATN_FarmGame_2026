@@ -5,5 +5,5 @@ public class GrowthStage
 {
     public Sprite sprite;       
     public int  daysToGrow;    
-    public bool canHarvest;   
+    public bool canHarvest;
 }

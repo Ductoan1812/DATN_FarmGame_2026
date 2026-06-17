@@ -15,7 +15,17 @@
         "com.unity.inputsystem": "1.1.1",
         "com.unity.cloud.gltfast": "6.12.1"
       },
-      "hash": "2b7638c0b66865a97df7a0069fcbdffa31034aec"
+      "hash": "377ff5d3e14e1a095c30be8ef8e1d4c57dd0e322"
+    },
+    "com.ramenvr.aura-unity": {
+      "version": "https://github.com/ramenvr/AuraForUnityPlugin.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.inputsystem": "1.1.1",
+        "com.unity.cloud.gltfast": "6.12.1"
+      },
+      "hash": "66cac7dc522b6fcb6794e43810be8fc7640f8f91"
     },
     "com.unity.2d.animation": {
       "version": "9.2.0",
@@ -120,6 +130,15 @@
       "dependencies": {
         "com.unity.mathematics": "1.2.1",
         "com.unity.modules.jsonserialize": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.cinemachine": {
+      "version": "2.10.3",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.test-framework": "1.1.31"
       },
       "url": "https://packages.unity.com"
     },

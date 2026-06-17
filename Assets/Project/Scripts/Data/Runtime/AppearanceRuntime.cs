@@ -27,6 +27,11 @@ public class AppearanceRuntime : IModuleRuntime, IHandleEvent<PrimaryActionEvent
         var equipment = e.actor.GetModule<EquipmentRuntime>();
         if (equipment == null) return;
 
+        // Hand item (vd: cuốc, rìu...) đã được EquipHand gắn từ hotbar selection.
+        // Nếu equip lại ở đây, EquipmentRuntime.Equip() sẽ coi nó là "item cũ" và
+        // Pickup lại chính nó mỗi lần dùng tool → spam thông báo nhặt giả.
+        if (equipment.IsEquipped(e.item)) return;
+
         equipment.Equip(e.item);
     }
 

@@ -32,10 +32,19 @@ public abstract class ToolRuntime : IModuleRuntime, IHandleEvent<PrimaryActionEv
         var actorGO = e.actor.Owner?.GameObject;
         if (actorGO == null) return;
 
-        if (!Validate(actorGO, e)) return;
+        // ── Stamina check tập trung qua StaminaCostModule của item ────────────
+        var staminaRuntime = e.item?.GetModule<StaminaCostRuntime>();
+        if (staminaRuntime != null && !staminaRuntime.CanAfford(e.actor))
+        {
+            Debug.Log($"[ToolRuntime] Không đủ thể lực để dùng {_data.toolType}.");
+            return;
+        }
 
-        // Lấy trigger name (default = ToolType.ToString())
-        var trigger = _data.GetAnimTrigger();
+        if (!Validate(actorGO, e))
+            return;
+
+        // Lấy trigger name phù hợp với action đã validate
+        var trigger = GetAnimationTrigger(e);
 
         // Tìm bridge trên actor → play animation
         var bridge = actorGO.GetComponent<ToolActionBridge>();
@@ -55,12 +64,16 @@ public abstract class ToolRuntime : IModuleRuntime, IHandleEvent<PrimaryActionEv
         if (actorGO == null) return;
 
         Execute(actorGO, e.actor, e.item);
+
+        // ── Trừ stamina sau khi thao tác thành công ───────────────────────────
+        e.item?.GetModule<StaminaCostRuntime>()?.Spend(e.actor);
     }
 
     // ── Abstract ──────────────────────────────────────────────────────────────
 
     protected abstract bool Validate(GameObject actorGO, PrimaryActionEvent e);
     protected abstract void Execute(GameObject actorGO, EntityRuntime actor, EntityRuntime item);
+    protected virtual string GetAnimationTrigger(PrimaryActionEvent e) => _data.GetAnimTrigger();
 
     // ── Save / Load ───────────────────────────────────────────────────────────
 
@@ -107,27 +120,29 @@ public abstract class DamageToolRuntime : ToolRuntime
 
         List<EntityRuntime> targets = EntityScanSystem.GetAll(actorGO, range);
         if (targets == null || targets.Count == 0)
-        {
-            Debug.Log($"[{GetType().Name}] Không có target trong tầm.");
             return;
-        }
 
         if (hitAllTargets)
         {
             foreach (var target in targets)
-                ApplyDamage(target, item, damage);
+                ApplyDamage(target, actor, item, damage);
             return;
         }
 
         var nearest = FindNearest(actorGO.transform.position, targets);
         if (nearest != null)
-            ApplyDamage(nearest, item, damage);
+            ApplyDamage(nearest, actor, item, damage);
     }
 
-    private void ApplyDamage(EntityRuntime target, EntityRuntime item, float damage)
+    private void ApplyDamage(EntityRuntime target, EntityRuntime actor, EntityRuntime sourceItem, float damage)
     {
         if (target == null) return;
-        target.TriggerEvent(new TakeDamageEvent(item, damage, damageToolType));
+        target.TriggerEvent(new TakeDamageEvent(
+            actor,
+            damage,
+            damageToolType,
+            Mathf.Max(1, _data.toolTier),
+            sourceItem));
     }
 
     private static EntityRuntime FindNearest(Vector3 from, List<EntityRuntime> targets)

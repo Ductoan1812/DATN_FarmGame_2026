@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8393fbdfdb650e5418aad1c82ae5b8b5, type: 3}
+  m_Name: item_tool_hoe_t1
+  m_EditorClassIdentifier: 
+  id: item_tool_hoe_t1
+  keyName: item.tool.hoe.t1.name
+  descKey: item.tool.hoe.t1.desc
+  icon: {fileID: 325664127, guid: 163ba03f3b439ab48b5f238ac2b407f0, type: 3}
+  category: 1
+  maxStack: 1
+  buyPrice: 180
+  sellPrice: 80
+  baseStats:
+    baseStats:
+    - statType: 5
+      value: 2
+    - statType: 9
+      value: 1
+    - statType: 10
+      value: 1
+    - statType: 11
+      value: 0.5
+    - statType: 12
+      value: 0
+  placementRule:
+    occupyLayer: 0
+    requireTags: 0
+    provideTags: 0
+    blockLayers: 
+  modules:
+  - rid: 5278706062832435204
+  - rid: 5278706062832435205
+  - rid: 5278706062832435206
+  - rid: 5278706062832435207
+  references:
+    version: 2
+    RefIds:
+    - rid: 5278706062832435204
+      type: {class: ToolModule, ns: , asm: Assembly-CSharp}
+      data:
+        toolType: 1
+        toolTier: 1
+        animTrigger: Hoe
+        refillAnimTrigger: 
+    - rid: 5278706062832435205
+      type: {class: StaminaCostModule, ns: , asm: Assembly-CSharp}
+      data:
+        cost: 2
+    - rid: 5278706062832435206
+      type: {class: ToolRequirementModule, ns: , asm: Assembly-CSharp}
+      data:
+        requiredToolType: 1
+        minimumToolTier: 1
+        wrongToolPenalty: 0
+        blockDamageIfWrongTool: 1
+        blockDamageIfBelowTier: 1
+    - rid: 5278706062832435207
+      type: {class: AppearanceModule, ns: , asm: Assembly-CSharp}
+      data:
+        spriteId: Art.Equipment.MeleeWeapon1H.Hoe
+        equipmentPart: 5

@@ -9,6 +9,13 @@ public sealed class InteractionContext
     public EntityRuntime Target { get; }
     public bool HasOptions => options.Count > 0;
 
+    /// <summary>
+    /// Set true khi module tự xử lý hành động trực tiếp (không thêm option vào dialog).
+    /// VD: ScenePortalRuntime gọi RequestTransition ngay, không cần mở dialog.
+    /// ActionRuntime sẽ bỏ qua warning "không có option" khi flag này là true.
+    /// </summary>
+    public bool IsHandledDirectly { get; set; }
+
     public InteractionContext(EntityRuntime interactor, EntityRuntime target)
     {
         Interactor = interactor;

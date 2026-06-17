@@ -7,6 +7,9 @@
 [System.Serializable]
 public class MortalModule : IModuleData
 {
+    [UnityEngine.Min(0f)]
+    public float destroyDelay;
+
     public override IModuleRuntime CreateRuntime()
     {
         return new MortalRuntime(this);

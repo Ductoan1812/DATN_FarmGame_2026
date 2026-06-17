@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8393fbdfdb650e5418aad1c82ae5b8b5, type: 3}
+  m_Name: Sprinkler_T2
+  m_EditorClassIdentifier: 
+  id: sprinkler_t2
+  keyName: mvp.sprinkler.t2.name
+  descKey: mvp.sprinkler.t2.desc
+  icon: {fileID: 21300000, guid: a1ccdcd8baee8674a965dbb970100a6b, type: 3}
+  category: 9
+  maxStack: 1
+  buyPrice: -1
+  sellPrice: 0
+  baseStats:
+    baseStats: []
+  placementRule:
+    occupyLayer: 1
+    requireTags: 0
+    provideTags: 0
+    blockLayers: 
+  modules:
+  - rid: 8196223221319336051
+  references:
+    version: 2
+    RefIds:
+    - rid: 8196223221319336051
+      type: {class: SprinklerModule, ns: , asm: Assembly-CSharp}
+      data:
+        waterRadius: 2

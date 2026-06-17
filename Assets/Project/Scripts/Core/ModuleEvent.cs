@@ -13,17 +13,41 @@ public class NextDayEvent : IGameEvent
 {
 }
 
+public class SeasonChangedEvent : IGameEvent
+{
+    public readonly int year;
+    public readonly Season season;
+
+    public SeasonChangedEvent(int year, Season season)
+    {
+        this.year = year;
+        this.season = season;
+    }
+}
+
 public class TakeDamageEvent : IGameEvent
 {
     public readonly EntityRuntime attacker;
     public readonly float damage;
     public readonly ToolType toolType;
+    public readonly int toolTier;
+    public readonly EntityRuntime sourceItem;
+    public readonly bool isCrit;
 
-    public TakeDamageEvent(EntityRuntime attacker, float damage, ToolType toolType = ToolType.None)
+    public TakeDamageEvent(
+        EntityRuntime attacker,
+        float damage,
+        ToolType toolType = ToolType.None,
+        int toolTier = 1,
+        EntityRuntime sourceItem = null,
+        bool isCrit = false)
     {
         this.attacker = attacker;
         this.damage   = damage;
         this.toolType = toolType;
+        this.toolTier = toolTier;
+        this.sourceItem = sourceItem;
+        this.isCrit = isCrit;
     }
 }
 
@@ -69,7 +93,15 @@ public class SecondaryActionEvent : IGameEvent
 public class DieEvent : IGameEvent
 {
     public readonly EntityRuntime entity;
-    public DieEvent(EntityRuntime entity) { this.entity = entity; }
+    public readonly EntityRuntime killer;
+    public readonly bool suppressWorldDrops;
+
+    public DieEvent(EntityRuntime entity, EntityRuntime killer = null, bool suppressWorldDrops = false)
+    {
+        this.entity = entity;
+        this.killer = killer;
+        this.suppressWorldDrops = suppressWorldDrops;
+    }
 }
 
 /// <summary>

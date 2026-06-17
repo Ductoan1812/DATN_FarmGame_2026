@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using TMPro;
 using UnityEngine;
 
 public class LocalizationManager : MonoBehaviour
@@ -13,7 +12,6 @@ public class LocalizationManager : MonoBehaviour
 
     [Header("Language")]
     [SerializeField] private Language currentLanguage = Language.Vi;
-    [SerializeField] private bool detectSystemLanguageOnStart = true;
 
     [Header("Resources")]
     [SerializeField] private string resourcesFolder = "Localization";
@@ -23,6 +21,10 @@ public class LocalizationManager : MonoBehaviour
 
     private readonly Dictionary<string, string> localizedTexts = new Dictionary<string, string>();
     private readonly HashSet<string> missingKeys = new HashSet<string>();
+
+    private const string PlayerPrefsLangKey = "settings_language";
+    private const string MissingKeysFolderName = "MissingKeys";
+    private const string MissingVietnameseKeysFileName = "vi_missing_keys.txt";
 
     private void Awake()
     {
@@ -38,8 +40,9 @@ public class LocalizationManager : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
 
-        if (detectSystemLanguageOnStart)
-            currentLanguage = MapSystemLanguage(Application.systemLanguage);
+        // Ưu tiên: 1) PlayerPrefs đã lưu, 2) default Vi (từ serialized field)
+        if (PlayerPrefs.HasKey(PlayerPrefsLangKey))
+            currentLanguage = PlayerPrefs.GetInt(PlayerPrefsLangKey, 0) == 1 ? Language.En : Language.Vi;
 
         LoadCurrentLanguage();
     }
@@ -123,7 +126,7 @@ public class LocalizationManager : MonoBehaviour
     {
         var resourcesPath = Path.Combine(Application.dataPath, "Resources");
         var localizationPath = Path.Combine(resourcesPath, "Localization");
-        var missingPath = Path.Combine(localizationPath, "MissingKeys");
+        var missingPath = Path.Combine(localizationPath, MissingKeysFolderName);
 
         if (!Directory.Exists(resourcesPath))
             Directory.CreateDirectory(resourcesPath);
@@ -135,12 +138,20 @@ public class LocalizationManager : MonoBehaviour
 
     private void WriteMissingKeyFile()
     {
-        var filePath = Path.Combine(Application.dataPath, "Resources", "Localization", "MissingKeys",
+        var missingKeysDirectory = Path.Combine(Application.dataPath, "Resources", "Localization", MissingKeysFolderName);
+        var currentLanguageFilePath = Path.Combine(
+            missingKeysDirectory,
             $"{currentLanguage.ToString().ToLowerInvariant()}_missing_keys.txt");
+        var vietnameseFilePath = Path.Combine(missingKeysDirectory, MissingVietnameseKeysFileName);
+        var orderedKeys = new List<string>(missingKeys);
+        orderedKeys.Sort(StringComparer.Ordinal);
 
         try
         {
-            File.WriteAllLines(filePath, missingKeys);
+            File.WriteAllLines(currentLanguageFilePath, orderedKeys);
+
+            if (!string.Equals(currentLanguageFilePath, vietnameseFilePath, StringComparison.OrdinalIgnoreCase))
+                File.WriteAllLines(vietnameseFilePath, orderedKeys);
         }
         catch (Exception ex)
         {
@@ -148,14 +159,4 @@ public class LocalizationManager : MonoBehaviour
         }
     }
 
-    private static Language MapSystemLanguage(SystemLanguage language)
-    {
-        switch (language)
-        {
-            case SystemLanguage.Vietnamese:
-                return Language.Vi;
-            default:
-                return Language.En;
-        }
-    }
 }

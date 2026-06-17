@@ -17,6 +17,8 @@ public class HealthRuntime : IModuleRuntime, IHandleEvent<SpawnedEvent>, IHandle
 {
     private readonly HealthModule _data;
     private EntityRuntime _entity;
+    private EntityRuntime _lastAttacker;
+    private bool _isDead;
 
     /// <summary>Có thể tắt tạm thời từ bên ngoài (invincibility frame, cutscene...).</summary>
     public bool CanTakeDamage
@@ -39,6 +41,7 @@ public class HealthRuntime : IModuleRuntime, IHandleEvent<SpawnedEvent>, IHandle
     public void Handle(SpawnedEvent e)
     {
         _entity = e.entity;
+        _isDead = false;
         float maxHp = _entity.stats.Get(StatType.MaxHp);
         if (maxHp > 0)
             _entity.stats.Set(StatType.Hp, maxHp);
@@ -49,19 +52,50 @@ public class HealthRuntime : IModuleRuntime, IHandleEvent<SpawnedEvent>, IHandle
     public void Handle(TakeDamageEvent e)
     {
         if (_entity == null) return;
-        if (!CanTakeDamage) return;
+        if (_isDead) return;
+        float damageMultiplier = 1f;
+        var toolRequirement = _entity.GetModule<ToolRequirementRuntime>();
+        if (toolRequirement != null && !toolRequirement.TryResolveDamage(e, out damageMultiplier, out var requirementReason))
+        {
+            Debug.Log($"[HealthRuntime] {_entity.entityData?.keyName} chặn sát thương: {requirementReason}");
+            return;
+        }
+
+        var harvest = _entity.GetModule<HarvestRuntime>();
+        if (harvest != null && harvest.TryHandleDamageHarvest(e))
+            return;
+
+        if (!CanTakeDamage)
+            return;
+        _lastAttacker = e.attacker;
 
         // Tính giảm dame theo Defense: finalDamage = damage - Defense (tối thiểu 1)
         float defense     = _entity.stats.Get(StatType.Defense);
-        float finalDamage = Mathf.Max(1f, e.damage - defense);
+        float incomingDamage = Mathf.Max(0f, e.damage * Mathf.Max(0f, damageMultiplier));
+        if (incomingDamage <= 0f)
+            return;
+
+        float finalDamage = Mathf.Max(1f, incomingDamage - defense);
 
         float currentHp = _entity.stats.Get(StatType.Hp);
         float newHp     = Mathf.Max(0f, currentHp - finalDamage);
         _entity.stats.Set(StatType.Hp, newHp);
 
+        var ownerGo = _entity.Owner?.GameObject;
+        GameManager.Instance?.EventBus?.Publish(new DamageAppliedPublish(
+            _entity,
+            e.attacker,
+            e.sourceItem,
+            ownerGo != null ? ownerGo.transform.position : Vector3.zero,
+            e.damage,
+            finalDamage,
+            currentHp,
+            newHp,
+            e.isCrit));
+
         var attackerName = e.attacker?.entityData?.keyName ?? "Unknown";
         Debug.Log($"[HealthRuntime] {_entity.entityData?.keyName} nhận {finalDamage:F1} dame " +
-                  $"(raw={e.damage:F1}, def={defense:F1}) từ {attackerName}. " +
+                  $"(raw={e.damage:F1}, mul={damageMultiplier:F2}, def={defense:F1}) từ {attackerName}. " +
                   $"HP: {newHp:F1}/{_entity.stats.Get(StatType.MaxHp):F1}");
 
         if (newHp <= 0f)
@@ -72,9 +106,16 @@ public class HealthRuntime : IModuleRuntime, IHandleEvent<SpawnedEvent>, IHandle
 
     private void Die()
     {
+        if (_isDead) return;
+        _isDead = true;
         Debug.Log($"[HealthRuntime] {_entity.id} đã chết.");
+        var ownerGo = _entity.Owner?.GameObject;
+        GameManager.Instance?.EventBus?.Publish(new EntityDiedPublish(
+            _entity,
+            _lastAttacker,
+            ownerGo != null ? ownerGo.transform.position : Vector3.zero));
         OnDied?.Invoke(_entity);
-        _entity.TriggerEvent(new DieEvent(_entity));
+        _entity.TriggerEvent(new DieEvent(_entity, _lastAttacker));
         // Việc Despawn/Destroy/Respawn/Drop do các module khác xử lý.
     }
 

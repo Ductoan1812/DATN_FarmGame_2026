@@ -13,6 +13,9 @@ using UnityEngine;
 /// <summary>Backward compatible — StageObject và các system cũ vẫn dùng được.</summary>
 public struct NextDayEventPublish { }
 
+/// <summary>Player vừa đi ngủ — UI hiển thị fade đen ngắn che lúc chuyển ngày.</summary>
+public struct SleepTransitionPublish { }
+
 /// <summary>Sang ngày mới — chứa đầy đủ context (year, season, day).</summary>
 public struct DayChangedPublish
 {
@@ -67,6 +70,15 @@ public struct GameHourChangedPublish
     }
 }
 
+// ── Weather ───────────────────────────────────────────────
+
+/// <summary>Thời tiết thay đổi (Sunny → Rainy, v.v.).</summary>
+public struct WeatherChangedPublish
+{
+    public readonly WeatherType weather;
+    public WeatherChangedPublish(WeatherType weather) { this.weather = weather; }
+}
+
 // ── Boot / Save-Load ──────────────────────────────────────
 
 /// <summary>Phase 1: SaveLoadManager đã load/tạo xong EntityRegistry (data sẵn sàng).</summary>
@@ -105,6 +117,31 @@ public struct SaveGameRequestPublish { }
 /// <summary>Yêu cầu load game.</summary>
 public struct LoadGameRequestPublish { }
 
+/// <summary>Hiển thị màn hình loading khi chuyển scene.</summary>
+public struct LoadingScreenShowPublish
+{
+    public readonly string targetSceneName;
+
+    public LoadingScreenShowPublish(string targetSceneName)
+    {
+        this.targetSceneName = targetSceneName;
+    }
+}
+
+/// <summary>Cập nhật tiến độ loading scene, giá trị 0..1.</summary>
+public struct LoadingScreenProgressPublish
+{
+    public readonly float progress;
+
+    public LoadingScreenProgressPublish(float progress)
+    {
+        this.progress = progress;
+    }
+}
+
+/// <summary>Ẩn màn hình loading sau khi scene mới đã restore xong.</summary>
+public struct LoadingScreenHidePublish { }
+
 // ══════════════════════════════════════════════════════════
 //  UI Events — PlayerBridge / Service publish, UI subscribe.
 // ══════════════════════════════════════════════════════════
@@ -117,6 +154,148 @@ public struct StatsChangedPublish
     public readonly float newValue;
     public StatsChangedPublish(string entityId, StatType statType, float newValue)
     { this.entityId = entityId; this.statType = statType; this.newValue = newValue; }
+}
+
+public struct ProgressionChangedPublish
+{
+    public readonly EntityRuntime target;
+    public readonly ExpSourceType source;
+    public readonly EntityRuntime sourceEntity;
+    public readonly int amount;
+    public readonly int oldLevel;
+    public readonly int newLevel;
+    public readonly int exp;
+    public readonly int maxExp;
+
+    public ProgressionChangedPublish(
+        EntityRuntime target,
+        ExpSourceType source,
+        EntityRuntime sourceEntity,
+        int amount,
+        int oldLevel,
+        int newLevel,
+        int exp,
+        int maxExp)
+    {
+        this.target = target;
+        this.source = source;
+        this.sourceEntity = sourceEntity;
+        this.amount = amount;
+        this.oldLevel = oldLevel;
+        this.newLevel = newLevel;
+        this.exp = exp;
+        this.maxExp = maxExp;
+    }
+}
+
+public struct LevelUpPublish
+{
+    public readonly EntityRuntime target;
+    public readonly int level;
+
+    public LevelUpPublish(EntityRuntime target, int level)
+    {
+        this.target = target;
+        this.level = level;
+    }
+}
+
+public struct DamageAppliedPublish
+{
+    public readonly EntityRuntime target;
+    public readonly EntityRuntime attacker;
+    public readonly EntityRuntime sourceItem;
+    public readonly Vector3 worldPosition;
+    public readonly float rawDamage;
+    public readonly float finalDamage;
+    public readonly float hpBefore;
+    public readonly float hpAfter;
+    public readonly bool isCrit;
+
+    public DamageAppliedPublish(
+        EntityRuntime target,
+        EntityRuntime attacker,
+        EntityRuntime sourceItem,
+        Vector3 worldPosition,
+        float rawDamage,
+        float finalDamage,
+        float hpBefore,
+        float hpAfter,
+        bool isCrit)
+    {
+        this.target = target;
+        this.attacker = attacker;
+        this.sourceItem = sourceItem;
+        this.worldPosition = worldPosition;
+        this.rawDamage = rawDamage;
+        this.finalDamage = finalDamage;
+        this.hpBefore = hpBefore;
+        this.hpAfter = hpAfter;
+        this.isCrit = isCrit;
+    }
+}
+
+public struct EntityDiedPublish
+{
+    public readonly EntityRuntime entity;
+    public readonly EntityRuntime killer;
+    public readonly Vector3 worldPosition;
+
+    public EntityDiedPublish(EntityRuntime entity, EntityRuntime killer, Vector3 worldPosition)
+    {
+        this.entity = entity;
+        this.killer = killer;
+        this.worldPosition = worldPosition;
+    }
+}
+
+public struct EnemyAttackStartedPublish
+{
+    public readonly EntityRuntime enemy;
+    public readonly Vector3 worldPosition;
+
+    public EnemyAttackStartedPublish(EntityRuntime enemy, Vector3 worldPosition)
+    {
+        this.enemy = enemy;
+        this.worldPosition = worldPosition;
+    }
+}
+
+public struct PlayerDeathPublish
+{
+    public readonly EntityRuntime player;
+
+    public PlayerDeathPublish(EntityRuntime player)
+    {
+        this.player = player;
+    }
+}
+
+public struct ToastPublish
+{
+    public readonly string message;
+    public readonly float duration;
+
+    public ToastPublish(string message, float duration = 2f)
+    {
+        this.message = message;
+        this.duration = duration;
+    }
+}
+
+/// <summary>Player nhặt được vật phẩm. InventoryService publish sau khi Pickup thành công.</summary>
+public struct ItemPickedUpPublish
+{
+    public readonly string itemKeyName;
+    public readonly Sprite icon;
+    public readonly int amount;
+
+    public ItemPickedUpPublish(string itemKeyName, Sprite icon, int amount)
+    {
+        this.itemKeyName = itemKeyName;
+        this.icon = icon;
+        this.amount = amount;
+    }
 }
 
 /// <summary>Inventory thay đổi (pickup, consume, swap...). InventoryService publish.</summary>
@@ -134,6 +313,24 @@ public struct InventoryChangedPublish
 /// </summary>
 public struct InventoryVisualRefreshRequestPublish { }
 
+public readonly struct SlotResourceMeterData
+{
+    public static SlotResourceMeterData None => new(false, 0, 0, Color.clear);
+
+    public readonly bool hasMeter;
+    public readonly int current;
+    public readonly int max;
+    public readonly Color fillColor;
+
+    public SlotResourceMeterData(bool hasMeter, int current, int max, Color fillColor)
+    {
+        this.hasMeter = hasMeter;
+        this.current = current;
+        this.max = max;
+        this.fillColor = fillColor;
+    }
+}
+
 /// <summary>
 /// Nội dung 1 slot hotbar thay đổi (icon, amount).
 /// PlayerBridge publish chỉ cho slot thực sự thay đổi.
@@ -143,8 +340,14 @@ public struct HotbarSlotChangedPublish
     public readonly int    index;
     public readonly Sprite icon;
     public readonly int    amount;
-    public HotbarSlotChangedPublish(int index, Sprite icon, int amount)
-    { this.index = index; this.icon = icon; this.amount = amount; }
+    public readonly SlotResourceMeterData meter;
+    public HotbarSlotChangedPublish(int index, Sprite icon, int amount, SlotResourceMeterData meter = default)
+    {
+        this.index = index;
+        this.icon = icon;
+        this.amount = amount;
+        this.meter = meter;
+    }
 }
 
 /// <summary>
@@ -166,8 +369,14 @@ public struct BackpackSlotChangedPublish
     public readonly int    index;
     public readonly Sprite icon;
     public readonly int    amount;
-    public BackpackSlotChangedPublish(int index, Sprite icon, int amount)
-    { this.index = index; this.icon = icon; this.amount = amount; }
+    public readonly SlotResourceMeterData meter;
+    public BackpackSlotChangedPublish(int index, Sprite icon, int amount, SlotResourceMeterData meter = default)
+    {
+        this.index = index;
+        this.icon = icon;
+        this.amount = amount;
+        this.meter = meter;
+    }
 }
 
 /// <summary>
@@ -177,6 +386,17 @@ public struct BackpackSlotSelectedRequestPublish
 {
     public readonly int slotIndex;
     public BackpackSlotSelectedRequestPublish(int slotIndex)
+    { this.slotIndex = slotIndex; }
+}
+
+/// <summary>
+/// UI request preview 1 slot backpack khi con trỏ hover.
+/// Không thay đổi slot đang chọn.
+/// </summary>
+public struct BackpackSlotPreviewRequestPublish
+{
+    public readonly int slotIndex;
+    public BackpackSlotPreviewRequestPublish(int slotIndex)
     { this.slotIndex = slotIndex; }
 }
 
@@ -211,6 +431,18 @@ public struct BackpackSplitRequestPublish
     { this.slotIndex = slotIndex; this.splitAmount = splitAmount; }
 }
 
+public struct InventoryUseRequestPublish
+{
+    public readonly InventoryType inventoryType;
+    public readonly int slotIndex;
+
+    public InventoryUseRequestPublish(InventoryType inventoryType, int slotIndex)
+    {
+        this.inventoryType = inventoryType;
+        this.slotIndex = slotIndex;
+    }
+}
+
 /// <summary>
 /// UI request drop item tại slot ra world.
 /// BackpackUI publish (khi nhấn Btn_Drop) hoặc DraggableSlot publish (khi kéo ra ngoài).
@@ -241,6 +473,7 @@ public struct StatDisplay
 public struct BackpackItemInfoChangedPublish
 {
     public readonly int slotIndex;
+    public readonly bool isPreview;
     public readonly bool isEmpty;
     public readonly Sprite icon;
     public readonly int amount;
@@ -248,10 +481,12 @@ public struct BackpackItemInfoChangedPublish
     public readonly string descKey;
     public readonly string categoryKey;
     public readonly int sellPrice;
+    public readonly bool canUse;
     public readonly StatDisplay[] stats;
 
     public BackpackItemInfoChangedPublish(
         int slotIndex,
+        bool isPreview,
         bool isEmpty,
         Sprite icon,
         int amount,
@@ -259,9 +494,11 @@ public struct BackpackItemInfoChangedPublish
         string descKey,
         string categoryKey,
         int sellPrice,
+        bool canUse,
         StatDisplay[] stats)
     {
         this.slotIndex = slotIndex;
+        this.isPreview = isPreview;
         this.isEmpty = isEmpty;
         this.icon = icon;
         this.amount = amount;
@@ -269,6 +506,7 @@ public struct BackpackItemInfoChangedPublish
         this.descKey = descKey;
         this.categoryKey = categoryKey;
         this.sellPrice = sellPrice;
+        this.canUse = canUse;
         this.stats = stats;
     }
 }
@@ -369,6 +607,16 @@ public struct InteractionOptionsReadyPublish
     }
 }
 
+public struct InteractionPreviewChangedPublish
+{
+    public readonly InteractionPreviewData preview;
+
+    public InteractionPreviewChangedPublish(InteractionPreviewData preview)
+    {
+        this.preview = preview;
+    }
+}
+
 public struct DialogueViewPublish
 {
     public readonly DialogueViewData viewData;
@@ -457,6 +705,63 @@ public struct ShopViewPublish
     }
 }
 
+public sealed class StorageViewData
+{
+    public EntityRuntime Interactor { get; }
+    public EntityRuntime StorageOwner { get; }
+    public InventoryType InventoryType { get; }
+
+    public StorageViewData(EntityRuntime interactor, EntityRuntime storageOwner, InventoryType inventoryType)
+    {
+        Interactor = interactor;
+        StorageOwner = storageOwner;
+        InventoryType = inventoryType;
+    }
+}
+
+public readonly struct StorageViewPublish
+{
+    public readonly StorageViewData viewData;
+
+    public StorageViewPublish(StorageViewData viewData)
+    {
+        this.viewData = viewData;
+    }
+}
+
+public sealed class ProcessorViewData
+{
+    public EntityRuntime Interactor { get; }
+    public EntityRuntime Station { get; }
+    public InventoryType InputInventoryType { get; }
+    public InventoryType OutputInventoryType { get; }
+    public IReadOnlyList<ProcessorRecipeEntry> Recipes { get; }
+
+    public ProcessorViewData(
+        EntityRuntime interactor,
+        EntityRuntime station,
+        InventoryType inputInventoryType,
+        InventoryType outputInventoryType,
+        IReadOnlyList<ProcessorRecipeEntry> recipes)
+    {
+        Interactor = interactor;
+        Station = station;
+        InputInventoryType = inputInventoryType;
+        OutputInventoryType = outputInventoryType;
+        Recipes = recipes;
+    }
+}
+
+public readonly struct ProcessorViewPublish
+{
+    public readonly ProcessorViewData viewData;
+
+    public ProcessorViewPublish(ProcessorViewData viewData)
+    {
+        this.viewData = viewData;
+    }
+}
+
 public struct ShopTransactionResultPublish
 {
     public readonly EntityRuntime customer;
@@ -469,4 +774,19 @@ public struct ShopTransactionResultPublish
         this.merchant = merchant;
         this.result = result;
     }
+}
+
+// ── Narrative ─────────────────────────────────────────────
+
+/// <summary>Story event được unlock.</summary>
+public struct StoryEventUnlockedPublish
+{
+    public readonly StoryEventData data;
+    public StoryEventUnlockedPublish(StoryEventData data) { this.data = data; }
+}
+
+public struct ResearchUnlockedPublish
+{
+    public readonly ResearchData data;
+    public ResearchUnlockedPublish(ResearchData data) { this.data = data; }
 }

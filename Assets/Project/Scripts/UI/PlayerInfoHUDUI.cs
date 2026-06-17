@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -33,7 +34,8 @@ public class PlayerInfoHUDUI : MonoBehaviour
     private void Awake()
     {
         AutoFindRefs();
-        HideAll();
+        // Không HideAll() ở đây — để HUD container visible, chỉ hide các stat bar khi chưa có player
+        HideStatBarsOnly();
     }
 
     private void OnEnable()
@@ -48,6 +50,10 @@ public class PlayerInfoHUDUI : MonoBehaviour
         TrySubscribe();
         TryBindPlayer();
         RefreshAll();
+
+        // Retry sau 1 frame — đảm bảo bắt được PlayerReady khi GameManager boot muộn hơn UIRoot
+        if (playerEntity == null)
+            StartCoroutine(RetryBindAfterDelay(1));
     }
 
     private void Update()
@@ -76,6 +82,24 @@ public class PlayerInfoHUDUI : MonoBehaviour
     {
         TryBindPlayer();
         RefreshAll();
+
+        // Nếu vẫn chưa bind được (player spawn async), retry thêm vài frame
+        if (playerEntity == null)
+            StartCoroutine(RetryBindAfterDelay(3));
+    }
+
+    private IEnumerator RetryBindAfterDelay(int frames)
+    {
+        for (int i = 0; i < frames; i++)
+            yield return null;
+
+        TrySubscribe();
+        TryBindPlayer();
+        if (playerEntity != null)
+        {
+            RefreshAll();
+            Debug.Log("[PlayerInfoHUDUI] Late bind success after " + frames + " frames.");
+        }
     }
 
     private void OnStatsChanged(StatsChangedPublish e)
@@ -88,9 +112,9 @@ public class PlayerInfoHUDUI : MonoBehaviour
             case StatType.MaxHp:
                 RefreshBar(hpInfo, hpFill, hpText, StatType.Hp, StatType.MaxHp);
                 break;
-            case StatType.Mp:
-            case StatType.MaxMp:
-                RefreshBar(mpInfo, mpFill, mpText, StatType.Mp, StatType.MaxMp);
+            case StatType.Stamina:
+            case StatType.MaxStamina:
+                RefreshBar(mpInfo, mpFill, mpText, StatType.Stamina, StatType.MaxStamina);
                 break;
             case StatType.Exp:
             case StatType.MaxExp:
@@ -138,7 +162,7 @@ public class PlayerInfoHUDUI : MonoBehaviour
         }
 
         RefreshBar(hpInfo, hpFill, hpText, StatType.Hp, StatType.MaxHp);
-        RefreshBar(mpInfo, mpFill, mpText, StatType.Mp, StatType.MaxMp);
+        RefreshBar(mpInfo, mpFill, mpText, StatType.Stamina, StatType.MaxStamina);
         RefreshBar(expInfo, expFill, expText, StatType.Exp, StatType.MaxExp);
         RefreshLevel();
         RefreshRootVisibility();
@@ -202,6 +226,19 @@ public class PlayerInfoHUDUI : MonoBehaviour
         if (expInfo != null) expInfo.SetActive(false);
         if (levelInfo != null) levelInfo.SetActive(false);
         SetRootVisible(false);
+    }
+
+    /// <summary>
+    /// Chỉ ẩn các stat bars (hp/mp/exp/level), KHÔNG ẩn root container.
+    /// Dùng trong Awake để HUD background vẫn hiển thị trong khi chờ player bind.
+    /// </summary>
+    private void HideStatBarsOnly()
+    {
+        if (hpInfo != null) hpInfo.SetActive(false);
+        if (mpInfo != null) mpInfo.SetActive(false);
+        if (expInfo != null) expInfo.SetActive(false);
+        if (levelInfo != null) levelInfo.SetActive(false);
+        // Root vẫn visible — UIController sẽ quản lý EnsureHudVisible
     }
 
     private void AutoFindRefs()

@@ -29,6 +29,7 @@ public class EntitySaveData
     public string id;
     public string entityDataId;
     public int amount;
+    public int quality = 1;
     public StatSaveData stats;
     public ModuleSaveData[] modules;
 }

@@ -106,3 +106,30 @@ InitTestScene*.unity*
 
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
+
+# Local docs and AI/tooling config should stay out of the remote repo
+/Docs/
+/Assets/Project/Docs/
+/.claude/
+/.codex/
+/.kiro/
+/.codegraph/
+/.aura/
+/.coplay/
+/Assets/.Aura/
+/Assets/.coplayrules.md
+/Packages/Aura/
+/Packages/Coplay/
+/Assets/Project/Scenes/Coreplay/FarmScene1.unity
+/Assets/Project/Scenes/Coreplay/FarmScene1.unity.meta
+/Assets/Resources/Localization/MissingKeys/
+/tools/
+
+# AI workflow and generated assets — không commit lên GitHub
+/.ai-workflow/
+/.codex-remote-attachments/
+/GeneratedTilesets/
+/SpriteSheets/
+/curves.json
+/curves_fix.json
+/curves_reset.json

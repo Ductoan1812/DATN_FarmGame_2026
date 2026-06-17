@@ -52,6 +52,7 @@ public class InventoryService
         {
             Debug.Log($"[InventoryService] Pickup tổng: {receiverName} nhặt {itemName} x{totalReceived}");
             PublishChanged(receiverEntity);
+            PublishPickedUp(pickupEntity.entityData, totalReceived);
         }
         else
         {
@@ -265,6 +266,13 @@ public class InventoryService
         if (eb == null || entity == null) return;
         foreach (var inv in GetAllInventories(entity))
             eb.Publish(new InventoryChangedPublish(entity.id, inv.Type));
+    }
+
+    private void PublishPickedUp(EntityData data, int amount)
+    {
+        var eb = GameManager.Instance?.EventBus;
+        if (eb == null || data == null) return;
+        eb.Publish(new ItemPickedUpPublish(data.keyName, data.icon, amount));
     }
 
   

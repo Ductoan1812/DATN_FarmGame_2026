@@ -13,6 +13,9 @@ public static class QuestService
         if (player == null || graph == null || string.IsNullOrWhiteSpace(graph.id))
             return null;
 
+        if (!UnlockService.IsUnlocked(player, graph.visibilityRequirement))
+            return null;
+
         var log = player.GetModule<QuestLogRuntime>();
         var state = log?.GetState(graph.id) ?? QuestState.NotStarted;
 
@@ -76,8 +79,11 @@ public static class QuestService
             foreach (var objective in graph.objectives)
             {
                 if (objective == null || objective.requiredAmount <= 0) continue;
-                if (string.IsNullOrWhiteSpace(objective.requiredEntityDataId)) continue;
-                if (!inventoryService.Remove(objective.requiredEntityDataId, objective.requiredAmount, player))
+                if (!IsInventoryObjective(objective)) continue;
+
+                string targetId = ResolveObjectiveTargetId(objective);
+                if (string.IsNullOrWhiteSpace(targetId)) continue;
+                if (!inventoryService.Remove(targetId, objective.requiredAmount, player))
                     return false;
             }
         }
@@ -96,13 +102,25 @@ public static class QuestService
         if (graph.objectives == null || graph.objectives.Count == 0) return true;
 
         var inventoryService = GameManager.Instance?.InventoryService;
-        if (inventoryService == null) return false;
+        var log = player.GetModule<QuestLogRuntime>();
 
         foreach (var objective in graph.objectives)
         {
             if (objective == null || objective.requiredAmount <= 0) continue;
-            if (string.IsNullOrWhiteSpace(objective.requiredEntityDataId)) continue;
-            if (inventoryService.CountEntity(player, objective.requiredEntityDataId) < objective.requiredAmount)
+            int required = Mathf.Max(1, objective.requiredAmount);
+
+            if (IsInventoryObjective(objective))
+            {
+                if (inventoryService == null) return false;
+                string targetId = ResolveObjectiveTargetId(objective);
+                if (string.IsNullOrWhiteSpace(targetId)) continue;
+                if (inventoryService.CountEntity(player, targetId) < required)
+                    return false;
+                continue;
+            }
+
+            if (log == null) return false;
+            if (log.GetObjectiveProgress(graph.id, objective.id) < required)
                 return false;
         }
 
@@ -116,7 +134,8 @@ public static class QuestService
         foreach (var objective in graph.objectives)
         {
             if (objective == null || objective.requiredAmount <= 0) continue;
-            if (string.IsNullOrWhiteSpace(objective.requiredEntityDataId)) continue;
+            if (!IsInventoryObjective(objective)) continue;
+            if (string.IsNullOrWhiteSpace(ResolveObjectiveTargetId(objective))) continue;
             return true;
         }
 
@@ -139,6 +158,7 @@ public static class QuestService
     {
         var result = new List<QuestObjectiveViewData>();
         var inventoryService = GameManager.Instance?.InventoryService;
+        var log = player?.GetModule<QuestLogRuntime>();
 
         if (graph.objectives == null) return result;
 
@@ -146,8 +166,16 @@ public static class QuestService
         {
             if (objective == null) continue;
             int currentAmount = 0;
-            if (inventoryService != null && !string.IsNullOrWhiteSpace(objective.requiredEntityDataId))
-                currentAmount = inventoryService.CountEntity(player, objective.requiredEntityDataId);
+            if (IsInventoryObjective(objective))
+            {
+                string targetId = ResolveObjectiveTargetId(objective);
+                if (inventoryService != null && !string.IsNullOrWhiteSpace(targetId))
+                    currentAmount = inventoryService.CountEntity(player, targetId);
+            }
+            else if (log != null)
+            {
+                currentAmount = log.GetObjectiveProgress(graph.id, objective.id);
+            }
 
             result.Add(new QuestObjectiveViewData(
                 objective.id,
@@ -157,6 +185,22 @@ public static class QuestService
         }
 
         return result;
+    }
+
+    private static bool IsInventoryObjective(QuestObjectiveData objective)
+    {
+        return objective == null || objective.objectiveType == QuestObjectiveType.Inventory;
+    }
+
+    private static string ResolveObjectiveTargetId(QuestObjectiveData objective)
+    {
+        if (objective == null)
+            return string.Empty;
+
+        if (!string.IsNullOrWhiteSpace(objective.targetEntityDataId))
+            return objective.targetEntityDataId;
+
+        return objective.requiredEntityDataId;
     }
 
     private static void PublishState(EntityRuntime player, string questId, QuestState state)
@@ -173,6 +217,9 @@ public static class QuestService
             float currentMoney = player.stats.Get(StatType.Money);
             player.stats.Set(StatType.Money, currentMoney + graph.rewardMoney);
         }
+
+        if (graph.rewardExp > 0)
+            GameManager.Instance?.ProgressionService?.GrantExp(player, graph.rewardExp, ExpSourceType.Quest);
 
         if (graph.rewardItems == null || graph.rewardItems.Count == 0)
             return;

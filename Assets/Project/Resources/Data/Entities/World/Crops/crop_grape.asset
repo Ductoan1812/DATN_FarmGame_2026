@@ -1,0 +1,121 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8393fbdfdb650e5418aad1c82ae5b8b5, type: 3}
+  m_Name: crop_grape
+  m_EditorClassIdentifier: 
+  id: crop_grape
+  keyName: crop_grape
+  descKey: 
+  icon: {fileID: 0}
+  category: 9
+  maxStack: 1
+  buyPrice: 0
+  sellPrice: 0
+  baseStats:
+    baseStats:
+    - statType: 0
+      value: 10
+    - statType: 1
+      value: 10
+  placementRule:
+    occupyLayer: 2
+    requireTags: 5
+    provideTags: 0
+    blockLayers: 
+  modules:
+  - rid: 8196223262934696380
+  - rid: 8196223262934696381
+  - rid: 8196223262934696382
+  - rid: 8196223262934696383
+  - rid: 8196223262934696384
+  - rid: 8196223262934696385
+  - rid: 8196223262934696386
+  references:
+    version: 2
+    RefIds:
+    - rid: 8196223262934696380
+      type: {class: StageModule, ns: , asm: Assembly-CSharp}
+      data:
+        stages:
+        - sprite: {fileID: -677910149130181169, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
+          daysToGrow: 1
+          canHarvest: 0
+        - sprite: {fileID: -5798649982483931728, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
+          daysToGrow: 1
+          canHarvest: 0
+        - sprite: {fileID: -2624937403327479927, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
+          daysToGrow: 1
+          canHarvest: 0
+        - sprite: {fileID: -4354138261324737311, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
+          daysToGrow: 1
+          canHarvest: 0
+        - sprite: {fileID: -5534724462128333364, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
+          daysToGrow: 1
+          canHarvest: 0
+        - sprite: {fileID: -2542550434830598010, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
+          daysToGrow: 1
+          canHarvest: 0
+        - sprite: {fileID: -1264843398413318860, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
+          daysToGrow: 1
+          canHarvest: 1
+        requiresWater: 1
+        wiltSprite: {fileID: 6222270498545573083, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
+        regrowStageIndex: -1
+        harvestGoToStageIndex: -1
+        lastStageLoopToIndex: -1
+        daysToReturnAfterHarvest: -1
+        wiltOnSeasonChange: 1
+    - rid: 8196223262934696381
+      type: {class: HarvestModule, ns: , asm: Assembly-CSharp}
+      data:
+        harvestTool: 3
+        allowHandHarvest: 0
+        additionalHarvestTools: []
+        dropMode: 0
+        harvestCausesDamage: 0
+        destroyOnHarvest: 1
+        oneHitDestroy: 0
+        wrongToolPenalty: 0.3
+    - rid: 8196223262934696382
+      type: {class: DropModule, ns: , asm: Assembly-CSharp}
+      data:
+        harvestDrops:
+        - item: {fileID: 11400000, guid: a7a396b4e535f6445959bc4d04464a80, type: 2}
+          minAmount: 2
+          maxAmount: 3
+          dropChance: 1
+        deathDrops: []
+        includeHarvestDropsOnDestroyWhenHarvestable: 0
+    - rid: 8196223262934696383
+      type: {class: HealthModule, ns: , asm: Assembly-CSharp}
+      data:
+        canTakeDamage: 1
+    - rid: 8196223262934696384
+      type: {class: ResourceHitReactionModule, ns: , asm: Assembly-CSharp}
+      data:
+        reactOnlyToHarvestTool: 1
+        useProceduralMotion: 1
+        flashColor: {r: 1, g: 0.9, b: 0.65, a: 1}
+        flashDuration: 0.12
+        scalePunch: 0.12
+        rotationPunch: 4
+        animatorHitTrigger: Hit
+    - rid: 8196223262934696385
+      type: {class: ExpRewardModule, ns: , asm: Assembly-CSharp}
+      data:
+        rewardExp: 10
+        sourceType: 1
+        requireKiller: 1
+    - rid: 8196223262934696386
+      type: {class: MortalModule, ns: , asm: Assembly-CSharp}
+      data:
+        destroyDelay: 0

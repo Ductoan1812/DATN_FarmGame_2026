@@ -36,7 +36,7 @@ public class LocalizedText : MonoBehaviour
         if (targetText == null)
             return;
 
-        if (LocalizationManager.Instance == null)
+        if (LocalizationManager.Instance == null || !LocalizationManager.Instance.IsReady)
             return;
 
         targetText.text = LocalizationManager.Instance.GetText(localizationKey);
@@ -45,6 +45,12 @@ public class LocalizedText : MonoBehaviour
     public void SetKey(string key)
     {
         localizationKey = key;
-        RefreshText();
+
+        // Đảm bảo đã subscribe events trước khi refresh
+        if (isActiveAndEnabled)
+        {
+            RefreshText();
+        }
+        // Nếu chưa enabled, OnEnable sẽ gọi RefreshText() khi component active
     }
 }

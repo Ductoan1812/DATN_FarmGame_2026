@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 358260a5fc2e0e646a27c9d953729876, type: 3}
+  m_Name: Recipe_Pickaxe_T4
+  m_EditorClassIdentifier: 
+  id: recipe.pickaxe.t4
+  titleKey: mvp.recipe.pickaxe.t4.name
+  requiredLevel: 28
+  unlockRequirement:
+    requiredLevel: 28
+    requiredQuestIds: []
+  ingredients:
+  - item: {fileID: 11400000, guid: 699de5905b974b7489372eee28f5756b, type: 2}
+    amount: 1
+  - item: {fileID: 11400000, guid: 6c6049a7732d5d44ba4b435d0692e7ba, type: 2}
+    amount: 26
+  - item: {fileID: 11400000, guid: ca2c6dc64ebcd4e42a25328c13e28ec5, type: 2}
+    amount: 7
+  outputs:
+  - item: {fileID: 11400000, guid: 7679ba1217721a446ba2b3cc9d2e3099, type: 2}
+    amount: 1
+  craftExp: 350

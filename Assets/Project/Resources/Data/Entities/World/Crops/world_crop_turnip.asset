@@ -1,0 +1,134 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8393fbdfdb650e5418aad1c82ae5b8b5, type: 3}
+  m_Name: world_crop_turnip
+  m_EditorClassIdentifier: 
+  id: world_crop_turnip
+  keyName: world.crop.turnip.name
+  descKey: world.crop.turnip.desc
+  icon: {fileID: 7439726997165979912, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
+  category: 14
+  maxStack: 1
+  buyPrice: 0
+  sellPrice: 0
+  baseStats:
+    baseStats:
+    - statType: 0
+      value: 10
+    - statType: 1
+      value: 10
+    - statType: 9
+      value: 1
+    - statType: 10
+      value: 1
+  placementRule:
+    occupyLayer: 2
+    requireTags: 5
+    provideTags: 0
+    blockLayers: 
+  modules:
+  - rid: 8196223262934696282
+  - rid: 8196223262934696283
+  - rid: 8196223262934696284
+  - rid: 8196223262934696285
+  - rid: 8196223262934696286
+  - rid: 8196223262934696287
+  - rid: 8196223262934696288
+  - rid: 5278706057718792224
+  - rid: 5278706057718792225
+  references:
+    version: 2
+    RefIds:
+    - rid: 5278706057718792224
+      type: {class: SeasonRuleModule, ns: , asm: Assembly-CSharp}
+      data:
+        allowAllSeasons: 1
+        allowedSeasons: 
+        blockPlacementOutOfSeason: 0
+        outOfSeasonBehavior: 0
+        dormantStageIndex: -1
+    - rid: 5278706057718792225
+      type: {class: QualityModule, ns: , asm: Assembly-CSharp}
+      data:
+        minQuality: 1
+        maxQuality: 3
+        soilQualityPerStar: 1
+    - rid: 8196223262934696282
+      type: {class: StageModule, ns: , asm: Assembly-CSharp}
+      data:
+        stages:
+        - sprite: {fileID: -3925603847308778788, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
+          daysToGrow: 1
+          canHarvest: 0
+        - sprite: {fileID: -1035321725382303935, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
+          daysToGrow: 1
+          canHarvest: 0
+        - sprite: {fileID: 6575606928575541049, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
+          daysToGrow: 1
+          canHarvest: 0
+        - sprite: {fileID: -6392520538313333088, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
+          daysToGrow: 1
+          canHarvest: 0
+        - sprite: {fileID: 7439726997165979912, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
+          daysToGrow: 1
+          canHarvest: 1
+        requiresWater: 1
+        wiltSprite: {fileID: -2017995614923965058, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
+        regrowStageIndex: -1
+        harvestGoToStageIndex: -1
+        lastStageLoopToIndex: -1
+        daysToReturnAfterHarvest: -1
+        wiltOnSeasonChange: 0
+    - rid: 8196223262934696283
+      type: {class: HarvestModule, ns: , asm: Assembly-CSharp}
+      data:
+        harvestTool: 0
+        allowHandHarvest: 1
+        additionalHarvestTools: []
+        dropMode: 1
+        harvestCausesDamage: 0
+        destroyOnHarvest: 1
+        oneHitDestroy: 0
+        wrongToolPenalty: 0.3
+    - rid: 8196223262934696284
+      type: {class: DropModule, ns: , asm: Assembly-CSharp}
+      data:
+        harvestDrops:
+        - item: {fileID: 11400000, guid: 5261f7155fedf324895b927432dd05be, type: 2}
+          minAmount: 1
+          maxAmount: 1
+          dropChance: 1
+        deathDrops: []
+        includeHarvestDropsOnDestroyWhenHarvestable: 0
+    - rid: 8196223262934696285
+      type: {class: HealthModule, ns: , asm: Assembly-CSharp}
+      data:
+        canTakeDamage: 1
+    - rid: 8196223262934696286
+      type: {class: ResourceHitReactionModule, ns: , asm: Assembly-CSharp}
+      data:
+        reactOnlyToHarvestTool: 1
+        useProceduralMotion: 1
+        flashColor: {r: 1, g: 0.9, b: 0.65, a: 1}
+        flashDuration: 0.12
+        scalePunch: 0.12
+        rotationPunch: 4
+        animatorHitTrigger: Hit
+    - rid: 8196223262934696287
+      type: {class: ExpRewardModule, ns: , asm: Assembly-CSharp}
+      data:
+        rewardExp: 4
+        sourceType: 1
+        requireKiller: 0
+    - rid: 8196223262934696288
+      type: {class: MortalModule, ns: , asm: Assembly-CSharp}
+      data: 

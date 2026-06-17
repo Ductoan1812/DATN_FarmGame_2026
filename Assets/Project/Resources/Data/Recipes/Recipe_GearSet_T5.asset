@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 358260a5fc2e0e646a27c9d953729876, type: 3}
+  m_Name: Recipe_GearSet_T5
+  m_EditorClassIdentifier: 
+  id: recipe.gear_set.t5
+  titleKey: mvp.recipe.gear_set.t5.name
+  requiredLevel: 38
+  unlockRequirement:
+    requiredLevel: 38
+    requiredQuestIds: []
+  ingredients:
+  - item: {fileID: 11400000, guid: e8539cdf0c4133d4b89009ca4508bdc8, type: 2}
+    amount: 1
+  - item: {fileID: 11400000, guid: a9a0b40326d52044092ceaa0439625ce, type: 2}
+    amount: 1
+  - item: {fileID: 11400000, guid: afeee043aa5fa2947b57e527df42ad61, type: 2}
+    amount: 1
+  - item: {fileID: 11400000, guid: 4ea7e97d50f21ec4ab3135ebf42a8382, type: 2}
+    amount: 1
+  - item: {fileID: 11400000, guid: 2e4bc46ffa338b341919ec74ea591249, type: 2}
+    amount: 39
+  - item: {fileID: 11400000, guid: 6fc4345449314b240b16c42cad430623, type: 2}
+    amount: 16
+  outputs:
+  - item: {fileID: 11400000, guid: dd7f6fcccc1cfad40b9ce4918d923142, type: 2}
+    amount: 1
+  - item: {fileID: 11400000, guid: 25c9920189418d94e9b7d7a2f79d6fab, type: 2}
+    amount: 1
+  - item: {fileID: 11400000, guid: edc2f09cd9d921e4ca57284f9fc0b973, type: 2}
+    amount: 1
+  - item: {fileID: 11400000, guid: 35e418b41fce7d243afdefe6c6f9d51d, type: 2}
+    amount: 1
+  craftExp: 650

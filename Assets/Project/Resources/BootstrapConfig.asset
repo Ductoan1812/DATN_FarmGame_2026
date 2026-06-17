@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87f3555042c273642b8ff0506d879979, type: 3}
+  m_Name: BootstrapConfig
+  m_EditorClassIdentifier: 
+  gameManagerPrefab: {fileID: 111477305079367859, guid: 935c1b6a64fc8c44e8082bbf7926ac1d, type: 3}
+  uiRootPrefab: {fileID: 4379341379828546367, guid: 9085d5dff2e0dbb45a82da42d0432317, type: 3}
+  throwOnMissingPrefab: 0

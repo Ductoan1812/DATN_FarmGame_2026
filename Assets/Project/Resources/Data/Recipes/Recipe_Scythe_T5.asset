@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 358260a5fc2e0e646a27c9d953729876, type: 3}
+  m_Name: Recipe_Scythe_T5
+  m_EditorClassIdentifier: 
+  id: recipe.scythe.t5
+  titleKey: mvp.recipe.scythe.t5.name
+  requiredLevel: 38
+  unlockRequirement:
+    requiredLevel: 38
+    requiredQuestIds: []
+  ingredients:
+  - item: {fileID: 11400000, guid: f9df5b5cc0dc9fc4b8c4fb581e096f9c, type: 2}
+    amount: 1
+  - item: {fileID: 11400000, guid: 2e4bc46ffa338b341919ec74ea591249, type: 2}
+    amount: 23
+  - item: {fileID: 11400000, guid: 6fc4345449314b240b16c42cad430623, type: 2}
+    amount: 9
+  outputs:
+  - item: {fileID: 11400000, guid: 394d752db1c9e46468e59faea035e1c6, type: 2}
+    amount: 1
+  craftExp: 650

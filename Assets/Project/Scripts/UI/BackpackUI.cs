@@ -1,7 +1,9 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
@@ -189,6 +191,7 @@ public class BackpackUI : MonoBehaviour
         if (btnNext != null) btnNext.onClick.AddListener(IncreaseSplitAmount);
         if (btnSplit != null) btnSplit.onClick.AddListener(PublishSplitRequest);
         if (btnDrop != null) btnDrop.onClick.AddListener(PublishDropRequest);
+        if (btnUse != null) btnUse.onClick.AddListener(PublishUseRequest);
     }
 
     private void UnregisterButtonEvents()
@@ -198,6 +201,7 @@ public class BackpackUI : MonoBehaviour
         if (btnNext != null) btnNext.onClick.RemoveListener(IncreaseSplitAmount);
         if (btnSplit != null) btnSplit.onClick.RemoveListener(PublishSplitRequest);
         if (btnDrop != null) btnDrop.onClick.RemoveListener(PublishDropRequest);
+        if (btnUse != null) btnUse.onClick.RemoveListener(PublishUseRequest);
     }
 
     // ══════════════════════════════════════════════════════════
@@ -207,7 +211,7 @@ public class BackpackUI : MonoBehaviour
     private void OnBackpackSlotChanged(BackpackSlotChangedPublish e)
     {
         EnsureCache(e.index + 1);
-        cache[e.index] = new InventoryGridItemData(e.icon, e.amount);
+        cache[e.index] = new InventoryGridItemData(e.icon, e.amount, resourceMeter: e.meter);
         dirty = true;
 
         if (IsContainerActive())
@@ -219,6 +223,9 @@ public class BackpackUI : MonoBehaviour
 
     private void OnBackpackItemInfoChanged(BackpackItemInfoChangedPublish e)
     {
+        // Chỉ xử lý khi người chơi click chọn slot (không phải preview hover)
+        if (e.isPreview) return;
+
         selectedIndex = e.slotIndex;
         selectedAmount = e.amount;
         UpdateSelectionVisual();
@@ -237,11 +244,10 @@ public class BackpackUI : MonoBehaviour
         SetOptionalLocalizedOrText(categoryLocalized, categoryText, e.categoryKey, GetFieldRoot(categoryText, "Category"));
 
         SetOptionalText(priceText, e.sellPrice > 0 ? e.sellPrice.ToString() : string.Empty, GetFieldRoot(priceText, "Price"));
-
         SetOptionalText(rareText, string.Empty, rareObject != null ? rareObject : rareText?.gameObject);
 
         if (btnUse != null)
-            btnUse.interactable = true;
+            btnUse.interactable = e.canUse;
 
         ApplyStats(e.stats);
     }
@@ -287,6 +293,14 @@ public class BackpackUI : MonoBehaviour
             new InventoryDropRequestPublish(InventoryType.Backpack, selectedIndex));
     }
 
+    private void PublishUseRequest()
+    {
+        if (selectedIndex < 0) return;
+
+        GameManager.Instance?.EventBus?.Publish(
+            new InventoryUseRequestPublish(InventoryType.Backpack, selectedIndex));
+    }
+
     private void PublishVisualRefreshRequest()
     {
         GameManager.Instance?.EventBus?.Publish(new InventoryVisualRefreshRequestPublish());
@@ -322,6 +336,7 @@ public class BackpackUI : MonoBehaviour
             dragDropEnabled: true,
             dragType: InventoryType.Backpack);
         gridView.SetClickHandler((index, _) => PublishSlotSelectedRequest(index));
+        // Không dùng hover preview trong static layout
 
         viewsReady = true;
     }
@@ -348,6 +363,7 @@ public class BackpackUI : MonoBehaviour
 
         UpdateSplitControls();
     }
+
 
     private void ApplyStats(StatDisplay[] stats)
     {
@@ -624,6 +640,8 @@ public class BackpackUI : MonoBehaviour
         AutoAssignStatsRefs();
     }
 
+    // Không còn dùng tooltip động - ItemInfoPanel hiển thị tĩnh theo layout Prefab
+
     private void AutoAssignStatsRefs()
     {
         statDatabase ??= Resources.Load<StatDefinitionDatabase>("StatDefinitionDatabase");
@@ -791,7 +809,9 @@ public class BackpackUI : MonoBehaviour
         }
 
         if (text != null)
-            text.text = key ?? string.Empty;
+            text.text = LocalizationManager.Instance != null
+                ? LocalizationManager.Instance.GetText(key)
+                : key ?? string.Empty;
     }
 
     private static void SetOptionalLocalizedOrText(LocalizedText localized, TMP_Text text, string key, GameObject displayRoot)
@@ -916,5 +936,14 @@ public class BackpackUI : MonoBehaviour
         }
 
         return null;
+    }
+
+    private static void SetRect(RectTransform rect, Vector2 anchorMin, Vector2 anchorMax, Vector2 pivot, Vector2 anchoredPosition, Vector2 sizeDelta)
+    {
+        rect.anchorMin = anchorMin;
+        rect.anchorMax = anchorMax;
+        rect.pivot = pivot;
+        rect.anchoredPosition = anchoredPosition;
+        rect.sizeDelta = sizeDelta;
     }
 }

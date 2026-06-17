@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1cd2983b44ed7c4983a7fdd8f19c8ea, type: 3}
+  m_Name: MasteryUnlockData
+  m_EditorClassIdentifier: 
+  unlocks:
+  - masteryLevel: 4
+    unlockId: recipe.fertilizer.t1
+    description: Unlock fertilizer crafting
+  - masteryLevel: 4
+    unlockId: tool.fertilizer.t1
+    description: Unlock fertilizer use
+  - masteryLevel: 8
+    unlockId: recipe.sprinkler.t1
+    description: Unlock sprinkler T1 crafting
+  - masteryLevel: 8
+    unlockId: tool.sprinkler.t1
+    description: Unlock sprinkler T1 use
+  - masteryLevel: 16
+    unlockId: recipe.sprinkler.t2
+    description: Unlock sprinkler T2 crafting
+  - masteryLevel: 16
+    unlockId: tool.sprinkler.t2
+    description: Unlock sprinkler T2 use

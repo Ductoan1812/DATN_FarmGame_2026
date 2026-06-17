@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 /// <summary>
@@ -20,6 +21,8 @@ public class InventoryGridView : MonoBehaviour
     private readonly List<SlotView> views = new();
     private readonly List<GameObject> spawnedSlots = new();
     private Action<int, InventoryGridItemData> onSlotClicked;
+    private Action<int, InventoryGridItemData, RectTransform> onSlotHovered;
+    private Action<int> onSlotHoverExited;
     private IReadOnlyList<InventoryGridItemData> currentItems;
     private bool viewsReady;
     private int selectedIndex = -1;
@@ -44,6 +47,14 @@ public class InventoryGridView : MonoBehaviour
     public void SetClickHandler(Action<int, InventoryGridItemData> handler)
     {
         onSlotClicked = handler;
+    }
+
+    public void SetHoverHandlers(
+        Action<int, InventoryGridItemData, RectTransform> hovered,
+        Action<int> exited)
+    {
+        onSlotHovered = hovered;
+        onSlotHoverExited = exited;
     }
 
     public void Render(IReadOnlyList<InventoryGridItemData> items, int selected = -1, int visibleSlotOverride = -1)
@@ -135,7 +146,9 @@ public class InventoryGridView : MonoBehaviour
             enableDragDrop,
             dragInventoryType,
             showAmountWhenOne,
-            HandleSlotClicked);
+            HandleSlotClicked,
+            HandleSlotHovered,
+            HandleSlotHoverExited);
     }
 
     private void RefreshAll()
@@ -160,6 +173,26 @@ public class InventoryGridView : MonoBehaviour
         onSlotClicked?.Invoke(index, item);
     }
 
+    private void HandleSlotHovered(int index, RectTransform slotRect)
+    {
+        var item = index >= 0 && currentItems != null && index < currentItems.Count
+            ? currentItems[index]
+            : InventoryGridItemData.Empty;
+
+        if (!item.Interactable)
+        {
+            onSlotHoverExited?.Invoke(index);
+            return;
+        }
+
+        onSlotHovered?.Invoke(index, item, slotRect);
+    }
+
+    private void HandleSlotHoverExited(int index)
+    {
+        onSlotHoverExited?.Invoke(index);
+    }
+
     private void ForceRebuild()
     {
         if (slotsContainer is not RectTransform rect) return;
@@ -174,6 +207,9 @@ public class InventoryGridView : MonoBehaviour
 
         private readonly Image icon;
         private readonly TMP_Text amountText;
+        private readonly GameObject meterRoot;
+        private readonly Image meterFillImage;
+        private readonly RectTransform meterFillRect;
         private readonly GameObject selectedObject;
         private readonly Toggle toggle;
         private readonly Button button;
@@ -186,7 +222,9 @@ public class InventoryGridView : MonoBehaviour
             bool enableDragDrop,
             InventoryType dragType,
             bool showAmountWhenOne,
-            Action<int> onSelected)
+            Action<int> onSelected,
+            Action<int, RectTransform> onHovered,
+            Action<int> onHoverExited)
         {
             this.root = root;
             this.showAmountWhenOne = showAmountWhenOne;
@@ -197,6 +235,8 @@ public class InventoryGridView : MonoBehaviour
             var amountT = root.Find("Amount") ?? root.Find("Quantity") ?? root.Find("AmountText");
             if (amountT != null) amountText = amountT.GetComponent<TMP_Text>();
 
+            EnsureMeterVisual(root, out meterRoot, out meterFillImage, out meterFillRect);
+
             var selectedT = root.Find("Select") ?? root.Find("Selected") ?? root.Find("Highlight");
             if (selectedT != null) selectedObject = selectedT.gameObject;
 
@@ -206,6 +246,10 @@ public class InventoryGridView : MonoBehaviour
                 if (drag == null) drag = root.gameObject.AddComponent<DraggableSlot>();
                 drag.Init(dragType, index, icon);
             }
+
+            var hover = root.GetComponent<InventorySlotHoverRelay>();
+            if (hover == null) hover = root.gameObject.AddComponent<InventorySlotHoverRelay>();
+            hover.Configure(index, root as RectTransform, onHovered, onHoverExited);
 
             toggle = root.GetComponent<Toggle>();
             if (toggle != null)
@@ -235,6 +279,7 @@ public class InventoryGridView : MonoBehaviour
         {
             SetIcon(item.Icon);
             SetAmount(item.Amount);
+            SetMeter(item.ResourceMeter);
             SetSelected(selected);
 
             if (button != null)
@@ -277,23 +322,125 @@ public class InventoryGridView : MonoBehaviour
                 ? MaxDisplayAmount.ToString()
                 : amount.ToString();
         }
+
+        private void SetMeter(SlotResourceMeterData meter)
+        {
+            if (meterRoot == null || meterFillImage == null || meterFillRect == null)
+                return;
+
+            bool visible = meter.hasMeter && meter.max > 0;
+            if (meterRoot.activeSelf != visible)
+                meterRoot.SetActive(visible);
+
+            if (!visible)
+                return;
+
+            float normalized = Mathf.Clamp01((float)meter.current / meter.max);
+            meterFillRect.anchorMax = new Vector2(1f, normalized);
+            meterFillRect.offsetMin = Vector2.zero;
+            meterFillRect.offsetMax = Vector2.zero;
+            meterFillImage.color = meter.fillColor.a <= 0f
+                ? new Color(0.24f, 0.74f, 0.98f, 1f)
+                : meter.fillColor;
+        }
+
+        private static void EnsureMeterVisual(
+            Transform root,
+            out GameObject meterRoot,
+            out Image fillImage,
+            out RectTransform fillRect)
+        {
+            var meter = root.Find("ResourceMeter");
+            if (meter == null)
+            {
+                var meterObject = new GameObject("ResourceMeter", typeof(RectTransform), typeof(Image));
+                meter = meterObject.transform;
+                meter.SetParent(root, false);
+
+                var meterRect = (RectTransform)meter;
+                meterRect.anchorMin = new Vector2(1f, 0f);
+                meterRect.anchorMax = new Vector2(1f, 1f);
+                meterRect.pivot = new Vector2(1f, 0.5f);
+                meterRect.sizeDelta = new Vector2(8f, -14f);
+                meterRect.anchoredPosition = new Vector2(-6f, 0f);
+
+                var background = meter.GetComponent<Image>();
+                background.color = new Color(0.08f, 0.12f, 0.16f, 0.82f);
+                background.raycastTarget = false;
+
+                var fillObject = new GameObject("Fill", typeof(RectTransform), typeof(Image));
+                fillObject.transform.SetParent(meter, false);
+                var createdFillRect = (RectTransform)fillObject.transform;
+                createdFillRect.anchorMin = new Vector2(0f, 0f);
+                createdFillRect.anchorMax = new Vector2(1f, 1f);
+                createdFillRect.offsetMin = Vector2.zero;
+                createdFillRect.offsetMax = Vector2.zero;
+
+                var createdFillImage = fillObject.GetComponent<Image>();
+                createdFillImage.color = new Color(0.24f, 0.74f, 0.98f, 1f);
+                createdFillImage.raycastTarget = false;
+            }
+
+            meterRoot = meter.gameObject;
+            fillRect = meter.Find("Fill") as RectTransform;
+            fillImage = fillRect != null ? fillRect.GetComponent<Image>() : null;
+            if (meterRoot.activeSelf)
+                meterRoot.SetActive(false);
+        }
+    }
+}
+
+public sealed class InventorySlotHoverRelay : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+{
+    private int index;
+    private RectTransform slotRect;
+    private Action<int, RectTransform> hovered;
+    private Action<int> exited;
+
+    public void Configure(
+        int slotIndex,
+        RectTransform rect,
+        Action<int, RectTransform> onHovered,
+        Action<int> onExited)
+    {
+        index = slotIndex;
+        slotRect = rect;
+        hovered = onHovered;
+        exited = onExited;
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        hovered?.Invoke(index, slotRect);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        exited?.Invoke(index);
     }
 }
 
 public readonly struct InventoryGridItemData
 {
-    public static InventoryGridItemData Empty => new(null, 0, null, false);
+    public static InventoryGridItemData Empty => new(null, 0, null, false, SlotResourceMeterData.None);
 
     public Sprite Icon { get; }
     public int Amount { get; }
     public object Payload { get; }
     public bool Interactable { get; }
+    public SlotResourceMeterData ResourceMeter { get; }
 
-    public InventoryGridItemData(Sprite icon, int amount, object payload = null, bool interactable = true)
+    public InventoryGridItemData(
+        Sprite icon,
+        int amount,
+        object payload = null,
+        bool interactable = true,
+        SlotResourceMeterData resourceMeter = default)
     {
         Icon = icon;
         Amount = amount;
         Payload = payload;
         Interactable = interactable;
+        ResourceMeter = resourceMeter;
     }
 }

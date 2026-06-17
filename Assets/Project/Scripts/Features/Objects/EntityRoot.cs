@@ -14,7 +14,7 @@ using System;
 [DisallowMultipleComponent]
 public class EntityRoot : MonoBehaviour, IEntityContainer
 {
-    GameObject IEntityContainer.GameObject => this.gameObject;
+    GameObject IEntityContainer.GameObject => this == null ? null : gameObject;
 
     // ── Refs (được SpawnSystem inject) ─────────────────────
     public EntityService entityService;
@@ -60,8 +60,20 @@ public class EntityRoot : MonoBehaviour, IEntityContainer
     public bool Remove(EntityRuntime entity, int amount = 1)
     {
         if (this.entity != entity) return false;
+        if (this.entity != null && ReferenceEquals(this.entity.Owner, this))
+            this.entity.Owner = null;
+
         this.entity = null;
         IsReady = false;
         return true;
+    }
+
+    private void OnDestroy()
+    {
+        if (entity != null && ReferenceEquals(entity.Owner, this))
+            entity.Owner = null;
+
+        entity = null;
+        IsReady = false;
     }
 }
