@@ -560,9 +560,10 @@ public class CraftingPanelUI : MonoBehaviour
     private static void SetIcon(Image image, EntityData itemData)
     {
         if (image == null) return;
-        image.sprite = itemData != null ? itemData.icon : null;
-        image.enabled = image.sprite != null;
-        image.preserveAspect = true;
+        image.sprite = itemData?.icon;
+        image.enabled = true;
+        image.color = image.sprite != null ? Color.white : new Color(0.20f, 0.11f, 0.04f, 0.60f);
+        image.preserveAspect = image.sprite != null;
     }
 
     private static void SetButtonLabel(Button button, string value)

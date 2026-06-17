@@ -217,8 +217,7 @@ public class ShopPanelUI : MonoBehaviour
 
         if (selectedSellIcon != null)
         {
-            SetIcon(selectedSellIcon, selectedSellItem?.ItemData);
-            selectedSellIcon.enabled = hasSelection && selectedSellItem.ItemData.icon != null;
+            SetIcon(selectedSellIcon, hasSelection ? selectedSellItem.ItemData : null);
         }
 
         SetLocalizedText(selectedSellNameText, hasSelection ? selectedSellItem.NameKey : string.Empty);
@@ -595,10 +594,7 @@ public class ShopPanelUI : MonoBehaviour
         var iconFrameImage = GetOrAdd<Image>(iconFrame);
         iconFrameImage.color = new Color(0.35f, 0.2f, 0.08f, 0.82f);
         SetLayoutSize(iconFrame, 52f, 52f);
-        var icon = CreateStretchImage("Icon", iconFrame.transform, Vector2.zero);
-        SetAnchorStretch(icon.rectTransform);
-        icon.rectTransform.offsetMin = new Vector2(5f, 5f);
-        icon.rectTransform.offsetMax = new Vector2(-5f, -5f);
+        var icon = CreateStretchImage("Icon", iconFrame.transform, new Vector2(5f, 5f));
         icon.preserveAspect = true;
         SetIcon(icon, entry.Item.ItemData);
         icon.enabled = entry.Item.ItemData.icon != null;
@@ -689,9 +685,7 @@ public class ShopPanelUI : MonoBehaviour
         root.gameObject.SetActive(false);
         SetButtonSize(root, 76f, 76f);
 
-        var icon = CreateStretchImage("Icon", root.transform, Vector2.zero);
-        icon.rectTransform.offsetMin = new Vector2(8f, 8f);
-        icon.rectTransform.offsetMax = new Vector2(-8f, -8f);
+        var icon = CreateStretchImage("Icon", root.transform, new Vector2(8f, 8f));
         icon.preserveAspect = true;
 
         var amount = CreateTemplateLabel("AmountText", root.transform, 18, FontStyles.Bold);
@@ -746,15 +740,17 @@ public class ShopPanelUI : MonoBehaviour
         return text;
     }
 
-    private static Image CreateStretchImage(string name, Transform parent, Vector2 size)
+    private static Image CreateStretchImage(string name, Transform parent, Vector2 padding)
     {
         var go = CreateChild(name, parent);
         var image = GetOrAdd<Image>(go);
         var rect = image.rectTransform;
-        rect.anchorMin = new Vector2(0.5f, 0.5f);
-        rect.anchorMax = new Vector2(0.5f, 0.5f);
+        rect.anchorMin = Vector2.zero;
+        rect.anchorMax = Vector2.one;
         rect.pivot = new Vector2(0.5f, 0.5f);
-        rect.sizeDelta = size;
+        rect.offsetMin = padding;
+        rect.offsetMax = -padding;
+        rect.sizeDelta = Vector2.zero;
         return image;
     }
 
@@ -807,7 +803,7 @@ public class ShopPanelUI : MonoBehaviour
     {
         if (image == null) return;
 
-        image.sprite = itemData != null ? itemData.icon : null;
+        image.sprite = itemData?.icon;
         image.enabled = image.sprite != null;
         image.preserveAspect = true;
     }

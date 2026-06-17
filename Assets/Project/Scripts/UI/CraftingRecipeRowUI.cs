@@ -83,9 +83,10 @@ public class CraftingRecipeRowUI : MonoBehaviour
     private void SetIcon(EntityData itemData)
     {
         if (icon == null) return;
-        icon.sprite = itemData != null ? itemData.icon : null;
-        icon.enabled = icon.sprite != null;
-        icon.preserveAspect = true;
+        icon.sprite = itemData?.icon;
+        icon.enabled = true;
+        icon.color = icon.sprite != null ? Color.white : new Color(0.20f, 0.11f, 0.04f, 0.60f);
+        icon.preserveAspect = icon.sprite != null;
     }
 
     private static string BuildIngredientText(CraftingRecipeViewData viewData)

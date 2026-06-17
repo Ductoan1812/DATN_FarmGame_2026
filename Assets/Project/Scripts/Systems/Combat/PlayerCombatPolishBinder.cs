@@ -46,7 +46,6 @@ public class PlayerCombatPolishBinder : MonoBehaviour
             return;
 
         Ensure<PlayerInvincibilityHandler>(player.gameObject);
-        Ensure<DodgeAfterimageEffect>(player.gameObject);
         Ensure<WeaponSwingTrail>(player.gameObject);
     }
 

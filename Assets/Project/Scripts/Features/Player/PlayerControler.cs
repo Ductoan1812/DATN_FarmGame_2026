@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 using Assets.HeroEditor4D.Common.Scripts.CharacterScripts;
 using Assets.HeroEditor4D.Common.Scripts.Enums;
 
@@ -12,11 +11,6 @@ public class PlayerControler : MonoBehaviour
     [SerializeField] private AnimationManager _anim ;
     [SerializeField] private KeyCode interactKey = KeyCode.E;
     [SerializeField] private bool allowRightMouseInteract;
-    [Header("Dodge")]
-    [SerializeField] private KeyCode dodgeKey = KeyCode.LeftShift;
-    [SerializeField] private float dodgeDistance = 1.25f;
-    [SerializeField] private float dodgeDuration = 0.16f;
-    [SerializeField] private float dodgeStaminaCost = 12f;
     [SerializeField] private float collisionSkin = 0.02f;
 
     private Vector3 lastMoveDirection = Vector3.up;
@@ -32,10 +26,8 @@ public class PlayerControler : MonoBehaviour
     private StatsRuntime _boundStats;
     private Vector2 _moveInput;
     private float _runtimeMoveSpeed;
-    private bool isDodging;
-    public bool IsDodging => isDodging;
+    public bool IsDodging => false;
     private readonly RaycastHit2D[] _movementHits = new RaycastHit2D[8];
-    private readonly WaitForFixedUpdate _waitForFixedUpdate = new();
     private ContactFilter2D _movementFilter;
 
     private void Awake()
@@ -96,14 +88,11 @@ public class PlayerControler : MonoBehaviour
         }
 
         // Animation đang chạy → block movement + action
-        if (IsActionBusy || isDodging)
+        if (IsActionBusy)
         {
-            StopMovement(playIdle: !isDodging);
+            StopMovement();
             return;
         }
-
-        if (TryStartDodge())
-            return;
 
         ReadMovementInput();
         UpdateMovementVisuals();
@@ -112,7 +101,7 @@ public class PlayerControler : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!InputEnabled || IsActionBusy || isDodging)
+        if (!InputEnabled || IsActionBusy)
             return;
 
         MoveWithCollision(_moveInput, ResolveMoveSpeed() * Time.fixedDeltaTime);
@@ -159,45 +148,6 @@ public class PlayerControler : MonoBehaviour
             eventBus?.Publish(new SaveGameRequestPublish());
             Debug.Log("[Player] Save requested.");
         }
-    }
-
-    private bool TryStartDodge()
-    {
-        if (!Input.GetKeyDown(dodgeKey)) return false;
-
-        var playerEntity = GetPlayerEntity();
-        if (playerEntity == null) return false;
-
-        if (!StaminaHelper.TrySpend(playerEntity, dodgeStaminaCost))
-        {
-            Debug.Log("[Player] Không đủ thể lực để né.");
-            return false;
-        }
-
-        Vector2 direction = ReadInputDirection();
-        if (direction.sqrMagnitude <= 0.001f)
-            direction = lastMoveDirection.sqrMagnitude > 0.001f ? (Vector2)lastMoveDirection : Vector2.down;
-
-        StartCoroutine(DodgeRoutine(direction.normalized));
-        return true;
-    }
-
-    private IEnumerator DodgeRoutine(Vector2 direction)
-    {
-        isDodging = true;
-        _moveInput = Vector2.zero;
-
-        float elapsed = 0f;
-        float dodgeSpeed = dodgeDuration <= 0f ? dodgeDistance : dodgeDistance / dodgeDuration;
-
-        while (elapsed < dodgeDuration)
-        {
-            MoveWithCollision(direction, dodgeSpeed * Time.fixedDeltaTime);
-            elapsed += Time.fixedDeltaTime;
-            yield return _waitForFixedUpdate;
-        }
-
-        isDodging = false;
     }
 
     private Vector2 ReadInputDirection()

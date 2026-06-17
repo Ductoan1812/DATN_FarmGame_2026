@@ -13,6 +13,9 @@ using UnityEngine;
 /// <summary>Backward compatible — StageObject và các system cũ vẫn dùng được.</summary>
 public struct NextDayEventPublish { }
 
+/// <summary>Player vừa đi ngủ — UI hiển thị fade đen ngắn che lúc chuyển ngày.</summary>
+public struct SleepTransitionPublish { }
+
 /// <summary>Sang ngày mới — chứa đầy đủ context (year, season, day).</summary>
 public struct DayChangedPublish
 {

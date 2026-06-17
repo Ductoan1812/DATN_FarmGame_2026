@@ -72,10 +72,7 @@ MonoBehaviour:
   _anim: {fileID: 0}
   interactKey: 101
   allowRightMouseInteract: 0
-  dodgeKey: 304
-  dodgeDistance: 1.25
-  dodgeDuration: 0.16
-  dodgeStaminaCost: 12
+  collisionSkin: 0.02
 --- !u!114 &1987065256476178076
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -87,9 +87,9 @@ SpriteRenderer:
   m_Size: {x: 1.92, y: 1.92}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!61 &7882070788303462590
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -187,12 +187,6 @@ MonoBehaviour:
   autoAssignCollider: 1
   warnIfColliderIsNotTrigger: 1
   playerTag: Player
-  promptText: "[RMB] Thu ho\u1EA1ch"
-  offset: {x: 0, y: 1}
-  fontSize: 1.01
-  textColor: {r: 1, g: 0.88025475, b: 0, a: 1}
-  bgColor: {r: 0, g: 0, b: 0, a: 0.6}
-  fontAsset: {fileID: 0}
 --- !u!114 &-5657714352043839771
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -102,7 +102,7 @@ public class GameManager : MonoBehaviour
         InitLoadingScreenUI();
         InitNarrativeUI();
         InitDailyTracker();
-        InitEndOfDaySummaryUI();
+        InitSleepTransitionUI();
         InitPickupNotificationUI();
         InitSaveLoadManager();
 
@@ -414,7 +414,6 @@ public class GameManager : MonoBehaviour
 
     private void InitNarrativeUI()
     {
-        EnsureNarrativeUIComponent<MessageNotificationUI>("NarrativeUI_MessageNotification");
         EnsureNarrativeUIComponent<NewsBroadcastUI>("NarrativeUI_NewsBroadcast");
         EnsureNarrativeUIComponent<DiaryUI>("NarrativeUI_Diary");
         EnsureNarrativeUIComponent<CalendarUI>("CalendarUI");
@@ -448,9 +447,9 @@ public class GameManager : MonoBehaviour
         DailyTracker = new DailyTracker(EventBus, TimeManager);
     }
 
-    private void InitEndOfDaySummaryUI()
+    private void InitSleepTransitionUI()
     {
-        EnsureNarrativeUIComponent<EndOfDaySummaryUI>("EndOfDaySummaryUI");
+        EnsureNarrativeUIComponent<SleepTransitionUI>("SleepTransitionUI");
     }
 
     private void InitPickupNotificationUI()

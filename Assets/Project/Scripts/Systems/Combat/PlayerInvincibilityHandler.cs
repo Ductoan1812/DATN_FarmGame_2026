@@ -4,10 +4,8 @@ using UnityEngine;
 public class PlayerInvincibilityHandler : MonoBehaviour
 {
     [SerializeField] private float postHitInvincibleSeconds = 0.65f;
-    [SerializeField] private float dodgeGraceSeconds = 0.08f;
     [SerializeField] private float blinkInterval = 0.08f;
 
-    private PlayerControler player;
     private EntityRoot root;
     private EntityRuntime entity;
     private HealthRuntime health;
@@ -19,7 +17,6 @@ public class PlayerInvincibilityHandler : MonoBehaviour
 
     private void Awake()
     {
-        player = GetComponent<PlayerControler>();
         root = GetComponent<EntityRoot>();
         renderers = GetComponentsInChildren<SpriteRenderer>(true);
     }
@@ -54,9 +51,6 @@ public class PlayerInvincibilityHandler : MonoBehaviour
 
     private void Update()
     {
-        if (player != null && player.IsDodging)
-            invincibleUntilRealtime = Mathf.Max(invincibleUntilRealtime, Time.realtimeSinceStartup + dodgeGraceSeconds);
-
         bool invincible = Time.realtimeSinceStartup < invincibleUntilRealtime;
         if (health != null)
             health.CanTakeDamage = !invincible;

@@ -152,12 +152,6 @@ MonoBehaviour:
   autoAssignCollider: 1
   warnIfColliderIsNotTrigger: 1
   playerTag: Player
-  promptText: "[RMB] T\u01B0\u01A1ng t\xE1c"
-  offset: {x: 0, y: 1}
-  fontSize: 9
-  textColor: {r: 1, g: 1, b: 1, a: 1}
-  bgColor: {r: 0, g: 0, b: 0, a: 0.6}
-  fontAsset: {fileID: 0}
 --- !u!58 &3763826657939634124
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -244,7 +238,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!114 &-2059209477160372625
 MonoBehaviour:
   m_ObjectHideFlags: 0

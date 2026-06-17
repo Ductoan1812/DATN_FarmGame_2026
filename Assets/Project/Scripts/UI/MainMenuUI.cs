@@ -44,6 +44,7 @@ public class MainMenuUI : MonoBehaviour
     {
         AutoFindRefs();
         EnsureSettingsPanelComponent();
+        ApplyLocalizedButtonLabels();
         RegisterListeners();
         ShowMainPanel(immediateLogo: true);
         RefreshMainButtons();
@@ -174,7 +175,7 @@ public class MainMenuUI : MonoBehaviour
             Destroy(saveSlotContent.GetChild(i).gameObject);
 
         if (saveSlotTitleText != null)
-            saveSlotTitleText.text = "Các bản save";
+            SetLocalizedText(saveSlotTitleText, LocalizationKeys.UiMainMenuSavesTitle);
 
         var summaries = SaveLoadManager.GetSaveSlots(saveSlotCount);
         bool foundAny = false;
@@ -191,7 +192,7 @@ public class MainMenuUI : MonoBehaviour
         }
 
         if (!foundAny && saveSlotTitleText != null)
-            saveSlotTitleText.text = "Không có bản save nào";
+            SetLocalizedText(saveSlotTitleText, LocalizationKeys.UiMainMenuSavesEmpty);
     }
 
     private SaveSlotButtonUI CreateSaveSlot(Transform parent)
@@ -436,5 +437,28 @@ public class MainMenuUI : MonoBehaviour
         rect.pivot = pivot;
         rect.anchoredPosition = position;
         rect.sizeDelta = size;
+    }
+
+    private void ApplyLocalizedButtonLabels()
+    {
+        SetButtonLocalized(newGameButton, LocalizationKeys.UiMainMenuNewGame);
+        SetButtonLocalized(continueButton, LocalizationKeys.UiMainMenuContinue);
+        SetButtonLocalized(settingsButton, LocalizationKeys.UiMainMenuSettings);
+        SetButtonLocalized(exitButton, LocalizationKeys.UiMainMenuExit);
+    }
+
+    private static void SetButtonLocalized(Button button, string key)
+    {
+        if (button == null) return;
+        var text = button.GetComponentInChildren<TMP_Text>(true);
+        if (text == null) return;
+        SetLocalizedText(text, key);
+    }
+
+    private static void SetLocalizedText(TMP_Text text, string key)
+    {
+        if (text == null || string.IsNullOrEmpty(key)) return;
+        var localized = text.GetComponent<LocalizedText>() ?? text.gameObject.AddComponent<LocalizedText>();
+        localized.SetKey(key);
     }
 }

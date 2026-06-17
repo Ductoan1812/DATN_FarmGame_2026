@@ -101,7 +101,11 @@ public class EntityRuntime
         if (entityData?.modules != null)
         {
             foreach (var m in entityData.modules)
-                if (m != null) modules.Add(m.CreateRuntime());
+            {
+                if (m == null) continue;
+                var rt = m.CreateRuntime();
+                if (rt != null) modules.Add(rt);
+            }
         }
     }
 
@@ -129,8 +133,12 @@ public class EntityRuntime
 
     public void TriggerEvent<T>(T e) where T : IGameEvent
     {
-        foreach (var m in modules)
+        if (modules == null) return;
+        for (int i = 0; i < modules.Count; i++)
+        {
+            var m = modules[i];
             if (m is IHandleEvent<T> handler)
                 handler.Handle(e);
+        }
     }
 }

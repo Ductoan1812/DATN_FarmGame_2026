@@ -1,606 +1,3500 @@
 {
   "entries": [
-    { "key": "ui.common.open", "value": "M\u1edf" },
-    { "key": "ui.common.close", "value": "\u0110\u00f3ng" },
-    { "key": "ui.common.use", "value": "S\u1eed d\u1ee5ng" },
-    { "key": "ui.common.cancel", "value": "H\u1ee7y" },
-    { "key": "ui.common.equip", "value": "Trang b\u1ecb" },
-    { "key": "ui.common.sort", "value": "S\u1eafp x\u1ebfp" },
-    { "key": "ui.menu.inventory", "value": "T\u00fai \u0111\u1ed3" },
-    { "key": "ui.menu.storage", "value": "Kho \u0111\u1ed3" },
-    { "key": "ui.menu.Equipment", "value": "Trang b\u1ecb" },
-    { "key": "ui.menu.skills", "value": "K\u1ef9 n\u0103ng" },
-    { "key": "ui.menu.map", "value": "B\u1ea3n \u0111\u1ed3" },
-    { "key": "ui.menu.quest", "value": "Nhi\u1ec7m v\u1ee5" },
-    { "key": "ui.menu.journal", "value": "Nh\u1eadt k\u00fd" },
-    { "key": "ui.menu.settings", "value": "C\u00e0i \u0111\u1eb7t" },
-    { "key": "ui.inventory.title", "value": "T\u00fai \u0111\u1ed3" },
-    { "key": "ui.inventory.capacity", "value": "{0}/{1}" },
-    { "key": "ui.inventory.quick_sort", "value": "S\u1eafp x\u1ebfp nhanh" },
-    { "key": "ui.inventory.Split", "value": "Chia" },
-    { "key": "ui.inventory.money", "value": "Ti\u1ec1n" },
-    { "key": "ui.inventory.info_title", "value": "Th\u00f4ng tin v\u1eadt ph\u1ea9m" },
-    { "key": "ui.equipment.infoPlayer", "value": "Ch\u1ec9 s\u1ed1 nh\u00e2n v\u1eadt" },
-    { "key": "ui.equipment.NamePlayer", "value": "T\u00ean :" },
-    { "key": "ui.item.category", "value": "Lo\u1ea1i" },
-    { "key": "ui.item.rarity", "value": "Ph\u1ea9m ch\u1ea5t" },
-    { "key": "ui.item.description", "value": "M\u00f4 t\u1ea3" },
-    { "key": "ui.item.sell_price", "value": "Gi\u00e1 b\u00e1n" },
-    { "key": "ui.stat.hp", "value": "M\u00e1u" },
-    { "key": "ui.stat.hpmax", "value": "M\u00e1u t\u1ed1i \u0111a" },
-    { "key": "ui.stat.energy", "value": "N\u0103ng l\u01b0\u1ee3ng" },
-    { "key": "ui.stat.exp", "value": "EXP" },
-    { "key": "ui.stat.attack", "value": "T\u1ea5n c\u00f4ng" },
-    { "key": "ui.stat.defense", "value": "Ph\u00f2ng th\u1ee7" },
-    { "key": "ui.stat.speed", "value": "T\u1ed1c \u0111\u1ed9" },
-    { "key": "ui.stat.crit_rate", "value": "T\u1ef7 l\u1ec7 ch\u00ed m\u1ea1ng" },
-    { "key": "ui.stat.attack_speed", "value": "T\u1ed1c \u0111\u1ed9 \u0111\u00e1nh" },
-    { "key": "ui.player.level", "value": "Lv. {0}" },
-    { "key": "ui.time.spring", "value": "Xu\u00e2n" },
-    { "key": "ui.time.summer", "value": "H\u1ea1" },
-    { "key": "ui.time.fall", "value": "Thu" },
-    { "key": "ui.time.winter", "value": "\u0110\u00f4ng" },
-    { "key": "ui.time.day", "value": "Ng\u00e0y {0}" },
-    { "key": "ui.time.gold", "value": "V\u00e0ng" },
-    { "key": "ui.rarity.common", "value": "Th\u01b0\u1eddng" },
-    { "key": "ui.rarity.uncommon", "value": "Kh\u00f4ng ph\u1ed5 bi\u1ebfn" },
-    { "key": "ui.rarity.rare", "value": "Hi\u1ebfm" },
-    { "key": "ui.rarity.epic", "value": "S\u1eed thi" },
-    { "key": "ui.category.weapon", "value": "V\u0169 kh\u00ed" },
-    { "key": "ui.category.tool", "value": "C\u00f4ng c\u1ee5" },
-    { "key": "ui.category.material", "value": "Nguy\u00ean li\u1ec7u" },
-    { "key": "ui.category.food", "value": "Th\u1ef1c ph\u1ea9m" },
-    { "key": "ui.category.potion", "value": "Thu\u1ed1c" },
-    { "key": "ui.category.seed", "value": "H\u1ea1t gi\u1ed1ng" },
-    { "key": "ui.category.crop", "value": "N\u00f4ng s\u1ea3n" },
-    { "key": "ui.category.animal_product", "value": "S\u1ea3n ph\u1ea9m ch\u0103n nu\u00f4i" },
-    { "key": "ui.category.placeable", "value": "C\u00f3 th\u1ec3 \u0111\u1eb7t" },
-    { "key": "ui.category.accessory", "value": "Ph\u1ee5 ki\u1ec7n" },
-    { "key": "ui.dialogue.talk", "value": "N\u00f3i chuy\u1ec7n" },
-    { "key": "ui.dialogue.goodbye", "value": "T\u1ea1m bi\u1ec7t" },
-    { "key": "ui.dialogue.default_interaction_line", "value": "C\u1eadu mu\u1ed1n l\u00e0m g\u00ec?" },
-    { "key": "ui.shop.open", "value": "C\u1eeda h\u00e0ng" },
-    { "key": "ui.shop.buy", "value": "Mua" },
-    { "key": "ui.shop.sell", "value": "B\u00e1n" },
-    { "key": "ui.shop.title", "value": "C\u1eeda h\u00e0ng c\u1ee7a {0}" },
-    { "key": "ui.shop.your_inventory", "value": "T\u00fai \u0111\u1ed3 c\u1ee7a b\u1ea1n" },
-    { "key": "ui.shop.sellable_items", "value": "V\u1eadt ph\u1ea9m c\u00f3 th\u1ec3 b\u00e1n" },
-    { "key": "ui.shop.sell_empty_hint", "value": "Ch\u1ecdn v\u1eadt ph\u1ea9m t\u1eeb t\u00fai \u0111\u1ed3 \u0111\u1ec3 b\u00e1n." },
-    { "key": "ui.shop.total", "value": "T\u1ed5ng ti\u1ec1n:" },
-    { "key": "ui.shop.quick_select", "value": "Ch\u1ecdn nhanh" },
-    { "key": "ui.scene.enter", "value": "\u0110i v\u00e0o" },
-    { "key": "ui.quest.accept", "value": "Nh\u1eadn nhi\u1ec7m v\u1ee5" },
-    { "key": "ui.quest.view", "value": "Xem nhi\u1ec7m v\u1ee5" },
-    { "key": "ui.quest.complete", "value": "Tr\u1ea3 nhi\u1ec7m v\u1ee5" },
-    { "key": "ui.quest.completed", "value": "Nhi\u1ec7m v\u1ee5 \u0111\u00e3 ho\u00e0n th\u00e0nh" },
-    { "key": "ui.quest.state.not_started", "value": "Ch\u01b0a nh\u1eadn" },
-    { "key": "ui.quest.state.in_progress", "value": "\u0110ang l\u00e0m" },
-    { "key": "ui.quest.state.completed", "value": "Ho\u00e0n th\u00e0nh" },
-    { "key": "npc.farmer.name", "value": "N\u00f4ng d\u00e2n" },
-    { "key": "dialogue.sample.farmer.hello", "value": "Ch\u00e0o c\u1eadu! H\u00f4m nay ru\u1ed9ng nh\u00ecn \u1ed5n \u0111\u1ea5y. C\u1eadu c\u1ea7n t\u00f4i ch\u1ec9 v\u00e0i vi\u1ec7c kh\u00f4ng?" },
-    { "key": "dialogue.sample.farmer.old_friend", "value": "L\u1ea1i g\u1eb7p c\u1eadu r\u1ed3i. N\u1ebfu r\u1ea3nh th\u00ec t\u00f4i c\u00f3 v\u00e0i vi\u1ec7c ngo\u00e0i \u0111\u1ed3ng c\u1ea7n nh\u1edd." },
-    { "key": "dialogue.sample.farmer.offer_work", "value": "T\u00f4i c\u1ea7n v\u00e0i c\u1ee7 c\u00e0 r\u1ed1t t\u01b0\u01a1i. N\u1ebfu c\u1eadu mang t\u1edbi, t\u00f4i s\u1ebd tr\u1ea3 c\u00f4ng x\u1ee9ng \u0111\u00e1ng." },
-    { "key": "dialogue.sample.farmer.accepted", "value": "T\u1ed1t l\u1eafm. Khi n\u00e0o chu\u1ea9n b\u1ecb xong th\u00ec quay l\u1ea1i g\u1eb7p t\u00f4i nh\u00e9." },
-    { "key": "dialogue.sample.choice.ask_work", "value": "\u00d4ng c\u1ea7n t\u00f4i gi\u00fap g\u00ec kh\u00f4ng?" },
-    { "key": "dialogue.sample.choice.accept_work", "value": "\u0110\u01b0\u1ee3c, t\u00f4i nh\u1eadn vi\u1ec7c n\u00e0y." },
-    { "key": "dialogue.sample.choice.later", "value": "\u0110\u1ec3 sau nh\u00e9." },
-    { "key": "npc_banhang_name", "value": "B\u00e1c Ba" },
-    { "key": "npc_banhang_desc", "value": "Xin ch\u00e0o, c\u1eadu c\u1ea7n mua b\u00e1n g\u00ec kh\u00f4ng?" },
-    { "key": "npc_chetao_name", "value": "Ch\u00fa T\u01b0" },
-    { "key": "npc_chetao_desc", "value": "T\u00f4i c\u00f3 th\u1ec3 n\u00e2ng c\u1ea5p c\u00f4ng c\u1ee5 n\u1ebfu c\u1eadu c\u00f3 \u0111\u1ee7 nguy\u00ean li\u1ec7u." },
-    { "key": "npc_channuoi_name", "value": "Ch\u1ecb B\u1ea3y" },
-    { "key": "npc_channuoi_desc", "value": "T\u00f4i b\u00e1n v\u1eadt nu\u00f4i, th\u1ee9c \u0103n v\u00e0 thu mua s\u1ea3n ph\u1ea9m ch\u0103n nu\u00f4i." },
-    { "key": "npc_sukien_name", "value": "C\u00f4 N\u0103m" },
-    { "key": "npc_sukien_desc", "value": "T\u00f4i c\u00f3 v\u00e0i vi\u1ec7c nh\u1edd c\u1eadu gi\u00fap \u0111\u1ee1." },
-    { "key": "quest.sample_farmer_work.title", "value": "Vi\u1ec7c \u0111\u1ed3ng \u00e1ng \u0111\u1ea7u ti\u00ean" },
-    { "key": "quest.sample_farmer_work.desc", "value": "Thu ho\u1ea1ch 5 c\u1ee7 h\u00e0nh v\u00e0 mang l\u1ea1i cho ng\u01b0\u1eddi n\u00f4ng d\u00e2n." },
-    { "key": "quest.sample_farmer_work.objective.collect_onion", "value": "Thu ho\u1ea1ch h\u00e0nh t\u00e2y" },
-    { "key": "Axe01_name", "value": "R\u00ecu kh\u1edfi \u0111\u1ea7u" },
-    { "key": "Axe01_desc", "value": "D\u00f9ng \u0111\u1ec3 ch\u1eb7t c\u00e2y v\u00e0 d\u1ecdn g\u1ed7 tr\u00ean n\u00f4ng tr\u1ea1i." },
-    { "key": "Pickaxe01_name", "value": "Cu\u1ed1c ch\u00edm \u0111\u1ed3ng" },
-    { "key": "Pickaxe01_desc", "value": "D\u00f9ng \u0111\u1ec3 khai th\u00e1c \u0111\u00e1 v\u00e0 qu\u1eb7ng." },
-    { "key": "OreChunk01_name", "value": "M\u1ea3nh qu\u1eb7ng" },
-    { "key": "OreChunk01_desc", "value": "Nguy\u00ean li\u1ec7u th\u00f4 c\u00f3 th\u1ec3 d\u00f9ng \u0111\u1ec3 ch\u1ebf t\u1ea1o." },
-    { "key": "ore_node_name", "value": "M\u1ecf qu\u1eb7ng" },
-    { "key": "ore_node_desc", "value": "C\u00f3 th\u1ec3 khai th\u00e1c b\u1eb1ng cu\u1ed1c ch\u00edm." },
-    { "key": "enemy_01_name", "value": "Qu\u00e1i \u0111\u1ed3ng hoang" },
-    { "key": "enemy_01_desc", "value": "Sinh v\u1eadt lang thang, s\u1ebd t\u1ea5n c\u00f4ng khi l\u1ea1i g\u1ea7n." },
-    { "key": "s5.ai.tip.water_crops", "value": "Tr\u1eddi n\u1eafng, \u0111\u1ea5t kh\u00f4. T\u01b0\u1edbi c\u00e2y tr\u01b0\u1edbc khi h\u1ebft ng\u00e0y." },
-    { "key": "s5.ai.tip.rain_waters_crops", "value": "M\u01b0a s\u1ebd t\u01b0\u1edbi c\u00e2y thay b\u1ea1n. D\u00f9ng th\u1eddi gian \u0111\u00f3 \u0111\u1ec3 khai m\u1ecf ho\u1eb7c l\u00e0m nhi\u1ec7m v\u1ee5." },
-    { "key": "s5.ai.tip.visit_mine_for_materials", "value": "Gh\u00e9 m\u1ecf \u0111\u1ec3 t\u00ecm qu\u1eb7ng v\u00e0 nguy\u00ean li\u1ec7u n\u00e2ng c\u1ea5p." },
-    { "key": "s5.ai.tip.keep_progressing", "value": "Ti\u1ebfp t\u1ee5c tr\u1ed3ng tr\u1eadt, giao d\u1ecbch v\u00e0 ho\u00e0n th\u00e0nh nhi\u1ec7m v\u1ee5 \u0111\u1ec3 m\u1edf kh\u00f3a b\u01b0\u1edbc ti\u1ebfp theo." },
-    { "key": "s5.story.day01.title", "value": "Ng\u00e0y \u0111\u1ea7u ti\u00ean" },
-    { "key": "s5.story.day01.body", "value": "Ch\u00e0o m\u1eebng \u0111\u1ebfn n\u00f4ng tr\u1ea1i. Ki\u1ec3m tra c\u00f4ng c\u1ee5, tr\u1ed3ng h\u1ea1t gi\u1ed1ng \u0111\u1ea7u ti\u00ean v\u00e0 h\u1ecdc nh\u1ecbp s\u1ed1ng h\u00e0ng ng\u00e0y." },
-    { "key": "s5.story.day03.title", "value": "N\u1ec1 n\u1ebfp n\u00f4ng tr\u1ea1i" },
-    { "key": "s5.story.day03.body", "value": "Sau v\u00e0i ng\u00e0y, thu ho\u1ea1ch n\u00f4ng s\u1ea3n, b\u00e1n hoa l\u1ee3i v\u00e0 chu\u1ea9n b\u1ecb cho chuy\u1ebfn kh\u00e1m ph\u00e1 ti\u1ebfp theo." },
-    { "key": "item.seed.spring.lettuce.name", "value": "H\u1ea1t x\u00e0 l\u00e1ch" },
-    { "key": "item.seed.spring.lettuce.desc", "value": "H\u1ea1t gi\u1ed1ng m\u00f9a xu\u00e2n. L\u1edbn nhanh trong 3 ng\u00e0y." },
-    { "key": "item.crop.spring.lettuce.name", "value": "X\u00e0 l\u00e1ch" },
-    { "key": "item.crop.spring.lettuce.desc", "value": "Rau xanh m\u00f9a xu\u00e2n. D\u00f9ng \u0111\u1ec3 l\u00e0m salad v\u00e0 sandwich." },
-    { "key": "item.seed.spring.turnip.name", "value": "H\u1ea1t c\u1ee7 c\u1ea3i tr\u1eafng" },
-    { "key": "item.seed.spring.turnip.desc", "value": "H\u1ea1t gi\u1ed1ng c\u01a1 b\u1ea3n, thu h\u1ed3i v\u1ed1n nhanh sau 4 ng\u00e0y." },
-    { "key": "item.crop.spring.turnip.name", "value": "C\u1ee7 c\u1ea3i tr\u1eafng" },
-    { "key": "item.crop.spring.turnip.desc", "value": "N\u00f4ng s\u1ea3n c\u01a1 b\u1ea3n. D\u00f9ng \u0111\u1ec3 n\u1ea5u soup ho\u1eb7c d\u01b0a mu\u1ed1i." },
-    { "key": "item.seed.spring.radish.name", "value": "H\u1ea1t c\u1ee7 c\u1ea3i \u0111\u1ecf" },
-    { "key": "item.seed.spring.radish.desc", "value": "H\u1ea1t gi\u1ed1ng m\u00f9a xu\u00e2n, thu ho\u1ea1ch sau 5 ng\u00e0y." },
-    { "key": "item.crop.spring.radish.name", "value": "C\u1ee7 c\u1ea3i \u0111\u1ecf" },
-    { "key": "item.crop.spring.radish.desc", "value": "Ngon v\u00e0 gi\u00f2n. D\u00f9ng \u0111\u1ec3 l\u00e0m salad v\u00e0 d\u01b0a mu\u1ed1i." },
-    { "key": "item.seed.spring.potato.name", "value": "H\u1ea1t khoai t\u00e2y" },
-    { "key": "item.seed.spring.potato.desc", "value": "H\u1ea1t gi\u1ed1ng ph\u1ed5 bi\u1ebfn, thu ho\u1ea1ch sau 6 ng\u00e0y." },
-    { "key": "item.crop.spring.potato.name", "value": "Khoai t\u00e2y" },
-    { "key": "item.crop.spring.potato.desc", "value": "N\u00f4ng s\u1ea3n v\u1ea1n n\u0103ng. D\u00f9ng \u0111\u1ec3 chi\u00ean, n\u1ea5u soup, ho\u1eb7c \u1ee7 Vodka." },
-    { "key": "item.seed.spring.asparagus.name", "value": "H\u1ea1t m\u0103ng t\u00e2y" },
-    { "key": "item.seed.spring.asparagus.desc", "value": "H\u1ea1t gi\u1ed1ng cao c\u1ea5p, t\u00e1i thu ho\u1ea1ch sau m\u1ed7i 3 ng\u00e0y." },
-    { "key": "item.crop.spring.asparagus.name", "value": "M\u0103ng t\u00e2y" },
-    { "key": "item.crop.spring.asparagus.desc", "value": "Rau cao c\u1ea5p. D\u00f9ng l\u00e0m soup m\u0103ng ho\u1eb7c x\u00e0o." },
-    { "key": "item.seed.spring.tulip.name", "value": "H\u1ea1t hoa tulip" },
-    { "key": "item.seed.spring.tulip.desc", "value": "H\u1ea1t hoa m\u00f9a xu\u00e2n. Thu ho\u1ea1ch sau 5 ng\u00e0y." },
-    { "key": "item.crop.spring.tulip.name", "value": "Hoa Tulip" },
-    { "key": "item.crop.spring.tulip.desc", "value": "Hoa \u0111\u1eb9p m\u00f9a xu\u00e2n. D\u00f9ng l\u00e0m qu\u00e0 NPC ho\u1eb7c nhu\u1ed9m m\u00e0u." },
-    { "key": "item.seed.spring.cauliflower.name", "value": "H\u1ea1t s\u00fap l\u01a1 tr\u1eafng" },
-    { "key": "item.seed.spring.cauliflower.desc", "value": "H\u1ea1t gi\u1ed1ng cao c\u1ea5p, thu ho\u1ea1ch sau 12 ng\u00e0y. L\u1ee3i nhu\u1eadn cao." },
-    { "key": "item.crop.spring.cauliflower.name", "value": "S\u00fap l\u01a1 tr\u1eafng" },
-    { "key": "item.crop.spring.cauliflower.desc", "value": "N\u00f4ng s\u1ea3n gi\u00e1 tr\u1ecb. D\u00f9ng \u0111\u1ec3 n\u1ea5u gratin v\u00e0 soup kem." },
-    { "key": "item.seed.spring.strawberry.name", "value": "H\u1ea1t d\u00e2u t\u00e2y" },
-    { "key": "item.seed.spring.strawberry.desc", "value": "H\u1ea1t gi\u1ed1ng t\u00e1i thu ho\u1ea1ch, th\u1eddi gian 8+4 ng\u00e0y." },
-    { "key": "item.crop.spring.strawberry.name", "value": "D\u00e2u t\u00e2y" },
-    { "key": "item.crop.spring.strawberry.desc", "value": "Qu\u1ea3 ng\u1ecdt m\u00f9a xu\u00e2n. D\u00f9ng l\u00e0m m\u1ee9t, b\u00e1nh, ho\u1eb7c qu\u00e0 NPC." },
-    { "key": "item.seed.summer.wheat.name", "value": "H\u1ea1t l\u00faa m\u00ec" },
-    { "key": "item.seed.summer.wheat.desc", "value": "H\u1ea1t c\u01a1 b\u1ea3n m\u00f9a h\u1ea1. Thu ho\u1ea1ch sau 4 ng\u00e0y." },
-    { "key": "item.crop.summer.wheat.name", "value": "L\u00faa m\u00ec" },
-    { "key": "item.crop.summer.wheat.desc", "value": "Nguy\u00ean li\u1ec7u quan tr\u1ecdng. Xay th\u00e0nh b\u1ed9t m\u00ec \u0111\u1ec3 n\u1ea5u \u0103n." },
-    { "key": "item.seed.summer.tomato.name", "value": "H\u1ea1t c\u00e0 chua" },
-    { "key": "item.seed.summer.tomato.desc", "value": "H\u1ea1t t\u00e1i thu ho\u1ea1ch m\u00f9a h\u1ea1, 11+4 ng\u00e0y." },
-    { "key": "item.crop.summer.tomato.name", "value": "C\u00e0 chua" },
-    { "key": "item.crop.summer.tomato.desc", "value": "Nguy\u00ean li\u1ec7u n\u1ea5u \u0103n \u0111a n\u0103ng. D\u00f9ng l\u00e0m salad, pizza, s\u1ed1t." },
-    { "key": "item.seed.summer.red_pepper.name", "value": "H\u1ea1t \u1edbt \u0111\u1ecf" },
-    { "key": "item.seed.summer.red_pepper.desc", "value": "H\u1ea1t t\u00e1i thu ho\u1ea1ch, 7+3 ng\u00e0y." },
-    { "key": "item.crop.summer.red_pepper.name", "value": "\u1eact \u0111\u1ecf" },
-    { "key": "item.crop.summer.red_pepper.desc", "value": "Cay v\u00e0 \u0111\u1ebb. D\u00f9ng x\u00e0o ho\u1eb7c ch\u1ebf bi\u1ebfn t\u01b0\u01a1ng \u1edbt." },
-    { "key": "item.seed.summer.yellow_pepper.name", "value": "H\u1ea1t \u1edbt v\u00e0ng" },
-    { "key": "item.seed.summer.yellow_pepper.desc", "value": "H\u1ea1t t\u00e1i thu ho\u1ea1ch, 7+3 ng\u00e0y." },
-    { "key": "item.crop.summer.yellow_pepper.name", "value": "\u1eact v\u00e0ng" },
-    { "key": "item.crop.summer.yellow_pepper.desc", "value": "Ng\u1ecdt nh\u1eb9 v\u00e0 \u0111\u1eb9p m\u1eaft. D\u00f9ng x\u00e0o ho\u1eb7c l\u00e0m qu\u00e0." },
-    { "key": "item.seed.summer.corn.name", "value": "H\u1ea1t ng\u00f4" },
-    { "key": "item.seed.summer.corn.desc", "value": "H\u1ea1t t\u00e1i thu ho\u1ea1ch, c\u00f3 th\u1ec3 tr\u1ed3ng xuy\u00ean m\u00f9a H\u1ea1-Thu." },
-    { "key": "item.crop.summer.corn.name", "value": "Ng\u00f4" },
-    { "key": "item.crop.summer.corn.desc", "value": "L\u01b0\u01a1ng th\u1ef1c \u0111a d\u1ee5ng. Xay d\u1ea7u ng\u00f4 ho\u1eb7c n\u01b0\u1edbng." },
-    { "key": "item.seed.summer.blueberry.name", "value": "H\u1ea1t vi\u1ec7t qu\u1ea5t" },
-    { "key": "item.seed.summer.blueberry.desc", "value": "H\u1ea1t gi\u1ed1ng t\u00e1i thu ho\u1ea1ch, m\u1ed7i l\u1ea7n ra 3 qu\u1ea3." },
-    { "key": "item.crop.summer.blueberry.name", "value": "Vi\u1ec7t qu\u1ea5t" },
-    { "key": "item.crop.summer.blueberry.desc", "value": "Qu\u1ea3 m\u1ecdi n\u01b0\u1edbc. D\u00f9ng l\u00e0m m\u1ee9t, n\u01b0\u1edbc \u00e9p ho\u1eb7c n\u1ea5u b\u00e1nh." },
-    { "key": "item.seed.summer.melon.name", "value": "H\u1ea1t d\u01b0a h\u1ea5u" },
-    { "key": "item.seed.summer.melon.desc", "value": "H\u1ea1t gi\u1ed1ng gi\u00e1 tr\u1ecb, thu ho\u1ea1ch sau 12 ng\u00e0y." },
-    { "key": "item.crop.summer.melon.name", "value": "D\u01b0a h\u1ea5u" },
-    { "key": "item.crop.summer.melon.desc", "value": "Qu\u1ea3 m\u00e1t l\u1ea1nh m\u00f9a h\u1ea1. B\u00e1n gi\u00e1 t\u1ed1t ho\u1eb7c l\u00e0m n\u01b0\u1edbc \u00e9p." },
-    { "key": "item.seed.summer.pineapple.name", "value": "H\u1ea1t d\u1ee9a" },
-    { "key": "item.seed.summer.pineapple.desc", "value": "H\u1ea1t gi\u1ed1ng ph\u00e1p, t\u00e1i thu ho\u1ea1ch m\u1ed7i 7 ng\u00e0y." },
-    { "key": "item.crop.summer.pineapple.name", "value": "D\u1ee9a" },
-    { "key": "item.crop.summer.pineapple.desc", "value": "Qu\u1ea3 h\u1ea1 gi\u00e1 tr\u1ecb. D\u00f9ng l\u00e0m n\u01b0\u1edbc \u00e9p, m\u1ee9t ho\u1eb7c pizza." },
-    { "key": "item.seed.fall.garlic.name", "value": "H\u1ea1t t\u1ecfi" },
-    { "key": "item.seed.fall.garlic.desc", "value": "H\u1ea1t m\u00f9a thu. Thu ho\u1ea1ch sau 4 ng\u00e0y." },
-    { "key": "item.crop.fall.garlic.name", "value": "T\u1ecfi" },
-    { "key": "item.crop.fall.garlic.desc", "value": "Nguy\u00ean li\u1ec7u n\u1ea5u \u0103n c\u1ed1t l\u00f5i. D\u00f9ng trong h\u01a1n 10 c\u00f4ng th\u1ee9c." },
-    { "key": "item.seed.fall.onion.name", "value": "H\u1ea1t h\u00e0nh t\u00e2y" },
-    { "key": "item.seed.fall.onion.desc", "value": "H\u1ea1t m\u00f9a thu. Thu ho\u1ea1ch sau 6 ng\u00e0y." },
-    { "key": "item.crop.fall.onion.name", "value": "H\u00e0nh t\u00e2y" },
-    { "key": "item.crop.fall.onion.desc", "value": "Gia v\u1ecb ph\u1ed5 bi\u1ebfn. D\u00f9ng trong h\u01a1n 8 c\u00f4ng th\u1ee9c n\u1ea5u \u0103n." },
-    { "key": "item.seed.fall.carrot.name", "value": "H\u1ea1t c\u00e0 r\u1ed1t" },
-    { "key": "item.seed.fall.carrot.desc", "value": "H\u1ea1t m\u00f9a thu. Thu ho\u1ea1ch sau 6 ng\u00e0y." },
-    { "key": "item.crop.fall.carrot.name", "value": "C\u00e0 r\u1ed1t" },
-    { "key": "item.crop.fall.carrot.desc", "value": "Rau c\u1ee7 ngon. D\u00f9ng n\u1ea5u soup ho\u1eb7c n\u01b0\u1edbng." },
-    { "key": "item.seed.fall.eggplant.name", "value": "H\u1ea1t c\u00e0 t\u00edm" },
-    { "key": "item.seed.fall.eggplant.desc", "value": "H\u1ea1t t\u00e1i thu ho\u1ea1ch, 5+5 ng\u00e0y." },
-    { "key": "item.crop.fall.eggplant.name", "value": "C\u00e0 t\u00edm" },
-    { "key": "item.crop.fall.eggplant.desc", "value": "Rau m\u00f9a thu. D\u00f9ng n\u01b0\u1edbng ho\u1eb7c l\u00e0m Parmesan." },
-    { "key": "item.seed.fall.cabbage.name", "value": "H\u1ea1t b\u1eafp c\u1ea3i" },
-    { "key": "item.seed.fall.cabbage.desc", "value": "H\u1ea1t m\u00f9a thu. Thu ho\u1ea1ch sau 8 ng\u00e0y." },
-    { "key": "item.crop.fall.cabbage.name", "value": "B\u1eafp c\u1ea3i" },
-    { "key": "item.crop.fall.cabbage.desc", "value": "Rau cu\u1ed1n d\u1ecbo ng\u1ecdt. D\u00f9ng l\u00e0m cabbage roll ho\u1eb7c kimchi." },
-    { "key": "item.seed.fall.broccoli.name", "value": "H\u1ea1t b\u00f4ng c\u1ea3i xanh" },
-    { "key": "item.seed.fall.broccoli.desc", "value": "H\u1ea1t m\u00f9a thu. Thu ho\u1ea1ch sau 8 ng\u00e0y." },
-    { "key": "item.crop.fall.broccoli.name", "value": "B\u00f4ng c\u1ea3i xanh" },
-    { "key": "item.crop.fall.broccoli.desc", "value": "Rau xanh gi\u00e0u dinh d\u01b0\u1ee1ng. D\u00f9ng x\u00e0o t\u1ecfi ho\u1eb7c n\u1ea5u soup." },
-    { "key": "item.seed.fall.grape.name", "value": "H\u1ea1t nho" },
-    { "key": "item.seed.fall.grape.desc", "value": "H\u1ea1t t\u00e1i thu ho\u1ea1ch m\u00f9a thu, 10+3 ng\u00e0y." },
-    { "key": "item.crop.fall.grape.name", "value": "Nho" },
-    { "key": "item.crop.fall.grape.desc", "value": "Qu\u1ea3 m\u00f9a thu. \u1ee4 Keg \u0111\u1ec3 l\u00e0m r\u01b0\u1ee3u nho gi\u00e1 c\u1ef1c cao." },
-    { "key": "item.seed.fall.pumpkin.name", "value": "H\u1ea1t b\u00ed ng\u00f4" },
-    { "key": "item.seed.fall.pumpkin.desc", "value": "H\u1ea1t gi\u1ed1ng cao c\u1ea5p. Thu ho\u1ea1ch sau 13 ng\u00e0y." },
-    { "key": "item.crop.fall.pumpkin.name", "value": "B\u00ed ng\u00f4" },
-    { "key": "item.crop.fall.pumpkin.desc", "value": "N\u00f4ng s\u1ea3n gi\u00e1 tr\u1ecb nh\u1ea5t m\u00f9a thu. D\u00f9ng n\u1ea5u soup ho\u1eb7c l\u00e0m \u0111\u00e8n Jack." },
-    { "key": "item.seed.winter.spinach.name", "value": "H\u1ea1t rau ch\u00e2n v\u1ecbt" },
-    { "key": "item.seed.winter.spinach.desc", "value": "H\u1ea1t m\u00f9a \u0111\u00f4ng. Thu ho\u1ea1ch sau 7 ng\u00e0y." },
-    { "key": "item.crop.winter.spinach.name", "value": "Rau ch\u00e2n v\u1ecbt" },
-    { "key": "item.crop.winter.spinach.desc", "value": "Rau m\u00f9a \u0111\u00f4ng gi\u00e0u dinh d\u01b0\u1ee1ng. D\u00f9ng l\u00e0m smoothie v\u00e0 soup." },
-    { "key": "item.seed.winter.green_bean.name", "value": "H\u1ea1t \u0111\u1eadu que" },
-    { "key": "item.seed.winter.green_bean.desc", "value": "H\u1ea1t t\u00e1i thu ho\u1ea1ch m\u00f9a \u0111\u00f4ng." },
-    { "key": "item.crop.winter.green_bean.name", "value": "\u0110\u1eadu que" },
-    { "key": "item.crop.winter.green_bean.desc", "value": "Rau x\u1eed l\u00fd nhanh. D\u00f9ng x\u00e0o ho\u1eb7c n\u1ea5u soup." },
-    { "key": "item.seed.winter.cucumber.name", "value": "H\u1ea1t d\u01b0a leo" },
-    { "key": "item.seed.winter.cucumber.desc", "value": "H\u1ea1t m\u00f9a \u0111\u00f4ng. Thu ho\u1ea1ch sau 6 ng\u00e0y." },
-    { "key": "item.crop.winter.cucumber.name", "value": "D\u01b0a leo" },
-    { "key": "item.crop.winter.cucumber.desc", "value": "Thanh m\u00e1t v\u00e0 gi\u00f2n. D\u00f9ng l\u00e0m salad ho\u1eb7c d\u01b0a mu\u1ed1i." },
-    { "key": "item.seed.winter.sweet_potato.name", "value": "H\u1ea1t khoai lang" },
-    { "key": "item.seed.winter.sweet_potato.desc", "value": "H\u1ea1t m\u00f9a \u0111\u00f4ng. Thu ho\u1ea1ch sau 8 ng\u00e0y." },
-    { "key": "item.crop.winter.sweet_potato.name", "value": "Khoai lang" },
-    { "key": "item.crop.winter.sweet_potato.desc", "value": "Ng\u1ecdt t\u1ef1 nhi\u00ean. D\u00f9ng n\u01b0\u1edbng b\u01a1 ho\u1eb7c l\u00e0m b\u00e1nh." },
-    { "key": "item.seed.winter.celery.name", "value": "H\u1ea1t c\u1ea7n t\u00e2y" },
-    { "key": "item.seed.winter.celery.desc", "value": "H\u1ea1t m\u00f9a \u0111\u00f4ng. Thu ho\u1ea1ch sau 5 ng\u00e0y." },
-    { "key": "item.crop.winter.celery.name", "value": "C\u1ea7n t\u00e2y" },
-    { "key": "item.crop.winter.celery.desc", "value": "Rau h\u01b0\u01a1ng v\u1ecb. D\u00f9ng l\u00e0m n\u01b0\u1edbc \u00e9p buff t\u1ed1c \u0111\u1ed9." },
-    { "key": "item.seed.winter.beet.name", "value": "H\u1ea1t c\u1ee7 d\u1ec1n" },
-    { "key": "item.seed.winter.beet.desc", "value": "H\u1ea1t m\u00f9a \u0111\u00f4ng. Thu ho\u1ea1ch sau 7 ng\u00e0y." },
-    { "key": "item.crop.winter.beet.name", "value": "C\u1ee7 d\u1ec1n" },
-    { "key": "item.crop.winter.beet.desc", "value": "M\u00e0u \u0111\u1ecf \u0111\u1eb9p. N\u01b0\u1edbc \u00e9p c\u1ee7 d\u1ec1n h\u1ed3i stamina m\u1ea1nh." },
-    { "key": "item.seed.winter.winter_flower.name", "value": "H\u1ea1t hoa tuy\u1ebft" },
-    { "key": "item.seed.winter.winter_flower.desc", "value": "H\u1ea1t hoa m\u00f9a \u0111\u00f4ng. Thu ho\u1ea1ch sau 8 ng\u00e0y." },
-    { "key": "item.crop.winter.winter_flower.name", "value": "Hoa Tuy\u1ebft" },
-    { "key": "item.crop.winter.winter_flower.desc", "value": "Hoa hi\u1ebfm m\u00f9a \u0111\u00f4ng. Gi\u00e1 tr\u1ecb qu\u00e0 t\u1eb7ng NPC c\u1ef1c cao." },
-    { "key": "item.seed.tree.apple.name", "value": "C\u00e2y gi\u1ed1ng t\u00e1o" },
-    { "key": "item.seed.tree.apple.desc", "value": "C\u00e2y \u0103n qu\u1ea3 m\u00f9a thu. Cho qu\u1ea3 sau 28 ng\u00e0y." },
-    { "key": "item.crop.tree.apple.name", "value": "T\u00e1o" },
-    { "key": "item.crop.tree.apple.desc", "value": "Qu\u1ea3 m\u00f9a thu. D\u00f9ng l\u00e0m b\u00e1nh t\u00e1o, gi\u1ea5m t\u00e1o, ho\u1eb7c n\u01b0\u1edbc \u00e9p." },
-    { "key": "item.seed.tree.cherry.name", "value": "C\u00e2y gi\u1ed1ng anh \u0111\u00e0o" },
-    { "key": "item.seed.tree.cherry.desc", "value": "C\u00e2y \u0103n qu\u1ea3 m\u00f9a xu\u00e2n. Cho qu\u1ea3 sau 28 ng\u00e0y." },
-    { "key": "item.crop.tree.cherry.name", "value": "Anh \u0111\u00e0o" },
-    { "key": "item.crop.tree.cherry.desc", "value": "Qu\u1ea3 nhung h\u1ed3ng. D\u00f9ng l\u00e0m m\u1ee9t ho\u1eb7c qu\u00e0 NPC." },
-    { "key": "item.seed.tree.plum.name", "value": "C\u00e2y gi\u1ed1ng m\u1eadn" },
-    { "key": "item.seed.tree.plum.desc", "value": "C\u00e2y \u0103n qu\u1ea3 m\u00f9a h\u1ea1. Cho qu\u1ea3 sau 28 ng\u00e0y." },
-    { "key": "item.crop.tree.plum.name", "value": "M\u1eadn" },
-    { "key": "item.crop.tree.plum.desc", "value": "Qu\u1ea3 chua ng\u1ecdt. D\u00f9ng \u1ee7 r\u01b0\u1ee3u m\u1eadn cao c\u1ea5p." },
-    { "key": "item.seed.tree.pear.name", "value": "C\u00e2y gi\u1ed1ng l\u00ea" },
-    { "key": "item.seed.tree.pear.desc", "value": "C\u00e2y \u0103n qu\u1ea3 m\u00f9a thu. Cho qu\u1ea3 sau 28 ng\u00e0y." },
-    { "key": "item.crop.tree.pear.name", "value": "L\u00ea" },
-    { "key": "item.crop.tree.pear.desc", "value": "Qu\u1ea3 m\u00e1t l\u1ea1nh. D\u00f9ng l\u00e0m n\u01b0\u1edbc \u00e9p v\u00e0 m\u1ee9t l\u00ea." },
-    { "key": "item.mat.stone.name", "value": "\u0110\u00e1" },
-    { "key": "item.mat.stone.desc", "value": "V\u1eadt li\u1ec7u x\u00e2y d\u1ef1ng c\u01a1 b\u1ea3n. D\u00f9ng x\u00e2y l\u00f2 nung v\u00e0 h\u00e0ng r\u00e0o." },
-    { "key": "item.mat.copper_ore.name", "value": "Qu\u1eb7ng \u0111\u1ed3ng" },
-    { "key": "item.mat.copper_ore.desc", "value": "Qu\u1eb7ng c\u1ea5p 1. Nung th\u00e0nh th\u1ecfi \u0111\u1ed3ng \u0111\u1ec3 n\u00e2ng c\u1ea5p." },
-    { "key": "item.mat.copper_bar.name", "value": "Th\u1ecfi \u0111\u1ed3ng" },
-    { "key": "item.mat.copper_bar.desc", "value": "Kim lo\u1ea1i \u0111\u01b0\u1ee3c tinh luy\u1ec7n. D\u00f9ng l\u00e0m c\u00f4ng c\u1ee5 T2 v\u00e0 sprinkler." },
-    { "key": "item.mat.iron_ore.name", "value": "Qu\u1eb7ng s\u1eaft" },
-    { "key": "item.mat.iron_ore.desc", "value": "Qu\u1eb7ng c\u1ea5p 2. Nung th\u00e0nh th\u1ecfi s\u1eaft." },
-    { "key": "item.mat.iron_bar.name", "value": "Th\u1ecfi s\u1eaft" },
-    { "key": "item.mat.iron_bar.desc", "value": "Kim lo\u1ea1i ch\u1eafc ch\u1eafn. D\u00f9ng l\u00e0m c\u00f4ng c\u1ee5 T3 v\u00e0 m\u00e1y m\u00f3c." },
-    { "key": "item.mat.gold_ore.name", "value": "Qu\u1eb7ng v\u00e0ng" },
-    { "key": "item.mat.gold_ore.desc", "value": "Qu\u1eb7ng qu\u00fd hi\u1ebfm c\u1ea5p 3. Nung th\u00e0nh th\u1ecfi v\u00e0ng." },
-    { "key": "item.mat.gold_bar.name", "value": "Th\u1ecfi v\u00e0ng" },
-    { "key": "item.mat.gold_bar.desc", "value": "Kim lo\u1ea1i qu\u00fd. D\u00f9ng c\u00f4ng c\u1ee5 T4 v\u00e0 sprinkler cao c\u1ea5p." },
-    { "key": "item.mat.crystal.name", "value": "Pha l\u00ea" },
-    { "key": "item.mat.crystal.desc", "value": "\u0110\u00e1 qu\u00fd hi\u1ebfm. D\u00f9ng l\u00e0m c\u1ed9t thu l\u00f4i v\u00e0 \u0111\u00e8n." },
-    { "key": "item.mat.crystal_shard.name", "value": "M\u1ea3nh pha l\u00ea" },
-    { "key": "item.mat.crystal_shard.desc", "value": "Pha l\u00ea \u0111\u00e3 qua tinh ch\u1ebf. D\u00f9ng ch\u1ebf t\u1ea1o." },
-    { "key": "item.mat.ruby.name", "value": "H\u1ed3ng ng\u1ecdc" },
-    { "key": "item.mat.ruby.desc", "value": "\u0110\u00e1 qu\u00fd \u0111\u1ecf r\u1ef1c. D\u00f9ng l\u00e0m trang s\u1ee9c cao c\u1ea5p ho\u1eb7c qu\u00e0 NPC." },
-    { "key": "item.mat.emerald.name", "value": "L\u1ee5c b\u1ea3o" },
-    { "key": "item.mat.emerald.desc", "value": "\u0110\u00e1 qu\u00fd xanh hi\u1ebfm. D\u00f9ng l\u00e0m charm may m\u1eafn." },
-    { "key": "item.mat.coal.name", "value": "Than" },
-    { "key": "item.mat.coal.desc", "value": "Nhi\u00ean li\u1ec7u cho l\u00f2 nung. C\u1ea7n \u0111\u1ec3 nung qu\u1eb7ng." },
-    { "key": "item.mat.hardwood.name", "value": "G\u1ed7 c\u1ee9ng" },
-    { "key": "item.mat.hardwood.desc", "value": "G\u1ed7 ch\u1ea5t l\u01b0\u1ee3ng cao t\u1eeb c\u00e2y s\u1ed3i. D\u00f9ng xây d\u1ef1ng v\u00e0 ch\u1ebf t\u1ea1o." },
-    { "key": "item.mat.wood.name", "value": "Gỗ" },
-    { "key": "item.mat.wood.desc", "value": "Gỗ cơ bản thu từ cây. Dùng để làm hàng rào, rương và nâng cấp dụng cụ." },
-    { "key": "item.mat.softwood.name", "value": "G\u1ed7 nh\u1eb9" },
-    { "key": "item.mat.softwood.desc", "value": "G\u1ed7 t\u1eeb c\u00e2y b\u1ea1ch d\u01b0\u01a1ng. D\u00f9ng l\u00e0m gi\u1ea5y v\u00e0 trang tr\u00ed." },
-    { "key": "item.mat.fiber.name", "value": "X\u01a1 th\u1ef1c v\u1eadt" },
-    { "key": "item.mat.fiber.desc", "value": "X\u01a1 t\u1eeb c\u1ecf d\u1ea1i. D\u00f9ng l\u00e0m d\u00e2y th\u1eebng v\u00e0 b\u00f9 nh\u00ecn." },
-    { "key": "item.mat.twig.name", "value": "C\u00e0nh nh\u1ecf" },
-    { "key": "item.mat.twig.desc", "value": "C\u00e0nh c\u00e2y r\u01a1i xu\u1ed1ng. D\u00f9ng l\u00e0m ch\u1ea5t \u0111\u1ed1t." },
-    { "key": "item.mat.oak_resin.name", "value": "Nh\u1ef1a s\u1ed3i" },
-    { "key": "item.mat.oak_resin.desc", "value": "Nh\u1ef1a t\u1eeb c\u00e2y s\u1ed3i. D\u00f9ng ch\u1ebf t\u1ea1o keo d\u00e1n m\u00e1y m\u00f3c." },
-    { "key": "item.mat.maple_syrup.name", "value": "M\u1eadt phong" },
-    { "key": "item.mat.maple_syrup.desc", "value": "Ch\u1ea5t ng\u1ecdt t\u1ef1 nhi\u00ean t\u1eeb c\u00e2y phong. D\u00f9ng n\u1ea5u \u0103n v\u00e0 b\u00e1n." },
-    { "key": "item.mat.pine_tar.name", "value": "Nh\u1ef1a th\u00f4ng" },
-    { "key": "item.mat.pine_tar.desc", "value": "Nh\u1ef1a th\u00f4ng d\u1ebb. D\u00f9ng l\u00e0m \u0111u\u1ed1c v\u00e0 keo ch\u1ed1ng n\u01b0\u1edbc." },
-    { "key": "item.mat.rope.name", "value": "D\u00e2y th\u1eebng" },
-    { "key": "item.mat.rope.desc", "value": "D\u00e2y th\u1eebng ch\u1eafc. Nguy\u00ean li\u1ec7u ch\u1ebf t\u1ea1o nhi\u1ec1u th\u1ee9." },
-    { "key": "item.mat.flour.name", "value": "B\u1ed9t m\u00ec" },
-    { "key": "item.mat.flour.desc", "value": "Xay t\u1eeb l\u00faa m\u00ec. Nguy\u00ean li\u1ec7u c\u01a1 b\u1ea3n \u0111\u1ec3 n\u1ea5u b\u00e1nh v\u00e0 pizza." },
-    { "key": "item.mat.sugar.name", "value": "\u0110\u01b0\u1eddng" },
-    { "key": "item.mat.sugar.desc", "value": "Xay t\u1eeb c\u1ee7 d\u1ec1n. D\u00f9ng l\u00e0m m\u1ee9t v\u00e0 b\u00e1nh ng\u1ecdt." },
-    { "key": "item.mat.corn_oil.name", "value": "D\u1ea7u ng\u00f4" },
-    { "key": "item.mat.corn_oil.desc", "value": "D\u1ea7u th\u1ef1c v\u1eadt t\u1eeb ng\u00f4. D\u00f9ng chi\u00ean v\u00e0 n\u1ea5u \u0103n." },
-    { "key": "item.mat.sunflower_oil.name", "value": "D\u1ea7u h\u01b0\u1edbng d\u01b0\u01a1ng" },
-    { "key": "item.mat.sunflower_oil.desc", "value": "D\u1ea7u t\u1eeb h\u1ea1t h\u01b0\u1edbng d\u01b0\u01a1ng. D\u00f9ng n\u1ea5u \u0103n." },
-    { "key": "item.forage.mushroom.brown.name", "value": "N\u1ea5m n\u00e2u" },
-    { "key": "item.forage.mushroom.brown.desc", "value": "N\u1ea5m ph\u1ed5 bi\u1ebfn trong r\u1eebng. H\u1ed3i 15 stamina khi \u0103n." },
-    { "key": "item.forage.mushroom.white.name", "value": "N\u1ea5m tr\u1eafng" },
-    { "key": "item.forage.mushroom.white.desc", "value": "N\u1ea5m s\u1ea1ch v\u00e0 l\u00e0nh m\u1ea1nh. D\u00f9ng n\u1ea5u soup kem." },
-    { "key": "item.forage.mushroom.orange.name", "value": "N\u1ea5m cam" },
-    { "key": "item.forage.mushroom.orange.desc", "value": "N\u1ea5m r\u1eebng s\u00e2u. H\u1ed3i 20 stamina v\u00e0 c\u00f3 t\u00e1c d\u1ee5ng gi\u1ea3i \u0111\u1ed9c." },
-    { "key": "item.forage.mushroom.purple.name", "value": "N\u1ea5m t\u00edm" },
-    { "key": "item.forage.mushroom.purple.desc", "value": "N\u1ea5m \u0111\u1ed9c hi\u1ebfm trong hang. Ch\u1ebf bi\u1ebfn th\u00e0nh thu\u1ed1c m\u1edbi an to\u00e0n." },
-    { "key": "item.forage.mushroom.green.name", "value": "N\u1ea5m xanh" },
-    { "key": "item.forage.mushroom.green.desc", "value": "N\u1ea5m \u0111\u1ea7m l\u1ea7y hi\u1ebfm. Ch\u1ebf bi\u1ebfn th\u00e0nh thu\u1ed1c t\u0103ng t\u1ed1c." },
-    { "key": "item.forage.flower.red.name", "value": "Hoa \u0111\u1ecf" },
-    { "key": "item.forage.flower.red.desc", "value": "Hoa d\u1ea1i m\u00f9a h\u1ea1. D\u00f9ng nhu\u1ed9m m\u00e0u \u0111\u1ecf v\u00e0 pha tr\u00e0." },
-    { "key": "item.forage.flower.pink.name", "value": "Hoa h\u1ed3ng" },
-    { "key": "item.forage.flower.pink.desc", "value": "Hoa qu\u00fd m\u00f9a xu\u00e2n. D\u00f9ng l\u00e0m qu\u00e0 NPC v\u00e0 n\u01b0\u1edbc hoa." },
-    { "key": "item.forage.flower.blue.name", "value": "Hoa xanh" },
-    { "key": "item.forage.flower.blue.desc", "value": "Hoa d\u1ea1i m\u00f9a thu. D\u00f9ng l\u00e0m thu\u1ed1c b\u00ecnh t\u0129nh." },
-    { "key": "item.forage.flower.yellow.name", "value": "Hoa h\u01b0\u1edbng d\u01b0\u01a1ng" },
-    { "key": "item.forage.flower.yellow.desc", "value": "Hoa v\u00e0ng r\u1ef1c r\u1ee1. H\u1ea1t d\u00f9ng l\u00e0m m\u00f3n \u0103n nh\u1eb9." },
-    { "key": "item.forage.flower.white.name", "value": "Hoa tr\u1eafng" },
-    { "key": "item.forage.flower.white.desc", "value": "Hoa hi\u1ebfm m\u00f9a \u0111\u00f4ng. Gi\u00e1 tr\u1ecb qu\u00e0 NPC cực cao." },
-    { "key": "item.forage.wild_root.name", "value": "R\u1ec5 c\u00e2y d\u1ea1i" },
-    { "key": "item.forage.wild_root.desc", "value": "R\u1ec5 c\u00e2y c\u00f3 d\u01b0\u1ee3c l\u1ef1c. D\u00f9ng l\u00e0m thu\u1ed1c v\u00e0 ph\u00e2n b\u00f3n." },
-    { "key": "item.animal.egg.name", "value": "Trứng" },
-    { "key": "item.animal.egg.desc", "value": "Sản phẩm chăn nuôi dùng để nấu ăn hoặc làm mayonnaise." },
-    { "key": "item.animal.milk.name", "value": "Sữa" },
-    { "key": "item.animal.milk.desc", "value": "Sữa tươi dùng cho nấu ăn và ép phô mai." },
-    { "key": "item.animal.wool.name", "value": "L\u00f4ng c\u1eebu" },
-    { "key": "item.animal.wool.desc", "value": "S\u1ea3n ph\u1ea9m t\u1eeb c\u1eebu. D\u1ec7t th\u00e0nh v\u1ea3i b\u1eb1ng m\u00e1y d\u1ec7t." },
-    { "key": "item.animal.truffle.name", "value": "N\u1ea5m Truffle" },
-    { "key": "item.animal.truffle.desc", "value": "L\u1ee3n r\u1eebng \u0111\u00e0o l\u00ean. N\u1ea5m hi\u1ebfm gi\u00e1 tr\u1ecb cực cao." },
-    { "key": "item.animal.mayonnaise.name", "value": "Mayonnaise" },
-    { "key": "item.animal.mayonnaise.desc", "value": "Ch\u1ebf bi\u1ebfn t\u1eeb tr\u1ee9ng. B\u00e1n gi\u00e1 cao h\u01a1n tr\u1ee9ng sống." },
-    { "key": "item.animal.cheese.name", "value": "Ph\u00f4 mai" },
-    { "key": "item.animal.cheese.desc", "value": "Ch\u1ebf bi\u1ebfn t\u1eeb s\u1eefa. D\u00f9ng l\u00e0m pizza v\u00e0 gratin." },
-    { "key": "item.animal.butter.name", "value": "B\u01a1" },
-    { "key": "item.animal.butter.desc", "value": "Ch\u1ebf bi\u1ebfn t\u1eeb s\u1eefa. D\u00f9ng n\u1ea5u b\u00e1nh v\u00e0 risotto." },
-    { "key": "item.animal.cloth.name", "value": "V\u1ea3i" },
-    { "key": "item.animal.cloth.desc", "value": "D\u1ec7t t\u1eeb l\u00f4ng c\u1eebu. D\u00f9ng l\u00e0m qu\u1ea7n \u00e1o b\u1ea3o h\u1ed9." },
-    { "key": "item.animal.truffle_oil.name", "value": "D\u1ea7u Truffle" },
-    { "key": "item.animal.truffle_oil.desc", "value": "D\u1ea7u tinh t\u1ebf t\u1eeb n\u1ea5m truffle. Gi\u00e1 tr\u1ecb cực cao." },
-    { "key": "item.animal.hay.name", "value": "C\u1ecf kh\u00f4" },
-    { "key": "item.animal.hay.desc", "value": "Th\u1ee9c \u0103n cho v\u1eadt nu\u00f4i. Ph\u1ea3i cho \u0103n h\u00e0ng ng\u00e0y." },
-    { "key": "item.drop.rat_tail.name", "value": "\u0110u\u00f4i chu\u1ed9t" },
-    { "key": "item.drop.rat_tail.desc", "value": "Nguy\u00ean li\u1ec7u t\u1eeb chu\u1ed9t hoang. D\u00f9ng l\u00e0m thu\u1ed1c gi\u1ea3i \u0111\u1ed9c." },
-    { "key": "item.drop.snake_skin.name", "value": "Da r\u1eafn" },
-    { "key": "item.drop.snake_skin.desc", "value": "Da r\u1eafn dai v\u00e0 ch\u1eafc. D\u00f9ng l\u00e0m d\u00e2y da." },
-    { "key": "item.drop.snake_venom.name", "value": "N\u1ecdc r\u1eafn" },
-    { "key": "item.drop.snake_venom.desc", "value": "N\u1ecdc \u0111\u1ed9c hi\u1ebfm. D\u00f9ng l\u00e0m thu\u1ed1c c\u1ef1c m\u1ea1nh." },
-    { "key": "item.drop.boar_meat.name", "value": "Th\u1ecbt l\u1ee3n r\u1eebng" },
-    { "key": "item.drop.boar_meat.desc", "value": "Th\u1ecbt t\u01b0\u01a1i t\u1eeb l\u1ee3n r\u1eebng. D\u00f9ng n\u1ea5u m\u00f3n \u0103n h\u1ed3i stamina cao." },
-    { "key": "item.drop.boar_tusk.name", "value": "Ng\u00e0 l\u1ee3n r\u1eebng" },
-    { "key": "item.drop.boar_tusk.desc", "value": "Ng\u00e0 c\u1ee9ng ch\u1eafc. D\u00f9ng trang tr\u00ed ho\u1eb7c b\u00e1n." },
-    { "key": "item.drop.hawk_feather.name", "value": "L\u00f4ng chim \u01b0ng" },
-    { "key": "item.drop.hawk_feather.desc", "value": "L\u00f4ng nh\u1eb9 v\u00e0 b\u1ec1n. D\u00f9ng nh\u1ed3i g\u1ed1i ho\u1eb7c l\u00e0m m\u0169i t\u00ean." },
-    { "key": "item.drop.bat_wing.name", "value": "C\u00e1nh d\u01a1i" },
-    { "key": "item.drop.bat_wing.desc", "value": "C\u00e1nh d\u01a1i khai th\u00e1c trong hang. D\u00f9ng l\u00e0m c\u1ed9t thu l\u00f4i." },
-    { "key": "item.drop.crab_shell.name", "value": "Mai cua \u0111\u00e1" },
-    { "key": "item.drop.crab_shell.desc", "value": "Mai c\u1ee9ng t\u1eeb cua hang. D\u00f9ng l\u00e0m khi\u00ean." },
-    { "key": "item.drop.mole_claw.name", "value": "Vu\u1ed1t chu\u1ed9t ch\u0169i" },
-    { "key": "item.drop.mole_claw.desc", "value": "Vu\u1ed1t s\u1eafc b\u00e9n. D\u00f9ng l\u00e0m charm \u0111\u00e0o m\u1ecf." },
-    { "key": "item.food.green_salad.name", "value": "Salad xanh" },
-    { "key": "item.food.green_salad.desc", "value": "M\u00f3n \u0103n nh\u1eb9. H\u1ed3i 35 stamina." },
-    { "key": "item.food.veggie_soup.name", "value": "Soup rau c\u1ee7" },
-    { "key": "item.food.veggie_soup.desc", "value": "Soup \u1ea5m l\u00f2ng. H\u1ed3i 55 stamina." },
-    { "key": "item.food.pumpkin_soup.name", "value": "Soup b\u00ed ng\u00f4" },
-    { "key": "item.food.pumpkin_soup.desc", "value": "Soup cao c\u1ea5p. H\u1ed3i 75 stamina, buff +10% stamina max trong 1 ng\u00e0y." },
-    { "key": "item.food.mushroom_soup.name", "value": "Soup kem n\u1ea5m" },
-    { "key": "item.food.mushroom_soup.desc", "value": "Soup th\u01a1m ng\u1ecdt. H\u1ed3i 60 stamina." },
-    { "key": "item.food.asparagus_soup.name", "value": "Soup m\u0103ng t\u00e2y" },
-    { "key": "item.food.asparagus_soup.desc", "value": "Soup tinh t\u1ebf. H\u1ed3i 50 stamina." },
-    { "key": "item.food.roasted_eggplant.name", "value": "C\u00e0 t\u00edm n\u01b0\u1edbng" },
-    { "key": "item.food.roasted_eggplant.desc", "value": "M\u00f3n n\u01b0\u1edbng th\u01a1m m\u00f9i. H\u1ed3i 40 stamina." },
-    { "key": "item.food.roasted_corn.name", "value": "Ng\u00f4 n\u01b0\u1edbng" },
-    { "key": "item.food.roasted_corn.desc", "value": "M\u00f3n \u0103n nh\u1eb9. H\u1ed3i 20 stamina." },
-    { "key": "item.food.french_fries.name", "value": "Khoai chi\u00ean" },
-    { "key": "item.food.french_fries.desc", "value": "Gi\u00f2n r\u1ee5m th\u01a1m ngon. H\u1ed3i 35 stamina." },
-    { "key": "item.food.garlic_broccoli.name", "value": "X\u00e0o t\u1ecfi b\u00f4ng c\u1ea3i" },
-    { "key": "item.food.garlic_broccoli.desc", "value": "X\u00e0o gi\u00f2n. H\u1ed3i 50 stamina, buff +15% t\u1ed1c \u0111\u1ed9 trong 3h." },
-    { "key": "item.food.stir_fry.name", "value": "Rau x\u00e0o th\u1eadp c\u1ea9m" },
-    { "key": "item.food.stir_fry.desc", "value": "X\u00e0o nhanh. H\u1ed3i 45 stamina, buff +10% t\u1ed1c \u0111\u1ed9 trong 3h." },
-    { "key": "item.food.bread.name", "value": "B\u00e1nh m\u00ec" },
-    { "key": "item.food.bread.desc", "value": "B\u00e1nh c\u01a1 b\u1ea3n. H\u1ed3i 25 stamina." },
-    { "key": "item.food.sandwich.name", "value": "Sandwich" },
-    { "key": "item.food.sandwich.desc", "value": "B\u1eefa \u0103n nh\u1eb9. H\u1ed3i 50 stamina." },
-    { "key": "item.food.pizza.name", "value": "Pizza" },
-    { "key": "item.food.pizza.desc", "value": "M\u00f3n \u0103n cao c\u1ea5p. H\u1ed3i 90 stamina." },
-    { "key": "item.food.apple_pie.name", "value": "B\u00e1nh t\u00e1o" },
-    { "key": "item.food.apple_pie.desc", "value": "B\u00e1nh ng\u1ecdt th\u01a1m ng\u00e0y. H\u1ed3i 80 stamina." },
-    { "key": "item.food.sweet_potato_cake.name", "value": "B\u00e1nh khoai lang" },
-    { "key": "item.food.sweet_potato_cake.desc", "value": "B\u00e1nh ng\u1ecdt m\u1ec1m m\u1ecbt. H\u1ed3i 65 stamina." },
-    { "key": "item.food.strawberry_cake.name", "value": "B\u00e1nh d\u00e2u" },
-    { "key": "item.food.strawberry_cake.desc", "value": "B\u00e1nh cao c\u1ea5p. H\u1ed3i 85 stamina." },
-    { "key": "item.food.cabbage_roll.name", "value": "C\u00e0i cu\u1ed1n" },
-    { "key": "item.food.cabbage_roll.desc", "value": "M\u00f3n cu\u1ed1n truy\u1ec1n th\u1ed1ng. H\u1ed3i 70 stamina." },
-    { "key": "item.food.eggplant_parmesan.name", "value": "C\u00e0 t\u00edm Parmesan" },
-    { "key": "item.food.eggplant_parmesan.desc", "value": "M\u00f3n \u00dd. H\u1ed3i 70 stamina." },
-    { "key": "item.food.cauliflower_gratin.name", "value": "Gratin s\u00fap l\u01a1" },
-    { "key": "item.food.cauliflower_gratin.desc", "value": "M\u00f3n n\u01b0\u1edbng ph\u00f4 mai. H\u1ed3i 65 stamina." },
-    { "key": "item.food.mushroom_risotto.name", "value": "Risotto n\u1ea5m" },
-    { "key": "item.food.mushroom_risotto.desc", "value": "C\u01a1m kem th\u01a1m ng\u1ecdt. H\u1ed3i 60 stamina." },
-    { "key": "item.food.truffle_risotto.name", "value": "Risotto Truffle" },
-    { "key": "item.food.truffle_risotto.desc", "value": "M\u00f3n \u0103n h\u1ea3o h\u1ea1ng. H\u1ed3i 100 stamina, buff +20% stamina max trong 1 ng\u00e0y." },
-    { "key": "item.food.pickles.name", "value": "D\u01b0a mu\u1ed1i" },
-    { "key": "item.food.pickles.desc", "value": "D\u01b0a chua m\u00e1t l\u1ea1nh. H\u1ed3i 30 stamina." },
-    { "key": "item.food.strawberry_jam.name", "value": "M\u1ee9t d\u00e2u" },
-    { "key": "item.food.strawberry_jam.desc", "value": "M\u1ee9t ng\u1ecdt th\u01a1m. H\u1ed3i 30 stamina v\u00e0 b\u00e1n gi\u00e1 cao." },
-    { "key": "item.food.cherry_jam.name", "value": "M\u1ee9t anh \u0111\u00e0o" },
-    { "key": "item.food.cherry_jam.desc", "value": "M\u1ee9t qu\u00fd ph\u00e1i. H\u1ed3i 35 stamina." },
-    { "key": "item.food.veggie_smoothie.name", "value": "Sinh t\u1ed1 rau" },
-    { "key": "item.food.veggie_smoothie.desc", "value": "\u0110\u1ed3 u\u1ed1ng l\u00e0nh m\u1ea1nh. H\u1ed3i 40 stamina, buff +10% t\u1ed1c \u0111\u1ed9 trong 3h." },
-    { "key": "item.food.beet_juice.name", "value": "N\u01b0\u1edbc \u00e9p c\u1ee7 d\u1ec1n" },
-    { "key": "item.food.beet_juice.desc", "value": "\u0110\u1ed3 u\u1ed1ng ph\u1ee5c h\u1ed3i. H\u1ed3i 50 stamina, c\u1ed9ng th\u00eam 20 stamina/5ph\u00fat." },
-    { "key": "item.food.flower_tea.name", "value": "Tr\u00e0 hoa" },
-    { "key": "item.food.flower_tea.desc", "value": "Tr\u00e0 th\u01a1m nh\u1eb9. H\u1ed3i 15 stamina, ch\u1ed1ng debuff." },
-    { "key": "item.food.buttered_sweet_potato.name", "value": "Khoai lang n\u01b0\u1edbng b\u01a1" },
-    { "key": "item.food.buttered_sweet_potato.desc", "value": "Khoai th\u01a1m b\u01a1. H\u1ed3i 55 stamina." },
-    { "key": "item.food.fruit_salad.name", "value": "Salad tr\u00e1i c\u00e2y" },
-    { "key": "item.food.fruit_salad.desc", "value": "Tr\u00e1i c\u00e2y t\u01b0\u01a1i ngon. H\u1ed3i 60 stamina." },
-    { "key": "item.food.pineapple_juice.name", "value": "N\u01b0\u1edbc \u00e9p d\u1ee9a" },
-    { "key": "item.food.pineapple_juice.desc", "value": "\u0110\u1ed3 u\u1ed1ng th\u1eaft m\u00e1t. H\u1ed3i 45 stamina." },
-    { "key": "item.food.wine.name", "value": "R\u01b0\u1ee3u nho" },
-    { "key": "item.food.wine.desc", "value": "R\u01b0\u1ee3u \u1ee7 t\u1eeb nho. B\u00e1n gi\u00e1 r\u1ea5t cao." },
-    { "key": "item.food.apple_vinegar.name", "value": "Gi\u1ea5m t\u00e1o" },
-    { "key": "item.food.apple_vinegar.desc", "value": "Gi\u1ea5m t\u00e1o. D\u00f9ng n\u1ea5u \u0103n ho\u1eb7c b\u00e1n." },
-    { "key": "item.food.plum_wine.name", "value": "R\u01b0\u1ee3u m\u1eadn" },
-    { "key": "item.food.plum_wine.desc", "value": "R\u01b0\u1ee3u m\u1eadn cao c\u1ea5p. B\u00e1n gi\u00e1 cực cao." },
-    { "key": "item.food.vodka.name", "value": "Vodka" },
-    { "key": "item.food.vodka.desc", "value": "R\u01b0\u1ee3u tr\u01b0ng t\u1eeb khoai t\u00e2y." },
-    { "key": "item.food.beer.name", "value": "Bia" },
-    { "key": "item.food.beer.desc", "value": "\u0110\u1ed3 u\u1ed1ng t\u1eeb l\u00faa m\u00ec." },
-    { "key": "item.tool.hoe.t1.name", "value": "Cu\u1ed1c (C\u01a1 b\u1ea3n)" },
-    { "key": "item.tool.hoe.t1.desc", "value": "Cu\u1ed1c \u0111\u1ea5t 1 \u00f4 m\u1ed7i l\u1ea7n. Gi\u00fap tr\u1ed3ng h\u1ea1t gi\u1ed1ng." },
-    { "key": "item.tool.hoe.t2.name", "value": "Cu\u1ed1c \u0110\u1ed3ng" },
-    { "key": "item.tool.hoe.t2.desc", "value": "Cu\u1ed1c 2 \u00f4 c\u00f9ng l\u00fac. Ti\u1ebft ki\u1ec7m stamina." },
-    { "key": "item.tool.hoe.t3.name", "value": "Cu\u1ed1c S\u1eaft" },
-    { "key": "item.tool.hoe.t3.desc", "value": "Cu\u1ed1c 3 \u00f4 c\u00f9ng l\u00fac. R\u1ea5t hi\u1ec7u qu\u1ea3." },
-    { "key": "item.tool.hoe.t4.name", "value": "Cu\u1ed1c V\u00e0ng" },
-    { "key": "item.tool.hoe.t4.desc", "value": "Cu\u1ed1c 5 \u00f4 c\u00f9ng l\u00fac. Hi\u1ec7u qu\u1ea3 t\u1ed1i \u0111a." },
-    { "key": "item.tool.watering_can.t1.name", "value": "B\u00ecnh t\u01b0\u1edbi (C\u01a1 b\u1ea3n)" },
-    { "key": "item.tool.watering_can.t1.desc", "value": "T\u01b0\u1edbi 1 \u00f4 m\u1ed7i l\u1ea7n." },
-    { "key": "item.tool.watering_can.t2.name", "value": "B\u00ecnh t\u01b0\u1edbi \u0110\u1ed3ng" },
-    { "key": "item.tool.watering_can.t2.desc", "value": "T\u01b0\u1edbi 3 \u00f4 c\u00f9ng l\u00fac." },
-    { "key": "item.tool.watering_can.t3.name", "value": "B\u00ecnh t\u01b0\u1edbi S\u1eaft" },
-    { "key": "item.tool.watering_can.t3.desc", "value": "T\u01b0\u1edbi 5 \u00f4 c\u00f9ng l\u00fac." },
-    { "key": "item.tool.watering_can.t4.name", "value": "B\u00ecnh t\u01b0\u1edbi V\u00e0ng" },
-    { "key": "item.tool.watering_can.t4.desc", "value": "T\u01b0\u1edbi 9 \u00f4 (3x3) c\u00f9ng l\u00fac." },
-    { "key": "item.tool.axe.t1.name", "value": "R\u00ecu (C\u01a1 b\u1ea3n)" },
-    { "key": "item.tool.axe.t1.desc", "value": "Ch\u1eb7t c\u00e2y nh\u1ecf trong 3 l\u1ea7n ch\u00e9m." },
-    { "key": "item.tool.axe.t2.name", "value": "R\u00ecú \u0110\u1ed3ng" },
-    { "key": "item.tool.axe.t2.desc", "value": "Ch\u1eb7t c\u00e2y trong 2 l\u1ea7n ch\u00e9m." },
-    { "key": "item.tool.axe.t3.name", "value": "R\u00ecu S\u1eaft" },
-    { "key": "item.tool.axe.t3.desc", "value": "Ch\u1eb7t c\u00e2y nh\u1ecf trong 1 l\u1ea7n. M\u1edf r\u1eebng s\u00e2u." },
-    { "key": "item.tool.axe.t4.name", "value": "R\u00ecú V\u00e0ng" },
-    { "key": "item.tool.axe.t4.desc", "value": "Ch\u1eb7t m\u1ecdi c\u00e2y trong 1 l\u1ea7n." },
-    { "key": "item.tool.pickaxe.t1.name", "value": "Cu\u1ed1c chim (C\u01a1 b\u1ea3n)" },
-    { "key": "item.tool.pickaxe.t1.desc", "value": "Khai th\u00e1c \u0111\u00e1 trong 3 l\u1ea7n." },
-    { "key": "item.tool.pickaxe.t2.name", "value": "Cuốc chim Đồng" },
-    { "key": "item.tool.pickaxe.t2.desc", "value": "Cuốc chim mạnh hơn giúp đào nhanh hơn bản cơ bản." },
-    { "key": "item.tool.pickaxe.t3.name", "value": "Cu\u1ed1c chim S\u1eaft" },
-    { "key": "item.tool.pickaxe.t3.desc", "value": "Khai th\u00e1c \u0111\u00e1 th\u01b0\u1eddng trong 1 l\u1ea7n." },
-    { "key": "item.tool.pickaxe.t4.name", "value": "Cu\u1ed1c chim V\u00e0ng" },
-    { "key": "item.tool.pickaxe.t4.desc", "value": "Khai th\u00e1c m\u1ecdi \u0111\u00e1 trong 1 l\u1ea7n." },
-    { "key": "item.tool.scythe.t1.name", "value": "Li\u1ec1m (C\u01a1 b\u1ea3n)" },
-    { "key": "item.tool.scythe.t1.desc", "value": "Thu ho\u1ea1ch 1 \u00f4 m\u1ed7i l\u1ea7n." },
-    { "key": "item.tool.scythe.t2.name", "value": "Liềm Đồng" },
-    { "key": "item.tool.scythe.t2.desc", "value": "Liềm nâng cấp giúp thu hoạch rộng hơn trong mỗi lần quét." },
-    { "key": "item.tool.scythe.t3.name", "value": "Li\u1ec1m S\u1eaft" },
-    { "key": "item.tool.scythe.t3.desc", "value": "Thu ho\u1ea1ch 5 \u00f4 c\u00f9ng l\u00fac." },
-    { "key": "item.tool.scythe.t4.name", "value": "Li\u1ec1m V\u00e0ng" },
-    { "key": "item.tool.scythe.t4.desc", "value": "Thu ho\u1ea1ch 7 \u00f4, kh\u00f4ng t\u1ed1n stamina." },
-    { "key": "item.equip.straw_hat.name", "value": "M\u1ee7 r\u01a1m" },
-    { "key": "item.equip.straw_hat.desc", "value": "Gi\u1ea3m 10% stamina khi l\u00e0m n\u00f4ng." },
-    { "key": "item.equip.leather_gloves.name", "value": "G\u0103ng tay da" },
-    { "key": "item.equip.leather_gloves.desc", "value": "+1 ch\u1ea5t l\u01b0\u1ee3ng thu ho\u1ea1ch." },
-    { "key": "item.equip.rubber_boots.name", "value": "\u1ee4ng cao su" },
-    { "key": "item.equip.rubber_boots.desc", "value": "Mi\u1ec5n nhi\u1ec5m ch\u1eadm khi m\u01b0a." },
-    { "key": "item.equip.backpack.name", "value": "Ba l\u00f4" },
-    { "key": "item.equip.backpack.desc", "value": "+10 slot inventory." },
-    { "key": "item.equip.stone_shield.name", "value": "Khi\u00ean \u0111\u00e1" },
-    { "key": "item.equip.stone_shield.desc", "value": "Gi\u1ea3m 30% s\u00e1t th\u01b0\u01a1ng nh\u1eadn." },
-    { "key": "item.equip.copper_ring.name", "value": "Nh\u1eabn \u0110\u1ed3ng" },
-    { "key": "item.equip.copper_ring.desc", "value": "+5 stamina t\u1ed1i \u0111a." },
-    { "key": "item.equip.ruby_ring.name", "value": "Nh\u1eabn H\u1ed3ng Ng\u1ecdc" },
-    { "key": "item.equip.ruby_ring.desc", "value": "+15 stamina t\u1ed1i \u0111a." },
-    { "key": "item.equip.mining_charm.name", "value": "Charm \u0111\u00e0o m\u1ecf" },
-    { "key": "item.equip.mining_charm.desc", "value": "+25% t\u1ed1c \u0111\u1ed9 khai th\u00e1c." },
-    { "key": "item.equip.luck_charm.name", "value": "Charm may m\u1eafn" },
-    { "key": "item.equip.luck_charm.desc", "value": "+15% t\u1ef7 l\u1ec7 rơi \u0111\u1ed3 hi\u1ebfm." },
-    { "key": "item.place.basic_craft_table.name", "value": "B\u00e0n ch\u1ebf t\u1ea1o c\u01a1 b\u1ea3n" },
-    { "key": "item.place.basic_craft_table.desc", "value": "Ch\u1ebf t\u1ea1o c\u00e1c v\u1eadt d\u1ee5ng c\u01a1 b\u1ea3n." },
-    { "key": "item.place.furnace.name", "value": "L\u00f2 nung" },
-    { "key": "item.place.furnace.desc", "value": "Nung qu\u1eb7ng th\u00e0nh th\u1ecfi kim lo\u1ea1i." },
-    { "key": "item.place.adv_craft_table.name", "value": "B\u00e0n ch\u1ebf t\u1ea1o n\u00e2ng cao" },
-    { "key": "item.place.adv_craft_table.desc", "value": "Ch\u1ebf t\u1ea1o m\u00e1y m\u00f3c v\u00e0 thi\u1ebft b\u1ecb." },
-    { "key": "item.place.kitchen.name", "value": "B\u1ebfp n\u1ea5u" },
-    { "key": "item.place.kitchen.desc", "value": "N\u1ea5u c\u00e1c m\u00f3n \u0103n h\u1ed3i stamina v\u00e0 buff." },
-    { "key": "item.place.keg.name", "value": "Th\u00f9ng \u1ee7" },
-    { "key": "item.place.keg.desc", "value": "\u1ee4 r\u01b0\u1ee3u, n\u01b0\u1edbc \u00e9p v\u00e0 gi\u1ea5m t\u1eeb n\u00f4ng s\u1ea3n." },
-    { "key": "item.place.preserves_jar.name", "value": "H\u0169 b\u1ea3o qu\u1ea3n" },
-    { "key": "item.place.preserves_jar.desc", "value": "L\u00e0m m\u1ee9t, d\u01b0a mu\u1ed1i v\u00e0 kimchi." },
-    { "key": "item.place.mill.name", "value": "M\u00e1y xay" },
-    { "key": "item.place.mill.desc", "value": "Xay b\u1ed9t, \u0111\u01b0\u1eddng v\u00e0 d\u1ea7u t\u1eeb n\u00f4ng s\u1ea3n." },
-    { "key": "item.place.loom.name", "value": "M\u00e1y d\u1ec7t" },
-    { "key": "item.place.loom.desc", "value": "D\u1ec7t l\u00f4ng c\u1eebu th\u00e0nh v\u1ea3i." },
-    { "key": "item.place.mayo_machine.name", "value": "M\u00e1y l\u00e0m Mayo" },
-    { "key": "item.place.mayo_machine.desc", "value": "Ch\u1ebf bi\u1ebfn tr\u1ee9ng th\u00e0nh mayonnaise." },
-    { "key": "item.place.cheese_press.name", "value": "M\u00e1y \u00e9p ph\u00f4 mai" },
-    { "key": "item.place.cheese_press.desc", "value": "Ch\u1ebf bi\u1ebfn s\u1eefa th\u00e0nh ph\u00f4 mai v\u00e0 b\u01a1." },
-    { "key": "item.place.sprinkler_t1.name", "value": "Sprinkler c\u01a1 b\u1ea3n" },
-    { "key": "item.place.sprinkler_t1.desc", "value": "T\u01b0\u1edbi t\u1ef1 \u0111\u1ed9ng 4 \u00f4 xung quanh m\u1ed7i s\u00e1ng." },
-    { "key": "item.place.sprinkler_t2.name", "value": "Sprinkler n\u00e2ng cao" },
-    { "key": "item.place.sprinkler_t2.desc", "value": "T\u01b0\u1edbi t\u1ef1 \u0111\u1ed9ng 8 \u00f4 (3x3) m\u1ed7i s\u00e1ng." },
-    { "key": "item.place.sprinkler_t3.name", "value": "Sprinkler cao c\u1ea5p" },
-    { "key": "item.place.sprinkler_t3.desc", "value": "T\u01b0\u1edbi t\u1ef1 \u0111\u1ed9ng 24 \u00f4 (5x5) m\u1ed7i s\u00e1ng." },
-    { "key": "item.place.wood_fence.name", "value": "H\u00e0ng r\u00e0o g\u1ed7" },
-    { "key": "item.place.wood_fence.desc", "value": "H\u00e0ng r\u00e0o c\u01a1 b\u1ea3n. D\u00f9ng kh\u00f3a ranh gi\u1edbi trang tr\u1ea1i." },
-    { "key": "item.place.stone_fence.name", "value": "H\u00e0ng r\u00e0o \u0111\u00e1" },
-    { "key": "item.place.stone_fence.desc", "value": "H\u00e0ng r\u00e0o b\u1ec1n v\u1eefng h\u01a1n, kh\u00f4ng b\u1ecb h\u1ecf." },
-    { "key": "item.place.chest.name", "value": "R\u01b0\u01a1ng \u0111\u1ed3" },
-    { "key": "item.place.chest.desc", "value": "+36 slot l\u01b0u tr\u1eef." },
-    { "key": "item.place.scarecrow.name", "value": "B\u00f9 nh\u00ecn" },
-    { "key": "item.place.scarecrow.desc", "value": "B\u1ea3o v\u1ec7 c\u00e2y tr\u1ed3ng trong v\u00f9ng 8x8 kh\u1ecfi qu\u1ea1." },
-    { "key": "item.place.lightning_rod.name", "value": "C\u1ed9t thu l\u00f4i" },
-    { "key": "item.place.lightning_rod.desc", "value": "Ch\u1ed1ng s\u00e9t l\u00e0m h\u1ecfng c\u00e2y tr\u1ed3ng trong m\u00f9a m\u01b0a b\u00e3o." },
-    { "key": "item.place.torch.name", "value": "\u0110u\u1ed1c" },
-    { "key": "item.place.torch.desc", "value": "Chi\u1ebfu s\u00e1ng trong hang m\u1ecf ban \u0111\u00eam." },
-    { "key": "m1.portal.farm_to_town.name", "value": "Cổng đến Thị trấn" },
-    { "key": "ui.loading.title", "value": "ĐANG TẢI..." },
-    { "key": "ui.loading.scene", "value": "Đang tải cảnh {0}" },
-    { "key": "ui.loading.percent", "value": "{0}%" },
-    { "key": "ui.loading.scene_name.scene", "value": "Cảnh" },
-    { "key": "ui.loading.scene_name.FarmScene", "value": "Nông trại" },
-    { "key": "ui.loading.scene_name.TownScene", "value": "Thị trấn" },
-    { "key": "ui.loading.scene_name.MainMenuScene", "value": "Màn hình chính" },
-    { "key": "ui.loading.tip.1", "value": "Mẹo: Thu thập tài nguyên và nâng cấp công cụ để sinh tồn dễ dàng hơn!" },
-    { "key": "ui.loading.tip.2", "value": "Mẹo: Tưới cây mỗi ngày để cây trồng phát triển ổn định." },
-    { "key": "ui.loading.tip.3", "value": "Mẹo: Mang đúng công cụ khi khai thác đá, cây và cỏ dại." },
-    { "key": "ui.loading.tip.4", "value": "Mẹo: Kiểm tra túi đồ trước khi ra khỏi nông trại để tránh thiếu vật phẩm." },
-    { "key": "ui.loading.tip.5", "value": "Mẹo: Lưu game thường xuyên để bảo vệ tiến độ của bạn." },
-    { "key": "enemy.slime1.name", "value": "Slime 1" },
-    { "key": "enemy.slime1.desc", "value": "Một con slime lang thang sẽ tấn công người chơi khi lại gần." },
-    { "key": "enemy.slime2.name", "value": "Slime 2" },
-    { "key": "enemy.slime2.desc", "value": "Một con slime lang thang sẽ tấn công người chơi khi lại gần." },
-    { "key": "enemy.slime3.name", "value": "Slime 3" },
-    { "key": "enemy.slime3.desc", "value": "Một con slime lang thang sẽ tấn công người chơi khi lại gần." },
-    { "key": "enemy.orc1.name", "value": "Orc 1" },
-    { "key": "enemy.orc1.desc", "value": "Một chiến binh orc lang thang sẽ tấn công người chơi khi lại gần." },
-    { "key": "enemy.orc2.name", "value": "Orc 2" },
-    { "key": "enemy.orc2.desc", "value": "Một chiến binh orc lang thang sẽ tấn công người chơi khi lại gần." },
-    { "key": "enemy.orc3.name", "value": "Orc 3" },
-    { "key": "enemy.orc3.desc", "value": "Một chiến binh orc lang thang sẽ tấn công người chơi khi lại gần." },
-    { "key": "item.crop.asparagus.name", "value": "Măng tây" },
-    { "key": "item.crop.asparagus.desc", "value": "Măng tây thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ." },
-    { "key": "item.crop.bean.name", "value": "Đậu que" },
-    { "key": "item.crop.bean.desc", "value": "Đậu que thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ." },
-    { "key": "item.crop.blueberry.name", "value": "Việt quất" },
-    { "key": "item.crop.blueberry.desc", "value": "Việt quất thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ." },
-    { "key": "item.crop.cabbage.name", "value": "Bắp cải" },
-    { "key": "item.crop.cabbage.desc", "value": "Bắp cải thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ." },
-    { "key": "item.crop.carrot.name", "value": "Cà rốt" },
-    { "key": "item.crop.carrot.desc", "value": "Cà rốt thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ." },
-    { "key": "item.crop.cauliflower.name", "value": "Súp lơ trắng" },
-    { "key": "item.crop.cauliflower.desc", "value": "Súp lơ trắng thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ." },
-    { "key": "item.crop.cucumber.name", "value": "Dưa leo" },
-    { "key": "item.crop.cucumber.desc", "value": "Dưa leo thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ." },
-    { "key": "item.crop.garlic.name", "value": "Tỏi" },
-    { "key": "item.crop.garlic.desc", "value": "Tỏi thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ." },
-    { "key": "item.crop.grape.name", "value": "Nho" },
-    { "key": "item.crop.grape.desc", "value": "Nho thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ." },
-    { "key": "item.crop.melon.name", "value": "Dưa lưới" },
-    { "key": "item.crop.melon.desc", "value": "Dưa lưới thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ." },
-    { "key": "item.crop.pea.name", "value": "Đậu Hà Lan" },
-    { "key": "item.crop.pea.desc", "value": "Đậu Hà Lan thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ." },
-    { "key": "item.crop.pepper_green.name", "value": "Ớt xanh" },
-    { "key": "item.crop.pepper_green.desc", "value": "Ớt xanh thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ." },
-    { "key": "item.crop.pepper_red.name", "value": "Ớt đỏ" },
-    { "key": "item.crop.pepper_red.desc", "value": "Ớt đỏ thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ." },
-    { "key": "item.crop.pepper_yellow.name", "value": "Ớt vàng" },
-    { "key": "item.crop.pepper_yellow.desc", "value": "Ớt vàng thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ." },
-    { "key": "item.crop.radish.name", "value": "Củ cải đỏ" },
-    { "key": "item.crop.radish.desc", "value": "Củ cải đỏ thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ." },
-    { "key": "item.crop.yam.name", "value": "Khoai mỡ" },
-    { "key": "item.crop.yam.desc", "value": "Khoai mỡ thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ." },
-    { "key": "item.crop.apple.name", "value": "Táo" },
-    { "key": "item.crop.apple.desc", "value": "Táo hái từ cây ăn quả. Phù hợp để nấu ăn hoặc bán có lời." },
-    { "key": "item.crop.cherry.name", "value": "Anh đào" },
-    { "key": "item.crop.cherry.desc", "value": "Anh đào hái từ cây ăn quả. Phù hợp để nấu ăn hoặc bán có lời." },
-    { "key": "item.crop.pear.name", "value": "Lê" },
-    { "key": "item.crop.pear.desc", "value": "Lê hái từ cây ăn quả. Phù hợp để nấu ăn hoặc bán có lời." },
-    { "key": "item.crop.plum.name", "value": "Mận" },
-    { "key": "item.crop.plum.desc", "value": "Mận hái từ cây ăn quả. Phù hợp để nấu ăn hoặc bán có lời." },
-    { "key": "item.food.cheese.name", "value": "Phô mai" },
-    { "key": "item.food.cheese.desc", "value": "Món sữa chế biến giúp hồi thể lực và bán lời hơn sữa tươi." },
-    { "key": "item.food.mayonnaise.name", "value": "Mayonnaise" },
-    { "key": "item.food.mayonnaise.desc", "value": "Món sốt làm từ trứng giúp hồi một ít thể lực." },
-    { "key": "item.place.sprinkler.t1.name", "value": "Sprinkler T1" },
-    { "key": "item.place.sprinkler.t1.desc", "value": "Đặt xuống để tự động tưới một vùng nhỏ vào mỗi buổi sáng." },
-    { "key": "item.place.sprinkler.t2.name", "value": "Sprinkler T2" },
-    { "key": "item.place.sprinkler.t2.desc", "value": "Đặt xuống để tự động tưới một khu lớn hơn vào mỗi buổi sáng." }
+    {
+      "key": "Axe01_desc",
+      "value": "Dùng để chặt cây và dọn gỗ trên nông trại."
+    },
+    {
+      "key": "Axe01_name",
+      "value": "Rìu khởi đầu"
+    },
+    {
+      "key": "dialogue.sample.choice.accept_work",
+      "value": "Được, tôi nhận việc này."
+    },
+    {
+      "key": "dialogue.sample.choice.ask_work",
+      "value": "Ông cần tôi giúp gì không?"
+    },
+    {
+      "key": "dialogue.sample.choice.later",
+      "value": "Để sau nhé."
+    },
+    {
+      "key": "dialogue.sample.farmer.accepted",
+      "value": "Tốt lắm. Khi nào chuẩn bị xong thì quay lại gặp tôi nhé."
+    },
+    {
+      "key": "dialogue.sample.farmer.hello",
+      "value": "Chào cậu! Hôm nay ruộng nhìn ổn đấy. Cậu cần tôi chỉ vài việc không?"
+    },
+    {
+      "key": "dialogue.sample.farmer.offer_work",
+      "value": "Tôi cần vài củ cà rốt tươi. Nếu cậu mang tới, tôi sẽ trả công xứng đáng."
+    },
+    {
+      "key": "dialogue.sample.farmer.old_friend",
+      "value": "Lại gặp cậu rồi. Nếu rảnh thì tôi có vài việc ngoài đồng cần nhờ."
+    },
+    {
+      "key": "enemy_01_desc",
+      "value": "Sinh vật lang thang, sẽ tấn công khi lại gần."
+    },
+    {
+      "key": "enemy_01_name",
+      "value": "Quái đồng hoang"
+    },
+    {
+      "key": "enemy.boar.desc",
+      "value": "Kẻ địch ngoài thiên nhiên với 60 HP, phù hợp cho vòng chiến đấu đầu game."
+    },
+    {
+      "key": "enemy.boar.name",
+      "value": "Lợn Rừng"
+    },
+    {
+      "key": "enemy.orc1.desc",
+      "value": "Một chiến binh orc lang thang sẽ tấn công người chơi khi lại gần."
+    },
+    {
+      "key": "enemy.orc1.name",
+      "value": "Orc 1"
+    },
+    {
+      "key": "enemy.orc2.desc",
+      "value": "Một chiến binh orc lang thang sẽ tấn công người chơi khi lại gần."
+    },
+    {
+      "key": "enemy.orc2.name",
+      "value": "Orc 2"
+    },
+    {
+      "key": "enemy.orc3.desc",
+      "value": "Một chiến binh orc lang thang sẽ tấn công người chơi khi lại gần."
+    },
+    {
+      "key": "enemy.orc3.name",
+      "value": "Orc 3"
+    },
+    {
+      "key": "enemy.rat.desc",
+      "value": "Kẻ địch ngoài thiên nhiên với 15 HP, phù hợp cho vòng chiến đấu đầu game."
+    },
+    {
+      "key": "enemy.rat.name",
+      "value": "Chuột Đồng"
+    },
+    {
+      "key": "enemy.slime1.desc",
+      "value": "Một con slime lang thang sẽ tấn công người chơi khi lại gần."
+    },
+    {
+      "key": "enemy.slime1.name",
+      "value": "Slime 1"
+    },
+    {
+      "key": "enemy.slime2.desc",
+      "value": "Một con slime lang thang sẽ tấn công người chơi khi lại gần."
+    },
+    {
+      "key": "enemy.slime2.name",
+      "value": "Slime 2"
+    },
+    {
+      "key": "enemy.slime3.desc",
+      "value": "Một con slime lang thang sẽ tấn công người chơi khi lại gần."
+    },
+    {
+      "key": "enemy.slime3.name",
+      "value": "Slime 3"
+    },
+    {
+      "key": "enemy.snake.desc",
+      "value": "Kẻ địch ngoài thiên nhiên với 25 HP, phù hợp cho vòng chiến đấu đầu game."
+    },
+    {
+      "key": "enemy.snake.name",
+      "value": "Rắn Đồng"
+    },
+    {
+      "key": "item.animal.butter.desc",
+      "value": "Chế biến từ sữa. Dùng nấu bánh và risotto."
+    },
+    {
+      "key": "item.animal.butter.name",
+      "value": "Bơ"
+    },
+    {
+      "key": "item.animal.cheese.desc",
+      "value": "Chế biến từ sữa. Dùng làm pizza và gratin."
+    },
+    {
+      "key": "item.animal.cheese.name",
+      "value": "Phô mai"
+    },
+    {
+      "key": "item.animal.cloth.desc",
+      "value": "Dệt từ lông cừu. Dùng làm quần áo bảo hộ."
+    },
+    {
+      "key": "item.animal.cloth.name",
+      "value": "Vải"
+    },
+    {
+      "key": "item.animal.egg.desc",
+      "value": "Sản phẩm chăn nuôi dùng để nấu ăn hoặc làm mayonnaise."
+    },
+    {
+      "key": "item.animal.egg.name",
+      "value": "Trứng"
+    },
+    {
+      "key": "item.animal.hay.desc",
+      "value": "Thức ăn cho vật nuôi. Phải cho ăn hàng ngày."
+    },
+    {
+      "key": "item.animal.hay.name",
+      "value": "Cỏ khô"
+    },
+    {
+      "key": "item.animal.mayonnaise.desc",
+      "value": "Chế biến từ trứng. Bán giá cao hơn trứng sống."
+    },
+    {
+      "key": "item.animal.mayonnaise.name",
+      "value": "Mayonnaise"
+    },
+    {
+      "key": "item.animal.milk.desc",
+      "value": "Sữa tươi dùng cho nấu ăn và ép phô mai."
+    },
+    {
+      "key": "item.animal.milk.name",
+      "value": "Sữa"
+    },
+    {
+      "key": "item.animal.truffle_oil.desc",
+      "value": "Dầu tinh tế từ nấm truffle. Giá trị cực cao."
+    },
+    {
+      "key": "item.animal.truffle_oil.name",
+      "value": "Dầu Truffle"
+    },
+    {
+      "key": "item.animal.truffle.desc",
+      "value": "Lợn rừng đào lên. Nấm hiếm giá trị cực cao."
+    },
+    {
+      "key": "item.animal.truffle.name",
+      "value": "Nấm Truffle"
+    },
+    {
+      "key": "item.animal.wool.desc",
+      "value": "Sản phẩm từ cừu. Dệt thành vải bằng máy dệt."
+    },
+    {
+      "key": "item.animal.wool.name",
+      "value": "Lông cừu"
+    },
+    {
+      "key": "item.crop.apple.desc",
+      "value": "Táo hái từ cây ăn quả. Phù hợp để nấu ăn hoặc bán có lời."
+    },
+    {
+      "key": "item.crop.apple.name",
+      "value": "Táo"
+    },
+    {
+      "key": "item.crop.asparagus.desc",
+      "value": "Măng tây thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ."
+    },
+    {
+      "key": "item.crop.asparagus.name",
+      "value": "Măng tây"
+    },
+    {
+      "key": "item.crop.bean.desc",
+      "value": "Đậu que thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ."
+    },
+    {
+      "key": "item.crop.bean.name",
+      "value": "Đậu que"
+    },
+    {
+      "key": "item.crop.blueberry.desc",
+      "value": "Việt quất thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ."
+    },
+    {
+      "key": "item.crop.blueberry.name",
+      "value": "Việt quất"
+    },
+    {
+      "key": "item.crop.cabbage.desc",
+      "value": "Bắp cải thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ."
+    },
+    {
+      "key": "item.crop.cabbage.name",
+      "value": "Bắp cải"
+    },
+    {
+      "key": "item.crop.carrot.desc",
+      "value": "Cà rốt thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ."
+    },
+    {
+      "key": "item.crop.carrot.name",
+      "value": "Cà rốt"
+    },
+    {
+      "key": "item.crop.cauliflower.desc",
+      "value": "Súp lơ trắng thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ."
+    },
+    {
+      "key": "item.crop.cauliflower.name",
+      "value": "Súp lơ trắng"
+    },
+    {
+      "key": "item.crop.cherry.desc",
+      "value": "Anh đào hái từ cây ăn quả. Phù hợp để nấu ăn hoặc bán có lời."
+    },
+    {
+      "key": "item.crop.cherry.name",
+      "value": "Anh đào"
+    },
+    {
+      "key": "item.crop.corn.desc",
+      "value": "Ngô tươi dùng để bán, nấu ăn hoặc giao nhiệm vụ."
+    },
+    {
+      "key": "item.crop.corn.name",
+      "value": "Ngô"
+    },
+    {
+      "key": "item.crop.cucumber.desc",
+      "value": "Dưa leo thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ."
+    },
+    {
+      "key": "item.crop.cucumber.name",
+      "value": "Dưa leo"
+    },
+    {
+      "key": "item.crop.fall.broccoli.desc",
+      "value": "Rau xanh giàu dinh dưỡng. Dùng xào tỏi hoặc nấu soup."
+    },
+    {
+      "key": "item.crop.fall.broccoli.name",
+      "value": "Bông cải xanh"
+    },
+    {
+      "key": "item.crop.fall.cabbage.desc",
+      "value": "Rau cuốn dịo ngọt. Dùng làm cabbage roll hoặc kimchi."
+    },
+    {
+      "key": "item.crop.fall.cabbage.name",
+      "value": "Bắp cải"
+    },
+    {
+      "key": "item.crop.fall.carrot.desc",
+      "value": "Rau củ ngon. Dùng nấu soup hoặc nướng."
+    },
+    {
+      "key": "item.crop.fall.carrot.name",
+      "value": "Cà rốt"
+    },
+    {
+      "key": "item.crop.fall.eggplant.desc",
+      "value": "Rau mùa thu. Dùng nướng hoặc làm Parmesan."
+    },
+    {
+      "key": "item.crop.fall.eggplant.name",
+      "value": "Cà tím"
+    },
+    {
+      "key": "item.crop.fall.garlic.desc",
+      "value": "Nguyên liệu nấu ăn cốt lõi. Dùng trong hơn 10 công thức."
+    },
+    {
+      "key": "item.crop.fall.garlic.name",
+      "value": "Tỏi"
+    },
+    {
+      "key": "item.crop.fall.grape.desc",
+      "value": "Quả mùa thu. Ụ Keg để làm rượu nho giá cực cao."
+    },
+    {
+      "key": "item.crop.fall.grape.name",
+      "value": "Nho"
+    },
+    {
+      "key": "item.crop.fall.onion.desc",
+      "value": "Gia vị phổ biến. Dùng trong hơn 8 công thức nấu ăn."
+    },
+    {
+      "key": "item.crop.fall.onion.name",
+      "value": "Hành tây"
+    },
+    {
+      "key": "item.crop.fall.pumpkin.desc",
+      "value": "Nông sản giá trị nhất mùa thu. Dùng nấu soup hoặc làm đèn Jack."
+    },
+    {
+      "key": "item.crop.fall.pumpkin.name",
+      "value": "Bí ngô"
+    },
+    {
+      "key": "item.crop.fall.wheat.desc",
+      "value": "Lúa Mì tươi dùng để bán, nấu ăn hoặc giao nhiệm vụ."
+    },
+    {
+      "key": "item.crop.fall.wheat.name",
+      "value": "Lúa Mì"
+    },
+    {
+      "key": "item.crop.garlic.desc",
+      "value": "Tỏi thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ."
+    },
+    {
+      "key": "item.crop.garlic.name",
+      "value": "Tỏi"
+    },
+    {
+      "key": "item.crop.grape.desc",
+      "value": "Nho thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ."
+    },
+    {
+      "key": "item.crop.grape.name",
+      "value": "Nho"
+    },
+    {
+      "key": "item.crop.melon.desc",
+      "value": "Dưa lưới thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ."
+    },
+    {
+      "key": "item.crop.melon.name",
+      "value": "Dưa lưới"
+    },
+    {
+      "key": "item.crop.pea.desc",
+      "value": "Đậu Hà Lan thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ."
+    },
+    {
+      "key": "item.crop.pea.name",
+      "value": "Đậu Hà Lan"
+    },
+    {
+      "key": "item.crop.pear.desc",
+      "value": "Lê hái từ cây ăn quả. Phù hợp để nấu ăn hoặc bán có lời."
+    },
+    {
+      "key": "item.crop.pear.name",
+      "value": "Lê"
+    },
+    {
+      "key": "item.crop.pepper_green.desc",
+      "value": "Ớt xanh thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ."
+    },
+    {
+      "key": "item.crop.pepper_green.name",
+      "value": "Ớt xanh"
+    },
+    {
+      "key": "item.crop.pepper_red.desc",
+      "value": "Ớt đỏ thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ."
+    },
+    {
+      "key": "item.crop.pepper_red.name",
+      "value": "Ớt đỏ"
+    },
+    {
+      "key": "item.crop.pepper_yellow.desc",
+      "value": "Ớt vàng thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ."
+    },
+    {
+      "key": "item.crop.pepper_yellow.name",
+      "value": "Ớt vàng"
+    },
+    {
+      "key": "item.crop.plum.desc",
+      "value": "Mận hái từ cây ăn quả. Phù hợp để nấu ăn hoặc bán có lời."
+    },
+    {
+      "key": "item.crop.plum.name",
+      "value": "Mận"
+    },
+    {
+      "key": "item.crop.potato.desc",
+      "value": "Khoai Tây tươi dùng để bán, nấu ăn hoặc giao nhiệm vụ."
+    },
+    {
+      "key": "item.crop.potato.name",
+      "value": "Khoai Tây"
+    },
+    {
+      "key": "item.crop.radish.desc",
+      "value": "Củ cải đỏ thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ."
+    },
+    {
+      "key": "item.crop.radish.name",
+      "value": "Củ cải đỏ"
+    },
+    {
+      "key": "item.crop.spring.asparagus.desc",
+      "value": "Rau cao cấp. Dùng làm soup măng hoặc xào."
+    },
+    {
+      "key": "item.crop.spring.asparagus.name",
+      "value": "Măng tây"
+    },
+    {
+      "key": "item.crop.spring.cauliflower.desc",
+      "value": "Nông sản giá trị. Dùng để nấu gratin và soup kem."
+    },
+    {
+      "key": "item.crop.spring.cauliflower.name",
+      "value": "Súp lơ trắng"
+    },
+    {
+      "key": "item.crop.spring.lettuce.desc",
+      "value": "Rau xanh mùa xuân. Dùng để làm salad và sandwich."
+    },
+    {
+      "key": "item.crop.spring.lettuce.name",
+      "value": "Xà lách"
+    },
+    {
+      "key": "item.crop.spring.potato.desc",
+      "value": "Nông sản vạn năng. Dùng để chiên, nấu soup, hoặc ủ Vodka."
+    },
+    {
+      "key": "item.crop.spring.potato.name",
+      "value": "Khoai tây"
+    },
+    {
+      "key": "item.crop.spring.radish.desc",
+      "value": "Ngon và giòn. Dùng để làm salad và dưa muối."
+    },
+    {
+      "key": "item.crop.spring.radish.name",
+      "value": "Củ cải đỏ"
+    },
+    {
+      "key": "item.crop.spring.strawberry.desc",
+      "value": "Quả ngọt mùa xuân. Dùng làm mứt, bánh, hoặc quà NPC."
+    },
+    {
+      "key": "item.crop.spring.strawberry.name",
+      "value": "Dâu tây"
+    },
+    {
+      "key": "item.crop.spring.tulip.desc",
+      "value": "Hoa đẹp mùa xuân. Dùng làm quà NPC hoặc nhuộm màu."
+    },
+    {
+      "key": "item.crop.spring.tulip.name",
+      "value": "Hoa Tulip"
+    },
+    {
+      "key": "item.crop.spring.turnip.desc",
+      "value": "Nông sản cơ bản. Dùng để nấu soup hoặc dưa muối."
+    },
+    {
+      "key": "item.crop.spring.turnip.name",
+      "value": "Củ cải trắng"
+    },
+    {
+      "key": "item.crop.strawberry.desc",
+      "value": "Dâu Tây tươi dùng để bán, nấu ăn hoặc giao nhiệm vụ."
+    },
+    {
+      "key": "item.crop.strawberry.name",
+      "value": "Dâu Tây"
+    },
+    {
+      "key": "item.crop.summer.blueberry.desc",
+      "value": "Quả mọi nước. Dùng làm mứt, nước ép hoặc nấu bánh."
+    },
+    {
+      "key": "item.crop.summer.blueberry.name",
+      "value": "Việt quất"
+    },
+    {
+      "key": "item.crop.summer.corn.desc",
+      "value": "Lương thực đa dụng. Xay dầu ngô hoặc nướng."
+    },
+    {
+      "key": "item.crop.summer.corn.name",
+      "value": "Ngô"
+    },
+    {
+      "key": "item.crop.summer.melon.desc",
+      "value": "Quả mát lạnh mùa hạ. Bán giá tốt hoặc làm nước ép."
+    },
+    {
+      "key": "item.crop.summer.melon.name",
+      "value": "Dưa hấu"
+    },
+    {
+      "key": "item.crop.summer.pineapple.desc",
+      "value": "Quả hạ giá trị. Dùng làm nước ép, mứt hoặc pizza."
+    },
+    {
+      "key": "item.crop.summer.pineapple.name",
+      "value": "Dứa"
+    },
+    {
+      "key": "item.crop.summer.red_pepper.desc",
+      "value": "Cay và đẻ. Dùng xào hoặc chế biến tương ớt."
+    },
+    {
+      "key": "item.crop.summer.red_pepper.name",
+      "value": "Ật đỏ"
+    },
+    {
+      "key": "item.crop.summer.tomato.desc",
+      "value": "Nguyên liệu nấu ăn đa năng. Dùng làm salad, pizza, sốt."
+    },
+    {
+      "key": "item.crop.summer.tomato.name",
+      "value": "Cà chua"
+    },
+    {
+      "key": "item.crop.summer.wheat.desc",
+      "value": "Nguyên liệu quan trọng. Xay thành bột mì để nấu ăn."
+    },
+    {
+      "key": "item.crop.summer.wheat.name",
+      "value": "Lúa mì"
+    },
+    {
+      "key": "item.crop.summer.yellow_pepper.desc",
+      "value": "Ngọt nhẹ và đẹp mắt. Dùng xào hoặc làm quà."
+    },
+    {
+      "key": "item.crop.summer.yellow_pepper.name",
+      "value": "Ật vàng"
+    },
+    {
+      "key": "item.crop.tomato.desc",
+      "value": "Cà Chua tươi dùng để bán, nấu ăn hoặc giao nhiệm vụ."
+    },
+    {
+      "key": "item.crop.tomato.name",
+      "value": "Cà Chua"
+    },
+    {
+      "key": "item.crop.tree.apple.desc",
+      "value": "Quả mùa thu. Dùng làm bánh táo, giấm táo, hoặc nước ép."
+    },
+    {
+      "key": "item.crop.tree.apple.name",
+      "value": "Táo"
+    },
+    {
+      "key": "item.crop.tree.cherry.desc",
+      "value": "Quả nhung hồng. Dùng làm mứt hoặc quà NPC."
+    },
+    {
+      "key": "item.crop.tree.cherry.name",
+      "value": "Anh đào"
+    },
+    {
+      "key": "item.crop.tree.pear.desc",
+      "value": "Quả mát lạnh. Dùng làm nước ép và mứt lê."
+    },
+    {
+      "key": "item.crop.tree.pear.name",
+      "value": "Lê"
+    },
+    {
+      "key": "item.crop.tree.plum.desc",
+      "value": "Quả chua ngọt. Dùng ủ rượu mận cao cấp."
+    },
+    {
+      "key": "item.crop.tree.plum.name",
+      "value": "Mận"
+    },
+    {
+      "key": "item.crop.turnip.desc",
+      "value": "Củ Cải tươi dùng để bán, nấu ăn hoặc giao nhiệm vụ."
+    },
+    {
+      "key": "item.crop.turnip.name",
+      "value": "Củ Cải"
+    },
+    {
+      "key": "item.crop.wheat.desc",
+      "value": "Lúa Mì tươi dùng để bán, nấu ăn hoặc giao nhiệm vụ."
+    },
+    {
+      "key": "item.crop.wheat.name",
+      "value": "Lúa Mì"
+    },
+    {
+      "key": "item.crop.winter.beet.desc",
+      "value": "Màu đỏ đẹp. Nước ép củ dền hồi stamina mạnh."
+    },
+    {
+      "key": "item.crop.winter.beet.name",
+      "value": "Củ dền"
+    },
+    {
+      "key": "item.crop.winter.celery.desc",
+      "value": "Rau hương vị. Dùng làm nước ép buff tốc độ."
+    },
+    {
+      "key": "item.crop.winter.celery.name",
+      "value": "Cần tây"
+    },
+    {
+      "key": "item.crop.winter.cucumber.desc",
+      "value": "Thanh mát và giòn. Dùng làm salad hoặc dưa muối."
+    },
+    {
+      "key": "item.crop.winter.cucumber.name",
+      "value": "Dưa leo"
+    },
+    {
+      "key": "item.crop.winter.green_bean.desc",
+      "value": "Rau xử lý nhanh. Dùng xào hoặc nấu soup."
+    },
+    {
+      "key": "item.crop.winter.green_bean.name",
+      "value": "Đậu que"
+    },
+    {
+      "key": "item.crop.winter.spinach.desc",
+      "value": "Rau mùa đông giàu dinh dưỡng. Dùng làm smoothie và soup."
+    },
+    {
+      "key": "item.crop.winter.spinach.name",
+      "value": "Rau chân vịt"
+    },
+    {
+      "key": "item.crop.winter.sweet_potato.desc",
+      "value": "Ngọt tự nhiên. Dùng nướng bơ hoặc làm bánh."
+    },
+    {
+      "key": "item.crop.winter.sweet_potato.name",
+      "value": "Khoai lang"
+    },
+    {
+      "key": "item.crop.winter.winter_flower.desc",
+      "value": "Hoa hiếm mùa đông. Giá trị quà tặng NPC cực cao."
+    },
+    {
+      "key": "item.crop.winter.winter_flower.name",
+      "value": "Hoa Tuyết"
+    },
+    {
+      "key": "item.crop.yam.desc",
+      "value": "Khoai mỡ thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ."
+    },
+    {
+      "key": "item.crop.yam.name",
+      "value": "Khoai mỡ"
+    },
+    {
+      "key": "item.drop.bat_wing.desc",
+      "value": "Cánh dơi khai thác trong hang. Dùng làm cột thu lôi."
+    },
+    {
+      "key": "item.drop.bat_wing.name",
+      "value": "Cánh dơi"
+    },
+    {
+      "key": "item.drop.boar_meat.desc",
+      "value": "Thịt tươi từ lợn rừng. Dùng nấu món ăn hồi stamina cao."
+    },
+    {
+      "key": "item.drop.boar_meat.name",
+      "value": "Thịt lợn rừng"
+    },
+    {
+      "key": "item.drop.boar_tusk.desc",
+      "value": "Ngà cứng chắc. Dùng trang trí hoặc bán."
+    },
+    {
+      "key": "item.drop.boar_tusk.name",
+      "value": "Ngà lợn rừng"
+    },
+    {
+      "key": "item.drop.crab_shell.desc",
+      "value": "Mai cứng từ cua hang. Dùng làm khiên."
+    },
+    {
+      "key": "item.drop.crab_shell.name",
+      "value": "Mai cua đá"
+    },
+    {
+      "key": "item.drop.hawk_feather.desc",
+      "value": "Lông nhẹ và bền. Dùng nhồi gối hoặc làm mũi tên."
+    },
+    {
+      "key": "item.drop.hawk_feather.name",
+      "value": "Lông chim ưng"
+    },
+    {
+      "key": "item.drop.mole_claw.desc",
+      "value": "Vuốt sắc bén. Dùng làm charm đào mỏ."
+    },
+    {
+      "key": "item.drop.mole_claw.name",
+      "value": "Vuốt chuột chũi"
+    },
+    {
+      "key": "item.drop.rat_tail.desc",
+      "value": "Nguyên liệu từ chuột hoang. Dùng làm thuốc giải độc."
+    },
+    {
+      "key": "item.drop.rat_tail.name",
+      "value": "Đuôi chuột"
+    },
+    {
+      "key": "item.drop.snake_skin.desc",
+      "value": "Da rắn dai và chắc. Dùng làm dây da."
+    },
+    {
+      "key": "item.drop.snake_skin.name",
+      "value": "Da rắn"
+    },
+    {
+      "key": "item.drop.snake_venom.desc",
+      "value": "Nọc độc hiếm. Dùng làm thuốc cực mạnh."
+    },
+    {
+      "key": "item.drop.snake_venom.name",
+      "value": "Nọc rắn"
+    },
+    {
+      "key": "item.equip.backpack.desc",
+      "value": "+10 slot inventory."
+    },
+    {
+      "key": "item.equip.backpack.name",
+      "value": "Ba lô"
+    },
+    {
+      "key": "item.equip.copper_ring.desc",
+      "value": "+5 stamina tối đa."
+    },
+    {
+      "key": "item.equip.copper_ring.name",
+      "value": "Nhẫn Đồng"
+    },
+    {
+      "key": "item.equip.leather_gloves.desc",
+      "value": "+1 chất lượng thu hoạch."
+    },
+    {
+      "key": "item.equip.leather_gloves.name",
+      "value": "Găng tay da"
+    },
+    {
+      "key": "item.equip.luck_charm.desc",
+      "value": "+15% tỷ lệ rơi đồ hiếm."
+    },
+    {
+      "key": "item.equip.luck_charm.name",
+      "value": "Charm may mắn"
+    },
+    {
+      "key": "item.equip.mining_charm.desc",
+      "value": "+25% tốc độ khai thác."
+    },
+    {
+      "key": "item.equip.mining_charm.name",
+      "value": "Charm đào mỏ"
+    },
+    {
+      "key": "item.equip.rubber_boots.desc",
+      "value": "Miễn nhiễm chậm khi mưa."
+    },
+    {
+      "key": "item.equip.rubber_boots.name",
+      "value": "Ụng cao su"
+    },
+    {
+      "key": "item.equip.ruby_ring.desc",
+      "value": "+15 stamina tối đa."
+    },
+    {
+      "key": "item.equip.ruby_ring.name",
+      "value": "Nhẫn Hồng Ngọc"
+    },
+    {
+      "key": "item.equip.stone_shield.desc",
+      "value": "Giảm 30% sát thương nhận."
+    },
+    {
+      "key": "item.equip.stone_shield.name",
+      "value": "Khiên đá"
+    },
+    {
+      "key": "item.equip.straw_hat.desc",
+      "value": "Giảm 10% stamina khi làm nông."
+    },
+    {
+      "key": "item.equip.straw_hat.name",
+      "value": "Mủ rơm"
+    },
+    {
+      "key": "item.feed.hay.desc",
+      "value": "Thức ăn cơ bản cho vật nuôi trong chuồng."
+    },
+    {
+      "key": "item.feed.hay.name",
+      "value": "Cỏ Khô"
+    },
+    {
+      "key": "item.food.apple_pie.desc",
+      "value": "Bánh ngọt thơm ngày. Hồi 80 stamina."
+    },
+    {
+      "key": "item.food.apple_pie.name",
+      "value": "Bánh táo"
+    },
+    {
+      "key": "item.food.apple_vinegar.desc",
+      "value": "Giấm táo. Dùng nấu ăn hoặc bán."
+    },
+    {
+      "key": "item.food.apple_vinegar.name",
+      "value": "Giấm táo"
+    },
+    {
+      "key": "item.food.asparagus_soup.desc",
+      "value": "Soup tinh tế. Hồi 50 stamina."
+    },
+    {
+      "key": "item.food.asparagus_soup.name",
+      "value": "Soup măng tây"
+    },
+    {
+      "key": "item.food.beer.desc",
+      "value": "Đồ uống từ lúa mì."
+    },
+    {
+      "key": "item.food.beer.name",
+      "value": "Bia"
+    },
+    {
+      "key": "item.food.beet_juice.desc",
+      "value": "Đồ uống phục hồi. Hồi 50 stamina, cộng thêm 20 stamina/5phút."
+    },
+    {
+      "key": "item.food.beet_juice.name",
+      "value": "Nước ép củ dền"
+    },
+    {
+      "key": "item.food.bread.desc",
+      "value": "Bánh cơ bản. Hồi 25 stamina."
+    },
+    {
+      "key": "item.food.bread.name",
+      "value": "Bánh mì"
+    },
+    {
+      "key": "item.food.buttered_sweet_potato.desc",
+      "value": "Khoai thơm bơ. Hồi 55 stamina."
+    },
+    {
+      "key": "item.food.buttered_sweet_potato.name",
+      "value": "Khoai lang nướng bơ"
+    },
+    {
+      "key": "item.food.cabbage_roll.desc",
+      "value": "Món cuốn truyền thống. Hồi 70 stamina."
+    },
+    {
+      "key": "item.food.cabbage_roll.name",
+      "value": "Cài cuốn"
+    },
+    {
+      "key": "item.food.cauliflower_gratin.desc",
+      "value": "Món nướng phô mai. Hồi 65 stamina."
+    },
+    {
+      "key": "item.food.cauliflower_gratin.name",
+      "value": "Gratin súp lơ"
+    },
+    {
+      "key": "item.food.cheese.desc",
+      "value": "Món sữa chế biến giúp hồi thể lực và bán lời hơn sữa tươi."
+    },
+    {
+      "key": "item.food.cheese.name",
+      "value": "Phô mai"
+    },
+    {
+      "key": "item.food.cherry_jam.desc",
+      "value": "Mứt quý phái. Hồi 35 stamina."
+    },
+    {
+      "key": "item.food.cherry_jam.name",
+      "value": "Mứt anh đào"
+    },
+    {
+      "key": "item.food.eggplant_parmesan.desc",
+      "value": "Món Ý. Hồi 70 stamina."
+    },
+    {
+      "key": "item.food.eggplant_parmesan.name",
+      "value": "Cà tím Parmesan"
+    },
+    {
+      "key": "item.food.flower_tea.desc",
+      "value": "Trà thơm nhẹ. Hồi 15 stamina, chống debuff."
+    },
+    {
+      "key": "item.food.flower_tea.name",
+      "value": "Trà hoa"
+    },
+    {
+      "key": "item.food.french_fries.desc",
+      "value": "Giòn rụm thơm ngon. Hồi 35 stamina."
+    },
+    {
+      "key": "item.food.french_fries.name",
+      "value": "Khoai chiên"
+    },
+    {
+      "key": "item.food.fruit_salad.desc",
+      "value": "Trái cây tươi ngon. Hồi 60 stamina."
+    },
+    {
+      "key": "item.food.fruit_salad.name",
+      "value": "Salad trái cây"
+    },
+    {
+      "key": "item.food.garlic_broccoli.desc",
+      "value": "Xào giòn. Hồi 50 stamina, buff +15% tốc độ trong 3h."
+    },
+    {
+      "key": "item.food.garlic_broccoli.name",
+      "value": "Xào tỏi bông cải"
+    },
+    {
+      "key": "item.food.green_salad.desc",
+      "value": "Món ăn nhẹ. Hồi 35 stamina."
+    },
+    {
+      "key": "item.food.green_salad.name",
+      "value": "Salad xanh"
+    },
+    {
+      "key": "item.food.mayonnaise.desc",
+      "value": "Món sốt làm từ trứng giúp hồi một ít thể lực."
+    },
+    {
+      "key": "item.food.mayonnaise.name",
+      "value": "Mayonnaise"
+    },
+    {
+      "key": "item.food.mushroom_risotto.desc",
+      "value": "Cơm kem thơm ngọt. Hồi 60 stamina."
+    },
+    {
+      "key": "item.food.mushroom_risotto.name",
+      "value": "Risotto nấm"
+    },
+    {
+      "key": "item.food.mushroom_soup.desc",
+      "value": "Soup thơm ngọt. Hồi 60 stamina."
+    },
+    {
+      "key": "item.food.mushroom_soup.name",
+      "value": "Soup kem nấm"
+    },
+    {
+      "key": "item.food.pickles.desc",
+      "value": "Dưa chua mát lạnh. Hồi 30 stamina."
+    },
+    {
+      "key": "item.food.pickles.name",
+      "value": "Dưa muối"
+    },
+    {
+      "key": "item.food.pineapple_juice.desc",
+      "value": "Đồ uống thắt mát. Hồi 45 stamina."
+    },
+    {
+      "key": "item.food.pineapple_juice.name",
+      "value": "Nước ép dứa"
+    },
+    {
+      "key": "item.food.pizza.desc",
+      "value": "Món ăn cao cấp. Hồi 90 stamina."
+    },
+    {
+      "key": "item.food.pizza.name",
+      "value": "Pizza"
+    },
+    {
+      "key": "item.food.plum_wine.desc",
+      "value": "Rượu mận cao cấp. Bán giá cực cao."
+    },
+    {
+      "key": "item.food.plum_wine.name",
+      "value": "Rượu mận"
+    },
+    {
+      "key": "item.food.pumpkin_soup.desc",
+      "value": "Soup cao cấp. Hồi 75 stamina, buff +10% stamina max trong 1 ngày."
+    },
+    {
+      "key": "item.food.pumpkin_soup.name",
+      "value": "Soup bí ngô"
+    },
+    {
+      "key": "item.food.roasted_corn.desc",
+      "value": "Món ăn nhẹ. Hồi 20 stamina."
+    },
+    {
+      "key": "item.food.roasted_corn.name",
+      "value": "Ngô nướng"
+    },
+    {
+      "key": "item.food.roasted_eggplant.desc",
+      "value": "Món nướng thơm mùi. Hồi 40 stamina."
+    },
+    {
+      "key": "item.food.roasted_eggplant.name",
+      "value": "Cà tím nướng"
+    },
+    {
+      "key": "item.food.sandwich.desc",
+      "value": "Bữa ăn nhẹ. Hồi 50 stamina."
+    },
+    {
+      "key": "item.food.sandwich.name",
+      "value": "Sandwich"
+    },
+    {
+      "key": "item.food.stir_fry.desc",
+      "value": "Xào nhanh. Hồi 45 stamina, buff +10% tốc độ trong 3h."
+    },
+    {
+      "key": "item.food.stir_fry.name",
+      "value": "Rau xào thập cẩm"
+    },
+    {
+      "key": "item.food.strawberry_cake.desc",
+      "value": "Bánh cao cấp. Hồi 85 stamina."
+    },
+    {
+      "key": "item.food.strawberry_cake.name",
+      "value": "Bánh dâu"
+    },
+    {
+      "key": "item.food.strawberry_jam.desc",
+      "value": "Mứt ngọt thơm. Hồi 30 stamina và bán giá cao."
+    },
+    {
+      "key": "item.food.strawberry_jam.name",
+      "value": "Mứt dâu"
+    },
+    {
+      "key": "item.food.sweet_potato_cake.desc",
+      "value": "Bánh ngọt mềm mịt. Hồi 65 stamina."
+    },
+    {
+      "key": "item.food.sweet_potato_cake.name",
+      "value": "Bánh khoai lang"
+    },
+    {
+      "key": "item.food.truffle_risotto.desc",
+      "value": "Món ăn hảo hạng. Hồi 100 stamina, buff +20% stamina max trong 1 ngày."
+    },
+    {
+      "key": "item.food.truffle_risotto.name",
+      "value": "Risotto Truffle"
+    },
+    {
+      "key": "item.food.veggie_smoothie.desc",
+      "value": "Đồ uống lành mạnh. Hồi 40 stamina, buff +10% tốc độ trong 3h."
+    },
+    {
+      "key": "item.food.veggie_smoothie.name",
+      "value": "Sinh tố rau"
+    },
+    {
+      "key": "item.food.veggie_soup.desc",
+      "value": "Soup ấm lòng. Hồi 55 stamina."
+    },
+    {
+      "key": "item.food.veggie_soup.name",
+      "value": "Soup rau củ"
+    },
+    {
+      "key": "item.food.vodka.desc",
+      "value": "Rượu trưng từ khoai tây."
+    },
+    {
+      "key": "item.food.vodka.name",
+      "value": "Vodka"
+    },
+    {
+      "key": "item.food.wine.desc",
+      "value": "Rượu ủ từ nho. Bán giá rất cao."
+    },
+    {
+      "key": "item.food.wine.name",
+      "value": "Rượu nho"
+    },
+    {
+      "key": "item.forage.flower.blue.desc",
+      "value": "Hoa dại mùa thu. Dùng làm thuốc bình tĩnh."
+    },
+    {
+      "key": "item.forage.flower.blue.name",
+      "value": "Hoa xanh"
+    },
+    {
+      "key": "item.forage.flower.pink.desc",
+      "value": "Hoa quý mùa xuân. Dùng làm quà NPC và nước hoa."
+    },
+    {
+      "key": "item.forage.flower.pink.name",
+      "value": "Hoa hồng"
+    },
+    {
+      "key": "item.forage.flower.red.desc",
+      "value": "Hoa dại mùa hạ. Dùng nhuộm màu đỏ và pha trà."
+    },
+    {
+      "key": "item.forage.flower.red.name",
+      "value": "Hoa đỏ"
+    },
+    {
+      "key": "item.forage.flower.white.desc",
+      "value": "Hoa hiếm mùa đông. Giá trị quà NPC cực cao."
+    },
+    {
+      "key": "item.forage.flower.white.name",
+      "value": "Hoa trắng"
+    },
+    {
+      "key": "item.forage.flower.yellow.desc",
+      "value": "Hoa vàng rực rỡ. Hạt dùng làm món ăn nhẹ."
+    },
+    {
+      "key": "item.forage.flower.yellow.name",
+      "value": "Hoa hướng dương"
+    },
+    {
+      "key": "item.forage.mushroom.brown.desc",
+      "value": "Nấm phổ biến trong rừng. Hồi 15 stamina khi ăn."
+    },
+    {
+      "key": "item.forage.mushroom.brown.name",
+      "value": "Nấm nâu"
+    },
+    {
+      "key": "item.forage.mushroom.green.desc",
+      "value": "Nấm đầm lầy hiếm. Chế biến thành thuốc tăng tốc."
+    },
+    {
+      "key": "item.forage.mushroom.green.name",
+      "value": "Nấm xanh"
+    },
+    {
+      "key": "item.forage.mushroom.orange.desc",
+      "value": "Nấm rừng sâu. Hồi 20 stamina và có tác dụng giải độc."
+    },
+    {
+      "key": "item.forage.mushroom.orange.name",
+      "value": "Nấm cam"
+    },
+    {
+      "key": "item.forage.mushroom.purple.desc",
+      "value": "Nấm độc hiếm trong hang. Chế biến thành thuốc mới an toàn."
+    },
+    {
+      "key": "item.forage.mushroom.purple.name",
+      "value": "Nấm tím"
+    },
+    {
+      "key": "item.forage.mushroom.white.desc",
+      "value": "Nấm sạch và lành mạnh. Dùng nấu soup kem."
+    },
+    {
+      "key": "item.forage.mushroom.white.name",
+      "value": "Nấm trắng"
+    },
+    {
+      "key": "item.forage.wild_root.desc",
+      "value": "Rễ cây có dược lực. Dùng làm thuốc và phân bón."
+    },
+    {
+      "key": "item.forage.wild_root.name",
+      "value": "Rễ cây dại"
+    },
+    {
+      "key": "item.mat.coal.desc",
+      "value": "Nhiên liệu cho lò nung. Cần để nung quặng."
+    },
+    {
+      "key": "item.mat.coal.name",
+      "value": "Than"
+    },
+    {
+      "key": "item.mat.copper_bar.desc",
+      "value": "Kim loại được tinh luyện. Dùng làm công cụ T2 và sprinkler."
+    },
+    {
+      "key": "item.mat.copper_bar.name",
+      "value": "Thỏi đồng"
+    },
+    {
+      "key": "item.mat.copper_ore.desc",
+      "value": "Quặng cấp 1. Nung thành thỏi đồng để nâng cấp."
+    },
+    {
+      "key": "item.mat.copper_ore.name",
+      "value": "Quặng đồng"
+    },
+    {
+      "key": "item.mat.corn_oil.desc",
+      "value": "Dầu thực vật từ ngô. Dùng chiên và nấu ăn."
+    },
+    {
+      "key": "item.mat.corn_oil.name",
+      "value": "Dầu ngô"
+    },
+    {
+      "key": "item.mat.crystal_shard.desc",
+      "value": "Pha lê đã qua tinh chế. Dùng chế tạo."
+    },
+    {
+      "key": "item.mat.crystal_shard.name",
+      "value": "Mảnh pha lê"
+    },
+    {
+      "key": "item.mat.crystal.desc",
+      "value": "Đá quý hiếm. Dùng làm cột thu lôi và đèn."
+    },
+    {
+      "key": "item.mat.crystal.name",
+      "value": "Pha lê"
+    },
+    {
+      "key": "item.mat.emerald.desc",
+      "value": "Đá quý xanh hiếm. Dùng làm charm may mắn."
+    },
+    {
+      "key": "item.mat.emerald.name",
+      "value": "Lục bảo"
+    },
+    {
+      "key": "item.mat.fiber.desc",
+      "value": "Xơ từ cỏ dại. Dùng làm dây thừng và bù nhìn."
+    },
+    {
+      "key": "item.mat.fiber.name",
+      "value": "Xơ thực vật"
+    },
+    {
+      "key": "item.mat.flour.desc",
+      "value": "Xay từ lúa mì. Nguyên liệu cơ bản để nấu bánh và pizza."
+    },
+    {
+      "key": "item.mat.flour.name",
+      "value": "Bột mì"
+    },
+    {
+      "key": "item.mat.gold_bar.desc",
+      "value": "Kim loại quý. Dùng công cụ T4 và sprinkler cao cấp."
+    },
+    {
+      "key": "item.mat.gold_bar.name",
+      "value": "Thỏi vàng"
+    },
+    {
+      "key": "item.mat.gold_ore.desc",
+      "value": "Quặng quý hiếm cấp 3. Nung thành thỏi vàng."
+    },
+    {
+      "key": "item.mat.gold_ore.name",
+      "value": "Quặng vàng"
+    },
+    {
+      "key": "item.mat.hardwood.desc",
+      "value": "Gỗ chất lượng cao từ cây sồi. Dùng xây dựng và chế tạo."
+    },
+    {
+      "key": "item.mat.hardwood.name",
+      "value": "Gỗ cứng"
+    },
+    {
+      "key": "item.mat.iron_bar.desc",
+      "value": "Kim loại chắc chắn. Dùng làm công cụ T3 và máy móc."
+    },
+    {
+      "key": "item.mat.iron_bar.name",
+      "value": "Thỏi sắt"
+    },
+    {
+      "key": "item.mat.iron_ore.desc",
+      "value": "Quặng cấp 2. Nung thành thỏi sắt."
+    },
+    {
+      "key": "item.mat.iron_ore.name",
+      "value": "Quặng sắt"
+    },
+    {
+      "key": "item.mat.maple_syrup.desc",
+      "value": "Chất ngọt tự nhiên từ cây phong. Dùng nấu ăn và bán."
+    },
+    {
+      "key": "item.mat.maple_syrup.name",
+      "value": "Mật phong"
+    },
+    {
+      "key": "item.mat.oak_resin.desc",
+      "value": "Nhựa từ cây sồi. Dùng chế tạo keo dán máy móc."
+    },
+    {
+      "key": "item.mat.oak_resin.name",
+      "value": "Nhựa sồi"
+    },
+    {
+      "key": "item.mat.pine_tar.desc",
+      "value": "Nhựa thông dẻ. Dùng làm đuốc và keo chống nước."
+    },
+    {
+      "key": "item.mat.pine_tar.name",
+      "value": "Nhựa thông"
+    },
+    {
+      "key": "item.mat.rope.desc",
+      "value": "Dây thừng chắc. Nguyên liệu chế tạo nhiều thứ."
+    },
+    {
+      "key": "item.mat.rope.name",
+      "value": "Dây thừng"
+    },
+    {
+      "key": "item.mat.ruby.desc",
+      "value": "Đá quý đỏ rực. Dùng làm trang sức cao cấp hoặc quà NPC."
+    },
+    {
+      "key": "item.mat.ruby.name",
+      "value": "Hồng ngọc"
+    },
+    {
+      "key": "item.mat.softwood.desc",
+      "value": "Gỗ từ cây bạch dương. Dùng làm giấy và trang trí."
+    },
+    {
+      "key": "item.mat.softwood.name",
+      "value": "Gỗ nhẹ"
+    },
+    {
+      "key": "item.mat.stone.desc",
+      "value": "Vật liệu xây dựng cơ bản. Dùng xây lò nung và hàng rào."
+    },
+    {
+      "key": "item.mat.stone.name",
+      "value": "Đá"
+    },
+    {
+      "key": "item.mat.sugar.desc",
+      "value": "Xay từ củ dền. Dùng làm mứt và bánh ngọt."
+    },
+    {
+      "key": "item.mat.sugar.name",
+      "value": "Đường"
+    },
+    {
+      "key": "item.mat.sunflower_oil.desc",
+      "value": "Dầu từ hạt hướng dương. Dùng nấu ăn."
+    },
+    {
+      "key": "item.mat.sunflower_oil.name",
+      "value": "Dầu hướng dương"
+    },
+    {
+      "key": "item.mat.twig.desc",
+      "value": "Cành cây rơi xuống. Dùng làm chất đốt."
+    },
+    {
+      "key": "item.mat.twig.name",
+      "value": "Cành nhỏ"
+    },
+    {
+      "key": "item.mat.wood.desc",
+      "value": "Gỗ cơ bản thu từ cây. Dùng để làm hàng rào, rương và nâng cấp dụng cụ."
+    },
+    {
+      "key": "item.mat.wood.name",
+      "value": "Gỗ"
+    },
+    {
+      "key": "item.place.adv_craft_table.desc",
+      "value": "Chế tạo máy móc và thiết bị."
+    },
+    {
+      "key": "item.place.adv_craft_table.name",
+      "value": "Bàn chế tạo nâng cao"
+    },
+    {
+      "key": "item.place.basic_craft_table.desc",
+      "value": "Chế tạo các vật dụng cơ bản."
+    },
+    {
+      "key": "item.place.basic_craft_table.name",
+      "value": "Bàn chế tạo cơ bản"
+    },
+    {
+      "key": "item.place.bed.basic.desc",
+      "value": "Một chiếc giường đặt trong nhà để kết thúc ngày và bắt đầu buổi sáng tiếp theo trong trạng thái hồi phục."
+    },
+    {
+      "key": "item.place.bed.basic.name",
+      "value": "Giường Gỗ"
+    },
+    {
+      "key": "item.place.cheese_press.desc",
+      "value": "Chế biến sữa thành phô mai và bơ."
+    },
+    {
+      "key": "item.place.cheese_press.name",
+      "value": "Máy ép phô mai"
+    },
+    {
+      "key": "item.place.chest.desc",
+      "value": "+36 slot lưu trữ."
+    },
+    {
+      "key": "item.place.chest.name",
+      "value": "Rương đồ"
+    },
+    {
+      "key": "item.place.furnace.desc",
+      "value": "Nung quặng thành thỏi kim loại."
+    },
+    {
+      "key": "item.place.furnace.name",
+      "value": "Lò nung"
+    },
+    {
+      "key": "item.place.keg.desc",
+      "value": "Ụ rượu, nước ép và giấm từ nông sản."
+    },
+    {
+      "key": "item.place.keg.name",
+      "value": "Thùng ủ"
+    },
+    {
+      "key": "item.place.kitchen.desc",
+      "value": "Nấu các món ăn hồi stamina và buff."
+    },
+    {
+      "key": "item.place.kitchen.name",
+      "value": "Bếp nấu"
+    },
+    {
+      "key": "item.place.lightning_rod.desc",
+      "value": "Chống sét làm hỏng cây trồng trong mùa mưa bão."
+    },
+    {
+      "key": "item.place.lightning_rod.name",
+      "value": "Cột thu lôi"
+    },
+    {
+      "key": "item.place.loom.desc",
+      "value": "Dệt lông cừu thành vải."
+    },
+    {
+      "key": "item.place.loom.name",
+      "value": "Máy dệt"
+    },
+    {
+      "key": "item.place.mayo_machine.desc",
+      "value": "Chế biến trứng thành mayonnaise."
+    },
+    {
+      "key": "item.place.mayo_machine.name",
+      "value": "Máy làm Mayo"
+    },
+    {
+      "key": "item.place.mill.desc",
+      "value": "Xay bột, đường và dầu từ nông sản."
+    },
+    {
+      "key": "item.place.mill.name",
+      "value": "Máy xay"
+    },
+    {
+      "key": "item.place.preserves_jar.desc",
+      "value": "Làm mứt, dưa muối và kimchi."
+    },
+    {
+      "key": "item.place.preserves_jar.name",
+      "value": "Hũ bảo quản"
+    },
+    {
+      "key": "item.place.scarecrow.desc",
+      "value": "Bảo vệ cây trồng trong vùng 8x8 khỏi quạ."
+    },
+    {
+      "key": "item.place.scarecrow.name",
+      "value": "Bù nhìn"
+    },
+    {
+      "key": "item.place.sprinkler_t1.desc",
+      "value": "Tưới tự động 4 ô xung quanh mỗi sáng."
+    },
+    {
+      "key": "item.place.sprinkler_t1.name",
+      "value": "Sprinkler cơ bản"
+    },
+    {
+      "key": "item.place.sprinkler_t2.desc",
+      "value": "Tưới tự động 8 ô (3x3) mỗi sáng."
+    },
+    {
+      "key": "item.place.sprinkler_t2.name",
+      "value": "Sprinkler nâng cao"
+    },
+    {
+      "key": "item.place.sprinkler_t3.desc",
+      "value": "Tưới tự động 24 ô (5x5) mỗi sáng."
+    },
+    {
+      "key": "item.place.sprinkler_t3.name",
+      "value": "Sprinkler cao cấp"
+    },
+    {
+      "key": "item.place.sprinkler.t1.desc",
+      "value": "Đặt xuống để tự động tưới một vùng nhỏ vào mỗi buổi sáng."
+    },
+    {
+      "key": "item.place.sprinkler.t1.name",
+      "value": "Sprinkler T1"
+    },
+    {
+      "key": "item.place.sprinkler.t2.desc",
+      "value": "Đặt xuống để tự động tưới một khu lớn hơn vào mỗi buổi sáng."
+    },
+    {
+      "key": "item.place.sprinkler.t2.name",
+      "value": "Sprinkler T2"
+    },
+    {
+      "key": "item.place.stone_fence.desc",
+      "value": "Hàng rào bền vững hơn, không bị hỏ."
+    },
+    {
+      "key": "item.place.stone_fence.name",
+      "value": "Hàng rào đá"
+    },
+    {
+      "key": "item.place.torch.desc",
+      "value": "Chiếu sáng trong hang mỏ ban đêm."
+    },
+    {
+      "key": "item.place.torch.name",
+      "value": "Đuốc"
+    },
+    {
+      "key": "item.place.wood_fence.desc",
+      "value": "Hàng rào cơ bản. Dùng khóa ranh giới trang trại."
+    },
+    {
+      "key": "item.place.wood_fence.name",
+      "value": "Hàng rào gỗ"
+    },
+    {
+      "key": "item.prod.cheese.desc",
+      "value": "Chế biến từ sữa. Bán tốt và dùng trong món ăn cao cấp."
+    },
+    {
+      "key": "item.prod.cheese.name",
+      "value": "Phô Mai"
+    },
+    {
+      "key": "item.prod.egg.desc",
+      "value": "Sản phẩm hằng ngày của gà. Có thể ăn hoặc làm mayonnaise."
+    },
+    {
+      "key": "item.prod.egg.name",
+      "value": "Trứng"
+    },
+    {
+      "key": "item.prod.mayonnaise.desc",
+      "value": "Chế biến từ trứng. Giá trị cao hơn bán trứng thô."
+    },
+    {
+      "key": "item.prod.mayonnaise.name",
+      "value": "Mayonnaise"
+    },
+    {
+      "key": "item.prod.milk.desc",
+      "value": "Sản phẩm hằng ngày của bò. Dùng làm phô mai."
+    },
+    {
+      "key": "item.prod.milk.name",
+      "value": "Sữa"
+    },
+    {
+      "key": "item.seed.brech_woodtree.desc",
+      "value": "Hạt giống trồng cây bạch dương lấy gỗ."
+    },
+    {
+      "key": "item.seed.brech_woodtree.name",
+      "value": "Hạt giống bạch dương"
+    },
+    {
+      "key": "item.seed.corn.desc",
+      "value": "Mở bán từ Lv.11. Cây trưởng thành sau khoảng 9 ngày được tưới. Sau lần thu hoạch đầu, cây cho thu hoạch lại sau 4 ngày."
+    },
+    {
+      "key": "item.seed.corn.name",
+      "value": "Hạt Giống Ngô"
+    },
+    {
+      "key": "item.seed.fall.broccoli.desc",
+      "value": "Hạt mùa thu. Thu hoạch sau 8 ngày."
+    },
+    {
+      "key": "item.seed.fall.broccoli.name",
+      "value": "Hạt bông cải xanh"
+    },
+    {
+      "key": "item.seed.fall.cabbage.desc",
+      "value": "Hạt mùa thu. Thu hoạch sau 8 ngày."
+    },
+    {
+      "key": "item.seed.fall.cabbage.name",
+      "value": "Hạt bắp cải"
+    },
+    {
+      "key": "item.seed.fall.carrot.desc",
+      "value": "Hạt mùa thu. Thu hoạch sau 6 ngày."
+    },
+    {
+      "key": "item.seed.fall.carrot.name",
+      "value": "Hạt cà rốt"
+    },
+    {
+      "key": "item.seed.fall.eggplant.desc",
+      "value": "Hạt tái thu hoạch, 5+5 ngày."
+    },
+    {
+      "key": "item.seed.fall.eggplant.name",
+      "value": "Hạt cà tím"
+    },
+    {
+      "key": "item.seed.fall.garlic.desc",
+      "value": "Hạt mùa thu. Thu hoạch sau 4 ngày."
+    },
+    {
+      "key": "item.seed.fall.garlic.name",
+      "value": "Hạt tỏi"
+    },
+    {
+      "key": "item.seed.fall.grape.desc",
+      "value": "Hạt tái thu hoạch mùa thu, 10+3 ngày."
+    },
+    {
+      "key": "item.seed.fall.grape.name",
+      "value": "Hạt nho"
+    },
+    {
+      "key": "item.seed.fall.onion.desc",
+      "value": "Hạt mùa thu. Thu hoạch sau 6 ngày."
+    },
+    {
+      "key": "item.seed.fall.onion.name",
+      "value": "Hạt hành tây"
+    },
+    {
+      "key": "item.seed.fall.pumpkin.desc",
+      "value": "Hạt giống cao cấp. Thu hoạch sau 13 ngày."
+    },
+    {
+      "key": "item.seed.fall.pumpkin.name",
+      "value": "Hạt bí ngô"
+    },
+    {
+      "key": "item.seed.fall.wheat.desc",
+      "value": "Gieo vào mùa Thu. Cây trưởng thành sau khoảng 5 ngày được tưới."
+    },
+    {
+      "key": "item.seed.fall.wheat.name",
+      "value": "Hạt Giống Lúa Mì"
+    },
+    {
+      "key": "item.seed.oak_woodtree.desc",
+      "value": "Hạt giống trồng cây sồi lấy gỗ."
+    },
+    {
+      "key": "item.seed.oak_woodtree.name",
+      "value": "Hạt giống sồi"
+    },
+    {
+      "key": "item.seed.potato.desc",
+      "value": "Mở bán từ Lv.2. Cây trưởng thành sau khoảng 5 ngày được tưới."
+    },
+    {
+      "key": "item.seed.potato.name",
+      "value": "Hạt Giống Khoai Tây"
+    },
+    {
+      "key": "item.seed.spring.asparagus.desc",
+      "value": "Hạt giống cao cấp, tái thu hoạch sau mỗi 3 ngày."
+    },
+    {
+      "key": "item.seed.spring.asparagus.name",
+      "value": "Hạt măng tây"
+    },
+    {
+      "key": "item.seed.spring.cauliflower.desc",
+      "value": "Hạt giống cao cấp, thu hoạch sau 12 ngày. Lợi nhuận cao."
+    },
+    {
+      "key": "item.seed.spring.cauliflower.name",
+      "value": "Hạt súp lơ trắng"
+    },
+    {
+      "key": "item.seed.spring.lettuce.desc",
+      "value": "Hạt giống mùa xuân. Lớn nhanh trong 3 ngày."
+    },
+    {
+      "key": "item.seed.spring.lettuce.name",
+      "value": "Hạt xà lách"
+    },
+    {
+      "key": "item.seed.spring.potato.desc",
+      "value": "Hạt giống phổ biến, thu hoạch sau 6 ngày."
+    },
+    {
+      "key": "item.seed.spring.potato.name",
+      "value": "Hạt khoai tây"
+    },
+    {
+      "key": "item.seed.spring.radish.desc",
+      "value": "Hạt giống mùa xuân, thu hoạch sau 5 ngày."
+    },
+    {
+      "key": "item.seed.spring.radish.name",
+      "value": "Hạt củ cải đỏ"
+    },
+    {
+      "key": "item.seed.spring.strawberry.desc",
+      "value": "Hạt giống tái thu hoạch, thời gian 8+4 ngày."
+    },
+    {
+      "key": "item.seed.spring.strawberry.name",
+      "value": "Hạt dâu tây"
+    },
+    {
+      "key": "item.seed.spring.tulip.desc",
+      "value": "Hạt hoa mùa xuân. Thu hoạch sau 5 ngày."
+    },
+    {
+      "key": "item.seed.spring.tulip.name",
+      "value": "Hạt hoa tulip"
+    },
+    {
+      "key": "item.seed.spring.turnip.desc",
+      "value": "Hạt giống cơ bản, thu hồi vốn nhanh sau 4 ngày."
+    },
+    {
+      "key": "item.seed.spring.turnip.name",
+      "value": "Hạt củ cải trắng"
+    },
+    {
+      "key": "item.seed.strawberry.desc",
+      "value": "Mở bán từ Lv.15. Cây trưởng thành sau khoảng 8 ngày được tưới. Sau lần thu hoạch đầu, cây cho thu hoạch lại sau 3 ngày."
+    },
+    {
+      "key": "item.seed.strawberry.name",
+      "value": "Hạt Giống Dâu Tây"
+    },
+    {
+      "key": "item.seed.summer.blueberry.desc",
+      "value": "Hạt giống tái thu hoạch, mỗi lần ra 3 quả."
+    },
+    {
+      "key": "item.seed.summer.blueberry.name",
+      "value": "Hạt việt quất"
+    },
+    {
+      "key": "item.seed.summer.corn.desc",
+      "value": "Hạt tái thu hoạch, có thể trồng xuyên mùa Hạ-Thu."
+    },
+    {
+      "key": "item.seed.summer.corn.name",
+      "value": "Hạt ngô"
+    },
+    {
+      "key": "item.seed.summer.melon.desc",
+      "value": "Hạt giống giá trị, thu hoạch sau 12 ngày."
+    },
+    {
+      "key": "item.seed.summer.melon.name",
+      "value": "Hạt dưa hấu"
+    },
+    {
+      "key": "item.seed.summer.pineapple.desc",
+      "value": "Hạt giống pháp, tái thu hoạch mỗi 7 ngày."
+    },
+    {
+      "key": "item.seed.summer.pineapple.name",
+      "value": "Hạt dứa"
+    },
+    {
+      "key": "item.seed.summer.red_pepper.desc",
+      "value": "Hạt tái thu hoạch, 7+3 ngày."
+    },
+    {
+      "key": "item.seed.summer.red_pepper.name",
+      "value": "Hạt ớt đỏ"
+    },
+    {
+      "key": "item.seed.summer.tomato.desc",
+      "value": "Hạt tái thu hoạch mùa hạ, 11+4 ngày."
+    },
+    {
+      "key": "item.seed.summer.tomato.name",
+      "value": "Hạt cà chua"
+    },
+    {
+      "key": "item.seed.summer.wheat.desc",
+      "value": "Hạt cơ bản mùa hạ. Thu hoạch sau 4 ngày."
+    },
+    {
+      "key": "item.seed.summer.wheat.name",
+      "value": "Hạt lúa mì"
+    },
+    {
+      "key": "item.seed.summer.yellow_pepper.desc",
+      "value": "Hạt tái thu hoạch, 7+3 ngày."
+    },
+    {
+      "key": "item.seed.summer.yellow_pepper.name",
+      "value": "Hạt ớt vàng"
+    },
+    {
+      "key": "item.seed.tomato.desc",
+      "value": "Mở bán từ Lv.7. Cây trưởng thành sau khoảng 7 ngày được tưới. Sau lần thu hoạch đầu, cây cho thu hoạch lại sau 3 ngày."
+    },
+    {
+      "key": "item.seed.tomato.name",
+      "value": "Hạt Giống Cà Chua"
+    },
+    {
+      "key": "item.seed.tree.apple.desc",
+      "value": "Cây ăn quả mùa thu. Cho quả sau 28 ngày."
+    },
+    {
+      "key": "item.seed.tree.apple.name",
+      "value": "Cây giống táo"
+    },
+    {
+      "key": "item.seed.tree.cherry.desc",
+      "value": "Cây ăn quả mùa xuân. Cho quả sau 28 ngày."
+    },
+    {
+      "key": "item.seed.tree.cherry.name",
+      "value": "Cây giống anh đào"
+    },
+    {
+      "key": "item.seed.tree.pear.desc",
+      "value": "Cây ăn quả mùa thu. Cho quả sau 28 ngày."
+    },
+    {
+      "key": "item.seed.tree.pear.name",
+      "value": "Cây giống lê"
+    },
+    {
+      "key": "item.seed.tree.plum.desc",
+      "value": "Cây ăn quả mùa hạ. Cho quả sau 28 ngày."
+    },
+    {
+      "key": "item.seed.tree.plum.name",
+      "value": "Cây giống mận"
+    },
+    {
+      "key": "item.seed.turnip.desc",
+      "value": "Mở bán từ Lv.1. Cây trưởng thành sau khoảng 4 ngày được tưới."
+    },
+    {
+      "key": "item.seed.turnip.name",
+      "value": "Hạt Giống Củ Cải"
+    },
+    {
+      "key": "item.seed.wheat.desc",
+      "value": "Mở bán từ Lv.4. Cây trưởng thành sau khoảng 4 ngày được tưới."
+    },
+    {
+      "key": "item.seed.wheat.name",
+      "value": "Hạt Giống Lúa Mì"
+    },
+    {
+      "key": "item.seed.winter.beet.desc",
+      "value": "Hạt mùa đông. Thu hoạch sau 7 ngày."
+    },
+    {
+      "key": "item.seed.winter.beet.name",
+      "value": "Hạt củ dền"
+    },
+    {
+      "key": "item.seed.winter.celery.desc",
+      "value": "Hạt mùa đông. Thu hoạch sau 5 ngày."
+    },
+    {
+      "key": "item.seed.winter.celery.name",
+      "value": "Hạt cần tây"
+    },
+    {
+      "key": "item.seed.winter.cucumber.desc",
+      "value": "Hạt mùa đông. Thu hoạch sau 6 ngày."
+    },
+    {
+      "key": "item.seed.winter.cucumber.name",
+      "value": "Hạt dưa leo"
+    },
+    {
+      "key": "item.seed.winter.green_bean.desc",
+      "value": "Hạt tái thu hoạch mùa đông."
+    },
+    {
+      "key": "item.seed.winter.green_bean.name",
+      "value": "Hạt đậu que"
+    },
+    {
+      "key": "item.seed.winter.spinach.desc",
+      "value": "Hạt mùa đông. Thu hoạch sau 7 ngày."
+    },
+    {
+      "key": "item.seed.winter.spinach.name",
+      "value": "Hạt rau chân vịt"
+    },
+    {
+      "key": "item.seed.winter.sweet_potato.desc",
+      "value": "Hạt mùa đông. Thu hoạch sau 8 ngày."
+    },
+    {
+      "key": "item.seed.winter.sweet_potato.name",
+      "value": "Hạt khoai lang"
+    },
+    {
+      "key": "item.seed.winter.winter_flower.desc",
+      "value": "Hạt hoa mùa đông. Thu hoạch sau 8 ngày."
+    },
+    {
+      "key": "item.seed.winter.winter_flower.name",
+      "value": "Hạt hoa tuyết"
+    },
+    {
+      "key": "item.tool.axe.t1.desc",
+      "value": "Chặt cây nhỏ trong 3 lần chém."
+    },
+    {
+      "key": "item.tool.axe.t1.name",
+      "value": "Rìu (Cơ bản)"
+    },
+    {
+      "key": "item.tool.axe.t2.desc",
+      "value": "Chặt cây trong 2 lần chém."
+    },
+    {
+      "key": "item.tool.axe.t2.name",
+      "value": "Rìú Đồng"
+    },
+    {
+      "key": "item.tool.axe.t3.desc",
+      "value": "Chặt cây nhỏ trong 1 lần. Mở rừng sâu."
+    },
+    {
+      "key": "item.tool.axe.t3.name",
+      "value": "Rìu Sắt"
+    },
+    {
+      "key": "item.tool.axe.t4.desc",
+      "value": "Chặt mọi cây trong 1 lần."
+    },
+    {
+      "key": "item.tool.axe.t4.name",
+      "value": "Rìú Vàng"
+    },
+    {
+      "key": "item.tool.hoe.t1.desc",
+      "value": "Cuốc đất 1 ô mỗi lần. Giúp trồng hạt giống."
+    },
+    {
+      "key": "item.tool.hoe.t1.name",
+      "value": "Cuốc (Cơ bản)"
+    },
+    {
+      "key": "item.tool.hoe.t2.desc",
+      "value": "Cuốc 2 ô cùng lúc. Tiết kiệm stamina."
+    },
+    {
+      "key": "item.tool.hoe.t2.name",
+      "value": "Cuốc Đồng"
+    },
+    {
+      "key": "item.tool.hoe.t3.desc",
+      "value": "Cuốc 3 ô cùng lúc. Rất hiệu quả."
+    },
+    {
+      "key": "item.tool.hoe.t3.name",
+      "value": "Cuốc Sắt"
+    },
+    {
+      "key": "item.tool.hoe.t4.desc",
+      "value": "Cuốc 5 ô cùng lúc. Hiệu quả tối đa."
+    },
+    {
+      "key": "item.tool.hoe.t4.name",
+      "value": "Cuốc Vàng"
+    },
+    {
+      "key": "item.tool.pickaxe.t1.desc",
+      "value": "Khai thác đá trong 3 lần."
+    },
+    {
+      "key": "item.tool.pickaxe.t1.name",
+      "value": "Cuốc chim (Cơ bản)"
+    },
+    {
+      "key": "item.tool.pickaxe.t2.desc",
+      "value": "Cuốc chim mạnh hơn giúp đào nhanh hơn bản cơ bản."
+    },
+    {
+      "key": "item.tool.pickaxe.t2.name",
+      "value": "Cuốc chim Đồng"
+    },
+    {
+      "key": "item.tool.pickaxe.t3.desc",
+      "value": "Khai thác đá thường trong 1 lần."
+    },
+    {
+      "key": "item.tool.pickaxe.t3.name",
+      "value": "Cuốc chim Sắt"
+    },
+    {
+      "key": "item.tool.pickaxe.t4.desc",
+      "value": "Khai thác mọi đá trong 1 lần."
+    },
+    {
+      "key": "item.tool.pickaxe.t4.name",
+      "value": "Cuốc chim Vàng"
+    },
+    {
+      "key": "item.tool.pickaxe.t5.desc",
+      "value": "Cuốc Chim Cổ cấp 5. Gây 30 sát thương cơ bản với chi phí 1 thể lực mỗi lần dùng."
+    },
+    {
+      "key": "item.tool.pickaxe.t5.name",
+      "value": "Cuốc Chim Cổ"
+    },
+    {
+      "key": "item.tool.scythe.t1.desc",
+      "value": "Thu hoạch 1 ô mỗi lần."
+    },
+    {
+      "key": "item.tool.scythe.t1.name",
+      "value": "Liềm (Cơ bản)"
+    },
+    {
+      "key": "item.tool.scythe.t2.desc",
+      "value": "Liềm nâng cấp giúp thu hoạch rộng hơn trong mỗi lần quét."
+    },
+    {
+      "key": "item.tool.scythe.t2.name",
+      "value": "Liềm Đồng"
+    },
+    {
+      "key": "item.tool.scythe.t3.desc",
+      "value": "Thu hoạch 5 ô cùng lúc."
+    },
+    {
+      "key": "item.tool.scythe.t3.name",
+      "value": "Liềm Sắt"
+    },
+    {
+      "key": "item.tool.scythe.t4.desc",
+      "value": "Thu hoạch 7 ô, không tốn stamina."
+    },
+    {
+      "key": "item.tool.scythe.t4.name",
+      "value": "Liềm Vàng"
+    },
+    {
+      "key": "item.tool.scythe.t5.desc",
+      "value": "Liềm Cổ cấp 5. Gây 38 sát thương cơ bản với chi phí 1 thể lực mỗi lần dùng."
+    },
+    {
+      "key": "item.tool.scythe.t5.name",
+      "value": "Liềm Cổ"
+    },
+    {
+      "key": "item.tool.watering_can.t1.desc",
+      "value": "Tưới 1 ô mỗi lần."
+    },
+    {
+      "key": "item.tool.watering_can.t1.name",
+      "value": "Bình tưới (Cơ bản)"
+    },
+    {
+      "key": "item.tool.watering_can.t2.desc",
+      "value": "Tưới 3 ô cùng lúc."
+    },
+    {
+      "key": "item.tool.watering_can.t2.name",
+      "value": "Bình tưới Đồng"
+    },
+    {
+      "key": "item.tool.watering_can.t3.desc",
+      "value": "Tưới 5 ô cùng lúc."
+    },
+    {
+      "key": "item.tool.watering_can.t3.name",
+      "value": "Bình tưới Sắt"
+    },
+    {
+      "key": "item.tool.watering_can.t4.desc",
+      "value": "Tưới 9 ô (3x3) cùng lúc."
+    },
+    {
+      "key": "item.tool.watering_can.t4.name",
+      "value": "Bình tưới Vàng"
+    },
+    {
+      "key": "m1.portal.farm_to_town.name",
+      "value": "Cổng đến Thị trấn"
+    },
+    {
+      "key": "m3.animal.chicken.name",
+      "value": "Gà"
+    },
+    {
+      "key": "m6.recipe.animal_feed.name",
+      "value": "Thức ăn chăn nuôi"
+    },
+    {
+      "key": "mvp.quest.crop.t1.desc",
+      "value": "Thu hoạch củ cải trắng và giao cho NPC nhiệm vụ."
+    },
+    {
+      "key": "mvp.quest.crop.t1.title",
+      "value": "Mùa vụ đầu tiên"
+    },
+    {
+      "key": "mvp.quest.crop.t2.desc",
+      "value": "Thu hoạch xà lách tươi và giao nộp."
+    },
+    {
+      "key": "mvp.quest.crop.t2.title",
+      "value": "Nông sản mùa xuân"
+    },
+    {
+      "key": "mvp.quest.crop.t3.desc",
+      "value": "Thu hoạch cà chua mùa hè và giao nộp."
+    },
+    {
+      "key": "mvp.quest.crop.t3.title",
+      "value": "Vụ hè bội thu"
+    },
+    {
+      "key": "mvp.quest.crop.t4.desc",
+      "value": "Thu hoạch bắp cải mùa thu và giao nộp."
+    },
+    {
+      "key": "mvp.quest.crop.t4.title",
+      "value": "Thu hoạch mùa thu"
+    },
+    {
+      "key": "mvp.quest.crop.t5.desc",
+      "value": "Thu hoạch rau chân vịt mùa đông và giao nộp."
+    },
+    {
+      "key": "mvp.quest.crop.t5.title",
+      "value": "Nông sản mùa đông"
+    },
+    {
+      "key": "mvp.quest.mixed.t1.desc",
+      "value": "Tiêu diệt quái và thu thập quặng trong mỏ."
+    },
+    {
+      "key": "mvp.quest.mixed.t1.title",
+      "value": "Phiêu lưu vào mỏ"
+    },
+    {
+      "key": "mvp.quest.mixed.t2.desc",
+      "value": "Tiêu diệt slime và khai thác quặng sắt."
+    },
+    {
+      "key": "mvp.quest.mixed.t2.title",
+      "value": "Chiến binh mỏ cấp 2"
+    },
+    {
+      "key": "mvp.quest.mixed.t3.desc",
+      "value": "Đánh bại orc và thu thập quặng vàng."
+    },
+    {
+      "key": "mvp.quest.mixed.t3.title",
+      "value": "Thám hiểm tầng sâu"
+    },
+    {
+      "key": "mvp.quest.mixed.t4.desc",
+      "value": "Vượt qua quái mạnh và lấy pha lê quý."
+    },
+    {
+      "key": "mvp.quest.mixed.t4.title",
+      "value": "Vùng nguy hiểm"
+    },
+    {
+      "key": "mvp.quest.mixed.t5.desc",
+      "value": "Tiêu diệt boss mỏ và thu thập hồng ngọc."
+    },
+    {
+      "key": "mvp.quest.mixed.t5.title",
+      "value": "Thử thách cuối cùng"
+    },
+    {
+      "key": "mvp.quest.obj.crop.t1",
+      "value": "Thu hoạch củ cải trắng"
+    },
+    {
+      "key": "mvp.quest.obj.crop.t2",
+      "value": "Thu hoạch xà lách"
+    },
+    {
+      "key": "mvp.quest.obj.crop.t3",
+      "value": "Thu hoạch cà chua"
+    },
+    {
+      "key": "mvp.quest.obj.crop.t4",
+      "value": "Thu hoạch bắp cải"
+    },
+    {
+      "key": "mvp.quest.obj.crop.t5",
+      "value": "Thu hoạch rau chân vịt"
+    },
+    {
+      "key": "mvp.quest.obj.mixed_ore.t1",
+      "value": "Thu thập quặng đồng"
+    },
+    {
+      "key": "mvp.quest.obj.mixed_ore.t2",
+      "value": "Thu thập quặng sắt"
+    },
+    {
+      "key": "mvp.quest.obj.mixed_ore.t3",
+      "value": "Thu thập quặng vàng"
+    },
+    {
+      "key": "mvp.quest.obj.mixed_ore.t4",
+      "value": "Thu thập pha lê"
+    },
+    {
+      "key": "mvp.quest.obj.mixed_ore.t5",
+      "value": "Thu thập hồng ngọc"
+    },
+    {
+      "key": "mvp.quest.obj.monster.t1",
+      "value": "Tiêu diệt quái vật"
+    },
+    {
+      "key": "mvp.quest.obj.monster.t2",
+      "value": "Tiêu diệt slime"
+    },
+    {
+      "key": "mvp.quest.obj.monster.t3",
+      "value": "Đánh bại orc"
+    },
+    {
+      "key": "mvp.quest.obj.monster.t4",
+      "value": "Đánh bại quái mạnh"
+    },
+    {
+      "key": "mvp.quest.obj.monster.t5",
+      "value": "Tiêu diệt boss mỏ"
+    },
+    {
+      "key": "mvp.quest.obj.ore.t1",
+      "value": "Khai thác quặng đồng"
+    },
+    {
+      "key": "mvp.quest.obj.ore.t2",
+      "value": "Khai thác quặng sắt"
+    },
+    {
+      "key": "mvp.quest.obj.ore.t3",
+      "value": "Khai thác quặng vàng"
+    },
+    {
+      "key": "mvp.quest.obj.ore.t4",
+      "value": "Thu thập mảnh pha lê"
+    },
+    {
+      "key": "mvp.quest.obj.ore.t5",
+      "value": "Thu thập hồng ngọc"
+    },
+    {
+      "key": "mvp.quest.ore.t1.desc",
+      "value": "Khai thác quặng đồng trong mỏ và giao nộp."
+    },
+    {
+      "key": "mvp.quest.ore.t1.title",
+      "value": "Quặng đồng cơ bản"
+    },
+    {
+      "key": "mvp.quest.ore.t2.desc",
+      "value": "Khai thác quặng sắt và giao nộp."
+    },
+    {
+      "key": "mvp.quest.ore.t2.title",
+      "value": "Quặng sắt vững chắc"
+    },
+    {
+      "key": "mvp.quest.ore.t3.desc",
+      "value": "Khai thác quặng vàng quý hiếm và giao nộp."
+    },
+    {
+      "key": "mvp.quest.ore.t3.title",
+      "value": "Vàng trong đất đá"
+    },
+    {
+      "key": "mvp.quest.ore.t4.desc",
+      "value": "Thu thập mảnh pha lê từ mỏ sâu."
+    },
+    {
+      "key": "mvp.quest.ore.t4.title",
+      "value": "Pha lê bí ẩn"
+    },
+    {
+      "key": "mvp.quest.ore.t5.desc",
+      "value": "Thu thập hồng ngọc từ tầng mỏ sâu nhất."
+    },
+    {
+      "key": "mvp.quest.ore.t5.title",
+      "value": "Đá quý cao cấp"
+    },
+    {
+      "key": "mvp.recipe.fertilizer.t1.name",
+      "value": "Phân bón cơ bản"
+    },
+    {
+      "key": "mvp.recipe.gear_set.t2.name",
+      "value": "Bộ trang bị đồng"
+    },
+    {
+      "key": "mvp.recipe.gear_set.t3.name",
+      "value": "Bộ trang bị sắt"
+    },
+    {
+      "key": "mvp.recipe.gear_set.t4.name",
+      "value": "Bộ trang bị vàng"
+    },
+    {
+      "key": "mvp.recipe.gear_set.t5.name",
+      "value": "Bộ trang bị tinh luyện"
+    },
+    {
+      "key": "mvp.recipe.pickaxe.t2.name",
+      "value": "Cuốc chim đồng"
+    },
+    {
+      "key": "mvp.recipe.pickaxe.t3.name",
+      "value": "Cuốc chim sắt"
+    },
+    {
+      "key": "mvp.recipe.pickaxe.t4.name",
+      "value": "Cuốc chim vàng"
+    },
+    {
+      "key": "mvp.recipe.pickaxe.t5.name",
+      "value": "Cuốc chim tinh luyện"
+    },
+    {
+      "key": "mvp.recipe.scythe.t2.name",
+      "value": "Liềm đồng"
+    },
+    {
+      "key": "mvp.recipe.scythe.t3.name",
+      "value": "Liềm sắt"
+    },
+    {
+      "key": "mvp.recipe.scythe.t4.name",
+      "value": "Liềm vàng"
+    },
+    {
+      "key": "mvp.recipe.scythe.t5.name",
+      "value": "Liềm tinh luyện"
+    },
+    {
+      "key": "mvp.recipe.sprinkler.t1.name",
+      "value": "Đầu phun tưới cơ bản"
+    },
+    {
+      "key": "mvp.recipe.sprinkler.t2.name",
+      "value": "Đầu phun tưới nâng cao"
+    },
+    {
+      "key": "npc_banhang_desc",
+      "value": "Xin chào, cậu cần mua bán gì không?"
+    },
+    {
+      "key": "npc_banhang_name",
+      "value": "Bác Ba"
+    },
+    {
+      "key": "npc_channuoi_desc",
+      "value": "Tôi bán vật nuôi, thức ăn và thu mua sản phẩm chăn nuôi."
+    },
+    {
+      "key": "npc_channuoi_name",
+      "value": "Chị Bảy"
+    },
+    {
+      "key": "npc_chetao_desc",
+      "value": "Tôi có thể nâng cấp công cụ nếu cậu có đủ nguyên liệu."
+    },
+    {
+      "key": "npc_chetao_name",
+      "value": "Chú Tư"
+    },
+    {
+      "key": "npc_sukien_desc",
+      "value": "Tôi có vài việc nhờ cậu giúp đỡ."
+    },
+    {
+      "key": "npc_sukien_name",
+      "value": "Cô Năm"
+    },
+    {
+      "key": "npc.farmer.name",
+      "value": "Nông dân"
+    },
+    {
+      "key": "npc.shop.bac_ba.desc",
+      "value": "Chủ tiệm nông cụ và hạt giống theo mùa."
+    },
+    {
+      "key": "npc.shop.bac_ba.name",
+      "value": "Bác Ba"
+    },
+    {
+      "key": "ore_node_desc",
+      "value": "Có thể khai thác bằng cuốc chím."
+    },
+    {
+      "key": "ore_node_name",
+      "value": "Mỏ quặng"
+    },
+    {
+      "key": "OreChunk01_desc",
+      "value": "Nguyên liệu thô có thể dùng để chế tạo."
+    },
+    {
+      "key": "OreChunk01_name",
+      "value": "Mảnh quặng"
+    },
+    {
+      "key": "Pickaxe01_desc",
+      "value": "Dùng để khai thác đá và quặng."
+    },
+    {
+      "key": "Pickaxe01_name",
+      "value": "Cuốc chím đồng"
+    },
+    {
+      "key": "quest.sample_farmer_work.desc",
+      "value": "Thu hoạch 5 củ hành và mang lại cho người nông dân."
+    },
+    {
+      "key": "quest.sample_farmer_work.objective.collect_onion",
+      "value": "Thu hoạch hành tây"
+    },
+    {
+      "key": "quest.sample_farmer_work.title",
+      "value": "Việc đồng áng đầu tiên"
+    },
+    {
+      "key": "recipe.furnace.copper_bar.desc",
+      "value": "Công thức chế tạo chuẩn hóa từ GED."
+    },
+    {
+      "key": "recipe.furnace.copper_bar.name",
+      "value": "Thỏi đồng (lò nung)"
+    },
+    {
+      "key": "recipe.furnace.gold_bar.desc",
+      "value": "Công thức chế tạo chuẩn hóa từ GED."
+    },
+    {
+      "key": "recipe.furnace.gold_bar.name",
+      "value": "Thỏi vàng (lò nung)"
+    },
+    {
+      "key": "recipe.furnace.iron_bar.desc",
+      "value": "Công thức chế tạo chuẩn hóa từ GED."
+    },
+    {
+      "key": "recipe.furnace.iron_bar.name",
+      "value": "Thỏi sắt (lò nung)"
+    },
+    {
+      "key": "recipe.machine.cheese.desc",
+      "value": "Công thức chế tạo chuẩn hóa từ GED."
+    },
+    {
+      "key": "recipe.machine.cheese.name",
+      "value": "Phô mai (máy ép)"
+    },
+    {
+      "key": "recipe.machine.mayo.desc",
+      "value": "Công thức chế tạo chuẩn hóa từ GED."
+    },
+    {
+      "key": "recipe.machine.mayo.name",
+      "value": "Mayonnaise (máy làm)"
+    },
+    {
+      "key": "recipe.mill.corn_oil.desc",
+      "value": "Công thức chế tạo chuẩn hóa từ GED."
+    },
+    {
+      "key": "recipe.mill.corn_oil.name",
+      "value": "Dầu ngô (máy xay)"
+    },
+    {
+      "key": "s5.ai.tip.keep_progressing",
+      "value": "Tiếp tục trồng trật, giao dịch và hoàn thành nhiệm vụ để mở khóa bước tiếp theo."
+    },
+    {
+      "key": "s5.ai.tip.rain_waters_crops",
+      "value": "Mưa sẽ tưới cây thay bạn. Dùng thời gian đó để khai mỏ hoặc làm nhiệm vụ."
+    },
+    {
+      "key": "s5.ai.tip.visit_mine_for_materials",
+      "value": "Ghé mỏ để tìm quặng và nguyên liệu nâng cấp."
+    },
+    {
+      "key": "s5.ai.tip.water_crops",
+      "value": "Trời nắng, đất khô. Tưới cây trước khi hết ngày."
+    },
+    {
+      "key": "s5.story.day01.body",
+      "value": "Chào mừng đến nông trại. Kiểm tra công cụ, trồng hạt giống đầu tiên và học nhịp sống hàng ngày."
+    },
+    {
+      "key": "s5.story.day01.title",
+      "value": "Ngày đầu tiên"
+    },
+    {
+      "key": "s5.story.day03.body",
+      "value": "Sau vài ngày, thu hoạch nông sản, bán hoa lợi và chuẩn bị cho chuyến khám phá tiếp theo."
+    },
+    {
+      "key": "s5.story.day03.title",
+      "value": "Nề nếp nông trại"
+    },
+    {
+      "key": "ui.animal.collect",
+      "value": "Thu sản phẩm"
+    },
+    {
+      "key": "ui.animal.feed",
+      "value": "Cho ăn"
+    },
+    {
+      "key": "ui.animal.status.dead",
+      "value": "Đã chết"
+    },
+    {
+      "key": "ui.animal.status.fed",
+      "value": "Đã no"
+    },
+    {
+      "key": "ui.animal.status.hungry",
+      "value": "Đói"
+    },
+    {
+      "key": "ui.animal.status.product_ready",
+      "value": "Sản phẩm sẵn sàng"
+    },
+    {
+      "key": "ui.bed.sleep",
+      "value": "Ngủ"
+    },
+    {
+      "key": "ui.category.accessory",
+      "value": "Phụ kiện"
+    },
+    {
+      "key": "ui.category.animal_product",
+      "value": "Sản phẩm chăn nuôi"
+    },
+    {
+      "key": "ui.category.crop",
+      "value": "Nông sản"
+    },
+    {
+      "key": "ui.category.food",
+      "value": "Thực phẩm"
+    },
+    {
+      "key": "ui.category.material",
+      "value": "Nguyên liệu"
+    },
+    {
+      "key": "ui.category.placeable",
+      "value": "Có thể đặt"
+    },
+    {
+      "key": "ui.category.potion",
+      "value": "Thuốc"
+    },
+    {
+      "key": "ui.category.seed",
+      "value": "Hạt giống"
+    },
+    {
+      "key": "ui.category.tool",
+      "value": "Công cụ"
+    },
+    {
+      "key": "ui.category.weapon",
+      "value": "Vũ khí"
+    },
+    {
+      "key": "ui.common.cancel",
+      "value": "Hủy"
+    },
+    {
+      "key": "ui.common.close",
+      "value": "Đóng"
+    },
+    {
+      "key": "ui.common.equip",
+      "value": "Trang bị"
+    },
+    {
+      "key": "ui.common.open",
+      "value": "Mở"
+    },
+    {
+      "key": "ui.common.sort",
+      "value": "Sắp xếp"
+    },
+    {
+      "key": "ui.common.use",
+      "value": "Sử dụng"
+    },
+    {
+      "key": "ui.crafting.craft",
+      "value": "Chế tạo"
+    },
+    {
+      "key": "ui.crafting.filter.all",
+      "value": "Tất cả"
+    },
+    {
+      "key": "ui.crafting.filter.decor",
+      "value": "Trang trí"
+    },
+    {
+      "key": "ui.crafting.filter.food",
+      "value": "Đồ ăn"
+    },
+    {
+      "key": "ui.crafting.filter.other",
+      "value": "Khác"
+    },
+    {
+      "key": "ui.crafting.filter.tool",
+      "value": "Công cụ"
+    },
+    {
+      "key": "ui.crafting.info.title",
+      "value": "Thông tin chế tạo"
+    },
+    {
+      "key": "ui.crafting.ingredients",
+      "value": "Nguyên liệu cần thiết"
+    },
+    {
+      "key": "ui.crafting.insufficient",
+      "value": "Thiếu nguyên liệu"
+    },
+    {
+      "key": "ui.crafting.locked",
+      "value": "Chưa mở khoá"
+    },
+    {
+      "key": "ui.crafting.open",
+      "value": "Chế tạo"
+    },
+    {
+      "key": "ui.crafting.required_level",
+      "value": "Yêu cầu cấp: Lv.{0}"
+    },
+    {
+      "key": "ui.crafting.select",
+      "value": "Chọn"
+    },
+    {
+      "key": "ui.crafting.title",
+      "value": "Chế Tạo"
+    },
+    {
+      "key": "ui.dialogue.default_interaction_line",
+      "value": "Cậu muốn làm gì?"
+    },
+    {
+      "key": "ui.dialogue.goodbye",
+      "value": "Tạm biệt"
+    },
+    {
+      "key": "ui.dialogue.talk",
+      "value": "Nói chuyện"
+    },
+    {
+      "key": "ui.equipment.infoPlayer",
+      "value": "Chỉ số nhân vật"
+    },
+    {
+      "key": "ui.equipment.NamePlayer",
+      "value": "Tên :"
+    },
+    {
+      "key": "ui.hud.backpack",
+      "value": "Túi đồ"
+    },
+    {
+      "key": "ui.hud.equipment",
+      "value": "Trang bị"
+    },
+    {
+      "key": "ui.hud.quest",
+      "value": "Nhiệm vụ"
+    },
+    {
+      "key": "ui.hud.settings",
+      "value": "Cài đặt"
+    },
+    {
+      "key": "ui.interaction.harvest",
+      "value": "Thu hoạch"
+    },
+    {
+      "key": "ui.interaction.need_tool_format",
+      "value": "Cần công cụ"
+    },
+    {
+      "key": "ui.interaction.not_ready",
+      "value": "Chưa sẵn sàng"
+    },
+    {
+      "key": "ui.inventory.capacity",
+      "value": "{0}/{1}"
+    },
+    {
+      "key": "ui.inventory.info_title",
+      "value": "Thông tin vật phẩm"
+    },
+    {
+      "key": "ui.inventory.money",
+      "value": "Tiền"
+    },
+    {
+      "key": "ui.inventory.quick_sort",
+      "value": "Sắp xếp nhanh"
+    },
+    {
+      "key": "ui.inventory.Split",
+      "value": "Chia"
+    },
+    {
+      "key": "ui.inventory.title",
+      "value": "Túi đồ"
+    },
+    {
+      "key": "ui.item.category",
+      "value": "Loại"
+    },
+    {
+      "key": "ui.item.description",
+      "value": "Mô tả"
+    },
+    {
+      "key": "ui.item.rarity",
+      "value": "Phẩm chất"
+    },
+    {
+      "key": "ui.item.sell_price",
+      "value": "Giá bán"
+    },
+    {
+      "key": "ui.loading.percent",
+      "value": "{0}%"
+    },
+    {
+      "key": "ui.loading.scene",
+      "value": "Đang tải cảnh {0}"
+    },
+    {
+      "key": "ui.loading.scene_name.FarmScene",
+      "value": "Nông trại"
+    },
+    {
+      "key": "ui.loading.scene_name.MainMenuScene",
+      "value": "Màn hình chính"
+    },
+    {
+      "key": "ui.loading.scene_name.scene",
+      "value": "Cảnh"
+    },
+    {
+      "key": "ui.loading.scene_name.TownScene",
+      "value": "Thị trấn"
+    },
+    {
+      "key": "ui.loading.tip.1",
+      "value": "Mẹo: Thu thập tài nguyên và nâng cấp công cụ để sinh tồn dễ dàng hơn!"
+    },
+    {
+      "key": "ui.loading.tip.2",
+      "value": "Mẹo: Tưới cây mỗi ngày để cây trồng phát triển ổn định."
+    },
+    {
+      "key": "ui.loading.tip.3",
+      "value": "Mẹo: Mang đúng công cụ khi khai thác đá, cây và cỏ dại."
+    },
+    {
+      "key": "ui.loading.tip.4",
+      "value": "Mẹo: Kiểm tra túi đồ trước khi ra khỏi nông trại để tránh thiếu vật phẩm."
+    },
+    {
+      "key": "ui.loading.tip.5",
+      "value": "Mẹo: Lưu game thường xuyên để bảo vệ tiến độ của bạn."
+    },
+    {
+      "key": "ui.loading.title",
+      "value": "ĐANG TẢI..."
+    },
+    {
+      "key": "ui.mainmenu.continue",
+      "value": "Tiếp tục"
+    },
+    {
+      "key": "ui.mainmenu.exit",
+      "value": "Thoát"
+    },
+    {
+      "key": "ui.mainmenu.new_game",
+      "value": "Trò chơi mới"
+    },
+    {
+      "key": "ui.mainmenu.saves.back",
+      "value": "Quay lại"
+    },
+    {
+      "key": "ui.mainmenu.saves.empty",
+      "value": "Không có bản lưu nào"
+    },
+    {
+      "key": "ui.mainmenu.saves.title",
+      "value": "Các bản lưu"
+    },
+    {
+      "key": "ui.mainmenu.settings",
+      "value": "Cài đặt"
+    },
+    {
+      "key": "ui.mainmenu.title",
+      "value": "Nông Trại Vui Vẻ"
+    },
+    {
+      "key": "ui.menu.Equipment",
+      "value": "Trang bị"
+    },
+    {
+      "key": "ui.menu.inventory",
+      "value": "Túi đồ"
+    },
+    {
+      "key": "ui.menu.journal",
+      "value": "Nhật ký"
+    },
+    {
+      "key": "ui.menu.map",
+      "value": "Bản đồ"
+    },
+    {
+      "key": "ui.menu.quest",
+      "value": "Nhiệm vụ"
+    },
+    {
+      "key": "ui.menu.settings",
+      "value": "Cài đặt"
+    },
+    {
+      "key": "ui.menu.skills",
+      "value": "Kỹ năng"
+    },
+    {
+      "key": "ui.menu.storage",
+      "value": "Kho đồ"
+    },
+    {
+      "key": "ui.player.level",
+      "value": "Lv. {0}"
+    },
+    {
+      "key": "ui.processor.open",
+      "value": "Sử dụng máy"
+    },
+    {
+      "key": "ui.processor.title",
+      "value": "Máy chế biến"
+    },
+    {
+      "key": "ui.processor.use",
+      "value": "Sử dụng máy"
+    },
+    {
+      "key": "ui.quest.accept",
+      "value": "Nhận nhiệm vụ"
+    },
+    {
+      "key": "ui.quest.complete",
+      "value": "Trả nhiệm vụ"
+    },
+    {
+      "key": "ui.quest.completed",
+      "value": "Nhiệm vụ đã hoàn thành"
+    },
+    {
+      "key": "ui.quest.in_progress",
+      "value": "Đang làm"
+    },
+    {
+      "key": "ui.quest.log.empty",
+      "value": "Chưa có nhiệm vụ đang theo dõi."
+    },
+    {
+      "key": "ui.quest.log.title",
+      "value": "Nhật ký nhiệm vụ"
+    },
+    {
+      "key": "ui.quest.objective",
+      "value": "Mục tiêu"
+    },
+    {
+      "key": "ui.quest.offer",
+      "value": "Nhận nhiệm vụ"
+    },
+    {
+      "key": "ui.quest.reward",
+      "value": "Phần thưởng"
+    },
+    {
+      "key": "ui.quest.state.completed",
+      "value": "Hoàn thành"
+    },
+    {
+      "key": "ui.quest.state.in_progress",
+      "value": "Đang làm"
+    },
+    {
+      "key": "ui.quest.state.label.completed",
+      "value": "Hoàn thành"
+    },
+    {
+      "key": "ui.quest.state.label.in_progress",
+      "value": "Đang làm"
+    },
+    {
+      "key": "ui.quest.state.not_started",
+      "value": "Chưa nhận"
+    },
+    {
+      "key": "ui.quest.view",
+      "value": "Xem nhiệm vụ"
+    },
+    {
+      "key": "ui.rarity.common",
+      "value": "Thường"
+    },
+    {
+      "key": "ui.rarity.epic",
+      "value": "Sử thi"
+    },
+    {
+      "key": "ui.rarity.rare",
+      "value": "Hiếm"
+    },
+    {
+      "key": "ui.rarity.uncommon",
+      "value": "Không phổ biến"
+    },
+    {
+      "key": "ui.scene.enter",
+      "value": "Đi vào"
+    },
+    {
+      "key": "ui.settings.audio.master",
+      "value": "Âm lượng tổng"
+    },
+    {
+      "key": "ui.settings.audio.music",
+      "value": "Nhạc nền"
+    },
+    {
+      "key": "ui.settings.audio.sfx",
+      "value": "Hiệu ứng"
+    },
+    {
+      "key": "ui.settings.close",
+      "value": "Đóng"
+    },
+    {
+      "key": "ui.settings.default",
+      "value": "Mặc định"
+    },
+    {
+      "key": "ui.settings.fps",
+      "value": "FPS mục tiêu"
+    },
+    {
+      "key": "ui.settings.fps.120",
+      "value": "120 FPS"
+    },
+    {
+      "key": "ui.settings.fps.30",
+      "value": "30 FPS"
+    },
+    {
+      "key": "ui.settings.fps.60",
+      "value": "60 FPS"
+    },
+    {
+      "key": "ui.settings.fps.unlimited",
+      "value": "Không giới hạn"
+    },
+    {
+      "key": "ui.settings.fullscreen",
+      "value": "Toàn màn hình"
+    },
+    {
+      "key": "ui.settings.interact_key",
+      "value": "Phím tương tác"
+    },
+    {
+      "key": "ui.settings.lang.en",
+      "value": "English"
+    },
+    {
+      "key": "ui.settings.lang.vi",
+      "value": "Tiếng Việt"
+    },
+    {
+      "key": "ui.settings.language",
+      "value": "Ngôn ngữ"
+    },
+    {
+      "key": "ui.settings.main_menu",
+      "value": "Về menu"
+    },
+    {
+      "key": "ui.settings.quit",
+      "value": "Thoát game"
+    },
+    {
+      "key": "ui.settings.rebind.prompt",
+      "value": "Nhấn phím..."
+    },
+    {
+      "key": "ui.settings.save",
+      "value": "Lưu"
+    },
+    {
+      "key": "ui.settings.title",
+      "value": "Cài đặt"
+    },
+    {
+      "key": "ui.settings.vsync",
+      "value": "Đồng bộ khung hình"
+    },
+    {
+      "key": "ui.shop.buy",
+      "value": "Mua"
+    },
+    {
+      "key": "ui.shop.open",
+      "value": "Cửa hàng"
+    },
+    {
+      "key": "ui.shop.quick_select",
+      "value": "Chọn nhanh"
+    },
+    {
+      "key": "ui.shop.sell",
+      "value": "Bán"
+    },
+    {
+      "key": "ui.shop.sell_empty_hint",
+      "value": "Chọn vật phẩm từ túi đồ để bán."
+    },
+    {
+      "key": "ui.shop.sellable_items",
+      "value": "Vật phẩm có thể bán"
+    },
+    {
+      "key": "ui.shop.title",
+      "value": "Cửa hàng của {0}"
+    },
+    {
+      "key": "ui.shop.total",
+      "value": "Tổng tiền:"
+    },
+    {
+      "key": "ui.shop.your_inventory",
+      "value": "Túi đồ của bạn"
+    },
+    {
+      "key": "ui.stat.attack",
+      "value": "Tấn công"
+    },
+    {
+      "key": "ui.stat.attack_speed",
+      "value": "Tốc độ đánh"
+    },
+    {
+      "key": "ui.stat.crit_rate",
+      "value": "Tỷ lệ chí mạng"
+    },
+    {
+      "key": "ui.stat.defense",
+      "value": "Phòng thủ"
+    },
+    {
+      "key": "ui.stat.energy",
+      "value": "Năng lượng"
+    },
+    {
+      "key": "ui.stat.exp",
+      "value": "EXP"
+    },
+    {
+      "key": "ui.stat.hp",
+      "value": "Máu"
+    },
+    {
+      "key": "ui.stat.hpmax",
+      "value": "Máu tối đa"
+    },
+    {
+      "key": "ui.stat.speed",
+      "value": "Tốc độ"
+    },
+    {
+      "key": "ui.storage.open",
+      "value": "Mở kho"
+    },
+    {
+      "key": "ui.storage.title",
+      "value": "Kho đồ"
+    },
+    {
+      "key": "ui.time.day",
+      "value": "Ngày {0}"
+    },
+    {
+      "key": "ui.time.fall",
+      "value": "Thu"
+    },
+    {
+      "key": "ui.time.gold",
+      "value": "Vàng"
+    },
+    {
+      "key": "ui.time.spring",
+      "value": "Xuân"
+    },
+    {
+      "key": "ui.time.summer",
+      "value": "Hạ"
+    },
+    {
+      "key": "ui.time.winter",
+      "value": "Đông"
+    },
+    {
+      "key": "ui.tool.axe",
+      "value": "Rìu"
+    },
+    {
+      "key": "ui.tool.fishing_rod",
+      "value": "Cần câu"
+    },
+    {
+      "key": "ui.tool.hoe",
+      "value": "Cuốc"
+    },
+    {
+      "key": "ui.tool.pickaxe",
+      "value": "Cuốc chim"
+    },
+    {
+      "key": "ui.tool.scythe",
+      "value": "Liềm"
+    },
+    {
+      "key": "ui.tool.unknown",
+      "value": "Công cụ phù hợp"
+    },
+    {
+      "key": "ui.tool.watering_can",
+      "value": "Bình tưới"
+    },
+    {
+      "key": "ui.unlock.level_required",
+      "value": "Yêu cầu cấp {0}"
+    },
+    {
+      "key": "ui.unlock.quest_required",
+      "value": "Cần hoàn thành nhiệm vụ trước"
+    },
+    {
+      "key": "world.animal.chicken.desc",
+      "value": "Vật nuôi cần cho ăn mỗi ngày để cho sản phẩm đều đặn."
+    },
+    {
+      "key": "world.animal.chicken.name",
+      "value": "Gà"
+    },
+    {
+      "key": "world.animal.cow.desc",
+      "value": "Vật nuôi cần cho ăn mỗi ngày để cho sản phẩm đều đặn."
+    },
+    {
+      "key": "world.animal.cow.name",
+      "value": "Bò"
+    },
+    {
+      "key": "world.crop.corn.desc",
+      "value": "Cây trồng mở ở Lv.11, cần được tưới mỗi ngày để phát triển."
+    },
+    {
+      "key": "world.crop.corn.name",
+      "value": "Cây Ngô"
+    },
+    {
+      "key": "world.crop.fall.pumpkin.desc",
+      "value": "Cây Bí Ngô ngoài ruộng. Cần tưới nước hằng ngày để phát triển trong mùa Thu."
+    },
+    {
+      "key": "world.crop.fall.pumpkin.name",
+      "value": "Bí Ngô"
+    },
+    {
+      "key": "world.crop.fall.wheat.desc",
+      "value": "Cây trồng mùa Thu, cần được tưới mỗi ngày để phát triển."
+    },
+    {
+      "key": "world.crop.fall.wheat.name",
+      "value": "Cây Lúa Mì"
+    },
+    {
+      "key": "world.crop.potato.desc",
+      "value": "Cây trồng mở ở Lv.2, cần được tưới mỗi ngày để phát triển."
+    },
+    {
+      "key": "world.crop.potato.name",
+      "value": "Cây Khoai Tây"
+    },
+    {
+      "key": "world.crop.spring.asparagus.desc",
+      "value": "Cây Măng Tây ngoài ruộng. Cần tưới nước hằng ngày để phát triển trong mùa Xuân."
+    },
+    {
+      "key": "world.crop.spring.asparagus.name",
+      "value": "Măng Tây"
+    },
+    {
+      "key": "world.crop.spring.lettuce.desc",
+      "value": "Cây Xà Lách ngoài ruộng. Cần tưới nước hằng ngày để phát triển trong mùa Xuân."
+    },
+    {
+      "key": "world.crop.spring.lettuce.name",
+      "value": "Xà Lách"
+    },
+    {
+      "key": "world.crop.spring.potato.desc",
+      "value": "Cây trồng mùa Xuân, cần được tưới mỗi ngày để phát triển."
+    },
+    {
+      "key": "world.crop.spring.potato.name",
+      "value": "Cây Khoai Tây"
+    },
+    {
+      "key": "world.crop.spring.strawberry.desc",
+      "value": "Cây trồng mùa Xuân, cần được tưới mỗi ngày để phát triển."
+    },
+    {
+      "key": "world.crop.spring.strawberry.name",
+      "value": "Cây Dâu Tây"
+    },
+    {
+      "key": "world.crop.spring.turnip.desc",
+      "value": "Cây trồng mùa Xuân, cần được tưới mỗi ngày để phát triển."
+    },
+    {
+      "key": "world.crop.spring.turnip.name",
+      "value": "Cây Củ Cải"
+    },
+    {
+      "key": "world.crop.strawberry.desc",
+      "value": "Cây trồng mở ở Lv.15, cần được tưới mỗi ngày để phát triển."
+    },
+    {
+      "key": "world.crop.strawberry.name",
+      "value": "Cây Dâu Tây"
+    },
+    {
+      "key": "world.crop.summer.corn.desc",
+      "value": "Cây trồng mùa Hạ, cần được tưới mỗi ngày để phát triển."
+    },
+    {
+      "key": "world.crop.summer.corn.name",
+      "value": "Cây Ngô"
+    },
+    {
+      "key": "world.crop.summer.tomato.desc",
+      "value": "Cây trồng mùa Hạ, cần được tưới mỗi ngày để phát triển."
+    },
+    {
+      "key": "world.crop.summer.tomato.name",
+      "value": "Cây Cà Chua"
+    },
+    {
+      "key": "world.crop.tomato.desc",
+      "value": "Cây trồng mở ở Lv.7, cần được tưới mỗi ngày để phát triển."
+    },
+    {
+      "key": "world.crop.tomato.name",
+      "value": "Cây Cà Chua"
+    },
+    {
+      "key": "world.crop.turnip.desc",
+      "value": "Cây trồng mở ở Lv.1, cần được tưới mỗi ngày để phát triển."
+    },
+    {
+      "key": "world.crop.turnip.name",
+      "value": "Cây Củ Cải"
+    },
+    {
+      "key": "world.crop.wheat.desc",
+      "value": "Cây trồng mở ở Lv.4, cần được tưới mỗi ngày để phát triển."
+    },
+    {
+      "key": "world.crop.wheat.name",
+      "value": "Cây Lúa Mì"
+    },
+    {
+      "key": "world.crop.winter.spinach.desc",
+      "value": "Cây Rau Chân Vịt ngoài ruộng. Cần tưới nước hằng ngày để phát triển trong mùa Đông."
+    },
+    {
+      "key": "world.crop.winter.spinach.name",
+      "value": "Rau Chân Vịt"
+    },
+    {
+      "key": "world.node.copper.desc",
+      "value": "Node tài nguyên yêu cầu cuốc chim cấp 1 và hồi lại sau khoảng 5 ngày."
+    },
+    {
+      "key": "world.node.copper.name",
+      "value": "Quặng Đồng"
+    },
+    {
+      "key": "world.node.gold.desc",
+      "value": "Điểm tài nguyên cần cuốc chim cấp 3 trở lên để khai thác."
+    },
+    {
+      "key": "world.node.gold.name",
+      "value": "Quặng Vàng"
+    },
+    {
+      "key": "world.node.iron.desc",
+      "value": "Điểm tài nguyên cần cuốc chim cấp 2 trở lên để khai thác."
+    },
+    {
+      "key": "world.node.iron.name",
+      "value": "Quặng Sắt"
+    },
+    {
+      "key": "world.node.rock.desc",
+      "value": "Điểm tài nguyên cần cuốc chim cấp 1 trở lên để khai thác."
+    },
+    {
+      "key": "world.node.rock.name",
+      "value": "Đá Thường"
+    },
+    {
+      "key": "world.tree.apple.desc",
+      "value": "Cây lâu năm cho quả vào mùa Thu và có thể chặt lấy gỗ."
+    },
+    {
+      "key": "world.tree.apple.name",
+      "value": "Cây Táo"
+    },
+    {
+      "key": "world.tree.maple.desc",
+      "value": "Cây lấy gỗ có thể chặt bằng rìu cấp 1 trở lên."
+    },
+    {
+      "key": "world.tree.maple.name",
+      "value": "Phong"
+    },
+    {
+      "key": "world.tree.oak.desc",
+      "value": "Cây lấy gỗ có thể chặt bằng rìu cấp 2 trở lên."
+    },
+    {
+      "key": "world.tree.oak.name",
+      "value": "Sồi"
+    },
+    {
+      "key": "world.tree.pine.desc",
+      "value": "Cây lấy gỗ có thể chặt bằng rìu cấp 1 trở lên."
+    },
+    {
+      "key": "world.tree.pine.name",
+      "value": "Thông"
+    },
+    {
+      "key": "world.utility.bed.basic.desc",
+      "value": "Ngủ để kết thúc ngày, hồi đầy thể lực và máu trước khi sang ngày mới."
+    },
+    {
+      "key": "world.utility.bed.basic.name",
+      "value": "Giường Gỗ"
+    },
+    {
+      "key": "world.utility.sprinkler.t1.desc",
+      "value": "Vòi tưới cơ bản, tự động tưới khu vực nhỏ vào đầu ngày mới."
+    },
+    {
+      "key": "world.utility.sprinkler.t1.name",
+      "value": "Vòi tưới T1"
+    },
+    {
+      "key": "world.utility.sprinkler.t2.desc",
+      "value": "Vòi tưới nâng cấp, bao phủ khu vực rộng hơn vào đầu ngày mới."
+    },
+    {
+      "key": "world.utility.sprinkler.t2.name",
+      "value": "Vòi tưới T2"
+    }
   ]
 }

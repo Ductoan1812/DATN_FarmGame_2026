@@ -359,7 +359,7 @@ public class DialoguePanelUI : MonoBehaviour
         optionsContentRect.pivot = new Vector2(0.5f, 1f);
         optionsContentRect.anchoredPosition = Vector2.zero;
         optionsContentRect.offsetMin = new Vector2(0f, optionsContentRect.offsetMin.y);
-        optionsContentRect.offsetMax = new Vector2(-16f, optionsContentRect.offsetMax.y);
+        optionsContentRect.offsetMax = new Vector2(0f, optionsContentRect.offsetMax.y);
 
         for (int i = optionsRootRect.childCount - 1; i >= 0; i--)
         {
@@ -377,7 +377,7 @@ public class DialoguePanelUI : MonoBehaviour
         optionsScrollRect.viewport = optionsRootRect;
         optionsScrollRect.content = optionsContentRect;
         optionsScrollRect.verticalScrollbar = optionsScrollbar;
-        optionsScrollRect.verticalScrollbarVisibility = ScrollRect.ScrollbarVisibility.AutoHideAndExpandViewport;
+        optionsScrollRect.verticalScrollbarVisibility = ScrollRect.ScrollbarVisibility.Permanent;
         optionsScrollRect.verticalScrollbarSpacing = 4f;
     }
 
@@ -427,8 +427,16 @@ public class DialoguePanelUI : MonoBehaviour
         }
 
         panelRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, panelHeight);
+        bool needsScrollbar = contentHeight > optionsHeight + 1f;
         if (optionsScrollbar != null)
-            optionsScrollbar.gameObject.SetActive(contentHeight > optionsHeight + 1f);
+            optionsScrollbar.gameObject.SetActive(needsScrollbar);
+
+        if (optionsContentRect != null)
+        {
+            float rightOffset = needsScrollbar ? -16f : 0f;
+            optionsContentRect.offsetMin = new Vector2(0f, optionsContentRect.offsetMin.y);
+            optionsContentRect.offsetMax = new Vector2(rightOffset, optionsContentRect.offsetMax.y);
+        }
 
         if (optionsScrollRect != null)
             optionsScrollRect.verticalNormalizedPosition = 1f;
@@ -469,6 +477,12 @@ public class DialoguePanelUI : MonoBehaviour
         panelRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, panelMinHeight);
         if (optionsScrollbar != null)
             optionsScrollbar.gameObject.SetActive(false);
+
+        if (optionsContentRect != null)
+        {
+            optionsContentRect.offsetMin = new Vector2(0f, optionsContentRect.offsetMin.y);
+            optionsContentRect.offsetMax = new Vector2(0f, optionsContentRect.offsetMax.y);
+        }
 
         if (optionsContentRect != null)
             LayoutRebuilder.ForceRebuildLayoutImmediate(optionsContentRect);

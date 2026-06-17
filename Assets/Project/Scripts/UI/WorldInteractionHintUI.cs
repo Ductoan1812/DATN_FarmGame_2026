@@ -1,35 +1,29 @@
-using TMPro;
 using UnityEngine;
 
 [DisallowMultipleComponent]
 public class WorldInteractionHintUI : MonoBehaviour
 {
-    private const string DefaultFontResourcePath = "Fonts & Materials/Roboto-Bold SDF";
+    private const string IconSheetPath = "UI/Icons/InteractionIcon";
 
     [SerializeField] private Vector3 worldOffset = new(0f, 1.9f, 0f);
-    [SerializeField] private float textScale = 0.13f;
-    [SerializeField] private float fontSize = 36f;
-    [SerializeField] private Color normalColor = Color.white;
-    [SerializeField] private Color blockedColor = new(1f, 0.72f, 0.72f, 1f);
-    [SerializeField] private string sortingLayerName = "UI";
+    [SerializeField] private float iconScale = 1.2f;
+    [SerializeField] private string sortingLayerName = "Effect";
     [SerializeField] private int sortingOrder = 200;
-    [SerializeField] private TMP_FontAsset fontAsset;
 
     private EventBus eventBus;
-    private TextMeshPro hintText;
+    private SpriteRenderer iconRenderer;
     private InteractionPreviewData currentPreview;
     private bool subscribed;
+    private Sprite[] iconSprites;
 
     private void Awake()
     {
-        EnsureText();
+        LoadIcons();
+        EnsureIcon();
         Hide();
     }
 
-    private void OnEnable()
-    {
-        TrySubscribe();
-    }
+    private void OnEnable() => TrySubscribe();
 
     private void Update()
     {
@@ -49,7 +43,6 @@ public class WorldInteractionHintUI : MonoBehaviour
         if (subscribed) return;
         eventBus = GameManager.Instance?.EventBus;
         if (eventBus == null) return;
-
         eventBus.Subscribe<InteractionPreviewChangedPublish>(OnPreviewChanged);
         subscribed = true;
     }
@@ -62,21 +55,20 @@ public class WorldInteractionHintUI : MonoBehaviour
 
     private void UpdateFollow()
     {
-        if (hintText == null) return;
-        if (!TryGetTargetTransform(out var targetTransform))
+        if (iconRenderer == null) return;
+        if (!TryGetTargetTransform(out var t))
         {
             Hide();
             currentPreview = default;
             return;
         }
-
-        hintText.transform.position = targetTransform.position + worldOffset;
+        iconRenderer.transform.position = t.position + worldOffset;
     }
 
     private void RenderPreview()
     {
-        EnsureText();
-        if (hintText == null) return;
+        EnsureIcon();
+        if (iconRenderer == null) return;
 
         if (!TryGetTargetTransform(out _))
         {
@@ -84,113 +76,145 @@ public class WorldInteractionHintUI : MonoBehaviour
             return;
         }
 
-        string targetName = ResolveText(currentPreview.targetNameKey, currentPreview.targetNameFallback);
-        string actionText = ResolveText(currentPreview.actionTextKey, "Tương tác");
-
-        string keyText = GameplayInputSettings.FormatKey(GameplayInputSettings.GetInteractKey());
-        string line = $"{keyText} - {actionText}: {targetName}";
-
-        if (currentPreview.isBlocked && !string.IsNullOrWhiteSpace(currentPreview.blockedReasonKey))
-            line = ResolveBlockedLine(currentPreview.blockedReasonKey);
-        else if (!string.IsNullOrWhiteSpace(currentPreview.statusTextKey))
-            line = ResolveText(currentPreview.statusTextKey, currentPreview.statusTextKey);
-
-        hintText.color = currentPreview.isBlocked ? blockedColor : normalColor;
-        hintText.text = line;
-        hintText.gameObject.SetActive(true);
+        int idx = ResolveIconIndex(currentPreview);
+        if (idx >= 0 && idx < iconSprites.Length && iconSprites[idx] != null)
+        {
+            iconRenderer.sprite = iconSprites[idx];
+            iconRenderer.color = currentPreview.isBlocked ? new Color(1f, 1f, 1f, 0.55f) : Color.white;
+            iconRenderer.gameObject.SetActive(true);
+        }
+        else
+        {
+            Hide();
+        }
     }
+
+    // Icon index map (từ ảnh sprite sheet):
+    // 0=HandHarvest, 1=WateringCan, 2=Hoe, 3=Axe, 4=Pickaxe, 5=Scythe/Liềm
+    // 6=Moon/Sleep, 7=Chat"...", 8=Quest"?", 9=Chat"..."2, 10=TúiVàng/Shop
+    // 11=Rương/Chest, 12=Craft, 13=Portal/Door, 14=Bowl/Animal, 15=Heart+Lock
+    // 16=X/Blocked, 17=Hourglass
+
+    // Trả về -1 = ẩn icon
+    private int ResolveIconIndex(InteractionPreviewData preview)
+    {
+        string key = preview.actionTextKey;
+
+        // Harvest — logic riêng
+        if (key == "ui.interaction.harvest")
+        {
+            if (preview.isBlocked)
+            {
+                // Chưa sẵn sàng → ẩn
+                if (!string.IsNullOrEmpty(preview.blockedReasonKey) && preview.blockedReasonKey.Contains("not_ready"))
+                    return -1;
+                // Cần tool → hiện icon tool đó
+                if (preview.requiredTool != ToolType.None)
+                    return ToolToIndex(preview.requiredTool);
+                return -1;
+            }
+            // Harvest được → icon thu hoạch tay (0)
+            return 0;
+        }
+
+        // Generic "use" hoặc rỗng → ẩn
+        if (string.IsNullOrEmpty(key) || key == "ui.common.use")
+            return -1;
+
+        if (key == "ui.bed.sleep") return 6;       // Moon
+        if (key == "ui.storage.open") return 11;    // Rương
+        if (key == "ui.processor.open") return 12;  // Craft
+
+        // Quest
+        if (key == "ui.quest.accept" || key == "ui.quest.offer") return 8;     // "?"
+        if (key == "ui.quest.view" || key == "ui.quest.in_progress") return 8; // "?"
+        if (key == "ui.quest.complete" || key == "ui.quest.completed") return 8;
+
+        // Shop, craft, portal, animal
+        if (key.Contains("shop") || key.Contains("buy") || key.Contains("sell")) return 10; // Túi vàng
+        if (key.Contains("craft")) return 12;   // Craft
+        if (key.Contains("portal") || key.Contains("enter") || key.Contains("door")) return 13; // Portal
+        if (key.Contains("feed") || key.Contains("animal")) return 14; // Bowl
+
+        // Dialogue / NPC / bất kỳ key lạ → icon "..." (7)
+        return 7;
+    }
+
+    private static int ToolToIndex(ToolType tool) => tool switch
+    {
+        ToolType.WateringCan => 1,
+        ToolType.Hoe        => 2,
+        ToolType.Axe        => 3,
+        ToolType.Pickaxe    => 4,
+        ToolType.Scythe     => 5,
+        _                   => 16
+    };
 
     private bool TryGetTargetTransform(out Transform targetTransform)
     {
         targetTransform = null;
-        if (!currentPreview.HasTarget || currentPreview.target == null)
-            return false;
+        if (!currentPreview.HasTarget || currentPreview.target == null) return false;
 
         var owner = currentPreview.target.Owner;
-        if (owner is UnityEngine.Object ownerObject && ownerObject == null)
-            return false;
+        if (owner is Object ownerObject && ownerObject == null) return false;
 
         var go = owner?.GameObject;
-        if (go == null)
-            return false;
+        if (go == null) return false;
 
         targetTransform = go.transform;
-        return targetTransform != null;
-    }
-
-    private string ResolveBlockedLine(string key)
-    {
-        if (string.IsNullOrWhiteSpace(key)) return string.Empty;
-
-        int separator = key.IndexOf('|');
-        if (separator < 0)
-            return ResolveText(key, key);
-
-        string formatKey = key.Substring(0, separator);
-        string argKey = key.Substring(separator + 1);
-        string toolName = ResolveText(argKey, argKey);
-        return ResolveText(formatKey, "Cần {0}", toolName);
-    }
-
-    private string ResolveText(string key, string fallback, params object[] args)
-    {
-        if (string.IsNullOrWhiteSpace(key))
-            return fallback ?? string.Empty;
-
-        var lm = LocalizationManager.Instance;
-        if (lm == null)
-            return args == null || args.Length == 0 ? key : string.Format(key, args);
-
-        string value = args == null || args.Length == 0
-            ? lm.GetText(key)
-            : lm.GetText(key, args);
-
-        if (string.IsNullOrWhiteSpace(value) || value == key)
-            return args == null || args.Length == 0 ? fallback : string.Format(fallback, args);
-
-        return value;
+        return true;
     }
 
     private void Hide()
     {
-        if (hintText == null) return;
-        hintText.gameObject.SetActive(false);
+        if (iconRenderer != null)
+            iconRenderer.gameObject.SetActive(false);
     }
 
-    private void EnsureText()
+    private void LoadIcons()
     {
-        if (hintText != null) return;
+        var loaded = Resources.LoadAll<Sprite>(IconSheetPath);
+        if (loaded == null || loaded.Length == 0)
+        {
+            Debug.LogWarning($"[WorldInteractionHintUI] No sprites found at '{IconSheetPath}'. Check sprite sheet import settings (spriteMode must be Multiple).");
+            iconSprites = System.Array.Empty<Sprite>();
+            return;
+        }
+        System.Array.Sort(loaded, (a, b) =>
+        {
+            int idxA = ExtractSpriteIndex(a.name);
+            int idxB = ExtractSpriteIndex(b.name);
+            return idxA.CompareTo(idxB);
+        });
+        iconSprites = loaded;
+        Debug.Log($"[WorldInteractionHintUI] Loaded {iconSprites.Length} interaction icon sprites.");
+    }
 
-        var child = transform.Find("WorldHintText");
+    private static int ExtractSpriteIndex(string spriteName)
+    {
+        int underscoreIdx = spriteName.LastIndexOf('_');
+        if (underscoreIdx >= 0 && int.TryParse(spriteName.Substring(underscoreIdx + 1), out int idx))
+            return idx;
+        return int.MaxValue;
+    }
+
+    private void EnsureIcon()
+    {
+        if (iconRenderer != null) return;
+
+        var child = transform.Find("WorldHintIcon");
         if (child != null)
-            hintText = child.GetComponent<TextMeshPro>();
+            iconRenderer = child.GetComponent<SpriteRenderer>();
 
-        if (hintText == null)
+        if (iconRenderer == null)
         {
-            var go = new GameObject("WorldHintText");
+            var go = new GameObject("WorldHintIcon");
             go.transform.SetParent(transform, false);
-            hintText = go.AddComponent<TextMeshPro>();
+            iconRenderer = go.AddComponent<SpriteRenderer>();
         }
 
-        hintText.alignment = TextAlignmentOptions.Center;
-        if (fontAsset == null)
-            fontAsset = Resources.Load<TMP_FontAsset>(DefaultFontResourcePath);
-        if (fontAsset != null)
-            hintText.font = fontAsset;
-        hintText.enableWordWrapping = false;
-        hintText.fontSize = fontSize;
-        hintText.color = normalColor;
-        hintText.outlineWidth = 0.2f;
-        hintText.outlineColor = new Color(0f, 0f, 0f, 0.95f);
-        hintText.raycastTarget = false;
-
-        hintText.transform.localScale = Vector3.one * Mathf.Max(0.01f, textScale);
-
-        var renderer = hintText.GetComponent<MeshRenderer>();
-        if (renderer != null)
-        {
-            renderer.sortingLayerName = sortingLayerName;
-            renderer.sortingOrder = sortingOrder;
-        }
+        iconRenderer.sortingLayerName = sortingLayerName;
+        iconRenderer.sortingOrder = sortingOrder;
+        iconRenderer.transform.localScale = Vector3.one * Mathf.Max(0.01f, iconScale);
     }
 }

@@ -126,7 +126,10 @@ public class SettingsWindowUI : MonoBehaviour
 
     private void EnsureBasicLayout()
     {
-        bool hasRequiredLayout = MenuWindowShellUI.FindDeepChild(transform, "SliderMaster") != null
+        // "SettingsLayoutV2" marker: chỉ tồn tại khi layout được build bởi code mới
+        // (slider dùng offsetMin/offsetMax đúng). Layout cũ từ scene sẽ không có marker này.
+        bool hasRequiredLayout = MenuWindowShellUI.FindDeepChild(transform, "SettingsLayoutV2") != null
+            && MenuWindowShellUI.FindDeepChild(transform, "SliderMaster") != null
             && MenuWindowShellUI.FindDeepChild(transform, "InteractKeyButton") != null
             && MenuWindowShellUI.FindDeepChild(transform, "FullscreenToggle") != null
             && MenuWindowShellUI.FindDeepChild(transform, "VsyncToggle") != null
@@ -145,24 +148,30 @@ public class SettingsWindowUI : MonoBehaviour
         ClearGeneratedRefs();
 
         MenuWindowShellUI.ClearChildren(transform);
-        var body = MenuWindowShellUI.BuildShell(transform, "Cài đặt", new Vector2(0f, -42f), new Vector2(-96f, -128f));
+
+        // Marker để phát hiện layout V2 trong lần OnEnable tiếp theo
+        var markerGo = new GameObject("SettingsLayoutV2");
+        markerGo.transform.SetParent(transform, false);
+
+        var body = MenuWindowShellUI.BuildShell(transform, string.Empty, new Vector2(0f, -42f), new Vector2(-96f, -128f));
+        SetLocalizedTitle(body.parent);
         var bodyFrame = MenuWindowShellUI.CreateImage("SettingsBodyFrame", body, new Color(0.14f, 0.08f, 0.03f, 0.12f));
         MenuWindowShellUI.Stretch(bodyFrame.rectTransform, new Vector2(18f, 18f), new Vector2(-18f, -18f));
 
-        CreateSliderRow(bodyFrame.transform, "Master", "Âm lượng tổng", -34f);
-        CreateSliderRow(bodyFrame.transform, "Music", "Nhạc nền", -104f);
-        CreateSliderRow(bodyFrame.transform, "Sfx", "Hiệu ứng", -174f);
+        CreateSliderRow(bodyFrame.transform, "Master", LocalizationKeys.UiSettingsAudioMaster, -34f);
+        CreateSliderRow(bodyFrame.transform, "Music", LocalizationKeys.UiSettingsAudioMusic, -104f);
+        CreateSliderRow(bodyFrame.transform, "Sfx", LocalizationKeys.UiSettingsAudioSfx, -174f);
         CreateLanguageRow(bodyFrame.transform, -244f);
         CreateInteractKeyRow(bodyFrame.transform, -304f);
-        CreateToggleRow(bodyFrame.transform, "Fullscreen", "Toàn màn hình", -364f, true);
-        CreateToggleRow(bodyFrame.transform, "Vsync", "Đồng bộ khung hình", -424f, false);
-        CreateButtonValueRow(bodyFrame.transform, "TargetFps", "FPS mục tiêu", "60 FPS", -484f);
-        CreateResetRow(bodyFrame.transform, -544f);
+        CreateToggleRow(bodyFrame.transform, "Fullscreen", LocalizationKeys.UiSettingsFullscreen, -364f, true);
+        CreateToggleRow(bodyFrame.transform, "Vsync", LocalizationKeys.UiSettingsVsync, -424f, false);
+        CreateButtonValueRow(bodyFrame.transform, "TargetFps", LocalizationKeys.UiSettingsFps, "60 FPS", -484f);
 
-        CreateBasicButton("SaveButton", transform, "Lưu", new Vector2(-300f, 34f));
-        CreateBasicButton("CloseButton", transform, "Đóng", new Vector2(-100f, 34f));
-        CreateBasicButton("BackToMenuButton", transform, "Về menu", new Vector2(100f, 34f));
-        CreateBasicButton("QuitButton", transform, "Thoát game", new Vector2(300f, 34f));
+        CreateLocalizedButton("SaveButton", transform, LocalizationKeys.UiSettingsSave, new Vector2(-400f, 34f));
+        CreateLocalizedButton("CloseButton", transform, LocalizationKeys.UiSettingsClose, new Vector2(-200f, 34f));
+        CreateResetRow(transform, new Vector2(0f, 34f));
+        CreateLocalizedButton("BackToMenuButton", transform, LocalizationKeys.UiSettingsMainMenu, new Vector2(200f, 34f));
+        CreateLocalizedButton("QuitButton", transform, LocalizationKeys.UiSettingsQuit, new Vector2(400f, 34f));
         AutoFindRefs();
         ApplyContextualButtonVisibility();
     }
@@ -392,7 +401,9 @@ public class SettingsWindowUI : MonoBehaviour
     {
         waitingForInteractKey = true;
         if (interactKeyValueLabel != null)
-            interactKeyValueLabel.text = "Nhấn phím...";
+            interactKeyValueLabel.text = LocalizationManager.Instance != null
+                ? LocalizationManager.Instance.GetText(LocalizationKeys.UiSettingsRebindPrompt)
+                : "Nhấn phím...";
     }
 
     private void BackToMenu()
@@ -459,7 +470,16 @@ public class SettingsWindowUI : MonoBehaviour
     {
         if (targetFpsValueLabel == null) return;
         int fps = PlayerPrefs.GetInt(KeyTargetFps, 60);
-        targetFpsValueLabel.text = fps < 0 ? "Không giới hạn" : $"{fps} FPS";
+        if (fps < 0)
+        {
+            targetFpsValueLabel.text = LocalizationManager.Instance != null
+                ? LocalizationManager.Instance.GetText(LocalizationKeys.UiSettingsFpsUnlimited)
+                : "Không giới hạn";
+        }
+        else
+        {
+            targetFpsValueLabel.text = $"{fps} FPS";
+        }
     }
 
     private void RefreshLanguageLabel()
@@ -497,7 +517,7 @@ public class SettingsWindowUI : MonoBehaviour
             closeButton.gameObject.SetActive(true);
             var rect = closeButton.GetComponent<RectTransform>();
             if (rect != null)
-                rect.anchoredPosition = new Vector2(0f, 34f);
+                rect.anchoredPosition = new Vector2(-100f, 34f);
         }
     }
 
@@ -525,16 +545,22 @@ public class SettingsWindowUI : MonoBehaviour
         return !name.StartsWith("Mouse") && !name.StartsWith("Joystick");
     }
 
-    private static void CreateSliderRow(Transform parent, string key, string label, float y)
+    private static void CreateSliderRow(Transform parent, string key, string labelKey, float y)
     {
         var row = CreateUiObject($"{key}Row", parent);
         SetRect(row, new Vector2(0f, 1f), Vector2.one, new Vector2(0.5f, 1f), new Vector2(0f, y), new Vector2(0f, 52f));
 
-        var labelText = CreateText($"Label{key}", row, label, 19f, TextAlignmentOptions.MidlineLeft, MenuWindowShellUI.BodyTextColor);
+        var labelText = CreateText($"Label{key}", row, string.Empty, 19f, TextAlignmentOptions.MidlineLeft, MenuWindowShellUI.BodyTextColor);
         SetRect(labelText.rectTransform, new Vector2(0f, 0f), new Vector2(0f, 1f), new Vector2(0f, 0.5f), Vector2.zero, new Vector2(190f, 0f));
+        AddLocalizedText(labelText, labelKey);
 
         var sliderRoot = CreateUiObject($"Slider{key}", row);
-        SetRect(sliderRoot, new Vector2(0f, 0.5f), new Vector2(1f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(102f, 0f), new Vector2(-286f, 22f));
+        // anchor stretch ngang, offsetMin.x=200 (sau label), offsetMax.x=-90 (trước value text)
+        sliderRoot.anchorMin = Vector2.zero;
+        sliderRoot.anchorMax = Vector2.one;
+        sliderRoot.pivot = new Vector2(0.5f, 0.5f);
+        sliderRoot.offsetMin = new Vector2(200f, 6f);
+        sliderRoot.offsetMax = new Vector2(-90f, -6f);
         var slider = sliderRoot.gameObject.AddComponent<Slider>();
 
         var background = CreateImage("Background", sliderRoot, MenuWindowShellUI.SurfaceAltColor);
@@ -566,21 +592,22 @@ public class SettingsWindowUI : MonoBehaviour
 
     private static void CreateLanguageRow(Transform parent, float y)
     {
-        CreateButtonValueRow(parent, "Language", "Ngôn ngữ", "Tiếng Việt", y, "LanguageButton", "LanguageValue");
+        CreateButtonValueRow(parent, "Language", LocalizationKeys.UiSettingsLanguage, "Tiếng Việt", y, "LanguageButton", "LanguageValue");
     }
 
     private static void CreateInteractKeyRow(Transform parent, float y)
     {
-        CreateButtonValueRow(parent, "InteractKey", "Phím tương tác", "E", y, "InteractKeyButton", "InteractKeyValue");
+        CreateButtonValueRow(parent, "InteractKey", LocalizationKeys.UiSettingsInteractKey, "E", y, "InteractKeyButton", "InteractKeyValue");
     }
 
-    private static void CreateButtonValueRow(Transform parent, string key, string label, string value, float y, string buttonName = null, string valueName = null)
+    private static void CreateButtonValueRow(Transform parent, string key, string labelKey, string value, float y, string buttonName = null, string valueName = null)
     {
         var row = CreateUiObject($"{key}Row", parent);
         SetRect(row, new Vector2(0f, 1f), Vector2.one, new Vector2(0.5f, 1f), new Vector2(0f, y), new Vector2(0f, 48f));
 
-        var labelText = CreateText($"Label{key}", row, label, 19f, TextAlignmentOptions.MidlineLeft, MenuWindowShellUI.BodyTextColor);
+        var labelText = CreateText($"Label{key}", row, string.Empty, 19f, TextAlignmentOptions.MidlineLeft, MenuWindowShellUI.BodyTextColor);
         SetRect(labelText.rectTransform, new Vector2(0f, 0f), new Vector2(0.5f, 1f), new Vector2(0f, 0.5f), Vector2.zero, Vector2.zero);
+        AddLocalizedText(labelText, labelKey);
 
         var buttonImage = CreateImage(buttonName ?? $"{key}Button", row, MenuWindowShellUI.SurfaceColor);
         SetRect(buttonImage.rectTransform, new Vector2(1f, 0.5f), new Vector2(1f, 0.5f), new Vector2(1f, 0.5f), Vector2.zero, new Vector2(190f, 40f));
@@ -591,13 +618,14 @@ public class SettingsWindowUI : MonoBehaviour
         Stretch(valueText.rectTransform, Vector2.zero, Vector2.zero);
     }
 
-    private static void CreateToggleRow(Transform parent, string key, string label, float y, bool defaultValue)
+    private static void CreateToggleRow(Transform parent, string key, string labelKey, float y, bool defaultValue)
     {
         var row = CreateUiObject($"{key}Row", parent);
         SetRect(row, new Vector2(0f, 1f), Vector2.one, new Vector2(0.5f, 1f), new Vector2(0f, y), new Vector2(0f, 48f));
 
-        var labelText = CreateText($"Label{key}", row, label, 19f, TextAlignmentOptions.MidlineLeft, MenuWindowShellUI.BodyTextColor);
+        var labelText = CreateText($"Label{key}", row, string.Empty, 19f, TextAlignmentOptions.MidlineLeft, MenuWindowShellUI.BodyTextColor);
         SetRect(labelText.rectTransform, new Vector2(0f, 0f), new Vector2(0.5f, 1f), new Vector2(0f, 0.5f), Vector2.zero, Vector2.zero);
+        AddLocalizedText(labelText, labelKey);
 
         var toggleRoot = CreateUiObject($"{key}Toggle", row);
         SetRect(toggleRoot, new Vector2(1f, 0.5f), new Vector2(1f, 0.5f), new Vector2(1f, 0.5f), Vector2.zero, new Vector2(70f, 38f));
@@ -614,15 +642,29 @@ public class SettingsWindowUI : MonoBehaviour
         toggle.isOn = defaultValue;
     }
 
-    private static void CreateResetRow(Transform parent, float y)
+    private static void CreateResetRow(Transform parent, Vector2 position)
     {
         var buttonImage = CreateImage("ResetDefaultsButton", parent, MenuWindowShellUI.SurfaceColor);
-        SetRect(buttonImage.rectTransform, new Vector2(1f, 1f), new Vector2(1f, 1f), new Vector2(1f, 1f), new Vector2(0f, y), new Vector2(190f, 42f));
+        SetRect(buttonImage.rectTransform, new Vector2(0.5f, 0f), new Vector2(0.5f, 0f), new Vector2(0.5f, 0.5f), position, new Vector2(160f, 48f));
         var button = buttonImage.gameObject.AddComponent<Button>();
         button.targetGraphic = buttonImage;
 
-        var text = CreateText("Label", buttonImage.transform, "Mặc định", 18f, TextAlignmentOptions.Center, MenuWindowShellUI.AccentSoftColor);
+        var text = CreateText("Label", buttonImage.transform, string.Empty, 20f, TextAlignmentOptions.Center, MenuWindowShellUI.AccentSoftColor);
         Stretch(text.rectTransform, Vector2.zero, Vector2.zero);
+        AddLocalizedText(text, LocalizationKeys.UiSettingsDefault);
+    }
+
+    private static Button CreateLocalizedButton(string name, Transform parent, string labelKey, Vector2 position)
+    {
+        var root = CreateImage(name, parent, MenuWindowShellUI.SurfaceColor);
+        SetRect(root.rectTransform, new Vector2(0.5f, 0f), new Vector2(0.5f, 0f), new Vector2(0.5f, 0.5f), position, new Vector2(160f, 48f));
+        var button = root.gameObject.AddComponent<Button>();
+        button.targetGraphic = root;
+
+        var text = CreateText("Label", root.transform, string.Empty, 20f, TextAlignmentOptions.Center, MenuWindowShellUI.AccentSoftColor);
+        Stretch(text.rectTransform, Vector2.zero, Vector2.zero);
+        AddLocalizedText(text, labelKey);
+        return button;
     }
 
     private static Button CreateBasicButton(string name, Transform parent, string label, Vector2 position)
@@ -660,5 +702,19 @@ public class SettingsWindowUI : MonoBehaviour
     private static void SetRect(RectTransform rect, Vector2 anchorMin, Vector2 anchorMax, Vector2 pivot, Vector2 anchoredPosition, Vector2 sizeDelta)
     {
         MenuWindowShellUI.SetRect(rect, anchorMin, anchorMax, pivot, anchoredPosition, sizeDelta);
+    }
+
+    private static void AddLocalizedText(TMP_Text text, string key)
+    {
+        if (text == null || string.IsNullOrEmpty(key)) return;
+        var localized = text.gameObject.GetComponent<LocalizedText>() ?? text.gameObject.AddComponent<LocalizedText>();
+        localized.SetKey(key);
+    }
+
+    private static void SetLocalizedTitle(Transform root)
+    {
+        var titleText = MenuWindowShellUI.FindDeepChild(root, "TitleText")?.GetComponent<TMP_Text>();
+        if (titleText != null)
+            AddLocalizedText(titleText, LocalizationKeys.UiSettingsTitle);
     }
 }

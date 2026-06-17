@@ -177,6 +177,7 @@ public class TimeManager : MonoBehaviour
     /// <summary>Nhảy sang ngày tiếp theo, reset giờ về startHour.</summary>
     public void SkipToNextDay()
     {
+        _eventBus?.Publish(new SleepTransitionPublish());
         AdvanceDay();
         _timeOfDaySeconds = HourMinuteToDaySeconds(
             config != null ? config.startHour : 6,

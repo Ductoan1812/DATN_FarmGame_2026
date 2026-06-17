@@ -1,606 +1,3500 @@
 {
   "entries": [
-    { "key": "ui.common.open", "value": "Open" },
-    { "key": "ui.common.close", "value": "Close" },
-    { "key": "ui.common.use", "value": "Use" },
-    { "key": "ui.common.cancel", "value": "Cancel" },
-    { "key": "ui.common.equip", "value": "Equip" },
-    { "key": "ui.common.sort", "value": "Sort" },
-    { "key": "ui.menu.inventory", "value": "Inventory" },
-    { "key": "ui.menu.storage", "value": "Storage" },
-    { "key": "ui.menu.Equipment", "value": "Equipment" },
-    { "key": "ui.menu.skills", "value": "Skills" },
-    { "key": "ui.menu.map", "value": "Map" },
-    { "key": "ui.menu.quest", "value": "Quest" },
-    { "key": "ui.menu.journal", "value": "Journal" },
-    { "key": "ui.menu.settings", "value": "Settings" },
-    { "key": "ui.inventory.title", "value": "Inventory" },
-    { "key": "ui.inventory.capacity", "value": "{0}/{1}" },
-    { "key": "ui.inventory.quick_sort", "value": "Quick Sort" },
-    { "key": "ui.inventory.Split", "value": "Split" },
-    { "key": "ui.inventory.money", "value": "Money" },
-    { "key": "ui.inventory.info_title", "value": "Item Info" },
-    { "key": "ui.equipment.infoPlayer", "value": "Character Stats" },
-    { "key": "ui.equipment.NamePlayer", "value": "Name:" },
-    { "key": "ui.item.category", "value": "Category" },
-    { "key": "ui.item.rarity", "value": "Rarity" },
-    { "key": "ui.item.description", "value": "Description" },
-    { "key": "ui.item.sell_price", "value": "Sell Price" },
-    { "key": "ui.stat.hp", "value": "HP" },
-    { "key": "ui.stat.hpmax", "value": "Max HP" },
-    { "key": "ui.stat.energy", "value": "Energy" },
-    { "key": "ui.stat.exp", "value": "EXP" },
-    { "key": "ui.stat.attack", "value": "Attack" },
-    { "key": "ui.stat.defense", "value": "Defense" },
-    { "key": "ui.stat.speed", "value": "Speed" },
-    { "key": "ui.stat.crit_rate", "value": "Crit Rate" },
-    { "key": "ui.stat.attack_speed", "value": "Attack Speed" },
-    { "key": "ui.player.level", "value": "Lv. {0}" },
-    { "key": "ui.time.spring", "value": "Spring" },
-    { "key": "ui.time.summer", "value": "Summer" },
-    { "key": "ui.time.fall", "value": "Fall" },
-    { "key": "ui.time.winter", "value": "Winter" },
-    { "key": "ui.time.day", "value": "Day {0}" },
-    { "key": "ui.time.gold", "value": "Gold" },
-    { "key": "ui.rarity.common", "value": "Common" },
-    { "key": "ui.rarity.uncommon", "value": "Uncommon" },
-    { "key": "ui.rarity.rare", "value": "Rare" },
-    { "key": "ui.rarity.epic", "value": "Epic" },
-    { "key": "ui.category.weapon", "value": "Weapon" },
-    { "key": "ui.category.tool", "value": "Tool" },
-    { "key": "ui.category.material", "value": "Material" },
-    { "key": "ui.category.food", "value": "Food" },
-    { "key": "ui.category.potion", "value": "Potion" },
-    { "key": "ui.category.seed", "value": "Seed" },
-    { "key": "ui.category.crop", "value": "Crop" },
-    { "key": "ui.category.animal_product", "value": "Animal Product" },
-    { "key": "ui.category.placeable", "value": "Placeable" },
-    { "key": "ui.category.accessory", "value": "Accessory" },
-    { "key": "ui.dialogue.talk", "value": "Talk" },
-    { "key": "ui.dialogue.goodbye", "value": "Goodbye" },
-    { "key": "ui.dialogue.default_interaction_line", "value": "What would you like to do?" },
-    { "key": "ui.shop.open", "value": "Shop" },
-    { "key": "ui.shop.buy", "value": "Buy" },
-    { "key": "ui.shop.sell", "value": "Sell" },
-    { "key": "ui.shop.title", "value": "{0}'s Shop" },
-    { "key": "ui.shop.your_inventory", "value": "Your Inventory" },
-    { "key": "ui.shop.sellable_items", "value": "Sellable Items" },
-    { "key": "ui.shop.sell_empty_hint", "value": "Choose an item from your inventory to sell." },
-    { "key": "ui.shop.total", "value": "Total:" },
-    { "key": "ui.shop.quick_select", "value": "Quick Select" },
-    { "key": "ui.scene.enter", "value": "Enter" },
-    { "key": "ui.quest.accept", "value": "Accept Quest" },
-    { "key": "ui.quest.view", "value": "View Quest" },
-    { "key": "ui.quest.complete", "value": "Complete Quest" },
-    { "key": "ui.quest.completed", "value": "Quest Completed" },
-    { "key": "ui.quest.state.not_started", "value": "Not Started" },
-    { "key": "ui.quest.state.in_progress", "value": "In Progress" },
-    { "key": "ui.quest.state.completed", "value": "Completed" },
-    { "key": "npc.farmer.name", "value": "Farmer" },
-    { "key": "dialogue.sample.farmer.hello", "value": "Hey there! The field looks good today. Need me to show you a few things?" },
-    { "key": "dialogue.sample.farmer.old_friend", "value": "Good to see you again. I have a bit of field work if you have time." },
-    { "key": "dialogue.sample.farmer.offer_work", "value": "I need a few fresh carrots. Bring them to me and I will pay you fairly." },
-    { "key": "dialogue.sample.farmer.accepted", "value": "Good. Come back when everything is ready." },
-    { "key": "dialogue.sample.choice.ask_work", "value": "Do you need help?" },
-    { "key": "dialogue.sample.choice.accept_work", "value": "Sure, I will take the job." },
-    { "key": "dialogue.sample.choice.later", "value": "Maybe later." },
-    { "key": "npc_banhang_name", "value": "Uncle Ba" },
-    { "key": "npc_banhang_desc", "value": "Hello, need to buy or sell something?" },
-    { "key": "npc_chetao_name", "value": "Uncle Tu" },
-    { "key": "npc_chetao_desc", "value": "I can upgrade your tools if you bring enough materials." },
-    { "key": "npc_channuoi_name", "value": "Sister Bay" },
-    { "key": "npc_channuoi_desc", "value": "I sell livestock, animal feed, and buy barn products." },
-    { "key": "npc_sukien_name", "value": "Miss Nam" },
-    { "key": "npc_sukien_desc", "value": "I have a few tasks that need your help." },
-    { "key": "quest.sample_farmer_work.title", "value": "First Farm Job" },
-    { "key": "quest.sample_farmer_work.desc", "value": "Harvest 5 onions and bring them back to the farmer." },
-    { "key": "quest.sample_farmer_work.objective.collect_onion", "value": "Harvest onions" },
-    { "key": "Axe01_name", "value": "Starter Axe" },
-    { "key": "Axe01_desc", "value": "Used to chop trees and clear wood from the farm." },
-    { "key": "Pickaxe01_name", "value": "Copper Pickaxe" },
-    { "key": "Pickaxe01_desc", "value": "Used to mine rocks and ore nodes." },
-    { "key": "OreChunk01_name", "value": "Ore Chunk" },
-    { "key": "OreChunk01_desc", "value": "Raw crafting material from ore nodes." },
-    { "key": "ore_node_name", "value": "Ore Node" },
-    { "key": "ore_node_desc", "value": "Can be mined with a pickaxe." },
-    { "key": "enemy_01_name", "value": "Field Beast" },
-    { "key": "enemy_01_desc", "value": "A roaming creature that attacks nearby players." },
-    { "key": "s5.ai.tip.water_crops", "value": "The sun is out and the field is dry. Water crops before the day ends." },
-    { "key": "s5.ai.tip.rain_waters_crops", "value": "Rain will water crops for you. Use the time for mining or quests." },
-    { "key": "s5.ai.tip.visit_mine_for_materials", "value": "Visit the mine to gather ore and upgrade materials." },
-    { "key": "s5.ai.tip.keep_progressing", "value": "Keep farming, trading, and finishing quests to unlock the next step." },
-    { "key": "s5.story.day01.title", "value": "First Day on the Farm" },
-    { "key": "s5.story.day01.body", "value": "Welcome to the farm. Check your tools, plant your first seeds, and learn the rhythm of the day." },
-    { "key": "s5.story.day03.title", "value": "Farm Routine" },
-    { "key": "s5.story.day03.body", "value": "After a few days, harvest crops, sell produce, and prepare supplies for the next trip." },
-    { "key": "item.seed.spring.lettuce.name", "value": "Lettuce Seeds" },
-    { "key": "item.seed.spring.lettuce.desc", "value": "Spring seeds. Ready to harvest in 3 days." },
-    { "key": "item.crop.spring.lettuce.name", "value": "Lettuce" },
-    { "key": "item.crop.spring.lettuce.desc", "value": "Fresh spring greens. Used in salads and sandwiches." },
-    { "key": "item.seed.spring.turnip.name", "value": "Turnip Seeds" },
-    { "key": "item.seed.spring.turnip.desc", "value": "Basic spring seeds. Ready in 4 days." },
-    { "key": "item.crop.spring.turnip.name", "value": "Turnip" },
-    { "key": "item.crop.spring.turnip.desc", "value": "A basic root vegetable. Used in soups and pickles." },
-    { "key": "item.seed.spring.radish.name", "value": "Radish Seeds" },
-    { "key": "item.seed.spring.radish.desc", "value": "Spring seeds. Ready in 5 days." },
-    { "key": "item.crop.spring.radish.name", "value": "Radish" },
-    { "key": "item.crop.spring.radish.desc", "value": "Crisp and fresh. Used in salads and pickles." },
-    { "key": "item.seed.spring.potato.name", "value": "Potato Seeds" },
-    { "key": "item.seed.spring.potato.desc", "value": "Popular spring seeds. Ready in 6 days." },
-    { "key": "item.crop.spring.potato.name", "value": "Potato" },
-    { "key": "item.crop.spring.potato.desc", "value": "Versatile vegetable. Used for fries, soups, or Vodka." },
-    { "key": "item.seed.spring.asparagus.name", "value": "Asparagus Seeds" },
-    { "key": "item.seed.spring.asparagus.desc", "value": "Premium regrowth crop. Regrows every 3 days." },
-    { "key": "item.crop.spring.asparagus.name", "value": "Asparagus" },
-    { "key": "item.crop.spring.asparagus.desc", "value": "Premium spring vegetable. Used in asparagus soup and stir-fry." },
-    { "key": "item.seed.spring.tulip.name", "value": "Tulip Seeds" },
-    { "key": "item.seed.spring.tulip.desc", "value": "Spring flower seeds. Blooms in 5 days." },
-    { "key": "item.crop.spring.tulip.name", "value": "Tulip" },
-    { "key": "item.crop.spring.tulip.desc", "value": "Beautiful spring flower. Used as NPC gift or dye." },
-    { "key": "item.seed.spring.cauliflower.name", "value": "Cauliflower Seeds" },
-    { "key": "item.seed.spring.cauliflower.desc", "value": "Premium seeds. Ready in 12 days. High value." },
-    { "key": "item.crop.spring.cauliflower.name", "value": "Cauliflower" },
-    { "key": "item.crop.spring.cauliflower.desc", "value": "Valuable spring crop. Used in gratin and cream soup." },
-    { "key": "item.seed.spring.strawberry.name", "value": "Strawberry Seeds" },
-    { "key": "item.seed.spring.strawberry.desc", "value": "Regrowth crop. First harvest in 8 days, then every 4." },
-    { "key": "item.crop.spring.strawberry.name", "value": "Strawberry" },
-    { "key": "item.crop.spring.strawberry.desc", "value": "Sweet spring berry. Used for jam, cake, or NPC gifts." },
-    { "key": "item.seed.summer.wheat.name", "value": "Wheat Seeds" },
-    { "key": "item.seed.summer.wheat.desc", "value": "Basic summer crop. Ready in 4 days." },
-    { "key": "item.crop.summer.wheat.name", "value": "Wheat" },
-    { "key": "item.crop.summer.wheat.desc", "value": "Key ingredient. Mill into flour for cooking." },
-    { "key": "item.seed.summer.tomato.name", "value": "Tomato Seeds" },
-    { "key": "item.seed.summer.tomato.desc", "value": "Regrowth summer crop. 11+4 days." },
-    { "key": "item.crop.summer.tomato.name", "value": "Tomato" },
-    { "key": "item.crop.summer.tomato.desc", "value": "Versatile ingredient. Used in salads, pizza, and sauces." },
-    { "key": "item.seed.summer.red_pepper.name", "value": "Red Pepper Seeds" },
-    { "key": "item.seed.summer.red_pepper.desc", "value": "Regrowth crop. 7+3 days." },
-    { "key": "item.crop.summer.red_pepper.name", "value": "Red Pepper" },
-    { "key": "item.crop.summer.red_pepper.desc", "value": "Spicy and vibrant. Used in stir-fry or hot sauce." },
-    { "key": "item.seed.summer.yellow_pepper.name", "value": "Yellow Pepper Seeds" },
-    { "key": "item.seed.summer.yellow_pepper.desc", "value": "Regrowth crop. 7+3 days." },
-    { "key": "item.crop.summer.yellow_pepper.name", "value": "Yellow Pepper" },
-    { "key": "item.crop.summer.yellow_pepper.desc", "value": "Mild and colorful. Used in stir-fry or as a gift." },
-    { "key": "item.seed.summer.corn.name", "value": "Corn Seeds" },
-    { "key": "item.seed.summer.corn.desc", "value": "Regrowth crop that spans Summer and Fall." },
-    { "key": "item.crop.summer.corn.name", "value": "Corn" },
-    { "key": "item.crop.summer.corn.desc", "value": "Multi-purpose staple. Pressed into corn oil or roasted." },
-    { "key": "item.seed.summer.blueberry.name", "value": "Blueberry Seeds" },
-    { "key": "item.seed.summer.blueberry.desc", "value": "Regrowth crop. Yields 3 berries each harvest." },
-    { "key": "item.crop.summer.blueberry.name", "value": "Blueberry" },
-    { "key": "item.crop.summer.blueberry.desc", "value": "Juicy summer berry. Used for jam, juice, or baking." },
-    { "key": "item.seed.summer.melon.name", "value": "Melon Seeds" },
-    { "key": "item.seed.summer.melon.desc", "value": "Valuable summer crop. Ready in 12 days." },
-    { "key": "item.crop.summer.melon.name", "value": "Melon" },
-    { "key": "item.crop.summer.melon.desc", "value": "Refreshing summer fruit. Sells for high price or made into juice." },
-    { "key": "item.seed.summer.pineapple.name", "value": "Pineapple Seeds" },
-    { "key": "item.seed.summer.pineapple.desc", "value": "Expensive regrowth crop. Regrows every 7 days." },
-    { "key": "item.crop.summer.pineapple.name", "value": "Pineapple" },
-    { "key": "item.crop.summer.pineapple.desc", "value": "Tropical summer fruit. Used for juice, jam, or pizza topping." },
-    { "key": "item.seed.fall.garlic.name", "value": "Garlic Seeds" },
-    { "key": "item.seed.fall.garlic.desc", "value": "Fall crop. Ready in 4 days." },
-    { "key": "item.crop.fall.garlic.name", "value": "Garlic" },
-    { "key": "item.crop.fall.garlic.desc", "value": "Core cooking ingredient. Used in over 10 recipes." },
-    { "key": "item.seed.fall.onion.name", "value": "Onion Seeds" },
-    { "key": "item.seed.fall.onion.desc", "value": "Fall crop. Ready in 6 days." },
-    { "key": "item.crop.fall.onion.name", "value": "Onion" },
-    { "key": "item.crop.fall.onion.desc", "value": "Common seasoning. Used in over 8 cooking recipes." },
-    { "key": "item.seed.fall.carrot.name", "value": "Carrot Seeds" },
-    { "key": "item.seed.fall.carrot.desc", "value": "Fall crop. Ready in 6 days." },
-    { "key": "item.crop.fall.carrot.name", "value": "Carrot" },
-    { "key": "item.crop.fall.carrot.desc", "value": "Tasty root vegetable. Used in soups and roasting." },
-    { "key": "item.seed.fall.eggplant.name", "value": "Eggplant Seeds" },
-    { "key": "item.seed.fall.eggplant.desc", "value": "Regrowth fall crop. 5+5 days." },
-    { "key": "item.crop.fall.eggplant.name", "value": "Eggplant" },
-    { "key": "item.crop.fall.eggplant.desc", "value": "Fall vegetable. Used for roasting or Eggplant Parmesan." },
-    { "key": "item.seed.fall.cabbage.name", "value": "Cabbage Seeds" },
-    { "key": "item.seed.fall.cabbage.desc", "value": "Fall crop. Ready in 8 days." },
-    { "key": "item.crop.fall.cabbage.name", "value": "Cabbage" },
-    { "key": "item.crop.fall.cabbage.desc", "value": "Crisp fall vegetable. Used for cabbage rolls or kimchi." },
-    { "key": "item.seed.fall.broccoli.name", "value": "Broccoli Seeds" },
-    { "key": "item.seed.fall.broccoli.desc", "value": "Fall crop. Ready in 8 days." },
-    { "key": "item.crop.fall.broccoli.name", "value": "Broccoli" },
-    { "key": "item.crop.fall.broccoli.desc", "value": "Nutritious green vegetable. Used in garlic stir-fry and soups." },
-    { "key": "item.seed.fall.grape.name", "value": "Grape Seeds" },
-    { "key": "item.seed.fall.grape.desc", "value": "Regrowth fall crop. 10+3 days." },
-    { "key": "item.crop.fall.grape.name", "value": "Grape" },
-    { "key": "item.crop.fall.grape.desc", "value": "Fall fruit. Fermented in a Keg for high-value wine." },
-    { "key": "item.seed.fall.pumpkin.name", "value": "Pumpkin Seeds" },
-    { "key": "item.seed.fall.pumpkin.desc", "value": "Premium fall seeds. Ready in 13 days." },
-    { "key": "item.crop.fall.pumpkin.name", "value": "Pumpkin" },
-    { "key": "item.crop.fall.pumpkin.desc", "value": "Most valuable fall crop. Used for soup or jack-o-lanterns." },
-    { "key": "item.seed.winter.spinach.name", "value": "Spinach Seeds" },
-    { "key": "item.seed.winter.spinach.desc", "value": "Winter crop. Ready in 7 days." },
-    { "key": "item.crop.winter.spinach.name", "value": "Spinach" },
-    { "key": "item.crop.winter.spinach.desc", "value": "Nutritious winter green. Used in smoothies and soups." },
-    { "key": "item.seed.winter.green_bean.name", "value": "Green Bean Seeds" },
-    { "key": "item.seed.winter.green_bean.desc", "value": "Regrowth winter crop." },
-    { "key": "item.crop.winter.green_bean.name", "value": "Green Bean" },
-    { "key": "item.crop.winter.green_bean.desc", "value": "Quick-cook vegetable. Used in stir-fry or soups." },
-    { "key": "item.seed.winter.cucumber.name", "value": "Cucumber Seeds" },
-    { "key": "item.seed.winter.cucumber.desc", "value": "Winter crop. Ready in 6 days." },
-    { "key": "item.crop.winter.cucumber.name", "value": "Cucumber" },
-    { "key": "item.crop.winter.cucumber.desc", "value": "Cool and crisp. Used in salads or pickles." },
-    { "key": "item.seed.winter.sweet_potato.name", "value": "Sweet Potato Seeds" },
-    { "key": "item.seed.winter.sweet_potato.desc", "value": "Winter crop. Ready in 8 days." },
-    { "key": "item.crop.winter.sweet_potato.name", "value": "Sweet Potato" },
-    { "key": "item.crop.winter.sweet_potato.desc", "value": "Naturally sweet. Used for buttered baking or cake." },
-    { "key": "item.seed.winter.celery.name", "value": "Celery Seeds" },
-    { "key": "item.seed.winter.celery.desc", "value": "Winter crop. Ready in 5 days." },
-    { "key": "item.crop.winter.celery.name", "value": "Celery" },
-    { "key": "item.crop.winter.celery.desc", "value": "Aromatic herb. Juice gives a speed buff." },
-    { "key": "item.seed.winter.beet.name", "value": "Beet Seeds" },
-    { "key": "item.seed.winter.beet.desc", "value": "Winter crop. Ready in 7 days." },
-    { "key": "item.crop.winter.beet.name", "value": "Beet" },
-    { "key": "item.crop.winter.beet.desc", "value": "Deep red vegetable. Beet juice restores stamina fast." },
-    { "key": "item.seed.winter.winter_flower.name", "value": "Winter Flower Seeds" },
-    { "key": "item.seed.winter.winter_flower.desc", "value": "Rare winter flower. Blooms in 8 days." },
-    { "key": "item.crop.winter.winter_flower.name", "value": "Winter Flower" },
-    { "key": "item.crop.winter.winter_flower.desc", "value": "Rare winter bloom. Extremely valuable as an NPC gift." },
-    { "key": "item.seed.tree.apple.name", "value": "Apple Sapling" },
-    { "key": "item.seed.tree.apple.desc", "value": "Fall fruit tree. Bears fruit after 28 days." },
-    { "key": "item.crop.tree.apple.name", "value": "Apple" },
-    { "key": "item.crop.tree.apple.desc", "value": "Fall fruit. Used for apple pie, vinegar, or juice." },
-    { "key": "item.seed.tree.cherry.name", "value": "Cherry Sapling" },
-    { "key": "item.seed.tree.cherry.desc", "value": "Spring fruit tree. Bears fruit after 28 days." },
-    { "key": "item.crop.tree.cherry.name", "value": "Cherry" },
-    { "key": "item.crop.tree.cherry.desc", "value": "Velvety spring fruit. Used for jam or NPC gifts." },
-    { "key": "item.seed.tree.plum.name", "value": "Plum Sapling" },
-    { "key": "item.seed.tree.plum.desc", "value": "Summer fruit tree. Bears fruit after 28 days." },
-    { "key": "item.crop.tree.plum.name", "value": "Plum" },
-    { "key": "item.crop.tree.plum.desc", "value": "Sweet-tart summer fruit. Fermented into premium plum wine." },
-    { "key": "item.seed.tree.pear.name", "value": "Pear Sapling" },
-    { "key": "item.seed.tree.pear.desc", "value": "Fall fruit tree. Bears fruit after 28 days." },
-    { "key": "item.crop.tree.pear.name", "value": "Pear" },
-    { "key": "item.crop.tree.pear.desc", "value": "Refreshing fall fruit. Used for juice and jam." },
-    { "key": "item.mat.stone.name", "value": "Stone" },
-    { "key": "item.mat.stone.desc", "value": "Basic building material. Used for furnaces and stone fences." },
-    { "key": "item.mat.copper_ore.name", "value": "Copper Ore" },
-    { "key": "item.mat.copper_ore.desc", "value": "Tier 1 ore. Smelt into copper bars to upgrade tools." },
-    { "key": "item.mat.copper_bar.name", "value": "Copper Bar" },
-    { "key": "item.mat.copper_bar.desc", "value": "Refined metal. Used for Tier 2 tools and basic sprinklers." },
-    { "key": "item.mat.iron_ore.name", "value": "Iron Ore" },
-    { "key": "item.mat.iron_ore.desc", "value": "Tier 2 ore. Smelt into iron bars." },
-    { "key": "item.mat.iron_bar.name", "value": "Iron Bar" },
-    { "key": "item.mat.iron_bar.desc", "value": "Sturdy metal. Used for Tier 3 tools and machines." },
-    { "key": "item.mat.gold_ore.name", "value": "Gold Ore" },
-    { "key": "item.mat.gold_ore.desc", "value": "Rare Tier 3 ore. Smelt into gold bars." },
-    { "key": "item.mat.gold_bar.name", "value": "Gold Bar" },
-    { "key": "item.mat.gold_bar.desc", "value": "Precious metal. Used for Tier 4 tools and premium sprinklers." },
-    { "key": "item.mat.crystal.name", "value": "Crystal" },
-    { "key": "item.mat.crystal.desc", "value": "Rare gemstone. Used for lightning rods and lanterns." },
-    { "key": "item.mat.crystal_shard.name", "value": "Crystal Shard" },
-    { "key": "item.mat.crystal_shard.desc", "value": "Refined crystal fragment. Used in crafting." },
-    { "key": "item.mat.ruby.name", "value": "Ruby" },
-    { "key": "item.mat.ruby.desc", "value": "Brilliant red gem. Used for high-end jewelry or NPC gifts." },
-    { "key": "item.mat.emerald.name", "value": "Emerald" },
-    { "key": "item.mat.emerald.desc", "value": "Rare green gem. Used to craft luck charms." },
-    { "key": "item.mat.coal.name", "value": "Coal" },
-    { "key": "item.mat.coal.desc", "value": "Fuel for the furnace. Required for smelting ore." },
-    { "key": "item.mat.hardwood.name", "value": "Hard Wood" },
-    { "key": "item.mat.hardwood.desc", "value": "High-quality oak lumber. Used for building and crafting." },
-    { "key": "item.mat.wood.name", "value": "Wood" },
-    { "key": "item.mat.wood.desc", "value": "Basic lumber from trees. Used for fences, chests, and tool upgrades." },
-    { "key": "item.mat.softwood.name", "value": "Soft Wood" },
-    { "key": "item.mat.softwood.desc", "value": "Birch lumber. Used for paper and decorations." },
-    { "key": "item.mat.fiber.name", "value": "Fiber" },
-    { "key": "item.mat.fiber.desc", "value": "Plant fiber from weeds. Used for rope and scarecrows." },
-    { "key": "item.mat.twig.name", "value": "Twig" },
-    { "key": "item.mat.twig.desc", "value": "A fallen branch. Used as kindling." },
-    { "key": "item.mat.oak_resin.name", "value": "Oak Resin" },
-    { "key": "item.mat.oak_resin.desc", "value": "Resin from oak trees. Used as adhesive in machine crafting." },
-    { "key": "item.mat.maple_syrup.name", "value": "Maple Syrup" },
-    { "key": "item.mat.maple_syrup.desc", "value": "Natural sweetener from maple trees. Used in cooking and sold." },
-    { "key": "item.mat.pine_tar.name", "value": "Pine Tar" },
-    { "key": "item.mat.pine_tar.desc", "value": "Sticky pine resin. Used for torches and waterproof adhesive." },
-    { "key": "item.mat.rope.name", "value": "Rope" },
-    { "key": "item.mat.rope.desc", "value": "Sturdy rope. A key material for many crafting recipes." },
-    { "key": "item.mat.flour.name", "value": "Flour" },
-    { "key": "item.mat.flour.desc", "value": "Milled from wheat. Core ingredient for bread, cake, and pizza." },
-    { "key": "item.mat.sugar.name", "value": "Sugar" },
-    { "key": "item.mat.sugar.desc", "value": "Milled from beets. Used in jam and baked goods." },
-    { "key": "item.mat.corn_oil.name", "value": "Corn Oil" },
-    { "key": "item.mat.corn_oil.desc", "value": "Vegetable oil pressed from corn. Used for frying and cooking." },
-    { "key": "item.mat.sunflower_oil.name", "value": "Sunflower Oil" },
-    { "key": "item.mat.sunflower_oil.desc", "value": "Light oil from sunflower seeds. Used in cooking." },
-    { "key": "item.forage.mushroom.brown.name", "value": "Brown Mushroom" },
-    { "key": "item.forage.mushroom.brown.desc", "value": "Common forest mushroom. Restores 15 stamina when eaten." },
-    { "key": "item.forage.mushroom.white.name", "value": "White Mushroom" },
-    { "key": "item.forage.mushroom.white.desc", "value": "Clean and healthy mushroom. Used in cream soups." },
-    { "key": "item.forage.mushroom.orange.name", "value": "Orange Mushroom" },
-    { "key": "item.forage.mushroom.orange.desc", "value": "Deep forest mushroom. Restores 20 stamina and removes debuffs." },
-    { "key": "item.forage.mushroom.purple.name", "value": "Purple Mushroom" },
-    { "key": "item.forage.mushroom.purple.desc", "value": "Rare cave mushroom. Safe only after processing into medicine." },
-    { "key": "item.forage.mushroom.green.name", "value": "Green Mushroom" },
-    { "key": "item.forage.mushroom.green.desc", "value": "Rare swamp mushroom. Processed into a speed potion." },
-    { "key": "item.forage.flower.red.name", "value": "Red Flower" },
-    { "key": "item.forage.flower.red.desc", "value": "Wild summer flower. Used as red dye and tea ingredient." },
-    { "key": "item.forage.flower.pink.name", "value": "Pink Rose" },
-    { "key": "item.forage.flower.pink.desc", "value": "Precious spring flower. Used as NPC gift or perfume." },
-    { "key": "item.forage.flower.blue.name", "value": "Blue Bell" },
-    { "key": "item.forage.flower.blue.desc", "value": "Wild fall flower. Used to craft calming medicine." },
-    { "key": "item.forage.flower.yellow.name", "value": "Sunflower" },
-    { "key": "item.forage.flower.yellow.desc", "value": "Bright yellow bloom. Seeds used as a light snack." },
-    { "key": "item.forage.flower.white.name", "value": "White Lily" },
-    { "key": "item.forage.flower.white.desc", "value": "Rare winter bloom. Extremely valuable as an NPC gift." },
-    { "key": "item.forage.wild_root.name", "value": "Wild Root" },
-    { "key": "item.forage.wild_root.desc", "value": "Medicinal plant root. Used in potions and fertilizer." },
-    { "key": "item.animal.egg.name", "value": "Egg" },
-    { "key": "item.animal.egg.desc", "value": "An animal product used in cooking or turned into mayonnaise." },
-    { "key": "item.animal.milk.name", "value": "Milk" },
-    { "key": "item.animal.milk.desc", "value": "Fresh milk used for recipes and cheese processing." },
-    { "key": "item.animal.wool.name", "value": "Wool" },
-    { "key": "item.animal.wool.desc", "value": "Produced by sheep. Woven into cloth using a loom." },
-    { "key": "item.animal.truffle.name", "value": "Truffle" },
-    { "key": "item.animal.truffle.desc", "value": "Foraged by pigs. An extremely valuable rare mushroom." },
-    { "key": "item.animal.mayonnaise.name", "value": "Mayonnaise" },
-    { "key": "item.animal.mayonnaise.desc", "value": "Processed from eggs. Sells for more than raw eggs." },
-    { "key": "item.animal.cheese.name", "value": "Cheese" },
-    { "key": "item.animal.cheese.desc", "value": "Processed from milk. Used in pizza and gratin." },
-    { "key": "item.animal.butter.name", "value": "Butter" },
-    { "key": "item.animal.butter.desc", "value": "Processed from milk. Used in baking and risotto." },
-    { "key": "item.animal.cloth.name", "value": "Cloth" },
-    { "key": "item.animal.cloth.desc", "value": "Woven from wool. Used to craft protective clothing." },
-    { "key": "item.animal.truffle_oil.name", "value": "Truffle Oil" },
-    { "key": "item.animal.truffle_oil.desc", "value": "Refined oil from truffles. Extremely high value." },
-    { "key": "item.animal.hay.name", "value": "Hay" },
-    { "key": "item.animal.hay.desc", "value": "Animal feed. Must be given to animals daily." },
-    { "key": "item.drop.rat_tail.name", "value": "Rat Tail" },
-    { "key": "item.drop.rat_tail.desc", "value": "Dropped by wild rats. Used to craft antidote." },
-    { "key": "item.drop.snake_skin.name", "value": "Snake Skin" },
-    { "key": "item.drop.snake_skin.desc", "value": "Tough snake hide. Used to craft leather straps." },
-    { "key": "item.drop.snake_venom.name", "value": "Snake Venom" },
-    { "key": "item.drop.snake_venom.desc", "value": "Rare venom. Used to craft powerful potions." },
-    { "key": "item.drop.boar_meat.name", "value": "Boar Meat" },
-    { "key": "item.drop.boar_meat.desc", "value": "Fresh meat from a wild boar. Cooked into high-stamina meals." },
-    { "key": "item.drop.boar_tusk.name", "value": "Boar Tusk" },
-    { "key": "item.drop.boar_tusk.desc", "value": "Hard and sharp tusk. Used for decoration or selling." },
-    { "key": "item.drop.hawk_feather.name", "value": "Hawk Feather" },
-    { "key": "item.drop.hawk_feather.desc", "value": "Light and durable feather. Used for arrow crafting or pillows." },
-    { "key": "item.drop.bat_wing.name", "value": "Bat Wing" },
-    { "key": "item.drop.bat_wing.desc", "value": "Cave bat wing. Used to craft lightning rods." },
-    { "key": "item.drop.crab_shell.name", "value": "Crab Shell" },
-    { "key": "item.drop.crab_shell.desc", "value": "Hard shell from cave crabs. Used to craft shields." },
-    { "key": "item.drop.mole_claw.name", "value": "Mole Claw" },
-    { "key": "item.drop.mole_claw.desc", "value": "Sharp claw. Used to craft mining charms." },
-    { "key": "item.food.green_salad.name", "value": "Green Salad" },
-    { "key": "item.food.green_salad.desc", "value": "Light meal. Restores 35 stamina." },
-    { "key": "item.food.veggie_soup.name", "value": "Vegetable Soup" },
-    { "key": "item.food.veggie_soup.desc", "value": "Hearty soup. Restores 55 stamina." },
-    { "key": "item.food.pumpkin_soup.name", "value": "Pumpkin Soup" },
-    { "key": "item.food.pumpkin_soup.desc", "value": "Premium soup. Restores 75 stamina. Buffs +10% max stamina for 1 day." },
-    { "key": "item.food.mushroom_soup.name", "value": "Mushroom Soup" },
-    { "key": "item.food.mushroom_soup.desc", "value": "Creamy soup. Restores 60 stamina." },
-    { "key": "item.food.asparagus_soup.name", "value": "Asparagus Soup" },
-    { "key": "item.food.asparagus_soup.desc", "value": "Elegant soup. Restores 50 stamina." },
-    { "key": "item.food.roasted_eggplant.name", "value": "Roasted Eggplant" },
-    { "key": "item.food.roasted_eggplant.desc", "value": "Smoky roasted dish. Restores 40 stamina." },
-    { "key": "item.food.roasted_corn.name", "value": "Roasted Corn" },
-    { "key": "item.food.roasted_corn.desc", "value": "Light snack. Restores 20 stamina." },
-    { "key": "item.food.french_fries.name", "value": "French Fries" },
-    { "key": "item.food.french_fries.desc", "value": "Crispy golden fries. Restores 35 stamina." },
-    { "key": "item.food.garlic_broccoli.name", "value": "Garlic Broccoli" },
-    { "key": "item.food.garlic_broccoli.desc", "value": "Stir-fried greens. Restores 50 stamina. Buffs +15% speed for 3 hours." },
-    { "key": "item.food.stir_fry.name", "value": "Stir Fry" },
-    { "key": "item.food.stir_fry.desc", "value": "Quick stir-fry. Restores 45 stamina. Buffs +10% speed for 3 hours." },
-    { "key": "item.food.bread.name", "value": "Bread" },
-    { "key": "item.food.bread.desc", "value": "Basic baked good. Restores 25 stamina." },
-    { "key": "item.food.sandwich.name", "value": "Sandwich" },
-    { "key": "item.food.sandwich.desc", "value": "Quick lunch. Restores 50 stamina." },
-    { "key": "item.food.pizza.name", "value": "Pizza" },
-    { "key": "item.food.pizza.desc", "value": "Premium meal. Restores 90 stamina." },
-    { "key": "item.food.apple_pie.name", "value": "Apple Pie" },
-    { "key": "item.food.apple_pie.desc", "value": "Homely sweet pie. Restores 80 stamina." },
-    { "key": "item.food.sweet_potato_cake.name", "value": "Sweet Potato Cake" },
-    { "key": "item.food.sweet_potato_cake.desc", "value": "Soft and sweet cake. Restores 65 stamina." },
-    { "key": "item.food.strawberry_cake.name", "value": "Strawberry Cake" },
-    { "key": "item.food.strawberry_cake.desc", "value": "Premium cake. Restores 85 stamina." },
-    { "key": "item.food.cabbage_roll.name", "value": "Cabbage Roll" },
-    { "key": "item.food.cabbage_roll.desc", "value": "Traditional stuffed roll. Restores 70 stamina." },
-    { "key": "item.food.eggplant_parmesan.name", "value": "Eggplant Parmesan" },
-    { "key": "item.food.eggplant_parmesan.desc", "value": "Italian classic. Restores 70 stamina." },
-    { "key": "item.food.cauliflower_gratin.name", "value": "Cauliflower Gratin" },
-    { "key": "item.food.cauliflower_gratin.desc", "value": "Cheesy baked dish. Restores 65 stamina." },
-    { "key": "item.food.mushroom_risotto.name", "value": "Mushroom Risotto" },
-    { "key": "item.food.mushroom_risotto.desc", "value": "Creamy rice dish. Restores 60 stamina." },
-    { "key": "item.food.truffle_risotto.name", "value": "Truffle Risotto" },
-    { "key": "item.food.truffle_risotto.desc", "value": "Exquisite delicacy. Restores 100 stamina. Buffs +20% max stamina for 1 day." },
-    { "key": "item.food.pickles.name", "value": "Pickles" },
-    { "key": "item.food.pickles.desc", "value": "Tangy preserved veggies. Restores 30 stamina." },
-    { "key": "item.food.strawberry_jam.name", "value": "Strawberry Jam" },
-    { "key": "item.food.strawberry_jam.desc", "value": "Sweet jam. Restores 30 stamina. Sells for high price." },
-    { "key": "item.food.cherry_jam.name", "value": "Cherry Jam" },
-    { "key": "item.food.cherry_jam.desc", "value": "Premium jam. Restores 35 stamina." },
-    { "key": "item.food.veggie_smoothie.name", "value": "Veggie Smoothie" },
-    { "key": "item.food.veggie_smoothie.desc", "value": "Healthy drink. Restores 40 stamina. Buffs +10% speed for 3 hours." },
-    { "key": "item.food.beet_juice.name", "value": "Beet Juice" },
-    { "key": "item.food.beet_juice.desc", "value": "Recovery drink. Restores 50 stamina. Grants 20 stamina/5 minutes." },
-    { "key": "item.food.flower_tea.name", "value": "Flower Tea" },
-    { "key": "item.food.flower_tea.desc", "value": "Fragrant tea. Restores 15 stamina. Resists debuffs." },
-    { "key": "item.food.buttered_sweet_potato.name", "value": "Buttered Sweet Potato" },
-    { "key": "item.food.buttered_sweet_potato.desc", "value": "Buttery baked potato. Restores 55 stamina." },
-    { "key": "item.food.fruit_salad.name", "value": "Fruit Salad" },
-    { "key": "item.food.fruit_salad.desc", "value": "Fresh and colorful. Restores 60 stamina." },
-    { "key": "item.food.pineapple_juice.name", "value": "Pineapple Juice" },
-    { "key": "item.food.pineapple_juice.desc", "value": "Tropical refresher. Restores 45 stamina." },
-    { "key": "item.food.wine.name", "value": "Wine" },
-    { "key": "item.food.wine.desc", "value": "Fermented grape beverage. Sells for very high price." },
-    { "key": "item.food.apple_vinegar.name", "value": "Apple Vinegar" },
-    { "key": "item.food.apple_vinegar.desc", "value": "Apple cider vinegar. Used in cooking or sold." },
-    { "key": "item.food.plum_wine.name", "value": "Plum Wine" },
-    { "key": "item.food.plum_wine.desc", "value": "Premium aged plum wine. Extremely high sell value." },
-    { "key": "item.food.vodka.name", "value": "Vodka" },
-    { "key": "item.food.vodka.desc", "value": "Distilled spirit from potatoes." },
-    { "key": "item.food.beer.name", "value": "Beer" },
-    { "key": "item.food.beer.desc", "value": "Brewed from wheat." },
-    { "key": "item.tool.hoe.t1.name", "value": "Hoe (Basic)" },
-    { "key": "item.tool.hoe.t1.desc", "value": "Tills 1 tile per swing. Lets you plant seeds." },
-    { "key": "item.tool.hoe.t2.name", "value": "Copper Hoe" },
-    { "key": "item.tool.hoe.t2.desc", "value": "Tills 2 tiles at once. Saves stamina." },
-    { "key": "item.tool.hoe.t3.name", "value": "Iron Hoe" },
-    { "key": "item.tool.hoe.t3.desc", "value": "Tills 3 tiles at once. Very efficient." },
-    { "key": "item.tool.hoe.t4.name", "value": "Gold Hoe" },
-    { "key": "item.tool.hoe.t4.desc", "value": "Tills 5 tiles at once. Maximum efficiency." },
-    { "key": "item.tool.watering_can.t1.name", "value": "Watering Can (Basic)" },
-    { "key": "item.tool.watering_can.t1.desc", "value": "Waters 1 tile per use." },
-    { "key": "item.tool.watering_can.t2.name", "value": "Copper Watering Can" },
-    { "key": "item.tool.watering_can.t2.desc", "value": "Waters 3 tiles at once." },
-    { "key": "item.tool.watering_can.t3.name", "value": "Iron Watering Can" },
-    { "key": "item.tool.watering_can.t3.desc", "value": "Waters 5 tiles at once." },
-    { "key": "item.tool.watering_can.t4.name", "value": "Gold Watering Can" },
-    { "key": "item.tool.watering_can.t4.desc", "value": "Waters 9 tiles (3x3) at once." },
-    { "key": "item.tool.axe.t1.name", "value": "Axe (Basic)" },
-    { "key": "item.tool.axe.t1.desc", "value": "Chops small trees in 3 swings." },
-    { "key": "item.tool.axe.t2.name", "value": "Copper Axe" },
-    { "key": "item.tool.axe.t2.desc", "value": "Chops trees in 2 swings." },
-    { "key": "item.tool.axe.t3.name", "value": "Iron Axe" },
-    { "key": "item.tool.axe.t3.desc", "value": "Chops small trees in 1 swing. Unlocks deep forest." },
-    { "key": "item.tool.axe.t4.name", "value": "Gold Axe" },
-    { "key": "item.tool.axe.t4.desc", "value": "Chops any tree in 1 swing." },
-    { "key": "item.tool.pickaxe.t1.name", "value": "Pickaxe (Basic)" },
-    { "key": "item.tool.pickaxe.t1.desc", "value": "Mines rock nodes in 3 hits." },
-    { "key": "item.tool.pickaxe.t2.name", "value": "Copper Pickaxe" },
-    { "key": "item.tool.pickaxe.t2.desc", "value": "A stronger pickaxe that mines faster than the starter tool." },
-    { "key": "item.tool.pickaxe.t3.name", "value": "Iron Pickaxe" },
-    { "key": "item.tool.pickaxe.t3.desc", "value": "Mines common rocks in 1 hit." },
-    { "key": "item.tool.pickaxe.t4.name", "value": "Gold Pickaxe" },
-    { "key": "item.tool.pickaxe.t4.desc", "value": "Mines any rock in 1 hit." },
-    { "key": "item.tool.scythe.t1.name", "value": "Scythe (Basic)" },
-    { "key": "item.tool.scythe.t1.desc", "value": "Harvests 1 tile per swing." },
-    { "key": "item.tool.scythe.t2.name", "value": "Copper Scythe" },
-    { "key": "item.tool.scythe.t2.desc", "value": "An upgraded scythe that harvests a wider area per swing." },
-    { "key": "item.tool.scythe.t3.name", "value": "Iron Scythe" },
-    { "key": "item.tool.scythe.t3.desc", "value": "Harvests 5 tiles at once." },
-    { "key": "item.tool.scythe.t4.name", "value": "Gold Scythe" },
-    { "key": "item.tool.scythe.t4.desc", "value": "Harvests 7 tiles. No stamina cost." },
-    { "key": "item.equip.straw_hat.name", "value": "Straw Hat" },
-    { "key": "item.equip.straw_hat.desc", "value": "Reduces farming stamina cost by 10%." },
-    { "key": "item.equip.leather_gloves.name", "value": "Leather Gloves" },
-    { "key": "item.equip.leather_gloves.desc", "value": "+1 to harvest quality." },
-    { "key": "item.equip.rubber_boots.name", "value": "Rubber Boots" },
-    { "key": "item.equip.rubber_boots.desc", "value": "Immune to slow effect when moving in rain." },
-    { "key": "item.equip.backpack.name", "value": "Backpack" },
-    { "key": "item.equip.backpack.desc", "value": "+10 inventory slots." },
-    { "key": "item.equip.stone_shield.name", "value": "Stone Shield" },
-    { "key": "item.equip.stone_shield.desc", "value": "Reduces incoming damage by 30%." },
-    { "key": "item.equip.copper_ring.name", "value": "Copper Ring" },
-    { "key": "item.equip.copper_ring.desc", "value": "+5 max stamina." },
-    { "key": "item.equip.ruby_ring.name", "value": "Ruby Ring" },
-    { "key": "item.equip.ruby_ring.desc", "value": "+15 max stamina." },
-    { "key": "item.equip.mining_charm.name", "value": "Mining Charm" },
-    { "key": "item.equip.mining_charm.desc", "value": "+25% mining speed." },
-    { "key": "item.equip.luck_charm.name", "value": "Luck Charm" },
-    { "key": "item.equip.luck_charm.desc", "value": "+15% rare item drop rate." },
-    { "key": "item.place.basic_craft_table.name", "value": "Basic Crafting Table" },
-    { "key": "item.place.basic_craft_table.desc", "value": "Crafts basic items and tools." },
-    { "key": "item.place.furnace.name", "value": "Furnace" },
-    { "key": "item.place.furnace.desc", "value": "Smelts ore into metal bars." },
-    { "key": "item.place.adv_craft_table.name", "value": "Advanced Crafting Table" },
-    { "key": "item.place.adv_craft_table.desc", "value": "Crafts machines and advanced equipment." },
-    { "key": "item.place.kitchen.name", "value": "Kitchen" },
-    { "key": "item.place.kitchen.desc", "value": "Cooks stamina-restoring and buff meals." },
-    { "key": "item.place.keg.name", "value": "Keg" },
-    { "key": "item.place.keg.desc", "value": "Ferments wine, juice, and vinegar from produce." },
-    { "key": "item.place.preserves_jar.name", "value": "Preserves Jar" },
-    { "key": "item.place.preserves_jar.desc", "value": "Makes jam, pickles, and kimchi." },
-    { "key": "item.place.mill.name", "value": "Mill" },
-    { "key": "item.place.mill.desc", "value": "Grinds flour, sugar, and oils from produce." },
-    { "key": "item.place.loom.name", "value": "Loom" },
-    { "key": "item.place.loom.desc", "value": "Weaves wool into cloth." },
-    { "key": "item.place.mayo_machine.name", "value": "Mayonnaise Machine" },
-    { "key": "item.place.mayo_machine.desc", "value": "Processes eggs into mayonnaise." },
-    { "key": "item.place.cheese_press.name", "value": "Cheese Press" },
-    { "key": "item.place.cheese_press.desc", "value": "Processes milk into cheese and butter." },
-    { "key": "item.place.sprinkler_t1.name", "value": "Basic Sprinkler" },
-    { "key": "item.place.sprinkler_t1.desc", "value": "Auto-waters 4 surrounding tiles every morning." },
-    { "key": "item.place.sprinkler_t2.name", "value": "Advanced Sprinkler" },
-    { "key": "item.place.sprinkler_t2.desc", "value": "Auto-waters 8 tiles (3x3) every morning." },
-    { "key": "item.place.sprinkler_t3.name", "value": "Premium Sprinkler" },
-    { "key": "item.place.sprinkler_t3.desc", "value": "Auto-waters 24 tiles (5x5) every morning." },
-    { "key": "item.place.wood_fence.name", "value": "Wood Fence" },
-    { "key": "item.place.wood_fence.desc", "value": "Basic fence. Marks the boundary of your farm." },
-    { "key": "item.place.stone_fence.name", "value": "Stone Fence" },
-    { "key": "item.place.stone_fence.desc", "value": "More durable fence. Does not decay." },
-    { "key": "item.place.chest.name", "value": "Chest" },
-    { "key": "item.place.chest.desc", "value": "+36 storage slots." },
-    { "key": "item.place.scarecrow.name", "value": "Scarecrow" },
-    { "key": "item.place.scarecrow.desc", "value": "Protects crops in an 8x8 area from crows." },
-    { "key": "item.place.lightning_rod.name", "value": "Lightning Rod" },
-    { "key": "item.place.lightning_rod.desc", "value": "Prevents lightning from damaging crops during storms." },
-    { "key": "item.place.torch.name", "value": "Torch" },
-    { "key": "item.place.torch.desc", "value": "Illuminates the mine at night." },
-    { "key": "m1.portal.farm_to_town.name", "value": "Portal to Town" },
-    { "key": "ui.loading.title", "value": "LOADING..." },
-    { "key": "ui.loading.scene", "value": "Loading scene {0}" },
-    { "key": "ui.loading.percent", "value": "{0}%" },
-    { "key": "ui.loading.scene_name.scene", "value": "Scene" },
-    { "key": "ui.loading.scene_name.FarmScene", "value": "Farm" },
-    { "key": "ui.loading.scene_name.TownScene", "value": "Town" },
-    { "key": "ui.loading.scene_name.MainMenuScene", "value": "Main Menu" },
-    { "key": "ui.loading.tip.1", "value": "Tip: Gather resources and upgrade tools to survive more easily!" },
-    { "key": "ui.loading.tip.2", "value": "Tip: Water crops every day so they keep growing steadily." },
-    { "key": "ui.loading.tip.3", "value": "Tip: Bring the right tool when mining rocks, chopping trees, or cutting weeds." },
-    { "key": "ui.loading.tip.4", "value": "Tip: Check your backpack before leaving the farm so you do not miss key items." },
-    { "key": "ui.loading.tip.5", "value": "Tip: Save often to protect your progress." },
-    { "key": "enemy.slime1.name", "value": "Slime 1" },
-    { "key": "enemy.slime1.desc", "value": "A roaming slime that attacks players on sight." },
-    { "key": "enemy.slime2.name", "value": "Slime 2" },
-    { "key": "enemy.slime2.desc", "value": "A roaming slime that attacks players on sight." },
-    { "key": "enemy.slime3.name", "value": "Slime 3" },
-    { "key": "enemy.slime3.desc", "value": "A roaming slime that attacks players on sight." },
-    { "key": "enemy.orc1.name", "value": "Orc 1" },
-    { "key": "enemy.orc1.desc", "value": "A roaming orc warrior that attacks players on sight." },
-    { "key": "enemy.orc2.name", "value": "Orc 2" },
-    { "key": "enemy.orc2.desc", "value": "A roaming orc warrior that attacks players on sight." },
-    { "key": "enemy.orc3.name", "value": "Orc 3" },
-    { "key": "enemy.orc3.desc", "value": "A roaming orc warrior that attacks players on sight." },
-    { "key": "item.crop.asparagus.name", "value": "Asparagus" },
-    { "key": "item.crop.asparagus.desc", "value": "Asparagus harvested from the field. Useful for selling, cooking, or quest turn-ins." },
-    { "key": "item.crop.bean.name", "value": "Green Bean" },
-    { "key": "item.crop.bean.desc", "value": "Green Bean harvested from the field. Useful for selling, cooking, or quest turn-ins." },
-    { "key": "item.crop.blueberry.name", "value": "Blueberry" },
-    { "key": "item.crop.blueberry.desc", "value": "Blueberry harvested from the field. Useful for selling, cooking, or quest turn-ins." },
-    { "key": "item.crop.cabbage.name", "value": "Cabbage" },
-    { "key": "item.crop.cabbage.desc", "value": "Cabbage harvested from the field. Useful for selling, cooking, or quest turn-ins." },
-    { "key": "item.crop.carrot.name", "value": "Carrot" },
-    { "key": "item.crop.carrot.desc", "value": "Carrot harvested from the field. Useful for selling, cooking, or quest turn-ins." },
-    { "key": "item.crop.cauliflower.name", "value": "Cauliflower" },
-    { "key": "item.crop.cauliflower.desc", "value": "Cauliflower harvested from the field. Useful for selling, cooking, or quest turn-ins." },
-    { "key": "item.crop.cucumber.name", "value": "Cucumber" },
-    { "key": "item.crop.cucumber.desc", "value": "Cucumber harvested from the field. Useful for selling, cooking, or quest turn-ins." },
-    { "key": "item.crop.garlic.name", "value": "Garlic" },
-    { "key": "item.crop.garlic.desc", "value": "Garlic harvested from the field. Useful for selling, cooking, or quest turn-ins." },
-    { "key": "item.crop.grape.name", "value": "Grape" },
-    { "key": "item.crop.grape.desc", "value": "Grape harvested from the field. Useful for selling, cooking, or quest turn-ins." },
-    { "key": "item.crop.melon.name", "value": "Melon" },
-    { "key": "item.crop.melon.desc", "value": "Melon harvested from the field. Useful for selling, cooking, or quest turn-ins." },
-    { "key": "item.crop.pea.name", "value": "Pea Pod" },
-    { "key": "item.crop.pea.desc", "value": "Pea Pod harvested from the field. Useful for selling, cooking, or quest turn-ins." },
-    { "key": "item.crop.pepper_green.name", "value": "Green Pepper" },
-    { "key": "item.crop.pepper_green.desc", "value": "Green Pepper harvested from the field. Useful for selling, cooking, or quest turn-ins." },
-    { "key": "item.crop.pepper_red.name", "value": "Red Pepper" },
-    { "key": "item.crop.pepper_red.desc", "value": "Red Pepper harvested from the field. Useful for selling, cooking, or quest turn-ins." },
-    { "key": "item.crop.pepper_yellow.name", "value": "Yellow Pepper" },
-    { "key": "item.crop.pepper_yellow.desc", "value": "Yellow Pepper harvested from the field. Useful for selling, cooking, or quest turn-ins." },
-    { "key": "item.crop.radish.name", "value": "Radish" },
-    { "key": "item.crop.radish.desc", "value": "Radish harvested from the field. Useful for selling, cooking, or quest turn-ins." },
-    { "key": "item.crop.yam.name", "value": "Yam" },
-    { "key": "item.crop.yam.desc", "value": "Yam harvested from the field. Useful for selling, cooking, or quest turn-ins." },
-    { "key": "item.crop.apple.name", "value": "Apple" },
-    { "key": "item.crop.apple.desc", "value": "Apple picked from a fruit tree. Great for cooking or profitable sales." },
-    { "key": "item.crop.cherry.name", "value": "Cherry" },
-    { "key": "item.crop.cherry.desc", "value": "Cherry picked from a fruit tree. Great for cooking or profitable sales." },
-    { "key": "item.crop.pear.name", "value": "Pear" },
-    { "key": "item.crop.pear.desc", "value": "Pear picked from a fruit tree. Great for cooking or profitable sales." },
-    { "key": "item.crop.plum.name", "value": "Plum" },
-    { "key": "item.crop.plum.desc", "value": "Plum picked from a fruit tree. Great for cooking or profitable sales." },
-    { "key": "item.food.cheese.name", "value": "Cheese" },
-    { "key": "item.food.cheese.desc", "value": "A processed dairy food that restores stamina and sells better than raw milk." },
-    { "key": "item.food.mayonnaise.name", "value": "Mayonnaise" },
-    { "key": "item.food.mayonnaise.desc", "value": "A rich egg-based food that restores a bit of stamina." },
-    { "key": "item.place.sprinkler.t1.name", "value": "Sprinkler T1" },
-    { "key": "item.place.sprinkler.t1.desc", "value": "Place it to automatically water a small area every morning." },
-    { "key": "item.place.sprinkler.t2.name", "value": "Sprinkler T2" },
-    { "key": "item.place.sprinkler.t2.desc", "value": "Place it to automatically water a larger field every morning." }
+    {
+      "key": "Axe01_desc",
+      "value": "Used to chop trees and clear wood from the farm."
+    },
+    {
+      "key": "Axe01_name",
+      "value": "Starter Axe"
+    },
+    {
+      "key": "dialogue.sample.choice.accept_work",
+      "value": "Sure, I will take the job."
+    },
+    {
+      "key": "dialogue.sample.choice.ask_work",
+      "value": "Do you need help?"
+    },
+    {
+      "key": "dialogue.sample.choice.later",
+      "value": "Maybe later."
+    },
+    {
+      "key": "dialogue.sample.farmer.accepted",
+      "value": "Good. Come back when everything is ready."
+    },
+    {
+      "key": "dialogue.sample.farmer.hello",
+      "value": "Hey there! The field looks good today. Need me to show you a few things?"
+    },
+    {
+      "key": "dialogue.sample.farmer.offer_work",
+      "value": "I need a few fresh carrots. Bring them to me and I will pay you fairly."
+    },
+    {
+      "key": "dialogue.sample.farmer.old_friend",
+      "value": "Good to see you again. I have a bit of field work if you have time."
+    },
+    {
+      "key": "enemy_01_desc",
+      "value": "A roaming creature that attacks nearby players."
+    },
+    {
+      "key": "enemy_01_name",
+      "value": "Field Beast"
+    },
+    {
+      "key": "enemy.boar.desc",
+      "value": "A wild enemy with 60 HP suited for early combat loops."
+    },
+    {
+      "key": "enemy.boar.name",
+      "value": "Boar"
+    },
+    {
+      "key": "enemy.orc1.desc",
+      "value": "A roaming orc warrior that attacks players on sight."
+    },
+    {
+      "key": "enemy.orc1.name",
+      "value": "Orc 1"
+    },
+    {
+      "key": "enemy.orc2.desc",
+      "value": "A roaming orc warrior that attacks players on sight."
+    },
+    {
+      "key": "enemy.orc2.name",
+      "value": "Orc 2"
+    },
+    {
+      "key": "enemy.orc3.desc",
+      "value": "A roaming orc warrior that attacks players on sight."
+    },
+    {
+      "key": "enemy.orc3.name",
+      "value": "Orc 3"
+    },
+    {
+      "key": "enemy.rat.desc",
+      "value": "A wild enemy with 15 HP suited for early combat loops."
+    },
+    {
+      "key": "enemy.rat.name",
+      "value": "Field Rat"
+    },
+    {
+      "key": "enemy.slime1.desc",
+      "value": "A roaming slime that attacks players on sight."
+    },
+    {
+      "key": "enemy.slime1.name",
+      "value": "Slime 1"
+    },
+    {
+      "key": "enemy.slime2.desc",
+      "value": "A roaming slime that attacks players on sight."
+    },
+    {
+      "key": "enemy.slime2.name",
+      "value": "Slime 2"
+    },
+    {
+      "key": "enemy.slime3.desc",
+      "value": "A roaming slime that attacks players on sight."
+    },
+    {
+      "key": "enemy.slime3.name",
+      "value": "Slime 3"
+    },
+    {
+      "key": "enemy.snake.desc",
+      "value": "A wild enemy with 25 HP suited for early combat loops."
+    },
+    {
+      "key": "enemy.snake.name",
+      "value": "Field Snake"
+    },
+    {
+      "key": "item.animal.butter.desc",
+      "value": "Processed from milk. Used in baking and risotto."
+    },
+    {
+      "key": "item.animal.butter.name",
+      "value": "Butter"
+    },
+    {
+      "key": "item.animal.cheese.desc",
+      "value": "Processed from milk. Used in pizza and gratin."
+    },
+    {
+      "key": "item.animal.cheese.name",
+      "value": "Cheese"
+    },
+    {
+      "key": "item.animal.cloth.desc",
+      "value": "Woven from wool. Used to craft protective clothing."
+    },
+    {
+      "key": "item.animal.cloth.name",
+      "value": "Cloth"
+    },
+    {
+      "key": "item.animal.egg.desc",
+      "value": "An animal product used in cooking or turned into mayonnaise."
+    },
+    {
+      "key": "item.animal.egg.name",
+      "value": "Egg"
+    },
+    {
+      "key": "item.animal.hay.desc",
+      "value": "Animal feed. Must be given to animals daily."
+    },
+    {
+      "key": "item.animal.hay.name",
+      "value": "Hay"
+    },
+    {
+      "key": "item.animal.mayonnaise.desc",
+      "value": "Processed from eggs. Sells for more than raw eggs."
+    },
+    {
+      "key": "item.animal.mayonnaise.name",
+      "value": "Mayonnaise"
+    },
+    {
+      "key": "item.animal.milk.desc",
+      "value": "Fresh milk used for recipes and cheese processing."
+    },
+    {
+      "key": "item.animal.milk.name",
+      "value": "Milk"
+    },
+    {
+      "key": "item.animal.truffle_oil.desc",
+      "value": "Refined oil from truffles. Extremely high value."
+    },
+    {
+      "key": "item.animal.truffle_oil.name",
+      "value": "Truffle Oil"
+    },
+    {
+      "key": "item.animal.truffle.desc",
+      "value": "Foraged by pigs. An extremely valuable rare mushroom."
+    },
+    {
+      "key": "item.animal.truffle.name",
+      "value": "Truffle"
+    },
+    {
+      "key": "item.animal.wool.desc",
+      "value": "Produced by sheep. Woven into cloth using a loom."
+    },
+    {
+      "key": "item.animal.wool.name",
+      "value": "Wool"
+    },
+    {
+      "key": "item.crop.apple.desc",
+      "value": "Apple picked from a fruit tree. Great for cooking or profitable sales."
+    },
+    {
+      "key": "item.crop.apple.name",
+      "value": "Apple"
+    },
+    {
+      "key": "item.crop.asparagus.desc",
+      "value": "Asparagus harvested from the field. Useful for selling, cooking, or quest turn-ins."
+    },
+    {
+      "key": "item.crop.asparagus.name",
+      "value": "Asparagus"
+    },
+    {
+      "key": "item.crop.bean.desc",
+      "value": "Green Bean harvested from the field. Useful for selling, cooking, or quest turn-ins."
+    },
+    {
+      "key": "item.crop.bean.name",
+      "value": "Green Bean"
+    },
+    {
+      "key": "item.crop.blueberry.desc",
+      "value": "Blueberry harvested from the field. Useful for selling, cooking, or quest turn-ins."
+    },
+    {
+      "key": "item.crop.blueberry.name",
+      "value": "Blueberry"
+    },
+    {
+      "key": "item.crop.cabbage.desc",
+      "value": "Cabbage harvested from the field. Useful for selling, cooking, or quest turn-ins."
+    },
+    {
+      "key": "item.crop.cabbage.name",
+      "value": "Cabbage"
+    },
+    {
+      "key": "item.crop.carrot.desc",
+      "value": "Carrot harvested from the field. Useful for selling, cooking, or quest turn-ins."
+    },
+    {
+      "key": "item.crop.carrot.name",
+      "value": "Carrot"
+    },
+    {
+      "key": "item.crop.cauliflower.desc",
+      "value": "Cauliflower harvested from the field. Useful for selling, cooking, or quest turn-ins."
+    },
+    {
+      "key": "item.crop.cauliflower.name",
+      "value": "Cauliflower"
+    },
+    {
+      "key": "item.crop.cherry.desc",
+      "value": "Cherry picked from a fruit tree. Great for cooking or profitable sales."
+    },
+    {
+      "key": "item.crop.cherry.name",
+      "value": "Cherry"
+    },
+    {
+      "key": "item.crop.corn.desc",
+      "value": "Fresh corn used for selling, cooking, or deliveries."
+    },
+    {
+      "key": "item.crop.corn.name",
+      "value": "Corn"
+    },
+    {
+      "key": "item.crop.cucumber.desc",
+      "value": "Cucumber harvested from the field. Useful for selling, cooking, or quest turn-ins."
+    },
+    {
+      "key": "item.crop.cucumber.name",
+      "value": "Cucumber"
+    },
+    {
+      "key": "item.crop.fall.broccoli.desc",
+      "value": "Nutritious green vegetable. Used in garlic stir-fry and soups."
+    },
+    {
+      "key": "item.crop.fall.broccoli.name",
+      "value": "Broccoli"
+    },
+    {
+      "key": "item.crop.fall.cabbage.desc",
+      "value": "Crisp fall vegetable. Used for cabbage rolls or kimchi."
+    },
+    {
+      "key": "item.crop.fall.cabbage.name",
+      "value": "Cabbage"
+    },
+    {
+      "key": "item.crop.fall.carrot.desc",
+      "value": "Tasty root vegetable. Used in soups and roasting."
+    },
+    {
+      "key": "item.crop.fall.carrot.name",
+      "value": "Carrot"
+    },
+    {
+      "key": "item.crop.fall.eggplant.desc",
+      "value": "Fall vegetable. Used for roasting or Eggplant Parmesan."
+    },
+    {
+      "key": "item.crop.fall.eggplant.name",
+      "value": "Eggplant"
+    },
+    {
+      "key": "item.crop.fall.garlic.desc",
+      "value": "Core cooking ingredient. Used in over 10 recipes."
+    },
+    {
+      "key": "item.crop.fall.garlic.name",
+      "value": "Garlic"
+    },
+    {
+      "key": "item.crop.fall.grape.desc",
+      "value": "Fall fruit. Fermented in a Keg for high-value wine."
+    },
+    {
+      "key": "item.crop.fall.grape.name",
+      "value": "Grape"
+    },
+    {
+      "key": "item.crop.fall.onion.desc",
+      "value": "Common seasoning. Used in over 8 cooking recipes."
+    },
+    {
+      "key": "item.crop.fall.onion.name",
+      "value": "Onion"
+    },
+    {
+      "key": "item.crop.fall.pumpkin.desc",
+      "value": "Most valuable fall crop. Used for soup or jack-o-lanterns."
+    },
+    {
+      "key": "item.crop.fall.pumpkin.name",
+      "value": "Pumpkin"
+    },
+    {
+      "key": "item.crop.fall.wheat.desc",
+      "value": "Fresh wheat used for selling, cooking, or deliveries."
+    },
+    {
+      "key": "item.crop.fall.wheat.name",
+      "value": "Wheat"
+    },
+    {
+      "key": "item.crop.garlic.desc",
+      "value": "Garlic harvested from the field. Useful for selling, cooking, or quest turn-ins."
+    },
+    {
+      "key": "item.crop.garlic.name",
+      "value": "Garlic"
+    },
+    {
+      "key": "item.crop.grape.desc",
+      "value": "Grape harvested from the field. Useful for selling, cooking, or quest turn-ins."
+    },
+    {
+      "key": "item.crop.grape.name",
+      "value": "Grape"
+    },
+    {
+      "key": "item.crop.melon.desc",
+      "value": "Melon harvested from the field. Useful for selling, cooking, or quest turn-ins."
+    },
+    {
+      "key": "item.crop.melon.name",
+      "value": "Melon"
+    },
+    {
+      "key": "item.crop.pea.desc",
+      "value": "Pea Pod harvested from the field. Useful for selling, cooking, or quest turn-ins."
+    },
+    {
+      "key": "item.crop.pea.name",
+      "value": "Pea Pod"
+    },
+    {
+      "key": "item.crop.pear.desc",
+      "value": "Pear picked from a fruit tree. Great for cooking or profitable sales."
+    },
+    {
+      "key": "item.crop.pear.name",
+      "value": "Pear"
+    },
+    {
+      "key": "item.crop.pepper_green.desc",
+      "value": "Green Pepper harvested from the field. Useful for selling, cooking, or quest turn-ins."
+    },
+    {
+      "key": "item.crop.pepper_green.name",
+      "value": "Green Pepper"
+    },
+    {
+      "key": "item.crop.pepper_red.desc",
+      "value": "Red Pepper harvested from the field. Useful for selling, cooking, or quest turn-ins."
+    },
+    {
+      "key": "item.crop.pepper_red.name",
+      "value": "Red Pepper"
+    },
+    {
+      "key": "item.crop.pepper_yellow.desc",
+      "value": "Yellow Pepper harvested from the field. Useful for selling, cooking, or quest turn-ins."
+    },
+    {
+      "key": "item.crop.pepper_yellow.name",
+      "value": "Yellow Pepper"
+    },
+    {
+      "key": "item.crop.plum.desc",
+      "value": "Plum picked from a fruit tree. Great for cooking or profitable sales."
+    },
+    {
+      "key": "item.crop.plum.name",
+      "value": "Plum"
+    },
+    {
+      "key": "item.crop.potato.desc",
+      "value": "Fresh potato used for selling, cooking, or deliveries."
+    },
+    {
+      "key": "item.crop.potato.name",
+      "value": "Potato"
+    },
+    {
+      "key": "item.crop.radish.desc",
+      "value": "Radish harvested from the field. Useful for selling, cooking, or quest turn-ins."
+    },
+    {
+      "key": "item.crop.radish.name",
+      "value": "Radish"
+    },
+    {
+      "key": "item.crop.spring.asparagus.desc",
+      "value": "Premium spring vegetable. Used in asparagus soup and stir-fry."
+    },
+    {
+      "key": "item.crop.spring.asparagus.name",
+      "value": "Asparagus"
+    },
+    {
+      "key": "item.crop.spring.cauliflower.desc",
+      "value": "Valuable spring crop. Used in gratin and cream soup."
+    },
+    {
+      "key": "item.crop.spring.cauliflower.name",
+      "value": "Cauliflower"
+    },
+    {
+      "key": "item.crop.spring.lettuce.desc",
+      "value": "Fresh spring greens. Used in salads and sandwiches."
+    },
+    {
+      "key": "item.crop.spring.lettuce.name",
+      "value": "Lettuce"
+    },
+    {
+      "key": "item.crop.spring.potato.desc",
+      "value": "Versatile vegetable. Used for fries, soups, or Vodka."
+    },
+    {
+      "key": "item.crop.spring.potato.name",
+      "value": "Potato"
+    },
+    {
+      "key": "item.crop.spring.radish.desc",
+      "value": "Crisp and fresh. Used in salads and pickles."
+    },
+    {
+      "key": "item.crop.spring.radish.name",
+      "value": "Radish"
+    },
+    {
+      "key": "item.crop.spring.strawberry.desc",
+      "value": "Sweet spring berry. Used for jam, cake, or NPC gifts."
+    },
+    {
+      "key": "item.crop.spring.strawberry.name",
+      "value": "Strawberry"
+    },
+    {
+      "key": "item.crop.spring.tulip.desc",
+      "value": "Beautiful spring flower. Used as NPC gift or dye."
+    },
+    {
+      "key": "item.crop.spring.tulip.name",
+      "value": "Tulip"
+    },
+    {
+      "key": "item.crop.spring.turnip.desc",
+      "value": "A basic root vegetable. Used in soups and pickles."
+    },
+    {
+      "key": "item.crop.spring.turnip.name",
+      "value": "Turnip"
+    },
+    {
+      "key": "item.crop.strawberry.desc",
+      "value": "Fresh strawberry used for selling, cooking, or deliveries."
+    },
+    {
+      "key": "item.crop.strawberry.name",
+      "value": "Strawberry"
+    },
+    {
+      "key": "item.crop.summer.blueberry.desc",
+      "value": "Juicy summer berry. Used for jam, juice, or baking."
+    },
+    {
+      "key": "item.crop.summer.blueberry.name",
+      "value": "Blueberry"
+    },
+    {
+      "key": "item.crop.summer.corn.desc",
+      "value": "Multi-purpose staple. Pressed into corn oil or roasted."
+    },
+    {
+      "key": "item.crop.summer.corn.name",
+      "value": "Corn"
+    },
+    {
+      "key": "item.crop.summer.melon.desc",
+      "value": "Refreshing summer fruit. Sells for high price or made into juice."
+    },
+    {
+      "key": "item.crop.summer.melon.name",
+      "value": "Melon"
+    },
+    {
+      "key": "item.crop.summer.pineapple.desc",
+      "value": "Tropical summer fruit. Used for juice, jam, or pizza topping."
+    },
+    {
+      "key": "item.crop.summer.pineapple.name",
+      "value": "Pineapple"
+    },
+    {
+      "key": "item.crop.summer.red_pepper.desc",
+      "value": "Spicy and vibrant. Used in stir-fry or hot sauce."
+    },
+    {
+      "key": "item.crop.summer.red_pepper.name",
+      "value": "Red Pepper"
+    },
+    {
+      "key": "item.crop.summer.tomato.desc",
+      "value": "Versatile ingredient. Used in salads, pizza, and sauces."
+    },
+    {
+      "key": "item.crop.summer.tomato.name",
+      "value": "Tomato"
+    },
+    {
+      "key": "item.crop.summer.wheat.desc",
+      "value": "Key ingredient. Mill into flour for cooking."
+    },
+    {
+      "key": "item.crop.summer.wheat.name",
+      "value": "Wheat"
+    },
+    {
+      "key": "item.crop.summer.yellow_pepper.desc",
+      "value": "Mild and colorful. Used in stir-fry or as a gift."
+    },
+    {
+      "key": "item.crop.summer.yellow_pepper.name",
+      "value": "Yellow Pepper"
+    },
+    {
+      "key": "item.crop.tomato.desc",
+      "value": "Fresh tomato used for selling, cooking, or deliveries."
+    },
+    {
+      "key": "item.crop.tomato.name",
+      "value": "Tomato"
+    },
+    {
+      "key": "item.crop.tree.apple.desc",
+      "value": "Fall fruit. Used for apple pie, vinegar, or juice."
+    },
+    {
+      "key": "item.crop.tree.apple.name",
+      "value": "Apple"
+    },
+    {
+      "key": "item.crop.tree.cherry.desc",
+      "value": "Velvety spring fruit. Used for jam or NPC gifts."
+    },
+    {
+      "key": "item.crop.tree.cherry.name",
+      "value": "Cherry"
+    },
+    {
+      "key": "item.crop.tree.pear.desc",
+      "value": "Refreshing fall fruit. Used for juice and jam."
+    },
+    {
+      "key": "item.crop.tree.pear.name",
+      "value": "Pear"
+    },
+    {
+      "key": "item.crop.tree.plum.desc",
+      "value": "Sweet-tart summer fruit. Fermented into premium plum wine."
+    },
+    {
+      "key": "item.crop.tree.plum.name",
+      "value": "Plum"
+    },
+    {
+      "key": "item.crop.turnip.desc",
+      "value": "Fresh turnip used for selling, cooking, or deliveries."
+    },
+    {
+      "key": "item.crop.turnip.name",
+      "value": "Turnip"
+    },
+    {
+      "key": "item.crop.wheat.desc",
+      "value": "Fresh wheat used for selling, cooking, or deliveries."
+    },
+    {
+      "key": "item.crop.wheat.name",
+      "value": "Wheat"
+    },
+    {
+      "key": "item.crop.winter.beet.desc",
+      "value": "Deep red vegetable. Beet juice restores stamina fast."
+    },
+    {
+      "key": "item.crop.winter.beet.name",
+      "value": "Beet"
+    },
+    {
+      "key": "item.crop.winter.celery.desc",
+      "value": "Aromatic herb. Juice gives a speed buff."
+    },
+    {
+      "key": "item.crop.winter.celery.name",
+      "value": "Celery"
+    },
+    {
+      "key": "item.crop.winter.cucumber.desc",
+      "value": "Cool and crisp. Used in salads or pickles."
+    },
+    {
+      "key": "item.crop.winter.cucumber.name",
+      "value": "Cucumber"
+    },
+    {
+      "key": "item.crop.winter.green_bean.desc",
+      "value": "Quick-cook vegetable. Used in stir-fry or soups."
+    },
+    {
+      "key": "item.crop.winter.green_bean.name",
+      "value": "Green Bean"
+    },
+    {
+      "key": "item.crop.winter.spinach.desc",
+      "value": "Nutritious winter green. Used in smoothies and soups."
+    },
+    {
+      "key": "item.crop.winter.spinach.name",
+      "value": "Spinach"
+    },
+    {
+      "key": "item.crop.winter.sweet_potato.desc",
+      "value": "Naturally sweet. Used for buttered baking or cake."
+    },
+    {
+      "key": "item.crop.winter.sweet_potato.name",
+      "value": "Sweet Potato"
+    },
+    {
+      "key": "item.crop.winter.winter_flower.desc",
+      "value": "Rare winter bloom. Extremely valuable as an NPC gift."
+    },
+    {
+      "key": "item.crop.winter.winter_flower.name",
+      "value": "Winter Flower"
+    },
+    {
+      "key": "item.crop.yam.desc",
+      "value": "Yam harvested from the field. Useful for selling, cooking, or quest turn-ins."
+    },
+    {
+      "key": "item.crop.yam.name",
+      "value": "Yam"
+    },
+    {
+      "key": "item.drop.bat_wing.desc",
+      "value": "Cave bat wing. Used to craft lightning rods."
+    },
+    {
+      "key": "item.drop.bat_wing.name",
+      "value": "Bat Wing"
+    },
+    {
+      "key": "item.drop.boar_meat.desc",
+      "value": "Fresh meat from a wild boar. Cooked into high-stamina meals."
+    },
+    {
+      "key": "item.drop.boar_meat.name",
+      "value": "Boar Meat"
+    },
+    {
+      "key": "item.drop.boar_tusk.desc",
+      "value": "Hard and sharp tusk. Used for decoration or selling."
+    },
+    {
+      "key": "item.drop.boar_tusk.name",
+      "value": "Boar Tusk"
+    },
+    {
+      "key": "item.drop.crab_shell.desc",
+      "value": "Hard shell from cave crabs. Used to craft shields."
+    },
+    {
+      "key": "item.drop.crab_shell.name",
+      "value": "Crab Shell"
+    },
+    {
+      "key": "item.drop.hawk_feather.desc",
+      "value": "Light and durable feather. Used for arrow crafting or pillows."
+    },
+    {
+      "key": "item.drop.hawk_feather.name",
+      "value": "Hawk Feather"
+    },
+    {
+      "key": "item.drop.mole_claw.desc",
+      "value": "Sharp claw. Used to craft mining charms."
+    },
+    {
+      "key": "item.drop.mole_claw.name",
+      "value": "Mole Claw"
+    },
+    {
+      "key": "item.drop.rat_tail.desc",
+      "value": "Dropped by wild rats. Used to craft antidote."
+    },
+    {
+      "key": "item.drop.rat_tail.name",
+      "value": "Rat Tail"
+    },
+    {
+      "key": "item.drop.snake_skin.desc",
+      "value": "Tough snake hide. Used to craft leather straps."
+    },
+    {
+      "key": "item.drop.snake_skin.name",
+      "value": "Snake Skin"
+    },
+    {
+      "key": "item.drop.snake_venom.desc",
+      "value": "Rare venom. Used to craft powerful potions."
+    },
+    {
+      "key": "item.drop.snake_venom.name",
+      "value": "Snake Venom"
+    },
+    {
+      "key": "item.equip.backpack.desc",
+      "value": "+10 inventory slots."
+    },
+    {
+      "key": "item.equip.backpack.name",
+      "value": "Backpack"
+    },
+    {
+      "key": "item.equip.copper_ring.desc",
+      "value": "+5 max stamina."
+    },
+    {
+      "key": "item.equip.copper_ring.name",
+      "value": "Copper Ring"
+    },
+    {
+      "key": "item.equip.leather_gloves.desc",
+      "value": "+1 to harvest quality."
+    },
+    {
+      "key": "item.equip.leather_gloves.name",
+      "value": "Leather Gloves"
+    },
+    {
+      "key": "item.equip.luck_charm.desc",
+      "value": "+15% rare item drop rate."
+    },
+    {
+      "key": "item.equip.luck_charm.name",
+      "value": "Luck Charm"
+    },
+    {
+      "key": "item.equip.mining_charm.desc",
+      "value": "+25% mining speed."
+    },
+    {
+      "key": "item.equip.mining_charm.name",
+      "value": "Mining Charm"
+    },
+    {
+      "key": "item.equip.rubber_boots.desc",
+      "value": "Immune to slow effect when moving in rain."
+    },
+    {
+      "key": "item.equip.rubber_boots.name",
+      "value": "Rubber Boots"
+    },
+    {
+      "key": "item.equip.ruby_ring.desc",
+      "value": "+15 max stamina."
+    },
+    {
+      "key": "item.equip.ruby_ring.name",
+      "value": "Ruby Ring"
+    },
+    {
+      "key": "item.equip.stone_shield.desc",
+      "value": "Reduces incoming damage by 30%."
+    },
+    {
+      "key": "item.equip.stone_shield.name",
+      "value": "Stone Shield"
+    },
+    {
+      "key": "item.equip.straw_hat.desc",
+      "value": "Reduces farming stamina cost by 10%."
+    },
+    {
+      "key": "item.equip.straw_hat.name",
+      "value": "Straw Hat"
+    },
+    {
+      "key": "item.feed.hay.desc",
+      "value": "Basic feed for livestock."
+    },
+    {
+      "key": "item.feed.hay.name",
+      "value": "Hay"
+    },
+    {
+      "key": "item.food.apple_pie.desc",
+      "value": "Homely sweet pie. Restores 80 stamina."
+    },
+    {
+      "key": "item.food.apple_pie.name",
+      "value": "Apple Pie"
+    },
+    {
+      "key": "item.food.apple_vinegar.desc",
+      "value": "Apple cider vinegar. Used in cooking or sold."
+    },
+    {
+      "key": "item.food.apple_vinegar.name",
+      "value": "Apple Vinegar"
+    },
+    {
+      "key": "item.food.asparagus_soup.desc",
+      "value": "Elegant soup. Restores 50 stamina."
+    },
+    {
+      "key": "item.food.asparagus_soup.name",
+      "value": "Asparagus Soup"
+    },
+    {
+      "key": "item.food.beer.desc",
+      "value": "Brewed from wheat."
+    },
+    {
+      "key": "item.food.beer.name",
+      "value": "Beer"
+    },
+    {
+      "key": "item.food.beet_juice.desc",
+      "value": "Recovery drink. Restores 50 stamina. Grants 20 stamina/5 minutes."
+    },
+    {
+      "key": "item.food.beet_juice.name",
+      "value": "Beet Juice"
+    },
+    {
+      "key": "item.food.bread.desc",
+      "value": "Basic baked good. Restores 25 stamina."
+    },
+    {
+      "key": "item.food.bread.name",
+      "value": "Bread"
+    },
+    {
+      "key": "item.food.buttered_sweet_potato.desc",
+      "value": "Buttery baked potato. Restores 55 stamina."
+    },
+    {
+      "key": "item.food.buttered_sweet_potato.name",
+      "value": "Buttered Sweet Potato"
+    },
+    {
+      "key": "item.food.cabbage_roll.desc",
+      "value": "Traditional stuffed roll. Restores 70 stamina."
+    },
+    {
+      "key": "item.food.cabbage_roll.name",
+      "value": "Cabbage Roll"
+    },
+    {
+      "key": "item.food.cauliflower_gratin.desc",
+      "value": "Cheesy baked dish. Restores 65 stamina."
+    },
+    {
+      "key": "item.food.cauliflower_gratin.name",
+      "value": "Cauliflower Gratin"
+    },
+    {
+      "key": "item.food.cheese.desc",
+      "value": "A processed dairy food that restores stamina and sells better than raw milk."
+    },
+    {
+      "key": "item.food.cheese.name",
+      "value": "Cheese"
+    },
+    {
+      "key": "item.food.cherry_jam.desc",
+      "value": "Premium jam. Restores 35 stamina."
+    },
+    {
+      "key": "item.food.cherry_jam.name",
+      "value": "Cherry Jam"
+    },
+    {
+      "key": "item.food.eggplant_parmesan.desc",
+      "value": "Italian classic. Restores 70 stamina."
+    },
+    {
+      "key": "item.food.eggplant_parmesan.name",
+      "value": "Eggplant Parmesan"
+    },
+    {
+      "key": "item.food.flower_tea.desc",
+      "value": "Fragrant tea. Restores 15 stamina. Resists debuffs."
+    },
+    {
+      "key": "item.food.flower_tea.name",
+      "value": "Flower Tea"
+    },
+    {
+      "key": "item.food.french_fries.desc",
+      "value": "Crispy golden fries. Restores 35 stamina."
+    },
+    {
+      "key": "item.food.french_fries.name",
+      "value": "French Fries"
+    },
+    {
+      "key": "item.food.fruit_salad.desc",
+      "value": "Fresh and colorful. Restores 60 stamina."
+    },
+    {
+      "key": "item.food.fruit_salad.name",
+      "value": "Fruit Salad"
+    },
+    {
+      "key": "item.food.garlic_broccoli.desc",
+      "value": "Stir-fried greens. Restores 50 stamina. Buffs +15% speed for 3 hours."
+    },
+    {
+      "key": "item.food.garlic_broccoli.name",
+      "value": "Garlic Broccoli"
+    },
+    {
+      "key": "item.food.green_salad.desc",
+      "value": "Light meal. Restores 35 stamina."
+    },
+    {
+      "key": "item.food.green_salad.name",
+      "value": "Green Salad"
+    },
+    {
+      "key": "item.food.mayonnaise.desc",
+      "value": "A rich egg-based food that restores a bit of stamina."
+    },
+    {
+      "key": "item.food.mayonnaise.name",
+      "value": "Mayonnaise"
+    },
+    {
+      "key": "item.food.mushroom_risotto.desc",
+      "value": "Creamy rice dish. Restores 60 stamina."
+    },
+    {
+      "key": "item.food.mushroom_risotto.name",
+      "value": "Mushroom Risotto"
+    },
+    {
+      "key": "item.food.mushroom_soup.desc",
+      "value": "Creamy soup. Restores 60 stamina."
+    },
+    {
+      "key": "item.food.mushroom_soup.name",
+      "value": "Mushroom Soup"
+    },
+    {
+      "key": "item.food.pickles.desc",
+      "value": "Tangy preserved veggies. Restores 30 stamina."
+    },
+    {
+      "key": "item.food.pickles.name",
+      "value": "Pickles"
+    },
+    {
+      "key": "item.food.pineapple_juice.desc",
+      "value": "Tropical refresher. Restores 45 stamina."
+    },
+    {
+      "key": "item.food.pineapple_juice.name",
+      "value": "Pineapple Juice"
+    },
+    {
+      "key": "item.food.pizza.desc",
+      "value": "Premium meal. Restores 90 stamina."
+    },
+    {
+      "key": "item.food.pizza.name",
+      "value": "Pizza"
+    },
+    {
+      "key": "item.food.plum_wine.desc",
+      "value": "Premium aged plum wine. Extremely high sell value."
+    },
+    {
+      "key": "item.food.plum_wine.name",
+      "value": "Plum Wine"
+    },
+    {
+      "key": "item.food.pumpkin_soup.desc",
+      "value": "Premium soup. Restores 75 stamina. Buffs +10% max stamina for 1 day."
+    },
+    {
+      "key": "item.food.pumpkin_soup.name",
+      "value": "Pumpkin Soup"
+    },
+    {
+      "key": "item.food.roasted_corn.desc",
+      "value": "Light snack. Restores 20 stamina."
+    },
+    {
+      "key": "item.food.roasted_corn.name",
+      "value": "Roasted Corn"
+    },
+    {
+      "key": "item.food.roasted_eggplant.desc",
+      "value": "Smoky roasted dish. Restores 40 stamina."
+    },
+    {
+      "key": "item.food.roasted_eggplant.name",
+      "value": "Roasted Eggplant"
+    },
+    {
+      "key": "item.food.sandwich.desc",
+      "value": "Quick lunch. Restores 50 stamina."
+    },
+    {
+      "key": "item.food.sandwich.name",
+      "value": "Sandwich"
+    },
+    {
+      "key": "item.food.stir_fry.desc",
+      "value": "Quick stir-fry. Restores 45 stamina. Buffs +10% speed for 3 hours."
+    },
+    {
+      "key": "item.food.stir_fry.name",
+      "value": "Stir Fry"
+    },
+    {
+      "key": "item.food.strawberry_cake.desc",
+      "value": "Premium cake. Restores 85 stamina."
+    },
+    {
+      "key": "item.food.strawberry_cake.name",
+      "value": "Strawberry Cake"
+    },
+    {
+      "key": "item.food.strawberry_jam.desc",
+      "value": "Sweet jam. Restores 30 stamina. Sells for high price."
+    },
+    {
+      "key": "item.food.strawberry_jam.name",
+      "value": "Strawberry Jam"
+    },
+    {
+      "key": "item.food.sweet_potato_cake.desc",
+      "value": "Soft and sweet cake. Restores 65 stamina."
+    },
+    {
+      "key": "item.food.sweet_potato_cake.name",
+      "value": "Sweet Potato Cake"
+    },
+    {
+      "key": "item.food.truffle_risotto.desc",
+      "value": "Exquisite delicacy. Restores 100 stamina. Buffs +20% max stamina for 1 day."
+    },
+    {
+      "key": "item.food.truffle_risotto.name",
+      "value": "Truffle Risotto"
+    },
+    {
+      "key": "item.food.veggie_smoothie.desc",
+      "value": "Healthy drink. Restores 40 stamina. Buffs +10% speed for 3 hours."
+    },
+    {
+      "key": "item.food.veggie_smoothie.name",
+      "value": "Veggie Smoothie"
+    },
+    {
+      "key": "item.food.veggie_soup.desc",
+      "value": "Hearty soup. Restores 55 stamina."
+    },
+    {
+      "key": "item.food.veggie_soup.name",
+      "value": "Vegetable Soup"
+    },
+    {
+      "key": "item.food.vodka.desc",
+      "value": "Distilled spirit from potatoes."
+    },
+    {
+      "key": "item.food.vodka.name",
+      "value": "Vodka"
+    },
+    {
+      "key": "item.food.wine.desc",
+      "value": "Fermented grape beverage. Sells for very high price."
+    },
+    {
+      "key": "item.food.wine.name",
+      "value": "Wine"
+    },
+    {
+      "key": "item.forage.flower.blue.desc",
+      "value": "Wild fall flower. Used to craft calming medicine."
+    },
+    {
+      "key": "item.forage.flower.blue.name",
+      "value": "Blue Bell"
+    },
+    {
+      "key": "item.forage.flower.pink.desc",
+      "value": "Precious spring flower. Used as NPC gift or perfume."
+    },
+    {
+      "key": "item.forage.flower.pink.name",
+      "value": "Pink Rose"
+    },
+    {
+      "key": "item.forage.flower.red.desc",
+      "value": "Wild summer flower. Used as red dye and tea ingredient."
+    },
+    {
+      "key": "item.forage.flower.red.name",
+      "value": "Red Flower"
+    },
+    {
+      "key": "item.forage.flower.white.desc",
+      "value": "Rare winter bloom. Extremely valuable as an NPC gift."
+    },
+    {
+      "key": "item.forage.flower.white.name",
+      "value": "White Lily"
+    },
+    {
+      "key": "item.forage.flower.yellow.desc",
+      "value": "Bright yellow bloom. Seeds used as a light snack."
+    },
+    {
+      "key": "item.forage.flower.yellow.name",
+      "value": "Sunflower"
+    },
+    {
+      "key": "item.forage.mushroom.brown.desc",
+      "value": "Common forest mushroom. Restores 15 stamina when eaten."
+    },
+    {
+      "key": "item.forage.mushroom.brown.name",
+      "value": "Brown Mushroom"
+    },
+    {
+      "key": "item.forage.mushroom.green.desc",
+      "value": "Rare swamp mushroom. Processed into a speed potion."
+    },
+    {
+      "key": "item.forage.mushroom.green.name",
+      "value": "Green Mushroom"
+    },
+    {
+      "key": "item.forage.mushroom.orange.desc",
+      "value": "Deep forest mushroom. Restores 20 stamina and removes debuffs."
+    },
+    {
+      "key": "item.forage.mushroom.orange.name",
+      "value": "Orange Mushroom"
+    },
+    {
+      "key": "item.forage.mushroom.purple.desc",
+      "value": "Rare cave mushroom. Safe only after processing into medicine."
+    },
+    {
+      "key": "item.forage.mushroom.purple.name",
+      "value": "Purple Mushroom"
+    },
+    {
+      "key": "item.forage.mushroom.white.desc",
+      "value": "Clean and healthy mushroom. Used in cream soups."
+    },
+    {
+      "key": "item.forage.mushroom.white.name",
+      "value": "White Mushroom"
+    },
+    {
+      "key": "item.forage.wild_root.desc",
+      "value": "Medicinal plant root. Used in potions and fertilizer."
+    },
+    {
+      "key": "item.forage.wild_root.name",
+      "value": "Wild Root"
+    },
+    {
+      "key": "item.mat.coal.desc",
+      "value": "Fuel for the furnace. Required for smelting ore."
+    },
+    {
+      "key": "item.mat.coal.name",
+      "value": "Coal"
+    },
+    {
+      "key": "item.mat.copper_bar.desc",
+      "value": "Refined metal. Used for Tier 2 tools and basic sprinklers."
+    },
+    {
+      "key": "item.mat.copper_bar.name",
+      "value": "Copper Bar"
+    },
+    {
+      "key": "item.mat.copper_ore.desc",
+      "value": "Tier 1 ore. Smelt into copper bars to upgrade tools."
+    },
+    {
+      "key": "item.mat.copper_ore.name",
+      "value": "Copper Ore"
+    },
+    {
+      "key": "item.mat.corn_oil.desc",
+      "value": "Vegetable oil pressed from corn. Used for frying and cooking."
+    },
+    {
+      "key": "item.mat.corn_oil.name",
+      "value": "Corn Oil"
+    },
+    {
+      "key": "item.mat.crystal_shard.desc",
+      "value": "Refined crystal fragment. Used in crafting."
+    },
+    {
+      "key": "item.mat.crystal_shard.name",
+      "value": "Crystal Shard"
+    },
+    {
+      "key": "item.mat.crystal.desc",
+      "value": "Rare gemstone. Used for lightning rods and lanterns."
+    },
+    {
+      "key": "item.mat.crystal.name",
+      "value": "Crystal"
+    },
+    {
+      "key": "item.mat.emerald.desc",
+      "value": "Rare green gem. Used to craft luck charms."
+    },
+    {
+      "key": "item.mat.emerald.name",
+      "value": "Emerald"
+    },
+    {
+      "key": "item.mat.fiber.desc",
+      "value": "Plant fiber from weeds. Used for rope and scarecrows."
+    },
+    {
+      "key": "item.mat.fiber.name",
+      "value": "Fiber"
+    },
+    {
+      "key": "item.mat.flour.desc",
+      "value": "Milled from wheat. Core ingredient for bread, cake, and pizza."
+    },
+    {
+      "key": "item.mat.flour.name",
+      "value": "Flour"
+    },
+    {
+      "key": "item.mat.gold_bar.desc",
+      "value": "Precious metal. Used for Tier 4 tools and premium sprinklers."
+    },
+    {
+      "key": "item.mat.gold_bar.name",
+      "value": "Gold Bar"
+    },
+    {
+      "key": "item.mat.gold_ore.desc",
+      "value": "Rare Tier 3 ore. Smelt into gold bars."
+    },
+    {
+      "key": "item.mat.gold_ore.name",
+      "value": "Gold Ore"
+    },
+    {
+      "key": "item.mat.hardwood.desc",
+      "value": "High-quality oak lumber. Used for building and crafting."
+    },
+    {
+      "key": "item.mat.hardwood.name",
+      "value": "Hard Wood"
+    },
+    {
+      "key": "item.mat.iron_bar.desc",
+      "value": "Sturdy metal. Used for Tier 3 tools and machines."
+    },
+    {
+      "key": "item.mat.iron_bar.name",
+      "value": "Iron Bar"
+    },
+    {
+      "key": "item.mat.iron_ore.desc",
+      "value": "Tier 2 ore. Smelt into iron bars."
+    },
+    {
+      "key": "item.mat.iron_ore.name",
+      "value": "Iron Ore"
+    },
+    {
+      "key": "item.mat.maple_syrup.desc",
+      "value": "Natural sweetener from maple trees. Used in cooking and sold."
+    },
+    {
+      "key": "item.mat.maple_syrup.name",
+      "value": "Maple Syrup"
+    },
+    {
+      "key": "item.mat.oak_resin.desc",
+      "value": "Resin from oak trees. Used as adhesive in machine crafting."
+    },
+    {
+      "key": "item.mat.oak_resin.name",
+      "value": "Oak Resin"
+    },
+    {
+      "key": "item.mat.pine_tar.desc",
+      "value": "Sticky pine resin. Used for torches and waterproof adhesive."
+    },
+    {
+      "key": "item.mat.pine_tar.name",
+      "value": "Pine Tar"
+    },
+    {
+      "key": "item.mat.rope.desc",
+      "value": "Sturdy rope. A key material for many crafting recipes."
+    },
+    {
+      "key": "item.mat.rope.name",
+      "value": "Rope"
+    },
+    {
+      "key": "item.mat.ruby.desc",
+      "value": "Brilliant red gem. Used for high-end jewelry or NPC gifts."
+    },
+    {
+      "key": "item.mat.ruby.name",
+      "value": "Ruby"
+    },
+    {
+      "key": "item.mat.softwood.desc",
+      "value": "Birch lumber. Used for paper and decorations."
+    },
+    {
+      "key": "item.mat.softwood.name",
+      "value": "Soft Wood"
+    },
+    {
+      "key": "item.mat.stone.desc",
+      "value": "Basic building material. Used for furnaces and stone fences."
+    },
+    {
+      "key": "item.mat.stone.name",
+      "value": "Stone"
+    },
+    {
+      "key": "item.mat.sugar.desc",
+      "value": "Milled from beets. Used in jam and baked goods."
+    },
+    {
+      "key": "item.mat.sugar.name",
+      "value": "Sugar"
+    },
+    {
+      "key": "item.mat.sunflower_oil.desc",
+      "value": "Light oil from sunflower seeds. Used in cooking."
+    },
+    {
+      "key": "item.mat.sunflower_oil.name",
+      "value": "Sunflower Oil"
+    },
+    {
+      "key": "item.mat.twig.desc",
+      "value": "A fallen branch. Used as kindling."
+    },
+    {
+      "key": "item.mat.twig.name",
+      "value": "Twig"
+    },
+    {
+      "key": "item.mat.wood.desc",
+      "value": "Basic lumber from trees. Used for fences, chests, and tool upgrades."
+    },
+    {
+      "key": "item.mat.wood.name",
+      "value": "Wood"
+    },
+    {
+      "key": "item.place.adv_craft_table.desc",
+      "value": "Crafts machines and advanced equipment."
+    },
+    {
+      "key": "item.place.adv_craft_table.name",
+      "value": "Advanced Crafting Table"
+    },
+    {
+      "key": "item.place.basic_craft_table.desc",
+      "value": "Crafts basic items and tools."
+    },
+    {
+      "key": "item.place.basic_craft_table.name",
+      "value": "Basic Crafting Table"
+    },
+    {
+      "key": "item.place.bed.basic.desc",
+      "value": "A house bed used to end the day and begin the next morning fully rested."
+    },
+    {
+      "key": "item.place.bed.basic.name",
+      "value": "Wooden Bed"
+    },
+    {
+      "key": "item.place.cheese_press.desc",
+      "value": "Processes milk into cheese and butter."
+    },
+    {
+      "key": "item.place.cheese_press.name",
+      "value": "Cheese Press"
+    },
+    {
+      "key": "item.place.chest.desc",
+      "value": "+36 storage slots."
+    },
+    {
+      "key": "item.place.chest.name",
+      "value": "Chest"
+    },
+    {
+      "key": "item.place.furnace.desc",
+      "value": "Smelts ore into metal bars."
+    },
+    {
+      "key": "item.place.furnace.name",
+      "value": "Furnace"
+    },
+    {
+      "key": "item.place.keg.desc",
+      "value": "Ferments wine, juice, and vinegar from produce."
+    },
+    {
+      "key": "item.place.keg.name",
+      "value": "Keg"
+    },
+    {
+      "key": "item.place.kitchen.desc",
+      "value": "Cooks stamina-restoring and buff meals."
+    },
+    {
+      "key": "item.place.kitchen.name",
+      "value": "Kitchen"
+    },
+    {
+      "key": "item.place.lightning_rod.desc",
+      "value": "Prevents lightning from damaging crops during storms."
+    },
+    {
+      "key": "item.place.lightning_rod.name",
+      "value": "Lightning Rod"
+    },
+    {
+      "key": "item.place.loom.desc",
+      "value": "Weaves wool into cloth."
+    },
+    {
+      "key": "item.place.loom.name",
+      "value": "Loom"
+    },
+    {
+      "key": "item.place.mayo_machine.desc",
+      "value": "Processes eggs into mayonnaise."
+    },
+    {
+      "key": "item.place.mayo_machine.name",
+      "value": "Mayonnaise Machine"
+    },
+    {
+      "key": "item.place.mill.desc",
+      "value": "Grinds flour, sugar, and oils from produce."
+    },
+    {
+      "key": "item.place.mill.name",
+      "value": "Mill"
+    },
+    {
+      "key": "item.place.preserves_jar.desc",
+      "value": "Makes jam, pickles, and kimchi."
+    },
+    {
+      "key": "item.place.preserves_jar.name",
+      "value": "Preserves Jar"
+    },
+    {
+      "key": "item.place.scarecrow.desc",
+      "value": "Protects crops in an 8x8 area from crows."
+    },
+    {
+      "key": "item.place.scarecrow.name",
+      "value": "Scarecrow"
+    },
+    {
+      "key": "item.place.sprinkler_t1.desc",
+      "value": "Auto-waters 4 surrounding tiles every morning."
+    },
+    {
+      "key": "item.place.sprinkler_t1.name",
+      "value": "Basic Sprinkler"
+    },
+    {
+      "key": "item.place.sprinkler_t2.desc",
+      "value": "Auto-waters 8 tiles (3x3) every morning."
+    },
+    {
+      "key": "item.place.sprinkler_t2.name",
+      "value": "Advanced Sprinkler"
+    },
+    {
+      "key": "item.place.sprinkler_t3.desc",
+      "value": "Auto-waters 24 tiles (5x5) every morning."
+    },
+    {
+      "key": "item.place.sprinkler_t3.name",
+      "value": "Premium Sprinkler"
+    },
+    {
+      "key": "item.place.sprinkler.t1.desc",
+      "value": "Place it to automatically water a small area every morning."
+    },
+    {
+      "key": "item.place.sprinkler.t1.name",
+      "value": "Sprinkler T1"
+    },
+    {
+      "key": "item.place.sprinkler.t2.desc",
+      "value": "Place it to automatically water a larger field every morning."
+    },
+    {
+      "key": "item.place.sprinkler.t2.name",
+      "value": "Sprinkler T2"
+    },
+    {
+      "key": "item.place.stone_fence.desc",
+      "value": "More durable fence. Does not decay."
+    },
+    {
+      "key": "item.place.stone_fence.name",
+      "value": "Stone Fence"
+    },
+    {
+      "key": "item.place.torch.desc",
+      "value": "Illuminates the mine at night."
+    },
+    {
+      "key": "item.place.torch.name",
+      "value": "Torch"
+    },
+    {
+      "key": "item.place.wood_fence.desc",
+      "value": "Basic fence. Marks the boundary of your farm."
+    },
+    {
+      "key": "item.place.wood_fence.name",
+      "value": "Wood Fence"
+    },
+    {
+      "key": "item.prod.cheese.desc",
+      "value": "Processed from milk. Valuable and useful in premium meals."
+    },
+    {
+      "key": "item.prod.cheese.name",
+      "value": "Cheese"
+    },
+    {
+      "key": "item.prod.egg.desc",
+      "value": "Daily chicken product. Can be eaten or processed into mayonnaise."
+    },
+    {
+      "key": "item.prod.egg.name",
+      "value": "Egg"
+    },
+    {
+      "key": "item.prod.mayonnaise.desc",
+      "value": "Processed from eggs. Worth more than selling raw eggs."
+    },
+    {
+      "key": "item.prod.mayonnaise.name",
+      "value": "Mayonnaise"
+    },
+    {
+      "key": "item.prod.milk.desc",
+      "value": "Daily cow product used for cheese."
+    },
+    {
+      "key": "item.prod.milk.name",
+      "value": "Milk"
+    },
+    {
+      "key": "item.seed.brech_woodtree.desc",
+      "value": "A seed for growing a birch wood tree."
+    },
+    {
+      "key": "item.seed.brech_woodtree.name",
+      "value": "Birch Tree Seed"
+    },
+    {
+      "key": "item.seed.corn.desc",
+      "value": "Unlocked at Lv.11. The crop matures after about 9 watered days. After the first harvest, it produces again every 4 days."
+    },
+    {
+      "key": "item.seed.corn.name",
+      "value": "Corn Seeds"
+    },
+    {
+      "key": "item.seed.fall.broccoli.desc",
+      "value": "Fall crop. Ready in 8 days."
+    },
+    {
+      "key": "item.seed.fall.broccoli.name",
+      "value": "Broccoli Seeds"
+    },
+    {
+      "key": "item.seed.fall.cabbage.desc",
+      "value": "Fall crop. Ready in 8 days."
+    },
+    {
+      "key": "item.seed.fall.cabbage.name",
+      "value": "Cabbage Seeds"
+    },
+    {
+      "key": "item.seed.fall.carrot.desc",
+      "value": "Fall crop. Ready in 6 days."
+    },
+    {
+      "key": "item.seed.fall.carrot.name",
+      "value": "Carrot Seeds"
+    },
+    {
+      "key": "item.seed.fall.eggplant.desc",
+      "value": "Regrowth fall crop. 5+5 days."
+    },
+    {
+      "key": "item.seed.fall.eggplant.name",
+      "value": "Eggplant Seeds"
+    },
+    {
+      "key": "item.seed.fall.garlic.desc",
+      "value": "Fall crop. Ready in 4 days."
+    },
+    {
+      "key": "item.seed.fall.garlic.name",
+      "value": "Garlic Seeds"
+    },
+    {
+      "key": "item.seed.fall.grape.desc",
+      "value": "Regrowth fall crop. 10+3 days."
+    },
+    {
+      "key": "item.seed.fall.grape.name",
+      "value": "Grape Seeds"
+    },
+    {
+      "key": "item.seed.fall.onion.desc",
+      "value": "Fall crop. Ready in 6 days."
+    },
+    {
+      "key": "item.seed.fall.onion.name",
+      "value": "Onion Seeds"
+    },
+    {
+      "key": "item.seed.fall.pumpkin.desc",
+      "value": "Premium fall seeds. Ready in 13 days."
+    },
+    {
+      "key": "item.seed.fall.pumpkin.name",
+      "value": "Pumpkin Seeds"
+    },
+    {
+      "key": "item.seed.fall.wheat.desc",
+      "value": "Plant in Fall. The crop matures after about 5 watered days."
+    },
+    {
+      "key": "item.seed.fall.wheat.name",
+      "value": "Wheat Seeds"
+    },
+    {
+      "key": "item.seed.oak_woodtree.desc",
+      "value": "A seed for growing an oak wood tree."
+    },
+    {
+      "key": "item.seed.oak_woodtree.name",
+      "value": "Oak Tree Seed"
+    },
+    {
+      "key": "item.seed.potato.desc",
+      "value": "Unlocked at Lv.2. The crop matures after about 5 watered days."
+    },
+    {
+      "key": "item.seed.potato.name",
+      "value": "Potato Seeds"
+    },
+    {
+      "key": "item.seed.spring.asparagus.desc",
+      "value": "Premium regrowth crop. Regrows every 3 days."
+    },
+    {
+      "key": "item.seed.spring.asparagus.name",
+      "value": "Asparagus Seeds"
+    },
+    {
+      "key": "item.seed.spring.cauliflower.desc",
+      "value": "Premium seeds. Ready in 12 days. High value."
+    },
+    {
+      "key": "item.seed.spring.cauliflower.name",
+      "value": "Cauliflower Seeds"
+    },
+    {
+      "key": "item.seed.spring.lettuce.desc",
+      "value": "Spring seeds. Ready to harvest in 3 days."
+    },
+    {
+      "key": "item.seed.spring.lettuce.name",
+      "value": "Lettuce Seeds"
+    },
+    {
+      "key": "item.seed.spring.potato.desc",
+      "value": "Popular spring seeds. Ready in 6 days."
+    },
+    {
+      "key": "item.seed.spring.potato.name",
+      "value": "Potato Seeds"
+    },
+    {
+      "key": "item.seed.spring.radish.desc",
+      "value": "Spring seeds. Ready in 5 days."
+    },
+    {
+      "key": "item.seed.spring.radish.name",
+      "value": "Radish Seeds"
+    },
+    {
+      "key": "item.seed.spring.strawberry.desc",
+      "value": "Regrowth crop. First harvest in 8 days, then every 4."
+    },
+    {
+      "key": "item.seed.spring.strawberry.name",
+      "value": "Strawberry Seeds"
+    },
+    {
+      "key": "item.seed.spring.tulip.desc",
+      "value": "Spring flower seeds. Blooms in 5 days."
+    },
+    {
+      "key": "item.seed.spring.tulip.name",
+      "value": "Tulip Seeds"
+    },
+    {
+      "key": "item.seed.spring.turnip.desc",
+      "value": "Basic spring seeds. Ready in 4 days."
+    },
+    {
+      "key": "item.seed.spring.turnip.name",
+      "value": "Turnip Seeds"
+    },
+    {
+      "key": "item.seed.strawberry.desc",
+      "value": "Unlocked at Lv.15. The crop matures after about 8 watered days. After the first harvest, it produces again every 3 days."
+    },
+    {
+      "key": "item.seed.strawberry.name",
+      "value": "Strawberry Seeds"
+    },
+    {
+      "key": "item.seed.summer.blueberry.desc",
+      "value": "Regrowth crop. Yields 3 berries each harvest."
+    },
+    {
+      "key": "item.seed.summer.blueberry.name",
+      "value": "Blueberry Seeds"
+    },
+    {
+      "key": "item.seed.summer.corn.desc",
+      "value": "Regrowth crop that spans Summer and Fall."
+    },
+    {
+      "key": "item.seed.summer.corn.name",
+      "value": "Corn Seeds"
+    },
+    {
+      "key": "item.seed.summer.melon.desc",
+      "value": "Valuable summer crop. Ready in 12 days."
+    },
+    {
+      "key": "item.seed.summer.melon.name",
+      "value": "Melon Seeds"
+    },
+    {
+      "key": "item.seed.summer.pineapple.desc",
+      "value": "Expensive regrowth crop. Regrows every 7 days."
+    },
+    {
+      "key": "item.seed.summer.pineapple.name",
+      "value": "Pineapple Seeds"
+    },
+    {
+      "key": "item.seed.summer.red_pepper.desc",
+      "value": "Regrowth crop. 7+3 days."
+    },
+    {
+      "key": "item.seed.summer.red_pepper.name",
+      "value": "Red Pepper Seeds"
+    },
+    {
+      "key": "item.seed.summer.tomato.desc",
+      "value": "Regrowth summer crop. 11+4 days."
+    },
+    {
+      "key": "item.seed.summer.tomato.name",
+      "value": "Tomato Seeds"
+    },
+    {
+      "key": "item.seed.summer.wheat.desc",
+      "value": "Basic summer crop. Ready in 4 days."
+    },
+    {
+      "key": "item.seed.summer.wheat.name",
+      "value": "Wheat Seeds"
+    },
+    {
+      "key": "item.seed.summer.yellow_pepper.desc",
+      "value": "Regrowth crop. 7+3 days."
+    },
+    {
+      "key": "item.seed.summer.yellow_pepper.name",
+      "value": "Yellow Pepper Seeds"
+    },
+    {
+      "key": "item.seed.tomato.desc",
+      "value": "Unlocked at Lv.7. The crop matures after about 7 watered days. After the first harvest, it produces again every 3 days."
+    },
+    {
+      "key": "item.seed.tomato.name",
+      "value": "Tomato Seeds"
+    },
+    {
+      "key": "item.seed.tree.apple.desc",
+      "value": "Fall fruit tree. Bears fruit after 28 days."
+    },
+    {
+      "key": "item.seed.tree.apple.name",
+      "value": "Apple Sapling"
+    },
+    {
+      "key": "item.seed.tree.cherry.desc",
+      "value": "Spring fruit tree. Bears fruit after 28 days."
+    },
+    {
+      "key": "item.seed.tree.cherry.name",
+      "value": "Cherry Sapling"
+    },
+    {
+      "key": "item.seed.tree.pear.desc",
+      "value": "Fall fruit tree. Bears fruit after 28 days."
+    },
+    {
+      "key": "item.seed.tree.pear.name",
+      "value": "Pear Sapling"
+    },
+    {
+      "key": "item.seed.tree.plum.desc",
+      "value": "Summer fruit tree. Bears fruit after 28 days."
+    },
+    {
+      "key": "item.seed.tree.plum.name",
+      "value": "Plum Sapling"
+    },
+    {
+      "key": "item.seed.turnip.desc",
+      "value": "Unlocked at Lv.1. The crop matures after about 4 watered days."
+    },
+    {
+      "key": "item.seed.turnip.name",
+      "value": "Turnip Seeds"
+    },
+    {
+      "key": "item.seed.wheat.desc",
+      "value": "Unlocked at Lv.4. The crop matures after about 4 watered days."
+    },
+    {
+      "key": "item.seed.wheat.name",
+      "value": "Wheat Seeds"
+    },
+    {
+      "key": "item.seed.winter.beet.desc",
+      "value": "Winter crop. Ready in 7 days."
+    },
+    {
+      "key": "item.seed.winter.beet.name",
+      "value": "Beet Seeds"
+    },
+    {
+      "key": "item.seed.winter.celery.desc",
+      "value": "Winter crop. Ready in 5 days."
+    },
+    {
+      "key": "item.seed.winter.celery.name",
+      "value": "Celery Seeds"
+    },
+    {
+      "key": "item.seed.winter.cucumber.desc",
+      "value": "Winter crop. Ready in 6 days."
+    },
+    {
+      "key": "item.seed.winter.cucumber.name",
+      "value": "Cucumber Seeds"
+    },
+    {
+      "key": "item.seed.winter.green_bean.desc",
+      "value": "Regrowth winter crop."
+    },
+    {
+      "key": "item.seed.winter.green_bean.name",
+      "value": "Green Bean Seeds"
+    },
+    {
+      "key": "item.seed.winter.spinach.desc",
+      "value": "Winter crop. Ready in 7 days."
+    },
+    {
+      "key": "item.seed.winter.spinach.name",
+      "value": "Spinach Seeds"
+    },
+    {
+      "key": "item.seed.winter.sweet_potato.desc",
+      "value": "Winter crop. Ready in 8 days."
+    },
+    {
+      "key": "item.seed.winter.sweet_potato.name",
+      "value": "Sweet Potato Seeds"
+    },
+    {
+      "key": "item.seed.winter.winter_flower.desc",
+      "value": "Rare winter flower. Blooms in 8 days."
+    },
+    {
+      "key": "item.seed.winter.winter_flower.name",
+      "value": "Winter Flower Seeds"
+    },
+    {
+      "key": "item.tool.axe.t1.desc",
+      "value": "Chops small trees in 3 swings."
+    },
+    {
+      "key": "item.tool.axe.t1.name",
+      "value": "Axe (Basic)"
+    },
+    {
+      "key": "item.tool.axe.t2.desc",
+      "value": "Chops trees in 2 swings."
+    },
+    {
+      "key": "item.tool.axe.t2.name",
+      "value": "Copper Axe"
+    },
+    {
+      "key": "item.tool.axe.t3.desc",
+      "value": "Chops small trees in 1 swing. Unlocks deep forest."
+    },
+    {
+      "key": "item.tool.axe.t3.name",
+      "value": "Iron Axe"
+    },
+    {
+      "key": "item.tool.axe.t4.desc",
+      "value": "Chops any tree in 1 swing."
+    },
+    {
+      "key": "item.tool.axe.t4.name",
+      "value": "Gold Axe"
+    },
+    {
+      "key": "item.tool.hoe.t1.desc",
+      "value": "Tills 1 tile per swing. Lets you plant seeds."
+    },
+    {
+      "key": "item.tool.hoe.t1.name",
+      "value": "Hoe (Basic)"
+    },
+    {
+      "key": "item.tool.hoe.t2.desc",
+      "value": "Tills 2 tiles at once. Saves stamina."
+    },
+    {
+      "key": "item.tool.hoe.t2.name",
+      "value": "Copper Hoe"
+    },
+    {
+      "key": "item.tool.hoe.t3.desc",
+      "value": "Tills 3 tiles at once. Very efficient."
+    },
+    {
+      "key": "item.tool.hoe.t3.name",
+      "value": "Iron Hoe"
+    },
+    {
+      "key": "item.tool.hoe.t4.desc",
+      "value": "Tills 5 tiles at once. Maximum efficiency."
+    },
+    {
+      "key": "item.tool.hoe.t4.name",
+      "value": "Gold Hoe"
+    },
+    {
+      "key": "item.tool.pickaxe.t1.desc",
+      "value": "Mines rock nodes in 3 hits."
+    },
+    {
+      "key": "item.tool.pickaxe.t1.name",
+      "value": "Pickaxe (Basic)"
+    },
+    {
+      "key": "item.tool.pickaxe.t2.desc",
+      "value": "A stronger pickaxe that mines faster than the starter tool."
+    },
+    {
+      "key": "item.tool.pickaxe.t2.name",
+      "value": "Copper Pickaxe"
+    },
+    {
+      "key": "item.tool.pickaxe.t3.desc",
+      "value": "Mines common rocks in 1 hit."
+    },
+    {
+      "key": "item.tool.pickaxe.t3.name",
+      "value": "Iron Pickaxe"
+    },
+    {
+      "key": "item.tool.pickaxe.t4.desc",
+      "value": "Mines any rock in 1 hit."
+    },
+    {
+      "key": "item.tool.pickaxe.t4.name",
+      "value": "Gold Pickaxe"
+    },
+    {
+      "key": "item.tool.pickaxe.t5.desc",
+      "value": "Ancient Pickaxe tier 5. Deals 30 base damage at a stamina cost of 1 per use."
+    },
+    {
+      "key": "item.tool.pickaxe.t5.name",
+      "value": "Ancient Pickaxe"
+    },
+    {
+      "key": "item.tool.scythe.t1.desc",
+      "value": "Harvests 1 tile per swing."
+    },
+    {
+      "key": "item.tool.scythe.t1.name",
+      "value": "Scythe (Basic)"
+    },
+    {
+      "key": "item.tool.scythe.t2.desc",
+      "value": "An upgraded scythe that harvests a wider area per swing."
+    },
+    {
+      "key": "item.tool.scythe.t2.name",
+      "value": "Copper Scythe"
+    },
+    {
+      "key": "item.tool.scythe.t3.desc",
+      "value": "Harvests 5 tiles at once."
+    },
+    {
+      "key": "item.tool.scythe.t3.name",
+      "value": "Iron Scythe"
+    },
+    {
+      "key": "item.tool.scythe.t4.desc",
+      "value": "Harvests 7 tiles. No stamina cost."
+    },
+    {
+      "key": "item.tool.scythe.t4.name",
+      "value": "Gold Scythe"
+    },
+    {
+      "key": "item.tool.scythe.t5.desc",
+      "value": "Ancient Scythe tier 5. Deals 38 base damage at a stamina cost of 1 per use."
+    },
+    {
+      "key": "item.tool.scythe.t5.name",
+      "value": "Ancient Scythe"
+    },
+    {
+      "key": "item.tool.watering_can.t1.desc",
+      "value": "Waters 1 tile per use."
+    },
+    {
+      "key": "item.tool.watering_can.t1.name",
+      "value": "Watering Can (Basic)"
+    },
+    {
+      "key": "item.tool.watering_can.t2.desc",
+      "value": "Waters 3 tiles at once."
+    },
+    {
+      "key": "item.tool.watering_can.t2.name",
+      "value": "Copper Watering Can"
+    },
+    {
+      "key": "item.tool.watering_can.t3.desc",
+      "value": "Waters 5 tiles at once."
+    },
+    {
+      "key": "item.tool.watering_can.t3.name",
+      "value": "Iron Watering Can"
+    },
+    {
+      "key": "item.tool.watering_can.t4.desc",
+      "value": "Waters 9 tiles (3x3) at once."
+    },
+    {
+      "key": "item.tool.watering_can.t4.name",
+      "value": "Gold Watering Can"
+    },
+    {
+      "key": "m1.portal.farm_to_town.name",
+      "value": "Portal to Town"
+    },
+    {
+      "key": "m3.animal.chicken.name",
+      "value": "Chicken"
+    },
+    {
+      "key": "m6.recipe.animal_feed.name",
+      "value": "Animal Feed"
+    },
+    {
+      "key": "mvp.quest.crop.t1.desc",
+      "value": "Harvest turnips and deliver them to the quest NPC."
+    },
+    {
+      "key": "mvp.quest.crop.t1.title",
+      "value": "First Harvest"
+    },
+    {
+      "key": "mvp.quest.crop.t2.desc",
+      "value": "Harvest fresh lettuce and deliver it."
+    },
+    {
+      "key": "mvp.quest.crop.t2.title",
+      "value": "Spring Produce"
+    },
+    {
+      "key": "mvp.quest.crop.t3.desc",
+      "value": "Harvest summer tomatoes and deliver them."
+    },
+    {
+      "key": "mvp.quest.crop.t3.title",
+      "value": "Summer Bounty"
+    },
+    {
+      "key": "mvp.quest.crop.t4.desc",
+      "value": "Harvest fall cabbage and deliver it."
+    },
+    {
+      "key": "mvp.quest.crop.t4.title",
+      "value": "Fall Harvest"
+    },
+    {
+      "key": "mvp.quest.crop.t5.desc",
+      "value": "Harvest winter spinach and deliver it."
+    },
+    {
+      "key": "mvp.quest.crop.t5.title",
+      "value": "Winter Greens"
+    },
+    {
+      "key": "mvp.quest.mixed.t1.desc",
+      "value": "Defeat monsters and collect ore in the mine."
+    },
+    {
+      "key": "mvp.quest.mixed.t1.title",
+      "value": "Mine Venture"
+    },
+    {
+      "key": "mvp.quest.mixed.t2.desc",
+      "value": "Defeat slimes and mine iron ore."
+    },
+    {
+      "key": "mvp.quest.mixed.t2.title",
+      "value": "Mine Warrior II"
+    },
+    {
+      "key": "mvp.quest.mixed.t3.desc",
+      "value": "Defeat orcs and collect gold ore."
+    },
+    {
+      "key": "mvp.quest.mixed.t3.title",
+      "value": "Deep Exploration"
+    },
+    {
+      "key": "mvp.quest.mixed.t4.desc",
+      "value": "Overcome powerful monsters and collect crystals."
+    },
+    {
+      "key": "mvp.quest.mixed.t4.title",
+      "value": "Danger Zone"
+    },
+    {
+      "key": "mvp.quest.mixed.t5.desc",
+      "value": "Defeat the mine boss and collect rubies."
+    },
+    {
+      "key": "mvp.quest.mixed.t5.title",
+      "value": "Final Challenge"
+    },
+    {
+      "key": "mvp.quest.obj.crop.t1",
+      "value": "Harvest Turnips"
+    },
+    {
+      "key": "mvp.quest.obj.crop.t2",
+      "value": "Harvest Lettuce"
+    },
+    {
+      "key": "mvp.quest.obj.crop.t3",
+      "value": "Harvest Tomatoes"
+    },
+    {
+      "key": "mvp.quest.obj.crop.t4",
+      "value": "Harvest Cabbage"
+    },
+    {
+      "key": "mvp.quest.obj.crop.t5",
+      "value": "Harvest Spinach"
+    },
+    {
+      "key": "mvp.quest.obj.mixed_ore.t1",
+      "value": "Collect Copper Ore"
+    },
+    {
+      "key": "mvp.quest.obj.mixed_ore.t2",
+      "value": "Collect Iron Ore"
+    },
+    {
+      "key": "mvp.quest.obj.mixed_ore.t3",
+      "value": "Collect Gold Ore"
+    },
+    {
+      "key": "mvp.quest.obj.mixed_ore.t4",
+      "value": "Collect Crystals"
+    },
+    {
+      "key": "mvp.quest.obj.mixed_ore.t5",
+      "value": "Collect Rubies"
+    },
+    {
+      "key": "mvp.quest.obj.monster.t1",
+      "value": "Defeat Monsters"
+    },
+    {
+      "key": "mvp.quest.obj.monster.t2",
+      "value": "Defeat Slimes"
+    },
+    {
+      "key": "mvp.quest.obj.monster.t3",
+      "value": "Defeat Orcs"
+    },
+    {
+      "key": "mvp.quest.obj.monster.t4",
+      "value": "Defeat Strong Monsters"
+    },
+    {
+      "key": "mvp.quest.obj.monster.t5",
+      "value": "Defeat Mine Boss"
+    },
+    {
+      "key": "mvp.quest.obj.ore.t1",
+      "value": "Mine Copper Ore"
+    },
+    {
+      "key": "mvp.quest.obj.ore.t2",
+      "value": "Mine Iron Ore"
+    },
+    {
+      "key": "mvp.quest.obj.ore.t3",
+      "value": "Mine Gold Ore"
+    },
+    {
+      "key": "mvp.quest.obj.ore.t4",
+      "value": "Collect Crystal Shards"
+    },
+    {
+      "key": "mvp.quest.obj.ore.t5",
+      "value": "Collect Rubies"
+    },
+    {
+      "key": "mvp.quest.ore.t1.desc",
+      "value": "Mine copper ore from the mine and deliver it."
+    },
+    {
+      "key": "mvp.quest.ore.t1.title",
+      "value": "Copper Run"
+    },
+    {
+      "key": "mvp.quest.ore.t2.desc",
+      "value": "Mine iron ore and deliver it."
+    },
+    {
+      "key": "mvp.quest.ore.t2.title",
+      "value": "Iron Foundations"
+    },
+    {
+      "key": "mvp.quest.ore.t3.desc",
+      "value": "Mine rare gold ore and deliver it."
+    },
+    {
+      "key": "mvp.quest.ore.t3.title",
+      "value": "Gold in the Deep"
+    },
+    {
+      "key": "mvp.quest.ore.t4.desc",
+      "value": "Collect crystal shards from deep in the mine."
+    },
+    {
+      "key": "mvp.quest.ore.t4.title",
+      "value": "Mysterious Crystal"
+    },
+    {
+      "key": "mvp.quest.ore.t5.desc",
+      "value": "Collect rubies from the deepest mine floor."
+    },
+    {
+      "key": "mvp.quest.ore.t5.title",
+      "value": "Precious Gems"
+    },
+    {
+      "key": "mvp.recipe.fertilizer.t1.name",
+      "value": "Basic Fertilizer"
+    },
+    {
+      "key": "mvp.recipe.gear_set.t2.name",
+      "value": "Copper Gear Set"
+    },
+    {
+      "key": "mvp.recipe.gear_set.t3.name",
+      "value": "Iron Gear Set"
+    },
+    {
+      "key": "mvp.recipe.gear_set.t4.name",
+      "value": "Gold Gear Set"
+    },
+    {
+      "key": "mvp.recipe.gear_set.t5.name",
+      "value": "Refined Gear Set"
+    },
+    {
+      "key": "mvp.recipe.pickaxe.t2.name",
+      "value": "Copper Pickaxe"
+    },
+    {
+      "key": "mvp.recipe.pickaxe.t3.name",
+      "value": "Iron Pickaxe"
+    },
+    {
+      "key": "mvp.recipe.pickaxe.t4.name",
+      "value": "Gold Pickaxe"
+    },
+    {
+      "key": "mvp.recipe.pickaxe.t5.name",
+      "value": "Refined Pickaxe"
+    },
+    {
+      "key": "mvp.recipe.scythe.t2.name",
+      "value": "Copper Scythe"
+    },
+    {
+      "key": "mvp.recipe.scythe.t3.name",
+      "value": "Iron Scythe"
+    },
+    {
+      "key": "mvp.recipe.scythe.t4.name",
+      "value": "Gold Scythe"
+    },
+    {
+      "key": "mvp.recipe.scythe.t5.name",
+      "value": "Refined Scythe"
+    },
+    {
+      "key": "mvp.recipe.sprinkler.t1.name",
+      "value": "Basic Sprinkler Head"
+    },
+    {
+      "key": "mvp.recipe.sprinkler.t2.name",
+      "value": "Advanced Sprinkler Head"
+    },
+    {
+      "key": "npc_banhang_desc",
+      "value": "Hello, need to buy or sell something?"
+    },
+    {
+      "key": "npc_banhang_name",
+      "value": "Uncle Ba"
+    },
+    {
+      "key": "npc_channuoi_desc",
+      "value": "I sell livestock, animal feed, and buy barn products."
+    },
+    {
+      "key": "npc_channuoi_name",
+      "value": "Sister Bay"
+    },
+    {
+      "key": "npc_chetao_desc",
+      "value": "I can upgrade your tools if you bring enough materials."
+    },
+    {
+      "key": "npc_chetao_name",
+      "value": "Uncle Tu"
+    },
+    {
+      "key": "npc_sukien_desc",
+      "value": "I have a few tasks that need your help."
+    },
+    {
+      "key": "npc_sukien_name",
+      "value": "Miss Nam"
+    },
+    {
+      "key": "npc.farmer.name",
+      "value": "Farmer"
+    },
+    {
+      "key": "npc.shop.bac_ba.desc",
+      "value": "A general seed and farm goods merchant."
+    },
+    {
+      "key": "npc.shop.bac_ba.name",
+      "value": "Uncle Ba"
+    },
+    {
+      "key": "ore_node_desc",
+      "value": "Can be mined with a pickaxe."
+    },
+    {
+      "key": "ore_node_name",
+      "value": "Ore Node"
+    },
+    {
+      "key": "OreChunk01_desc",
+      "value": "Raw crafting material from ore nodes."
+    },
+    {
+      "key": "OreChunk01_name",
+      "value": "Ore Chunk"
+    },
+    {
+      "key": "Pickaxe01_desc",
+      "value": "Used to mine rocks and ore nodes."
+    },
+    {
+      "key": "Pickaxe01_name",
+      "value": "Copper Pickaxe"
+    },
+    {
+      "key": "quest.sample_farmer_work.desc",
+      "value": "Harvest 5 onions and bring them back to the farmer."
+    },
+    {
+      "key": "quest.sample_farmer_work.objective.collect_onion",
+      "value": "Harvest onions"
+    },
+    {
+      "key": "quest.sample_farmer_work.title",
+      "value": "First Farm Job"
+    },
+    {
+      "key": "recipe.furnace.copper_bar.desc",
+      "value": "A GED-normalized crafting recipe."
+    },
+    {
+      "key": "recipe.furnace.copper_bar.name",
+      "value": "Copper Bar (Furnace)"
+    },
+    {
+      "key": "recipe.furnace.gold_bar.desc",
+      "value": "A GED-normalized crafting recipe."
+    },
+    {
+      "key": "recipe.furnace.gold_bar.name",
+      "value": "Gold Bar (Furnace)"
+    },
+    {
+      "key": "recipe.furnace.iron_bar.desc",
+      "value": "A GED-normalized crafting recipe."
+    },
+    {
+      "key": "recipe.furnace.iron_bar.name",
+      "value": "Iron Bar (Furnace)"
+    },
+    {
+      "key": "recipe.machine.cheese.desc",
+      "value": "A GED-normalized crafting recipe."
+    },
+    {
+      "key": "recipe.machine.cheese.name",
+      "value": "Cheese (Press)"
+    },
+    {
+      "key": "recipe.machine.mayo.desc",
+      "value": "A GED-normalized crafting recipe."
+    },
+    {
+      "key": "recipe.machine.mayo.name",
+      "value": "Mayonnaise (Machine)"
+    },
+    {
+      "key": "recipe.mill.corn_oil.desc",
+      "value": "A GED-normalized crafting recipe."
+    },
+    {
+      "key": "recipe.mill.corn_oil.name",
+      "value": "Corn Oil (Mill)"
+    },
+    {
+      "key": "s5.ai.tip.keep_progressing",
+      "value": "Keep farming, trading, and finishing quests to unlock the next step."
+    },
+    {
+      "key": "s5.ai.tip.rain_waters_crops",
+      "value": "Rain will water crops for you. Use the time for mining or quests."
+    },
+    {
+      "key": "s5.ai.tip.visit_mine_for_materials",
+      "value": "Visit the mine to gather ore and upgrade materials."
+    },
+    {
+      "key": "s5.ai.tip.water_crops",
+      "value": "The sun is out and the field is dry. Water crops before the day ends."
+    },
+    {
+      "key": "s5.story.day01.body",
+      "value": "Welcome to the farm. Check your tools, plant your first seeds, and learn the rhythm of the day."
+    },
+    {
+      "key": "s5.story.day01.title",
+      "value": "First Day on the Farm"
+    },
+    {
+      "key": "s5.story.day03.body",
+      "value": "After a few days, harvest crops, sell produce, and prepare supplies for the next trip."
+    },
+    {
+      "key": "s5.story.day03.title",
+      "value": "Farm Routine"
+    },
+    {
+      "key": "ui.animal.collect",
+      "value": "Collect"
+    },
+    {
+      "key": "ui.animal.feed",
+      "value": "Feed"
+    },
+    {
+      "key": "ui.animal.status.dead",
+      "value": "Dead"
+    },
+    {
+      "key": "ui.animal.status.fed",
+      "value": "Fed"
+    },
+    {
+      "key": "ui.animal.status.hungry",
+      "value": "Hungry"
+    },
+    {
+      "key": "ui.animal.status.product_ready",
+      "value": "Product Ready"
+    },
+    {
+      "key": "ui.bed.sleep",
+      "value": "Sleep"
+    },
+    {
+      "key": "ui.category.accessory",
+      "value": "Accessory"
+    },
+    {
+      "key": "ui.category.animal_product",
+      "value": "Animal Product"
+    },
+    {
+      "key": "ui.category.crop",
+      "value": "Crop"
+    },
+    {
+      "key": "ui.category.food",
+      "value": "Food"
+    },
+    {
+      "key": "ui.category.material",
+      "value": "Material"
+    },
+    {
+      "key": "ui.category.placeable",
+      "value": "Placeable"
+    },
+    {
+      "key": "ui.category.potion",
+      "value": "Potion"
+    },
+    {
+      "key": "ui.category.seed",
+      "value": "Seed"
+    },
+    {
+      "key": "ui.category.tool",
+      "value": "Tool"
+    },
+    {
+      "key": "ui.category.weapon",
+      "value": "Weapon"
+    },
+    {
+      "key": "ui.common.cancel",
+      "value": "Cancel"
+    },
+    {
+      "key": "ui.common.close",
+      "value": "Close"
+    },
+    {
+      "key": "ui.common.equip",
+      "value": "Equip"
+    },
+    {
+      "key": "ui.common.open",
+      "value": "Open"
+    },
+    {
+      "key": "ui.common.sort",
+      "value": "Sort"
+    },
+    {
+      "key": "ui.common.use",
+      "value": "Use"
+    },
+    {
+      "key": "ui.crafting.craft",
+      "value": "Craft"
+    },
+    {
+      "key": "ui.crafting.filter.all",
+      "value": "All"
+    },
+    {
+      "key": "ui.crafting.filter.decor",
+      "value": "Decor"
+    },
+    {
+      "key": "ui.crafting.filter.food",
+      "value": "Food"
+    },
+    {
+      "key": "ui.crafting.filter.other",
+      "value": "Other"
+    },
+    {
+      "key": "ui.crafting.filter.tool",
+      "value": "Tools"
+    },
+    {
+      "key": "ui.crafting.info.title",
+      "value": "Crafting Info"
+    },
+    {
+      "key": "ui.crafting.ingredients",
+      "value": "Required Ingredients"
+    },
+    {
+      "key": "ui.crafting.insufficient",
+      "value": "Missing ingredients"
+    },
+    {
+      "key": "ui.crafting.locked",
+      "value": "Locked"
+    },
+    {
+      "key": "ui.crafting.open",
+      "value": "Crafting"
+    },
+    {
+      "key": "ui.crafting.required_level",
+      "value": "Requires Lv.{0}"
+    },
+    {
+      "key": "ui.crafting.select",
+      "value": "Select"
+    },
+    {
+      "key": "ui.crafting.title",
+      "value": "Crafting"
+    },
+    {
+      "key": "ui.dialogue.default_interaction_line",
+      "value": "What would you like to do?"
+    },
+    {
+      "key": "ui.dialogue.goodbye",
+      "value": "Goodbye"
+    },
+    {
+      "key": "ui.dialogue.talk",
+      "value": "Talk"
+    },
+    {
+      "key": "ui.equipment.infoPlayer",
+      "value": "Character Stats"
+    },
+    {
+      "key": "ui.equipment.NamePlayer",
+      "value": "Name:"
+    },
+    {
+      "key": "ui.hud.backpack",
+      "value": "Backpack"
+    },
+    {
+      "key": "ui.hud.equipment",
+      "value": "Equipment"
+    },
+    {
+      "key": "ui.hud.quest",
+      "value": "Quests"
+    },
+    {
+      "key": "ui.hud.settings",
+      "value": "Settings"
+    },
+    {
+      "key": "ui.interaction.harvest",
+      "value": "Harvest"
+    },
+    {
+      "key": "ui.interaction.need_tool_format",
+      "value": "Needs Tool"
+    },
+    {
+      "key": "ui.interaction.not_ready",
+      "value": "Not Ready"
+    },
+    {
+      "key": "ui.inventory.capacity",
+      "value": "{0}/{1}"
+    },
+    {
+      "key": "ui.inventory.info_title",
+      "value": "Item Info"
+    },
+    {
+      "key": "ui.inventory.money",
+      "value": "Money"
+    },
+    {
+      "key": "ui.inventory.quick_sort",
+      "value": "Quick Sort"
+    },
+    {
+      "key": "ui.inventory.Split",
+      "value": "Split"
+    },
+    {
+      "key": "ui.inventory.title",
+      "value": "Inventory"
+    },
+    {
+      "key": "ui.item.category",
+      "value": "Category"
+    },
+    {
+      "key": "ui.item.description",
+      "value": "Description"
+    },
+    {
+      "key": "ui.item.rarity",
+      "value": "Rarity"
+    },
+    {
+      "key": "ui.item.sell_price",
+      "value": "Sell Price"
+    },
+    {
+      "key": "ui.loading.percent",
+      "value": "{0}%"
+    },
+    {
+      "key": "ui.loading.scene",
+      "value": "Loading scene {0}"
+    },
+    {
+      "key": "ui.loading.scene_name.FarmScene",
+      "value": "Farm"
+    },
+    {
+      "key": "ui.loading.scene_name.MainMenuScene",
+      "value": "Main Menu"
+    },
+    {
+      "key": "ui.loading.scene_name.scene",
+      "value": "Scene"
+    },
+    {
+      "key": "ui.loading.scene_name.TownScene",
+      "value": "Town"
+    },
+    {
+      "key": "ui.loading.tip.1",
+      "value": "Tip: Gather resources and upgrade tools to survive more easily!"
+    },
+    {
+      "key": "ui.loading.tip.2",
+      "value": "Tip: Water crops every day so they keep growing steadily."
+    },
+    {
+      "key": "ui.loading.tip.3",
+      "value": "Tip: Bring the right tool when mining rocks, chopping trees, or cutting weeds."
+    },
+    {
+      "key": "ui.loading.tip.4",
+      "value": "Tip: Check your backpack before leaving the farm so you do not miss key items."
+    },
+    {
+      "key": "ui.loading.tip.5",
+      "value": "Tip: Save often to protect your progress."
+    },
+    {
+      "key": "ui.loading.title",
+      "value": "LOADING..."
+    },
+    {
+      "key": "ui.mainmenu.continue",
+      "value": "Continue"
+    },
+    {
+      "key": "ui.mainmenu.exit",
+      "value": "Exit"
+    },
+    {
+      "key": "ui.mainmenu.new_game",
+      "value": "New Game"
+    },
+    {
+      "key": "ui.mainmenu.saves.back",
+      "value": "Back"
+    },
+    {
+      "key": "ui.mainmenu.saves.empty",
+      "value": "No save files found"
+    },
+    {
+      "key": "ui.mainmenu.saves.title",
+      "value": "Save Files"
+    },
+    {
+      "key": "ui.mainmenu.settings",
+      "value": "Settings"
+    },
+    {
+      "key": "ui.mainmenu.title",
+      "value": "Happy Farm"
+    },
+    {
+      "key": "ui.menu.Equipment",
+      "value": "Equipment"
+    },
+    {
+      "key": "ui.menu.inventory",
+      "value": "Inventory"
+    },
+    {
+      "key": "ui.menu.journal",
+      "value": "Journal"
+    },
+    {
+      "key": "ui.menu.map",
+      "value": "Map"
+    },
+    {
+      "key": "ui.menu.quest",
+      "value": "Quest"
+    },
+    {
+      "key": "ui.menu.settings",
+      "value": "Settings"
+    },
+    {
+      "key": "ui.menu.skills",
+      "value": "Skills"
+    },
+    {
+      "key": "ui.menu.storage",
+      "value": "Storage"
+    },
+    {
+      "key": "ui.player.level",
+      "value": "Lv. {0}"
+    },
+    {
+      "key": "ui.processor.open",
+      "value": "Use Machine"
+    },
+    {
+      "key": "ui.processor.title",
+      "value": "Processor"
+    },
+    {
+      "key": "ui.processor.use",
+      "value": "Use Machine"
+    },
+    {
+      "key": "ui.quest.accept",
+      "value": "Accept Quest"
+    },
+    {
+      "key": "ui.quest.complete",
+      "value": "Complete Quest"
+    },
+    {
+      "key": "ui.quest.completed",
+      "value": "Quest Completed"
+    },
+    {
+      "key": "ui.quest.in_progress",
+      "value": "In Progress"
+    },
+    {
+      "key": "ui.quest.log.empty",
+      "value": "No quests in progress."
+    },
+    {
+      "key": "ui.quest.log.title",
+      "value": "Quest Log"
+    },
+    {
+      "key": "ui.quest.objective",
+      "value": "Objective"
+    },
+    {
+      "key": "ui.quest.offer",
+      "value": "Accept Quest"
+    },
+    {
+      "key": "ui.quest.reward",
+      "value": "Reward"
+    },
+    {
+      "key": "ui.quest.state.completed",
+      "value": "Completed"
+    },
+    {
+      "key": "ui.quest.state.in_progress",
+      "value": "In Progress"
+    },
+    {
+      "key": "ui.quest.state.label.completed",
+      "value": "Completed"
+    },
+    {
+      "key": "ui.quest.state.label.in_progress",
+      "value": "In Progress"
+    },
+    {
+      "key": "ui.quest.state.not_started",
+      "value": "Not Started"
+    },
+    {
+      "key": "ui.quest.view",
+      "value": "View Quest"
+    },
+    {
+      "key": "ui.rarity.common",
+      "value": "Common"
+    },
+    {
+      "key": "ui.rarity.epic",
+      "value": "Epic"
+    },
+    {
+      "key": "ui.rarity.rare",
+      "value": "Rare"
+    },
+    {
+      "key": "ui.rarity.uncommon",
+      "value": "Uncommon"
+    },
+    {
+      "key": "ui.scene.enter",
+      "value": "Enter"
+    },
+    {
+      "key": "ui.settings.audio.master",
+      "value": "Master Volume"
+    },
+    {
+      "key": "ui.settings.audio.music",
+      "value": "Music"
+    },
+    {
+      "key": "ui.settings.audio.sfx",
+      "value": "Sound Effects"
+    },
+    {
+      "key": "ui.settings.close",
+      "value": "Close"
+    },
+    {
+      "key": "ui.settings.default",
+      "value": "Default"
+    },
+    {
+      "key": "ui.settings.fps",
+      "value": "Target FPS"
+    },
+    {
+      "key": "ui.settings.fps.120",
+      "value": "120 FPS"
+    },
+    {
+      "key": "ui.settings.fps.30",
+      "value": "30 FPS"
+    },
+    {
+      "key": "ui.settings.fps.60",
+      "value": "60 FPS"
+    },
+    {
+      "key": "ui.settings.fps.unlimited",
+      "value": "Unlimited"
+    },
+    {
+      "key": "ui.settings.fullscreen",
+      "value": "Fullscreen"
+    },
+    {
+      "key": "ui.settings.interact_key",
+      "value": "Interact Key"
+    },
+    {
+      "key": "ui.settings.lang.en",
+      "value": "English"
+    },
+    {
+      "key": "ui.settings.lang.vi",
+      "value": "Tiếng Việt"
+    },
+    {
+      "key": "ui.settings.language",
+      "value": "Language"
+    },
+    {
+      "key": "ui.settings.main_menu",
+      "value": "Main Menu"
+    },
+    {
+      "key": "ui.settings.quit",
+      "value": "Quit Game"
+    },
+    {
+      "key": "ui.settings.rebind.prompt",
+      "value": "Press a key..."
+    },
+    {
+      "key": "ui.settings.save",
+      "value": "Save"
+    },
+    {
+      "key": "ui.settings.title",
+      "value": "Settings"
+    },
+    {
+      "key": "ui.settings.vsync",
+      "value": "VSync"
+    },
+    {
+      "key": "ui.shop.buy",
+      "value": "Buy"
+    },
+    {
+      "key": "ui.shop.open",
+      "value": "Shop"
+    },
+    {
+      "key": "ui.shop.quick_select",
+      "value": "Quick Select"
+    },
+    {
+      "key": "ui.shop.sell",
+      "value": "Sell"
+    },
+    {
+      "key": "ui.shop.sell_empty_hint",
+      "value": "Choose an item from your inventory to sell."
+    },
+    {
+      "key": "ui.shop.sellable_items",
+      "value": "Sellable Items"
+    },
+    {
+      "key": "ui.shop.title",
+      "value": "{0}'s Shop"
+    },
+    {
+      "key": "ui.shop.total",
+      "value": "Total:"
+    },
+    {
+      "key": "ui.shop.your_inventory",
+      "value": "Your Inventory"
+    },
+    {
+      "key": "ui.stat.attack",
+      "value": "Attack"
+    },
+    {
+      "key": "ui.stat.attack_speed",
+      "value": "Attack Speed"
+    },
+    {
+      "key": "ui.stat.crit_rate",
+      "value": "Crit Rate"
+    },
+    {
+      "key": "ui.stat.defense",
+      "value": "Defense"
+    },
+    {
+      "key": "ui.stat.energy",
+      "value": "Energy"
+    },
+    {
+      "key": "ui.stat.exp",
+      "value": "EXP"
+    },
+    {
+      "key": "ui.stat.hp",
+      "value": "HP"
+    },
+    {
+      "key": "ui.stat.hpmax",
+      "value": "Max HP"
+    },
+    {
+      "key": "ui.stat.speed",
+      "value": "Speed"
+    },
+    {
+      "key": "ui.storage.open",
+      "value": "Open Storage"
+    },
+    {
+      "key": "ui.storage.title",
+      "value": "Storage"
+    },
+    {
+      "key": "ui.time.day",
+      "value": "Day {0}"
+    },
+    {
+      "key": "ui.time.fall",
+      "value": "Fall"
+    },
+    {
+      "key": "ui.time.gold",
+      "value": "Gold"
+    },
+    {
+      "key": "ui.time.spring",
+      "value": "Spring"
+    },
+    {
+      "key": "ui.time.summer",
+      "value": "Summer"
+    },
+    {
+      "key": "ui.time.winter",
+      "value": "Winter"
+    },
+    {
+      "key": "ui.tool.axe",
+      "value": "Axe"
+    },
+    {
+      "key": "ui.tool.fishing_rod",
+      "value": "Fishing Rod"
+    },
+    {
+      "key": "ui.tool.hoe",
+      "value": "Hoe"
+    },
+    {
+      "key": "ui.tool.pickaxe",
+      "value": "Pickaxe"
+    },
+    {
+      "key": "ui.tool.scythe",
+      "value": "Scythe"
+    },
+    {
+      "key": "ui.tool.unknown",
+      "value": "Appropriate Tool"
+    },
+    {
+      "key": "ui.tool.watering_can",
+      "value": "Watering Can"
+    },
+    {
+      "key": "ui.unlock.level_required",
+      "value": "Requires Level {0}"
+    },
+    {
+      "key": "ui.unlock.quest_required",
+      "value": "Complete required quest first"
+    },
+    {
+      "key": "world.animal.chicken.desc",
+      "value": "A farm animal that must be fed daily to keep producing."
+    },
+    {
+      "key": "world.animal.chicken.name",
+      "value": "Chicken"
+    },
+    {
+      "key": "world.animal.cow.desc",
+      "value": "A farm animal that must be fed daily to keep producing."
+    },
+    {
+      "key": "world.animal.cow.name",
+      "value": "Cow"
+    },
+    {
+      "key": "world.crop.corn.desc",
+      "value": "A crop unlocked at Lv.11 that must be watered daily to grow."
+    },
+    {
+      "key": "world.crop.corn.name",
+      "value": "Corn Crop"
+    },
+    {
+      "key": "world.crop.fall.pumpkin.desc",
+      "value": "Pumpkin growing in the field. Needs daily watering and thrives during Fall."
+    },
+    {
+      "key": "world.crop.fall.pumpkin.name",
+      "value": "Pumpkin"
+    },
+    {
+      "key": "world.crop.fall.wheat.desc",
+      "value": "A fall crop that must be watered daily to grow."
+    },
+    {
+      "key": "world.crop.fall.wheat.name",
+      "value": "Wheat Crop"
+    },
+    {
+      "key": "world.crop.potato.desc",
+      "value": "A crop unlocked at Lv.2 that must be watered daily to grow."
+    },
+    {
+      "key": "world.crop.potato.name",
+      "value": "Potato Crop"
+    },
+    {
+      "key": "world.crop.spring.asparagus.desc",
+      "value": "Asparagus growing in the field. Needs daily watering and thrives during Spring."
+    },
+    {
+      "key": "world.crop.spring.asparagus.name",
+      "value": "Asparagus"
+    },
+    {
+      "key": "world.crop.spring.lettuce.desc",
+      "value": "Lettuce growing in the field. Needs daily watering and thrives during Spring."
+    },
+    {
+      "key": "world.crop.spring.lettuce.name",
+      "value": "Lettuce"
+    },
+    {
+      "key": "world.crop.spring.potato.desc",
+      "value": "A spring crop that must be watered daily to grow."
+    },
+    {
+      "key": "world.crop.spring.potato.name",
+      "value": "Potato Crop"
+    },
+    {
+      "key": "world.crop.spring.strawberry.desc",
+      "value": "A spring crop that must be watered daily to grow."
+    },
+    {
+      "key": "world.crop.spring.strawberry.name",
+      "value": "Strawberry Crop"
+    },
+    {
+      "key": "world.crop.spring.turnip.desc",
+      "value": "A spring crop that must be watered daily to grow."
+    },
+    {
+      "key": "world.crop.spring.turnip.name",
+      "value": "Turnip Crop"
+    },
+    {
+      "key": "world.crop.strawberry.desc",
+      "value": "A crop unlocked at Lv.15 that must be watered daily to grow."
+    },
+    {
+      "key": "world.crop.strawberry.name",
+      "value": "Strawberry Crop"
+    },
+    {
+      "key": "world.crop.summer.corn.desc",
+      "value": "A summer crop that must be watered daily to grow."
+    },
+    {
+      "key": "world.crop.summer.corn.name",
+      "value": "Corn Crop"
+    },
+    {
+      "key": "world.crop.summer.tomato.desc",
+      "value": "A summer crop that must be watered daily to grow."
+    },
+    {
+      "key": "world.crop.summer.tomato.name",
+      "value": "Tomato Crop"
+    },
+    {
+      "key": "world.crop.tomato.desc",
+      "value": "A crop unlocked at Lv.7 that must be watered daily to grow."
+    },
+    {
+      "key": "world.crop.tomato.name",
+      "value": "Tomato Crop"
+    },
+    {
+      "key": "world.crop.turnip.desc",
+      "value": "A crop unlocked at Lv.1 that must be watered daily to grow."
+    },
+    {
+      "key": "world.crop.turnip.name",
+      "value": "Turnip Crop"
+    },
+    {
+      "key": "world.crop.wheat.desc",
+      "value": "A crop unlocked at Lv.4 that must be watered daily to grow."
+    },
+    {
+      "key": "world.crop.wheat.name",
+      "value": "Wheat Crop"
+    },
+    {
+      "key": "world.crop.winter.spinach.desc",
+      "value": "Spinach growing in the field. Needs daily watering and thrives during Winter."
+    },
+    {
+      "key": "world.crop.winter.spinach.name",
+      "value": "Spinach"
+    },
+    {
+      "key": "world.node.copper.desc",
+      "value": "A resource node that requires Pickaxe tier 1 and returns after roughly 5 days."
+    },
+    {
+      "key": "world.node.copper.name",
+      "value": "Copper Node"
+    },
+    {
+      "key": "world.node.gold.desc",
+      "value": "A resource node requiring Pickaxe tier 3 or higher."
+    },
+    {
+      "key": "world.node.gold.name",
+      "value": "Gold Node"
+    },
+    {
+      "key": "world.node.iron.desc",
+      "value": "A resource node requiring Pickaxe tier 2 or higher."
+    },
+    {
+      "key": "world.node.iron.name",
+      "value": "Iron Node"
+    },
+    {
+      "key": "world.node.rock.desc",
+      "value": "A resource node requiring Pickaxe tier 1 or higher."
+    },
+    {
+      "key": "world.node.rock.name",
+      "value": "Rock"
+    },
+    {
+      "key": "world.tree.apple.desc",
+      "value": "A perennial tree that fruits in Fall and can also be chopped for wood."
+    },
+    {
+      "key": "world.tree.apple.name",
+      "value": "Apple Tree"
+    },
+    {
+      "key": "world.tree.maple.desc",
+      "value": "A lumber tree that can be chopped with an Axe tier 1 or higher."
+    },
+    {
+      "key": "world.tree.maple.name",
+      "value": "Maple"
+    },
+    {
+      "key": "world.tree.oak.desc",
+      "value": "A lumber tree that can be chopped with an Axe tier 2 or higher."
+    },
+    {
+      "key": "world.tree.oak.name",
+      "value": "Oak"
+    },
+    {
+      "key": "world.tree.pine.desc",
+      "value": "A lumber tree that can be chopped with an Axe tier 1 or higher."
+    },
+    {
+      "key": "world.tree.pine.name",
+      "value": "Pine"
+    },
+    {
+      "key": "world.utility.bed.basic.desc",
+      "value": "Sleep to end the day and fully restore stamina and health before the next morning."
+    },
+    {
+      "key": "world.utility.bed.basic.name",
+      "value": "Wooden Bed"
+    },
+    {
+      "key": "world.utility.sprinkler.t1.desc",
+      "value": "A basic sprinkler that waters a small area at the start of each day."
+    },
+    {
+      "key": "world.utility.sprinkler.t1.name",
+      "value": "Sprinkler T1"
+    },
+    {
+      "key": "world.utility.sprinkler.t2.desc",
+      "value": "An upgraded sprinkler that covers a wider area each morning."
+    },
+    {
+      "key": "world.utility.sprinkler.t2.name",
+      "value": "Sprinkler T2"
+    }
   ]
 }
