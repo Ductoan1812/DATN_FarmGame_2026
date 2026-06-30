@@ -66,12 +66,46 @@ public class CraftingService
             foreach (var recipe in recipes)
             {
                 if (recipe == null) continue;
+                if (!IsRecipeValid(recipe)) continue;
                 recipeViews.Add(BuildRecipeView(crafter, recipe));
             }
         }
 
         return new CraftingViewData(crafter, station, recipeViews);
     }
+
+    // A recipe is only shown if it can actually produce something and every
+    // listed ingredient resolves to a real item. This hides recipes whose
+    // item references are missing/dangling so the UI never renders blank rows.
+    private static bool IsRecipeValid(RecipeData recipe)
+    {
+        if (recipe == null) return false;
+
+        bool hasValidOutput = false;
+        if (recipe.outputs != null)
+        {
+            foreach (var output in recipe.outputs)
+            {
+                if (output?.item == null) continue;
+                hasValidOutput = true;
+                break;
+            }
+        }
+
+        if (!hasValidOutput) return false;
+
+        if (recipe.ingredients != null)
+        {
+            foreach (var ingredient in recipe.ingredients)
+            {
+                if (ingredient != null && ingredient.amount > 0 && ingredient.item == null)
+                    return false;
+            }
+        }
+
+        return true;
+    }
+
 
     private CraftingRecipeViewData BuildRecipeView(EntityRuntime crafter, RecipeData recipe)
     {

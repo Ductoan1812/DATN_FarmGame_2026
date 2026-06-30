@@ -39,6 +39,8 @@ public class ShopPanelUI : MonoBehaviour
     [SerializeField] private Button sellButton;
     [SerializeField] private int visibleSellSlots = 30;
 
+    private const string ExternalWindowId = "shop";
+
     private readonly List<GameObject> spawnedObjects = new();
     private readonly List<GameObject> spawnedSellCartRows = new();
     private readonly Dictionary<EntityRuntime, SellCartEntry> sellCart = new();
@@ -49,6 +51,7 @@ public class ShopPanelUI : MonoBehaviour
     private bool listenersRegistered;
     private ShopViewData currentView;
     private ShopItemViewData selectedSellItem;
+    private UIController _uiController;
 
     private void OnEnable()
     {
@@ -77,6 +80,7 @@ public class ShopPanelUI : MonoBehaviour
         }
 
         UnregisterListeners();
+        _uiController?.CloseExternalExclusiveWindow(ExternalWindowId);
     }
 
     private void OnShopView(ShopViewPublish e)
@@ -272,6 +276,9 @@ public class ShopPanelUI : MonoBehaviour
 
     private void Show()
     {
+        ResolveUIController();
+        _uiController?.OpenExternalExclusiveWindow(ExternalWindowId);
+
         if (panel != null) panel.SetActive(true);
         else gameObject.SetActive(true);
     }
@@ -287,6 +294,16 @@ public class ShopPanelUI : MonoBehaviour
 
         if (panel != null) panel.SetActive(false);
         else gameObject.SetActive(false);
+
+        _uiController?.CloseExternalExclusiveWindow(ExternalWindowId);
+    }
+
+    private void ResolveUIController()
+    {
+        if (_uiController != null) return;
+        _uiController = GetComponentInParent<UIController>(true);
+        if (_uiController == null)
+            _uiController = FindAnyObjectByType<UIController>(FindObjectsInactive.Include);
     }
 
     private void SetTitle()

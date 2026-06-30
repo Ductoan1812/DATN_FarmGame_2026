@@ -15,11 +15,11 @@ MonoBehaviour:
   id: item_crop_grape
   keyName: item.crop.grape.name
   descKey: item.crop.grape.desc
-  icon: {fileID: 6669101765221594657, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
+  icon: {fileID: -5660904872717903664, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
   category: 3
   maxStack: 99
   buyPrice: 0
-  sellPrice: 68
+  sellPrice: 110
   baseStats:
     baseStats: []
   placementRule:
@@ -31,3 +31,4 @@ MonoBehaviour:
   references:
     version: 2
     RefIds: []
+

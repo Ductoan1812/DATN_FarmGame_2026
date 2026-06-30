@@ -3,7 +3,7 @@ using UnityEngine;
 [DefaultExecutionOrder(-90)]
 public class InteractionPreviewSystem : MonoBehaviour
 {
-    [SerializeField] private float scanRange = 1f;
+    [SerializeField] private float scanRange = 1.35f;
     [SerializeField] private float scanInterval = 0.08f;
     [SerializeField] private bool autoCreateWorldHint = true;
 

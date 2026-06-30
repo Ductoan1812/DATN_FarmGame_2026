@@ -132,12 +132,14 @@ public class DiaryUI : MonoBehaviour
         isVisible = true;
         panel.SetActive(true);
         RefreshContent();
+        FindAnyObjectByType<UIController>()?.OpenExternalExclusiveWindow("diary");
     }
 
     private void Hide()
     {
         isVisible = false;
         panel.SetActive(false);
+        FindAnyObjectByType<UIController>()?.CloseExternalExclusiveWindow("diary");
     }
 
     private void RefreshContent()

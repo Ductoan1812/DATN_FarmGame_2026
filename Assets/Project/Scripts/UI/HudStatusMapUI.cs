@@ -15,6 +15,8 @@ public class HudStatusMapUI : MonoBehaviour
 
     private void OnEnable()
     {
+        LocalizationManager.LocalizationReady += OnLocalizationChanged;
+        LocalizationManager.LanguageChanged += OnLocalizationChanged;
         EnsureBasicLayout();
         TrySubscribe();
         ResolveRefs();
@@ -44,6 +46,9 @@ public class HudStatusMapUI : MonoBehaviour
 
     private void OnDisable()
     {
+        LocalizationManager.LocalizationReady -= OnLocalizationChanged;
+        LocalizationManager.LanguageChanged -= OnLocalizationChanged;
+
         if (subscribedBus == null) return;
 
         subscribedBus.Unsubscribe<GameTimeChangedPublish>(OnGameTimeChanged);
@@ -54,6 +59,11 @@ public class HudStatusMapUI : MonoBehaviour
         subscribedBus.Unsubscribe<GameReadyPublish>(OnGameReady);
         subscribedBus.Unsubscribe<StatsChangedPublish>(OnStatsChanged);
         subscribedBus = null;
+    }
+
+    private void OnLocalizationChanged()
+    {
+        RefreshDate();
     }
 
     private void OnGameTimeChanged(GameTimeChangedPublish _)
@@ -161,7 +171,7 @@ public class HudStatusMapUI : MonoBehaviour
 
         var statusPanel = CreatePanel("StatusPanel", root, new Vector2(0f, 0f), new Vector2(0.62f, 1f), new Vector2(0f, 0.5f), Vector2.zero, new Vector2(-8f, 0f), new Color(0.86f, 0.56f, 0.22f, 0.90f));
         ConfigureVertical(statusPanel, 3f, new RectOffset(12, 12, 6, 6));
-        dateText = CreateStatusRow(statusPanel, "DateText", "D", "Ngày 1 - Xuân");
+        dateText = CreateStatusRow(statusPanel, "DateText", "D", FormatDate(1, Season.Spring));
         timeText = CreateStatusRow(statusPanel, "TimeText", "T", "06:00 AM");
         moneyText = CreateStatusRow(statusPanel, "MoneyText", "$", "0");
 
@@ -187,13 +197,9 @@ public class HudStatusMapUI : MonoBehaviour
     {
         if (dateText == null) return;
 
-        if (timeManager == null)
-        {
-            dateText.text = "Ngày 1 - Xuân";
-            return;
-        }
-
-        dateText.text = $"Ngày {timeManager.Day} - {SeasonName(timeManager.Season)}";
+        int day = timeManager != null ? timeManager.Day : 1;
+        Season season = timeManager != null ? timeManager.Season : Season.Spring;
+        dateText.text = FormatDate(day, season);
     }
 
     private void RefreshTime()
@@ -225,7 +231,26 @@ public class HudStatusMapUI : MonoBehaviour
         moneyText.text = money.ToString("N0");
     }
 
-    private static string SeasonName(Season season)
+    private static string FormatDate(int day, Season season)
+    {
+        string dayText = LocalizeFormat(LocalizationKeys.UiTimeDay, $"Ngày {day}", day);
+        string seasonText = Localize(SeasonKey(season), SeasonNameFallback(season));
+        return $"{dayText} - {seasonText}";
+    }
+
+    private static string SeasonKey(Season season)
+    {
+        return season switch
+        {
+            Season.Spring => LocalizationKeys.UiTimeSpring,
+            Season.Summer => LocalizationKeys.UiTimeSummer,
+            Season.Fall => LocalizationKeys.UiTimeFall,
+            Season.Winter => LocalizationKeys.UiTimeWinter,
+            _ => string.Empty
+        };
+    }
+
+    private static string SeasonNameFallback(Season season)
     {
         return season switch
         {
@@ -235,6 +260,26 @@ public class HudStatusMapUI : MonoBehaviour
             Season.Winter => "Đông",
             _ => season.ToString()
         };
+    }
+
+    private static string Localize(string key, string fallback)
+    {
+        var localization = LocalizationManager.Instance;
+        if (localization == null || !localization.IsReady || string.IsNullOrWhiteSpace(key))
+            return fallback;
+
+        var value = localization.GetText(key);
+        return string.IsNullOrWhiteSpace(value) ? fallback : value;
+    }
+
+    private static string LocalizeFormat(string key, string fallback, params object[] args)
+    {
+        var localization = LocalizationManager.Instance;
+        if (localization == null || !localization.IsReady || string.IsNullOrWhiteSpace(key))
+            return fallback;
+
+        var value = localization.GetText(key, args);
+        return string.IsNullOrWhiteSpace(value) ? fallback : value;
     }
 
     private static TMP_Text CreateStatusRow(Transform parent, string valueName, string prefix, string value)

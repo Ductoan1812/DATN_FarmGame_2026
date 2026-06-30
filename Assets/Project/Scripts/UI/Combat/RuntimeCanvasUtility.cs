@@ -61,10 +61,6 @@ public static class RuntimeCanvasUtility
         if (defaultUiSprite != null)
             return defaultUiSprite;
 
-        defaultUiSprite = Resources.GetBuiltinResource<Sprite>("UI/Skin/UISprite.psd");
-        if (defaultUiSprite != null)
-            return defaultUiSprite;
-
         defaultUiSprite = Sprite.Create(
             Texture2D.whiteTexture,
             new Rect(0f, 0f, Texture2D.whiteTexture.width, Texture2D.whiteTexture.height),

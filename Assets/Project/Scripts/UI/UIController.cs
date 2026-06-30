@@ -72,6 +72,7 @@ public class UIController : MonoBehaviour
     private bool runtimeInitialized;
     private bool hasMenuStateSnapshot;
     private bool menuStateSnapshot;
+    private PlayerControler _cachedPlayer;
 
     /// <summary>Fired khi một window được mở. Truyền id của window đó.</summary>
     public event Action<string> WindowOpened;
@@ -635,13 +636,17 @@ public class UIController : MonoBehaviour
     {
         UpdateMenuButtonVisibility();
 
-        if (hotbarRoot == null)
-            return;
-
         bool hasExternalWindowOpen = externalExclusiveWindows.Count > 0;
         bool isBackpackOpen = IsEntryWindowOpen(backpackWindowId);
         bool anyFunctionalWindowOpen = IsAnyFunctionalWindowOpen();
         bool menuOpen = IsMenuOpen();
+
+        // Block player input khi có bất kỳ UI nào đang mở
+        bool isUIBlocking = menuOpen || anyFunctionalWindowOpen || hasExternalWindowOpen;
+        UpdatePlayerInput(!isUIBlocking);
+
+        if (hotbarRoot == null)
+            return;
 
         bool showHotbar;
         if (!hideHotbarWhenWindowOpen)
@@ -657,6 +662,15 @@ public class UIController : MonoBehaviour
 
         if (hotbarRoot.activeSelf != showHotbar)
             hotbarRoot.SetActive(showHotbar);
+    }
+
+    private void UpdatePlayerInput(bool enabled)
+    {
+        if (_cachedPlayer == null)
+            _cachedPlayer = FindAnyObjectByType<PlayerControler>();
+
+        if (_cachedPlayer != null)
+            _cachedPlayer.InputEnabled = enabled;
     }
 
     private void UpdateMenuButtonVisibility()

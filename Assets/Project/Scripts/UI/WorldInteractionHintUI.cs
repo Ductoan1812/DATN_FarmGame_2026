@@ -100,6 +100,9 @@ public class WorldInteractionHintUI : MonoBehaviour
     {
         string key = preview.actionTextKey;
 
+        if (IsNpcPreview(preview))
+            return -1;
+
         // Harvest — logic riêng
         if (key == "ui.interaction.harvest")
         {
@@ -136,8 +139,30 @@ public class WorldInteractionHintUI : MonoBehaviour
         if (key.Contains("portal") || key.Contains("enter") || key.Contains("door")) return 13; // Portal
         if (key.Contains("feed") || key.Contains("animal")) return 14; // Bowl
 
-        // Dialogue / NPC / bất kỳ key lạ → icon "..." (7)
-        return 7;
+        // Bất kỳ key lạ nào khác không cần icon nổi.
+        return -1;
+    }
+
+    private static bool IsNpcPreview(InteractionPreviewData preview)
+    {
+        var data = preview.target?.entityData;
+        if (data == null) return false;
+
+        if (LooksLikeNpcKey(data.id) || LooksLikeNpcKey(data.keyName))
+            return true;
+
+        var ownerGo = preview.target.Owner?.GameObject;
+        var role = ownerGo != null ? ownerGo.GetComponentInParent<WorldEntityPrefabRole>() : null;
+        return role != null && role.role == WorldEntityPrefabRoleType.Npc;
+    }
+
+    private static bool LooksLikeNpcKey(string value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+            return false;
+
+        return value.StartsWith("npc_", System.StringComparison.OrdinalIgnoreCase)
+            || value.StartsWith("npc.", System.StringComparison.OrdinalIgnoreCase);
     }
 
     private static int ToolToIndex(ToolType tool) => tool switch

@@ -13,13 +13,12 @@ MonoBehaviour:
   m_Name: seed_cabbage_crop
   m_EditorClassIdentifier: 
   id: seed_cabbage_crop
-  keyName: seed_cabbage_crop
-  descKey: 
-  icon: {fileID: 2450159384689198845, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
+  keyName: item.seed.cabbage.name
+  descKey: item.seed.cabbage.desc
   category: 2
   maxStack: 99
-  buyPrice: 0
-  sellPrice: 0
+  buyPrice: 55
+  sellPrice: 13
   baseStats:
     baseStats: []
   placementRule:
@@ -39,3 +38,4 @@ MonoBehaviour:
         placedEntityData: {fileID: 11400000, guid: a8d5d39081bba464a84fe84f48d1b1ea, type: 2}
         centerTile: 1
         animTrigger: PutDown
+

@@ -19,12 +19,12 @@ MonoBehaviour:
     requiredLevel: 8
     requiredQuestIds: []
   ingredients:
-  - item: {fileID: 11400000, guid: 2304ceb092dee4242b2caf0a817319ed, type: 2}
-    amount: 4
-  - item: {fileID: 11400000, guid: 7db4d99b9c6a94f418335f71ba3db895, type: 2}
-    amount: 2
-  - item: {fileID: 11400000, guid: 2bcbc6fa4fcc213459e5ccbd90e9e50e, type: 2}
-    amount: 1
+  - item: {fileID: 11400000, guid: a6e2d77e9ec04e34aa6d6e67bbd44a41, type: 2}
+    amount: 10
+  - item: {fileID: 11400000, guid: f0d281dba74dc0b43a3e6179c493a903, type: 2}
+    amount: 5
+  - item: {fileID: 11400000, guid: fc32c8d6dc69c8a4b9595e2bacaa340b, type: 2}
+    amount: 3
   outputs:
   - item: {fileID: 11400000, guid: 9f485a15faf2ca948b8ee1880ca7dba2, type: 2}
     amount: 1

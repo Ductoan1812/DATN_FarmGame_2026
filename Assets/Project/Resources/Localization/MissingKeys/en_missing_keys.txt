@@ -1,5 +1,0 @@
-UiMenuJournal
-UiMenuQuest
-Ui.Menu.Map
-UI.Menu.Skills
-UiMenuSettings

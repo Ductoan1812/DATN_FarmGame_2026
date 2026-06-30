@@ -9,6 +9,7 @@ using UnityEngine;
 /// </summary>
 public class ActionRuntime : IModuleRuntime, IHandleEvent<PrimaryActionEvent>, IHandleEvent<SecondaryActionEvent>
 {
+    private const float InteractionScanRange = 1.35f;
     private readonly ActionModule _data;
 
     public ActionRuntime(ActionModule data)
@@ -52,7 +53,7 @@ public class ActionRuntime : IModuleRuntime, IHandleEvent<PrimaryActionEvent>, I
         if (actorGO == null) return;
 
         // Tìm entity gần nhất có IInteractable
-        var target = EntityScanSystem.GetClosest(actorGO, 1f);
+        var target = EntityScanSystem.GetClosest(actorGO, InteractionScanRange);
         if (target == null)
         {
             Debug.Log("[ActionRuntime] Không có target tương tác phía trước.");

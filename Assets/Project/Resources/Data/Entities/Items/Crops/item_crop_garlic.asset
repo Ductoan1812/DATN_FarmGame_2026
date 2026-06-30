@@ -15,11 +15,11 @@ MonoBehaviour:
   id: item_crop_garlic
   keyName: item.crop.garlic.name
   descKey: item.crop.garlic.desc
-  icon: {fileID: 2154695631969314900, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
+  icon: {fileID: -7240731250556930267, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
   category: 3
   maxStack: 99
   buyPrice: 0
-  sellPrice: 42
+  sellPrice: 70
   baseStats:
     baseStats: []
   placementRule:
@@ -31,3 +31,4 @@ MonoBehaviour:
   references:
     version: 2
     RefIds: []
+

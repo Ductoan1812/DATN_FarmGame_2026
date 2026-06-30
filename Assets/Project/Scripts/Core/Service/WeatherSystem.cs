@@ -2,9 +2,6 @@ using UnityEngine;
 
 /// <summary>
 /// Owns current weather state and generates next-day weather.
-/// Rain auto-waters all plowed cells after WateredTileTracker.ResetAll().
-/// GameManager calls ApplyRainForNewDay() explicitly inside DayChangedPublish handler
-/// to guarantee order: ResetAll() → ApplyRainForNewDay().
 /// </summary>
 public class WeatherSystem
 {
@@ -38,13 +35,4 @@ public class WeatherSystem
         SetWeather(next);
     }
 
-    /// <summary>
-    /// If today is Rainy, water all plowed cells.
-    /// Must be called AFTER WateredTileTracker.ResetAll() for the new day.
-    /// </summary>
-    public void ApplyRainForNewDay(WateredTileTracker tracker)
-    {
-        if (CurrentWeather == WeatherType.Rainy)
-            tracker?.WaterAllPlowedCells();
-    }
 }

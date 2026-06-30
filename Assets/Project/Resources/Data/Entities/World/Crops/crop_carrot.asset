@@ -13,9 +13,8 @@ MonoBehaviour:
   m_Name: crop_carrot
   m_EditorClassIdentifier: 
   id: crop_carrot
-  keyName: crop_carrot
-  descKey: 
-  icon: {fileID: 0}
+  keyName: world.crop.carrot.name
+  descKey: world.crop.carrot.desc
   category: 9
   maxStack: 1
   buyPrice: 0
@@ -35,10 +34,6 @@ MonoBehaviour:
   - rid: 8196223262934696303
   - rid: 8196223262934696304
   - rid: 8196223262934696305
-  - rid: 8196223262934696306
-  - rid: 8196223262934696307
-  - rid: 8196223262934696308
-  - rid: 8196223262934696309
   references:
     version: 2
     RefIds:
@@ -72,7 +67,7 @@ MonoBehaviour:
       type: {class: HarvestModule, ns: , asm: Assembly-CSharp}
       data:
         harvestTool: 3
-        allowHandHarvest: 0
+        allowHandHarvest: 1
         additionalHarvestTools: []
         dropMode: 0
         harvestCausesDamage: 0
@@ -85,31 +80,8 @@ MonoBehaviour:
         harvestDrops:
         - item: {fileID: 11400000, guid: 4baa751bb04637c4b88af04b34224b27, type: 2}
           minAmount: 1
-          maxAmount: 2
+          maxAmount: 1
           dropChance: 1
         deathDrops: []
         includeHarvestDropsOnDestroyWhenHarvestable: 0
-    - rid: 8196223262934696306
-      type: {class: HealthModule, ns: , asm: Assembly-CSharp}
-      data:
-        canTakeDamage: 1
-    - rid: 8196223262934696307
-      type: {class: ResourceHitReactionModule, ns: , asm: Assembly-CSharp}
-      data:
-        reactOnlyToHarvestTool: 1
-        useProceduralMotion: 1
-        flashColor: {r: 1, g: 0.9, b: 0.65, a: 1}
-        flashDuration: 0.12
-        scalePunch: 0.12
-        rotationPunch: 4
-        animatorHitTrigger: Hit
-    - rid: 8196223262934696308
-      type: {class: ExpRewardModule, ns: , asm: Assembly-CSharp}
-      data:
-        rewardExp: 10
-        sourceType: 1
-        requireKiller: 1
-    - rid: 8196223262934696309
-      type: {class: MortalModule, ns: , asm: Assembly-CSharp}
-      data:
-        destroyDelay: 0
+

@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: marker_treewood_ 3
   m_EditorClassIdentifier: 
   markerKind: 6
-  objectType: 2
+  objectType: 10
   entityData: {fileID: 11400000, guid: d5742761419e5c245ae14c40dd314f5d, type: 2}
   savePolicy: 0
   spawnGroupId: 
   spawnPointId: 
   respawnMinutes: 0
   initialAmount: 1
-  bypassPlacementValidation: 0
+  bypassPlacementValidation: 1
   stageSpawnMode: 2
   fixedStartStageIndex: 0
   randomStartStageMin: 3

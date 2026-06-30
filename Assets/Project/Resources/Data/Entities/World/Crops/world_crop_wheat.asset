@@ -39,10 +39,6 @@ MonoBehaviour:
   - rid: 8196223262934696268
   - rid: 8196223262934696269
   - rid: 8196223262934696270
-  - rid: 8196223262934696271
-  - rid: 8196223262934696272
-  - rid: 8196223262934696273
-  - rid: 8196223262934696274
   - rid: 5278706057718792228
   - rid: 5278706057718792229
   references:
@@ -91,10 +87,10 @@ MonoBehaviour:
     - rid: 8196223262934696269
       type: {class: HarvestModule, ns: , asm: Assembly-CSharp}
       data:
-        harvestTool: 0
+        harvestTool: 3
         allowHandHarvest: 1
         additionalHarvestTools: []
-        dropMode: 1
+        dropMode: 0
         harvestCausesDamage: 0
         destroyOnHarvest: 1
         oneHitDestroy: 0
@@ -105,30 +101,8 @@ MonoBehaviour:
         harvestDrops:
         - item: {fileID: 11400000, guid: a4e338a7fb8b1a944a0d397836b1cbf6, type: 2}
           minAmount: 1
-          maxAmount: 2
+          maxAmount: 1
           dropChance: 1
         deathDrops: []
         includeHarvestDropsOnDestroyWhenHarvestable: 0
-    - rid: 8196223262934696271
-      type: {class: HealthModule, ns: , asm: Assembly-CSharp}
-      data:
-        canTakeDamage: 1
-    - rid: 8196223262934696272
-      type: {class: ResourceHitReactionModule, ns: , asm: Assembly-CSharp}
-      data:
-        reactOnlyToHarvestTool: 1
-        useProceduralMotion: 1
-        flashColor: {r: 1, g: 0.9, b: 0.65, a: 1}
-        flashDuration: 0.12
-        scalePunch: 0.12
-        rotationPunch: 4
-        animatorHitTrigger: Hit
-    - rid: 8196223262934696273
-      type: {class: ExpRewardModule, ns: , asm: Assembly-CSharp}
-      data:
-        rewardExp: 4
-        sourceType: 1
-        requireKiller: 0
-    - rid: 8196223262934696274
-      type: {class: MortalModule, ns: , asm: Assembly-CSharp}
-      data: 
+

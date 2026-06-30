@@ -15,11 +15,11 @@ MonoBehaviour:
   id: item_crop_pea
   keyName: item.crop.pea.name
   descKey: item.crop.pea.desc
-  icon: {fileID: -2881612921432387127, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
+  icon: {fileID: -5525426233839129252, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
   category: 3
   maxStack: 99
   buyPrice: 0
-  sellPrice: 30
+  sellPrice: 48
   baseStats:
     baseStats: []
   placementRule:
@@ -31,3 +31,4 @@ MonoBehaviour:
   references:
     version: 2
     RefIds: []
+

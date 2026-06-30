@@ -9,6 +9,74 @@
       "value": "Rìu khởi đầu"
     },
     {
+      "key": "Item",
+      "value": "Vật phẩm"
+    },
+    {
+      "key": "Item_resource_coal",
+      "value": "Than đá"
+    },
+    {
+      "key": "Item_resource_copper_bar",
+      "value": "Thỏi đồng"
+    },
+    {
+      "key": "Item_resource_copper_ore",
+      "value": "Quặng đồng"
+    },
+    {
+      "key": "Item_resource_gem_emerald",
+      "value": "Ngọc lục bảo"
+    },
+    {
+      "key": "Item_resource_gem_ruby",
+      "value": "Hồng ngọc"
+    },
+    {
+      "key": "Item_resource_gem_sapphire",
+      "value": "Lam ngọc"
+    },
+    {
+      "key": "Item_resource_gold_bar",
+      "value": "Thỏi vàng"
+    },
+    {
+      "key": "Item_resource_iron_bar",
+      "value": "Thỏi sắt"
+    },
+    {
+      "key": "NPC",
+      "value": "NPC"
+    },
+    {
+      "key": "OreChunk01_desc",
+      "value": "Nguyên liệu thô có thể dùng để chế tạo."
+    },
+    {
+      "key": "OreChunk01_name",
+      "value": "Mảnh quặng"
+    },
+    {
+      "key": "Pickaxe01_desc",
+      "value": "Dùng để khai thác đá và quặng."
+    },
+    {
+      "key": "Pickaxe01_name",
+      "value": "Cuốc chím đồng"
+    },
+    {
+      "key": "apple_fruittree_desc",
+      "value": "Cây ăn quả cho thu hoạch táo theo mùa."
+    },
+    {
+      "key": "apple_fruittree_name",
+      "value": "Cây táo"
+    },
+    {
+      "key": "dialogue.line.key",
+      "value": "Hãy chọn một hành động để tiếp tục tương tác."
+    },
+    {
       "key": "dialogue.sample.choice.accept_work",
       "value": "Được, tôi nhận việc này."
     },
@@ -35,14 +103,6 @@
     {
       "key": "dialogue.sample.farmer.old_friend",
       "value": "Lại gặp cậu rồi. Nếu rảnh thì tôi có vài việc ngoài đồng cần nhờ."
-    },
-    {
-      "key": "enemy_01_desc",
-      "value": "Sinh vật lang thang, sẽ tấn công khi lại gần."
-    },
-    {
-      "key": "enemy_01_name",
-      "value": "Quái đồng hoang"
     },
     {
       "key": "enemy.boar.desc",
@@ -117,6 +177,14 @@
       "value": "Rắn Đồng"
     },
     {
+      "key": "enemy_01_desc",
+      "value": "Sinh vật lang thang, sẽ tấn công khi lại gần."
+    },
+    {
+      "key": "enemy_01_name",
+      "value": "Quái đồng hoang"
+    },
+    {
       "key": "item.animal.butter.desc",
       "value": "Chế biến từ sữa. Dùng nấu bánh và risotto."
     },
@@ -173,20 +241,20 @@
       "value": "Sữa"
     },
     {
-      "key": "item.animal.truffle_oil.desc",
-      "value": "Dầu tinh tế từ nấm truffle. Giá trị cực cao."
-    },
-    {
-      "key": "item.animal.truffle_oil.name",
-      "value": "Dầu Truffle"
-    },
-    {
       "key": "item.animal.truffle.desc",
       "value": "Lợn rừng đào lên. Nấm hiếm giá trị cực cao."
     },
     {
       "key": "item.animal.truffle.name",
       "value": "Nấm Truffle"
+    },
+    {
+      "key": "item.animal.truffle_oil.desc",
+      "value": "Dầu tinh tế từ nấm truffle. Giá trị cực cao."
+    },
+    {
+      "key": "item.animal.truffle_oil.name",
+      "value": "Dầu Truffle"
     },
     {
       "key": "item.animal.wool.desc",
@@ -206,7 +274,7 @@
     },
     {
       "key": "item.crop.asparagus.desc",
-      "value": "Măng tây thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ."
+      "value": "Măng tây thu hoạch từ ruộng. Cây mở khóa càng cao thì giá trị bán càng tốt."
     },
     {
       "key": "item.crop.asparagus.name",
@@ -214,7 +282,7 @@
     },
     {
       "key": "item.crop.bean.desc",
-      "value": "Đậu que thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ."
+      "value": "Đậu que thu hoạch từ ruộng. Cây mở khóa càng cao thì giá trị bán càng tốt."
     },
     {
       "key": "item.crop.bean.name",
@@ -222,7 +290,7 @@
     },
     {
       "key": "item.crop.blueberry.desc",
-      "value": "Việt quất thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ."
+      "value": "Việt quất thu hoạch từ ruộng. Cây mở khóa càng cao thì giá trị bán càng tốt."
     },
     {
       "key": "item.crop.blueberry.name",
@@ -230,7 +298,7 @@
     },
     {
       "key": "item.crop.cabbage.desc",
-      "value": "Bắp cải thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ."
+      "value": "Bắp cải thu hoạch từ ruộng. Cây mở khóa càng cao thì giá trị bán càng tốt."
     },
     {
       "key": "item.crop.cabbage.name",
@@ -238,7 +306,7 @@
     },
     {
       "key": "item.crop.carrot.desc",
-      "value": "Cà rốt thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ."
+      "value": "Cà rốt thu hoạch từ ruộng. Cây mở khóa càng cao thì giá trị bán càng tốt."
     },
     {
       "key": "item.crop.carrot.name",
@@ -246,11 +314,11 @@
     },
     {
       "key": "item.crop.cauliflower.desc",
-      "value": "Súp lơ trắng thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ."
+      "value": "Bông cải trắng thu hoạch từ ruộng. Cây mở khóa càng cao thì giá trị bán càng tốt."
     },
     {
       "key": "item.crop.cauliflower.name",
-      "value": "Súp lơ trắng"
+      "value": "Bông cải trắng"
     },
     {
       "key": "item.crop.cherry.desc",
@@ -262,15 +330,15 @@
     },
     {
       "key": "item.crop.corn.desc",
-      "value": "Ngô tươi dùng để bán, nấu ăn hoặc giao nhiệm vụ."
+      "value": "Bắp ngô thu hoạch từ ruộng. Cây mở khóa càng cao thì giá trị bán càng tốt."
     },
     {
       "key": "item.crop.corn.name",
-      "value": "Ngô"
+      "value": "Bắp ngô"
     },
     {
       "key": "item.crop.cucumber.desc",
-      "value": "Dưa leo thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ."
+      "value": "Dưa leo thu hoạch từ ruộng. Cây mở khóa càng cao thì giá trị bán càng tốt."
     },
     {
       "key": "item.crop.cucumber.name",
@@ -350,7 +418,7 @@
     },
     {
       "key": "item.crop.garlic.desc",
-      "value": "Tỏi thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ."
+      "value": "Tỏi thu hoạch từ ruộng. Cây mở khóa càng cao thì giá trị bán càng tốt."
     },
     {
       "key": "item.crop.garlic.name",
@@ -358,7 +426,7 @@
     },
     {
       "key": "item.crop.grape.desc",
-      "value": "Nho thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ."
+      "value": "Nho thu hoạch từ ruộng. Cây mở khóa càng cao thì giá trị bán càng tốt."
     },
     {
       "key": "item.crop.grape.name",
@@ -366,15 +434,15 @@
     },
     {
       "key": "item.crop.melon.desc",
-      "value": "Dưa lưới thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ."
+      "value": "Dưa gang thu hoạch từ ruộng. Cây mở khóa càng cao thì giá trị bán càng tốt."
     },
     {
       "key": "item.crop.melon.name",
-      "value": "Dưa lưới"
+      "value": "Dưa gang"
     },
     {
       "key": "item.crop.pea.desc",
-      "value": "Đậu Hà Lan thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ."
+      "value": "Đậu Hà Lan thu hoạch từ ruộng. Cây mở khóa càng cao thì giá trị bán càng tốt."
     },
     {
       "key": "item.crop.pea.name",
@@ -390,27 +458,27 @@
     },
     {
       "key": "item.crop.pepper_green.desc",
-      "value": "Ớt xanh thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ."
+      "value": "Ớt chuông xanh thu hoạch từ ruộng. Cây mở khóa càng cao thì giá trị bán càng tốt."
     },
     {
       "key": "item.crop.pepper_green.name",
-      "value": "Ớt xanh"
+      "value": "Ớt chuông xanh"
     },
     {
       "key": "item.crop.pepper_red.desc",
-      "value": "Ớt đỏ thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ."
+      "value": "Ớt chuông đỏ thu hoạch từ ruộng. Cây mở khóa càng cao thì giá trị bán càng tốt."
     },
     {
       "key": "item.crop.pepper_red.name",
-      "value": "Ớt đỏ"
+      "value": "Ớt chuông đỏ"
     },
     {
       "key": "item.crop.pepper_yellow.desc",
-      "value": "Ớt vàng thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ."
+      "value": "Ớt chuông vàng thu hoạch từ ruộng. Cây mở khóa càng cao thì giá trị bán càng tốt."
     },
     {
       "key": "item.crop.pepper_yellow.name",
-      "value": "Ớt vàng"
+      "value": "Ớt chuông vàng"
     },
     {
       "key": "item.crop.plum.desc",
@@ -422,15 +490,15 @@
     },
     {
       "key": "item.crop.potato.desc",
-      "value": "Khoai Tây tươi dùng để bán, nấu ăn hoặc giao nhiệm vụ."
+      "value": "Khoai tây thu hoạch từ ruộng. Cây mở khóa càng cao thì giá trị bán càng tốt."
     },
     {
       "key": "item.crop.potato.name",
-      "value": "Khoai Tây"
+      "value": "Khoai tây"
     },
     {
       "key": "item.crop.radish.desc",
-      "value": "Củ cải đỏ thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ."
+      "value": "Củ cải đỏ thu hoạch từ ruộng. Cây mở khóa càng cao thì giá trị bán càng tốt."
     },
     {
       "key": "item.crop.radish.name",
@@ -502,11 +570,11 @@
     },
     {
       "key": "item.crop.strawberry.desc",
-      "value": "Dâu Tây tươi dùng để bán, nấu ăn hoặc giao nhiệm vụ."
+      "value": "Dâu tây thu hoạch từ ruộng. Cây mở khóa càng cao thì giá trị bán càng tốt."
     },
     {
       "key": "item.crop.strawberry.name",
-      "value": "Dâu Tây"
+      "value": "Dâu tây"
     },
     {
       "key": "item.crop.summer.blueberry.desc",
@@ -574,11 +642,11 @@
     },
     {
       "key": "item.crop.tomato.desc",
-      "value": "Cà Chua tươi dùng để bán, nấu ăn hoặc giao nhiệm vụ."
+      "value": "Cà chua thu hoạch từ ruộng. Cây mở khóa càng cao thì giá trị bán càng tốt."
     },
     {
       "key": "item.crop.tomato.name",
-      "value": "Cà Chua"
+      "value": "Cà chua"
     },
     {
       "key": "item.crop.tree.apple.desc",
@@ -614,19 +682,19 @@
     },
     {
       "key": "item.crop.turnip.desc",
-      "value": "Củ Cải tươi dùng để bán, nấu ăn hoặc giao nhiệm vụ."
+      "value": "Củ cải trắng thu hoạch từ ruộng. Cây mở khóa càng cao thì giá trị bán càng tốt."
     },
     {
       "key": "item.crop.turnip.name",
-      "value": "Củ Cải"
+      "value": "Củ cải trắng"
     },
     {
       "key": "item.crop.wheat.desc",
-      "value": "Lúa Mì tươi dùng để bán, nấu ăn hoặc giao nhiệm vụ."
+      "value": "Lúa mì thu hoạch từ ruộng. Cây mở khóa càng cao thì giá trị bán càng tốt."
     },
     {
       "key": "item.crop.wheat.name",
-      "value": "Lúa Mì"
+      "value": "Lúa mì"
     },
     {
       "key": "item.crop.winter.beet.desc",
@@ -686,7 +754,7 @@
     },
     {
       "key": "item.crop.yam.desc",
-      "value": "Khoai mỡ thu hoạch từ ruộng. Dùng để bán, nấu ăn hoặc nộp nhiệm vụ."
+      "value": "Khoai mỡ thu hoạch từ ruộng. Cây mở khóa càng cao thì giá trị bán càng tốt."
     },
     {
       "key": "item.crop.yam.name",
@@ -1261,20 +1329,20 @@
       "value": "Dầu ngô"
     },
     {
-      "key": "item.mat.crystal_shard.desc",
-      "value": "Pha lê đã qua tinh chế. Dùng chế tạo."
-    },
-    {
-      "key": "item.mat.crystal_shard.name",
-      "value": "Mảnh pha lê"
-    },
-    {
       "key": "item.mat.crystal.desc",
       "value": "Đá quý hiếm. Dùng làm cột thu lôi và đèn."
     },
     {
       "key": "item.mat.crystal.name",
       "value": "Pha lê"
+    },
+    {
+      "key": "item.mat.crystal_shard.desc",
+      "value": "Pha lê đã qua tinh chế. Dùng chế tạo."
+    },
+    {
+      "key": "item.mat.crystal_shard.name",
+      "value": "Mảnh pha lê"
     },
     {
       "key": "item.mat.emerald.desc",
@@ -1379,6 +1447,14 @@
     {
       "key": "item.mat.ruby.name",
       "value": "Hồng ngọc"
+    },
+    {
+      "key": "item.mat.slime_liquid.desc",
+      "value": "Dịch dẻo thu được khi đánh bại slime. Dùng để chế tạo thiết bị tưới tự động."
+    },
+    {
+      "key": "item.mat.slime_liquid.name",
+      "value": "Dịch slime"
     },
     {
       "key": "item.mat.softwood.desc",
@@ -1541,6 +1617,22 @@
       "value": "Bù nhìn"
     },
     {
+      "key": "item.place.sprinkler.t1.desc",
+      "value": "Đặt xuống để tự động tưới một vùng nhỏ vào mỗi buổi sáng."
+    },
+    {
+      "key": "item.place.sprinkler.t1.name",
+      "value": "Sprinkler T1"
+    },
+    {
+      "key": "item.place.sprinkler.t2.desc",
+      "value": "Đặt xuống để tự động tưới một khu lớn hơn vào mỗi buổi sáng."
+    },
+    {
+      "key": "item.place.sprinkler.t2.name",
+      "value": "Sprinkler T2"
+    },
+    {
       "key": "item.place.sprinkler_t1.desc",
       "value": "Tưới tự động 4 ô xung quanh mỗi sáng."
     },
@@ -1563,22 +1655,6 @@
     {
       "key": "item.place.sprinkler_t3.name",
       "value": "Sprinkler cao cấp"
-    },
-    {
-      "key": "item.place.sprinkler.t1.desc",
-      "value": "Đặt xuống để tự động tưới một vùng nhỏ vào mỗi buổi sáng."
-    },
-    {
-      "key": "item.place.sprinkler.t1.name",
-      "value": "Sprinkler T1"
-    },
-    {
-      "key": "item.place.sprinkler.t2.desc",
-      "value": "Đặt xuống để tự động tưới một khu lớn hơn vào mỗi buổi sáng."
-    },
-    {
-      "key": "item.place.sprinkler.t2.name",
-      "value": "Sprinkler T2"
     },
     {
       "key": "item.place.stone_fence.desc",
@@ -1637,6 +1713,30 @@
       "value": "Sữa"
     },
     {
+      "key": "item.seed.asparagus.desc",
+      "value": "Mở khóa cấp 5. Mất khoảng 7 ngày tưới nước để trưởng thành. Sau lần đầu, cây cho thu lại mỗi 3 ngày."
+    },
+    {
+      "key": "item.seed.asparagus.name",
+      "value": "Hạt giống Măng tây"
+    },
+    {
+      "key": "item.seed.bean.desc",
+      "value": "Mở khóa cấp 4. Mất khoảng 6 ngày tưới nước để trưởng thành. Sau lần đầu, cây cho thu lại mỗi 3 ngày."
+    },
+    {
+      "key": "item.seed.bean.name",
+      "value": "Hạt giống Đậu que"
+    },
+    {
+      "key": "item.seed.blueberry.desc",
+      "value": "Mở khóa cấp 7. Mất khoảng 9 ngày tưới nước để trưởng thành. Sau lần đầu, cây cho thu lại mỗi 4 ngày."
+    },
+    {
+      "key": "item.seed.blueberry.name",
+      "value": "Hạt giống Việt quất"
+    },
+    {
       "key": "item.seed.brech_woodtree.desc",
       "value": "Hạt giống trồng cây bạch dương lấy gỗ."
     },
@@ -1645,12 +1745,44 @@
       "value": "Hạt giống bạch dương"
     },
     {
+      "key": "item.seed.cabbage.desc",
+      "value": "Mở khóa cấp 4. Mất khoảng 6 ngày tưới nước để trưởng thành."
+    },
+    {
+      "key": "item.seed.cabbage.name",
+      "value": "Hạt giống Bắp cải"
+    },
+    {
+      "key": "item.seed.carrot.desc",
+      "value": "Mở khóa cấp 2. Mất khoảng 4 ngày tưới nước để trưởng thành."
+    },
+    {
+      "key": "item.seed.carrot.name",
+      "value": "Hạt giống Cà rốt"
+    },
+    {
+      "key": "item.seed.cauliflower.desc",
+      "value": "Mở khóa cấp 6. Mất khoảng 7 ngày tưới nước để trưởng thành."
+    },
+    {
+      "key": "item.seed.cauliflower.name",
+      "value": "Hạt giống Bông cải trắng"
+    },
+    {
       "key": "item.seed.corn.desc",
-      "value": "Mở bán từ Lv.11. Cây trưởng thành sau khoảng 9 ngày được tưới. Sau lần thu hoạch đầu, cây cho thu hoạch lại sau 4 ngày."
+      "value": "Mở khóa cấp 5. Mất khoảng 8 ngày tưới nước để trưởng thành. Sau lần đầu, cây cho thu lại mỗi 4 ngày."
     },
     {
       "key": "item.seed.corn.name",
-      "value": "Hạt Giống Ngô"
+      "value": "Hạt giống Bắp ngô"
+    },
+    {
+      "key": "item.seed.cucumber.desc",
+      "value": "Mở khóa cấp 3. Mất khoảng 6 ngày tưới nước để trưởng thành. Sau lần đầu, cây cho thu lại mỗi 3 ngày."
+    },
+    {
+      "key": "item.seed.cucumber.name",
+      "value": "Hạt giống Dưa leo"
     },
     {
       "key": "item.seed.fall.broccoli.desc",
@@ -1725,6 +1857,30 @@
       "value": "Hạt Giống Lúa Mì"
     },
     {
+      "key": "item.seed.garlic.desc",
+      "value": "Mở khóa cấp 3. Mất khoảng 5 ngày tưới nước để trưởng thành."
+    },
+    {
+      "key": "item.seed.garlic.name",
+      "value": "Hạt giống Tỏi"
+    },
+    {
+      "key": "item.seed.grape.desc",
+      "value": "Mở khóa cấp 9. Mất khoảng 9 ngày tưới nước để trưởng thành. Sau lần đầu, cây cho thu lại mỗi 4 ngày."
+    },
+    {
+      "key": "item.seed.grape.name",
+      "value": "Hạt giống Nho"
+    },
+    {
+      "key": "item.seed.melon.desc",
+      "value": "Mở khóa cấp 8. Mất khoảng 8 ngày tưới nước để trưởng thành."
+    },
+    {
+      "key": "item.seed.melon.name",
+      "value": "Hạt giống Dưa gang"
+    },
+    {
       "key": "item.seed.oak_woodtree.desc",
       "value": "Hạt giống trồng cây sồi lấy gỗ."
     },
@@ -1733,12 +1889,52 @@
       "value": "Hạt giống sồi"
     },
     {
+      "key": "item.seed.pea.desc",
+      "value": "Mở khóa cấp 3. Mất khoảng 6 ngày tưới nước để trưởng thành. Sau lần đầu, cây cho thu lại mỗi 3 ngày."
+    },
+    {
+      "key": "item.seed.pea.name",
+      "value": "Hạt giống Đậu Hà Lan"
+    },
+    {
+      "key": "item.seed.pepper_green.desc",
+      "value": "Mở khóa cấp 4. Mất khoảng 6 ngày tưới nước để trưởng thành. Sau lần đầu, cây cho thu lại mỗi 3 ngày."
+    },
+    {
+      "key": "item.seed.pepper_green.name",
+      "value": "Hạt giống Ớt chuông xanh"
+    },
+    {
+      "key": "item.seed.pepper_red.desc",
+      "value": "Mở khóa cấp 5. Mất khoảng 7 ngày tưới nước để trưởng thành. Sau lần đầu, cây cho thu lại mỗi 3 ngày."
+    },
+    {
+      "key": "item.seed.pepper_red.name",
+      "value": "Hạt giống Ớt chuông đỏ"
+    },
+    {
+      "key": "item.seed.pepper_yellow.desc",
+      "value": "Mở khóa cấp 6. Mất khoảng 7 ngày tưới nước để trưởng thành. Sau lần đầu, cây cho thu lại mỗi 3 ngày."
+    },
+    {
+      "key": "item.seed.pepper_yellow.name",
+      "value": "Hạt giống Ớt chuông vàng"
+    },
+    {
       "key": "item.seed.potato.desc",
-      "value": "Mở bán từ Lv.2. Cây trưởng thành sau khoảng 5 ngày được tưới."
+      "value": "Mở khóa cấp 2. Mất khoảng 5 ngày tưới nước để trưởng thành."
     },
     {
       "key": "item.seed.potato.name",
-      "value": "Hạt Giống Khoai Tây"
+      "value": "Hạt giống Khoai tây"
+    },
+    {
+      "key": "item.seed.radish.desc",
+      "value": "Mở khóa cấp 2. Mất khoảng 5 ngày tưới nước để trưởng thành."
+    },
+    {
+      "key": "item.seed.radish.name",
+      "value": "Hạt giống Củ cải đỏ"
     },
     {
       "key": "item.seed.spring.asparagus.desc",
@@ -1806,11 +2002,11 @@
     },
     {
       "key": "item.seed.strawberry.desc",
-      "value": "Mở bán từ Lv.15. Cây trưởng thành sau khoảng 8 ngày được tưới. Sau lần thu hoạch đầu, cây cho thu hoạch lại sau 3 ngày."
+      "value": "Mở khóa cấp 7. Mất khoảng 8 ngày tưới nước để trưởng thành. Sau lần đầu, cây cho thu lại mỗi 3 ngày."
     },
     {
       "key": "item.seed.strawberry.name",
-      "value": "Hạt Giống Dâu Tây"
+      "value": "Hạt giống Dâu tây"
     },
     {
       "key": "item.seed.summer.blueberry.desc",
@@ -1878,11 +2074,11 @@
     },
     {
       "key": "item.seed.tomato.desc",
-      "value": "Mở bán từ Lv.7. Cây trưởng thành sau khoảng 7 ngày được tưới. Sau lần thu hoạch đầu, cây cho thu hoạch lại sau 3 ngày."
+      "value": "Mở khóa cấp 4. Mất khoảng 7 ngày tưới nước để trưởng thành. Sau lần đầu, cây cho thu lại mỗi 3 ngày."
     },
     {
       "key": "item.seed.tomato.name",
-      "value": "Hạt Giống Cà Chua"
+      "value": "Hạt giống Cà chua"
     },
     {
       "key": "item.seed.tree.apple.desc",
@@ -1918,19 +2114,19 @@
     },
     {
       "key": "item.seed.turnip.desc",
-      "value": "Mở bán từ Lv.1. Cây trưởng thành sau khoảng 4 ngày được tưới."
+      "value": "Mở khóa cấp 1. Mất khoảng 3 ngày tưới nước để trưởng thành."
     },
     {
       "key": "item.seed.turnip.name",
-      "value": "Hạt Giống Củ Cải"
+      "value": "Hạt giống Củ cải trắng"
     },
     {
       "key": "item.seed.wheat.desc",
-      "value": "Mở bán từ Lv.4. Cây trưởng thành sau khoảng 4 ngày được tưới."
+      "value": "Mở khóa cấp 1. Mất khoảng 4 ngày tưới nước để trưởng thành."
     },
     {
       "key": "item.seed.wheat.name",
-      "value": "Hạt Giống Lúa Mì"
+      "value": "Hạt giống Lúa mì"
     },
     {
       "key": "item.seed.winter.beet.desc",
@@ -1987,6 +2183,14 @@
     {
       "key": "item.seed.winter.winter_flower.name",
       "value": "Hạt hoa tuyết"
+    },
+    {
+      "key": "item.seed.yam.desc",
+      "value": "Mở khóa cấp 6. Mất khoảng 6 ngày tưới nước để trưởng thành."
+    },
+    {
+      "key": "item.seed.yam.name",
+      "value": "Hạt giống Khoai mỡ"
     },
     {
       "key": "item.tool.axe.t1.desc",
@@ -2165,12 +2369,48 @@
       "value": "Bình tưới Vàng"
     },
     {
+      "key": "item.weapon.sword.t1.desc",
+      "value": "Thanh kiếm cơ bản dùng để tự vệ trước quái vật."
+    },
+    {
+      "key": "item.weapon.sword.t1.name",
+      "value": "Kiếm gỉ sét"
+    },
+    {
       "key": "m1.portal.farm_to_town.name",
       "value": "Cổng đến Thị trấn"
     },
     {
+      "key": "m1.portal.mine_to_town.name",
+      "value": "Cổng về Thị trấn"
+    },
+    {
+      "key": "m1.portal.town_to_farm.name",
+      "value": "Cổng đến Nông trại"
+    },
+    {
+      "key": "m1.portal.town_to_mine.name",
+      "value": "Cổng đến Hầm mỏ"
+    },
+    {
       "key": "m3.animal.chicken.name",
       "value": "Gà"
+    },
+    {
+      "key": "m3.bed.desc",
+      "value": "Ngủ để hồi phục thể lực và sang ngày mới."
+    },
+    {
+      "key": "m3.bed.name",
+      "value": "Giường ngủ"
+    },
+    {
+      "key": "m3.portal.desc",
+      "value": "Bước vào để di chuyển sang khu vực khác."
+    },
+    {
+      "key": "m3.portal.name",
+      "value": "Cổng dịch chuyển"
     },
     {
       "key": "m6.recipe.animal_feed.name",
@@ -2437,6 +2677,266 @@
       "value": "Đầu phun tưới nâng cao"
     },
     {
+      "key": "mvp.sprinkler.t1.desc",
+      "value": "Tự động tưới các ô đất xung quanh mỗi sáng."
+    },
+    {
+      "key": "mvp.sprinkler.t1.name",
+      "value": "Vòi tưới cơ bản"
+    },
+    {
+      "key": "mvp.sprinkler.t2.desc",
+      "value": "Tưới được phạm vi rộng hơn mỗi sáng."
+    },
+    {
+      "key": "mvp.sprinkler.t2.name",
+      "value": "Vòi tưới nâng cao"
+    },
+    {
+      "key": "node_BigStone1",
+      "value": "Tảng đá lớn"
+    },
+    {
+      "key": "node_BigStoneEmerald1",
+      "value": "Đá lớn lẫn lục bảo"
+    },
+    {
+      "key": "node_BigStooneSapphire1",
+      "value": "Đá lớn lẫn lam ngọc"
+    },
+    {
+      "key": "node_BigstoneRuby1",
+      "value": "Đá lớn lẫn hồng ngọc"
+    },
+    {
+      "key": "node_Emerald1",
+      "value": "Mạch lục bảo"
+    },
+    {
+      "key": "node_Emerald2",
+      "value": "Mạch lục bảo"
+    },
+    {
+      "key": "node_Emerald3",
+      "value": "Mạch lục bảo"
+    },
+    {
+      "key": "node_Emerald4",
+      "value": "Mạch lục bảo"
+    },
+    {
+      "key": "node_StoneEmerald",
+      "value": "Đá lẫn lục bảo"
+    },
+    {
+      "key": "node_StoneEmerald1",
+      "value": "Đá lẫn lục bảo"
+    },
+    {
+      "key": "node_StoneEmerald2",
+      "value": "Đá lẫn lục bảo"
+    },
+    {
+      "key": "node_StoneEmerald3",
+      "value": "Đá lẫn lục bảo"
+    },
+    {
+      "key": "node_StoneEmerald4",
+      "value": "Đá lẫn lục bảo"
+    },
+    {
+      "key": "node_StoneEmerald6",
+      "value": "Đá lẫn lục bảo"
+    },
+    {
+      "key": "node_StoneSapphire1",
+      "value": "Đá lẫn lam ngọc"
+    },
+    {
+      "key": "node_StoneSapphire2",
+      "value": "Đá lẫn lam ngọc"
+    },
+    {
+      "key": "node_StoneSapphire3",
+      "value": "Đá lẫn lam ngọc"
+    },
+    {
+      "key": "node_StoneSapphire4",
+      "value": "Đá lẫn lam ngọc"
+    },
+    {
+      "key": "node_StoneSapphire5",
+      "value": "Đá lẫn lam ngọc"
+    },
+    {
+      "key": "node_StoneSapphire6",
+      "value": "Đá lẫn lam ngọc"
+    },
+    {
+      "key": "node_biggold1",
+      "value": "Mạch vàng lớn"
+    },
+    {
+      "key": "node_bigiron1",
+      "value": "Mạch sắt lớn"
+    },
+    {
+      "key": "node_gold2",
+      "value": "Mạch vàng"
+    },
+    {
+      "key": "node_gold3",
+      "value": "Mạch vàng"
+    },
+    {
+      "key": "node_gold3_desc",
+      "value": "Điểm tài nguyên cần cuốc chim phù hợp để khai thác quặng vàng."
+    },
+    {
+      "key": "node_gold4",
+      "value": "Mạch vàng"
+    },
+    {
+      "key": "node_gold5",
+      "value": "Mạch vàng"
+    },
+    {
+      "key": "node_gold6",
+      "value": "Mạch vàng"
+    },
+    {
+      "key": "node_iron2",
+      "value": "Mạch sắt"
+    },
+    {
+      "key": "node_iron3",
+      "value": "Mạch sắt"
+    },
+    {
+      "key": "node_iron4",
+      "value": "Mạch sắt"
+    },
+    {
+      "key": "node_iron5",
+      "value": "Mạch sắt"
+    },
+    {
+      "key": "node_iron6",
+      "value": "Mạch sắt"
+    },
+    {
+      "key": "node_ruby1",
+      "value": "Mạch hồng ngọc"
+    },
+    {
+      "key": "node_ruby2",
+      "value": "Mạch hồng ngọc"
+    },
+    {
+      "key": "node_ruby3",
+      "value": "Mạch hồng ngọc"
+    },
+    {
+      "key": "node_ruby4",
+      "value": "Mạch hồng ngọc"
+    },
+    {
+      "key": "node_sapphire1",
+      "value": "Mạch lam ngọc"
+    },
+    {
+      "key": "node_sapphire2",
+      "value": "Mạch lam ngọc"
+    },
+    {
+      "key": "node_sapphire3",
+      "value": "Mạch lam ngọc"
+    },
+    {
+      "key": "node_sapphire4",
+      "value": "Mạch lam ngọc"
+    },
+    {
+      "key": "node_stone10",
+      "value": "Tảng đá"
+    },
+    {
+      "key": "node_stone11",
+      "value": "Tảng đá"
+    },
+    {
+      "key": "node_stone12",
+      "value": "Tảng đá"
+    },
+    {
+      "key": "node_stone8",
+      "value": "Tảng đá"
+    },
+    {
+      "key": "node_stone9",
+      "value": "Tảng đá"
+    },
+    {
+      "key": "node_stoneRuby1",
+      "value": "Đá lẫn hồng ngọc"
+    },
+    {
+      "key": "node_stoneRuby2",
+      "value": "Đá lẫn hồng ngọc"
+    },
+    {
+      "key": "node_stoneRuby3",
+      "value": "Đá lẫn hồng ngọc"
+    },
+    {
+      "key": "node_stoneRuby4",
+      "value": "Đá lẫn hồng ngọc"
+    },
+    {
+      "key": "node_stoneRuby5",
+      "value": "Đá lẫn hồng ngọc"
+    },
+    {
+      "key": "node_stoneRuby6",
+      "value": "Đá lẫn hồng ngọc"
+    },
+    {
+      "key": "npc.crafting.tho_ren.desc",
+      "value": "Thợ rèn làng, chuyên chế tạo và nâng cấp công cụ."
+    },
+    {
+      "key": "npc.crafting.tho_ren.name",
+      "value": "Thợ rèn"
+    },
+    {
+      "key": "npc.farmer.name",
+      "value": "Nông dân"
+    },
+    {
+      "key": "npc.quest.co_gai_lang.desc",
+      "value": "Cô gái trong làng thường giao những nhiệm vụ nhỏ."
+    },
+    {
+      "key": "npc.quest.co_gai_lang.name",
+      "value": "Cô gái làng"
+    },
+    {
+      "key": "npc.shop.bac_ba.desc",
+      "value": "Chủ tiệm nông cụ và hạt giống theo mùa."
+    },
+    {
+      "key": "npc.shop.bac_ba.name",
+      "value": "Bác Ba"
+    },
+    {
+      "key": "npc.villager.static.desc",
+      "value": "Một dân làng đang sinh sống tại đây."
+    },
+    {
+      "key": "npc.villager.static.name",
+      "value": "Dân làng"
+    },
+    {
       "key": "npc_banhang_desc",
       "value": "Xin chào, cậu cần mua bán gì không?"
     },
@@ -2469,18 +2969,6 @@
       "value": "Cô Năm"
     },
     {
-      "key": "npc.farmer.name",
-      "value": "Nông dân"
-    },
-    {
-      "key": "npc.shop.bac_ba.desc",
-      "value": "Chủ tiệm nông cụ và hạt giống theo mùa."
-    },
-    {
-      "key": "npc.shop.bac_ba.name",
-      "value": "Bác Ba"
-    },
-    {
       "key": "ore_node_desc",
       "value": "Có thể khai thác bằng cuốc chím."
     },
@@ -2489,20 +2977,16 @@
       "value": "Mỏ quặng"
     },
     {
-      "key": "OreChunk01_desc",
-      "value": "Nguyên liệu thô có thể dùng để chế tạo."
+      "key": "player.desc",
+      "value": "Nhân vật do bạn điều khiển."
     },
     {
-      "key": "OreChunk01_name",
-      "value": "Mảnh quặng"
+      "key": "player.name",
+      "value": "Nông dân"
     },
     {
-      "key": "Pickaxe01_desc",
-      "value": "Dùng để khai thác đá và quặng."
-    },
-    {
-      "key": "Pickaxe01_name",
-      "value": "Cuốc chím đồng"
+      "key": "quest.description.key",
+      "value": "Chưa có mô tả nhiệm vụ."
     },
     {
       "key": "quest.sample_farmer_work.desc",
@@ -2515,6 +2999,14 @@
     {
       "key": "quest.sample_farmer_work.title",
       "value": "Việc đồng áng đầu tiên"
+    },
+    {
+      "key": "quest.title.key",
+      "value": "Nhiệm vụ"
+    },
+    {
+      "key": "recipe.desc",
+      "value": "Mô tả công thức."
     },
     {
       "key": "recipe.furnace.copper_bar.desc",
@@ -2565,6 +3057,10 @@
       "value": "Dầu ngô (máy xay)"
     },
     {
+      "key": "recipe.name",
+      "value": "Công thức"
+    },
+    {
       "key": "s5.ai.tip.keep_progressing",
       "value": "Tiếp tục trồng trật, giao dịch và hoàn thành nhiệm vụ để mở khóa bước tiếp theo."
     },
@@ -2581,6 +3077,26 @@
       "value": "Trời nắng, đất khô. Tưới cây trước khi hết ngày."
     },
     {
+      "key": "s5.research.day03.title",
+      "value": "Nghiên cứu: Ngày 3"
+    },
+    {
+      "key": "s5.research.day07.title",
+      "value": "Nghiên cứu: Ngày 7"
+    },
+    {
+      "key": "s5.research.day10.title",
+      "value": "Nghiên cứu: Ngày 10"
+    },
+    {
+      "key": "s5.research.day14.title",
+      "value": "Nghiên cứu: Ngày 14"
+    },
+    {
+      "key": "s5.research.day21.title",
+      "value": "Nghiên cứu: Ngày 21"
+    },
+    {
       "key": "s5.story.day01.body",
       "value": "Chào mừng đến nông trại. Kiểm tra công cụ, trồng hạt giống đầu tiên và học nhịp sống hàng ngày."
     },
@@ -2595,6 +3111,30 @@
     {
       "key": "s5.story.day03.title",
       "value": "Nề nếp nông trại"
+    },
+    {
+      "key": "s5.story.day07.title",
+      "value": "Tuần đầu khép lại"
+    },
+    {
+      "key": "s5.story.day10.title",
+      "value": "Bén rễ"
+    },
+    {
+      "key": "s5.story.day14.title",
+      "value": "Hai tuần trên nông trại"
+    },
+    {
+      "key": "s5.story.day21.title",
+      "value": "Trang trại vào guồng"
+    },
+    {
+      "key": "seed_apple_fruitree_desc",
+      "value": "Gieo trồng để nuôi lớn thành cây táo."
+    },
+    {
+      "key": "seed_apple_fruitree_name",
+      "value": "Hạt giống táo"
     },
     {
       "key": "ui.animal.collect",
@@ -2757,12 +3297,12 @@
       "value": "Nói chuyện"
     },
     {
-      "key": "ui.equipment.infoPlayer",
-      "value": "Chỉ số nhân vật"
-    },
-    {
       "key": "ui.equipment.NamePlayer",
       "value": "Tên :"
+    },
+    {
+      "key": "ui.equipment.infoPlayer",
+      "value": "Chỉ số nhân vật"
     },
     {
       "key": "ui.hud.backpack",
@@ -2793,6 +3333,10 @@
       "value": "Chưa sẵn sàng"
     },
     {
+      "key": "ui.inventory.Split",
+      "value": "Chia"
+    },
+    {
       "key": "ui.inventory.capacity",
       "value": "{0}/{1}"
     },
@@ -2807,10 +3351,6 @@
     {
       "key": "ui.inventory.quick_sort",
       "value": "Sắp xếp nhanh"
-    },
-    {
-      "key": "ui.inventory.Split",
-      "value": "Chia"
     },
     {
       "key": "ui.inventory.title",
@@ -2849,12 +3389,12 @@
       "value": "Màn hình chính"
     },
     {
-      "key": "ui.loading.scene_name.scene",
-      "value": "Cảnh"
-    },
-    {
       "key": "ui.loading.scene_name.TownScene",
       "value": "Thị trấn"
+    },
+    {
+      "key": "ui.loading.scene_name.scene",
+      "value": "Cảnh"
     },
     {
       "key": "ui.loading.tip.1",
@@ -3085,6 +3625,30 @@
       "value": "Toàn màn hình"
     },
     {
+      "key": "ui.settings.input.move_down",
+      "value": "Di chuyển xuống"
+    },
+    {
+      "key": "ui.settings.input.move_left",
+      "value": "Di chuyển trái"
+    },
+    {
+      "key": "ui.settings.input.move_right",
+      "value": "Di chuyển phải"
+    },
+    {
+      "key": "ui.settings.input.move_up",
+      "value": "Di chuyển lên"
+    },
+    {
+      "key": "ui.settings.input.primary_action",
+      "value": "Hành động chính"
+    },
+    {
+      "key": "ui.settings.input.secondary_action",
+      "value": "Hành động phụ"
+    },
+    {
       "key": "ui.settings.interact_key",
       "value": "Phím tương tác"
     },
@@ -3113,6 +3677,10 @@
       "value": "Nhấn phím..."
     },
     {
+      "key": "ui.settings.resolution",
+      "value": "Độ phân giải"
+    },
+    {
       "key": "ui.settings.save",
       "value": "Lưu"
     },
@@ -3123,6 +3691,22 @@
     {
       "key": "ui.settings.vsync",
       "value": "Đồng bộ khung hình"
+    },
+    {
+      "key": "ui.settings.window_mode",
+      "value": "Chế độ cửa sổ"
+    },
+    {
+      "key": "ui.settings.window_mode.borderless",
+      "value": "Toàn màn hình viền mỏng"
+    },
+    {
+      "key": "ui.settings.window_mode.fullscreen",
+      "value": "Toàn màn hình độc quyền"
+    },
+    {
+      "key": "ui.settings.window_mode.windowed",
+      "value": "Cửa sổ"
     },
     {
       "key": "ui.shop.buy",
@@ -3281,12 +3865,68 @@
       "value": "Bò"
     },
     {
+      "key": "world.crop.asparagus.desc",
+      "value": "Cây trồng cấp 5, trưởng thành sau khoảng 7 ngày tưới nước. Sau lần đầu, cây cho thu lại mỗi 3 ngày."
+    },
+    {
+      "key": "world.crop.asparagus.name",
+      "value": "Cây Măng tây"
+    },
+    {
+      "key": "world.crop.bean.desc",
+      "value": "Cây trồng cấp 4, trưởng thành sau khoảng 6 ngày tưới nước. Sau lần đầu, cây cho thu lại mỗi 3 ngày."
+    },
+    {
+      "key": "world.crop.bean.name",
+      "value": "Cây Đậu que"
+    },
+    {
+      "key": "world.crop.blueberry.desc",
+      "value": "Cây trồng cấp 7, trưởng thành sau khoảng 9 ngày tưới nước. Sau lần đầu, cây cho thu lại mỗi 4 ngày."
+    },
+    {
+      "key": "world.crop.blueberry.name",
+      "value": "Cây Việt quất"
+    },
+    {
+      "key": "world.crop.cabbage.desc",
+      "value": "Cây trồng cấp 4, trưởng thành sau khoảng 6 ngày tưới nước."
+    },
+    {
+      "key": "world.crop.cabbage.name",
+      "value": "Cây Bắp cải"
+    },
+    {
+      "key": "world.crop.carrot.desc",
+      "value": "Cây trồng cấp 2, trưởng thành sau khoảng 4 ngày tưới nước."
+    },
+    {
+      "key": "world.crop.carrot.name",
+      "value": "Cây Cà rốt"
+    },
+    {
+      "key": "world.crop.cauliflower.desc",
+      "value": "Cây trồng cấp 6, trưởng thành sau khoảng 7 ngày tưới nước."
+    },
+    {
+      "key": "world.crop.cauliflower.name",
+      "value": "Cây Bông cải trắng"
+    },
+    {
       "key": "world.crop.corn.desc",
-      "value": "Cây trồng mở ở Lv.11, cần được tưới mỗi ngày để phát triển."
+      "value": "Cây trồng cấp 5, trưởng thành sau khoảng 8 ngày tưới nước. Sau lần đầu, cây cho thu lại mỗi 4 ngày."
     },
     {
       "key": "world.crop.corn.name",
-      "value": "Cây Ngô"
+      "value": "Cây Bắp ngô"
+    },
+    {
+      "key": "world.crop.cucumber.desc",
+      "value": "Cây trồng cấp 3, trưởng thành sau khoảng 6 ngày tưới nước. Sau lần đầu, cây cho thu lại mỗi 3 ngày."
+    },
+    {
+      "key": "world.crop.cucumber.name",
+      "value": "Cây Dưa leo"
     },
     {
       "key": "world.crop.fall.pumpkin.desc",
@@ -3305,12 +3945,76 @@
       "value": "Cây Lúa Mì"
     },
     {
+      "key": "world.crop.garlic.desc",
+      "value": "Cây trồng cấp 3, trưởng thành sau khoảng 5 ngày tưới nước."
+    },
+    {
+      "key": "world.crop.garlic.name",
+      "value": "Cây Tỏi"
+    },
+    {
+      "key": "world.crop.grape.desc",
+      "value": "Cây trồng cấp 9, trưởng thành sau khoảng 9 ngày tưới nước. Sau lần đầu, cây cho thu lại mỗi 4 ngày."
+    },
+    {
+      "key": "world.crop.grape.name",
+      "value": "Cây Nho"
+    },
+    {
+      "key": "world.crop.melon.desc",
+      "value": "Cây trồng cấp 8, trưởng thành sau khoảng 8 ngày tưới nước."
+    },
+    {
+      "key": "world.crop.melon.name",
+      "value": "Cây Dưa gang"
+    },
+    {
+      "key": "world.crop.pea.desc",
+      "value": "Cây trồng cấp 3, trưởng thành sau khoảng 6 ngày tưới nước. Sau lần đầu, cây cho thu lại mỗi 3 ngày."
+    },
+    {
+      "key": "world.crop.pea.name",
+      "value": "Cây Đậu Hà Lan"
+    },
+    {
+      "key": "world.crop.pepper_green.desc",
+      "value": "Cây trồng cấp 4, trưởng thành sau khoảng 6 ngày tưới nước. Sau lần đầu, cây cho thu lại mỗi 3 ngày."
+    },
+    {
+      "key": "world.crop.pepper_green.name",
+      "value": "Cây Ớt chuông xanh"
+    },
+    {
+      "key": "world.crop.pepper_red.desc",
+      "value": "Cây trồng cấp 5, trưởng thành sau khoảng 7 ngày tưới nước. Sau lần đầu, cây cho thu lại mỗi 3 ngày."
+    },
+    {
+      "key": "world.crop.pepper_red.name",
+      "value": "Cây Ớt chuông đỏ"
+    },
+    {
+      "key": "world.crop.pepper_yellow.desc",
+      "value": "Cây trồng cấp 6, trưởng thành sau khoảng 7 ngày tưới nước. Sau lần đầu, cây cho thu lại mỗi 3 ngày."
+    },
+    {
+      "key": "world.crop.pepper_yellow.name",
+      "value": "Cây Ớt chuông vàng"
+    },
+    {
       "key": "world.crop.potato.desc",
-      "value": "Cây trồng mở ở Lv.2, cần được tưới mỗi ngày để phát triển."
+      "value": "Cây trồng cấp 2, trưởng thành sau khoảng 5 ngày tưới nước."
     },
     {
       "key": "world.crop.potato.name",
-      "value": "Cây Khoai Tây"
+      "value": "Cây Khoai tây"
+    },
+    {
+      "key": "world.crop.radish.desc",
+      "value": "Cây trồng cấp 2, trưởng thành sau khoảng 5 ngày tưới nước."
+    },
+    {
+      "key": "world.crop.radish.name",
+      "value": "Cây Củ cải đỏ"
     },
     {
       "key": "world.crop.spring.asparagus.desc",
@@ -3354,11 +4058,11 @@
     },
     {
       "key": "world.crop.strawberry.desc",
-      "value": "Cây trồng mở ở Lv.15, cần được tưới mỗi ngày để phát triển."
+      "value": "Cây trồng cấp 7, trưởng thành sau khoảng 8 ngày tưới nước. Sau lần đầu, cây cho thu lại mỗi 3 ngày."
     },
     {
       "key": "world.crop.strawberry.name",
-      "value": "Cây Dâu Tây"
+      "value": "Cây Dâu tây"
     },
     {
       "key": "world.crop.summer.corn.desc",
@@ -3378,27 +4082,27 @@
     },
     {
       "key": "world.crop.tomato.desc",
-      "value": "Cây trồng mở ở Lv.7, cần được tưới mỗi ngày để phát triển."
+      "value": "Cây trồng cấp 4, trưởng thành sau khoảng 7 ngày tưới nước. Sau lần đầu, cây cho thu lại mỗi 3 ngày."
     },
     {
       "key": "world.crop.tomato.name",
-      "value": "Cây Cà Chua"
+      "value": "Cây Cà chua"
     },
     {
       "key": "world.crop.turnip.desc",
-      "value": "Cây trồng mở ở Lv.1, cần được tưới mỗi ngày để phát triển."
+      "value": "Cây trồng cấp 1, trưởng thành sau khoảng 3 ngày tưới nước."
     },
     {
       "key": "world.crop.turnip.name",
-      "value": "Cây Củ Cải"
+      "value": "Cây Củ cải trắng"
     },
     {
       "key": "world.crop.wheat.desc",
-      "value": "Cây trồng mở ở Lv.4, cần được tưới mỗi ngày để phát triển."
+      "value": "Cây trồng cấp 1, trưởng thành sau khoảng 4 ngày tưới nước."
     },
     {
       "key": "world.crop.wheat.name",
-      "value": "Cây Lúa Mì"
+      "value": "Cây Lúa mì"
     },
     {
       "key": "world.crop.winter.spinach.desc",
@@ -3407,6 +4111,22 @@
     {
       "key": "world.crop.winter.spinach.name",
       "value": "Rau Chân Vịt"
+    },
+    {
+      "key": "world.crop.yam.desc",
+      "value": "Cây trồng cấp 6, trưởng thành sau khoảng 6 ngày tưới nước."
+    },
+    {
+      "key": "world.crop.yam.name",
+      "value": "Cây Khoai mỡ"
+    },
+    {
+      "key": "world.forage.grass.desc",
+      "value": "Bụi cỏ dại, dọn bằng liềm hoặc bằng tay để lấy xơ cỏ."
+    },
+    {
+      "key": "world.forage.grass.name",
+      "value": "Bụi cỏ"
     },
     {
       "key": "world.node.copper.desc",

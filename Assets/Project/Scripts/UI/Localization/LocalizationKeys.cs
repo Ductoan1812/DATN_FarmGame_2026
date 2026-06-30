@@ -37,6 +37,9 @@ public static class LocalizationKeys
     public const string UiPlayerLevel = "ui.player.level";
 
     public const string UiTimeSpring = "ui.time.spring";
+    public const string UiTimeSummer = "ui.time.summer";
+    public const string UiTimeFall = "ui.time.fall";
+    public const string UiTimeWinter = "ui.time.winter";
     public const string UiTimeDay = "ui.time.day";
     public const string UiTimeGold = "ui.time.gold";
 
@@ -69,6 +72,17 @@ public static class LocalizationKeys
     public const string UiSettingsAudioSfx = "ui.settings.audio.sfx";
     public const string UiSettingsLanguage = "ui.settings.language";
     public const string UiSettingsInteractKey = "ui.settings.interact_key";
+    public const string UiSettingsMoveUp = "ui.settings.input.move_up";
+    public const string UiSettingsMoveDown = "ui.settings.input.move_down";
+    public const string UiSettingsMoveLeft = "ui.settings.input.move_left";
+    public const string UiSettingsMoveRight = "ui.settings.input.move_right";
+    public const string UiSettingsPrimaryAction = "ui.settings.input.primary_action";
+    public const string UiSettingsSecondaryAction = "ui.settings.input.secondary_action";
+    public const string UiSettingsResolution = "ui.settings.resolution";
+    public const string UiSettingsWindowMode = "ui.settings.window_mode";
+    public const string UiSettingsWindowModeWindowed = "ui.settings.window_mode.windowed";
+    public const string UiSettingsWindowModeBorderless = "ui.settings.window_mode.borderless";
+    public const string UiSettingsWindowModeFullscreen = "ui.settings.window_mode.fullscreen";
     public const string UiSettingsFullscreen = "ui.settings.fullscreen";
     public const string UiSettingsVsync = "ui.settings.vsync";
     public const string UiSettingsFps = "ui.settings.fps";

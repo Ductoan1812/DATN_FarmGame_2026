@@ -13,13 +13,12 @@ MonoBehaviour:
   m_Name: seed_cauliflower_crop
   m_EditorClassIdentifier: 
   id: seed_cauliflower_crop
-  keyName: seed_cauliflower_crop
-  descKey: 
-  icon: {fileID: 2684864631225305211, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
+  keyName: item.seed.cauliflower.name
+  descKey: item.seed.cauliflower.desc
   category: 2
   maxStack: 99
-  buyPrice: 0
-  sellPrice: 0
+  buyPrice: 75
+  sellPrice: 18
   baseStats:
     baseStats: []
   placementRule:
@@ -39,3 +38,4 @@ MonoBehaviour:
         placedEntityData: {fileID: 11400000, guid: 829188332b8ea3b45b364130c1b477c1, type: 2}
         centerTile: 1
         animTrigger: PutDown
+

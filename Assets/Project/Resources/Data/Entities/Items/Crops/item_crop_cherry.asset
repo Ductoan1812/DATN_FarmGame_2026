@@ -15,7 +15,7 @@ MonoBehaviour:
   id: item_crop_cherry
   keyName: item.crop.cherry.name
   descKey: item.crop.cherry.desc
-  icon: {fileID: 607833044, guid: 247cdd78657a55546aadfc05332f068c, type: 3}
+  icon: {fileID: 1657305584, guid: 247cdd78657a55546aadfc05332f068c, type: 3}
   category: 3
   maxStack: 99
   buyPrice: 0

@@ -183,12 +183,20 @@ public class PickupNotificationUI : MonoBehaviour
         float elapsed = 0f;
         while (elapsed < SlideSeconds)
         {
+            // Entry có thể bị Destroy giữa chừng (đóng panel, đổi scene, dồn quá nhiều entry...).
+            if (entry == null || canvasGroup == null || rect == null)
+                yield break;
+
             elapsed += Time.unscaledDeltaTime;
             float t = Mathf.Clamp01(elapsed / SlideSeconds);
             canvasGroup.alpha = t;
             rect.anchoredPosition = new Vector2(0f, Mathf.Lerp(startY, 0f, t));
             yield return null;
         }
+
+        if (entry == null || canvasGroup == null || rect == null)
+            yield break;
+
         canvasGroup.alpha = 1f;
         rect.anchoredPosition = Vector2.zero;
 
@@ -197,6 +205,12 @@ public class PickupNotificationUI : MonoBehaviour
         elapsed = 0f;
         while (elapsed < FadeSeconds)
         {
+            if (entry == null || canvasGroup == null)
+            {
+                activeEntries.Remove(entry);
+                yield break;
+            }
+
             elapsed += Time.unscaledDeltaTime;
             canvasGroup.alpha = 1f - Mathf.Clamp01(elapsed / FadeSeconds);
             yield return null;
@@ -206,4 +220,5 @@ public class PickupNotificationUI : MonoBehaviour
         if (entry != null)
             Destroy(entry);
     }
+
 }

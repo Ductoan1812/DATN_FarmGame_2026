@@ -355,6 +355,7 @@ public class MainMenuUI : MonoBehaviour
         mainMenuPanel ??= FindDeepChild(transform, "MainMenuPanel")?.gameObject;
         saveSlotPanel ??= FindDeepChild(transform, "ContinuePanel")?.gameObject;
         settingsPanel ??= FindDeepChild(transform, "SettingsPanel")?.gameObject
+            ?? FindDeepChild(transform, "SettingsWindow")?.gameObject
             ?? FindDeepChild(transform, "Setting Panel")?.gameObject;
 
         logoGame ??= FindDeepChild(transform, "LogoGame")?.GetComponent<RectTransform>();

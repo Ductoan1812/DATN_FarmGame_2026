@@ -13,13 +13,12 @@ MonoBehaviour:
   m_Name: seed_asparagus_crop
   m_EditorClassIdentifier: 
   id: seed_asparagus_crop
-  keyName: seed_asparagus_crop
-  descKey: 
-  icon: {fileID: -3812083719649620342, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
+  keyName: item.seed.asparagus.name
+  descKey: item.seed.asparagus.desc
   category: 2
   maxStack: 99
-  buyPrice: 0
-  sellPrice: 0
+  buyPrice: 130
+  sellPrice: 32
   baseStats:
     baseStats: []
   placementRule:
@@ -39,3 +38,4 @@ MonoBehaviour:
         placedEntityData: {fileID: 11400000, guid: 6fcf60f0078b3f94fa86a66a992d34bb, type: 2}
         centerTile: 1
         animTrigger: PutDown
+

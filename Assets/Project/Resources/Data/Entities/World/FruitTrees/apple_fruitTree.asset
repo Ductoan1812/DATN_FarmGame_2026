@@ -23,9 +23,9 @@ MonoBehaviour:
   baseStats:
     baseStats:
     - statType: 0
-      value: 12
+      value: 25
     - statType: 1
-      value: 12
+      value: 25
   placementRule:
     occupyLayer: 2
     requireTags: 5
@@ -111,8 +111,12 @@ MonoBehaviour:
           minAmount: 2
           maxAmount: 3
           dropChance: 1
-        deathDrops: []
-        includeHarvestDropsOnDestroyWhenHarvestable: 1
+        deathDrops:
+        - item: {fileID: 11400000, guid: f0d281dba74dc0b43a3e6179c493a903, type: 2}
+          minAmount: 3
+          maxAmount: 5
+          dropChance: 1
+        includeHarvestDropsOnDestroyWhenHarvestable: 0
     - rid: 8196223262934696178
       type: {class: HealthModule, ns: , asm: Assembly-CSharp}
       data:

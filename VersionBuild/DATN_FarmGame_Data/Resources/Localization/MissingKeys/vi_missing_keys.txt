@@ -1,0 +1,9 @@
+NPC
+dialogue.line.key
+m1.portal.mine_to_town.name
+m1.portal.town_to_farm.name
+m1.portal.town_to_mine.name
+npc.crafting.tho_ren.name
+npc.quest.co_gai_lang.name
+npc.villager.static.name
+ui.loading.scene_name.MineScene

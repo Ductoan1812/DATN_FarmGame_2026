@@ -15,11 +15,11 @@ MonoBehaviour:
   id: item_crop_cabbage
   keyName: item.crop.cabbage.name
   descKey: item.crop.cabbage.desc
-  icon: {fileID: 2450159384689198845, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
+  icon: {fileID: 947553704, guid: 247cdd78657a55546aadfc05332f068c, type: 3}
   category: 3
   maxStack: 99
   buyPrice: 0
-  sellPrice: 46
+  sellPrice: 90
   baseStats:
     baseStats: []
   placementRule:
@@ -31,3 +31,4 @@ MonoBehaviour:
   references:
     version: 2
     RefIds: []
+

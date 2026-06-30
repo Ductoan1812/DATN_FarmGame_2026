@@ -62,6 +62,12 @@ public class HealthRuntime : IModuleRuntime, IHandleEvent<SpawnedEvent>, IHandle
         }
 
         var harvest = _entity.GetModule<HarvestRuntime>();
+        if (harvest != null && !harvest.CanReceiveDamage(e, out var harvestReason))
+        {
+            Debug.Log($"[HealthRuntime] {_entity.entityData?.keyName} chặn sát thương harvest: {harvestReason}");
+            return;
+        }
+
         if (harvest != null && harvest.TryHandleDamageHarvest(e))
             return;
 

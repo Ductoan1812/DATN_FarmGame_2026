@@ -13,9 +13,8 @@ MonoBehaviour:
   m_Name: crop_pea
   m_EditorClassIdentifier: 
   id: crop_pea
-  keyName: crop_pea
-  descKey: 
-  icon: {fileID: 0}
+  keyName: world.crop.pea.name
+  descKey: world.crop.pea.desc
   category: 9
   maxStack: 1
   buyPrice: 0
@@ -35,10 +34,6 @@ MonoBehaviour:
   - rid: 8196223262934696394
   - rid: 8196223262934696395
   - rid: 8196223262934696396
-  - rid: 8196223262934696397
-  - rid: 8196223262934696398
-  - rid: 8196223262934696399
-  - rid: 8196223262934696400
   references:
     version: 2
     RefIds:
@@ -69,20 +64,20 @@ MonoBehaviour:
           canHarvest: 1
         requiresWater: 1
         wiltSprite: {fileID: -4379983295258734805, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
-        regrowStageIndex: -1
-        harvestGoToStageIndex: -1
-        lastStageLoopToIndex: -1
-        daysToReturnAfterHarvest: -1
+        regrowStageIndex: 5
+        harvestGoToStageIndex: 5
+        lastStageLoopToIndex: 6
+        daysToReturnAfterHarvest: 3
         wiltOnSeasonChange: 1
     - rid: 8196223262934696395
       type: {class: HarvestModule, ns: , asm: Assembly-CSharp}
       data:
         harvestTool: 3
-        allowHandHarvest: 0
+        allowHandHarvest: 1
         additionalHarvestTools: []
         dropMode: 0
         harvestCausesDamage: 0
-        destroyOnHarvest: 1
+        destroyOnHarvest: 0
         oneHitDestroy: 0
         wrongToolPenalty: 0.3
     - rid: 8196223262934696396
@@ -95,27 +90,4 @@ MonoBehaviour:
           dropChance: 1
         deathDrops: []
         includeHarvestDropsOnDestroyWhenHarvestable: 0
-    - rid: 8196223262934696397
-      type: {class: HealthModule, ns: , asm: Assembly-CSharp}
-      data:
-        canTakeDamage: 1
-    - rid: 8196223262934696398
-      type: {class: ResourceHitReactionModule, ns: , asm: Assembly-CSharp}
-      data:
-        reactOnlyToHarvestTool: 1
-        useProceduralMotion: 1
-        flashColor: {r: 1, g: 0.9, b: 0.65, a: 1}
-        flashDuration: 0.12
-        scalePunch: 0.12
-        rotationPunch: 4
-        animatorHitTrigger: Hit
-    - rid: 8196223262934696399
-      type: {class: ExpRewardModule, ns: , asm: Assembly-CSharp}
-      data:
-        rewardExp: 10
-        sourceType: 1
-        requireKiller: 1
-    - rid: 8196223262934696400
-      type: {class: MortalModule, ns: , asm: Assembly-CSharp}
-      data:
-        destroyDelay: 0
+

@@ -12,6 +12,7 @@ public class ExpRewardRuntime : IModuleRuntime, IHandleEvent<DieEvent>
     public void Handle(DieEvent e)
     {
         if (data == null || data.rewardExp <= 0) return;
+        if (ShouldSuppressImmatureHarvestExp(e.entity)) return;
 
         EntityRuntime receiver = e.killer;
         if (receiver == null && data.requireKiller)
@@ -29,4 +30,10 @@ public class ExpRewardRuntime : IModuleRuntime, IHandleEvent<DieEvent>
     public ModuleSaveData ToSaveData() => null;
     public void ApplySaveData(ModuleSaveData save) { }
     public bool Equals(IModuleRuntime other) => other is ExpRewardRuntime;
+
+    private static bool ShouldSuppressImmatureHarvestExp(EntityRuntime source)
+    {
+        var harvest = source?.GetModule<HarvestRuntime>();
+        return harvest != null && harvest.HasGrowthGate() && !harvest.IsReadyForHarvest();
+    }
 }

@@ -13,13 +13,12 @@ MonoBehaviour:
   m_Name: seed_pepper_yellow_crop
   m_EditorClassIdentifier: 
   id: seed_pepper_yellow_crop
-  keyName: seed_pepper_yellow_crop
-  descKey: 
-  icon: {fileID: 777240805763462005, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
+  keyName: item.seed.pepper_yellow.name
+  descKey: item.seed.pepper_yellow.desc
   category: 2
   maxStack: 99
-  buyPrice: 0
-  sellPrice: 0
+  buyPrice: 145
+  sellPrice: 36
   baseStats:
     baseStats: []
   placementRule:
@@ -39,3 +38,4 @@ MonoBehaviour:
         placedEntityData: {fileID: 11400000, guid: 4c9d21ce9e97ec448b8af571522e879d, type: 2}
         centerTile: 1
         animTrigger: PutDown
+

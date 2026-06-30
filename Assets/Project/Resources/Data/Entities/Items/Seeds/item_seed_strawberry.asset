@@ -18,8 +18,8 @@ MonoBehaviour:
   icon: {fileID: 71351524177638284, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
   category: 2
   maxStack: 99
-  buyPrice: 120
-  sellPrice: 0
+  buyPrice: 180
+  sellPrice: 45
   baseStats:
     baseStats: []
   placementRule:
@@ -48,3 +48,4 @@ MonoBehaviour:
         placedEntityData: {fileID: 11400000, guid: 884318d9c40c579448e3434f30ed5a4a, type: 2}
         centerTile: 1
         animTrigger: PutDown
+

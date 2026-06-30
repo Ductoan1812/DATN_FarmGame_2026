@@ -15,7 +15,7 @@ MonoBehaviour:
   id: item_crop_plum
   keyName: item.crop.plum.name
   descKey: item.crop.plum.desc
-  icon: {fileID: 1381839147, guid: 247cdd78657a55546aadfc05332f068c, type: 3}
+  icon: {fileID: -1015306404, guid: 247cdd78657a55546aadfc05332f068c, type: 3}
   category: 3
   maxStack: 99
   buyPrice: 0

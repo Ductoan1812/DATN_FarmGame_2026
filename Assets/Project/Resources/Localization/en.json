@@ -9,6 +9,74 @@
       "value": "Starter Axe"
     },
     {
+      "key": "Item",
+      "value": "Item"
+    },
+    {
+      "key": "Item_resource_coal",
+      "value": "Coal"
+    },
+    {
+      "key": "Item_resource_copper_bar",
+      "value": "Copper Bar"
+    },
+    {
+      "key": "Item_resource_copper_ore",
+      "value": "Copper Ore"
+    },
+    {
+      "key": "Item_resource_gem_emerald",
+      "value": "Emerald"
+    },
+    {
+      "key": "Item_resource_gem_ruby",
+      "value": "Ruby"
+    },
+    {
+      "key": "Item_resource_gem_sapphire",
+      "value": "Sapphire"
+    },
+    {
+      "key": "Item_resource_gold_bar",
+      "value": "Gold Bar"
+    },
+    {
+      "key": "Item_resource_iron_bar",
+      "value": "Iron Bar"
+    },
+    {
+      "key": "NPC",
+      "value": "NPC"
+    },
+    {
+      "key": "OreChunk01_desc",
+      "value": "Raw crafting material from ore nodes."
+    },
+    {
+      "key": "OreChunk01_name",
+      "value": "Ore Chunk"
+    },
+    {
+      "key": "Pickaxe01_desc",
+      "value": "Used to mine rocks and ore nodes."
+    },
+    {
+      "key": "Pickaxe01_name",
+      "value": "Copper Pickaxe"
+    },
+    {
+      "key": "apple_fruittree_desc",
+      "value": "A fruit tree that yields apples each season."
+    },
+    {
+      "key": "apple_fruittree_name",
+      "value": "Apple Tree"
+    },
+    {
+      "key": "dialogue.line.key",
+      "value": "Choose an action to continue interacting."
+    },
+    {
       "key": "dialogue.sample.choice.accept_work",
       "value": "Sure, I will take the job."
     },
@@ -35,14 +103,6 @@
     {
       "key": "dialogue.sample.farmer.old_friend",
       "value": "Good to see you again. I have a bit of field work if you have time."
-    },
-    {
-      "key": "enemy_01_desc",
-      "value": "A roaming creature that attacks nearby players."
-    },
-    {
-      "key": "enemy_01_name",
-      "value": "Field Beast"
     },
     {
       "key": "enemy.boar.desc",
@@ -117,6 +177,14 @@
       "value": "Field Snake"
     },
     {
+      "key": "enemy_01_desc",
+      "value": "A roaming creature that attacks nearby players."
+    },
+    {
+      "key": "enemy_01_name",
+      "value": "Field Beast"
+    },
+    {
       "key": "item.animal.butter.desc",
       "value": "Processed from milk. Used in baking and risotto."
     },
@@ -173,20 +241,20 @@
       "value": "Milk"
     },
     {
-      "key": "item.animal.truffle_oil.desc",
-      "value": "Refined oil from truffles. Extremely high value."
-    },
-    {
-      "key": "item.animal.truffle_oil.name",
-      "value": "Truffle Oil"
-    },
-    {
       "key": "item.animal.truffle.desc",
       "value": "Foraged by pigs. An extremely valuable rare mushroom."
     },
     {
       "key": "item.animal.truffle.name",
       "value": "Truffle"
+    },
+    {
+      "key": "item.animal.truffle_oil.desc",
+      "value": "Refined oil from truffles. Extremely high value."
+    },
+    {
+      "key": "item.animal.truffle_oil.name",
+      "value": "Truffle Oil"
     },
     {
       "key": "item.animal.wool.desc",
@@ -206,7 +274,7 @@
     },
     {
       "key": "item.crop.asparagus.desc",
-      "value": "Asparagus harvested from the field. Useful for selling, cooking, or quest turn-ins."
+      "value": "Asparagus harvested from the field. Higher level crops sell for better value."
     },
     {
       "key": "item.crop.asparagus.name",
@@ -214,15 +282,15 @@
     },
     {
       "key": "item.crop.bean.desc",
-      "value": "Green Bean harvested from the field. Useful for selling, cooking, or quest turn-ins."
+      "value": "Bean harvested from the field. Higher level crops sell for better value."
     },
     {
       "key": "item.crop.bean.name",
-      "value": "Green Bean"
+      "value": "Bean"
     },
     {
       "key": "item.crop.blueberry.desc",
-      "value": "Blueberry harvested from the field. Useful for selling, cooking, or quest turn-ins."
+      "value": "Blueberry harvested from the field. Higher level crops sell for better value."
     },
     {
       "key": "item.crop.blueberry.name",
@@ -230,7 +298,7 @@
     },
     {
       "key": "item.crop.cabbage.desc",
-      "value": "Cabbage harvested from the field. Useful for selling, cooking, or quest turn-ins."
+      "value": "Cabbage harvested from the field. Higher level crops sell for better value."
     },
     {
       "key": "item.crop.cabbage.name",
@@ -238,7 +306,7 @@
     },
     {
       "key": "item.crop.carrot.desc",
-      "value": "Carrot harvested from the field. Useful for selling, cooking, or quest turn-ins."
+      "value": "Carrot harvested from the field. Higher level crops sell for better value."
     },
     {
       "key": "item.crop.carrot.name",
@@ -246,7 +314,7 @@
     },
     {
       "key": "item.crop.cauliflower.desc",
-      "value": "Cauliflower harvested from the field. Useful for selling, cooking, or quest turn-ins."
+      "value": "Cauliflower harvested from the field. Higher level crops sell for better value."
     },
     {
       "key": "item.crop.cauliflower.name",
@@ -262,7 +330,7 @@
     },
     {
       "key": "item.crop.corn.desc",
-      "value": "Fresh corn used for selling, cooking, or deliveries."
+      "value": "Corn harvested from the field. Higher level crops sell for better value."
     },
     {
       "key": "item.crop.corn.name",
@@ -270,7 +338,7 @@
     },
     {
       "key": "item.crop.cucumber.desc",
-      "value": "Cucumber harvested from the field. Useful for selling, cooking, or quest turn-ins."
+      "value": "Cucumber harvested from the field. Higher level crops sell for better value."
     },
     {
       "key": "item.crop.cucumber.name",
@@ -350,7 +418,7 @@
     },
     {
       "key": "item.crop.garlic.desc",
-      "value": "Garlic harvested from the field. Useful for selling, cooking, or quest turn-ins."
+      "value": "Garlic harvested from the field. Higher level crops sell for better value."
     },
     {
       "key": "item.crop.garlic.name",
@@ -358,7 +426,7 @@
     },
     {
       "key": "item.crop.grape.desc",
-      "value": "Grape harvested from the field. Useful for selling, cooking, or quest turn-ins."
+      "value": "Grape harvested from the field. Higher level crops sell for better value."
     },
     {
       "key": "item.crop.grape.name",
@@ -366,7 +434,7 @@
     },
     {
       "key": "item.crop.melon.desc",
-      "value": "Melon harvested from the field. Useful for selling, cooking, or quest turn-ins."
+      "value": "Melon harvested from the field. Higher level crops sell for better value."
     },
     {
       "key": "item.crop.melon.name",
@@ -374,11 +442,11 @@
     },
     {
       "key": "item.crop.pea.desc",
-      "value": "Pea Pod harvested from the field. Useful for selling, cooking, or quest turn-ins."
+      "value": "Pea harvested from the field. Higher level crops sell for better value."
     },
     {
       "key": "item.crop.pea.name",
-      "value": "Pea Pod"
+      "value": "Pea"
     },
     {
       "key": "item.crop.pear.desc",
@@ -390,7 +458,7 @@
     },
     {
       "key": "item.crop.pepper_green.desc",
-      "value": "Green Pepper harvested from the field. Useful for selling, cooking, or quest turn-ins."
+      "value": "Green Pepper harvested from the field. Higher level crops sell for better value."
     },
     {
       "key": "item.crop.pepper_green.name",
@@ -398,7 +466,7 @@
     },
     {
       "key": "item.crop.pepper_red.desc",
-      "value": "Red Pepper harvested from the field. Useful for selling, cooking, or quest turn-ins."
+      "value": "Red Pepper harvested from the field. Higher level crops sell for better value."
     },
     {
       "key": "item.crop.pepper_red.name",
@@ -406,7 +474,7 @@
     },
     {
       "key": "item.crop.pepper_yellow.desc",
-      "value": "Yellow Pepper harvested from the field. Useful for selling, cooking, or quest turn-ins."
+      "value": "Yellow Pepper harvested from the field. Higher level crops sell for better value."
     },
     {
       "key": "item.crop.pepper_yellow.name",
@@ -422,7 +490,7 @@
     },
     {
       "key": "item.crop.potato.desc",
-      "value": "Fresh potato used for selling, cooking, or deliveries."
+      "value": "Potato harvested from the field. Higher level crops sell for better value."
     },
     {
       "key": "item.crop.potato.name",
@@ -430,7 +498,7 @@
     },
     {
       "key": "item.crop.radish.desc",
-      "value": "Radish harvested from the field. Useful for selling, cooking, or quest turn-ins."
+      "value": "Radish harvested from the field. Higher level crops sell for better value."
     },
     {
       "key": "item.crop.radish.name",
@@ -502,7 +570,7 @@
     },
     {
       "key": "item.crop.strawberry.desc",
-      "value": "Fresh strawberry used for selling, cooking, or deliveries."
+      "value": "Strawberry harvested from the field. Higher level crops sell for better value."
     },
     {
       "key": "item.crop.strawberry.name",
@@ -574,7 +642,7 @@
     },
     {
       "key": "item.crop.tomato.desc",
-      "value": "Fresh tomato used for selling, cooking, or deliveries."
+      "value": "Tomato harvested from the field. Higher level crops sell for better value."
     },
     {
       "key": "item.crop.tomato.name",
@@ -614,7 +682,7 @@
     },
     {
       "key": "item.crop.turnip.desc",
-      "value": "Fresh turnip used for selling, cooking, or deliveries."
+      "value": "Turnip harvested from the field. Higher level crops sell for better value."
     },
     {
       "key": "item.crop.turnip.name",
@@ -622,7 +690,7 @@
     },
     {
       "key": "item.crop.wheat.desc",
-      "value": "Fresh wheat used for selling, cooking, or deliveries."
+      "value": "Wheat harvested from the field. Higher level crops sell for better value."
     },
     {
       "key": "item.crop.wheat.name",
@@ -686,7 +754,7 @@
     },
     {
       "key": "item.crop.yam.desc",
-      "value": "Yam harvested from the field. Useful for selling, cooking, or quest turn-ins."
+      "value": "Yam harvested from the field. Higher level crops sell for better value."
     },
     {
       "key": "item.crop.yam.name",
@@ -1261,20 +1329,20 @@
       "value": "Corn Oil"
     },
     {
-      "key": "item.mat.crystal_shard.desc",
-      "value": "Refined crystal fragment. Used in crafting."
-    },
-    {
-      "key": "item.mat.crystal_shard.name",
-      "value": "Crystal Shard"
-    },
-    {
       "key": "item.mat.crystal.desc",
       "value": "Rare gemstone. Used for lightning rods and lanterns."
     },
     {
       "key": "item.mat.crystal.name",
       "value": "Crystal"
+    },
+    {
+      "key": "item.mat.crystal_shard.desc",
+      "value": "Refined crystal fragment. Used in crafting."
+    },
+    {
+      "key": "item.mat.crystal_shard.name",
+      "value": "Crystal Shard"
     },
     {
       "key": "item.mat.emerald.desc",
@@ -1379,6 +1447,14 @@
     {
       "key": "item.mat.ruby.name",
       "value": "Ruby"
+    },
+    {
+      "key": "item.mat.slime_liquid.desc",
+      "value": "Sticky fluid gathered from defeated slimes. Used to craft automatic watering devices."
+    },
+    {
+      "key": "item.mat.slime_liquid.name",
+      "value": "Slime Liquid"
     },
     {
       "key": "item.mat.softwood.desc",
@@ -1541,6 +1617,22 @@
       "value": "Scarecrow"
     },
     {
+      "key": "item.place.sprinkler.t1.desc",
+      "value": "Place it to automatically water a small area every morning."
+    },
+    {
+      "key": "item.place.sprinkler.t1.name",
+      "value": "Sprinkler T1"
+    },
+    {
+      "key": "item.place.sprinkler.t2.desc",
+      "value": "Place it to automatically water a larger field every morning."
+    },
+    {
+      "key": "item.place.sprinkler.t2.name",
+      "value": "Sprinkler T2"
+    },
+    {
       "key": "item.place.sprinkler_t1.desc",
       "value": "Auto-waters 4 surrounding tiles every morning."
     },
@@ -1563,22 +1655,6 @@
     {
       "key": "item.place.sprinkler_t3.name",
       "value": "Premium Sprinkler"
-    },
-    {
-      "key": "item.place.sprinkler.t1.desc",
-      "value": "Place it to automatically water a small area every morning."
-    },
-    {
-      "key": "item.place.sprinkler.t1.name",
-      "value": "Sprinkler T1"
-    },
-    {
-      "key": "item.place.sprinkler.t2.desc",
-      "value": "Place it to automatically water a larger field every morning."
-    },
-    {
-      "key": "item.place.sprinkler.t2.name",
-      "value": "Sprinkler T2"
     },
     {
       "key": "item.place.stone_fence.desc",
@@ -1637,6 +1713,30 @@
       "value": "Milk"
     },
     {
+      "key": "item.seed.asparagus.desc",
+      "value": "Unlocked at Lv.5. The crop matures after about 7 watered days. After the first harvest, it produces again every 3 days."
+    },
+    {
+      "key": "item.seed.asparagus.name",
+      "value": "Asparagus Seeds"
+    },
+    {
+      "key": "item.seed.bean.desc",
+      "value": "Unlocked at Lv.4. The crop matures after about 6 watered days. After the first harvest, it produces again every 3 days."
+    },
+    {
+      "key": "item.seed.bean.name",
+      "value": "Bean Seeds"
+    },
+    {
+      "key": "item.seed.blueberry.desc",
+      "value": "Unlocked at Lv.7. The crop matures after about 9 watered days. After the first harvest, it produces again every 4 days."
+    },
+    {
+      "key": "item.seed.blueberry.name",
+      "value": "Blueberry Seeds"
+    },
+    {
       "key": "item.seed.brech_woodtree.desc",
       "value": "A seed for growing a birch wood tree."
     },
@@ -1645,12 +1745,44 @@
       "value": "Birch Tree Seed"
     },
     {
+      "key": "item.seed.cabbage.desc",
+      "value": "Unlocked at Lv.4. The crop matures after about 6 watered days."
+    },
+    {
+      "key": "item.seed.cabbage.name",
+      "value": "Cabbage Seeds"
+    },
+    {
+      "key": "item.seed.carrot.desc",
+      "value": "Unlocked at Lv.2. The crop matures after about 4 watered days."
+    },
+    {
+      "key": "item.seed.carrot.name",
+      "value": "Carrot Seeds"
+    },
+    {
+      "key": "item.seed.cauliflower.desc",
+      "value": "Unlocked at Lv.6. The crop matures after about 7 watered days."
+    },
+    {
+      "key": "item.seed.cauliflower.name",
+      "value": "Cauliflower Seeds"
+    },
+    {
       "key": "item.seed.corn.desc",
-      "value": "Unlocked at Lv.11. The crop matures after about 9 watered days. After the first harvest, it produces again every 4 days."
+      "value": "Unlocked at Lv.5. The crop matures after about 8 watered days. After the first harvest, it produces again every 4 days."
     },
     {
       "key": "item.seed.corn.name",
       "value": "Corn Seeds"
+    },
+    {
+      "key": "item.seed.cucumber.desc",
+      "value": "Unlocked at Lv.3. The crop matures after about 6 watered days. After the first harvest, it produces again every 3 days."
+    },
+    {
+      "key": "item.seed.cucumber.name",
+      "value": "Cucumber Seeds"
     },
     {
       "key": "item.seed.fall.broccoli.desc",
@@ -1725,6 +1857,30 @@
       "value": "Wheat Seeds"
     },
     {
+      "key": "item.seed.garlic.desc",
+      "value": "Unlocked at Lv.3. The crop matures after about 5 watered days."
+    },
+    {
+      "key": "item.seed.garlic.name",
+      "value": "Garlic Seeds"
+    },
+    {
+      "key": "item.seed.grape.desc",
+      "value": "Unlocked at Lv.9. The crop matures after about 9 watered days. After the first harvest, it produces again every 4 days."
+    },
+    {
+      "key": "item.seed.grape.name",
+      "value": "Grape Seeds"
+    },
+    {
+      "key": "item.seed.melon.desc",
+      "value": "Unlocked at Lv.8. The crop matures after about 8 watered days."
+    },
+    {
+      "key": "item.seed.melon.name",
+      "value": "Melon Seeds"
+    },
+    {
       "key": "item.seed.oak_woodtree.desc",
       "value": "A seed for growing an oak wood tree."
     },
@@ -1733,12 +1889,52 @@
       "value": "Oak Tree Seed"
     },
     {
+      "key": "item.seed.pea.desc",
+      "value": "Unlocked at Lv.3. The crop matures after about 6 watered days. After the first harvest, it produces again every 3 days."
+    },
+    {
+      "key": "item.seed.pea.name",
+      "value": "Pea Seeds"
+    },
+    {
+      "key": "item.seed.pepper_green.desc",
+      "value": "Unlocked at Lv.4. The crop matures after about 6 watered days. After the first harvest, it produces again every 3 days."
+    },
+    {
+      "key": "item.seed.pepper_green.name",
+      "value": "Green Pepper Seeds"
+    },
+    {
+      "key": "item.seed.pepper_red.desc",
+      "value": "Unlocked at Lv.5. The crop matures after about 7 watered days. After the first harvest, it produces again every 3 days."
+    },
+    {
+      "key": "item.seed.pepper_red.name",
+      "value": "Red Pepper Seeds"
+    },
+    {
+      "key": "item.seed.pepper_yellow.desc",
+      "value": "Unlocked at Lv.6. The crop matures after about 7 watered days. After the first harvest, it produces again every 3 days."
+    },
+    {
+      "key": "item.seed.pepper_yellow.name",
+      "value": "Yellow Pepper Seeds"
+    },
+    {
       "key": "item.seed.potato.desc",
       "value": "Unlocked at Lv.2. The crop matures after about 5 watered days."
     },
     {
       "key": "item.seed.potato.name",
       "value": "Potato Seeds"
+    },
+    {
+      "key": "item.seed.radish.desc",
+      "value": "Unlocked at Lv.2. The crop matures after about 5 watered days."
+    },
+    {
+      "key": "item.seed.radish.name",
+      "value": "Radish Seeds"
     },
     {
       "key": "item.seed.spring.asparagus.desc",
@@ -1806,7 +2002,7 @@
     },
     {
       "key": "item.seed.strawberry.desc",
-      "value": "Unlocked at Lv.15. The crop matures after about 8 watered days. After the first harvest, it produces again every 3 days."
+      "value": "Unlocked at Lv.7. The crop matures after about 8 watered days. After the first harvest, it produces again every 3 days."
     },
     {
       "key": "item.seed.strawberry.name",
@@ -1878,7 +2074,7 @@
     },
     {
       "key": "item.seed.tomato.desc",
-      "value": "Unlocked at Lv.7. The crop matures after about 7 watered days. After the first harvest, it produces again every 3 days."
+      "value": "Unlocked at Lv.4. The crop matures after about 7 watered days. After the first harvest, it produces again every 3 days."
     },
     {
       "key": "item.seed.tomato.name",
@@ -1918,7 +2114,7 @@
     },
     {
       "key": "item.seed.turnip.desc",
-      "value": "Unlocked at Lv.1. The crop matures after about 4 watered days."
+      "value": "Unlocked at Lv.1. The crop matures after about 3 watered days."
     },
     {
       "key": "item.seed.turnip.name",
@@ -1926,7 +2122,7 @@
     },
     {
       "key": "item.seed.wheat.desc",
-      "value": "Unlocked at Lv.4. The crop matures after about 4 watered days."
+      "value": "Unlocked at Lv.1. The crop matures after about 4 watered days."
     },
     {
       "key": "item.seed.wheat.name",
@@ -1987,6 +2183,14 @@
     {
       "key": "item.seed.winter.winter_flower.name",
       "value": "Winter Flower Seeds"
+    },
+    {
+      "key": "item.seed.yam.desc",
+      "value": "Unlocked at Lv.6. The crop matures after about 6 watered days."
+    },
+    {
+      "key": "item.seed.yam.name",
+      "value": "Yam Seeds"
     },
     {
       "key": "item.tool.axe.t1.desc",
@@ -2165,12 +2369,48 @@
       "value": "Gold Watering Can"
     },
     {
+      "key": "item.weapon.sword.t1.desc",
+      "value": "A basic sword for defending against monsters."
+    },
+    {
+      "key": "item.weapon.sword.t1.name",
+      "value": "Rusty Sword"
+    },
+    {
       "key": "m1.portal.farm_to_town.name",
       "value": "Portal to Town"
     },
     {
+      "key": "m1.portal.mine_to_town.name",
+      "value": "Portal to Town"
+    },
+    {
+      "key": "m1.portal.town_to_farm.name",
+      "value": "Portal to Farm"
+    },
+    {
+      "key": "m1.portal.town_to_mine.name",
+      "value": "Portal to Mine"
+    },
+    {
       "key": "m3.animal.chicken.name",
       "value": "Chicken"
+    },
+    {
+      "key": "m3.bed.desc",
+      "value": "Sleep to restore energy and start a new day."
+    },
+    {
+      "key": "m3.bed.name",
+      "value": "Bed"
+    },
+    {
+      "key": "m3.portal.desc",
+      "value": "Step in to travel to another area."
+    },
+    {
+      "key": "m3.portal.name",
+      "value": "Portal"
     },
     {
       "key": "m6.recipe.animal_feed.name",
@@ -2437,6 +2677,266 @@
       "value": "Advanced Sprinkler Head"
     },
     {
+      "key": "mvp.sprinkler.t1.desc",
+      "value": "Automatically waters nearby tiles each morning."
+    },
+    {
+      "key": "mvp.sprinkler.t1.name",
+      "value": "Basic Sprinkler"
+    },
+    {
+      "key": "mvp.sprinkler.t2.desc",
+      "value": "Waters a wider area each morning."
+    },
+    {
+      "key": "mvp.sprinkler.t2.name",
+      "value": "Advanced Sprinkler"
+    },
+    {
+      "key": "node_BigStone1",
+      "value": "Large Rock"
+    },
+    {
+      "key": "node_BigStoneEmerald1",
+      "value": "Large Emerald-Bearing Rock"
+    },
+    {
+      "key": "node_BigStooneSapphire1",
+      "value": "Large Sapphire-Bearing Rock"
+    },
+    {
+      "key": "node_BigstoneRuby1",
+      "value": "Large Ruby-Bearing Rock"
+    },
+    {
+      "key": "node_Emerald1",
+      "value": "Emerald Vein"
+    },
+    {
+      "key": "node_Emerald2",
+      "value": "Emerald Vein"
+    },
+    {
+      "key": "node_Emerald3",
+      "value": "Emerald Vein"
+    },
+    {
+      "key": "node_Emerald4",
+      "value": "Emerald Vein"
+    },
+    {
+      "key": "node_StoneEmerald",
+      "value": "Emerald-Bearing Rock"
+    },
+    {
+      "key": "node_StoneEmerald1",
+      "value": "Emerald-Bearing Rock"
+    },
+    {
+      "key": "node_StoneEmerald2",
+      "value": "Emerald-Bearing Rock"
+    },
+    {
+      "key": "node_StoneEmerald3",
+      "value": "Emerald-Bearing Rock"
+    },
+    {
+      "key": "node_StoneEmerald4",
+      "value": "Emerald-Bearing Rock"
+    },
+    {
+      "key": "node_StoneEmerald6",
+      "value": "Emerald-Bearing Rock"
+    },
+    {
+      "key": "node_StoneSapphire1",
+      "value": "Sapphire-Bearing Rock"
+    },
+    {
+      "key": "node_StoneSapphire2",
+      "value": "Sapphire-Bearing Rock"
+    },
+    {
+      "key": "node_StoneSapphire3",
+      "value": "Sapphire-Bearing Rock"
+    },
+    {
+      "key": "node_StoneSapphire4",
+      "value": "Sapphire-Bearing Rock"
+    },
+    {
+      "key": "node_StoneSapphire5",
+      "value": "Sapphire-Bearing Rock"
+    },
+    {
+      "key": "node_StoneSapphire6",
+      "value": "Sapphire-Bearing Rock"
+    },
+    {
+      "key": "node_biggold1",
+      "value": "Large Gold Vein"
+    },
+    {
+      "key": "node_bigiron1",
+      "value": "Large Iron Vein"
+    },
+    {
+      "key": "node_gold2",
+      "value": "Gold Vein"
+    },
+    {
+      "key": "node_gold3",
+      "value": "Gold Vein"
+    },
+    {
+      "key": "node_gold3_desc",
+      "value": "A resource node that needs a proper pickaxe to mine gold ore."
+    },
+    {
+      "key": "node_gold4",
+      "value": "Gold Vein"
+    },
+    {
+      "key": "node_gold5",
+      "value": "Gold Vein"
+    },
+    {
+      "key": "node_gold6",
+      "value": "Gold Vein"
+    },
+    {
+      "key": "node_iron2",
+      "value": "Iron Vein"
+    },
+    {
+      "key": "node_iron3",
+      "value": "Iron Vein"
+    },
+    {
+      "key": "node_iron4",
+      "value": "Iron Vein"
+    },
+    {
+      "key": "node_iron5",
+      "value": "Iron Vein"
+    },
+    {
+      "key": "node_iron6",
+      "value": "Iron Vein"
+    },
+    {
+      "key": "node_ruby1",
+      "value": "Ruby Vein"
+    },
+    {
+      "key": "node_ruby2",
+      "value": "Ruby Vein"
+    },
+    {
+      "key": "node_ruby3",
+      "value": "Ruby Vein"
+    },
+    {
+      "key": "node_ruby4",
+      "value": "Ruby Vein"
+    },
+    {
+      "key": "node_sapphire1",
+      "value": "Sapphire Vein"
+    },
+    {
+      "key": "node_sapphire2",
+      "value": "Sapphire Vein"
+    },
+    {
+      "key": "node_sapphire3",
+      "value": "Sapphire Vein"
+    },
+    {
+      "key": "node_sapphire4",
+      "value": "Sapphire Vein"
+    },
+    {
+      "key": "node_stone10",
+      "value": "Rock"
+    },
+    {
+      "key": "node_stone11",
+      "value": "Rock"
+    },
+    {
+      "key": "node_stone12",
+      "value": "Rock"
+    },
+    {
+      "key": "node_stone8",
+      "value": "Rock"
+    },
+    {
+      "key": "node_stone9",
+      "value": "Rock"
+    },
+    {
+      "key": "node_stoneRuby1",
+      "value": "Ruby-Bearing Rock"
+    },
+    {
+      "key": "node_stoneRuby2",
+      "value": "Ruby-Bearing Rock"
+    },
+    {
+      "key": "node_stoneRuby3",
+      "value": "Ruby-Bearing Rock"
+    },
+    {
+      "key": "node_stoneRuby4",
+      "value": "Ruby-Bearing Rock"
+    },
+    {
+      "key": "node_stoneRuby5",
+      "value": "Ruby-Bearing Rock"
+    },
+    {
+      "key": "node_stoneRuby6",
+      "value": "Ruby-Bearing Rock"
+    },
+    {
+      "key": "npc.crafting.tho_ren.desc",
+      "value": "The village blacksmith, crafting and upgrading tools."
+    },
+    {
+      "key": "npc.crafting.tho_ren.name",
+      "value": "Blacksmith"
+    },
+    {
+      "key": "npc.farmer.name",
+      "value": "Farmer"
+    },
+    {
+      "key": "npc.quest.co_gai_lang.desc",
+      "value": "A village girl who hands out small quests."
+    },
+    {
+      "key": "npc.quest.co_gai_lang.name",
+      "value": "Village Girl"
+    },
+    {
+      "key": "npc.shop.bac_ba.desc",
+      "value": "A general seed and farm goods merchant."
+    },
+    {
+      "key": "npc.shop.bac_ba.name",
+      "value": "Uncle Ba"
+    },
+    {
+      "key": "npc.villager.static.desc",
+      "value": "A villager living in this town."
+    },
+    {
+      "key": "npc.villager.static.name",
+      "value": "Villager"
+    },
+    {
       "key": "npc_banhang_desc",
       "value": "Hello, need to buy or sell something?"
     },
@@ -2469,18 +2969,6 @@
       "value": "Miss Nam"
     },
     {
-      "key": "npc.farmer.name",
-      "value": "Farmer"
-    },
-    {
-      "key": "npc.shop.bac_ba.desc",
-      "value": "A general seed and farm goods merchant."
-    },
-    {
-      "key": "npc.shop.bac_ba.name",
-      "value": "Uncle Ba"
-    },
-    {
       "key": "ore_node_desc",
       "value": "Can be mined with a pickaxe."
     },
@@ -2489,20 +2977,16 @@
       "value": "Ore Node"
     },
     {
-      "key": "OreChunk01_desc",
-      "value": "Raw crafting material from ore nodes."
+      "key": "player.desc",
+      "value": "The character you control."
     },
     {
-      "key": "OreChunk01_name",
-      "value": "Ore Chunk"
+      "key": "player.name",
+      "value": "Farmer"
     },
     {
-      "key": "Pickaxe01_desc",
-      "value": "Used to mine rocks and ore nodes."
-    },
-    {
-      "key": "Pickaxe01_name",
-      "value": "Copper Pickaxe"
+      "key": "quest.description.key",
+      "value": "No quest description yet."
     },
     {
       "key": "quest.sample_farmer_work.desc",
@@ -2515,6 +2999,14 @@
     {
       "key": "quest.sample_farmer_work.title",
       "value": "First Farm Job"
+    },
+    {
+      "key": "quest.title.key",
+      "value": "Quest"
+    },
+    {
+      "key": "recipe.desc",
+      "value": "Recipe description."
     },
     {
       "key": "recipe.furnace.copper_bar.desc",
@@ -2565,6 +3057,10 @@
       "value": "Corn Oil (Mill)"
     },
     {
+      "key": "recipe.name",
+      "value": "Recipe"
+    },
+    {
       "key": "s5.ai.tip.keep_progressing",
       "value": "Keep farming, trading, and finishing quests to unlock the next step."
     },
@@ -2581,6 +3077,26 @@
       "value": "The sun is out and the field is dry. Water crops before the day ends."
     },
     {
+      "key": "s5.research.day03.title",
+      "value": "Research: Day 3"
+    },
+    {
+      "key": "s5.research.day07.title",
+      "value": "Research: Day 7"
+    },
+    {
+      "key": "s5.research.day10.title",
+      "value": "Research: Day 10"
+    },
+    {
+      "key": "s5.research.day14.title",
+      "value": "Research: Day 14"
+    },
+    {
+      "key": "s5.research.day21.title",
+      "value": "Research: Day 21"
+    },
+    {
       "key": "s5.story.day01.body",
       "value": "Welcome to the farm. Check your tools, plant your first seeds, and learn the rhythm of the day."
     },
@@ -2595,6 +3111,30 @@
     {
       "key": "s5.story.day03.title",
       "value": "Farm Routine"
+    },
+    {
+      "key": "s5.story.day07.title",
+      "value": "Closing the First Week"
+    },
+    {
+      "key": "s5.story.day10.title",
+      "value": "Putting Down Roots"
+    },
+    {
+      "key": "s5.story.day14.title",
+      "value": "Two Weeks In"
+    },
+    {
+      "key": "s5.story.day21.title",
+      "value": "The Farm Finds Its Rhythm"
+    },
+    {
+      "key": "seed_apple_fruitree_desc",
+      "value": "Plant it to grow an apple tree."
+    },
+    {
+      "key": "seed_apple_fruitree_name",
+      "value": "Apple Sapling"
     },
     {
       "key": "ui.animal.collect",
@@ -2757,12 +3297,12 @@
       "value": "Talk"
     },
     {
-      "key": "ui.equipment.infoPlayer",
-      "value": "Character Stats"
-    },
-    {
       "key": "ui.equipment.NamePlayer",
       "value": "Name:"
+    },
+    {
+      "key": "ui.equipment.infoPlayer",
+      "value": "Character Stats"
     },
     {
       "key": "ui.hud.backpack",
@@ -2793,6 +3333,10 @@
       "value": "Not Ready"
     },
     {
+      "key": "ui.inventory.Split",
+      "value": "Split"
+    },
+    {
       "key": "ui.inventory.capacity",
       "value": "{0}/{1}"
     },
@@ -2807,10 +3351,6 @@
     {
       "key": "ui.inventory.quick_sort",
       "value": "Quick Sort"
-    },
-    {
-      "key": "ui.inventory.Split",
-      "value": "Split"
     },
     {
       "key": "ui.inventory.title",
@@ -2849,12 +3389,12 @@
       "value": "Main Menu"
     },
     {
-      "key": "ui.loading.scene_name.scene",
-      "value": "Scene"
-    },
-    {
       "key": "ui.loading.scene_name.TownScene",
       "value": "Town"
+    },
+    {
+      "key": "ui.loading.scene_name.scene",
+      "value": "Scene"
     },
     {
       "key": "ui.loading.tip.1",
@@ -3085,6 +3625,30 @@
       "value": "Fullscreen"
     },
     {
+      "key": "ui.settings.input.move_down",
+      "value": "Move Down"
+    },
+    {
+      "key": "ui.settings.input.move_left",
+      "value": "Move Left"
+    },
+    {
+      "key": "ui.settings.input.move_right",
+      "value": "Move Right"
+    },
+    {
+      "key": "ui.settings.input.move_up",
+      "value": "Move Up"
+    },
+    {
+      "key": "ui.settings.input.primary_action",
+      "value": "Primary Action"
+    },
+    {
+      "key": "ui.settings.input.secondary_action",
+      "value": "Secondary Action"
+    },
+    {
       "key": "ui.settings.interact_key",
       "value": "Interact Key"
     },
@@ -3113,6 +3677,10 @@
       "value": "Press a key..."
     },
     {
+      "key": "ui.settings.resolution",
+      "value": "Resolution"
+    },
+    {
       "key": "ui.settings.save",
       "value": "Save"
     },
@@ -3123,6 +3691,22 @@
     {
       "key": "ui.settings.vsync",
       "value": "VSync"
+    },
+    {
+      "key": "ui.settings.window_mode",
+      "value": "Window Mode"
+    },
+    {
+      "key": "ui.settings.window_mode.borderless",
+      "value": "Borderless"
+    },
+    {
+      "key": "ui.settings.window_mode.fullscreen",
+      "value": "Exclusive Fullscreen"
+    },
+    {
+      "key": "ui.settings.window_mode.windowed",
+      "value": "Windowed"
     },
     {
       "key": "ui.shop.buy",
@@ -3281,12 +3865,68 @@
       "value": "Cow"
     },
     {
+      "key": "world.crop.asparagus.desc",
+      "value": "A Lv.5 crop that matures after about 7 watered days. After the first harvest, it produces again every 3 days."
+    },
+    {
+      "key": "world.crop.asparagus.name",
+      "value": "Asparagus Plant"
+    },
+    {
+      "key": "world.crop.bean.desc",
+      "value": "A Lv.4 crop that matures after about 6 watered days. After the first harvest, it produces again every 3 days."
+    },
+    {
+      "key": "world.crop.bean.name",
+      "value": "Bean Plant"
+    },
+    {
+      "key": "world.crop.blueberry.desc",
+      "value": "A Lv.7 crop that matures after about 9 watered days. After the first harvest, it produces again every 4 days."
+    },
+    {
+      "key": "world.crop.blueberry.name",
+      "value": "Blueberry Plant"
+    },
+    {
+      "key": "world.crop.cabbage.desc",
+      "value": "A Lv.4 crop that matures after about 6 watered days."
+    },
+    {
+      "key": "world.crop.cabbage.name",
+      "value": "Cabbage Plant"
+    },
+    {
+      "key": "world.crop.carrot.desc",
+      "value": "A Lv.2 crop that matures after about 4 watered days."
+    },
+    {
+      "key": "world.crop.carrot.name",
+      "value": "Carrot Plant"
+    },
+    {
+      "key": "world.crop.cauliflower.desc",
+      "value": "A Lv.6 crop that matures after about 7 watered days."
+    },
+    {
+      "key": "world.crop.cauliflower.name",
+      "value": "Cauliflower Plant"
+    },
+    {
       "key": "world.crop.corn.desc",
-      "value": "A crop unlocked at Lv.11 that must be watered daily to grow."
+      "value": "A Lv.5 crop that matures after about 8 watered days. After the first harvest, it produces again every 4 days."
     },
     {
       "key": "world.crop.corn.name",
-      "value": "Corn Crop"
+      "value": "Corn Plant"
+    },
+    {
+      "key": "world.crop.cucumber.desc",
+      "value": "A Lv.3 crop that matures after about 6 watered days. After the first harvest, it produces again every 3 days."
+    },
+    {
+      "key": "world.crop.cucumber.name",
+      "value": "Cucumber Plant"
     },
     {
       "key": "world.crop.fall.pumpkin.desc",
@@ -3305,12 +3945,76 @@
       "value": "Wheat Crop"
     },
     {
+      "key": "world.crop.garlic.desc",
+      "value": "A Lv.3 crop that matures after about 5 watered days."
+    },
+    {
+      "key": "world.crop.garlic.name",
+      "value": "Garlic Plant"
+    },
+    {
+      "key": "world.crop.grape.desc",
+      "value": "A Lv.9 crop that matures after about 9 watered days. After the first harvest, it produces again every 4 days."
+    },
+    {
+      "key": "world.crop.grape.name",
+      "value": "Grape Plant"
+    },
+    {
+      "key": "world.crop.melon.desc",
+      "value": "A Lv.8 crop that matures after about 8 watered days."
+    },
+    {
+      "key": "world.crop.melon.name",
+      "value": "Melon Plant"
+    },
+    {
+      "key": "world.crop.pea.desc",
+      "value": "A Lv.3 crop that matures after about 6 watered days. After the first harvest, it produces again every 3 days."
+    },
+    {
+      "key": "world.crop.pea.name",
+      "value": "Pea Plant"
+    },
+    {
+      "key": "world.crop.pepper_green.desc",
+      "value": "A Lv.4 crop that matures after about 6 watered days. After the first harvest, it produces again every 3 days."
+    },
+    {
+      "key": "world.crop.pepper_green.name",
+      "value": "Green Pepper Plant"
+    },
+    {
+      "key": "world.crop.pepper_red.desc",
+      "value": "A Lv.5 crop that matures after about 7 watered days. After the first harvest, it produces again every 3 days."
+    },
+    {
+      "key": "world.crop.pepper_red.name",
+      "value": "Red Pepper Plant"
+    },
+    {
+      "key": "world.crop.pepper_yellow.desc",
+      "value": "A Lv.6 crop that matures after about 7 watered days. After the first harvest, it produces again every 3 days."
+    },
+    {
+      "key": "world.crop.pepper_yellow.name",
+      "value": "Yellow Pepper Plant"
+    },
+    {
       "key": "world.crop.potato.desc",
-      "value": "A crop unlocked at Lv.2 that must be watered daily to grow."
+      "value": "A Lv.2 crop that matures after about 5 watered days."
     },
     {
       "key": "world.crop.potato.name",
-      "value": "Potato Crop"
+      "value": "Potato Plant"
+    },
+    {
+      "key": "world.crop.radish.desc",
+      "value": "A Lv.2 crop that matures after about 5 watered days."
+    },
+    {
+      "key": "world.crop.radish.name",
+      "value": "Radish Plant"
     },
     {
       "key": "world.crop.spring.asparagus.desc",
@@ -3354,11 +4058,11 @@
     },
     {
       "key": "world.crop.strawberry.desc",
-      "value": "A crop unlocked at Lv.15 that must be watered daily to grow."
+      "value": "A Lv.7 crop that matures after about 8 watered days. After the first harvest, it produces again every 3 days."
     },
     {
       "key": "world.crop.strawberry.name",
-      "value": "Strawberry Crop"
+      "value": "Strawberry Plant"
     },
     {
       "key": "world.crop.summer.corn.desc",
@@ -3378,27 +4082,27 @@
     },
     {
       "key": "world.crop.tomato.desc",
-      "value": "A crop unlocked at Lv.7 that must be watered daily to grow."
+      "value": "A Lv.4 crop that matures after about 7 watered days. After the first harvest, it produces again every 3 days."
     },
     {
       "key": "world.crop.tomato.name",
-      "value": "Tomato Crop"
+      "value": "Tomato Plant"
     },
     {
       "key": "world.crop.turnip.desc",
-      "value": "A crop unlocked at Lv.1 that must be watered daily to grow."
+      "value": "A Lv.1 crop that matures after about 3 watered days."
     },
     {
       "key": "world.crop.turnip.name",
-      "value": "Turnip Crop"
+      "value": "Turnip Plant"
     },
     {
       "key": "world.crop.wheat.desc",
-      "value": "A crop unlocked at Lv.4 that must be watered daily to grow."
+      "value": "A Lv.1 crop that matures after about 4 watered days."
     },
     {
       "key": "world.crop.wheat.name",
-      "value": "Wheat Crop"
+      "value": "Wheat Plant"
     },
     {
       "key": "world.crop.winter.spinach.desc",
@@ -3407,6 +4111,22 @@
     {
       "key": "world.crop.winter.spinach.name",
       "value": "Spinach"
+    },
+    {
+      "key": "world.crop.yam.desc",
+      "value": "A Lv.6 crop that matures after about 6 watered days."
+    },
+    {
+      "key": "world.crop.yam.name",
+      "value": "Yam Plant"
+    },
+    {
+      "key": "world.forage.grass.desc",
+      "value": "A wild grass bush. Clear it by hand or scythe to gather fiber."
+    },
+    {
+      "key": "world.forage.grass.name",
+      "value": "Grass Bush"
     },
     {
       "key": "world.node.copper.desc",

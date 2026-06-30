@@ -54,44 +54,6 @@ public class WateredTileTracker
         _tmWatered.ClearAllTiles();
     }
 
-    /// <summary>Tưới tất cả ô đã cày (plowed) — gọi khi trời mưa.</summary>
-    public void WaterAllPlowedCells()
-    {
-        if (_tmGround == null || _tileData == null) return;
-
-        var bounds = _tmGround.cellBounds;
-        var plowedTile = _tileData.plowedTile;
-
-        int count = 0;
-        for (int x = bounds.xMin; x < bounds.xMax; x++)
-        {
-            for (int y = bounds.yMin; y < bounds.yMax; y++)
-            {
-                var pos = new Vector3Int(x, y, 0);
-                var groundTile = _tmGround.GetTile(pos);
-                if (groundTile != plowedTile)
-                    continue;
-
-                // Convert: cell (tmGround) → world center → cell (tmWatered / GridSystem)
-                // Đảm bảo khớp với StageRuntime dùng GridSystem.WorldToCell(worldPos)
-                Vector3 worldCenter = _tmGround.GetCellCenterWorld(pos);
-                Vector3Int wateredCell = _tmWatered != null
-                    ? _tmWatered.WorldToCell(worldCenter)
-                    : pos;
-
-                var cell = new Vector2Int(wateredCell.x, wateredCell.y);
-                _wateredCells.Add(cell);
-
-                if (_tmWatered != null && _wateredTile != null)
-                    _tmWatered.SetTile(wateredCell, _wateredTile);
-
-                count++;
-            }
-        }
-
-        Debug.Log($"[WateredTileTracker] WaterAllPlowedCells: tưới {count} ô đã cày.");
-    }
-
     /// <summary>Export tất cả ô đang được tưới (dùng cho save).</summary>
     public System.Collections.Generic.List<WateredCellDto> ExportWateredCells()
     {

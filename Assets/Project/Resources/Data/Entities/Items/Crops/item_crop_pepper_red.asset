@@ -15,11 +15,11 @@ MonoBehaviour:
   id: item_crop_pepper_red
   keyName: item.crop.pepper_red.name
   descKey: item.crop.pepper_red.desc
-  icon: {fileID: -8627892990803166715, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
+  icon: {fileID: -3288613243438722894, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
   category: 3
   maxStack: 99
   buyPrice: 0
-  sellPrice: 38
+  sellPrice: 64
   baseStats:
     baseStats: []
   placementRule:
@@ -31,3 +31,4 @@ MonoBehaviour:
   references:
     version: 2
     RefIds: []
+

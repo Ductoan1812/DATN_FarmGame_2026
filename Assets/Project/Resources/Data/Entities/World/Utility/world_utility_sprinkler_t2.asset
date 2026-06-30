@@ -15,7 +15,7 @@ MonoBehaviour:
   id: world_utility_sprinkler_t2
   keyName: world.utility.sprinkler.t2.name
   descKey: world.utility.sprinkler.t2.desc
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: b2fd20e9b8dad9d4985535fcdcb65c96, type: 3}
   category: 14
   maxStack: 1
   buyPrice: 0
@@ -29,6 +29,8 @@ MonoBehaviour:
     blockLayers: 0100000002000000
   modules:
   - rid: 5278705929685041270
+  - rid: 5278706298761773057
+  - rid: 5278706298761773059
   references:
     version: 2
     RefIds:
@@ -36,3 +38,24 @@ MonoBehaviour:
       type: {class: SprinklerModule, ns: , asm: Assembly-CSharp}
       data:
         waterRadius: 2
+    - rid: 5278706298761773057
+      type: {class: StageModule, ns: , asm: Assembly-CSharp}
+      data:
+        stages:
+        - sprite: {fileID: -622031469, guid: 2e10ff29e7b713441bb2344a79e94e4e, type: 3}
+          daysToGrow: 0
+          canHarvest: 0
+        requiresWater: 1
+        wiltSprite: {fileID: 0}
+        regrowStageIndex: -1
+        harvestGoToStageIndex: -1
+        lastStageLoopToIndex: -1
+        daysToReturnAfterHarvest: -1
+        wiltOnSeasonChange: 1
+    - rid: 5278706298761773059
+      type: {class: PlacementModule, ns: , asm: Assembly-CSharp}
+      data:
+        objectTypeToSpawn: 17
+        placedEntityData: {fileID: 0}
+        centerTile: 1
+        animTrigger: 

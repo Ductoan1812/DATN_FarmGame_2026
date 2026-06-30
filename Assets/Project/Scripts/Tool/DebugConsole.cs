@@ -467,19 +467,31 @@ public class DebugConsole : MonoBehaviour
             LogSuccess($"Thời tiết đã đặt: {wt}");
         });
 
-        // ── waterall — Tưới toàn bộ ô đất đã cày ──
-        AddCommand("waterall", "waterall — Tưới toàn bộ ô đất đã cày (plowed) trong scene hiện tại", _ =>
+        // ── waterall — Tưới toàn bộ ô đã cuốc ──
+        AddCommand("waterall", "waterall — Tưới nước toàn bộ ô đã cuốc", _ =>
         {
             var gm = GM(); if (gm == null) return;
-
             var tracker = gm.WateredTileTracker;
             if (tracker == null) { LogError("WateredTileTracker null!"); return; }
-
-            int before = tracker.GetWateredCount();
-            tracker.WaterAllPlowedCells();
-            int after = tracker.GetWateredCount();
-
-            LogSuccess($"Đã tưới toàn bộ ô đất đã cày! ({before} → {after} ô được tưới)");
+            var ws = gm.WorldService;
+            if (ws == null) { LogError("WorldService null!"); return; }
+            var tm = GridSystem.GetTilemap();
+            if (tm == null) { LogError("GridSystem/tilemap null!"); return; }
+            var bounds = tm.cellBounds;
+            int count = 0;
+            for (int x = bounds.xMin; x < bounds.xMax; x++)
+            {
+                for (int y = bounds.yMin; y < bounds.yMax; y++)
+                {
+                    var cell = new UnityEngine.Vector2Int(x, y);
+                    if (ws.IsPlowed(cell) && !tracker.IsWatered(cell))
+                    {
+                        tracker.SetWatered(cell);
+                        count++;
+                    }
+                }
+            }
+            LogSuccess($"Đã tưới {count} ô. Tổng: {tracker.GetWateredCount()}");
         });
 
         // ── watercount — Đếm số ô đang được tưới ──

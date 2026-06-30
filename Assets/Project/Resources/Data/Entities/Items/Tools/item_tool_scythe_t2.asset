@@ -23,7 +23,7 @@ MonoBehaviour:
   baseStats:
     baseStats:
     - statType: 5
-      value: 3
+      value: 0
     - statType: 9
       value: 3
     - statType: 10

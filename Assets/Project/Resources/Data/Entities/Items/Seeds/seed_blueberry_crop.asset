@@ -13,13 +13,12 @@ MonoBehaviour:
   m_Name: seed_blueberry_crop
   m_EditorClassIdentifier: 
   id: seed_blueberry_crop
-  keyName: seed_blueberry_crop
-  descKey: 
-  icon: {fileID: -313995225879862448, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
+  keyName: item.seed.blueberry.name
+  descKey: item.seed.blueberry.desc
   category: 2
   maxStack: 99
-  buyPrice: 0
-  sellPrice: 0
+  buyPrice: 210
+  sellPrice: 52
   baseStats:
     baseStats: []
   placementRule:
@@ -39,3 +38,4 @@ MonoBehaviour:
         placedEntityData: {fileID: 11400000, guid: 32f38b8c21f033a49aac8707216845f4, type: 2}
         centerTile: 1
         animTrigger: PutDown
+

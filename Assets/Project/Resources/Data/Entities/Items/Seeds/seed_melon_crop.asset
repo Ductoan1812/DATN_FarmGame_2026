@@ -13,13 +13,12 @@ MonoBehaviour:
   m_Name: seed_melon_crop
   m_EditorClassIdentifier: 
   id: seed_melon_crop
-  keyName: seed_melon_crop
-  descKey: 
-  icon: {fileID: 7071444314301507100, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
+  keyName: item.seed.melon.name
+  descKey: item.seed.melon.desc
   category: 2
   maxStack: 99
-  buyPrice: 0
-  sellPrice: 0
+  buyPrice: 100
+  sellPrice: 25
   baseStats:
     baseStats: []
   placementRule:
@@ -39,3 +38,4 @@ MonoBehaviour:
         placedEntityData: {fileID: 11400000, guid: 2a33662437f4f1e42824f2eeab6bc8eb, type: 2}
         centerTile: 1
         animTrigger: PutDown
+

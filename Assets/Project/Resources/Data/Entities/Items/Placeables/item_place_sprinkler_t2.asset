@@ -15,7 +15,7 @@ MonoBehaviour:
   id: item_place_sprinkler_t2
   keyName: item.place.sprinkler.t2.name
   descKey: item.place.sprinkler.t2.desc
-  icon: {fileID: 21300000, guid: b2fd20e9b8dad9d4985535fcdcb65c96, type: 3}
+  icon: {fileID: 441853895, guid: 2e10ff29e7b713441bb2344a79e94e4e, type: 3}
   category: 9
   maxStack: 99
   buyPrice: 0

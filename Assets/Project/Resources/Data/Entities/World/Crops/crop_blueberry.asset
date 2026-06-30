@@ -13,9 +13,8 @@ MonoBehaviour:
   m_Name: crop_blueberry
   m_EditorClassIdentifier: 
   id: crop_blueberry
-  keyName: crop_blueberry
-  descKey: 
-  icon: {fileID: 0}
+  keyName: world.crop.blueberry.name
+  descKey: world.crop.blueberry.desc
   category: 9
   maxStack: 1
   buyPrice: 0
@@ -35,10 +34,6 @@ MonoBehaviour:
   - rid: 8196223262934696415
   - rid: 8196223262934696416
   - rid: 8196223262934696417
-  - rid: 8196223262934696418
-  - rid: 8196223262934696419
-  - rid: 8196223262934696420
-  - rid: 8196223262934696421
   references:
     version: 2
     RefIds:
@@ -47,22 +42,22 @@ MonoBehaviour:
       data:
         stages:
         - sprite: {fileID: -4873918160073397930, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
-          daysToGrow: 1
+          daysToGrow: 2
           canHarvest: 0
         - sprite: {fileID: -8956061356347601033, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
-          daysToGrow: 1
+          daysToGrow: 2
           canHarvest: 0
         - sprite: {fileID: 8535769642914098369, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
-          daysToGrow: 1
+          daysToGrow: 2
           canHarvest: 0
         - sprite: {fileID: -7390425146213612228, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
-          daysToGrow: 1
+          daysToGrow: 2
           canHarvest: 0
         - sprite: {fileID: -8260203823689047691, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
-          daysToGrow: 1
+          daysToGrow: 2
           canHarvest: 0
         - sprite: {fileID: -4033948150039621058, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
-          daysToGrow: 1
+          daysToGrow: 2
           canHarvest: 0
         - sprite: {fileID: -3150480795609139496, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
           daysToGrow: 1
@@ -72,20 +67,20 @@ MonoBehaviour:
           canHarvest: 1
         requiresWater: 1
         wiltSprite: {fileID: -2130848022206418948, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
-        regrowStageIndex: -1
-        harvestGoToStageIndex: -1
-        lastStageLoopToIndex: -1
-        daysToReturnAfterHarvest: -1
+        regrowStageIndex: 6
+        harvestGoToStageIndex: 6
+        lastStageLoopToIndex: 7
+        daysToReturnAfterHarvest: 4
         wiltOnSeasonChange: 1
     - rid: 8196223262934696416
       type: {class: HarvestModule, ns: , asm: Assembly-CSharp}
       data:
         harvestTool: 3
-        allowHandHarvest: 0
+        allowHandHarvest: 1
         additionalHarvestTools: []
         dropMode: 0
         harvestCausesDamage: 0
-        destroyOnHarvest: 1
+        destroyOnHarvest: 0
         oneHitDestroy: 0
         wrongToolPenalty: 0.3
     - rid: 8196223262934696417
@@ -94,31 +89,8 @@ MonoBehaviour:
         harvestDrops:
         - item: {fileID: 11400000, guid: 54c479402b017a64386f55e0e9a7169a, type: 2}
           minAmount: 2
-          maxAmount: 3
+          maxAmount: 4
           dropChance: 1
         deathDrops: []
         includeHarvestDropsOnDestroyWhenHarvestable: 0
-    - rid: 8196223262934696418
-      type: {class: HealthModule, ns: , asm: Assembly-CSharp}
-      data:
-        canTakeDamage: 1
-    - rid: 8196223262934696419
-      type: {class: ResourceHitReactionModule, ns: , asm: Assembly-CSharp}
-      data:
-        reactOnlyToHarvestTool: 1
-        useProceduralMotion: 1
-        flashColor: {r: 1, g: 0.9, b: 0.65, a: 1}
-        flashDuration: 0.12
-        scalePunch: 0.12
-        rotationPunch: 4
-        animatorHitTrigger: Hit
-    - rid: 8196223262934696420
-      type: {class: ExpRewardModule, ns: , asm: Assembly-CSharp}
-      data:
-        rewardExp: 10
-        sourceType: 1
-        requireKiller: 1
-    - rid: 8196223262934696421
-      type: {class: MortalModule, ns: , asm: Assembly-CSharp}
-      data:
-        destroyDelay: 0
+

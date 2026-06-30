@@ -15,11 +15,11 @@ MonoBehaviour:
   id: item_crop_radish
   keyName: item.crop.radish.name
   descKey: item.crop.radish.desc
-  icon: {fileID: 6850556480264846171, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
+  icon: {fileID: -2029464459588680703, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
   category: 3
   maxStack: 99
   buyPrice: 0
-  sellPrice: 34
+  sellPrice: 58
   baseStats:
     baseStats: []
   placementRule:
@@ -31,3 +31,4 @@ MonoBehaviour:
   references:
     version: 2
     RefIds: []
+

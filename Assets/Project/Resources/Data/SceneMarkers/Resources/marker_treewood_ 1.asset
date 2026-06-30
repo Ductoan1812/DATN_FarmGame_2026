@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: marker_treewood_ 1
   m_EditorClassIdentifier: 
   markerKind: 6
-  objectType: 2
+  objectType: 10
   entityData: {fileID: 11400000, guid: 78ffe4bb2cb449940b146407ca5f6689, type: 2}
   savePolicy: 0
   spawnGroupId: 
