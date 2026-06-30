@@ -15,11 +15,11 @@ MonoBehaviour:
   id: item_crop_asparagus
   keyName: item.crop.asparagus.name
   descKey: item.crop.asparagus.desc
-  icon: {fileID: -3812083719649620342, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
+  icon: {fileID: -2506596742231209967, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
   category: 3
   maxStack: 99
   buyPrice: 0
-  sellPrice: 38
+  sellPrice: 70
   baseStats:
     baseStats: []
   placementRule:
@@ -31,3 +31,4 @@ MonoBehaviour:
   references:
     version: 2
     RefIds: []
+

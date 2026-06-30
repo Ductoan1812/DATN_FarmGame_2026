@@ -25,12 +25,13 @@ public class LocalizationManager : MonoBehaviour
     private const string PlayerPrefsLangKey = "settings_language";
     private const string MissingKeysFolderName = "MissingKeys";
     private const string MissingVietnameseKeysFileName = "vi_missing_keys.txt";
+    private const string ProjectResourcesFolderName = "Project";
 
     private void Awake()
     {
         if (Instance != null && Instance != this)
         {
-            Destroy(gameObject);
+            Destroy(this);
             return;
         }
 
@@ -124,8 +125,8 @@ public class LocalizationManager : MonoBehaviour
 
     private void EnsureLocalizationFoldersExist()
     {
-        var resourcesPath = Path.Combine(Application.dataPath, "Resources");
-        var localizationPath = Path.Combine(resourcesPath, "Localization");
+        var resourcesPath = GetPreferredResourcesRootPath();
+        var localizationPath = Path.Combine(resourcesPath, resourcesFolder);
         var missingPath = Path.Combine(localizationPath, MissingKeysFolderName);
 
         if (!Directory.Exists(resourcesPath))
@@ -138,7 +139,10 @@ public class LocalizationManager : MonoBehaviour
 
     private void WriteMissingKeyFile()
     {
-        var missingKeysDirectory = Path.Combine(Application.dataPath, "Resources", "Localization", MissingKeysFolderName);
+        var missingKeysDirectory = Path.Combine(
+            GetPreferredResourcesRootPath(),
+            resourcesFolder,
+            MissingKeysFolderName);
         var currentLanguageFilePath = Path.Combine(
             missingKeysDirectory,
             $"{currentLanguage.ToString().ToLowerInvariant()}_missing_keys.txt");
@@ -157,6 +161,15 @@ public class LocalizationManager : MonoBehaviour
         {
             Debug.LogWarning($"[Localization] Could not write missing keys file: {ex.Message}");
         }
+    }
+
+    private static string GetPreferredResourcesRootPath()
+    {
+        var projectResourcesPath = Path.Combine(Application.dataPath, ProjectResourcesFolderName, "Resources");
+        if (Directory.Exists(projectResourcesPath))
+            return projectResourcesPath;
+
+        return Path.Combine(Application.dataPath, "Resources");
     }
 
 }

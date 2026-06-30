@@ -48,10 +48,14 @@ public abstract class ToolRuntime : IModuleRuntime, IHandleEvent<PrimaryActionEv
 
         // Tìm bridge trên actor → play animation
         var bridge = actorGO.GetComponent<ToolActionBridge>();
-        if (bridge == null || bridge.IsBusy)
+        if (bridge == null)
+        {
+            Debug.LogWarning($"[ToolRuntime] Không tìm thấy ToolActionBridge trên actor khi dùng {_data.toolType}.");
             return;
+        }
 
-        bridge.Request(e.actor, e.item, trigger);
+        if (!bridge.Request(e.actor, e.item, trigger))
+            Debug.Log($"[ToolRuntime] Bỏ qua {_data.toolType}: ToolActionBridge đang xử lý action trước đó.");
     }
 
     // ── AnimStrike: animation đến frame Strike → execute logic ─────────────────

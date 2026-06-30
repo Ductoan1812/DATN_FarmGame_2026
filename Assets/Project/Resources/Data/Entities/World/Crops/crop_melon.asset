@@ -13,9 +13,8 @@ MonoBehaviour:
   m_Name: crop_melon
   m_EditorClassIdentifier: 
   id: crop_melon
-  keyName: crop_melon
-  descKey: 
-  icon: {fileID: 0}
+  keyName: world.crop.melon.name
+  descKey: world.crop.melon.desc
   category: 9
   maxStack: 1
   buyPrice: 0
@@ -35,10 +34,6 @@ MonoBehaviour:
   - rid: 8196223262934696408
   - rid: 8196223262934696409
   - rid: 8196223262934696410
-  - rid: 8196223262934696411
-  - rid: 8196223262934696412
-  - rid: 8196223262934696413
-  - rid: 8196223262934696414
   references:
     version: 2
     RefIds:
@@ -47,22 +42,22 @@ MonoBehaviour:
       data:
         stages:
         - sprite: {fileID: 4985777796357885778, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
-          daysToGrow: 1
+          daysToGrow: 2
           canHarvest: 0
         - sprite: {fileID: -5431018840936565689, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
-          daysToGrow: 1
+          daysToGrow: 2
           canHarvest: 0
         - sprite: {fileID: 2791237337395160579, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
-          daysToGrow: 1
+          daysToGrow: 2
           canHarvest: 0
         - sprite: {fileID: -3943918545537627832, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
-          daysToGrow: 1
+          daysToGrow: 2
           canHarvest: 0
         - sprite: {fileID: 1646005206928650461, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
-          daysToGrow: 1
+          daysToGrow: 2
           canHarvest: 0
         - sprite: {fileID: 1890484804369733712, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
-          daysToGrow: 1
+          daysToGrow: 2
           canHarvest: 0
         - sprite: {fileID: 8298068539123624375, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
           daysToGrow: 1
@@ -81,7 +76,7 @@ MonoBehaviour:
       type: {class: HarvestModule, ns: , asm: Assembly-CSharp}
       data:
         harvestTool: 3
-        allowHandHarvest: 0
+        allowHandHarvest: 1
         additionalHarvestTools: []
         dropMode: 0
         harvestCausesDamage: 0
@@ -98,27 +93,4 @@ MonoBehaviour:
           dropChance: 1
         deathDrops: []
         includeHarvestDropsOnDestroyWhenHarvestable: 0
-    - rid: 8196223262934696411
-      type: {class: HealthModule, ns: , asm: Assembly-CSharp}
-      data:
-        canTakeDamage: 1
-    - rid: 8196223262934696412
-      type: {class: ResourceHitReactionModule, ns: , asm: Assembly-CSharp}
-      data:
-        reactOnlyToHarvestTool: 1
-        useProceduralMotion: 1
-        flashColor: {r: 1, g: 0.9, b: 0.65, a: 1}
-        flashDuration: 0.12
-        scalePunch: 0.12
-        rotationPunch: 4
-        animatorHitTrigger: Hit
-    - rid: 8196223262934696413
-      type: {class: ExpRewardModule, ns: , asm: Assembly-CSharp}
-      data:
-        rewardExp: 10
-        sourceType: 1
-        requireKiller: 1
-    - rid: 8196223262934696414
-      type: {class: MortalModule, ns: , asm: Assembly-CSharp}
-      data:
-        destroyDelay: 0
+

@@ -13,6 +13,8 @@ public class ShopModule : IModuleData
     public bool buysFromPlayer = true;
     public bool buysAllItems;
     public bool infiniteStock;
+    [Tooltip("When true, the merchant has unlimited funds and can always pay the player when buying items.")]
+    public bool infiniteMoney = true;
     public InventoryType stockInventoryType = InventoryType.Backpack;
     public List<EntityData> buyWhitelist = new();
 

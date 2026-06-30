@@ -15,11 +15,11 @@ MonoBehaviour:
   id: item_crop_corn
   keyName: item.crop.corn.name
   descKey: item.crop.corn.desc
-  icon: {fileID: 2373349242592443278, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
+  icon: {fileID: -6053543609646908961, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
   category: 3
   maxStack: 99
   buyPrice: 0
-  sellPrice: 62
+  sellPrice: 78
   baseStats:
     baseStats: []
   placementRule:
@@ -31,3 +31,4 @@ MonoBehaviour:
   references:
     version: 2
     RefIds: []
+

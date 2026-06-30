@@ -13,9 +13,8 @@ MonoBehaviour:
   m_Name: crop_cabbage
   m_EditorClassIdentifier: 
   id: crop_cabbage
-  keyName: crop_cabbage
-  descKey: 
-  icon: {fileID: 0}
+  keyName: world.crop.cabbage.name
+  descKey: world.crop.cabbage.desc
   category: 9
   maxStack: 1
   buyPrice: 0
@@ -35,10 +34,6 @@ MonoBehaviour:
   - rid: 8196223262934696317
   - rid: 8196223262934696318
   - rid: 8196223262934696319
-  - rid: 8196223262934696320
-  - rid: 8196223262934696321
-  - rid: 8196223262934696322
-  - rid: 8196223262934696323
   references:
     version: 2
     RefIds:
@@ -47,13 +42,13 @@ MonoBehaviour:
       data:
         stages:
         - sprite: {fileID: -4898036874343354164, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
-          daysToGrow: 1
+          daysToGrow: 2
           canHarvest: 0
         - sprite: {fileID: 3843515321614399396, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
-          daysToGrow: 1
+          daysToGrow: 2
           canHarvest: 0
         - sprite: {fileID: 5270635110760264938, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
-          daysToGrow: 1
+          daysToGrow: 2
           canHarvest: 0
         - sprite: {fileID: -9130011790729639447, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
           daysToGrow: 1
@@ -72,7 +67,7 @@ MonoBehaviour:
       type: {class: HarvestModule, ns: , asm: Assembly-CSharp}
       data:
         harvestTool: 3
-        allowHandHarvest: 0
+        allowHandHarvest: 1
         additionalHarvestTools: []
         dropMode: 0
         harvestCausesDamage: 0
@@ -89,27 +84,4 @@ MonoBehaviour:
           dropChance: 1
         deathDrops: []
         includeHarvestDropsOnDestroyWhenHarvestable: 0
-    - rid: 8196223262934696320
-      type: {class: HealthModule, ns: , asm: Assembly-CSharp}
-      data:
-        canTakeDamage: 1
-    - rid: 8196223262934696321
-      type: {class: ResourceHitReactionModule, ns: , asm: Assembly-CSharp}
-      data:
-        reactOnlyToHarvestTool: 1
-        useProceduralMotion: 1
-        flashColor: {r: 1, g: 0.9, b: 0.65, a: 1}
-        flashDuration: 0.12
-        scalePunch: 0.12
-        rotationPunch: 4
-        animatorHitTrigger: Hit
-    - rid: 8196223262934696322
-      type: {class: ExpRewardModule, ns: , asm: Assembly-CSharp}
-      data:
-        rewardExp: 10
-        sourceType: 1
-        requireKiller: 1
-    - rid: 8196223262934696323
-      type: {class: MortalModule, ns: , asm: Assembly-CSharp}
-      data:
-        destroyDelay: 0
+

@@ -3,7 +3,7 @@ using UnityEngine;
 
 /// <summary>
 /// Tracks all active sprinklers in the scene.
-/// GameManager ticks all registered sprinklers on NextDayEventPublish BEFORE crop growth.
+/// GameManager ticks registered sprinklers after new-day water has been reset.
 /// </summary>
 public class SprinklerRegistry
 {

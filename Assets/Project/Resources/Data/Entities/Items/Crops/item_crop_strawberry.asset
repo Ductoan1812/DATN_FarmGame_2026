@@ -15,11 +15,11 @@ MonoBehaviour:
   id: item_crop_strawberry
   keyName: item.crop.strawberry.name
   descKey: item.crop.strawberry.desc
-  icon: {fileID: 3501278653505447337, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
+  icon: {fileID: -6597601255816890543, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
   category: 3
   maxStack: 99
   buyPrice: 0
-  sellPrice: 78
+  sellPrice: 85
   baseStats:
     baseStats: []
   placementRule:
@@ -31,3 +31,4 @@ MonoBehaviour:
   references:
     version: 2
     RefIds: []
+

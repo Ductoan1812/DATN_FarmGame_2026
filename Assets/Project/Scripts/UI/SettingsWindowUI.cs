@@ -17,6 +17,8 @@ public class SettingsWindowUI : MonoBehaviour
     private const string KeyFullscreen = "settings_fullscreen";
     private const string KeyVsync = "settings_vsync";
     private const string KeyTargetFps = "settings_target_fps";
+    private const string KeyResolutionIndex = "settings_resolution_index";
+    private const string KeyWindowMode = "settings_window_mode";
 
     [Header("Volume Sliders")]
     [SerializeField] private Slider sliderMaster;
@@ -36,8 +38,24 @@ public class SettingsWindowUI : MonoBehaviour
     [Header("Input")]
     [SerializeField] private Button interactKeyButton;
     [SerializeField] private TMP_Text interactKeyValueLabel;
+    [SerializeField] private Button moveUpKeyButton;
+    [SerializeField] private TMP_Text moveUpKeyValueLabel;
+    [SerializeField] private Button moveDownKeyButton;
+    [SerializeField] private TMP_Text moveDownKeyValueLabel;
+    [SerializeField] private Button moveLeftKeyButton;
+    [SerializeField] private TMP_Text moveLeftKeyValueLabel;
+    [SerializeField] private Button moveRightKeyButton;
+    [SerializeField] private TMP_Text moveRightKeyValueLabel;
+    [SerializeField] private Button primaryActionKeyButton;
+    [SerializeField] private TMP_Text primaryActionKeyValueLabel;
+    [SerializeField] private Button secondaryActionKeyButton;
+    [SerializeField] private TMP_Text secondaryActionKeyValueLabel;
 
     [Header("Display")]
+    [SerializeField] private Button resolutionButton;
+    [SerializeField] private TMP_Text resolutionValueLabel;
+    [SerializeField] private Button windowModeButton;
+    [SerializeField] private TMP_Text windowModeValueLabel;
     [SerializeField] private Toggle fullscreenToggle;
     [SerializeField] private Toggle vsyncToggle;
     [SerializeField] private Button targetFpsButton;
@@ -61,7 +79,8 @@ public class SettingsWindowUI : MonoBehaviour
     [SerializeField] private string mixerParamSfx = "VolSfx";
 
     private bool listenersRegistered;
-    private bool waitingForInteractKey;
+    private GameplayInputAction? waitingForInputAction;
+    private ResolutionOption[] resolutionOptions;
 
     private void OnEnable()
     {
@@ -75,28 +94,28 @@ public class SettingsWindowUI : MonoBehaviour
     private void OnDisable()
     {
         UnregisterListeners();
-        waitingForInteractKey = false;
+        waitingForInputAction = null;
     }
 
     private void Update()
     {
-        if (!waitingForInteractKey)
+        if (!waitingForInputAction.HasValue)
             return;
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            waitingForInteractKey = false;
-            RefreshInteractKeyLabel();
+            waitingForInputAction = null;
+            RefreshInputKeyLabels();
             return;
         }
 
         if (!Input.anyKeyDown || !TryReadPressedKeyboardKey(out var key))
             return;
 
-        GameplayInputSettings.SetInteractKey(key);
+        GameplayInputSettings.SetKey(waitingForInputAction.Value, key);
         PlayerPrefs.Save();
-        waitingForInteractKey = false;
-        RefreshInteractKeyLabel();
+        waitingForInputAction = null;
+        RefreshInputKeyLabels();
     }
 
     private void AutoFindRefs()
@@ -112,6 +131,22 @@ public class SettingsWindowUI : MonoBehaviour
         languageValueLabel ??= MenuWindowShellUI.FindDeepChild(transform, "LanguageValue")?.GetComponent<TMP_Text>();
         interactKeyButton ??= MenuWindowShellUI.FindDeepChild(transform, "InteractKeyButton")?.GetComponent<Button>();
         interactKeyValueLabel ??= MenuWindowShellUI.FindDeepChild(transform, "InteractKeyValue")?.GetComponent<TMP_Text>();
+        moveUpKeyButton ??= MenuWindowShellUI.FindDeepChild(transform, "MoveUpKeyButton")?.GetComponent<Button>();
+        moveUpKeyValueLabel ??= MenuWindowShellUI.FindDeepChild(transform, "MoveUpKeyValue")?.GetComponent<TMP_Text>();
+        moveDownKeyButton ??= MenuWindowShellUI.FindDeepChild(transform, "MoveDownKeyButton")?.GetComponent<Button>();
+        moveDownKeyValueLabel ??= MenuWindowShellUI.FindDeepChild(transform, "MoveDownKeyValue")?.GetComponent<TMP_Text>();
+        moveLeftKeyButton ??= MenuWindowShellUI.FindDeepChild(transform, "MoveLeftKeyButton")?.GetComponent<Button>();
+        moveLeftKeyValueLabel ??= MenuWindowShellUI.FindDeepChild(transform, "MoveLeftKeyValue")?.GetComponent<TMP_Text>();
+        moveRightKeyButton ??= MenuWindowShellUI.FindDeepChild(transform, "MoveRightKeyButton")?.GetComponent<Button>();
+        moveRightKeyValueLabel ??= MenuWindowShellUI.FindDeepChild(transform, "MoveRightKeyValue")?.GetComponent<TMP_Text>();
+        primaryActionKeyButton ??= MenuWindowShellUI.FindDeepChild(transform, "PrimaryActionKeyButton")?.GetComponent<Button>();
+        primaryActionKeyValueLabel ??= MenuWindowShellUI.FindDeepChild(transform, "PrimaryActionKeyValue")?.GetComponent<TMP_Text>();
+        secondaryActionKeyButton ??= MenuWindowShellUI.FindDeepChild(transform, "SecondaryActionKeyButton")?.GetComponent<Button>();
+        secondaryActionKeyValueLabel ??= MenuWindowShellUI.FindDeepChild(transform, "SecondaryActionKeyValue")?.GetComponent<TMP_Text>();
+        resolutionButton ??= MenuWindowShellUI.FindDeepChild(transform, "ResolutionButton")?.GetComponent<Button>();
+        resolutionValueLabel ??= MenuWindowShellUI.FindDeepChild(transform, "ResolutionValue")?.GetComponent<TMP_Text>();
+        windowModeButton ??= MenuWindowShellUI.FindDeepChild(transform, "WindowModeButton")?.GetComponent<Button>();
+        windowModeValueLabel ??= MenuWindowShellUI.FindDeepChild(transform, "WindowModeValue")?.GetComponent<TMP_Text>();
         fullscreenToggle ??= MenuWindowShellUI.FindDeepChild(transform, "FullscreenToggle")?.GetComponent<Toggle>();
         vsyncToggle ??= MenuWindowShellUI.FindDeepChild(transform, "VsyncToggle")?.GetComponent<Toggle>();
         targetFpsButton ??= MenuWindowShellUI.FindDeepChild(transform, "TargetFpsButton")?.GetComponent<Button>();
@@ -126,11 +161,16 @@ public class SettingsWindowUI : MonoBehaviour
 
     private void EnsureBasicLayout()
     {
-        // "SettingsLayoutV2" marker: chỉ tồn tại khi layout được build bởi code mới
-        // (slider dùng offsetMin/offsetMax đúng). Layout cũ từ scene sẽ không có marker này.
         bool hasRequiredLayout = MenuWindowShellUI.FindDeepChild(transform, "SettingsLayoutV2") != null
             && MenuWindowShellUI.FindDeepChild(transform, "SliderMaster") != null
-            && MenuWindowShellUI.FindDeepChild(transform, "InteractKeyButton") != null
+            && MenuWindowShellUI.FindDeepChild(transform, "MoveUpKeyButton") != null
+            && MenuWindowShellUI.FindDeepChild(transform, "MoveDownKeyButton") != null
+            && MenuWindowShellUI.FindDeepChild(transform, "MoveLeftKeyButton") != null
+            && MenuWindowShellUI.FindDeepChild(transform, "MoveRightKeyButton") != null
+            && MenuWindowShellUI.FindDeepChild(transform, "PrimaryActionKeyButton") != null
+            && MenuWindowShellUI.FindDeepChild(transform, "SecondaryActionKeyButton") != null
+            && MenuWindowShellUI.FindDeepChild(transform, "ResolutionButton") != null
+            && MenuWindowShellUI.FindDeepChild(transform, "WindowModeButton") != null
             && MenuWindowShellUI.FindDeepChild(transform, "FullscreenToggle") != null
             && MenuWindowShellUI.FindDeepChild(transform, "VsyncToggle") != null
             && MenuWindowShellUI.FindDeepChild(transform, "TargetFpsButton") != null
@@ -140,40 +180,13 @@ public class SettingsWindowUI : MonoBehaviour
 
         if (hasRequiredLayout)
         {
+            SetLocalizedTitle(transform);
             AutoFindRefs();
             ApplyContextualButtonVisibility();
             return;
         }
 
-        ClearGeneratedRefs();
-
-        MenuWindowShellUI.ClearChildren(transform);
-
-        // Marker để phát hiện layout V2 trong lần OnEnable tiếp theo
-        var markerGo = new GameObject("SettingsLayoutV2");
-        markerGo.transform.SetParent(transform, false);
-
-        var body = MenuWindowShellUI.BuildShell(transform, string.Empty, new Vector2(0f, -42f), new Vector2(-96f, -128f));
-        SetLocalizedTitle(body.parent);
-        var bodyFrame = MenuWindowShellUI.CreateImage("SettingsBodyFrame", body, new Color(0.14f, 0.08f, 0.03f, 0.12f));
-        MenuWindowShellUI.Stretch(bodyFrame.rectTransform, new Vector2(18f, 18f), new Vector2(-18f, -18f));
-
-        CreateSliderRow(bodyFrame.transform, "Master", LocalizationKeys.UiSettingsAudioMaster, -34f);
-        CreateSliderRow(bodyFrame.transform, "Music", LocalizationKeys.UiSettingsAudioMusic, -104f);
-        CreateSliderRow(bodyFrame.transform, "Sfx", LocalizationKeys.UiSettingsAudioSfx, -174f);
-        CreateLanguageRow(bodyFrame.transform, -244f);
-        CreateInteractKeyRow(bodyFrame.transform, -304f);
-        CreateToggleRow(bodyFrame.transform, "Fullscreen", LocalizationKeys.UiSettingsFullscreen, -364f, true);
-        CreateToggleRow(bodyFrame.transform, "Vsync", LocalizationKeys.UiSettingsVsync, -424f, false);
-        CreateButtonValueRow(bodyFrame.transform, "TargetFps", LocalizationKeys.UiSettingsFps, "60 FPS", -484f);
-
-        CreateLocalizedButton("SaveButton", transform, LocalizationKeys.UiSettingsSave, new Vector2(-400f, 34f));
-        CreateLocalizedButton("CloseButton", transform, LocalizationKeys.UiSettingsClose, new Vector2(-200f, 34f));
-        CreateResetRow(transform, new Vector2(0f, 34f));
-        CreateLocalizedButton("BackToMenuButton", transform, LocalizationKeys.UiSettingsMainMenu, new Vector2(200f, 34f));
-        CreateLocalizedButton("QuitButton", transform, LocalizationKeys.UiSettingsQuit, new Vector2(400f, 34f));
-        AutoFindRefs();
-        ApplyContextualButtonVisibility();
+        Debug.LogWarning($"[SettingsWindowUI] Missing authored layout on '{name}'. No supported layout source was found.");
     }
 
     private void ClearGeneratedRefs()
@@ -189,6 +202,22 @@ public class SettingsWindowUI : MonoBehaviour
         languageValueLabel = null;
         interactKeyButton = null;
         interactKeyValueLabel = null;
+        moveUpKeyButton = null;
+        moveUpKeyValueLabel = null;
+        moveDownKeyButton = null;
+        moveDownKeyValueLabel = null;
+        moveLeftKeyButton = null;
+        moveLeftKeyValueLabel = null;
+        moveRightKeyButton = null;
+        moveRightKeyValueLabel = null;
+        primaryActionKeyButton = null;
+        primaryActionKeyValueLabel = null;
+        secondaryActionKeyButton = null;
+        secondaryActionKeyValueLabel = null;
+        resolutionButton = null;
+        resolutionValueLabel = null;
+        windowModeButton = null;
+        windowModeValueLabel = null;
         fullscreenToggle = null;
         vsyncToggle = null;
         targetFpsButton = null;
@@ -229,7 +258,10 @@ public class SettingsWindowUI : MonoBehaviour
 
         RefreshLanguageLabel();
 
-        bool fullscreen = PlayerPrefs.GetInt(KeyFullscreen, Screen.fullScreen ? 1 : 0) == 1;
+        CacheResolutionOptions();
+        int resolutionIndex = PlayerPrefs.GetInt(KeyResolutionIndex, GetClosestResolutionIndex(Screen.width, Screen.height));
+        DisplayWindowMode windowMode = GetSavedWindowMode();
+        bool fullscreen = windowMode != DisplayWindowMode.Windowed;
         bool vsync = PlayerPrefs.GetInt(KeyVsync, QualitySettings.vSyncCount > 0 ? 1 : 0) == 1;
         int fps = PlayerPrefs.GetInt(KeyTargetFps, 60);
 
@@ -238,11 +270,13 @@ public class SettingsWindowUI : MonoBehaviour
         if (vsyncToggle != null)
             vsyncToggle.SetIsOnWithoutNotify(vsync);
 
-        Screen.fullScreen = fullscreen;
+        ApplyResolutionAndWindowMode(resolutionIndex, windowMode, persistResolution: false, persistWindowMode: false);
         QualitySettings.vSyncCount = vsync ? 1 : 0;
         ApplyTargetFrameRate(fps, vsync);
+        RefreshResolutionLabel();
+        RefreshWindowModeLabel();
         RefreshTargetFpsLabel();
-        RefreshInteractKeyLabel();
+        RefreshInputKeyLabels();
     }
 
     private void RegisterListeners()
@@ -255,6 +289,14 @@ public class SettingsWindowUI : MonoBehaviour
         if (languageDropdown != null) languageDropdown.onValueChanged.AddListener(OnLanguageChanged);
         if (languageButton != null) languageButton.onClick.AddListener(CycleLanguage);
         if (interactKeyButton != null) interactKeyButton.onClick.AddListener(StartInteractKeyRebind);
+        if (moveUpKeyButton != null) moveUpKeyButton.onClick.AddListener(StartMoveUpKeyRebind);
+        if (moveDownKeyButton != null) moveDownKeyButton.onClick.AddListener(StartMoveDownKeyRebind);
+        if (moveLeftKeyButton != null) moveLeftKeyButton.onClick.AddListener(StartMoveLeftKeyRebind);
+        if (moveRightKeyButton != null) moveRightKeyButton.onClick.AddListener(StartMoveRightKeyRebind);
+        if (primaryActionKeyButton != null) primaryActionKeyButton.onClick.AddListener(StartPrimaryActionKeyRebind);
+        if (secondaryActionKeyButton != null) secondaryActionKeyButton.onClick.AddListener(StartSecondaryActionKeyRebind);
+        if (resolutionButton != null) resolutionButton.onClick.AddListener(CycleResolution);
+        if (windowModeButton != null) windowModeButton.onClick.AddListener(CycleWindowMode);
         if (fullscreenToggle != null) fullscreenToggle.onValueChanged.AddListener(OnFullscreenChanged);
         if (vsyncToggle != null) vsyncToggle.onValueChanged.AddListener(OnVsyncChanged);
         if (targetFpsButton != null) targetFpsButton.onClick.AddListener(CycleTargetFps);
@@ -277,6 +319,14 @@ public class SettingsWindowUI : MonoBehaviour
         if (languageDropdown != null) languageDropdown.onValueChanged.RemoveListener(OnLanguageChanged);
         if (languageButton != null) languageButton.onClick.RemoveListener(CycleLanguage);
         if (interactKeyButton != null) interactKeyButton.onClick.RemoveListener(StartInteractKeyRebind);
+        if (moveUpKeyButton != null) moveUpKeyButton.onClick.RemoveListener(StartMoveUpKeyRebind);
+        if (moveDownKeyButton != null) moveDownKeyButton.onClick.RemoveListener(StartMoveDownKeyRebind);
+        if (moveLeftKeyButton != null) moveLeftKeyButton.onClick.RemoveListener(StartMoveLeftKeyRebind);
+        if (moveRightKeyButton != null) moveRightKeyButton.onClick.RemoveListener(StartMoveRightKeyRebind);
+        if (primaryActionKeyButton != null) primaryActionKeyButton.onClick.RemoveListener(StartPrimaryActionKeyRebind);
+        if (secondaryActionKeyButton != null) secondaryActionKeyButton.onClick.RemoveListener(StartSecondaryActionKeyRebind);
+        if (resolutionButton != null) resolutionButton.onClick.RemoveListener(CycleResolution);
+        if (windowModeButton != null) windowModeButton.onClick.RemoveListener(CycleWindowMode);
         if (fullscreenToggle != null) fullscreenToggle.onValueChanged.RemoveListener(OnFullscreenChanged);
         if (vsyncToggle != null) vsyncToggle.onValueChanged.RemoveListener(OnVsyncChanged);
         if (targetFpsButton != null) targetFpsButton.onClick.RemoveListener(CycleTargetFps);
@@ -319,6 +369,8 @@ public class SettingsWindowUI : MonoBehaviour
         var lang = langIndex == 1 ? Language.En : Language.Vi;
         LocalizationManager.Instance?.SetLanguage(lang);
         RefreshLanguageLabel();
+        RefreshWindowModeLabel();
+        RefreshTargetFpsLabel();
         PlayerPrefs.Save();
     }
 
@@ -332,8 +384,12 @@ public class SettingsWindowUI : MonoBehaviour
 
     private void OnFullscreenChanged(bool value)
     {
-        Screen.fullScreen = value;
+        var mode = value ? DisplayWindowMode.BorderlessFullscreen : DisplayWindowMode.Windowed;
+        int resolutionIndex = PlayerPrefs.GetInt(KeyResolutionIndex, GetClosestResolutionIndex(Screen.width, Screen.height));
+        ApplyResolutionAndWindowMode(resolutionIndex, mode, persistResolution: false, persistWindowMode: true);
         PlayerPrefs.SetInt(KeyFullscreen, value ? 1 : 0);
+        RefreshWindowModeLabel();
+        RefreshResolutionLabel();
         PlayerPrefs.Save();
     }
 
@@ -368,10 +424,13 @@ public class SettingsWindowUI : MonoBehaviour
         PlayerPrefs.SetFloat(KeyMusic, 1f);
         PlayerPrefs.SetFloat(KeySfx, 1f);
         PlayerPrefs.SetInt(KeyLang, 0);
-        PlayerPrefs.SetInt(KeyFullscreen, Screen.fullScreen ? 1 : 0);
+        CacheResolutionOptions();
+        PlayerPrefs.SetInt(KeyResolutionIndex, GetClosestResolutionIndex(Screen.currentResolution.width, Screen.currentResolution.height));
+        PlayerPrefs.SetInt(KeyWindowMode, (int)DisplayWindowMode.Windowed);
+        PlayerPrefs.SetInt(KeyFullscreen, 0);
         PlayerPrefs.SetInt(KeyVsync, 0);
         PlayerPrefs.SetInt(KeyTargetFps, 60);
-        GameplayInputSettings.SetInteractKey(KeyCode.E);
+        GameplayInputSettings.ResetDefaults();
         PlayerPrefs.Save();
         LoadSettings();
     }
@@ -392,6 +451,22 @@ public class SettingsWindowUI : MonoBehaviour
         ApplyContextualButtonVisibility();
     }
 
+    public void RebuildMainMenuAuthoredLayout()
+    {
+        Transform content = MenuWindowShellUI.FindDeepChild(transform, "Content");
+        if (content == null)
+        {
+            Debug.LogWarning($"[SettingsWindowUI] Cannot rebuild main menu layout on '{name}' because 'Content' was not found.");
+            return;
+        }
+
+        ClearGeneratedRefs();
+        BuildMainMenuSettingsLayout(content);
+        SetLocalizedTitle(transform);
+        AutoFindRefs();
+        ApplyContextualButtonVisibility();
+    }
+
     private void Close()
     {
         gameObject.SetActive(false);
@@ -399,11 +474,24 @@ public class SettingsWindowUI : MonoBehaviour
 
     private void StartInteractKeyRebind()
     {
-        waitingForInteractKey = true;
-        if (interactKeyValueLabel != null)
-            interactKeyValueLabel.text = LocalizationManager.Instance != null
+        StartKeyRebind(GameplayInputAction.SecondaryAction);
+    }
+
+    private void StartMoveUpKeyRebind() => StartKeyRebind(GameplayInputAction.MoveUp);
+    private void StartMoveDownKeyRebind() => StartKeyRebind(GameplayInputAction.MoveDown);
+    private void StartMoveLeftKeyRebind() => StartKeyRebind(GameplayInputAction.MoveLeft);
+    private void StartMoveRightKeyRebind() => StartKeyRebind(GameplayInputAction.MoveRight);
+    private void StartPrimaryActionKeyRebind() => StartKeyRebind(GameplayInputAction.PrimaryAction);
+    private void StartSecondaryActionKeyRebind() => StartKeyRebind(GameplayInputAction.SecondaryAction);
+
+    private void StartKeyRebind(GameplayInputAction action)
+    {
+        waitingForInputAction = action;
+        var label = GetInputValueLabel(action);
+        if (label != null)
+            label.text = LocalizationManager.Instance != null
                 ? LocalizationManager.Instance.GetText(LocalizationKeys.UiSettingsRebindPrompt)
-                : "Nhấn phím...";
+                : "Nhan phim...";
     }
 
     private void BackToMenu()
@@ -466,6 +554,57 @@ public class SettingsWindowUI : MonoBehaviour
         Application.targetFrameRate = vsyncEnabled ? -1 : fps;
     }
 
+    private void CycleResolution()
+    {
+        CacheResolutionOptions();
+        if (resolutionOptions == null || resolutionOptions.Length == 0)
+            return;
+
+        int current = PlayerPrefs.GetInt(KeyResolutionIndex, GetClosestResolutionIndex(Screen.width, Screen.height));
+        int next = (current + 1) % resolutionOptions.Length;
+        ApplyResolutionAndWindowMode(next, GetSavedWindowMode(), persistResolution: true, persistWindowMode: false);
+        RefreshResolutionLabel();
+        PlayerPrefs.Save();
+    }
+
+    private void CycleWindowMode()
+    {
+        var next = GetSavedWindowMode() switch
+        {
+            DisplayWindowMode.Windowed => DisplayWindowMode.BorderlessFullscreen,
+            DisplayWindowMode.BorderlessFullscreen => DisplayWindowMode.ExclusiveFullscreen,
+            _ => DisplayWindowMode.Windowed
+        };
+
+        int resolutionIndex = PlayerPrefs.GetInt(KeyResolutionIndex, GetClosestResolutionIndex(Screen.width, Screen.height));
+        ApplyResolutionAndWindowMode(resolutionIndex, next, persistResolution: false, persistWindowMode: true);
+        if (fullscreenToggle != null)
+            fullscreenToggle.SetIsOnWithoutNotify(next != DisplayWindowMode.Windowed);
+        RefreshWindowModeLabel();
+        RefreshResolutionLabel();
+        PlayerPrefs.Save();
+    }
+
+    private void RefreshResolutionLabel()
+    {
+        if (resolutionValueLabel == null)
+            return;
+
+        CacheResolutionOptions();
+        int index = Mathf.Clamp(PlayerPrefs.GetInt(KeyResolutionIndex, GetClosestResolutionIndex(Screen.width, Screen.height)), 0, Mathf.Max(0, resolutionOptions.Length - 1));
+        resolutionValueLabel.text = resolutionOptions != null && resolutionOptions.Length > 0
+            ? resolutionOptions[index].Label
+            : $"{Screen.width} x {Screen.height}";
+    }
+
+    private void RefreshWindowModeLabel()
+    {
+        if (windowModeValueLabel == null)
+            return;
+
+        windowModeValueLabel.text = GetWindowModeDisplayName(GetSavedWindowMode());
+    }
+
     private void RefreshTargetFpsLabel()
     {
         if (targetFpsValueLabel == null) return;
@@ -488,11 +627,37 @@ public class SettingsWindowUI : MonoBehaviour
         languageValueLabel.text = PlayerPrefs.GetInt(KeyLang, 0) == 1 ? "English" : "Tiếng Việt";
     }
 
-    private void RefreshInteractKeyLabel()
+    private void RefreshInputKeyLabels()
     {
-        if (interactKeyValueLabel == null) return;
-        var key = GameplayInputSettings.GetInteractKey();
-        interactKeyValueLabel.text = GameplayInputSettings.FormatKey(key);
+        SetInputKeyLabel(moveUpKeyValueLabel, GameplayInputAction.MoveUp);
+        SetInputKeyLabel(moveDownKeyValueLabel, GameplayInputAction.MoveDown);
+        SetInputKeyLabel(moveLeftKeyValueLabel, GameplayInputAction.MoveLeft);
+        SetInputKeyLabel(moveRightKeyValueLabel, GameplayInputAction.MoveRight);
+        SetInputKeyLabel(primaryActionKeyValueLabel, GameplayInputAction.PrimaryAction);
+        SetInputKeyLabel(secondaryActionKeyValueLabel, GameplayInputAction.SecondaryAction);
+        SetInputKeyLabel(interactKeyValueLabel, GameplayInputAction.SecondaryAction);
+    }
+
+    private static void SetInputKeyLabel(TMP_Text label, GameplayInputAction action)
+    {
+        if (label == null)
+            return;
+
+        label.text = GameplayInputSettings.FormatKey(GameplayInputSettings.GetKey(action));
+    }
+
+    private TMP_Text GetInputValueLabel(GameplayInputAction action)
+    {
+        return action switch
+        {
+            GameplayInputAction.MoveUp => moveUpKeyValueLabel,
+            GameplayInputAction.MoveDown => moveDownKeyValueLabel,
+            GameplayInputAction.MoveLeft => moveLeftKeyValueLabel,
+            GameplayInputAction.MoveRight => moveRightKeyValueLabel,
+            GameplayInputAction.PrimaryAction => primaryActionKeyValueLabel,
+            GameplayInputAction.SecondaryAction => secondaryActionKeyValueLabel ?? interactKeyValueLabel,
+            _ => null
+        };
     }
 
     private void ApplyContextualButtonVisibility()
@@ -518,6 +683,99 @@ public class SettingsWindowUI : MonoBehaviour
             var rect = closeButton.GetComponent<RectTransform>();
             if (rect != null)
                 rect.anchoredPosition = new Vector2(-100f, 34f);
+        }
+    }
+
+    private void BuildMainMenuSettingsLayout(Transform content)
+    {
+        if (content == null)
+            return;
+
+        var contentRect = content as RectTransform;
+        if (contentRect != null)
+            contentRect.sizeDelta = new Vector2(contentRect.sizeDelta.x, 1120f);
+
+        var verticalLayout = content.GetComponent<VerticalLayoutGroup>();
+        if (verticalLayout != null)
+            verticalLayout.enabled = false;
+
+        var existing = MenuWindowShellUI.FindDeepChild(content, "SettingsLayoutV2");
+        if (existing != null)
+            DestroyChild(existing.gameObject);
+
+        var layout = CreateUiObject("SettingsLayoutV2", content);
+        SetRect(layout, new Vector2(0f, 1f), new Vector2(1f, 1f), new Vector2(0.5f, 1f), Vector2.zero, new Vector2(-24f, 1120f));
+
+        float y = -12f;
+        CreateSliderRow(layout, "Master", LocalizationKeys.UiSettingsAudioMaster, y);
+        y -= 64f;
+        CreateSliderRow(layout, "Music", LocalizationKeys.UiSettingsAudioMusic, y);
+        y -= 64f;
+        CreateSliderRow(layout, "Sfx", LocalizationKeys.UiSettingsAudioSfx, y);
+        y -= 72f;
+        CreateLanguageRow(layout, y);
+        y -= 56f;
+        CreateInputKeyRow(layout, "MoveUp", LocalizationKeys.UiSettingsMoveUp, "W", y, "MoveUpKeyButton", "MoveUpKeyValue");
+        y -= 56f;
+        CreateInputKeyRow(layout, "MoveDown", LocalizationKeys.UiSettingsMoveDown, "S", y, "MoveDownKeyButton", "MoveDownKeyValue");
+        y -= 56f;
+        CreateInputKeyRow(layout, "MoveLeft", LocalizationKeys.UiSettingsMoveLeft, "A", y, "MoveLeftKeyButton", "MoveLeftKeyValue");
+        y -= 56f;
+        CreateInputKeyRow(layout, "MoveRight", LocalizationKeys.UiSettingsMoveRight, "D", y, "MoveRightKeyButton", "MoveRightKeyValue");
+        y -= 56f;
+        CreateInputKeyRow(layout, "PrimaryAction", LocalizationKeys.UiSettingsPrimaryAction, "Space", y, "PrimaryActionKeyButton", "PrimaryActionKeyValue");
+        y -= 56f;
+        CreateInputKeyRow(layout, "SecondaryAction", LocalizationKeys.UiSettingsSecondaryAction, "E", y, "SecondaryActionKeyButton", "SecondaryActionKeyValue");
+        y -= 56f;
+        CreateButtonValueRow(layout, "Resolution", LocalizationKeys.UiSettingsResolution, "1920 x 1080", y, "ResolutionButton", "ResolutionValue");
+        y -= 56f;
+        CreateButtonValueRow(layout, "WindowMode", LocalizationKeys.UiSettingsWindowMode, "Windowed", y, "WindowModeButton", "WindowModeValue");
+        y -= 56f;
+        CreateToggleRow(layout, "Fullscreen", LocalizationKeys.UiSettingsFullscreen, y, true);
+        y -= 56f;
+        CreateToggleRow(layout, "Vsync", LocalizationKeys.UiSettingsVsync, y, false);
+        y -= 56f;
+        CreateButtonValueRow(layout, "TargetFps", LocalizationKeys.UiSettingsFps, "60 FPS", y, "TargetFpsButton", "TargetFpsValue");
+
+        CreateResetRow(layout, new Vector2(120f, 34f));
+        CreateLocalizedButton("CloseButton", layout, LocalizationKeys.UiSettingsClose, new Vector2(-120f, 34f));
+        CreateLocalizedButton("SaveButton", layout, LocalizationKeys.UiSettingsSave, new Vector2(-300f, 34f));
+        CreateLocalizedButton("BackToMenuButton", layout, LocalizationKeys.UiSettingsMainMenu, new Vector2(300f, 34f));
+        CreateLocalizedButton("QuitButton", layout, LocalizationKeys.UiSettingsQuit, new Vector2(480f, 34f));
+
+        UiTextStyleUtility.ApplyRobotoToChildren(layout);
+        RefreshGeneratedToggles(layout);
+    }
+
+    private static void RefreshGeneratedToggles(Transform layout)
+    {
+        if (layout == null)
+            return;
+
+        ConfigureGeneratedToggle(layout, "FullscreenToggle");
+        ConfigureGeneratedToggle(layout, "VsyncToggle");
+    }
+
+    private static void ConfigureGeneratedToggle(Transform layout, string toggleName)
+    {
+        var toggle = MenuWindowShellUI.FindDeepChild(layout, toggleName)?.GetComponent<Toggle>();
+        if (toggle == null)
+            return;
+
+        var background = MenuWindowShellUI.FindDeepChild(toggle.transform, "Background")?.GetComponent<Image>();
+        var checkmark = MenuWindowShellUI.FindDeepChild(toggle.transform, "Checkmark")?.GetComponent<Image>();
+        if (background == null || checkmark == null)
+            return;
+
+        toggle.onValueChanged.RemoveListener(UpdateVisual);
+        toggle.onValueChanged.AddListener(UpdateVisual);
+        UpdateVisual(toggle.isOn);
+
+        void UpdateVisual(bool isOn)
+        {
+            background.color = isOn ? MenuWindowShellUI.AccentColor : MenuWindowShellUI.SurfaceColor;
+            checkmark.enabled = isOn;
+            checkmark.color = MenuWindowShellUI.AccentSoftColor;
         }
     }
 
@@ -600,6 +858,18 @@ public class SettingsWindowUI : MonoBehaviour
         CreateButtonValueRow(parent, "InteractKey", LocalizationKeys.UiSettingsInteractKey, "E", y, "InteractKeyButton", "InteractKeyValue");
     }
 
+    private static void CreateInputKeyRow(
+        Transform parent,
+        string key,
+        string labelKey,
+        string value,
+        float y,
+        string buttonName,
+        string valueName)
+    {
+        CreateButtonValueRow(parent, key, labelKey, value, y, buttonName, valueName);
+    }
+
     private static void CreateButtonValueRow(Transform parent, string key, string labelKey, string value, float y, string buttonName = null, string valueName = null)
     {
         var row = CreateUiObject($"{key}Row", parent);
@@ -633,6 +903,7 @@ public class SettingsWindowUI : MonoBehaviour
 
         var background = CreateImage("Background", toggleRoot, MenuWindowShellUI.SurfaceColor);
         Stretch(background.rectTransform, Vector2.zero, Vector2.zero);
+        background.type = Image.Type.Sliced;
 
         var checkmark = CreateImage("Checkmark", background.transform, MenuWindowShellUI.AccentSoftColor);
         SetRect(checkmark.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(36f, 22f));
@@ -713,8 +984,136 @@ public class SettingsWindowUI : MonoBehaviour
 
     private static void SetLocalizedTitle(Transform root)
     {
-        var titleText = MenuWindowShellUI.FindDeepChild(root, "TitleText")?.GetComponent<TMP_Text>();
+        var titleText = MenuWindowShellUI.FindDeepChild(root, "TitleText")?.GetComponent<TMP_Text>()
+            ?? MenuWindowShellUI.FindDeepChild(root, "TitleName")?.GetComponent<TMP_Text>();
         if (titleText != null)
             AddLocalizedText(titleText, LocalizationKeys.UiSettingsTitle);
+    }
+
+    private void CacheResolutionOptions()
+    {
+        if (resolutionOptions != null && resolutionOptions.Length > 0)
+            return;
+
+        var options = new List<ResolutionOption>();
+        var seen = new HashSet<string>();
+        var resolutions = Screen.resolutions;
+
+        for (int i = resolutions.Length - 1; i >= 0; i--)
+        {
+            var resolution = resolutions[i];
+            string key = $"{resolution.width}x{resolution.height}";
+            if (!seen.Add(key))
+                continue;
+
+            options.Add(new ResolutionOption(resolution.width, resolution.height));
+        }
+
+        if (options.Count == 0)
+            options.Add(new ResolutionOption(Screen.width, Screen.height));
+
+        resolutionOptions = options.ToArray();
+    }
+
+    private int GetClosestResolutionIndex(int width, int height)
+    {
+        CacheResolutionOptions();
+        if (resolutionOptions == null || resolutionOptions.Length == 0)
+            return 0;
+
+        int bestIndex = 0;
+        int bestScore = int.MaxValue;
+
+        for (int i = 0; i < resolutionOptions.Length; i++)
+        {
+            int score = Mathf.Abs(resolutionOptions[i].Width - width) + Mathf.Abs(resolutionOptions[i].Height - height);
+            if (score >= bestScore)
+                continue;
+
+            bestScore = score;
+            bestIndex = i;
+        }
+
+        return bestIndex;
+    }
+
+    private void ApplyResolutionAndWindowMode(
+        int index,
+        DisplayWindowMode windowMode,
+        bool persistResolution,
+        bool persistWindowMode)
+    {
+        CacheResolutionOptions();
+        if (resolutionOptions == null || resolutionOptions.Length == 0)
+            return;
+
+        index = Mathf.Clamp(index, 0, resolutionOptions.Length - 1);
+        var option = resolutionOptions[index];
+        Screen.SetResolution(option.Width, option.Height, ToUnityFullScreenMode(windowMode));
+
+        if (persistResolution)
+            PlayerPrefs.SetInt(KeyResolutionIndex, index);
+        if (persistWindowMode)
+        {
+            PlayerPrefs.SetInt(KeyWindowMode, (int)windowMode);
+            PlayerPrefs.SetInt(KeyFullscreen, windowMode == DisplayWindowMode.Windowed ? 0 : 1);
+        }
+    }
+
+    private DisplayWindowMode GetSavedWindowMode()
+    {
+        if (PlayerPrefs.HasKey(KeyWindowMode))
+            return (DisplayWindowMode)Mathf.Clamp(
+                PlayerPrefs.GetInt(KeyWindowMode, (int)DisplayWindowMode.Windowed),
+                0,
+                (int)DisplayWindowMode.ExclusiveFullscreen);
+
+        return PlayerPrefs.GetInt(KeyFullscreen, Screen.fullScreen ? 1 : 0) == 1
+            ? DisplayWindowMode.BorderlessFullscreen
+            : DisplayWindowMode.Windowed;
+    }
+
+    private static FullScreenMode ToUnityFullScreenMode(DisplayWindowMode windowMode)
+    {
+        return windowMode switch
+        {
+            DisplayWindowMode.ExclusiveFullscreen => FullScreenMode.ExclusiveFullScreen,
+            DisplayWindowMode.BorderlessFullscreen => FullScreenMode.FullScreenWindow,
+            _ => FullScreenMode.Windowed
+        };
+    }
+
+    private string GetWindowModeDisplayName(DisplayWindowMode windowMode)
+    {
+        string key = windowMode switch
+        {
+            DisplayWindowMode.ExclusiveFullscreen => LocalizationKeys.UiSettingsWindowModeFullscreen,
+            DisplayWindowMode.BorderlessFullscreen => LocalizationKeys.UiSettingsWindowModeBorderless,
+            _ => LocalizationKeys.UiSettingsWindowModeWindowed
+        };
+
+        return LocalizationManager.Instance != null
+            ? LocalizationManager.Instance.GetText(key)
+            : windowMode.ToString();
+    }
+
+    private enum DisplayWindowMode
+    {
+        Windowed = 0,
+        BorderlessFullscreen = 1,
+        ExclusiveFullscreen = 2
+    }
+
+    private readonly struct ResolutionOption
+    {
+        public readonly int Width;
+        public readonly int Height;
+        public string Label => $"{Width} x {Height}";
+
+        public ResolutionOption(int width, int height)
+        {
+            Width = width;
+            Height = height;
+        }
     }
 }

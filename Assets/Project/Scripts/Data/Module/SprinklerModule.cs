@@ -7,7 +7,7 @@ using UnityEngine;
 [System.Serializable]
 public class SprinklerModule : IModuleData
 {
-    [Tooltip("Bán kính tưới (Manhattan distance). VD: radius=1 → 5 ô (center + 4 cạnh), radius=2 → 13 ô.")]
+    [Tooltip("Bán kính tưới theo Manhattan distance, bỏ ô trung tâm. VD: radius=1 → 4 ô cạnh theo dấu cộng.")]
     public int waterRadius = 1;
 
     public override IModuleRuntime CreateRuntime()

@@ -15,7 +15,7 @@ MonoBehaviour:
   id: item_mat_wood
   keyName: item.mat.wood.name
   descKey: item.mat.wood.desc
-  icon: {fileID: 21300000, guid: 06ae530a1bed2f74f9b622a55abd3971, type: 3}
+  icon: {fileID: -282897292, guid: 247cdd78657a55546aadfc05332f068c, type: 3}
   category: 5
   maxStack: 99
   buyPrice: 0

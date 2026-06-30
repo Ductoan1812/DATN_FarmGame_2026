@@ -23,9 +23,9 @@ MonoBehaviour:
   baseStats:
     baseStats:
     - statType: 0
-      value: 12
+      value: 5
     - statType: 1
-      value: 12
+      value: 5
   placementRule:
     occupyLayer: 2
     requireTags: 5
@@ -45,12 +45,16 @@ MonoBehaviour:
     - rid: 5278706222873444360
       type: {class: DropModule, ns: , asm: Assembly-CSharp}
       data:
-        harvestDrops:
+        harvestDrops: []
+        deathDrops:
         - item: {fileID: 11400000, guid: f0d281dba74dc0b43a3e6179c493a903, type: 2}
           minAmount: 2
           maxAmount: 3
           dropChance: 1
-        deathDrops: []
+        - item: {fileID: 11400000, guid: 2f9a2553e2ac5124ab4a694441e10da0, type: 2}
+          minAmount: 1
+          maxAmount: 2
+          dropChance: 0.7
         includeHarvestDropsOnDestroyWhenHarvestable: 0
     - rid: 8196223262934696259
       type: {class: ResourceGrowthModule, ns: , asm: Assembly-CSharp}
@@ -107,7 +111,7 @@ MonoBehaviour:
         allowHandHarvest: 0
         additionalHarvestTools: []
         dropMode: 0
-        harvestCausesDamage: 0
+        harvestCausesDamage: 1
         destroyOnHarvest: 1
         oneHitDestroy: 0
         wrongToolPenalty: 0.3

@@ -15,11 +15,11 @@ MonoBehaviour:
   id: item_crop_yam
   keyName: item.crop.yam.name
   descKey: item.crop.yam.desc
-  icon: {fileID: -9139276995365024363, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
+  icon: {fileID: -6031859326688331905, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
   category: 3
   maxStack: 99
   buyPrice: 0
-  sellPrice: 45
+  sellPrice: 96
   baseStats:
     baseStats: []
   placementRule:
@@ -31,3 +31,4 @@ MonoBehaviour:
   references:
     version: 2
     RefIds: []
+

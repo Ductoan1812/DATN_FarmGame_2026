@@ -15,7 +15,7 @@ MonoBehaviour:
   id: item_crop_pear
   keyName: item.crop.pear.name
   descKey: item.crop.pear.desc
-  icon: {fileID: -375788996, guid: 247cdd78657a55546aadfc05332f068c, type: 3}
+  icon: {fileID: -879205411, guid: 247cdd78657a55546aadfc05332f068c, type: 3}
   category: 3
   maxStack: 99
   buyPrice: 0

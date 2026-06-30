@@ -15,7 +15,7 @@ MonoBehaviour:
   id: item_crop_wheat
   keyName: item.crop.wheat.name
   descKey: item.crop.wheat.desc
-  icon: {fileID: -8391403926966359344, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
+  icon: {fileID: 1132851120409376285, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
   category: 3
   maxStack: 99
   buyPrice: 0
@@ -31,3 +31,4 @@ MonoBehaviour:
   references:
     version: 2
     RefIds: []
+

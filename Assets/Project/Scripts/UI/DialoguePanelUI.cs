@@ -172,8 +172,7 @@ public class DialoguePanelUI : MonoBehaviour
         ResolveUIController();
         uiController?.OpenExternalExclusiveWindow(externalWindowId);
 
-        if (panel != null) panel.SetActive(true);
-        else gameObject.SetActive(true);
+        SetPanelVisible(true);
     }
 
     private void Hide()
@@ -181,10 +180,46 @@ public class DialoguePanelUI : MonoBehaviour
         ClearOptions();
         ResetLayoutToMinimum();
 
-        if (panel != null) panel.SetActive(false);
-        else gameObject.SetActive(false);
+        SetPanelVisible(false);
 
         uiController?.CloseExternalExclusiveWindow(externalWindowId);
+    }
+
+    private void SetPanelVisible(bool visible)
+    {
+        var target = panel != null ? panel : gameObject;
+        if (target == null) return;
+
+        if (visible)
+            EnsureActiveHierarchy(target);
+
+        if (target == gameObject)
+        {
+            // Keep the subscriber object alive; otherwise it unsubscribes from EventBus.
+            if (!target.activeSelf)
+                target.SetActive(true);
+
+            var group = GetOrAdd<CanvasGroup>(target);
+            group.alpha = visible ? 1f : 0f;
+            group.interactable = visible;
+            group.blocksRaycasts = visible;
+            return;
+        }
+
+        if (target.activeSelf != visible)
+            target.SetActive(visible);
+    }
+
+    private static void EnsureActiveHierarchy(GameObject target)
+    {
+        var current = target != null ? target.transform : null;
+        while (current != null)
+        {
+            if (!current.gameObject.activeSelf)
+                current.gameObject.SetActive(true);
+
+            current = current.parent;
+        }
     }
 
     private void ClearOptions()

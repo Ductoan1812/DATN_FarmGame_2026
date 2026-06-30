@@ -15,7 +15,7 @@ MonoBehaviour:
   id: item_crop_turnip
   keyName: item.crop.turnip.name
   descKey: item.crop.turnip.desc
-  icon: {fileID: 7439726997165979912, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
+  icon: {fileID: -306809486627159910, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
   category: 3
   maxStack: 99
   buyPrice: 0
@@ -31,3 +31,4 @@ MonoBehaviour:
   references:
     version: 2
     RefIds: []
+

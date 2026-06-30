@@ -51,6 +51,9 @@ public static class ShopService
         if (stockItem == null)
             return Fail(ShopTransactionFailReason.InvalidRequest);
 
+        if (!stockItem.Unlocked || !stockItem.Buyable)
+            return Fail(ShopTransactionFailReason.ItemNotBuyable);
+
         return stockItem.InfiniteStock
             ? TryBuyInfinite(customer, merchant, stockItem.ItemData, amount)
             : TryBuy(customer, merchant, stockItem.Item, amount);
@@ -134,7 +137,7 @@ public static class ShopService
         if (item.entityData == null || item.entityData.sellPrice < 0)
             return Fail(ShopTransactionFailReason.ItemNotSellable);
 
-        if (!HasMoney(merchant, totalPrice))
+        if (!shop.infiniteMoney && !HasMoney(merchant, totalPrice))
             return Fail(ShopTransactionFailReason.MerchantNotEnoughMoney);
 
         var inventoryService = GameManager.Instance?.InventoryService;
@@ -149,7 +152,8 @@ public static class ShopService
             return Fail(ShopTransactionFailReason.TransferFailed);
 
         AddMoney(seller, totalPrice);
-        AddMoney(merchant, -totalPrice);
+        if (!shop.infiniteMoney)
+            AddMoney(merchant, -totalPrice);
 
         var result = new ShopTransactionResult(true, ShopTransactionFailReason.None, transferred, totalPrice);
         GameManager.Instance?.DailyTracker?.RecordIncome(totalPrice);
@@ -181,11 +185,11 @@ public static class ShopService
         {
             if (shop.initialStock != null)
             {
-                int customerLevel = GetLevel(customer);
                 foreach (var entry in shop.initialStock)
                 {
                     if (entry?.itemData == null) continue;
                     var requirement = UnlockService.MergeLevelFallback(entry.unlockRequirement, entry.requiredLevel);
+                    int requiredLevel = Mathf.Max(1, requirement?.requiredLevel ?? entry.requiredLevel);
                     bool unlocked = UnlockService.IsUnlocked(customer, requirement);
                     string lockedReasonKey = UnlockService.GetLockedReasonKey(customer, requirement);
                     stockItems.Add(new ShopItemViewData(
@@ -198,7 +202,8 @@ public static class ShopService
                         CanMerchantBuy(shop, entry.itemData),
                         true,
                         unlocked,
-                        lockedReasonKey));
+                        lockedReasonKey,
+                        requiredLevel));
                 }
             }
         }
@@ -335,6 +340,7 @@ public sealed class ShopItemViewData
     public bool InfiniteStock { get; }
     public bool Unlocked { get; }
     public string LockedReasonKey { get; }
+    public int RequiredLevel { get; }
 
     public ShopItemViewData(EntityRuntime item, string nameKey, int amount, int buyPrice, int sellPrice, bool buyable, bool sellable)
     {
@@ -349,14 +355,20 @@ public sealed class ShopItemViewData
         InfiniteStock = false;
         Unlocked = true;
         LockedReasonKey = string.Empty;
+        RequiredLevel = 1;
     }
 
     public ShopItemViewData(EntityData itemData, string nameKey, int amount, int buyPrice, int sellPrice, bool buyable, bool sellable, bool infiniteStock)
-        : this(itemData, nameKey, amount, buyPrice, sellPrice, buyable, sellable, infiniteStock, true, string.Empty)
+        : this(itemData, nameKey, amount, buyPrice, sellPrice, buyable, sellable, infiniteStock, true, string.Empty, 1)
     {
     }
 
     public ShopItemViewData(EntityData itemData, string nameKey, int amount, int buyPrice, int sellPrice, bool buyable, bool sellable, bool infiniteStock, bool unlocked, string lockedReasonKey)
+        : this(itemData, nameKey, amount, buyPrice, sellPrice, buyable, sellable, infiniteStock, unlocked, lockedReasonKey, 1)
+    {
+    }
+
+    public ShopItemViewData(EntityData itemData, string nameKey, int amount, int buyPrice, int sellPrice, bool buyable, bool sellable, bool infiniteStock, bool unlocked, string lockedReasonKey, int requiredLevel)
     {
         Item = null;
         ItemData = itemData;
@@ -369,6 +381,7 @@ public sealed class ShopItemViewData
         InfiniteStock = infiniteStock;
         Unlocked = unlocked;
         LockedReasonKey = lockedReasonKey ?? string.Empty;
+        RequiredLevel = Mathf.Max(1, requiredLevel);
     }
 }
 

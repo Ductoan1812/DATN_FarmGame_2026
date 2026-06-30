@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Sprinkler01
   m_EditorClassIdentifier: 
   idObject: 16
-  prefab: {fileID: 5509933931381334664, guid: 48a5174f01b04d34ca0cbcfaf564dace, type: 3}
+  prefab: {fileID: 1480549768447680965, guid: 5bbe319184b05ce488fbebc996c3896d, type: 3}

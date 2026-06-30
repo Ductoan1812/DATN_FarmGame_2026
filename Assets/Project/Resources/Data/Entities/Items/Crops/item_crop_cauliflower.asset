@@ -15,11 +15,11 @@ MonoBehaviour:
   id: item_crop_cauliflower
   keyName: item.crop.cauliflower.name
   descKey: item.crop.cauliflower.desc
-  icon: {fileID: 2684864631225305211, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
+  icon: {fileID: -3788064418311820048, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
   category: 3
   maxStack: 99
   buyPrice: 0
-  sellPrice: 62
+  sellPrice: 120
   baseStats:
     baseStats: []
   placementRule:
@@ -31,3 +31,4 @@ MonoBehaviour:
   references:
     version: 2
     RefIds: []
+

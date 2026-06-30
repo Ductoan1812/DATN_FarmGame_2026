@@ -103,6 +103,7 @@ public class GameManager : MonoBehaviour
         InitNarrativeUI();
         InitDailyTracker();
         InitSleepTransitionUI();
+        InitPassOutSystem();
         InitPickupNotificationUI();
         InitSaveLoadManager();
 
@@ -315,17 +316,12 @@ public class GameManager : MonoBehaviour
 
         WateredTileTracker = new WateredTileTracker(tmWatered, tmGround, tileData);
 
-        // Thứ tự đúng: NextDayEventPublish (sprinklers water → cây grow) → DayChangedPublish (roll weather → reset watered → rain waters plowed)
-        EventBus.Subscribe<NextDayEventPublish>(_ =>
-        {
-            SprinklerRegistry?.TickAll();
-        });
-
+        // NextDayEventPublish lets crops consume yesterday's watered state.
+        // DayChangedPublish then clears old water and applies new-day sources.
         EventBus.Subscribe<DayChangedPublish>(_ =>
         {
-            WeatherSystem?.RollNextDayWeather();
             WateredTileTracker?.ResetAll();
-            WeatherSystem?.ApplyRainForNewDay(WateredTileTracker);
+            SprinklerRegistry?.TickAll();
         });
     }
 
@@ -450,6 +446,12 @@ public class GameManager : MonoBehaviour
     private void InitSleepTransitionUI()
     {
         EnsureNarrativeUIComponent<SleepTransitionUI>("SleepTransitionUI");
+    }
+
+    private void InitPassOutSystem()
+    {
+        if (GetComponent<PassOutSystem>() == null)
+            gameObject.AddComponent<PassOutSystem>();
     }
 
     private void InitPickupNotificationUI()

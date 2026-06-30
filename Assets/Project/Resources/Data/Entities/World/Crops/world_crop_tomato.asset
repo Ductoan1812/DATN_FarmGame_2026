@@ -39,10 +39,6 @@ MonoBehaviour:
   - rid: 8196223262934696338
   - rid: 8196223262934696339
   - rid: 8196223262934696340
-  - rid: 8196223262934696341
-  - rid: 8196223262934696342
-  - rid: 8196223262934696343
-  - rid: 8196223262934696344
   - rid: 5278706057718792219
   - rid: 5278706057718792220
   references:
@@ -70,22 +66,22 @@ MonoBehaviour:
           daysToGrow: 2
           canHarvest: 0
         - sprite: {fileID: 5401503547220429891, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
-          daysToGrow: 1
+          daysToGrow: 2
           canHarvest: 0
         - sprite: {fileID: -7683078042369615650, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
-          daysToGrow: 1
+          daysToGrow: 2
           canHarvest: 0
         - sprite: {fileID: 6605476628458567135, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
-          daysToGrow: 1
+          daysToGrow: 2
           canHarvest: 0
         - sprite: {fileID: 2756813176406166142, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
-          daysToGrow: 1
+          daysToGrow: 2
           canHarvest: 0
         - sprite: {fileID: -3473054647133496591, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
           daysToGrow: 1
           canHarvest: 0
         - sprite: {fileID: -7198753384639829732, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
-          daysToGrow: 3
+          daysToGrow: 1
           canHarvest: 1
         requiresWater: 1
         wiltSprite: {fileID: -160852262253556874, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
@@ -97,10 +93,10 @@ MonoBehaviour:
     - rid: 8196223262934696339
       type: {class: HarvestModule, ns: , asm: Assembly-CSharp}
       data:
-        harvestTool: 0
+        harvestTool: 3
         allowHandHarvest: 1
         additionalHarvestTools: []
-        dropMode: 1
+        dropMode: 0
         harvestCausesDamage: 0
         destroyOnHarvest: 0
         oneHitDestroy: 0
@@ -111,30 +107,8 @@ MonoBehaviour:
         harvestDrops:
         - item: {fileID: 11400000, guid: 469a4721e07ad1f4081c9cd8d9884963, type: 2}
           minAmount: 1
-          maxAmount: 2
+          maxAmount: 3
           dropChance: 1
         deathDrops: []
         includeHarvestDropsOnDestroyWhenHarvestable: 0
-    - rid: 8196223262934696341
-      type: {class: HealthModule, ns: , asm: Assembly-CSharp}
-      data:
-        canTakeDamage: 1
-    - rid: 8196223262934696342
-      type: {class: ResourceHitReactionModule, ns: , asm: Assembly-CSharp}
-      data:
-        reactOnlyToHarvestTool: 1
-        useProceduralMotion: 1
-        flashColor: {r: 1, g: 0.9, b: 0.65, a: 1}
-        flashDuration: 0.12
-        scalePunch: 0.12
-        rotationPunch: 4
-        animatorHitTrigger: Hit
-    - rid: 8196223262934696343
-      type: {class: ExpRewardModule, ns: , asm: Assembly-CSharp}
-      data:
-        rewardExp: 7
-        sourceType: 1
-        requireKiller: 0
-    - rid: 8196223262934696344
-      type: {class: MortalModule, ns: , asm: Assembly-CSharp}
-      data: 
+

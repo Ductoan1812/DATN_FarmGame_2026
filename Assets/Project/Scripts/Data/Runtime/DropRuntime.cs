@@ -37,6 +37,7 @@ public class DropRuntime : IModuleRuntime, IHandleEvent<DieEvent>, IHandleEvent<
     public void Handle(DieEvent e)
     {
         if (e.suppressWorldDrops) return;
+        if (ShouldSuppressImmatureHarvestDrops(e.entity)) return;
 
         var owner = e.entity?.Owner;
         if (owner == null) return;
@@ -126,6 +127,12 @@ public class DropRuntime : IModuleRuntime, IHandleEvent<DieEvent>, IHandleEvent<
     private static int GetDropQuality(EntityRuntime source)
     {
         return source?.GetModule<QualityRuntime>()?.GetHarvestQuality() ?? 1;
+    }
+
+    private static bool ShouldSuppressImmatureHarvestDrops(EntityRuntime source)
+    {
+        var harvest = source?.GetModule<HarvestRuntime>();
+        return harvest != null && harvest.HasGrowthGate() && !harvest.IsReadyForHarvest();
     }
 
     private static int SpawnEntriesToWorld(

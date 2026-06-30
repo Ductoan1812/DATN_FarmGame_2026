@@ -15,11 +15,11 @@ MonoBehaviour:
   id: item_crop_melon
   keyName: item.crop.melon.name
   descKey: item.crop.melon.desc
-  icon: {fileID: 7071444314301507100, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
+  icon: {fileID: 6824423241583720265, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
   category: 3
   maxStack: 99
   buyPrice: 0
-  sellPrice: 80
+  sellPrice: 160
   baseStats:
     baseStats: []
   placementRule:
@@ -31,3 +31,4 @@ MonoBehaviour:
   references:
     version: 2
     RefIds: []
+

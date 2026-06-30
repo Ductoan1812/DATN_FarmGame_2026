@@ -19,11 +19,11 @@ MonoBehaviour:
     requiredLevel: 1
     requiredQuestIds: []
   ingredients:
-  - item: {fileID: 11400000, guid: ba28e11ef828c7f4192efa0552fc1d2a, type: 2}
+  - item: {fileID: 11400000, guid: 466d07d66eb516b488bef2ad9e76e38c, type: 2}
     amount: 5
-  - item: {fileID: 11400000, guid: 7cdb6947f081d9847b35cffe5dbc5fd7, type: 2}
+  - item: {fileID: 11400000, guid: 2bcbc6fa4fcc213459e5ccbd90e9e50e, type: 2}
     amount: 1
   outputs:
-  - item: {fileID: 11400000, guid: 895549a1950dd934b92d33bad87bad79, type: 2}
+  - item: {fileID: 11400000, guid: 7db4d99b9c6a94f418335f71ba3db895, type: 2}
     amount: 1
   craftExp: 5

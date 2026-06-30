@@ -15,11 +15,11 @@ MonoBehaviour:
   id: item_crop_cucumber
   keyName: item.crop.cucumber.name
   descKey: item.crop.cucumber.desc
-  icon: {fileID: 561377097865333065, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
+  icon: {fileID: -7082812707760819069, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
   category: 3
   maxStack: 99
   buyPrice: 0
-  sellPrice: 34
+  sellPrice: 44
   baseStats:
     baseStats: []
   placementRule:
@@ -31,3 +31,4 @@ MonoBehaviour:
   references:
     version: 2
     RefIds: []
+

@@ -24,6 +24,13 @@ public class CalendarUI : MonoBehaviour
             _visible = !_visible;
             _panel.SetActive(_visible);
             if (_visible) Refresh();
+
+            var uiCtrl = FindAnyObjectByType<UIController>();
+            if (uiCtrl != null)
+            {
+                if (_visible) uiCtrl.OpenExternalExclusiveWindow("calendar");
+                else uiCtrl.CloseExternalExclusiveWindow("calendar");
+            }
         }
     }
 

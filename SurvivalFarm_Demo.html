@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Survival Farm — Demo Slides</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#0d1a10;font-family:'Segoe UI',Calibri,sans-serif;overflow:hidden;width:100vw;height:100vh;user-select:none;}
+
+/* ── Slide shell ── */
+.stage{display:flex;align-items:center;justify-content:center;width:100vw;height:100vh;}
+.slide{
+  width:min(100vw,177.78vh);height:min(100vh,56.25vw);
+  position:relative;overflow:hidden;display:none;background:#F5F3EE;
+}
+.slide.active{display:block;}
+
+/* ── Header ── */
+.hdr{position:absolute;top:0;left:0;right:0;height:15.5%;background:#1B3A2A;
+  display:flex;align-items:center;padding:0 3.5%;}
+.hdr h1{color:#C8901F;font-size:clamp(14px,3vh,28px);font-weight:800;letter-spacing:.02em;}
+.hdr .badge{margin-left:auto;background:#2B5A3D;color:#E8C050;padding:.4vh 1vw;
+  border-radius:.5vh;font-size:clamp(9px,1.4vh,14px);border:1px solid #C8901F;}
+
+/* ── Nav bar ── */
+#nav{position:fixed;bottom:1.5vh;left:50%;transform:translateX(-50%);
+  display:flex;align-items:center;gap:1vw;z-index:999;}
+#nav button{background:#1B3A2A;color:#E8C050;border:1.5px solid #C8901F;
+  padding:.6vh 2vw;font-size:clamp(10px,1.6vh,16px);cursor:pointer;border-radius:.5vh;
+  font-family:inherit;transition:background .2s;}
+#nav button:hover{background:#2B5A3D;}
+#counter{color:#E8E4D8;font-size:clamp(10px,1.6vh,16px);padding:0 .5vw;}
+.hint{position:absolute;bottom:1.5%;right:2%;color:#5A7A5A;font-size:clamp(8px,1.3vh,13px);font-style:italic;}
+
+/* ── Shared card ── */
+.card{border-radius:.8vh;box-shadow:0 .3vh 1.2vh rgba(0,0,0,.25);}
+</style>
+</head>
+<body>
+<div class="stage">
+
+<!-- ════════════════ SLIDE 1: EntityData ════════════════ -->
+<div class="slide active" id="s1">
+  <div class="hdr">
+    <h1>Kiến Trúc Dữ Liệu — EntityData &amp; ModuleData</h1>
+    <span class="badge">ScriptableObject</span>
+  </div>
+  <svg id="svg1" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;">
+    <defs>
+      <marker id="arr1" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+        <polygon points="0 0,8 3,0 6" fill="#C8901F"/>
+      </marker>
+    </defs>
+  </svg>
+
+  <!-- Center oval -->
+  <div id="ec" style="
+    position:absolute;left:43%;top:54%;transform:translate(-50%,-50%);
+    width:13%;aspect-ratio:1;background:#C8901F;border-radius:50%;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;padding:1%;z-index:10;
+    box-shadow:0 0 3vh .8vh rgba(200,144,31,.45);
+    opacity:0;transition:opacity .6s;
+  ">
+    <b style="color:#1B3A2A;font-size:clamp(10px,1.9vh,20px)">EntityData</b>
+    <span style="color:#1B3A2A;font-size:clamp(7px,1vh,11px);margin-top:.3vh;line-height:1.35">
+      id · keyName · icon<br>category · maxStack<br>buyPrice · sellPrice<br>baseStats · modules[]
+    </span>
+  </div>
+
+  <!-- 6 module nodes — positioned by JS -->
+  <div class="en-node card" id="en0" data-label="StageModule"           data-sub="Giai đoạn cây trồng"    data-bg="#2B5A3D" data-ang="90"></div>
+  <div class="en-node card" id="en1" data-label="HarvestModule"         data-sub="Thu hoạch &amp; sản phẩm" data-bg="#2B5A3D" data-ang="30"></div>
+  <div class="en-node card" id="en2" data-label="PlacementModule"       data-sub="Quy tắc đặt xuống"       data-bg="#3A7A28" data-ang="150"></div>
+  <div class="en-node card" id="en3" data-label="ShopModule"            data-sub="Giá mua bán"              data-bg="#1A4A8A" data-ang="210"></div>
+  <div class="en-node card" id="en4" data-label="DropModule"            data-sub="Vật phẩm rơi"            data-bg="#B05018" data-ang="270"></div>
+  <div class="en-node card" id="en5" data-label="ToolRequirementModule" data-sub="Công cụ cần thiết"       data-bg="#5A2A8A" data-ang="330"></div>
+
+  <!-- Example panel -->
+  <div id="ex1" class="card" style="
+    position:absolute;right:2%;top:17%;width:19%;height:77%;
+    background:#2B5A3D;padding:2vh 1.5vw;opacity:0;transition:opacity .5s;
+  ">
+    <div style="color:#E8C050;font-weight:700;font-size:clamp(10px,1.7vh,17px);border-bottom:2px solid #C8901F;padding-bottom:.8vh;margin-bottom:1.2vh">
+      Ví dụ: <span style="color:#C8901F">tomato_seed</span>
+    </div>
+    <div style="color:#E8E4D8;font-size:clamp(9px,1.4vh,14px);line-height:2.1">
+      ✓ StageModule<br>✓ HarvestModule<br>✓ PlacementModule<br>✓ ShopModule
+    </div>
+    <hr style="border-color:#3A7A28;margin:1.2vh 0">
+    <div style="color:#E8C050;font-size:clamp(9px,1.35vh,13px);line-height:1.6">
+      Ghép module khác nhau<br>= đối tượng khác nhau
+    </div>
+    <div style="margin-top:1.5vh;color:#5A9A7A;font-size:clamp(8px,1.2vh,12px)">
+      14 loại ModuleData<br>→ mọi thực thể trong game
+    </div>
+  </div>
+
+  <div class="hint">Click / → để reveal từng module</div>
+</div>
+
+<!-- ════════════════ SLIDE 2: EventBus ════════════════ -->
+<div class="slide" id="s2">
+  <div class="hdr">
+    <h1>EventBus — Publish / Subscribe Pattern</h1>
+    <span class="badge">Decoupled Systems</span>
+  </div>
+  <svg id="svg2" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;"></svg>
+
+  <!-- Bus center -->
+  <div id="bus" style="
+    position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);
+    width:14%;padding:2vh 1vw;background:#C8901F;border-radius:1vh;
+    text-align:center;z-index:10;
+    box-shadow:0 0 3vh rgba(200,144,31,.5);
+    opacity:0;transition:opacity .5s,box-shadow .3s;
+  ">
+    <div style="color:#1B3A2A;font-weight:800;font-size:clamp(12px,2.2vh,22px)">EventBus</div>
+    <div style="color:#1B3A2A;font-size:clamp(9px,1.2vh,13px);margin-top:.4vh">Pub / Sub</div>
+  </div>
+
+  <!-- System nodes — 4 left publishers, 4 right subscribers -->
+  <div class="eb-node card" id="eb0" data-side="L" data-y="22" data-label="TimeManager"      data-role="pub"></div>
+  <div class="eb-node card" id="eb1" data-side="L" data-y="36" data-label="FarmingSystem"    data-role="pub"></div>
+  <div class="eb-node card" id="eb2" data-side="L" data-y="50" data-label="InventoryManager" data-role="pub"></div>
+  <div class="eb-node card" id="eb3" data-side="L" data-y="64" data-label="ShopSystem"       data-role="pub"></div>
+  <div class="eb-node card" id="eb4" data-side="R" data-y="22" data-label="QuestSystem"      data-role="sub"></div>
+  <div class="eb-node card" id="eb5" data-side="R" data-y="36" data-label="SaveLoadManager"  data-role="sub"></div>
+  <div class="eb-node card" id="eb6" data-side="R" data-y="50" data-label="DialogueSystem"   data-role="sub"></div>
+  <div class="eb-node card" id="eb7" data-side="R" data-y="64" data-label="UIManager"        data-role="sub"></div>
+
+  <!-- Floating event pill -->
+  <div id="pill" style="
+    position:absolute;padding:.5vh 1.2vw;background:#E8C050;border-radius:2vh;
+    font-size:clamp(9px,1.3vh,13px);color:#1B3A2A;font-weight:700;white-space:nowrap;
+    z-index:30;opacity:0;pointer-events:none;transform:translate(-50%,-50%);
+    transition:left .55s cubic-bezier(.4,0,.2,1),top .55s cubic-bezier(.4,0,.2,1),opacity .3s;
+  "></div>
+
+  <!-- Info bar -->
+  <div id="ebinfo" style="
+    position:absolute;bottom:3.5%;left:50%;transform:translateX(-50%);
+    background:#1B3A2A;color:#E8E4D8;border:1.5px solid #C8901F;border-radius:.8vh;
+    padding:1.2vh 2.5vw;font-size:clamp(9px,1.5vh,15px);text-align:center;width:64%;
+    opacity:0;transition:opacity .4s;
+  "></div>
+
+  <div class="hint">Click để chạy demo event flow</div>
+</div>
+
+<!-- ════════════════ SLIDE 3: TileMap ════════════════ -->
+<div class="slide" id="s3">
+  <div class="hdr">
+    <h1>Xây Dựng Scene — Tilemap Theo Lớp</h1>
+    <span class="badge">Click → thêm lớp</span>
+  </div>
+
+  <!-- Stack area -->
+  <div id="stack" style="position:absolute;left:3%;top:18%;width:64%;height:79%;"></div>
+
+  <!-- Right info panel -->
+  <div style="position:absolute;right:1%;top:17%;width:30%;height:80%;background:#1B3A2A;border-radius:1vh;padding:2vh 1.5vw;">
+    <div style="color:#C8901F;font-weight:700;font-size:clamp(11px,2vh,20px);text-align:center;margin-bottom:1.5vh">
+      Mỗi Lớp (Tilemap) Độc Lập
+    </div>
+    <hr style="border-color:#2B5A3D;margin-bottom:1.3vh">
+    <div style="font-size:clamp(9px,1.4vh,14px);color:#E8E4D8;line-height:2.1">
+      • Vẽ &amp; tắt từng layer riêng<br>
+      • Sắp xếp độ ưu tiên hiển thị<br>
+      • Nhân vật/NPC là prefab riêng<br>
+      • Tile thay đổi → WorldSave ghi nhận
+    </div>
+    <hr style="border-color:#2B5A3D;margin:1.3vh 0">
+    <div id="lyrinfo" style="background:#2B5A3D;border-radius:.8vh;padding:1.5vh;min-height:11vh;transition:all .35s;">
+      <div style="color:#E8C050;font-weight:700;font-size:clamp(10px,1.5vh,15px);margin-bottom:.5vh">Click để thêm lớp →</div>
+      <div style="color:#5A8A6A;font-size:clamp(9px,1.3vh,13px)">Từ dưới lên, từng Tilemap<br>được đặt vào Scene</div>
+    </div>
+  </div>
+
+  <div class="hint">Click / → để thêm từng lớp Tilemap</div>
+</div>
+
+<!-- ════════════════ SLIDE 4: Boot Sequence ════════════════ -->
+<div class="slide" id="s4">
+  <div class="hdr">
+    <h1>Save/Load &amp; Quy Trình Boot 5 Pha</h1>
+    <span class="badge">Initialization Flow</span>
+  </div>
+
+  <!-- 3 JSON files — left -->
+  <div style="position:absolute;left:2%;top:17%;width:30%;height:79%;">
+    <div style="color:#C8901F;font-weight:700;font-size:clamp(10px,1.8vh,18px);text-align:center;margin-bottom:1.5vh">3 File JSON / Slot</div>
+    <div class="jcard card" id="jc0" style="background:#1B3A2A;padding:1.5vh 1.5vw;margin-bottom:1.2vh;opacity:0;transition:opacity .5s,transform .5s;transform:translateX(-2vw)">
+      <div style="color:#C8901F;font-weight:700;font-size:clamp(10px,1.6vh,16px)">📄 entities_save.json</div>
+      <div style="color:#E8E4D8;font-size:clamp(8px,1.2vh,12px);margin-top:.6vh;line-height:1.7">• id, entityDataId<br>• amount, quality<br>• stats[] · modules[]</div>
+    </div>
+    <div class="jcard card" id="jc1" style="background:#1B3A2A;padding:1.5vh 1.5vw;margin-bottom:1.2vh;opacity:0;transition:opacity .5s .12s,transform .5s .12s;transform:translateX(-2vw)">
+      <div style="color:#4A90D9;font-weight:700;font-size:clamp(10px,1.6vh,16px)">🗺️ world_{Scene}.json</div>
+      <div style="color:#E8E4D8;font-size:clamp(8px,1.2vh,12px);margin-top:.6vh;line-height:1.7">• entities[] runtime<br>• tileChanges[] dirty<br>• inactiveEntities[]</div>
+    </div>
+    <div class="jcard card" id="jc2" style="background:#1B3A2A;padding:1.5vh 1.5vw;opacity:0;transition:opacity .5s .24s,transform .5s .24s;transform:translateX(-2vw)">
+      <div style="color:#B490E0;font-weight:700;font-size:clamp(10px,1.6vh,16px)">⚙️ system_save.json</div>
+      <div style="color:#E8E4D8;font-size:clamp(8px,1.2vh,12px);margin-top:.6vh;line-height:1.7">• TimeState (year/season/day)<br>• wateredCells · soilCells<br>• currentWeather · playerPos</div>
+    </div>
+    <div id="slot8" style="margin-top:1.5vh;text-align:center;background:#2B5A3D;border-radius:.6vh;padding:1vh;color:#E8E4D8;font-size:clamp(9px,1.3vh,13px);opacity:0;transition:opacity .5s .36s">
+      8 Save Slot · {persistentDataPath}/Saves/save{N}/
+    </div>
+  </div>
+
+  <!-- Arrow separator -->
+  <svg style="position:absolute;left:33%;top:17%;width:5%;height:79%;pointer-events:none;">
+    <defs><marker id="arrb" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#C8901F"/></marker></defs>
+    <line id="bootarrow" x1="50%" y1="10%" x2="50%" y2="90%" stroke="#2B5A3D" stroke-width="2" stroke-dasharray="8,5"/>
+  </svg>
+
+  <!-- Boot phases — right -->
+  <div style="position:absolute;right:2%;top:17%;width:60%;height:79%;">
+    <div style="color:#C8901F;font-weight:700;font-size:clamp(10px,1.8vh,18px);text-align:center;margin-bottom:1.2vh">Quy Trình Boot 5 Pha</div>
+    <div id="bp0" class="bphase card" data-num="1" data-col="#3A7A28"  data-title="DataReadyPublish"              data-sub="ScriptableObject nạp xong"></div>
+    <div id="bp1" class="bphase card" data-num="2" data-col="#2B5A3D"  data-title="WorldObjectsSpawnedPublish"     data-sub="Spawn entity &amp; tilemap"></div>
+    <div id="bp2" class="bphase card" data-num="3" data-col="#1A4A8A"  data-title="InventoryDataRestoredPublish"   data-sub="Khôi phục inventory"></div>
+    <div id="bp3" class="bphase card" data-num="4" data-col="#5A2A8A"  data-title="PlayerReadyPublish"             data-sub="Nhân vật sẵn sàng"></div>
+    <div id="bp4" class="bphase card" data-num="5" data-col="#1A6860"  data-title="GameReadyPublish"               data-sub="Game bắt đầu hoạt động"></div>
+    <!-- Auto-save -->
+    <div id="bpauto" style="
+      margin-top:1.2vh;background:#2B5A3D;border-radius:.6vh;padding:1.2vh 1.5vw;
+      display:flex;align-items:center;gap:1vw;opacity:0;transition:opacity .5s;
+    ">
+      <span style="color:#E8C050;font-size:clamp(10px,1.5vh,16px);font-weight:700">⚡ Auto-save:</span>
+      <span style="color:#E8E4D8;font-size:clamp(8px,1.2vh,13px)">DayChangedPublish → SaveGameRequestPublish → SaveAll() → 3 JSON</span>
+    </div>
+  </div>
+
+  <div class="hint">Click / → để reveal từng pha boot</div>
+</div>
+
+</div><!-- /stage -->
+
+<!-- Nav -->
+<div id="nav">
+  <button onclick="prevSlide()">← Trước</button>
+  <span id="counter">1 / 4</span>
+  <button onclick="nextAction()">Tiếp →</button>
+</div>
+
+<style>
+/* EntityData nodes */
+.en-node{
+  position:absolute;width:13%;padding:1vh .8vw;text-align:center;
+  opacity:0;transform:scale(.75);transition:opacity .4s,transform .45s cubic-bezier(.175,.885,.32,1.275);
+  z-index:10;
+}
+.en-node.vis{opacity:1;transform:scale(1);}
+.en-node .nl{color:#fff;font-weight:700;font-size:clamp(8px,1.4vh,14px);}
+.en-node .ns{color:rgba(255,255,255,.8);font-size:clamp(7px,1.05vh,11px);margin-top:.3vh;}
+
+/* EventBus nodes */
+.eb-node{
+  position:absolute;width:14%;padding:1.2vh .8vw;text-align:center;
+  background:#2B5A3D;color:#fff;opacity:0;z-index:10;
+  transition:opacity .4s,background .35s,box-shadow .3s;
+}
+.eb-node.vis{opacity:1;}
+.eb-node .nl{font-weight:700;font-size:clamp(9px,1.4vh,14px);}
+.eb-node.pub-hi{background:#B05018!important;box-shadow:0 0 1.5vh rgba(176,80,24,.7)!important;}
+.eb-node.sub-hi{background:#1A4A8A!important;box-shadow:0 0 1.5vh rgba(26,74,138,.7)!important;}
+
+/* TileMap layers */
+.tl{
+  position:absolute;left:0;display:flex;align-items:center;
+  padding:0 2vw;border-radius:.5vh;border-left:4px solid transparent;
+  box-shadow:0 .3vh 1.2vh rgba(0,0,0,.3);height:18%;
+  opacity:0;transform:translateY(3vh);
+  transition:opacity .5s,transform .55s cubic-bezier(.2,.8,.3,1);
+}
+.tl.vis{opacity:1;transform:translateY(0);}
+.tl .tn{font-size:clamp(14px,2.8vh,30px);font-weight:900;margin-right:1.5vw;min-width:2.5vw;}
+.tl .ttl{color:#fff;font-weight:700;font-size:clamp(10px,1.7vh,17px);}
+.tl .tds{color:rgba(255,255,255,.78);font-size:clamp(8px,1.25vh,13px);margin-top:.3vh;}
+
+/* Boot phases */
+.bphase{
+  padding:1.2vh 1.5vw;margin-bottom:.9vh;display:flex;align-items:center;gap:1.5vw;
+  opacity:0;transform:translateX(2vw);
+  transition:opacity .45s,transform .45s cubic-bezier(.2,.8,.3,1);
+}
+.bphase.vis{opacity:1;transform:translateX(0);}
+.bphase .bnum{
+  width:3.5vh;height:3.5vh;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:clamp(10px,1.6vh,16px);color:#fff;flex-shrink:0;
+}
+.bphase .btitle{color:#fff;font-weight:700;font-size:clamp(10px,1.5vh,15px);}
+.bphase .bsub{color:rgba(255,255,255,.75);font-size:clamp(8px,1.2vh,12px);margin-top:.2vh;}
+</style>
+
+<script>
+// ─── State ───────────────────────────────────────────────
+const SLIDES = ['s1','s2','s3','s4'];
+let cur = 0;
+const step = [0,0,0,0];
+
+function showSlide(i){
+  document.querySelectorAll('.slide').forEach(s=>s.classList.remove('active'));
+  document.getElementById(SLIDES[i]).classList.add('active');
+  document.getElementById('counter').textContent = `${i+1} / ${SLIDES.length}`;
+  cur = i;
+  if(i===0 && step[0]===0) initEntity();
+  if(i===1 && step[1]===0) initEventBus();
+  if(i===2 && step[2]===0) initTileMap();
+  if(i===3 && step[3]===0) initBoot();
+}
+function prevSlide(){ if(cur>0) showSlide(cur-1); }
+function nextAction(){
+  if(cur===0) stepEntity();
+  else if(cur===1) stepEventBus();
+  else if(cur===2) stepTileMap();
+  else if(cur===3) stepBoot();
+}
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();nextAction();}
+  if(e.key==='ArrowLeft'){e.preventDefault();prevSlide();}
+});
+
+// ─── Util ────────────────────────────────────────────────
+function animLine(svgId, x1,y1, x2,y2, color, id, dur=0.45){
+  const svg = document.getElementById(svgId);
+  const old = document.getElementById(id); if(old) old.remove();
+  const len = Math.hypot(x2-x1, y2-y1);
+  const g   = document.createElementNS('http://www.w3.org/2000/svg','line');
+  Object.entries({id,x1,y1,x2,y2,stroke:color,'stroke-width':2,
+    'stroke-dasharray':len,'stroke-dashoffset':len}).forEach(([k,v])=>g.setAttribute(k,v));
+  svg.appendChild(g);
+  const a = document.createElementNS('http://www.w3.org/2000/svg','animate');
+  Object.entries({attributeName:'stroke-dashoffset',from:len,to:0,
+    dur:dur+'s',fill:'freeze'}).forEach(([k,v])=>a.setAttribute(k,v));
+  g.appendChild(a); a.beginElement();
+}
+function staticLine(svgId, x1,y1, x2,y2, color, id, w=1.5, dash=''){
+  const svg = document.getElementById(svgId);
+  const old = document.getElementById(id); if(old) old.remove();
+  const g = document.createElementNS('http://www.w3.org/2000/svg','line');
+  Object.entries({id,x1,y1,x2,y2,stroke:color,'stroke-width':w,
+    'stroke-dasharray':dash}).forEach(([k,v])=>g.setAttribute(k,v));
+  svg.appendChild(g);
+}
+
+// ─── SLIDE 1: EntityData ─────────────────────────────────
+const EN_NODES = [
+  {id:'en0',ang:90,  bg:'#2B5A3D'},{id:'en1',ang:30,  bg:'#2B5A3D'},
+  {id:'en2',ang:150, bg:'#3A7A28'},{id:'en3',ang:210, bg:'#1A4A8A'},
+  {id:'en4',ang:270, bg:'#B05018'},{id:'en5',ang:330, bg:'#5A2A8A'},
+];
+let enPositions = [];
+
+function initEntity(){
+  const slide = document.getElementById('s1');
+  const sw=slide.offsetWidth, sh=slide.offsetHeight;
+  const cx=sw*.43, cy=sh*.54, r=Math.min(sw,sh)*.28;
+  const cw=sw*.065; // half of 13%
+
+  document.getElementById('ec').style.opacity='1';
+
+  EN_NODES.forEach(({id,ang,bg},i)=>{
+    const rad = ang*Math.PI/180;
+    const nx=cx+r*Math.cos(rad), ny=cy+r*Math.sin(rad);
+    const el=document.getElementById(id);
+    const nw=sw*.13, nh=sh*.12;
+    el.style.left= (nx/sw*100 - 6.5)+'%';
+    el.style.top = (ny/sh*100 - 6)+'%';
+    el.style.background = bg;
+    const lbl=el.dataset.label, sub=el.dataset.sub;
+    el.innerHTML=`<div class="nl">${lbl}</div><div class="ns">${sub}</div>`;
+    // edge point on center oval
+    const oRw=cw, oRh=sh*.065;
+    const k=1/Math.sqrt(Math.cos(rad)**2/oRw**2 + Math.sin(rad)**2/oRh**2);
+    enPositions[i]={ex1:cx+k*Math.cos(rad), ey1:cy+k*Math.sin(rad), nx,ny};
+  });
+  step[0]=1;
+}
+
+function stepEntity(){
+  const s=step[0];
+  const slide=document.getElementById('s1');
+  const sw=slide.offsetWidth,sh=slide.offsetHeight;
+  const cx=sw*.43,cy=sh*.54;
+  if(s===0){initEntity();return;}
+  if(s>=1&&s<=6){
+    const i=s-1;
+    document.getElementById(EN_NODES[i].id).classList.add('vis');
+    const {ex1,ey1,nx,ny}=enPositions[i];
+    // edge point on node box
+    const ang=EN_NODES[i].ang*Math.PI/180;
+    const nw=sw*.065,nh=sh*.06;
+    const dx=Math.cos(ang+Math.PI),dy=Math.sin(ang+Math.PI);
+    const tx=nw/Math.abs(dx||.001),ty=nh/Math.abs(dy||.001);
+    const t=Math.min(tx,ty);
+    animLine('svg1',ex1,ey1, nx+t*dx,ny+t*dy, '#C8901F','el'+i);
+    step[0]++;
+    return;
+  }
+  if(s===7){document.getElementById('ex1').style.opacity='1';step[0]++;return;}
+  if(cur<SLIDES.length-1){showSlide(cur+1);}
+}
+
+// ─── SLIDE 2: EventBus ───────────────────────────────────
+const EB = [
+  {id:'eb0',side:'L',y:22,lbl:'TimeManager'},
+  {id:'eb1',side:'L',y:36,lbl:'FarmingSystem'},
+  {id:'eb2',side:'L',y:50,lbl:'InventoryManager'},
+  {id:'eb3',side:'L',y:64,lbl:'ShopSystem'},
+  {id:'eb4',side:'R',y:22,lbl:'QuestSystem'},
+  {id:'eb5',side:'R',y:36,lbl:'SaveLoadManager'},
+  {id:'eb6',side:'R',y:50,lbl:'DialogueSystem'},
+  {id:'eb7',side:'R',y:64,lbl:'UIManager'},
+];
+const EB_DEMOS=[
+  {pub:'eb0',subs:['eb5','eb4','eb7'],evt:'DayChangedPublish',
+   msg:'TimeManager publish → SaveLoad ghi file, Quest kiểm tra, UI cập nhật ngày'},
+  {pub:'eb1',subs:['eb2','eb7'],evt:'HarvestReadyPublish',
+   msg:'FarmingSystem publish → Inventory cộng item, UI refresh túi đồ'},
+  {pub:'eb2',subs:['eb4','eb6','eb7'],evt:'ItemAddedPublish',
+   msg:'Inventory publish → Quest check điều kiện, Dialogue trigger, UI cập nhật'},
+  {pub:'eb3',subs:['eb2','eb4'],evt:'PurchasePublish',
+   msg:'ShopSystem publish → Inventory trừ tiền + cộng item, Quest ghi nhận'},
+];
+let ebIdx=0,ebBusy=false;
+
+function initEventBus(){
+  const slide=document.getElementById('s2');
+  const sw=slide.offsetWidth,sh=slide.offsetHeight;
+  const busX=sw*.5,busY=sh*.52;
+
+  EB.forEach(({id,side,y,lbl})=>{
+    const el=document.getElementById(id);
+    const lx=side==='L'?3:73;
+    el.style.left=lx+'%'; el.style.top=y+'%';
+    el.innerHTML=`<div class="nl">${lbl}</div>`;
+    const nx=side==='L'?sw*.17:sw*.87, ny=sh*(y/100+.07);
+    staticLine('svg2',nx,ny, side==='L'?sw*.43:sw*.57,busY,'rgba(90,110,90,.35)','sl'+id,1.5,'6,4');
+  });
+  document.getElementById('bus').style.opacity='1';
+  step[1]=1;
+}
+
+function stepEventBus(){
+  if(step[1]===0){initEventBus();return;}
+  if(step[1]===1){
+    EB.forEach(({id})=>document.getElementById(id).classList.add('vis'));
+    step[1]=2;
+    document.getElementById('ebinfo').innerHTML=`<span style="color:#E8C050">👆 Click thêm lần nữa để xem event flow</span>`;
+    document.getElementById('ebinfo').style.opacity='1';
+    return;
+  }
+  if(!ebBusy) runEbDemo();
+}
+
+function runEbDemo(){
+  if(ebBusy)return; ebBusy=true;
+  const demo=EB_DEMOS[ebIdx%EB_DEMOS.length]; ebIdx++;
+  const slide=document.getElementById('s2');
+  const sw=slide.offsetWidth,sh=slide.offsetHeight;
+
+  EB.forEach(({id})=>{const e=document.getElementById(id);e.classList.remove('pub-hi','sub-hi');});
+
+  const pubN=EB.find(n=>n.id===demo.pub);
+  document.getElementById(demo.pub).classList.add('pub-hi');
+
+  const pill=document.getElementById('pill');
+  pill.textContent=demo.evt;
+  const px=(pubN.side==='L'?17:80), py=pubN.y+7;
+  pill.style.left=px+'%'; pill.style.top=py+'%'; pill.style.opacity='1';
+
+  document.getElementById('ebinfo').innerHTML=`<span style="color:#E8C050">📡 ${demo.evt}</span><br><span style="font-size:clamp(8px,1.2vh,13px)">${demo.msg}</span>`;
+
+  const bus=document.getElementById('bus');
+  setTimeout(()=>{
+    pill.style.left='50%'; pill.style.top='52%';
+    bus.style.boxShadow='0 0 4vh 2vh rgba(200,144,31,.85)';
+    setTimeout(()=>{
+      bus.style.boxShadow='0 0 3vh rgba(200,144,31,.5)';
+      pill.style.opacity='0';
+      demo.subs.forEach((sid,i)=>{
+        setTimeout(()=>{
+          const sn=EB.find(n=>n.id===sid);
+          const p2=document.createElement('div');
+          const sx=(sn.side==='L'?17:80),sy=sn.y+7;
+          p2.style.cssText=`position:absolute;padding:.4vh 1vw;background:#1A4A8A;border-radius:2vh;
+            font-size:clamp(8px,1.1vh,11px);color:#fff;font-weight:700;white-space:nowrap;
+            z-index:25;pointer-events:none;transform:translate(-50%,-50%);
+            transition:left .5s cubic-bezier(.4,0,.2,1),top .5s cubic-bezier(.4,0,.2,1),opacity .3s;
+            left:50%;top:52%`;
+          p2.textContent=demo.evt.replace('Publish','');
+          slide.appendChild(p2);
+          requestAnimationFrame(()=>requestAnimationFrame(()=>{
+            p2.style.left=sx+'%'; p2.style.top=sy+'%';
+          }));
+          document.getElementById(sid).classList.add('sub-hi');
+          setTimeout(()=>{p2.style.opacity='0';setTimeout(()=>p2.remove(),400);},900);
+          if(i===demo.subs.length-1) setTimeout(()=>{ebBusy=false;},1100);
+        },i*220);
+      });
+    },700);
+  },580);
+}
+
+// ─── SLIDE 3: TileMap ────────────────────────────────────
+const LAYERS=[
+  {n:'0',name:'Layer 0: Ground Tiles',      desc:'Nền đất cơ bản — không tương tác',       bg:'#5C3A1E',acc:'#C8901F'},
+  {n:'1',name:'Layer 1: Water / Soil Tints',desc:'Đất canh tác, ao nước, đường đi',         bg:'#1A4080',acc:'#4A90D9'},
+  {n:'2',name:'Layer 2: Obstacle Objects',  desc:'Cây, đá, hàng rào, tường — cản đường',   bg:'#2B5A3D',acc:'#3A7A28'},
+  {n:'3',name:'Layer 3: Interactive Objs',  desc:'Cây thu hoạch, mỏ quặng, hòm đồ',        bg:'#1A6860',acc:'#00A896'},
+  {n:'4',name:'Layer 4: Entity Spawns',     desc:'Người chơi, NPC, quái vật, prefab runtime',bg:'#5A2A8A',acc:'#B490E0'},
+];
+function initTileMap(){ step[2]=0; }
+function stepTileMap(){
+  const i=step[2];
+  if(i>=LAYERS.length){
+    if(cur<SLIDES.length-1) showSlide(cur+1);
+    return;
+  }
+  const L=LAYERS[i];
+  const cont=document.getElementById('stack');
+  const el=document.createElement('div');
+  el.className='tl';
+  el.style.background=L.bg;
+  el.style.borderLeftColor=L.acc;
+  el.style.bottom=(i*20)+'%';
+  el.style.width=(92-i*3)+'%';
+  el.style.left=(i*1.5)+'%';
+  el.innerHTML=`
+    <div class="tn" style="color:${L.acc}">[${L.n}]→</div>
+    <div><div class="ttl">${L.name}</div><div class="tds">${L.desc}</div></div>`;
+  cont.appendChild(el);
+  requestAnimationFrame(()=>requestAnimationFrame(()=>el.classList.add('vis')));
+  document.getElementById('lyrinfo').innerHTML=`
+    <div style="color:${L.acc};font-weight:700;font-size:clamp(10px,1.5vh,15px);margin-bottom:.5vh">Layer ${L.n} — vừa thêm vào Scene</div>
+    <div style="color:#E8E4D8;font-size:clamp(9px,1.3vh,13px)">${L.desc}</div>
+    ${i===4?'<div style="color:#E8C050;margin-top:.8vh;font-size:clamp(9px,1.3vh,13px)">✓ Scene hoàn chỉnh với 5 lớp Tilemap!</div>':''}`;
+  step[2]++;
+}
+
+// ─── SLIDE 4: Boot ───────────────────────────────────────
+const BP_DATA=[
+  {id:'bp0',col:'#3A7A28'},{id:'bp1',col:'#2B5A3D'},
+  {id:'bp2',col:'#1A4A8A'},{id:'bp3',col:'#5A2A8A'},{id:'bp4',col:'#1A6860'},
+];
+function initBoot(){
+  BP_DATA.forEach(({id,col})=>{
+    const el=document.getElementById(id);
+    el.style.background=col+'22';
+    el.style.border=`1.5px solid ${col}`;
+    const num=el.dataset.num,title=el.dataset.title,sub=el.dataset.sub;
+    el.innerHTML=`
+      <div class="bnum" style="background:${col}">${num}</div>
+      <div><div class="btitle">${title}</div><div class="bsub">${sub}</div></div>`;
+  });
+  // Show JSON files
+  ['jc0','jc1','jc2','slot8'].forEach(id=>{
+    const el=document.getElementById(id);
+    el.style.opacity='1'; el.style.transform='translateX(0)';
+  });
+  step[3]=1;
+}
+
+function stepBoot(){
+  const s=step[3];
+  if(s===0){initBoot();return;}
+  if(s>=1&&s<=5){
+    const el=document.getElementById('bp'+(s-1));
+    el.classList.add('vis');
+    step[3]++;
+    return;
+  }
+  if(s===6){
+    document.getElementById('bpauto').style.opacity='1';
+    step[3]++;
+    return;
+  }
+  // loop back to start or do nothing
+}
+
+// ─── Init ────────────────────────────────────────────────
+showSlide(0);
+</script>
+</body>
+</html>

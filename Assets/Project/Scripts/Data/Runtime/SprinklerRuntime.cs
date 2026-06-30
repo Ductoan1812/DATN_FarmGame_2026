@@ -38,19 +38,22 @@ public class SprinklerRuntime : IModuleRuntime, IHandleEvent<SpawnedEvent>
         {
             for (int dy = -_data.waterRadius; dy <= _data.waterRadius; dy++)
             {
-                if (Mathf.Abs(dx) + Mathf.Abs(dy) <= _data.waterRadius)
-                {
-                    var cell = new Vector2Int(centerCell.x + dx, centerCell.y + dy);
-                    if (!worldService.IsPlowed(cell))
-                        continue;
+                if (dx == 0 && dy == 0)
+                    continue;
 
-                    tracker.SetWatered(cell);
-                    count++;
-                }
+                if (Mathf.Abs(dx) + Mathf.Abs(dy) > _data.waterRadius)
+                    continue;
+
+                var cell = new Vector2Int(centerCell.x + dx, centerCell.y + dy);
+                if (!worldService.IsPlowed(cell))
+                    continue;
+
+                tracker.SetWatered(cell);
+                count++;
             }
         }
 
-        Debug.Log($"[SprinklerRuntime] '{_owner.GameObject.name}' đã tưới {count} ô (radius={_data.waterRadius}).");
+        Debug.Log($"[SprinklerRuntime] '{_owner.GameObject.name}' đã tưới {count} ô cạnh theo dấu cộng (radius={_data.waterRadius}).");
     }
 
     // ── Save / Load ───────────────────────────────────────────────────────────

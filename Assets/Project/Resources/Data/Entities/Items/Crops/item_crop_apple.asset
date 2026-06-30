@@ -15,7 +15,7 @@ MonoBehaviour:
   id: item_crop_apple
   keyName: item.crop.apple.name
   descKey: item.crop.apple.desc
-  icon: {fileID: -600571475, guid: 247cdd78657a55546aadfc05332f068c, type: 3}
+  icon: {fileID: -1439235073, guid: 247cdd78657a55546aadfc05332f068c, type: 3}
   category: 3
   maxStack: 99
   buyPrice: 0

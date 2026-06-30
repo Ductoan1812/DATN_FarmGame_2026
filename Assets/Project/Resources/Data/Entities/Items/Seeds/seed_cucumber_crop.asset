@@ -13,13 +13,12 @@ MonoBehaviour:
   m_Name: seed_cucumber_crop
   m_EditorClassIdentifier: 
   id: seed_cucumber_crop
-  keyName: seed_cucumber_crop
-  descKey: 
-  icon: {fileID: 561377097865333065, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
+  keyName: item.seed.cucumber.name
+  descKey: item.seed.cucumber.desc
   category: 2
   maxStack: 99
-  buyPrice: 0
-  sellPrice: 0
+  buyPrice: 70
+  sellPrice: 17
   baseStats:
     baseStats: []
   placementRule:
@@ -39,3 +38,4 @@ MonoBehaviour:
         placedEntityData: {fileID: 11400000, guid: 75752174a6ccbda41b09c5c863c8a4fe, type: 2}
         centerTile: 1
         animTrigger: PutDown
+

@@ -112,14 +112,14 @@ public class PlayerControler : MonoBehaviour
         var playerEntity = GetPlayerEntity();
         if (playerEntity == null) return;
 
-        // ── Chuột trái: PrimaryAction ─────────────────────────────────────────
-        if (Input.GetMouseButtonDown(0))
+        // ── PrimaryAction: configurable key + left mouse fallback ─────────────
+        if (GameplayInputSettings.IsPrimaryActionDown())
         {
             playerEntity.TriggerEvent(new PrimaryActionEvent(playerEntity));
         }
 
-        // ── E: SecondaryAction / Interact ─────────────────────────────────────
-        if (Input.GetKeyDown(GameplayInputSettings.GetInteractKey(interactKey)) || (allowRightMouseInteract && Input.GetMouseButtonDown(1)))
+        // ── SecondaryAction / Interact: configurable key + optional right mouse.
+        if (GameplayInputSettings.IsSecondaryActionDown(interactKey, allowRightMouseInteract))
         {
             playerEntity.TriggerEvent(new SecondaryActionEvent(playerEntity));
         }
@@ -152,9 +152,7 @@ public class PlayerControler : MonoBehaviour
 
     private Vector2 ReadInputDirection()
     {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
-        return new Vector2(horizontal, vertical).normalized;
+        return GameplayInputSettings.ReadMovementVector();
     }
 
     private EntityRuntime GetPlayerEntity()

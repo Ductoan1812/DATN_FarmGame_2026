@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d88d43265a2517a40b86c58484bc1f8e, type: 3}
+  m_Name: marker_grass_bush
+  m_EditorClassIdentifier: 
+  markerKind: 6
+  objectType: 12
+  entityData: {fileID: 11400000, guid: 4668086ef23a7eb4da63ee1ab0bc144a, type: 2}
+  savePolicy: 1
+  spawnGroupId: 
+  spawnPointId: 
+  respawnMinutes: 0
+  initialAmount: 1
+  bypassPlacementValidation: 1
+  stageSpawnMode: 2
+  fixedStartStageIndex: 0
+  randomStartStageMin: 0
+  randomStartStageMax: 4
+  editorSprite: {fileID: 888109990, guid: 247cdd78657a55546aadfc05332f068c, type: 3}
+  editorColor: {r: 1, g: 1, b: 1, a: 1}

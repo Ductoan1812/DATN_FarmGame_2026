@@ -15,11 +15,11 @@ MonoBehaviour:
   id: item_crop_tomato
   keyName: item.crop.tomato.name
   descKey: item.crop.tomato.desc
-  icon: {fileID: -7198753384639829732, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
+  icon: {fileID: -3626307438265804302, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
   category: 3
   maxStack: 99
   buyPrice: 0
-  sellPrice: 48
+  sellPrice: 62
   baseStats:
     baseStats: []
   placementRule:
@@ -31,3 +31,4 @@ MonoBehaviour:
   references:
     version: 2
     RefIds: []
+

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-public class HarvestRuntime : IModuleRuntime, IHandleEvent<SecondaryActionEvent>, IHandleEvent<SpawnedEvent>
+public class HarvestRuntime : IModuleRuntime, IHandleEvent<SecondaryActionEvent>, IHandleEvent<SpawnedEvent>, IHandleEvent<TakeDamageEvent>
 {
     public HarvestModule data;
     private EntityRuntime _entity;
@@ -15,6 +15,18 @@ public class HarvestRuntime : IModuleRuntime, IHandleEvent<SecondaryActionEvent>
     {
         _entity = e.entity;
     }
+
+    /// <summary>
+    /// Cho phép tool harvest (liềm, rìu...) hoạt động trực tiếp trên entity KHÔNG có HealthModule
+    /// (ví dụ cây trồng). Nếu entity có HealthRuntime thì để HealthRuntime điều phối (tránh xử lý 2 lần).
+    /// </summary>
+    public void Handle(TakeDamageEvent e)
+    {
+        if (_entity == null) return;
+        if (_entity.GetModule<HealthRuntime>() != null) return; // HealthRuntime sẽ gọi TryHandleDamageHarvest
+        TryHandleDamageHarvest(e);
+    }
+
 
     public void Handle(SecondaryActionEvent e)
     {
@@ -55,6 +67,18 @@ public class HarvestRuntime : IModuleRuntime, IHandleEvent<SecondaryActionEvent>
         return true;
     }
 
+    public bool HasGrowthGate()
+    {
+        if (_entity == null) return false;
+        return _entity.GetModule<StageRuntime>() != null || _entity.GetModule<ResourceGrowthRuntime>() != null;
+    }
+
+    public bool IsReadyForHarvest()
+    {
+        if (_entity == null) return false;
+        return IsHarvestable();
+    }
+
     /// <summary>
     /// Try harvest: grant drops, then either reset regrow stage or die for non-regrow crops.
     /// Returns true if handled.
@@ -85,8 +109,20 @@ public class HarvestRuntime : IModuleRuntime, IHandleEvent<SecondaryActionEvent>
             return true;
 
         _entity.TriggerEvent(new DieEvent(_entity, interactor, suppressWorldDrops: dropsAlreadyHandled));
+
+        // Single-harvest crops thường KHÔNG có MortalModule/RespawnModule để hủy object sau DieEvent,
+        // nên DieEvent chỉ spawn drop mà cây vẫn nằm lại ở stage đã thu hoạch. Ở trường hợp đó ta chủ
+        // động yêu cầu hủy entity để cây biến mất sau khi thu hoạch.
+        if (_entity.GetModule<MortalRuntime>() == null && _entity.GetModule<RespawnRuntime>() == null)
+        {
+            var bus = GameManager.Instance?.EventBus;
+            if (bus != null && !string.IsNullOrWhiteSpace(_entity.id))
+                bus.Publish(new DestroyEntityRequestPublish(_entity.id));
+        }
+
         return true;
     }
+
 
     public bool TryRegrowableHarvest(EntityRuntime interactor)
     {

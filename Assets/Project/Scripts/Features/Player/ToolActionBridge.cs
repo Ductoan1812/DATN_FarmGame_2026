@@ -7,6 +7,7 @@ public class ToolActionBridge : MonoBehaviour
     [SerializeField] private float safetyTimeout = 1.25f;
     [SerializeField] private string defaultFallbackTrigger = "Slash1H";
     [SerializeField] private bool executeImmediatelyWhenAnimationMissing = true;
+    [SerializeField] private float stuckBusyGraceSeconds = 0.25f;
 
     private AnimationManager _anim;
     private AnimationEvents _animEvents;
@@ -14,6 +15,7 @@ public class ToolActionBridge : MonoBehaviour
     private EntityRuntime _pendingItem;
     private bool _waitingForStrike;
     private Coroutine _safetyCoroutine;
+    private float _actionStartedAt = -1f;
 
     private void Start()
     {
@@ -34,7 +36,14 @@ public class ToolActionBridge : MonoBehaviour
             _animEvents.OnEvent -= OnAnimEvent;
     }
 
-    public bool IsBusy => _anim != null && _anim.IsAction;
+    public bool IsBusy
+    {
+        get
+        {
+            RecoverStuckActionIfNeeded();
+            return _anim != null && _anim.IsAction;
+        }
+    }
 
     /// <summary>
     /// Play animation rồi fire AnimStrikeEvent lên item khi đến frame "Strike".
@@ -42,6 +51,8 @@ public class ToolActionBridge : MonoBehaviour
     /// </summary>
     public bool Request(EntityRuntime actor, EntityRuntime item, string animTrigger)
     {
+        RecoverStuckActionIfNeeded();
+
         if (_anim != null && _anim.IsAction)
             return false;
 
@@ -67,6 +78,7 @@ public class ToolActionBridge : MonoBehaviour
             return true;
         }
 
+        _actionStartedAt = Time.unscaledTime;
         _anim.IsAction = true;
         _anim.Animator.ResetTrigger(resolvedTrigger);
         _anim.Animator.SetTrigger(resolvedTrigger);
@@ -79,7 +91,7 @@ public class ToolActionBridge : MonoBehaviour
         if (_safetyCoroutine != null)
             StopCoroutine(_safetyCoroutine);
 
-        _safetyCoroutine = StartCoroutine(SafetyResetCoroutine(safetyTimeout));
+        _safetyCoroutine = StartCoroutine(SafetyResetCoroutine(Mathf.Max(0.05f, safetyTimeout)));
 
         return true;
     }
@@ -114,13 +126,14 @@ public class ToolActionBridge : MonoBehaviour
         _waitingForStrike = false;
         _pendingActor     = null;
         _pendingItem      = null;
+        _actionStartedAt  = -1f;
         if (_anim != null)
             _anim.IsAction = false;
     }
 
     private IEnumerator SafetyResetCoroutine(float timeout)
     {
-        yield return new WaitForSeconds(timeout);
+        yield return new WaitForSecondsRealtime(timeout);
         _safetyCoroutine = null;
 
         if (_anim != null && _anim.IsAction)
@@ -131,6 +144,23 @@ public class ToolActionBridge : MonoBehaviour
             Debug.LogWarning($"[ToolActionBridge] Safety reset sau {timeout}s: animation không fire event 'End/Finish'.");
             ResetState();
         }
+    }
+
+    private void RecoverStuckActionIfNeeded()
+    {
+        if (_anim == null || !_anim.IsAction)
+            return;
+
+        float timeout = Mathf.Max(0.05f, safetyTimeout) + Mathf.Max(0f, stuckBusyGraceSeconds);
+        float startedAt = _actionStartedAt >= 0f ? _actionStartedAt : Time.unscaledTime - timeout - 0.01f;
+        if (Time.unscaledTime - startedAt < timeout)
+            return;
+
+        if (_waitingForStrike)
+            ExecutePendingStrike();
+
+        Debug.LogWarning($"[ToolActionBridge] Recovered stuck tool action after {timeout:F2}s.");
+        ResetState();
     }
 
     private void ExecutePendingStrike()

@@ -23,7 +23,7 @@ MonoBehaviour:
   baseStats:
     baseStats:
     - statType: 5
-      value: 3
+      value: 0
     - statType: 9
       value: 1
     - statType: 10
@@ -31,6 +31,8 @@ MonoBehaviour:
     - statType: 11
       value: 0.55
     - statType: 12
+      value: 1
+    - statType: 2
       value: 1
   placementRule:
     occupyLayer: 0

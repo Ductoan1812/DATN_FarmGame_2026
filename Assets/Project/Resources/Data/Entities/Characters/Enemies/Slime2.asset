@@ -64,6 +64,10 @@ MonoBehaviour:
       data:
         harvestDrops: []
         deathDrops:
+        - item: {fileID: 11400000, guid: a6e2d77e9ec04e34aa6d6e67bbd44a41, type: 2}
+          minAmount: 2
+          maxAmount: 3
+          dropChance: 1
         - item: {fileID: 11400000, guid: 2304ceb092dee4242b2caf0a817319ed, type: 2}
           minAmount: 1
           maxAmount: 3

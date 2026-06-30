@@ -13,13 +13,12 @@ MonoBehaviour:
   m_Name: seed_grape_crop
   m_EditorClassIdentifier: 
   id: seed_grape_crop
-  keyName: seed_grape_crop
-  descKey: 
-  icon: {fileID: 6669101765221594657, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
+  keyName: item.seed.grape.name
+  descKey: item.seed.grape.desc
   category: 2
   maxStack: 99
-  buyPrice: 0
-  sellPrice: 0
+  buyPrice: 260
+  sellPrice: 65
   baseStats:
     baseStats: []
   placementRule:
@@ -39,3 +38,4 @@ MonoBehaviour:
         placedEntityData: {fileID: 11400000, guid: 2dcb7c9a5b1bb9947a1f419788fa7b72, type: 2}
         centerTile: 1
         animTrigger: PutDown
+

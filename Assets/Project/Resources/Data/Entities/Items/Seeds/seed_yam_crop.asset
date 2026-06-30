@@ -13,13 +13,12 @@ MonoBehaviour:
   m_Name: seed_yam_crop
   m_EditorClassIdentifier: 
   id: seed_yam_crop
-  keyName: seed_yam_crop
-  descKey: 
-  icon: {fileID: -9139276995365024363, guid: 2036fb678992bbc4b9e9671b6f0ca119, type: 3}
+  keyName: item.seed.yam.name
+  descKey: item.seed.yam.desc
   category: 2
   maxStack: 99
-  buyPrice: 0
-  sellPrice: 0
+  buyPrice: 60
+  sellPrice: 15
   baseStats:
     baseStats: []
   placementRule:
@@ -39,3 +38,4 @@ MonoBehaviour:
         placedEntityData: {fileID: 11400000, guid: d5355b943ed01524eb587c1004270a2c, type: 2}
         centerTile: 1
         animTrigger: PutDown
+
